@@ -9,7 +9,7 @@
 if [ "${CIRCLE_BRANCH}" == "develop" ]
 then
   {
-    echo "export REACT_APP_GQL_ROOT=https://crio-qa-api.hcx.ai/prod/graphql/"
+    echo "export REACT_APP_GQL_ROOT=https://crio-qa-api.tlabs.app/prod/graphql/"
     echo "export SUBDOMAIN_NAME=crio-qa"
     echo "export STACK_REGION=us-west-1"
     echo "export APP_NAME=crio-development"
@@ -20,7 +20,7 @@ then
 elif [ "${CIRCLE_BRANCH}" == "staging" ]
 then
   {
-    echo "export REACT_APP_GQL_ROOT=https://crio-staging-api.hcx.ai/prod/graphql/"
+    echo "export REACT_APP_GQL_ROOT=https://crio-staging-api.tlabs.app/prod/graphql/"
     echo "export SUBDOMAIN_NAME=crio-staging"
     echo "export STACK_REGION=us-west-2"
     echo "export APP_NAME=crio-staging"
