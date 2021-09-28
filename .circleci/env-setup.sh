@@ -9,37 +9,29 @@
 if [ "${CIRCLE_BRANCH}" == "develop" ]
 then
   {
-    echo "export REACT_APP_GQL_ROOT=https://api-qa-outbound.hcx.ai/prod/graphql/"
-    echo "export SUBDOMAIN_NAME=qa-outbound"
+    echo "export REACT_APP_GQL_ROOT=https://crio-qa-api.hcx.ai/prod/graphql/"
+    echo "export SUBDOMAIN_NAME=crio-qa"
     echo "export STACK_REGION=us-west-1"
-    echo "export APP_NAME=outbound-development"
+    echo "export APP_NAME=crio-development"
+    echo "export REACT_APP_COGNITO_USER_POOL_ID=us-west-1_orM3G9iAn"
+    echo "export REACT_APP_COGNITO_DOMAIN=https://crio-development-auth.auth.us-west-1.amazoncognito.com"
+    echo "export REACT_APP_COGNITO_CLIENT_ID=4qv5v7d6474fvrdakt08d7b8gd"
   } >> "$BASH_ENV"
 elif [ "${CIRCLE_BRANCH}" == "staging" ]
 then
   {
-    echo "export REACT_APP_GQL_ROOT=https://api-staging-outbound.hcx.ai/prod/graphql/"
-    echo "export SUBDOMAIN_NAME=staging-outbound"
+    echo "export REACT_APP_GQL_ROOT=https://crio-staging-api.hcx.ai/prod/graphql/"
+    echo "export SUBDOMAIN_NAME=crio-staging"
     echo "export STACK_REGION=us-west-2"
-    echo "export APP_NAME=outbound-staging"
+    echo "export APP_NAME=crio-staging"
   } >> "$BASH_ENV"
 elif [ "${CIRCLE_BRANCH}" == "master" ]
 then
   {
-    echo "export REACT_APP_GQL_ROOT=https://api-outbound.tlabs.app/prod/graphql/"
-    echo "export SUBDOMAIN_NAME=outbound"
+    echo "export REACT_APP_GQL_ROOT=https://crio-api.tlabs.app/prod/graphql/"
+    echo "export SUBDOMAIN_NAME=crio"
     echo "export STACK_REGION=us-east-2"
-    echo "export APP_NAME=outbound-production"
-    echo "export REACT_APP_COGNITO_USER_POOL_ID=us-west-1_LwHEfHkyr"
-    echo "export REACT_APP_COGNITO_DOMAIN=https://hcx-development-auth.auth.us-west-1.amazoncognito.com"
-    echo "export REACT_APP_COGNITO_CLIENT_ID=6vsf1ka3ibovmk4en8rppnij8r"
-  } >> "$BASH_ENV"
-elif [ "${CIRCLE_BRANCH}" == "deploy" ]
-then
-  {
-    echo "export REACT_APP_GQL_ROOT=https://api-deploy-outbound.tlabs.app/prod/graphql/"
-    echo "export SUBDOMAIN_NAME=deploy-outbound"
-    echo "export STACK_REGION=ca-central-1"
-    echo "export APP_NAME=outbound-deploy"
+    echo "export APP_NAME=crio-production"
   } >> "$BASH_ENV"
 else
   #should not be executed
