@@ -1,0 +1,57 @@
+version: 2.1
+
+orbs:
+  aws-cli: circleci/aws-cli@1.3.0
+  node: circleci/node@4.1.0
+
+commands:
+  setup-env-vars:
+    steps:
+      - run: chmod +x .circleci/env-setup.sh && .circleci/env-setup.sh
+  deploy-app:
+    steps:
+      - install-packages
+      - run: npm run deploy
+  install-packages:
+    steps:
+      - run: npm install
+
+jobs:
+  test-client:
+    executor: node/default
+    steps:
+      - checkout
+      - setup-env-vars
+      - install-packages
+      - run: npm run test
+  deploy:
+    executor: aws-cli/default
+    #    resource_class: medium+
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/
+      - aws-cli/setup
+      - setup-env-vars
+      - deploy-app
+
+workflows:
+  version: 2
+  test-and-deploy:
+    jobs:
+      - test-client:
+          context:
+            - tidepool-npm #should be specified on circleci
+      - deploy:
+          context:
+            - aws-account #should be specified on circleci
+            - tidepool-npm #should be specified on circleci
+          requires:
+            - test-client
+          filters:
+            branches:
+              only:
+                - develop
+                - staging
+                - master
+                - deploy
