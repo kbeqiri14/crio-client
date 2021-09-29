@@ -1,54 +1,41 @@
-import React, { useState } from 'react';
-import { userHasGroup } from './auth/hoc';
-import { signIn } from './auth';
+import { Suspense } from 'react';
+import { ApolloProvider } from '@apollo/client';
+import { init as SentryInit, reactRouterV5Instrumentation } from '@sentry/react';
+import { Integrations } from '@sentry/tracing';
+import { Route, Router } from 'react-router-dom';
+import { env, isOnProduction, SENTRY_DSN } from './configs/environment';
+import history from './configs/history';
+import { client } from './graphql/client';
+import { AppRoutes } from './routing';
+import './index.css';
 
-const SigninForm = function() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  return (
-    <form onSubmit={(e) => {
-      e.preventDefault();
-      signIn(email, password);
-    }}>
-      <span>Sign in</span>
-      <p>
-        <input
-          type="text"
-          value={email}
-          onChange={event => setEmail(event.target.value)}
-          placeholder="Email"
-          required
-        />
-      </p>
-      <p>
-        <input
-          type="password"
-          value={password}
-          onChange={event => setPassword(event.target.value)}
-          placeholder="Password"
-          required
-        />
-      </p>
-      <button>Sign in</button>
-    </form>
-  );
+if (isOnProduction) {
+  SentryInit({
+    dsn: SENTRY_DSN,
+    integrations: [
+      new Integrations.BrowserTracing({
+        routingInstrumentation: reactRouterV5Instrumentation(history),
+      }),
+    ],
+    environment: env,
+    tracesSampleRate: 1.0,
+  });
 }
-
-const ComponentA = userHasGroup('doctor')(function() {
-  return 'Visible for Doctors';
-});
-
-const ComponentB = userHasGroup('patient')(function() {
-  return 'Visible for Patients';
-});
 
 function App() {
   return (
-    <div className="App">
-      <SigninForm/>
-      <ComponentA/>
-      <ComponentB/>
-    </div>
+    <ApolloProvider client={client}>
+      <Router history={history}>
+        <Route
+          path='/*'
+          component={(props) => (
+            <Suspense fallback={<div>Loading...</div>}>
+              <AppRoutes {...props} />
+            </Suspense>
+          )}
+        />
+      </Router>
+    </ApolloProvider>
   );
 }
 

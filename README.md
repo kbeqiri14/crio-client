@@ -23,5 +23,5 @@
     - `REACT_APP_GQL_ROOT` backend's graphql url
 
 # Deployment from local machine
-1. Copy the `env.sh.template` into `env.sh` file and set the env varables (as specified on circleci section)
+1. Copy the `env.sh.template` into `env.sh` file and set the env variables (as specified on circleci section)
 1. run `npm run deploy`

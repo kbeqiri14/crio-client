@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-const cdk = require('@aws-cdk/core');
+const { App } = require('@aws-cdk/core');
 const { WebsiteStack } = require('../lib/website-stack');
 const Utils = require('../utils');
 
-const app = new cdk.App();
+const app = new App();
 const stackProps = {
   env: {
     account: Utils.getEnv("STACK_ACCOUNT"),
