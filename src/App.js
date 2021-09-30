@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import { ApolloProvider } from '@apollo/client';
 import { init as SentryInit, reactRouterV5Instrumentation } from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
@@ -6,8 +6,9 @@ import { Route, Router } from 'react-router-dom';
 import { env, isOnProduction, SENTRY_DSN } from './configs/environment';
 import history from './configs/history';
 import { client } from './graphql/client';
-import { AppRoutes } from './routing';
-import './index.css';
+import '@styles/main.less';
+
+const AppRoutes = lazy(() => import('./routing'));
 
 if (isOnProduction) {
   SentryInit({

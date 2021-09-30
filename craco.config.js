@@ -1,23 +1,24 @@
-const CracoLessPlugin = require('craco-less');
-const path = require('path');
-const fs = require('fs');
-const lessToJs = require('less-vars-to-js');
-
-const themeVariables = lessToJs(
-  fs.readFileSync(path.join(__dirname, './src/antd-theme.less'), 'utf8'),
-);
+const CracoAntDesignPlugin = require('craco-antd');
+const CracoAlias = require('craco-alias');
 
 module.exports = {
   plugins: [
     {
-      plugin: CracoLessPlugin,
+      plugin: CracoAntDesignPlugin,
       options: {
         lessLoaderOptions: {
           lessOptions: {
-            modifyVars: themeVariables,
             javascriptEnabled: true,
+            paths: [],
           },
         },
+      },
+    },
+    {
+      plugin: CracoAlias,
+      options: {
+        source: 'jsconfig',
+        baseUrl: './',
       },
     },
   ],

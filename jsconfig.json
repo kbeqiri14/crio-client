@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@root": ["./"],
+      "@root/*": ["./*"],
+      "@lib": ["./lib"],
+      "@lib/*": ["./lib/*"],
+      "@app": ["./src"],
+      "@app/*": ["./src/*"],
+      "@styles": ["./src/styles"],
+      "@styles/*": ["./src/styles/*"],
+      "@ui-kit": ["./src/components/UI-kit"],
+      "@ui-kit/*": ["./src/components/UI-kit/*"],
+      "@shared": ["./src/components/shared"],
+      "@shared/*": ["./src/components/shared/*"],
+      "@screens": ["./src/components/screens"],
+      "@screens/*": ["./src/components/screens/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@fonts/*": ["./src/assets/fonts/*"],
+      "@images/*": ["./src/assets/images/*"],
+      "@svgs/*": ["./src/assets/svgs/*"],
+      "variables": ["./src/styles/variables.less"]
+    }
+  }
+}

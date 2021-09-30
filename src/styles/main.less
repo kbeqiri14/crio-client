@@ -1,0 +1,30 @@
+@import '~normalize.less/normalize.less'; /* bring in normalize.css styles */
+@import '~antd/lib/style/themes/default.less';
+@import '~antd/dist/antd.less';
+@import "antd-theme.less";
+@import (css) "@fonts/styles";
+@import "variables";
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: @dark;
+  font-family: 'Mark Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  monospace;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+}

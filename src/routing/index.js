@@ -1,5 +1,5 @@
 import { Route, Switch } from 'react-router-dom';
-import LandingPage from '../components/screens/LandingPage';
+import LandingPage from '@screens/LandingPage';
 
 export const AppRoutes = () => {
   return (
@@ -8,3 +8,5 @@ export const AppRoutes = () => {
     </Switch>
   );
 };
+
+export default AppRoutes;
