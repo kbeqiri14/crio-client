@@ -17,6 +17,7 @@ export const Title = ({ level, children, className }) => {
   return <TitleTag className={cc([`header-${level}`, className])}>{children}</TitleTag>;
 };
 
-export const Text = ({ level, children, className }) => {
-  return <p className={cc([`text-${level}`, className])}>{children}</p>;
+export const Text = ({ level, children, inline = false, className }) => {
+  const TextTag = inline ? 'span' : 'p';
+  return <TextTag className={cc([`text-${level}`, className])}>{children}</TextTag>;
 };
