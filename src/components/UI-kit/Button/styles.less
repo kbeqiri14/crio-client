@@ -1,0 +1,51 @@
+@import "variables";
+
+.cr-tab-button {
+  padding: 10px;
+  width: auto;
+  height: auto;
+  background-color: transparent;
+  border: 1px solid transparent;
+  margin-right: 4px;
+  cursor: pointer;
+  &__text {
+    color: @white_75;
+  }
+
+  &:hover, &.active {
+    border-radius: 6px;
+    border: 1px solid @white_25;
+  }
+
+  &.active {
+    background-color: @white_25;
+    .cr-tab-button__text {
+      color: @white;
+    }
+  }
+}
+
+.cr-button-secondary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  padding: 11.5px 19px;
+  border-radius: 500px;
+  min-width: 169px;
+  border: 1px solid @primary;
+  cursor: pointer;
+  &__text {
+    color: @primary;
+  }
+  &:not(:disabled)&:hover {
+    background-color: @black_25;
+  }
+  &:disabled {
+    border-color: @white_25;
+    cursor: not-allowed;
+    .cr-button-secondary__text {
+      color: @white_25;
+    }
+  }
+}
