@@ -27,14 +27,9 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router history={history}>
-        <Route
-          path='/*'
-          component={(props) => (
-            <Suspense fallback={<div>Loading...</div>}>
-              <AppRoutes {...props} />
-            </Suspense>
-          )}
-        />
+        <Suspense fallback={<div>Loading...</div>}>
+          <AppRoutes />
+        </Suspense>
       </Router>
     </ApolloProvider>
   );

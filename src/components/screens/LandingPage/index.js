@@ -1,7 +1,5 @@
-import Layout from '../../shared/Layout';
-
 export const LandingPage = () => {
-  return <Layout>Landing Page</Layout>;
+  return <div>Landing Page</div>;
 };
 
 export default LandingPage;

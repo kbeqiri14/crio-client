@@ -20,6 +20,8 @@
       "@fonts/*": ["./src/assets/fonts/*"],
       "@images/*": ["./src/assets/images/*"],
       "@svgs/*": ["./src/assets/svgs/*"],
+      "@utils": ["./src/utils"],
+      "@utils/*": ["./src/utils/*"],
       "variables": ["./src/styles/variables.less"]
     }
   }

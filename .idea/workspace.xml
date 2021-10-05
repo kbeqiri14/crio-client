@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1182071f-d656-4609-be86-93184587e28c" name="Changes" comment="" />
+    <list default="true" id="1182071f-d656-4609-be86-93184587e28c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.storybook/main.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.storybook/preview.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/shared/Header/Header.stories.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/storybook.utils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/jsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/screens/LandingPage/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/screens/LandingPage/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shared/Header/__partials__/TabMenu/TabMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/Header/__partials__/TabMenu/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shared/Header/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/Header/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routing/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routing/index.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

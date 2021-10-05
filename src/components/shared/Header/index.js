@@ -1,7 +1,8 @@
-import history from '@app/configs/history';
-import { TabMenu } from '@shared/Header/__partials__/TabMenu/TabMenu';
-import { SecondaryButton } from '@ui-kit/Button';
 import { Row, Col } from 'antd';
+import { useLocation } from 'react-router-dom';
+import { TabMenu } from '@shared/Header/__partials__/TabMenu';
+import { SecondaryButton } from '@ui-kit/Button';
+import history from '@app/configs/history';
 import crio_logo from '@images/crio-logo.png';
 import './styles.less';
 
@@ -9,7 +10,7 @@ const tabItems = [
   {
     id: 'home',
     title: 'Home',
-    onClick: () => history.push(''),
+    onClick: () => history.push('/'),
   },
   {
     id: 'pricing',
@@ -19,6 +20,8 @@ const tabItems = [
 ];
 
 export const Header = () => {
+  const location = useLocation();
+  const activeItem = location.pathname?.replace('/', '') || 'home';
   return (
     <header className='crio-app-header'>
       <Row justify='space-between' align='middle'>
@@ -27,7 +30,7 @@ export const Header = () => {
             <img alt='crio app logo' src={crio_logo} />
           </div>
           <div className='header-tab-menu'>
-            <TabMenu defaultActiveItem='home' menuItems={tabItems} />
+            <TabMenu defaultActiveItem={activeItem} menuItems={tabItems} />
           </div>
         </Col>
         <Col className='header-end-group'>

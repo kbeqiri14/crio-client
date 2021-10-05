@@ -39,6 +39,11 @@
     "web-vitals": "^2.1.0"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^6.3.9",
+    "@storybook/addon-essentials": "^6.3.9",
+    "@storybook/addon-links": "^6.3.9",
+    "@storybook/node-logger": "^6.3.9",
+    "@storybook/react": "^6.3.9",
     "craco-alias": "^3.0.1",
     "craco-antd": "^1.19.0",
     "craco-less": "^1.20.0",
@@ -49,6 +54,7 @@
     "prettier": "^2.4.1",
     "prop-types": "^15.7.2",
     "serve": "^12.0.1",
+    "storybook-preset-craco": "0.0.6",
     "terser": "^5.9.0"
   },
   "scripts": {
@@ -58,7 +64,9 @@
     "build": "craco build --max-old-space-size=4096",
     "test": "craco test --passWithNoTests",
     "lint": "eslint . --ext .js",
-    "format": "prettier --write \"src/**/*.+(js|jsx|json|css|less|md)\""
+    "format": "prettier --write \"src/**/*.+(js|jsx|json|css|less|md)\"",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "husky": {
     "hooks": {
@@ -78,6 +86,16 @@
     "extends": [
       "react-app",
       "react-app/jest"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
     ]
   },
   "browserslist": {
