@@ -1,12 +1,12 @@
 import { Route, Switch } from 'react-router-dom';
 import LandingPage from '@screens/LandingPage';
-import CognitoCallbak from '@screens/CognitoCallbak';
+import CognitoCallback from '@root/src/components/screens/CognitoCallback';
 
 export const AppRoutes = () => {
   return (
     <Switch>
       <Route component={LandingPage} path='/' exact />
-      <Route component={CognitoCallbak} path='/cognito/callback' exact />
+      <Route component={CognitoCallback} path='/cognito/callback' exact />
     </Switch>
   );
 };

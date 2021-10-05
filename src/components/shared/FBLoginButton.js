@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from 'antd';
+import { SecondaryButton } from '@ui-kit/Button';
 
 import { fbSignIn } from '../../auth';
 
@@ -29,9 +29,9 @@ const FBLoginButton = () => {
   };
 
   return (
-    <Button onClick={handleClick} disabled={loading}>
-      Login with Facebook
-    </Button>
+    <SecondaryButton onClick={handleClick} disabled={loading}>
+      LOG IN
+    </SecondaryButton>
   );
 }
 

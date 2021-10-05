@@ -1,9 +1,9 @@
 import history from '@app/configs/history';
 import { TabMenu } from '@shared/Header/__partials__/TabMenu/TabMenu';
-import { SecondaryButton } from '@ui-kit/Button';
 import { Row, Col } from 'antd';
 import crio_logo from '@images/crio-logo.png';
 import './styles.less';
+import FacebookButton from '../../shared/FBLoginButton';
 
 const tabItems = [
   {
@@ -31,8 +31,7 @@ export const Header = () => {
           </div>
         </Col>
         <Col className='header-end-group'>
-          <SecondaryButton>Log In</SecondaryButton>
-          <button>Sign Up</button>
+          <FacebookButton />
         </Col>
       </Row>
     </header>
