@@ -1,4 +1,4 @@
-import { Col, Image, Row } from 'antd';
+import { Col, Row } from 'antd';
 
 import history from '@app/configs/history';
 import { useCurrentUser } from '@app/auth/hooks';
@@ -38,7 +38,7 @@ export const Header = () => {
         </Col>
         <Col className='header-end-group'>
           {user
-            ? <Image src={JSON.parse(user?.attributes?.picture).data.url} preview={false} />
+            ? <img alt='profile' src={JSON.parse(user?.attributes?.picture).data.url} />
             : !loading && <SecondaryButton onClick={login} disabled={loading || fbLoading}>
                 LOG IN
               </SecondaryButton>}
