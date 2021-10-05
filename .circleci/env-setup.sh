@@ -13,9 +13,12 @@ then
     echo "export SUBDOMAIN_NAME=crio-qa"
     echo "export STACK_REGION=us-west-1"
     echo "export APP_NAME=crio-development"
-    echo "export REACT_APP_COGNITO_USER_POOL_ID=us-west-1_orM3G9iAn"
-    echo "export REACT_APP_COGNITO_DOMAIN=https://crio-development-auth.auth.us-west-1.amazoncognito.com"
-    echo "export REACT_APP_COGNITO_CLIENT_ID=4qv5v7d6474fvrdakt08d7b8gd"
+    echo "export REACT_APP_COGNITO_REGION=us-west-2"
+    echo "export REACT_APP_COGNITO_APP_CLIENT_ID=1b76ir6odhsf56d9u051hfvu43"
+    echo "export REACT_APP_COGNITO_USER_POOL_ID=us-west-2_JVspvFNBB"
+    echo "export REACT_APP_COGNITO_DOMAIN=crio-development-auth.auth.us-west-2.amazoncognito.com"
+    echo "export REACT_APP_COGNITO_REDIRECT_SIGN_IN=https://crio-qa.tlabs.app/cognito/callback"
+    echo "export REACT_APP_COGNITO_REDIRECT_SIGN_OUT=https://crio-qa.tlabs.app"
   } >> "$BASH_ENV"
 elif [ "${CIRCLE_BRANCH}" == "staging" ]
 then
