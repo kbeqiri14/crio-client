@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { TabMenu } from '@shared/Header/__partials__/TabMenu';
 import { SecondaryButton } from '@ui-kit/Button';
 import history from '@app/configs/history';
-import crio_logo from '@images/crio-logo.png';
+import crio_logo from '@images/crio-logo.svg';
 import './styles.less';
 
 const tabItems = [
