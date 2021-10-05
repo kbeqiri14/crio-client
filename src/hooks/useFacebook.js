@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import { SecondaryButton } from '@ui-kit/Button';
+import { useState } from 'react';
 
-import { fbSignIn } from '../../auth';
+import { fbSignIn } from '@app/auth';
 
-const FBLoginButton = () => {
+const useFacebook = () => {
   const [loading, setLoading] = useState(false);
 
   const statusChangeCallback = async response => {
@@ -24,15 +23,15 @@ const FBLoginButton = () => {
     window.FB.getLoginStatus(statusChangeCallback);
   };
 
-  const handleClick = () => {
+  const login = () => {
     window.FB.login(checkLoginState, { scope: 'public_profile,email', return_scopes: true });
   };
 
-  return (
-    <SecondaryButton onClick={handleClick} disabled={loading}>
-      LOG IN
-    </SecondaryButton>
-  );
+  const logout = () => {
+    window.FB.logout(() => console.log('logout'));
+  };
+
+  return { loading, login, logout };
 }
 
-export default FBLoginButton;
+export default useFacebook;

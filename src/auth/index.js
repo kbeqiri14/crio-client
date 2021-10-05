@@ -7,7 +7,7 @@ import {
   COGNITO_DOMAIN,
   COGNITO_REDIRECT_SIGN_IN,
   COGNITO_REDIRECT_SIGN_OUT,
-} from '../configs/environment';
+} from '@app/configs/environment';
 class User {
   _user = null;
 

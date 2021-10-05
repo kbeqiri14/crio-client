@@ -1,9 +1,12 @@
+import { Col, Image, Row } from 'antd';
+
 import history from '@app/configs/history';
+import { useCurrentUser } from '@app/auth/hooks';
+import useFacebook from '@app/hooks/useFacebook';
 import { TabMenu } from '@shared/Header/__partials__/TabMenu/TabMenu';
-import { Row, Col } from 'antd';
+import { SecondaryButton } from '@ui-kit/Button';
 import crio_logo from '@images/crio-logo.png';
 import './styles.less';
-import FacebookButton from '../../shared/FBLoginButton';
 
 const tabItems = [
   {
@@ -19,7 +22,10 @@ const tabItems = [
 ];
 
 export const Header = () => {
-  return (
+    const { user, loading } = useCurrentUser();
+    const { loading: fbLoading, login } = useFacebook();
+
+    return (
     <header className='crio-app-header'>
       <Row justify='space-between' align='middle'>
         <Col className='header-start-group'>
@@ -31,7 +37,11 @@ export const Header = () => {
           </div>
         </Col>
         <Col className='header-end-group'>
-          <FacebookButton />
+          {user
+            ? <Image src={JSON.parse(user?.attributes?.picture).data.url} preview={false} />
+            : !loading && <SecondaryButton onClick={login} disabled={loading || fbLoading}>
+                LOG IN
+              </SecondaryButton>}
         </Col>
       </Row>
     </header>

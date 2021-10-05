@@ -1,5 +1,7 @@
-import Layout from '../../shared/Layout';
-import { useQueryParams } from '../../../auth/hooks';
+import { memo } from 'react';
+
+import { useQueryParams } from '@app/hooks/useRouter';
+import Layout from '@shared/Layout';
 
 export const CognitoCallback = () => {
   let { access_token } = useQueryParams();
@@ -10,4 +12,4 @@ export const CognitoCallback = () => {
   </Layout>;
 };
 
-export default CognitoCallback;
+export default memo(CognitoCallback);
