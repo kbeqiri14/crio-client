@@ -38,7 +38,7 @@ export const Header = () => {
         </Col>
         <Col className='header-end-group'>
           {user
-            ? <img alt='profile' src={JSON.parse(user?.attributes?.picture).data.url} />
+            ? <img alt='profile' src={JSON.parse(user.attributes?.picture)?.data?.url} />
             : !loading && <SecondaryButton onClick={login} disabled={loading || fbLoading}>
                 LOG IN
               </SecondaryButton>}
