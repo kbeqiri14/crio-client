@@ -58,12 +58,13 @@
     "terser": "^5.9.0"
   },
   "scripts": {
+    "prepare": "husky install",
     "generate-config": "node generateCdkConfig.js",
     "deploy": "chmod +x ./deploy.sh && ./deploy.sh",
     "start": "nodemon -w craco.config.js -w jsconfig.json --exec \"craco start\"",
     "build": "craco build --max-old-space-size=4096",
     "test": "craco test --passWithNoTests",
-    "lint": "eslint . --ext .js",
+    "lint": "eslint ./src --ext .js --max-warnings 0",
     "format": "prettier --write \"src/**/*.+(js|jsx|json|css|less|md)\"",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public"
