@@ -1,4 +1,6 @@
-import Header from '../Header';
+import { memo } from 'react';
+
+import Header from '@shared/Header';
 import './styles.less';
 
 export const Layout = ({ children }) => {
@@ -10,4 +12,4 @@ export const Layout = ({ children }) => {
   );
 };
 
-export default Layout;
+export default memo(Layout);

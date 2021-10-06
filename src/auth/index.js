@@ -1,46 +1,18 @@
 import Amplify, { Auth } from 'aws-amplify';
 
-const cognitoConfig = {
-  'cognitoUserPoolId': process.env.REACT_APP_COGNITO_USER_POOL_ID,
-  'cognitoUserPoolAppClientId': process.env.REACT_APP_COGNITO_CLIENT_ID,
-  'cognitoDomain': process.env.REACT_APP_COGNITO_DOMAIN,
-  'region': process.env.REACT_APP_COGNITO_REGION,
-};
-const awsConfig = {
-  Auth: {
-    // REQUIRED - Amazon Cognito Region
-    region: cognitoConfig.region,
-    // OPTIONAL - Amazon Cognito User Pool ID
-    userPoolId: cognitoConfig.cognitoUserPoolId,
-    // OPTIONAL - Amazon Cognito Web Client ID (26-char alphanumeric string)
-    userPoolWebClientId: cognitoConfig.cognitoUserPoolAppClientId,
-    // OPTIONAL - Enforce user authentication prior to accessing AWS resources or not
-    // mandatorySignIn: false,
-    oauth: {
-      domain: cognitoConfig.cognitoDomain,
-      scope: ['email', 'openid', 'profile'],
-      responseType: 'code', // or token
-      // optional, for Cognito hosted ui specified options
-      options: {
-        // Indicates if the data collection is enabled to support Cognito advanced security features. By default, this flag is set to true.
-        AdvancedSecurityDataCollectionFlag: true,
-      },
-    },
-  },
-};
-
-Amplify.configure(awsConfig);
-
+import {
+  COGNITO_APP_CLIENT_ID,
+  COGNITO_REGION,
+  COGNITO_USER_POOL_ID,
+  COGNITO_DOMAIN,
+  COGNITO_REDIRECT_SIGN_IN,
+  COGNITO_REDIRECT_SIGN_OUT,
+} from '@app/configs/environment';
 class User {
   _user = null;
 
   constructor(user) {
     this._user = user;
-  }
-
-  get groups() {
-    return this._user.signInUserSession.accessToken.payload['cognito:groups'] ||
-      [];
   }
 
   get attributes() {
@@ -52,46 +24,25 @@ class User {
   }
 }
 
-export async function signUp(email, password) {
-  try {
-    const { user } = await Auth.signUp({
-      username: email,
-      password,
-      attributes: {
-        email,
-      },
-    });
-    return new User(user);
-  } catch (error) {
-    console.log('error signing up:', error);
-    return null;
-  }
-}
+Amplify.configure({
+  Auth: {
+    region: COGNITO_REGION,
+    userPoolId: COGNITO_USER_POOL_ID,
+    userPoolWebClientId: COGNITO_APP_CLIENT_ID,
+    oauth: {
+      responseType: 'token',
+      domain: COGNITO_DOMAIN,
+      redirectSignIn: COGNITO_REDIRECT_SIGN_IN,
+      redirectSignOut: COGNITO_REDIRECT_SIGN_OUT,
+    },
+  },
+});
 
-export async function confirmSignUp(username, code) {
+export async function fbSignIn() {
   try {
-    await Auth.confirmSignUp(username, code);
+    await Auth.federatedSignIn({ provider: 'Facebook' });
   } catch (error) {
-    console.log('error confirming sign up', error);
-  }
-}
-
-export async function signIn(username, password) {
-  try {
-    const user = await Auth.signIn(username, password);
-    return new User(user);
-  } catch (error) {
-    console.log('error signing in', error);
-    return null;
-  }
-}
-
-export async function resendConfirmationCode(username) {
-  try {
-    await Auth.resendSignUp(username);
-    console.log('code resent successfully');
-  } catch (err) {
-    console.log('error resending code: ', err);
+    console.log('error facebook signing in: ', error);
   }
 }
 
@@ -111,11 +62,3 @@ export async function getCurrentUser() {
     return null;
   }
 }
-
-(async () => {
-  // await signIn('albert+patient@tidepoollabs.com', '1qaz!QAZ');
-  // await signUp('albert+patient@tidepoollabs.com', '1qaz!QAZ');
-  // await confirmSignUp('albert+patient@tidepoollabs.com', '299492');
-  // await resendConfirmationCode('albert+patient@tidepoollabs.com');
-})();
-
