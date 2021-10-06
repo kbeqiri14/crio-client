@@ -35,7 +35,9 @@ export const Header = () => {
         </Col>
         <Col className='header-end-group'>
           <SecondaryButton>Log In</SecondaryButton>
-          <button>Sign Up</button>
+          <SecondaryButton filled fillColor='secondary'>
+            Sign Up
+          </SecondaryButton>
         </Col>
       </Row>
     </header>

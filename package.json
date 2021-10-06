@@ -66,8 +66,8 @@
     "test": "craco test --passWithNoTests",
     "lint": "eslint ./src --ext .js --max-warnings 0",
     "format": "prettier --write \"src/**/*.+(js|jsx|json|css|less|md)\"",
-    "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "sb": "start-storybook -p 6006 -s public",
+    "build-sb": "build-storybook -s public"
   },
   "husky": {
     "hooks": {

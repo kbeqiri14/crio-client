@@ -1,11 +1,11 @@
-import Header from '@shared/Header';
+import { Header as HeaderComponent } from '@shared/Header';
 import { routerDecorator } from '@utils/storybook.utils';
 import '../../../styles/main.less';
 
 export default {
-  component: Header,
-  title: 'Crio Header',
+  component: HeaderComponent,
+  title: 'Header',
   decorators: [routerDecorator],
 };
 
-export const Default = () => <Header />;
+export const Header = () => <HeaderComponent />;

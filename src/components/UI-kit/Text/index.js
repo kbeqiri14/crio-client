@@ -7,8 +7,8 @@ const levelMapping = {
   30: 4,
 };
 
-export const Title = ({ level, children, className }) => {
-  const TitleTag = `h${levelMapping[level]}`;
+export const Title = ({ level, children, className, inline = false }) => {
+  const TitleTag = inline ? 'span' : `h${levelMapping[level]}`;
 
   if (!TitleTag) {
     return null;

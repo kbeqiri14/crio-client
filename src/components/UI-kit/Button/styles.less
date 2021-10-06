@@ -1,4 +1,4 @@
-@import "variables";
+@import 'variables';
 
 .cr-tab-button {
   padding: 10px;
@@ -12,7 +12,8 @@
     color: @white_75;
   }
 
-  &:hover, &.active {
+  &:hover,
+  &.active {
     border-radius: 6px;
     border: 1px solid @white_25;
   }
@@ -30,11 +31,27 @@
   justify-content: center;
   align-items: center;
   background: transparent;
-  padding: 11.5px 19px;
+  padding-left: 19px;
+  padding-right: 19px;
+  height: 44px;
   border-radius: 500px;
-  min-width: 169px;
+  min-width: 140px;
   border: 1px solid @primary;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  line-height: 0;
+  &:active {
+    box-shadow: none;
+  }
+  &.large {
+    height: 54px;
+    .filled {
+      .cr-button-secondary__text {
+        color: @white;
+      }
+    }
+  }
   &__text {
     color: @primary;
   }
@@ -47,5 +64,42 @@
     .cr-button-secondary__text {
       color: @white_25;
     }
+  }
+  &.filled {
+    border: none;
+    .cr-button-secondary__text {
+      color: @white;
+      text-transform: uppercase;
+    }
+    &:hover {
+      &:after {
+        display: block;
+        content: '';
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.15);
+      }
+    }
+    &:disabled {
+      background-color: @white_25;
+      background-image: none;
+      box-shadow: none;
+      cursor: not-allowed;
+      .cr-button-secondary__text {
+        color: @white_50;
+      }
+    }
+  }
+}
+
+.filled-color {
+  &-primary {
+    background-image: @gradient-1;
+    box-shadow: 0 4px 5px rgba(227, 123, 122, 0.25);
+  }
+  &-secondary {
+    background-image: @gradient-4;
+    box-shadow: 0 4px 5px rgba(26, 14, 156, 0.25);
   }
 }
