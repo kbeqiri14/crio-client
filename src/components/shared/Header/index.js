@@ -5,6 +5,7 @@ import { useCurrentUser } from '@app/auth/hooks';
 import useFacebook from '@app/hooks/useFacebook';
 import { TabMenu } from '@shared/Header/__partials__/TabMenu/TabMenu';
 import { SecondaryButton } from '@ui-kit/Button';
+import { ProfileMenu } from './__partials__/ProfileMenu';
 import crio_logo from '@images/crio-logo.png';
 import './styles.less';
 
@@ -38,7 +39,7 @@ export const Header = () => {
         </Col>
         <Col className='header-end-group'>
           {user
-            ? <img alt='profile' src={JSON.parse(user.attributes?.picture)?.data?.url} />
+            ? <ProfileMenu user={user} />
             : !loading && <SecondaryButton onClick={login} disabled={loading || fbLoading}>
                 LOG IN
               </SecondaryButton>}
