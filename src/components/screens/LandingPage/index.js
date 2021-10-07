@@ -1,10 +1,10 @@
-import Layout from '../../shared/Layout';
-import FacebookButton from '../../shared/FBLoginButton';
+import { memo } from 'react';
+import Layout from '@shared/Layout';
 
 export const LandingPage = () => {
   return <Layout>
-    <FacebookButton />
+    Landing Page
   </Layout>;
 };
 
-export default LandingPage;
+export default memo(LandingPage);

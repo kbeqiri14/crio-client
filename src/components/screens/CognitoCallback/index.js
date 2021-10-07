@@ -1,6 +1,7 @@
 import { memo } from 'react';
-import Layout from '../../shared/Layout';
-import { useQueryParams } from '../../../auth/hooks';
+
+import { useQueryParams } from '@app/hooks/useRouter';
+import Layout from '@shared/Layout';
 
 export const CognitoCallback = () => {
   const { access_token } = useQueryParams();

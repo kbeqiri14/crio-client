@@ -9,7 +9,7 @@ export const AppRoutes = () => {
     <Switch>
       <Route component={LandingPage} path='/' exact />
       <Route component={CognitoCallback} path='/cognito/callback' exact />
-      <Route component={CreatorProfile} path='/creator-profile' exact />
+      <Route component={CreatorProfile} path='/profile' exact />
       <Route component={FanProfile} path='/fan-profile' exact />
     </Switch>
   );
