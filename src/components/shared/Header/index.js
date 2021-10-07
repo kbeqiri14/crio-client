@@ -24,7 +24,7 @@ const tabItems = [
 
 export const Header = () => {
     const { user, loading } = useCurrentUser();
-    const { loading: fbLoading, login } = useFacebook();
+    const { loading: fbLoading, login, logout } = useFacebook();
 
     return (
     <header className='crio-app-header'>
@@ -39,7 +39,7 @@ export const Header = () => {
         </Col>
         <Col className='header-end-group'>
           {user
-            ? <ProfileMenu user={user} />
+            ? <ProfileMenu user={user} logout={logout} />
             : !loading && <SecondaryButton onClick={login} disabled={loading || fbLoading}>
                 LOG IN
               </SecondaryButton>}

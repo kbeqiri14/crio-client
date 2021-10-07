@@ -1,8 +1,7 @@
 import { useHistory } from 'react-router-dom';
-import { signOut } from '@app/auth';
 import './styles.less';
 
-export const ProfileMenu = ({ user }) => {
+export const ProfileMenu = ({ user, logout }) => {
   const history = useHistory();
 
   return (
@@ -13,7 +12,7 @@ export const ProfileMenu = ({ user }) => {
     </p>
     <div className='dropdown-content'>
       <span onClick={() => history.push('/profile')}>My Profile</span>
-      <span onClick={signOut}>Log Out</span>
+      <span onClick={logout}>Log Out</span>
     </div>
   </div>
   );
