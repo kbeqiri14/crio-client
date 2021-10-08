@@ -1,14 +1,15 @@
 import { Route, Switch } from 'react-router-dom';
 import Layout from '@shared/Layout';
 import LandingPage from '@screens/LandingPage';
-import CognitoCallback from '@root/src/components/screens/CognitoCallback';
+import CognitoCallback from '@screens/CognitoCallback';
 
 export const AppRoutes = () => {
   return (
     <Layout>
       <Switch>
-        <Route component={LandingPage} path='/' exact />
-        <Route component={CognitoCallback} path='/cognito/callback' exact />
+        <Route path='/pricing' render={() => <div>Pricing</div>} />
+        <Route path='/cognito/callback' component={CognitoCallback} />
+        <Route exact path='/' component={LandingPage} />
       </Switch>
     </Layout>
   );

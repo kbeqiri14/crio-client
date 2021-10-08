@@ -7,11 +7,11 @@ export const SecondaryButton = ({
   children,
   onClick,
   disabled,
-  loading,
   icon,
   filled = false,
   fillColor = 'primary',
   size = 'regular',
+  className = '',
 }) => {
   return (
     <button
@@ -22,6 +22,7 @@ export const SecondaryButton = ({
           [`filled-color-${fillColor}`]: filled,
           large: size === 'large',
         },
+        className,
       ])}
       onClick={onClick}
       disabled={disabled}
@@ -43,12 +44,12 @@ export const SecondaryButton = ({
 export default SecondaryButton;
 
 SecondaryButton.propTypes = {
-  children: PropTypes.element,
+  children: PropTypes.node,
   disabled: PropTypes.bool,
   fillColor: PropTypes.oneOf(['primary', 'secondary']),
   size: PropTypes.oneOf(['regular', 'large']),
   filled: PropTypes.bool,
   icon: PropTypes.element,
-  loading: PropTypes.bool,
   onClick: PropTypes.func,
+  className: PropTypes.string,
 };

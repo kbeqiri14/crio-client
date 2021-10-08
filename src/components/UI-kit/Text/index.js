@@ -14,10 +14,12 @@ export const Title = ({ level, children, className, inline = false }) => {
     return null;
   }
 
-  return <TitleTag className={cc([`header-${level}`, className])}>{children}</TitleTag>;
+  return (
+    <TitleTag className={cc(['crio-heading', `header-${level}`, className])}>{children}</TitleTag>
+  );
 };
 
 export const Text = ({ level, children, inline = false, className }) => {
   const TextTag = inline ? 'span' : 'p';
-  return <TextTag className={cc([`text-${level}`, className])}>{children}</TextTag>;
+  return <TextTag className={cc(['crio-text', `text-${level}`, className])}>{children}</TextTag>;
 };
