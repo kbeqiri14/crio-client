@@ -1,4 +1,5 @@
 import { memo, useEffect } from 'react';
+import { Spin } from 'antd';
 import { useMutation } from '@apollo/client';
 
 import { useCurrentUser } from '@app/auth/hooks';
@@ -8,20 +9,21 @@ import Layout from '@shared/Layout';
 
 export const CognitoCallback = () => {
   const { access_token } = useQueryParams();
-  const { user } = useCurrentUser();
+  const { user, loading } = useCurrentUser();
   const [createUser] = useMutation(signIn);
 
   useEffect(() => {
     if (access_token && user) {
       try {
+        const attr = user.attributes || {};
         createUser({
           variables: {
             attributes: {
-              userId: user.attributes.sub,
-              email: user.attributes.email,
-              username: user.attributes.family_name,
-              firstName: user.attributes.family_name,
-              lastName: user.attributes.given_name,
+              userId: attr.sub,
+              email: attr.email,
+              username: attr.sub,
+              firstName: attr.family_name,
+              lastName: attr.given_name,
             }
           },
         });
@@ -32,7 +34,7 @@ export const CognitoCallback = () => {
   }, [access_token, user, createUser]);
 
   return <Layout>
-    CognitoCallback
+    <Spin spinning={loading} />
   </Layout>;
 };
 

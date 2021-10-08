@@ -9,6 +9,7 @@ export const signIn = gql`
       username
       firstName
       lastName
+      creator
     }
   }
 `;
