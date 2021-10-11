@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const signIn = gql`
-  mutation saveUser($attributes: UserAttributes!) {
-    saveUser(attributes: $attributes) {
+  mutation {
+    saveUser {
       id
       userId
       email

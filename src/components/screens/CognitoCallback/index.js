@@ -15,18 +15,7 @@ export const CognitoCallback = () => {
   useEffect(() => {
     if (access_token && user) {
       try {
-        const attr = user.attributes || {};
-        createUser({
-          variables: {
-            attributes: {
-              userId: attr.sub,
-              email: attr.email,
-              username: attr.sub,
-              firstName: attr.family_name,
-              lastName: attr.given_name,
-            }
-          },
-        });
+        createUser();
         history.push('/');
       } catch (e) {
         console.log('error creating user ', e);
