@@ -1,0 +1,29 @@
+@import 'variables';
+
+.cr-landing__footer {
+  height: 110px;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  background-color: @black_25;
+  color: @white_75;
+  &-wrapper {
+    flex-grow: 1;
+    max-width: calc(690px + 23px);
+  }
+  &-logo {
+    cursor: pointer;
+    img {
+      width: 48px;
+      height: 28px;
+    }
+  }
+  .cr-social-link {
+    background: transparent;
+    border: none;
+    color: white;
+    padding: 0;
+    margin: 0 20px 0 0;
+    cursor: pointer;
+  }
+}
