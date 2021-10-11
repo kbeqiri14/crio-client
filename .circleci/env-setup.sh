@@ -27,6 +27,12 @@ then
     echo "export SUBDOMAIN_NAME=crio-staging"
     echo "export STACK_REGION=us-west-2"
     echo "export APP_NAME=crio-staging"
+    echo "export REACT_APP_COGNITO_REGION=us-west-2"
+    echo "export REACT_APP_COGNITO_APP_CLIENT_ID=5nl699lvu2gmhat36pita5he9c"
+    echo "export REACT_APP_COGNITO_USER_POOL_ID=us-west-2_ALXn4YGWa"
+    echo "export REACT_APP_COGNITO_DOMAIN1=crio-staging-auth.auth.us-west-2.amazoncognito.com"
+    echo "export REACT_APP_COGNITO_REDIRECT_SIGN_IN=https://crio-staging.tlabs.app/cognito/callback"
+    echo "export REACT_APP_COGNITO_REDIRECT_SIGN_OUT=https://crio-staging.tlabs.app"
   } >> "$BASH_ENV"
 elif [ "${CIRCLE_BRANCH}" == "master" ]
 then
