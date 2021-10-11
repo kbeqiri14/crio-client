@@ -36,7 +36,7 @@ export const LandingPage = () => {
             Crio is a leading community platform for creatives to showcase their work and interact
             with fans across the globe
           </div>
-          <ConnectButton onClick={undefined} />
+          <ConnectButton />
         </div>
       </section>
       <section className='cr-landing__video-grid'>
@@ -68,7 +68,7 @@ export const LandingPage = () => {
           </div>
         </div>
         <div className='about-perks__connect'>
-          <ConnectButton onClick={undefined} />
+          <ConnectButton />
         </div>
       </section>
       <Footer />

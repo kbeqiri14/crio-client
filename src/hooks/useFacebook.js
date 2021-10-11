@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Auth } from 'aws-amplify';
 
 import { fbSignIn } from '@app/auth';
 
@@ -27,7 +28,13 @@ const useFacebook = () => {
   };
 
   const logout = () => {
-    window.FB.logout(() => console.log('logout'));
+    window.FB.getLoginStatus(({ status }) => {
+      if (status === 'connected') {
+        window.FB.logout(() => Auth.signOut());
+      } else {
+        Auth.signOut();
+      }
+    });
   };
 
   return { loading, login, logout };

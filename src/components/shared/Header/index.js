@@ -1,9 +1,12 @@
 import { Row, Col } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
-import { ConnectButton } from '@shared/ConnectButton';
+
 import history from '@app/configs/history';
-import { TabMenu } from './__partials__/TabMenu';
+import { useCurrentUser } from '@app/auth/hooks';
 import crio_logo from '@images/crio-logo.svg';
+import { ConnectButton } from '@shared/ConnectButton';
+import { TabMenu } from './__partials__/TabMenu';
+import { ProfileMenu } from './__partials__/ProfileMenu';
 import './styles.less';
 
 const tabItems = [
@@ -21,6 +24,7 @@ const tabItems = [
 
 export const Header = () => {
   const location = useLocation();
+  const { user, loading } = useCurrentUser();
   const activeItem = location.pathname?.replace('/', '') || 'home';
 
   return (
@@ -37,7 +41,11 @@ export const Header = () => {
           </div>
         </Col>
         <Col className='header-end-group'>
-          <ConnectButton onClick={undefined} size='regular' />
+          {
+            user
+              ? <ProfileMenu user={user} />
+              : !loading && <ConnectButton size='regular' disabled={loading} />
+          }
         </Col>
       </Row>
     </header>
