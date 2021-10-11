@@ -1,9 +1,11 @@
-import { ConnectButton } from '@shared/ConnectButton';
-import { Footer } from '@shared/Footer';
 import { useState } from 'react';
 import { Row } from 'antd';
 import cc from 'classcat';
+
+import { useCurrentUser } from '@app/auth/hooks';
 import { renderPosters } from '@shared/PostersList';
+import { ConnectButton } from '@shared/ConnectButton';
+import { Footer } from '@shared/Footer';
 import { Text, Title } from '@ui-kit/Text';
 import { SecondaryButton } from '@ui-kit/Button';
 import aboutPerks from '@images/about-perks.png';
@@ -17,6 +19,7 @@ const videosCount = smallPostersCount + largePostersCount;
 const videoPosters = new Array(videosCount).fill(samplePoster);
 
 export const LandingPage = () => {
+  const { user, loading } = useCurrentUser();
   const [listLoaded, setListLoaded] = useState(false);
   const [postersList, setPostersList] = useState(renderPosters(videoPosters, largePostersCount));
 
@@ -36,7 +39,7 @@ export const LandingPage = () => {
             Crio is a leading community platform for creatives to showcase their work and interact
             with fans across the globe
           </div>
-          <ConnectButton />
+          {!user && <ConnectButton disabled={loading} />}
         </div>
       </section>
       <section className='cr-landing__video-grid'>
@@ -67,9 +70,9 @@ export const LandingPage = () => {
             </div>
           </div>
         </div>
-        <div className='about-perks__connect'>
-          <ConnectButton />
-        </div>
+        {!user && <div className='about-perks__connect'>
+          <ConnectButton disabled={loading} />
+        </div>}
       </section>
       <Footer />
     </div>
