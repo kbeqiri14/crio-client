@@ -19,6 +19,7 @@ then
     echo "export REACT_APP_COGNITO_DOMAIN1=crio-development-auth.auth.us-west-2.amazoncognito.com"
     echo "export REACT_APP_COGNITO_REDIRECT_SIGN_IN=https://crio-qa.tlabs.app/cognito/callback"
     echo "export REACT_APP_COGNITO_REDIRECT_SIGN_OUT=https://crio-qa.tlabs.app"
+    echo "export REACT_APP_FB_APP_ID=644393000298985"
   } >> "$BASH_ENV"
 elif [ "${CIRCLE_BRANCH}" == "staging" ]
 then
@@ -33,6 +34,7 @@ then
     echo "export REACT_APP_COGNITO_DOMAIN1=crio-staging-auth.auth.us-west-2.amazoncognito.com"
     echo "export REACT_APP_COGNITO_REDIRECT_SIGN_IN=https://crio-staging.tlabs.app/cognito/callback"
     echo "export REACT_APP_COGNITO_REDIRECT_SIGN_OUT=https://crio-staging.tlabs.app"
+    echo "export REACT_APP_FB_APP_ID=1945366748964292"
   } >> "$BASH_ENV"
 elif [ "${CIRCLE_BRANCH}" == "master" ]
 then
