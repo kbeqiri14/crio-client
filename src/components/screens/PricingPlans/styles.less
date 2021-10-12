@@ -41,6 +41,10 @@
     padding: 48px 10px 9px;
     width: 459px;
     position: relative;
+    display: flex;
+    flex-flow: column nowrap;
+    flex-grow: 1;
+    max-height: 621px;
     .recommended-marker {
       position: absolute;
       width: 147px;
@@ -52,8 +56,6 @@
       text-align: center;
       margin-bottom: 57px;
     }
-    flex-grow: 1;
-    max-height: 621px;
     &.is-paid {
       width: 477px;
       > .crio-heading {
@@ -75,11 +77,15 @@
     padding: 0 24px;
     color: @white_75;
     margin: 0 0 45px;
+    flex-grow: 1;
 
     &-item {
       display: flex;
       justify-content: flex-start;
       align-items: flex-start;
+      .crio-text {
+        margin-top: -3px !important;
+      }
       &:not(:last-child) {
         margin-bottom: 35px;
         line-height: 19px;
@@ -87,6 +93,7 @@
       &__icon {
         display: inline-block;
         margin-right: 11px;
+        padding-top: 1.5px;
       }
       &.is-pro &__icon {
         color: @success;
