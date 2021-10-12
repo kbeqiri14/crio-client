@@ -1,9 +1,9 @@
-import { useHistory } from 'react-router-dom';
+import history from '@app/configs/history';
 import useFacebook from '@app/hooks/useFacebook';
+import { Text } from '@ui-kit/Text';
 import './styles.less';
 
 export const ProfileMenu = ({ user }) => {
-  const history = useHistory();
   const { logout } = useFacebook();
 
   return (
@@ -13,8 +13,12 @@ export const ProfileMenu = ({ user }) => {
         <i className='arrow-down' />
       </div>
       <div className='dropdown-content'>
-        <span onClick={() => history.push('/profile')}>My Profile</span>
-        <span onClick={logout}>Log Out</span>
+        <Text inline level='20' onClick={() => history.push('/profile')}>
+          My Profile
+        </Text>
+        <Text inline level='20' onClick={logout}>
+          Log Out
+        </Text>
       </div>
     </div>
   );
