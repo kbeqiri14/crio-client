@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { TabButton } from '@ui-kit/Button';
+import './styles.less';
 
 export const TabMenu = ({ menuItems, defaultActiveItem }) => {
   const [activeItem, setActiveItem] = useState(defaultActiveItem);
