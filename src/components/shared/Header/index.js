@@ -41,11 +41,11 @@ export const Header = () => {
           </div>
         </Col>
         <Col className='header-end-group'>
-          {
-            user
-              ? <ProfileMenu user={user} />
-              : !loading && <ConnectButton size='regular' disabled={loading} />
-          }
+          {user ? (
+            <ProfileMenu user={user} />
+          ) : (
+            !loading && <ConnectButton size='regular' disabled={loading} />
+          )}
         </Col>
       </Row>
     </header>

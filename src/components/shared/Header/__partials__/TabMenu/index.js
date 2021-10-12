@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TabButton } from '@ui-kit/Button';
 
 export const TabMenu = ({ menuItems, defaultActiveItem }) => {
@@ -9,6 +9,10 @@ export const TabMenu = ({ menuItems, defaultActiveItem }) => {
     setActiveItem(item.id);
   };
 
+  useEffect(() => {
+    setActiveItem(defaultActiveItem);
+  }, [defaultActiveItem]);
+
   return (
     <div className='cr-tab-container'>
       {menuItems.map((menu) => (
@@ -16,7 +20,8 @@ export const TabMenu = ({ menuItems, defaultActiveItem }) => {
           key={menu.id}
           isActive={activeItem === menu.id}
           onClick={handleItemClick(menu)}
-          className='cr-tab-item'>
+          className='cr-tab-item'
+        >
           {menu.title}
         </TabButton>
       ))}
