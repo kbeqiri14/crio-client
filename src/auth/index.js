@@ -34,7 +34,7 @@ Amplify.configure({
       domain: COGNITO_DOMAIN,
       redirectSignIn: COGNITO_REDIRECT_SIGN_IN,
       redirectSignOut: COGNITO_REDIRECT_SIGN_OUT,
-    }
+    },
   },
 });
 

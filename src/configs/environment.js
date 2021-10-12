@@ -13,3 +13,8 @@ export const COGNITO_REDIRECT_SIGN_OUT = process.env.REACT_APP_COGNITO_REDIRECT_
 
 //social
 export const FB_APP_ID = process.env.REACT_APP_FB_APP_ID;
+
+// Social Links
+export const FACEBOOK_LINK = process.env.REACT_APP_FACEBOOK_LINK || 'https://facebook.com';
+export const TWITTER_LINK = process.env.TWITTER_LINK || 'https://twitter.com';
+export const INSTAGRAM_LINK = process.env.INSTAGRAM_LINK || 'https://instagram.com';

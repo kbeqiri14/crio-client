@@ -6,15 +6,14 @@ import { fbSignIn } from '@app/auth';
 const useFacebook = () => {
   const [loading, setLoading] = useState(false);
 
-  const statusChangeCallback = async response => {
+  const statusChangeCallback = async (response) => {
     if (response.status === 'connected') {
       setLoading(true);
       try {
         await fbSignIn();
       } catch (e) {
         console.log('error facebook status change: ', response);
-      }
-      finally {
+      } finally {
         setLoading(false);
       }
     }
@@ -39,6 +38,6 @@ const useFacebook = () => {
   };
 
   return { loading, login, logout };
-}
+};
 
 export default useFacebook;

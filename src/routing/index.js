@@ -1,18 +1,19 @@
 import { Route, Switch } from 'react-router-dom';
+
 import LandingPage from '@screens/LandingPage';
+import { PricingPlans } from '@screens/PricingPlans';
 import CognitoCallback from '@screens/CognitoCallback';
 import CreatorProfile from '@screens/Profiles/Creator';
-import FanProfile from '@screens/Profiles/Fan';
 
 export const AppRoutes = () => {
   return (
     <Switch>
-      <Route component={LandingPage} path='/' exact />
-      <Route component={CognitoCallback} path='/cognito/callback' exact />
-      <Route component={CreatorProfile} path='/profile' exact />
-      <Route component={FanProfile} path='/fan-profile' exact />
+        <Route path='/pricing' component={PricingPlans} />
+        <Route path='/cognito/callback' component={CognitoCallback} />
+        <Route path='/profile' component={CreatorProfile} />
+        <Route exact path='/' component={LandingPage} />
     </Switch>
   );
-};
+}
 
 export default AppRoutes;

@@ -7,17 +7,36 @@ const levelMapping = {
   30: 4,
 };
 
-export const Title = ({ level, children, className }) => {
-  const TitleTag = `h${levelMapping[level]}`;
+export const Title = ({ level, children, className, inline = false, color, onClick }) => {
+  const TitleTag = inline ? 'span' : `h${levelMapping[level]}`;
 
   if (!TitleTag) {
     return null;
   }
 
-  return <TitleTag className={cc([`header-${level}`, className])}>{children}</TitleTag>;
+  return (
+    <TitleTag
+      className={cc([
+        'crio-heading',
+        `header-${level}`,
+        `crio-heading--color--${color}`,
+        className,
+      ])}
+      onClick={onClick}
+    >
+      {children}
+    </TitleTag>
+  );
 };
 
-export const Text = ({ level, children, inline = false, className }) => {
+export const Text = ({ level, children, inline = false, className, color, onClick }) => {
   const TextTag = inline ? 'span' : 'p';
-  return <TextTag className={cc([`text-${level}`, className])}>{children}</TextTag>;
+  return (
+    <TextTag
+      className={cc(['crio-text', `text-${level}`, `crio-text--color--${color}`, className])}
+      onClick={onClick}
+    >
+      {children}
+    </TextTag>
+  );
 };

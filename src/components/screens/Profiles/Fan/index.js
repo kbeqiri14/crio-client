@@ -1,11 +1,7 @@
 import { memo } from 'react';
-import Layout from '../../../shared/Layout';
-import PersonalInfo from '../shared/PersonalInfo';
 
 export const FanProfile = () => {
-  return <Layout>
-    <PersonalInfo />
-  </Layout>;
+  return <div>Fan profile</div>;
 };
 
 export default memo(FanProfile);

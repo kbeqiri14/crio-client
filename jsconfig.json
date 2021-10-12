@@ -8,6 +8,8 @@
       "@lib/*": ["./lib/*"],
       "@app": ["./src"],
       "@app/*": ["./src/*"],
+      "@configs": ["./src/configs"],
+      "@configs/*": ["./src/configs/*"],
       "@styles": ["./src/styles"],
       "@styles/*": ["./src/styles/*"],
       "@ui-kit": ["./src/components/UI-kit"],
@@ -20,6 +22,8 @@
       "@fonts/*": ["./src/assets/fonts/*"],
       "@images/*": ["./src/assets/images/*"],
       "@svgs/*": ["./src/assets/svgs/*"],
+      "@utils": ["./src/utils"],
+      "@utils/*": ["./src/utils/*"],
       "variables": ["./src/styles/variables.less"]
     }
   }

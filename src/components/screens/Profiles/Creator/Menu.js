@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import Works from '../shared/Works';
 import PerksList from '../shared/PerksList';
 
-export const CreatorProfile = () => {
+export const Menu = () => {
   const [worksView, setWorksView] = useState(true);
   return <Fragment>
     <Button shape='round' onClick={() => setWorksView(true)}>
@@ -17,4 +17,4 @@ export const CreatorProfile = () => {
   </Fragment>;
 };
 
-export default memo(CreatorProfile);
+export default memo(Menu);

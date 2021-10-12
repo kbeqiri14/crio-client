@@ -15,18 +15,18 @@
     "@sentry/react": "^6.13.2",
     "@sentry/tracing": "^6.13.2",
     "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^12.1.1",
+    "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.2.1",
-    "@tidepoollabs/auth": "^1",
+    "@tidepoollabs/auth": "^1.0.0",
     "@tidepoollabs/react-manage-users": "^1.0.1",
-    "@tidepoollabs/upload": "^1",
+    "@tidepoollabs/upload": "^1.0.0",
     "antd": "^4.16.13",
     "aws-amplify": "^4.3.1",
     "aws-amplify-react": "^5.1.1",
     "aws-sdk": "^2.996.0",
     "classcat": "^5.0.3",
     "graphql": "^15.6.0",
-    "history": "^5.0.1",
+    "history": "^4.10.1",
     "normalize.less": "^1.0.0",
     "pluralize": "^8.0.0",
     "query-string": "^7.0.1",
@@ -41,9 +41,17 @@
     "web-vitals": "^2.1.0"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^6.3.9",
+    "@storybook/addon-essentials": "^6.3.9",
+    "@storybook/addon-links": "^6.3.9",
+    "@storybook/node-logger": "^6.3.9",
+    "@storybook/react": "^6.3.9",
+    "browserslist": "^4.17.3",
     "craco-alias": "^3.0.1",
     "craco-antd": "^1.19.0",
     "craco-less": "^1.20.0",
+    "crio-scripts": "file:crio-scripts",
+    "env-cmd": "^10.1.0",
     "husky": "^7.0.2",
     "less-vars-to-js": "^1.3.0",
     "lint-staged": "^11.1.2",
@@ -51,16 +59,31 @@
     "prettier": "^2.4.1",
     "prop-types": "^15.7.2",
     "serve": "^12.0.1",
+    "storybook-preset-craco": "0.0.6",
     "terser": "^5.9.0"
   },
   "scripts": {
+    "prepare": "husky install",
+    "preinstall": "npm i --package-lock-only --ignore-scripts --no-audit && npx npm-force-resolutions",
     "generate-config": "node generateCdkConfig.js",
     "deploy": "chmod +x ./deploy.sh && ./deploy.sh",
-    "start": "nodemon -w craco.config.js -w jsconfig.json --exec \"craco start\"",
+    "start": "crio-scripts start",
     "build": "craco build --max-old-space-size=4096",
     "test": "craco test --passWithNoTests",
-    "lint": "eslint . --ext .js",
-    "format": "prettier --write \"src/**/*.+(js|jsx|json|css|less|md)\""
+    "lint": "eslint ./src --ext .js --max-warnings 0",
+    "format": "prettier --write \"src/**/*.+(js|jsx|json|css|less|md)\"",
+    "sb": "start-storybook -p 6006 -s public",
+    "build-sb": "build-storybook -s public"
+  },
+  "resolutions": {
+    "glob-parent": "5.1.2",
+    "trim": "0.0.3",
+    "browserslist": "4.17.3",
+    "node-fetch": "2.6.1",
+    "immer": "9.0.6",
+    "set-value": "4.0.1",
+    "nth-check": "2.0.1",
+    "ansi-regex": "5.0.1"
   },
   "husky": {
     "hooks": {
@@ -80,6 +103,16 @@
     "extends": [
       "react-app",
       "react-app/jest"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
     ]
   },
   "browserslist": {

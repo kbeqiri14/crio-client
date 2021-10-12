@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
-
-import { getCurrentUser } from './index';
 import useAsyncFn from '@app/hooks/useAsyncFn';
+import { getCurrentUser } from './index';
 
-export const useCurrentUser = function() {
+export const useCurrentUser = function () {
   const { loading, call } = useAsyncFn(getCurrentUser);
   const [user, setUser] = useState(null);
 
