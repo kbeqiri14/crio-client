@@ -4,31 +4,80 @@ import { Link } from 'react-router-dom';
 import { getPosters } from '@screens/LandingPage/posters';
 import { renderPosters } from '@shared/PostersList';
 import { Text, Title } from '@ui-kit/Text';
-import samplePoster from '@images/posters/carousel-poster.png';
 import sampleAvatar from '@images/avatar-sample.png';
+import samplePoster from '@images/posters/carousel-poster.jpg';
+import samplePoster1 from '@images/posters/carousel-poster.png';
+import samplePoster2 from '@images/posters/carousel-poster-2.jpg';
+import samplePoster3 from '@images/posters/carousel-poster-3.jpg';
 import './styles.less';
+
+const carouselPosters = [
+  {
+    id: 1,
+    url: samplePoster,
+    title: 'Editorial series for Quartz',
+    description:
+      'This time, we have been asked for three different illustration sets for Quartz’s homepage.',
+    author: {
+      name: 'Ann Bee',
+    },
+  },
+  {
+    id: 2,
+    url: samplePoster1,
+    title: 'The Camper Cartel',
+    description: 'We helped Slip.Stream to create music videos in minutes.',
+    author: {
+      name: 'Lew Chan',
+    },
+  },
+  {
+    id: 3,
+    url: samplePoster2,
+    title: 'Design for video automation',
+    description:
+      'Starting from the branded colors of the logo, we developed a fresh color palette.',
+    author: {
+      name: 'Design Studio Kraft',
+    },
+  },
+  {
+    id: 4,
+    url: samplePoster3,
+    title: 'MUSIC VIDEO CONCEPTS',
+    description: 'These are not commissioned pieces for the songs,they are just experiments.',
+    author: {
+      name: 'Into Dust',
+    },
+  },
+];
 
 const videoPosters = getPosters(8);
 
 export const Feed = () => {
   const [posters] = useState(renderPosters(videoPosters, 0));
+  const [currentPoster, setCurrentPoster] = useState(carouselPosters[0]);
+
+  const handlePosterChange = (index) => {
+    console.log(index);
+    setCurrentPoster(carouselPosters[index]);
+  };
+
   return (
     <div className='cr-feed'>
       <section className='cr-feed__poster-carousel'>
         <div className='cr-carousel'>
-          <Carousel effect='fade' className='cr-carousel__container'>
-            <div className='cr-carousel__item'>
-              <img alt='poster' src={samplePoster} />
-            </div>
-            <div className='cr-carousel__item'>
-              <img alt='poster' src={samplePoster} />
-            </div>
-            <div className='cr-carousel__item'>
-              <img alt='poster' src={samplePoster} />
-            </div>
-            <div className='cr-carousel__item'>
-              <img alt='poster' src={samplePoster} />
-            </div>
+          <Carousel
+            afterChange={handlePosterChange}
+            autoplay
+            effect='fade'
+            className='cr-carousel__container'
+          >
+            {carouselPosters.map((pic) => (
+              <div className='cr-carousel__item' key={pic.id}>
+                <img alt={pic.title} src={pic.url} />
+              </div>
+            ))}
           </Carousel>
           <div className='cr-carousel__cards'>
             <div className='cr-carousel__cards--author'>
@@ -38,18 +87,18 @@ export const Feed = () => {
               </Text>
               <Link>
                 <Text level='30' color='secondary' inline>
-                  Ann Bee
+                  {currentPoster.author.name}
                 </Text>
               </Link>
             </div>
             <div className='cr-carousel__cards--title'>
               <Title level='10' color='dark'>
-                Big mac - McDonald's Commercial
+                {currentPoster.title}
               </Title>
             </div>
             <div className='cr-carousel__cards--desc'>
               <Text level='10' color='black_75'>
-                Description goes here Description goes here Description goes here
+                {currentPoster.description}
               </Text>
             </div>
           </div>
