@@ -8,15 +8,15 @@ import { ConnectButton } from '@shared/ConnectButton';
 import { Footer } from '@shared/Footer';
 import { Text, Title } from '@ui-kit/Text';
 import { SecondaryButton } from '@ui-kit/Button';
+import { getPosters } from './posters';
 import aboutPerks from '@images/about-perks.png';
-import samplePoster from '@images/sample-poster.png';
 import './styles.less';
 
 const multiplier = 3;
 const smallPostersCount = multiplier * 4;
 const largePostersCount = multiplier;
 const videosCount = smallPostersCount + largePostersCount;
-const videoPosters = new Array(videosCount).fill(samplePoster);
+const videoPosters = getPosters(videosCount);
 
 export const LandingPage = () => {
   const { user, loading } = useCurrentUser();
@@ -51,7 +51,7 @@ export const LandingPage = () => {
         </Row>
       </section>
       <section className='cr-landing__about-perks'>
-        <div className='about-perks__wrapper'>
+        <div className={cc(['about-perks__wrapper', { 'is-signed-in': !!user }])}>
           <div className='about-perks__container'>
             <div className='about-perks__info'>
               <div className='about-perks__title'>
@@ -70,9 +70,11 @@ export const LandingPage = () => {
             </div>
           </div>
         </div>
-        {!user && <div className='about-perks__connect'>
-          <ConnectButton disabled={loading} />
-        </div>}
+        {!user && (
+          <div className='about-perks__connect'>
+            <ConnectButton disabled={loading} />
+          </div>
+        )}
       </section>
       <Footer />
     </div>

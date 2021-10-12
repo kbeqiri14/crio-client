@@ -3,7 +3,8 @@ import { ApolloProvider } from '@apollo/client';
 import { init as SentryInit, reactRouterV5Instrumentation } from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
 import { Router } from 'react-router-dom';
-import { env, isOnProduction, SENTRY_DSN } from './configs/environment';
+import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
+import { env, isOnProduction, SENTRY_DSN } from '@configs/environment';
 import history from './configs/history';
 import { client } from './graphql/client';
 import '@styles/main.less';
@@ -27,7 +28,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router history={history}>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<GlobalSpinner />}>
           <AppRoutes />
         </Suspense>
       </Router>
