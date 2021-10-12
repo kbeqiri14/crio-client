@@ -1,15 +1,15 @@
 import { memo, useEffect } from 'react';
-import { Spin } from 'antd';
 import { useMutation } from '@apollo/client';
 
 import history from '@app/configs/history';
 import { useCurrentUser } from '@app/auth/hooks';
 import { useQueryParams } from '@app/hooks/useRouter';
 import { signIn } from '@app/graphql/mutations/user.mutation';
+import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 
 export const CognitoCallback = () => {
   const { access_token } = useQueryParams();
-  const { user, loading } = useCurrentUser();
+  const { user } = useCurrentUser();
   const [createUser] = useMutation(signIn);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export const CognitoCallback = () => {
     }
   }, [access_token, user, createUser]);
 
-  return <Spin spinning={loading} />;
+  return <GlobalSpinner />;
 };
 
 export default memo(CognitoCallback);
