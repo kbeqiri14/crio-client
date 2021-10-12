@@ -11,7 +11,13 @@ export const ConnectButton = memo(({ disabled, size = 'large' }) => {
   return (
     <div className={cc(['cr-landing__connect', { small: size === 'regular' }])}>
       <img alt='facebook connect icon' src={fbIcon} className='banner__fb-icon' />
-      <SecondaryButton onClick={login} disabled={disabled || fbLoading} filled fillColor='secondary' size={size}>
+      <SecondaryButton
+        onClick={login}
+        disabled={disabled || fbLoading}
+        filled
+        fillColor='secondary'
+        size={size}
+      >
         Connect with Facebook
       </SecondaryButton>
     </div>

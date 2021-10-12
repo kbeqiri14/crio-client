@@ -10,7 +10,7 @@ export const ProfileMenu = ({ user }) => {
     <div className='dropdown'>
       <div className='drop-button'>
         <img alt='profile' src={JSON.parse(user.attributes?.picture)?.data?.url} />
-        <i className="arrow-down"></i>
+        <i className='arrow-down' />
       </div>
       <div className='dropdown-content'>
         <span onClick={() => history.push('/profile')}>My Profile</span>
