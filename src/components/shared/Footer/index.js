@@ -11,40 +11,42 @@ import './styles.less';
 
 export const Footer = memo(() => (
   <footer className='cr-landing__footer'>
-    <Row justify='center' align='middle' className='cr-landing__footer-wrapper'>
-      <Col className='cr-landing__footer-logo'>
+    <Row justify='stretch' align='middle' className='cr-landing__footer-wrapper'>
+      <Col span={8} className='cr-landing__footer-logo'>
         <Link to='/'>
           <img alt='Crio logo' src={crioLogo} />
         </Link>
       </Col>
-      <Col>
+      <Col span={8}>
         <Text level='20'>Crio ©2021. All right reserved</Text>
       </Col>
-      <Col>
-        <a
-          href={FACEBOOK_LINK}
-          rel='noopener noreferrer nofollow'
-          target='_blank'
-          className='cr-social-link'
-        >
-          <FacebookIcon />
-        </a>
-        <a
-          href={TWITTER_LINK}
-          rel='noopener noreferrer nofollow'
-          target='_blank'
-          className='cr-social-link'
-        >
-          <TwitterIcon />
-        </a>
-        <a
-          href={INSTAGRAM_LINK}
-          rel='noopener noreferrer nofollow'
-          target='_blank'
-          className='cr-social-link'
-        >
-          <InstaIcon />
-        </a>
+      <Col span={8}>
+        <div>
+          <a
+            href={FACEBOOK_LINK}
+            rel='noopener noreferrer nofollow'
+            target='_blank'
+            className='cr-social-link'
+          >
+            <FacebookIcon />
+          </a>
+          <a
+            href={TWITTER_LINK}
+            rel='noopener noreferrer nofollow'
+            target='_blank'
+            className='cr-social-link'
+          >
+            <TwitterIcon />
+          </a>
+          <a
+            href={INSTAGRAM_LINK}
+            rel='noopener noreferrer nofollow'
+            target='_blank'
+            className='cr-social-link'
+          >
+            <InstaIcon />
+          </a>
+        </div>
       </Col>
     </Row>
   </footer>
