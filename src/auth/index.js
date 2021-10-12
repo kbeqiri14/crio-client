@@ -24,6 +24,8 @@ class User {
   }
 }
 
+console.log('COGNITO_REDIRECT_SIGN_OUT', COGNITO_REDIRECT_SIGN_OUT);
+
 Amplify.configure({
   Auth: {
     region: COGNITO_REGION,
