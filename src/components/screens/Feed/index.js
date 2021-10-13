@@ -1,14 +1,17 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Carousel, Row } from 'antd';
 import { Link } from 'react-router-dom';
+import ScrollBars from 'react-custom-scrollbars';
 import { getPosters } from '@screens/LandingPage/posters';
-import { renderPosters } from '@shared/PostersList';
+import { PosterCard, renderPosters } from '@shared/PostersList';
 import { Text, Title } from '@ui-kit/Text';
 import sampleAvatar from '@images/avatar-sample.png';
 import samplePoster from '@images/posters/carousel-poster.jpg';
 import samplePoster1 from '@images/posters/carousel-poster.png';
 import samplePoster2 from '@images/posters/carousel-poster-2.jpg';
 import samplePoster3 from '@images/posters/carousel-poster-3.jpg';
+import { ReactComponent as ArrowLeft } from '@svgs/arrow-left.svg';
+import { ReactComponent as ArrowRight } from '@svgs/arrow-right.svg';
 import './styles.less';
 
 const carouselPosters = [
@@ -54,12 +57,67 @@ const carouselPosters = [
 
 const videoPosters = getPosters(8);
 
+const posterWidth = 326.5;
+const posterGap = 22;
+const postsPerLine = 4;
+const scrollWidth = postsPerLine * (posterWidth + posterGap);
+
+const ScrollPosters = () => {
+  const scrolls = useRef();
+
+  const handleScrollRight = () => {
+    const val = scrolls.current.getValues();
+    scrolls.current.view.scroll({
+      left: val.scrollLeft + scrollWidth,
+      behavior: 'smooth',
+    });
+  };
+  const handleScrollLeft = () => {
+    const val = scrolls.current.getValues();
+    scrolls.current.view.scroll({
+      left: val.scrollLeft - scrollWidth,
+      behavior: 'smooth',
+    });
+  };
+  return (
+    <div className='cr-feed__poster-scroll'>
+      <ScrollBars
+        ref={scrolls}
+        renderTrackHorizontal={(props) => <div {...props} className='cr-scroll-horizontal' />}
+        renderThumbHorizontal={(props) => <div {...props} className='cr-thumb-horizontal' />}
+        style={{ width: '100%', height: 276 + 41 }}
+      >
+        <div className='posters-list'>
+          {videoPosters.concat(videoPosters).map((p, idx) => (
+            <PosterCard
+              key={idx}
+              index={idx}
+              poster={p}
+              author='Ann Bee'
+              description='Work’s name goes here'
+            />
+          ))}
+        </div>
+      </ScrollBars>
+      <div className='slider-left'>
+        <button onClick={handleScrollLeft}>
+          <ArrowLeft />
+        </button>
+      </div>
+      <div className='slider-right'>
+        <button onClick={handleScrollRight}>
+          <ArrowRight />
+        </button>
+      </div>
+    </div>
+  );
+};
+
 export const Feed = () => {
   const [posters] = useState(renderPosters(videoPosters, 0));
   const [currentPoster, setCurrentPoster] = useState(carouselPosters[0]);
 
   const handlePosterChange = (index) => {
-    console.log(index);
     setCurrentPoster(carouselPosters[index]);
   };
 
@@ -108,6 +166,7 @@ export const Feed = () => {
         <Row gutter={[22, 35]} className='cr-landing__video-grid__container'>
           {posters}
         </Row>
+        <ScrollPosters />
       </section>
     </div>
   );

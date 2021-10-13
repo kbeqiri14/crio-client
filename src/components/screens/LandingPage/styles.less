@@ -35,6 +35,53 @@
 @grid-gap-horizontal: 22px;
 @grid-gap-vertical: 34px;
 
+.video-grid__item {
+  height: 276px;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  &-container {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    &:hover {
+      .video-grid__item-panel {
+        display: flex;
+        transform: translateY(0);
+      }
+    }
+  }
+  img {
+    display: block;
+    border-radius: 16px;
+    height: 100%;
+    width: 100%;
+    max-width: 100%;
+    object-fit: cover;
+    line-height: 0;
+  }
+  &.large {
+    height: 587px;
+  }
+  &-panel {
+    transition: all 0.3s linear;
+    transform: translateY(100%);
+    visibility: visible;
+    opacity: 1;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 111px;
+    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 103.09%);
+    border-radius: 0 0 16px 16px;
+    padding: 0 25px 16px 21px;
+    color: @white;
+    cursor: pointer;
+  }
+}
+
 .cr-landing__video-grid {
   display: flex;
   flex-flow: column nowrap;
@@ -43,46 +90,6 @@
   &__container {
     max-width: 1440px;
     padding: 27px 23px;
-  }
-  .video-grid__item {
-    height: 276px;
-    display: flex;
-    justify-content: center;
-    align-items: stretch;
-    &-container {
-      position: relative;
-    }
-    img {
-      display: block;
-      border-radius: 16px;
-      height: 100%;
-      width: 100%;
-      max-width: 100%;
-      object-fit: cover;
-      line-height: 0;
-    }
-    &.large {
-      height: 587px;
-    }
-    &:hover {
-      .video-grid__item-panel {
-        display: flex;
-      }
-    }
-    &-panel {
-      display: none;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      width: 100%;
-      height: 111px;
-      background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 103.09%);
-      border-radius: 0 0 16px 16px;
-      padding: 0 25px 16px 21px;
-      color: @white;
-      cursor: pointer;
-    }
   }
   &__see-all {
     position: relative;
