@@ -1,74 +1,52 @@
 import React, { Fragment, memo, useState } from 'react';
-import { Button, Col, Row, Typography } from 'antd';
-import Icon, { EditOutlined } from '@ant-design/icons';
+import { Col, Row } from 'antd';
 
-import { ReactComponent as avatarIcon } from '../../../../assets/icons/avatar.svg';
-import { ReactComponent as creatorIcon } from '../../../../assets/icons/creator.svg';
-import { ReactComponent as mailIcon } from '../../../../assets/icons/mail.svg';
-
+import { useCurrentUser } from '@app/auth/hooks';
+import { Text, Title } from '@ui-kit/Text';
+import { SecondaryButton } from '@ui-kit/Button';
+import { ReactComponent as CreatorIcon } from '@svgs/creator.svg';
+import { ReactComponent as MailIcon } from '@svgs/mail.svg';
 import EditProfile from './EditProfile';
-
-const { Text } = Typography;
-
-const personalInfo = {
-  image: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-  name: 'Ann Bee',
-  email: 'ann.bee@gmail.com',
-  isCreator: true,
-}
+import './styles.less';
 
 function PersonalInfo() {
   const [visible, setVisible] = useState(false);
+  const { user } = useCurrentUser();
 
   return (
     <Fragment>
-      <Row
-        justify='space-around'
-        align='middle'
-        style={{ backgroundColor: 'rgba(0.9, 0.9, 0.9, 1.0)' }}>
-        <Col>
+      <Row justify='space-between' align='middle' className='container'>
+        <Col span={16}>
           <Row align='middle'>
-            <Col span={12}>
-              <Icon component={avatarIcon} style={{ fontSize: 150 }} />
-              {personalInfo.isCreator && <Icon
-                component={creatorIcon}
-                style={{
-                  position: 'absolute',
-                  bottom: 0,
-                  left: 110,
-                  fontSize: 40
-                }} />}
+            <Col>
+              <img alt='profile' src={user?.attributes?.picture ? JSON.parse(user.attributes.picture)?.data?.url : undefined} className='profile-image' />
+              {!user?.creator && <CreatorIcon className='creator-icon' />}
             </Col>
-            <Col span={12}>
-              <Text
-                style={{
-                  fontSize: 26,
-                  weight: '400',
-                  color: '#FFFFFF',
-                }}
-              >
-                {personalInfo.name}
-              </Text><br />
-              <Icon component={mailIcon} />
-              <Text
-                underline={true}
-                style={{
-                  fontSize: 18,
-                  weight: '400',
-                  color: 'rgba(255,255,255,0.75)',
-                }}>
-                {personalInfo.email}
+            <Col>
+              <Title level={10} color='white'>
+                {user?.attributes?.name}
+              </Title>
+              <MailIcon />
+              <Text level={10} color='white_75'
+                underline={true}>
+                {user?.attributes?.email}
               </Text>
             </Col>
           </Row>
         </Col>
         <Col>
-          <Button shape='round' icon={<EditOutlined />} onClick={() => setVisible(true)}>
+          <SecondaryButton
+            filled
+            fillColor='transparent'
+            size='large'
+            icon={<MailIcon />}
+            onClick={() => setVisible(true)}
+          >
             EDIT PROFILE
-          </Button>
+          </SecondaryButton>
         </Col>
       </Row>
-      <EditProfile personalInfo={personalInfo} visible={visible} closeModal={() => setVisible(false)} />
+      <EditProfile personalInfo={user} visible={visible} closeModal={() => setVisible(false)} />
     </Fragment>
   );
 }

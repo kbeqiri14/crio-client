@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import cc from 'classcat';
-import { AlertFilled } from '@ant-design/icons';
 import { Text, Title } from '@ui-kit/Text';
 
 export const SecondaryButton = ({
@@ -29,7 +28,7 @@ export const SecondaryButton = ({
       onClick={onClick}
       disabled={disabled}
     >
-      {icon && <AlertFilled />}
+      {icon}
       {size === 'large' ? (
         <Title inline level='30' className='cr-button-secondary__text'>
           {children}
@@ -48,7 +47,7 @@ export default SecondaryButton;
 SecondaryButton.propTypes = {
   children: PropTypes.node,
   disabled: PropTypes.bool,
-  fillColor: PropTypes.oneOf(['primary', 'secondary', 'tertiary']),
+  fillColor: PropTypes.oneOf(['primary', 'secondary', 'tertiary', 'transparent']),
   size: PropTypes.oneOf(['regular', 'large']),
   filled: PropTypes.bool,
   icon: PropTypes.element,
