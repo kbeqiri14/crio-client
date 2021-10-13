@@ -15,11 +15,11 @@ function PersonalInfo() {
 
   return (
     <Fragment>
-      <Row justify='space-between' align='middle' className='container'>
+      <Row justify='space-between' align='middle' className='profile'>
         <Col span={16}>
           <Row align='middle'>
             <Col>
-              <img alt='profile' src={user?.attributes?.picture ? JSON.parse(user.attributes.picture)?.data?.url : undefined} className='profile-image' />
+              <img alt='profile' src={user?.attributes?.picture ? JSON.parse(user.attributes.picture)?.data?.url : undefined} />
               {!user?.creator && <CreatorIcon className='creator-icon' />}
             </Col>
             <Col>
