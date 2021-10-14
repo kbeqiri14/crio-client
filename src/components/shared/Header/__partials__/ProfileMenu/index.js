@@ -1,6 +1,7 @@
 import history from '@app/configs/history';
 import useFacebook from '@app/hooks/useFacebook';
 import { Text } from '@ui-kit/Text';
+import profile from '@images/profile.png';
 import './styles.less';
 
 export const ProfileMenu = ({ user }) => {
@@ -9,7 +10,7 @@ export const ProfileMenu = ({ user }) => {
   return (
     <div className='dropdown'>
       <div className='drop-button'>
-        <img alt='profile' src={user.attributes?.picture ? JSON.parse(user.attributes?.picture)?.data?.url : undefined} />
+        <img alt='profile' src={user.attributes?.picture ? JSON.parse(user.attributes?.picture)?.data?.url : profile} />
         <i className='arrow-down' />
       </div>
       <div className='dropdown-content'>
