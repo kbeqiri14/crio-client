@@ -1,3 +1,4 @@
+import { SecondaryButton } from '@ui-kit/Button';
 import { Row, Col } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -36,15 +37,22 @@ export const Header = () => {
               <img alt='crio app logo' src={crio_logo} />
             </Link>
           </div>
-          <div className='header-tab-menu'>
-            <TabMenu defaultActiveItem={activeItem} menuItems={tabItems} />
-          </div>
+          {!user && (
+            <div className='header-tab-menu'>
+              <TabMenu defaultActiveItem={activeItem} menuItems={tabItems} />
+            </div>
+          )}
         </Col>
         <Col className='header-end-group'>
           {user ? (
             <ProfileMenu user={user} />
           ) : (
             !loading && <ConnectButton size='regular' disabled={loading} />
+          )}
+          {user && (
+            <SecondaryButton filled fillColor='primary'>
+              UPLOAD
+            </SecondaryButton>
           )}
         </Col>
       </Row>

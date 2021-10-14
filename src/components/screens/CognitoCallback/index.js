@@ -1,3 +1,4 @@
+import { DEFAULT_PRIVATE_ROUTE } from '@configs/constants';
 import { memo, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 
@@ -16,7 +17,7 @@ export const CognitoCallback = () => {
     if (access_token && user) {
       try {
         createUser();
-        history.push('/');
+        history.push(DEFAULT_PRIVATE_ROUTE);
       } catch (e) {
         console.log('error creating user ', e);
       }
