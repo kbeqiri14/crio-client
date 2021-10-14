@@ -1,3 +1,4 @@
+import { Meta } from '@shared/Meta';
 import { Fragment, useRef, useState } from 'react';
 import { Carousel, Row } from 'antd';
 import { Link } from 'react-router-dom';
@@ -85,6 +86,7 @@ const ScrollPosters = () => {
   };
   return (
     <div className='cr-feed__poster-scroll'>
+      <Meta title='Feed' description='Crio - Artworks Feed' />
       <ScrollBars
         ref={scrolls}
         renderTrackHorizontal={(props) => <div {...props} className='cr-scroll-horizontal' />}
@@ -196,7 +198,7 @@ export const Feed = () => {
             <RandomAuthorArtworks key={blockId} posters={bottomPosters} />
           ))}
           <Row className='cr-landing__video-grid__see-all'>
-            <SecondaryButton onClick={handleLoadMore}>LOAD MORE</SecondaryButton>}
+            <SecondaryButton onClick={handleLoadMore}>LOAD MORE</SecondaryButton>
           </Row>
         </div>
       </section>
