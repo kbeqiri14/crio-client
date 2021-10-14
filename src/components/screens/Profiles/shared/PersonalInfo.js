@@ -6,8 +6,9 @@ import { Text, Title } from '@ui-kit/Text';
 import { SecondaryButton } from '@ui-kit/Button';
 import { ReactComponent as CreatorIcon } from '@svgs/creator.svg';
 import { ReactComponent as MailIcon } from '@svgs/mail.svg';
+import { ReactComponent as PencilIcon } from '@svgs/pencil.svg';
+import profile from '@images/profile.png';
 import EditProfile from './EditProfile';
-import './styles.less';
 
 function PersonalInfo() {
   const [visible, setVisible] = useState(false);
@@ -19,7 +20,7 @@ function PersonalInfo() {
         <Col span={16}>
           <Row align='middle'>
             <Col>
-              <img alt='profile' src={user?.attributes?.picture ? JSON.parse(user.attributes.picture)?.data?.url : undefined} />
+              <img alt='profile' src={user?.attributes?.picture ? JSON.parse(user.attributes.picture)?.data?.url : profile} />
               {!user?.creator && <CreatorIcon className='creator-icon' />}
             </Col>
             <Col>
@@ -27,9 +28,8 @@ function PersonalInfo() {
                 {user?.attributes?.name}
               </Title>
               <MailIcon />
-              <Text level={10} color='white_75'
-                underline={true}>
-                {user?.attributes?.email}
+              <Text level={10} underline color='white_75'>
+                {user?.attributes?.email || 'n_kosyan@yahoo.com'}
               </Text>
             </Col>
           </Row>
@@ -39,7 +39,7 @@ function PersonalInfo() {
             filled
             fillColor='transparent'
             size='large'
-            icon={<MailIcon />}
+            icon={<PencilIcon />}
             onClick={() => setVisible(true)}
           >
             EDIT PROFILE

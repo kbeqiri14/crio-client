@@ -1,4 +1,4 @@
-import { Fragment, memo, useState } from 'react';
+import { memo, useState } from 'react';
 import { Button } from 'antd';
 
 import Works from '../shared/Works';
@@ -6,7 +6,7 @@ import Perks from '../shared/Perks';
 
 export const Menu = () => {
   const [worksView, setWorksView] = useState(true);
-  return <Fragment>
+  return <div className='container'>
     <Button shape='round' onClick={() => setWorksView(true)}>
       Works
     </Button>
@@ -14,7 +14,7 @@ export const Menu = () => {
       Perks
     </Button>
     {worksView ? <Works /> : <Perks />}
-  </Fragment>;
+  </div>;
 };
 
 export default memo(Menu);

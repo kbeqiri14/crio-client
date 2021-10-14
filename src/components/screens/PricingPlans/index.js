@@ -1,3 +1,4 @@
+import { Meta } from '@shared/Meta';
 import { Col, Row } from 'antd';
 import cc from 'classcat';
 import { Footer } from '@shared/Footer';
@@ -43,6 +44,7 @@ const perksListPro = [
 export const PricingPlans = () => {
   return (
     <div className='cr-pricing'>
+      <Meta title='Pricing Plans' description='Crio - Pricing Plans' />
       <Row justify='center' align='stretch'>
         <Col>
           <div className='cr-pricing__card'>
