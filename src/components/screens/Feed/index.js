@@ -1,10 +1,13 @@
-import { useRef, useState } from 'react';
+import { Fragment, useRef, useState } from 'react';
 import { Carousel, Row } from 'antd';
 import { Link } from 'react-router-dom';
 import ScrollBars from 'react-custom-scrollbars';
 import { getPosters } from '@screens/LandingPage/posters';
+import { Footer } from '@shared/Footer';
 import { PosterCard, renderPosters } from '@shared/PostersList';
 import { Text, Title } from '@ui-kit/Text';
+import { SecondaryButton } from '@ui-kit/Button';
+import uuid from '@utils/uuid';
 import sampleAvatar from '@images/avatar-sample.png';
 import samplePoster from '@images/posters/carousel-poster.jpg';
 import samplePoster1 from '@images/posters/carousel-poster.png';
@@ -56,6 +59,7 @@ const carouselPosters = [
 ];
 
 const videoPosters = getPosters(8);
+const authorVideoPosters = getPosters(15);
 
 const posterWidth = 326.5;
 const posterGap = 22;
@@ -113,12 +117,33 @@ const ScrollPosters = () => {
   );
 };
 
+const RandomAuthorArtworks = ({ posters }) => (
+  <Fragment>
+    <div className='cr-artworks-section__author'>
+      <Title level='10' color='white' inline>
+        © Artwork by &nbsp;
+        <Link>Ann Bee</Link>
+      </Title>
+    </div>
+    <ScrollPosters />
+    <Row gutter={[22, 35]} className='cr-landing__video-grid__container'>
+      {posters}
+    </Row>
+  </Fragment>
+);
+
 export const Feed = () => {
-  const [posters] = useState(renderPosters(videoPosters, 0));
+  const [topPosters] = useState(renderPosters(videoPosters, 0));
+  const [bottomPosters] = useState(renderPosters(authorVideoPosters, 3));
+  const [authorBlocks, setAuthorBlocks] = useState(Array.from({ length: 1 }, () => uuid()));
   const [currentPoster, setCurrentPoster] = useState(carouselPosters[0]);
 
   const handlePosterChange = (index) => {
     setCurrentPoster(carouselPosters[index]);
+  };
+
+  const handleLoadMore = () => {
+    setAuthorBlocks(authorBlocks.concat([uuid()]));
   };
 
   return (
@@ -164,10 +189,18 @@ export const Feed = () => {
       </section>
       <section className='cr-feed__posters-list cr-landing__video-grid'>
         <Row gutter={[22, 35]} className='cr-landing__video-grid__container'>
-          {posters}
+          {topPosters}
         </Row>
-        <ScrollPosters />
+        <div className='cr-artworks-section'>
+          {authorBlocks.map((blockId) => (
+            <RandomAuthorArtworks key={blockId} posters={bottomPosters} />
+          ))}
+          <Row className='cr-landing__video-grid__see-all'>
+            <SecondaryButton onClick={handleLoadMore}>LOAD MORE</SecondaryButton>}
+          </Row>
+        </div>
       </section>
+      <Footer />
     </div>
   );
 };

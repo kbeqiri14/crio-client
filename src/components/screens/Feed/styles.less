@@ -44,14 +44,14 @@
     }
   }
   &-left {
-    left: 34px;
+    left: 0;
     justify-content: flex-start;
     button {
       padding-left: 30px;
     }
   }
   &-right {
-    right: 34px;
+    right: 0;
     justify-content: flex-end;
     button {
       padding-right: 30px;
@@ -147,8 +147,8 @@
     }
   }
   &__posters-list {
-    .ant-row {
-      padding-top: 0;
+    .cr-landing__video-grid__container {
+      padding: 0 0 58px;
     }
   }
   &__poster-scroll {
@@ -156,7 +156,6 @@
     max-width: 1440px;
     margin-bottom: 45px;
     position: relative;
-    padding: 0 34px;
     .posters-list {
       display: flex;
       justify-content: flex-start;
@@ -195,4 +194,21 @@
   justify-content: center;
   align-items: center;
   font-weight: bold;
+}
+
+.cr-artworks-section {
+  width: 100%;
+  max-width: 1440px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column nowrap;
+  padding: 0 34px;
+  &__author {
+    align-self: flex-start;
+    margin-bottom: 30px;
+    a {
+      color: @primary;
+    }
+  }
 }
