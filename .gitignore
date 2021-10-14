@@ -185,3 +185,4 @@ dependency-check-report.html
 .cdk.staging
 cdk.out
 /env.sh
+/.env

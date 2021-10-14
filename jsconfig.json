@@ -8,6 +8,8 @@
       "@lib/*": ["./lib/*"],
       "@app": ["./src"],
       "@app/*": ["./src/*"],
+      "@configs": ["./src/configs"],
+      "@configs/*": ["./src/configs/*"],
       "@styles": ["./src/styles"],
       "@styles/*": ["./src/styles/*"],
       "@ui-kit": ["./src/components/UI-kit"],
