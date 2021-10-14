@@ -9,7 +9,7 @@ export const ProfileMenu = ({ user }) => {
   return (
     <div className='dropdown'>
       <div className='drop-button'>
-        <img alt='profile' src={JSON.parse(user.attributes?.picture)?.data?.url} />
+        <img alt='profile' src={user.attributes?.picture ? JSON.parse(user.attributes?.picture)?.data?.url : undefined} />
         <i className="arrow-down"></i>
       </div>
       <div className='dropdown-content'>
