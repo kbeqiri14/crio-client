@@ -1,14 +1,14 @@
-import { memo } from 'react';
+import { Fragment, memo } from 'react';
 
 import PersonalInfo from '../shared/PersonalInfo';
-import Menu from './Menu';
+import WorksAndPerks from './WorksAndPerks';
 import '../styles.less';
 
 export const CreatorProfile = () => {
-  return <>
+  return <Fragment>
     <PersonalInfo />
-    <Menu />
-  </>;
+    <WorksAndPerks />
+  </Fragment>;
 };
 
 export default memo(CreatorProfile);

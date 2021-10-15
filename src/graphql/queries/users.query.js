@@ -11,7 +11,7 @@ export const me_fragment = gql`
 `;
 
 export const me = gql`
-  query me {
+  query {
     me {
       ...Me
     }

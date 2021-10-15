@@ -26,18 +26,26 @@ const perks = [
 
 function Perks() {
   return (
-    <div className='perks'>
+    <Row gutter={[0, 44]} className='perks'>
       {perks.map(({ title, desc, src }) => (
-        <div>
-          <Title level={10} color='white'>
-            {title}
-          </Title>
-          <Text level={10} color='white'>
-            {desc}
-          </Text>
-          <img alt={title} src={src} />
-        </div>))}
-    </div>
+        <Col>
+          <Row gutter={[55, 20]}>
+            <Col span={24}>
+              <Title level={10} color='white'>
+                {title}
+              </Title>
+            </Col>
+            <Col span={24}>
+              <Text level={10} color='white'>
+                {desc}
+              </Text>
+            </Col>
+            <Col span={24}>
+              <img alt={title} src={src} />
+            </Col>
+          </Row>
+        </Col>))}
+    </Row>
   );
 }
 

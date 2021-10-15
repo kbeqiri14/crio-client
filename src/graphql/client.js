@@ -27,6 +27,8 @@ const errorLink = onError(({ networkError, graphQLErrors }) => {
     graphQLErrors.map(async ({ message }) => {
       if (message.includes('Not Authorized!')) {
         await Auth.signOut();
+        const loggedInUserVar = require('@configs/client-cache').loggedInUserVar;
+        loggedInUserVar({});
         window.location.href = '/';
       }
       return console.log(`GraphQL Error: ${message}`);
