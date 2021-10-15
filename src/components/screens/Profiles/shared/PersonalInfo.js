@@ -11,7 +11,7 @@ import profile from '@images/profile.png';
 const PersonalInfo = ({ user, editProfile }) => (
   <Row justify='space-between' align='middle' className='profile'>
     <Col span={16}>
-      <Row align='middle'>
+      <Row align='middle' gutter={30}>
         <Col>
           <img alt='profile' src={user?.attributes?.picture ? JSON.parse(user.attributes.picture)?.data?.url : profile} />
           {!user?.creator && <CreatorIcon className='creator-icon' />}

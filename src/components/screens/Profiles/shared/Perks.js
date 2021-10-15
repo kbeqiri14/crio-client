@@ -25,10 +25,10 @@ const perks = [
 ];
 
 const Perks = () => (
-  <Row gutter={[0, 44]} className='perks'>
+  <Row gutter={[0, 44]} justify='center' className='perks'>
     {perks.map(({ title, desc, src }) => (
       <Col key={title}>
-        <Row gutter={[0, 20]}>
+        <Row>
           <Col span={24}>
             <Title level={10} color='white'>
               {title}
