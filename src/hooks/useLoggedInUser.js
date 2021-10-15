@@ -3,7 +3,7 @@ import { useReactiveVar } from '@apollo/client';
 
 import { loggedInUserVar } from '@configs/client-cache';
 
-export function useLoggedInUser() {
+export const useLoggedInUser = () => {
   const user = useReactiveVar(loggedInUserVar);
 
   const dispatchUser = useCallback(userAttribute => {

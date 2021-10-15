@@ -1,8 +1,10 @@
 import React, { memo } from 'react';
 import { useForm } from 'react-hook-form';
-import { Button, Col, Input, Modal, Row, Select, Space, Typography } from 'antd';
+import { Col, Input, Modal, Row, Select, Space } from 'antd';
 
-const { Text } = Typography;
+import { Text } from '@ui-kit/Text';
+import { SecondaryButton } from '@ui-kit/Button';
+
 const { Option } = Select;
 
 const Item = ({ text, span, register }) => (
@@ -12,16 +14,16 @@ const Item = ({ text, span, register }) => (
 </Col>
 );
 
-function EditProfile({ personalInfo, visible, closeModal }) {
+const  EditProfile = ({ user, visible, closeModal }) => {
   const { register, handleSubmit } = useForm();
 
   const Visibility = () => (
-    personalInfo.isCreator && <Col span={8}>
+    user.creator ? <Col span={8}>
       <Select style={{ width: 140 }}>
         <Option key='public'>Public</Option>
         <Option key='only-me'>Only me</Option>
       </Select>
-    </Col>
+    </Col> : null
   );
 
   return (
@@ -36,15 +38,15 @@ function EditProfile({ personalInfo, visible, closeModal }) {
         <Visibility key='email' />
         <Col>
           <Space>
-            <Button shape='round' onClick={closeModal}>
+            <SecondaryButton shape='round' onClick={closeModal}>
               CANCEL
-            </Button>
-            <Button shape='round' type='primary'  onClick={() => {
+            </SecondaryButton>
+            <SecondaryButton shape='round' type='primary'  onClick={() => {
               handleSubmit(() => console.log('submit'));
               closeModal();
             }}>
               SAVE
-            </Button>
+            </SecondaryButton>
           </Space>
         </Col>
       </Row>
