@@ -28,13 +28,13 @@ const Perks = () => (
   <Row gutter={[0, 44]} justify='center' className='perks'>
     {perks.map(({ title, desc, src }) => (
       <Col key={title}>
-        <Row>
+        <Row justify='center'>
           <Col span={24}>
             <Title level={10} color='white'>
               {title}
             </Title>
           </Col>
-          <Col span={9} offset={8}>
+          <Col span={9}>
             <Text level={10} color='white'>
               {desc}
             </Text>

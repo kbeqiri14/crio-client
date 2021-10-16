@@ -10,13 +10,13 @@ export const WorksAndPerks = () => {
 
   return (
     <Row className='container' gutter={[0, 47]}>
-      <Col span={1}>
-        <Text level='40' color='white_75' onClick={() => setWorksView(true)}>
-          Works
+      <Col span={2}>
+        <Text level='40' color='white_75' className={worksView ? 'active' : 'inactive'} onClick={() => setWorksView(true)}>
+          Works 126
         </Text>
       </Col>
-      <Col span={23}>
-        <Text level={40} color='white_75' onClick={() => setWorksView(false)}>
+      <Col span={22}>
+        <Text level={40} color='white_75' className={!worksView ? 'active' : 'inactive'} onClick={() => setWorksView(false)}>
           Perks
         </Text>
       </Col>

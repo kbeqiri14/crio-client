@@ -1,51 +1,53 @@
 import React, { memo, useCallback } from 'react';
+import { Col, Modal, Row, Space } from 'antd';
 import { useForm } from 'react-hook-form';
-import { Col, Input, Modal, Row, Select, Space } from 'antd';
 
-import { Text } from '@ui-kit/Text';
+import { Title } from '@ui-kit/Text';
+import { Input } from '@ui-kit/Input';
 import { SecondaryButton } from '@ui-kit/Button';
+import { ReactComponent as CloseIcon } from '@svgs/close.svg';
 
-const { Option } = Select;
-
-const Item = ({ text, span, register, defaultValue }) => (
+const Item = ({ text, span, size, register, defaultValue }) => (
   <Col span={span}>
-    <Text>{text}</Text>
-    <Input { ...register } defaultValue={defaultValue} />
-  </Col>
-);
-
-const Visibility = () => (
-  <Col span={8}>
-    <Select style={{ width: 140 }}>
-      <Option key='public'>Public</Option>
-      <Option key='only-me'>Only me</Option>
-    </Select>
+    <Title level={30} color='white'>{text}</Title>
+    <Input { ...register } defaultValue={defaultValue} size={size} />
   </Col>
 );
 
 const  EditProfile = ({ user, visible, closeModal }) => {
   const { register, handleSubmit } = useForm();
   const updateProfile = useCallback(() => {
-    handleSubmit(() => console.log('submit'));
+    console.log('submit')
+    handleSubmit((e) => console.log('submit', e));
     closeModal();
   }, [closeModal, handleSubmit]);
 
   return (
-    <Modal visible={visible} title='Edit Profile' footer={null}>
-      <Row justify='center' align='bottom' gutter={[20, 32]}>
-        <Item text='First name' span={8} register={{ ...register('firstName') }} defaultValue={user?.firstName} />
-        <Item text='Last name' span={8} register={{ ...register('lastName') }} defaultValue={user?.lastName} />
-        <Visibility key='name' />
-        <Item text='Username*' span={16} register={{ ...register('username', { required: true }) }} defaultValue={user?.username} />
-        <Visibility key='username' />
-        <Item text='Email' span={16} register={{ ...register('email') }} defaultValue={user?.email} />
-        <Visibility key='email' />
+    <Modal width={828} visible={visible} footer={null} closeIcon={<CloseIcon />} onCancel={closeModal}>
+      <Row justify='center' align='bottom' gutter={[80, 32]}>
+        <Col span={24}>
+          <Title level={10} color='white'>Edit Profile</Title>
+        </Col>
+        <Item text='First name' span={8} size={25} register={{ ...register('firstName') }} defaultValue={user?.firstName || 'Ann'} />
+        <Item text='Last name' span={8} size={25} register={{ ...register('lastName') }} defaultValue={user?.lastName || 'Bee'} />
+        <Item text='Username*' span={16} size={56} register={{ ...register('username', { required: true }) }} defaultValue={user?.username || '@allergic_designer'} />
+        <Item text='Email' span={16} size={56} register={{ ...register('email') }} defaultValue={user?.email || 'annbee@gmail.com'} />
         <Col>
           <Space>
-            <SecondaryButton shape='round' onClick={closeModal}>
+            <SecondaryButton
+              filled
+              fillColor='transparent'
+              size='large'
+              onClick={closeModal}
+            >
               CANCEL
             </SecondaryButton>
-            <SecondaryButton shape='round' type='primary' onClick={updateProfile}>
+            <SecondaryButton
+              filled
+              fillColor='white'
+              size='large'
+              onClick={updateProfile}
+            >
               SAVE
             </SecondaryButton>
           </Space>

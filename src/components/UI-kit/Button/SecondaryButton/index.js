@@ -47,7 +47,7 @@ export default SecondaryButton;
 SecondaryButton.propTypes = {
   children: PropTypes.node,
   disabled: PropTypes.bool,
-  fillColor: PropTypes.oneOf(['primary', 'secondary', 'tertiary', 'transparent']),
+  fillColor: PropTypes.oneOf(['primary', 'secondary', 'tertiary', 'white', 'transparent']),
   size: PropTypes.oneOf(['regular', 'large']),
   filled: PropTypes.bool,
   icon: PropTypes.element,
