@@ -13,16 +13,16 @@ const PersonalInfo = ({ user, editProfile }) => (
     <Col span={16}>
       <Row align='middle' gutter={30}>
         <Col>
-          <img alt='profile' src={user?.attributes?.picture ? JSON.parse(user.attributes.picture)?.data?.url : profile} />
+          <img alt='profile' src={user?.picture ? JSON.parse(user.picture)?.data?.url : profile} />
           {!user?.creator && <CreatorIcon className='creator-icon' />}
         </Col>
         <Col>
           <Title level={10} color='white'>
-            {user?.attributes?.name}
+            {user?.name}
           </Title>
           <MailIcon />
           <Text level={10} underline color='white_75'>
-            {user?.attributes?.email || 'n_kosyan@yahoo.com'}
+            {user?.email}
           </Text>
         </Col>
       </Row>
