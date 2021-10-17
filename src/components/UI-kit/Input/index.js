@@ -2,8 +2,8 @@ import cc from 'classcat';
 import './styles.less';
 
 export const Input = ({ className, ...props }) => {
-  const Input = 'input';
+  const InputTag = 'input';
   return (
-    <Input className={cc(['crio-input', className])} {...props} />
+    <InputTag className={cc(['crio-input', className])} {...props} />
   );
 };

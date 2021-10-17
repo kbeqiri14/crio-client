@@ -28,10 +28,10 @@ const  EditProfile = ({ user, visible, closeModal }) => {
         <Col span={24}>
           <Title level={10} color='white'>Edit Profile</Title>
         </Col>
-        <Item text='First name' span={8} size={25} register={{ ...register('firstName') }} defaultValue={user?.firstName || 'Ann'} />
-        <Item text='Last name' span={8} size={25} register={{ ...register('lastName') }} defaultValue={user?.lastName || 'Bee'} />
-        <Item text='Username*' span={16} size={56} register={{ ...register('username', { required: true }) }} defaultValue={user?.username || '@allergic_designer'} />
-        <Item text='Email' span={16} size={56} register={{ ...register('email') }} defaultValue={user?.email || 'annbee@gmail.com'} />
+        <Item text='First name' span={8} size={25} register={{ ...register('firstName') }} defaultValue={user?.given_name} />
+        <Item text='Last name' span={8} size={25} register={{ ...register('lastName') }} defaultValue={user?.family_name} />
+        <Item text='Username*' span={16} size={56} register={{ ...register('username', { required: true }) }} defaultValue={user?.sub} />
+        <Item text='Email' span={16} size={56} register={{ ...register('email') }} defaultValue={user?.email} />
         <Col>
           <Space>
             <SecondaryButton

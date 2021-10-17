@@ -31,6 +31,6 @@ export const AppRoutes = () => {
       </Switch>
     </Layout>
   );
-}
+};
 
 export default AppRoutes;

@@ -12,9 +12,9 @@ export const CreatorProfile = () => {
 
   return (
     <Fragment>
-      <PersonalInfo user={user} editProfile={() => setVisible(true)} />
+      <PersonalInfo user={user?.attributes} editProfile={() => setVisible(true)} />
       <WorksAndPerks />
-      <EditProfile user={user} visible={visible} closeModal={() => setVisible(false)} />
+      <EditProfile user={user?.attributes} visible={visible} closeModal={() => setVisible(false)} />
     </Fragment>
   );
 };
