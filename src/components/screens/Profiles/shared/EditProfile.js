@@ -1,26 +1,30 @@
 import React, { memo, useCallback } from 'react';
 import { Col, Modal, Row, Space } from 'antd';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
+import { useMutation } from '@apollo/client';
 
+import { updateUser } from '@app/graphql/mutations/user.mutation';
 import { Title } from '@ui-kit/Text';
 import { Input } from '@ui-kit/Input';
 import { SecondaryButton } from '@ui-kit/Button';
 import { ReactComponent as CloseIcon } from '@svgs/close.svg';
 
-const Item = ({ text, span, size, register, defaultValue }) => (
+const Item = ({ text, span, size, control, name, defaultValue }) => (
   <Col span={span}>
     <Title level={30} color='white'>{text}</Title>
-    <Input { ...register } defaultValue={defaultValue} size={size} />
+    <Controller
+      name={name}
+      control={control}
+      defaultValue={defaultValue}
+      render={({ field }) => <Input size={size} {...field} />}
+    />
   </Col>
 );
 
 const  EditProfile = ({ user, visible, closeModal }) => {
-  const { register, handleSubmit } = useForm();
-  const updateProfile = useCallback(() => {
-    console.log('submit')
-    handleSubmit((e) => console.log('submit', e));
-    closeModal();
-  }, [closeModal, handleSubmit]);
+  const { control, handleSubmit } = useForm();
+  const [updateUserInfo] = useMutation(updateUser);
+  const onsubmit = useCallback(attributes => updateUserInfo({ variables: { attributes } }), [updateUserInfo]);
 
   return (
     <Modal width={828} visible={visible} footer={null} closeIcon={<CloseIcon />} onCancel={closeModal}>
@@ -28,10 +32,10 @@ const  EditProfile = ({ user, visible, closeModal }) => {
         <Col span={24}>
           <Title level={10} color='white'>Edit Profile</Title>
         </Col>
-        <Item text='First name' span={8} size={25} register={{ ...register('firstName') }} defaultValue={user?.given_name} />
-        <Item text='Last name' span={8} size={25} register={{ ...register('lastName') }} defaultValue={user?.family_name} />
-        <Item text='Username*' span={16} size={56} register={{ ...register('username', { required: true }) }} defaultValue={user?.sub} />
-        <Item text='Email' span={16} size={56} register={{ ...register('email') }} defaultValue={user?.email} />
+        <Item text='First name' span={8} size={25} control={control} name='firstName' defaultValue={user?.given_name} />
+        <Item text='Last name' span={8} size={25} control={control} name='lastName' defaultValue={user?.family_name} />
+        <Item text='Username*' span={16} size={56} control={control} name='username' defaultValue={user?.sub} />
+        <Item text='Email' span={16} size={56} control={control} name='email' defaultValue={user?.email} />
         <Col>
           <Space>
             <SecondaryButton
@@ -46,7 +50,7 @@ const  EditProfile = ({ user, visible, closeModal }) => {
               filled
               fillColor='white'
               size='large'
-              onClick={updateProfile}
+              onClick={handleSubmit(onsubmit)}
             >
               SAVE
             </SecondaryButton>

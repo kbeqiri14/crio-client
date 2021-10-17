@@ -20,10 +20,10 @@ const PersonalInfo = ({ user, editProfile }) => (
           <Title level={10} color='white'>
             {user?.name}
           </Title>
-          <MailIcon />
-          <Text level={10} underline color='white_75'>
-            {user?.email}
-          </Text>
+          {user?.email && <Text level={10} underline color='white_75'>
+            <MailIcon />
+            {user.email}
+          </Text>}
         </Col>
       </Row>
     </Col>
