@@ -2,14 +2,12 @@ import { Meta } from '@shared/Meta';
 import { Fragment, useRef, useState } from 'react';
 import { Carousel, Row } from 'antd';
 import { Link } from 'react-router-dom';
-import ScrollBars from 'react-custom-scrollbars';
 import { getPosters } from '@screens/LandingPage/posters';
 import { Footer } from '@shared/Footer';
 import { PosterCard, renderPosters } from '@shared/PostersList';
 import { Text, Title } from '@ui-kit/Text';
 import { SecondaryButton } from '@ui-kit/Button';
 import uuid from '@utils/uuid';
-import sampleAvatar from '@images/avatar-sample.png';
 import samplePoster from '@images/posters/carousel-poster.jpg';
 import samplePoster1 from '@images/posters/carousel-poster.png';
 import samplePoster2 from '@images/posters/carousel-poster-2.jpg';
@@ -27,6 +25,7 @@ const carouselPosters = [
       'This time, we have been asked for three different illustration sets for Quartz’s homepage.',
     author: {
       name: 'Ann Bee',
+      avatar: 'https://avatars.dicebear.com/api/pixel-art/Ann_Bee.svg',
     },
   },
   {
@@ -36,6 +35,7 @@ const carouselPosters = [
     description: 'We helped Slip.Stream to create music videos in minutes.',
     author: {
       name: 'Lew Chan',
+      avatar: 'https://avatars.dicebear.com/api/pixel-art/Lew_Chan.svg',
     },
   },
   {
@@ -46,6 +46,7 @@ const carouselPosters = [
       'Starting from the branded colors of the logo, we developed a fresh color palette.',
     author: {
       name: 'Design Studio Kraft',
+      avatar: 'https://avatars.dicebear.com/api/pixel-art/Design_Studio_Kraft.svg',
     },
   },
   {
@@ -55,6 +56,31 @@ const carouselPosters = [
     description: 'These are not commissioned pieces for the songs,they are just experiments.',
     author: {
       name: 'Into Dust',
+      avatar: `https://avatars.dicebear.com/api/pixel-art/Into_Dust.svg`,
+    },
+  },
+];
+const slickResponsive = [
+  {
+    breakpoint: 1440,
+    settings: {
+      slidesToShow: 3,
+      slidesToScroll: 3,
+    },
+  },
+  {
+    breakpoint: 1024,
+    settings: {
+      slidesToShow: 2,
+      slidesToScroll: 2,
+    },
+  },
+  {
+    breakpoint: 600,
+    settings: {
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      centerMode: true,
     },
   },
 ];
@@ -62,50 +88,32 @@ const carouselPosters = [
 const videoPosters = getPosters(8);
 const authorVideoPosters = getPosters(15);
 
-const posterWidth = 326.5;
-const posterGap = 22;
-const postsPerLine = 4;
-const scrollWidth = postsPerLine * (posterWidth + posterGap);
-
 const ScrollPosters = () => {
-  const scrolls = useRef();
+  const slick = useRef();
 
   const handleScrollRight = () => {
-    const val = scrolls.current.getValues();
-    scrolls.current.view.scroll({
-      left: val.scrollLeft + scrollWidth,
-      behavior: 'smooth',
-    });
+    slick.current.next();
   };
   const handleScrollLeft = () => {
-    const val = scrolls.current.getValues();
-    scrolls.current.view.scroll({
-      left: val.scrollLeft - scrollWidth,
-      behavior: 'smooth',
-    });
+    slick.current.prev();
   };
   return (
     <div className='cr-feed__poster-scroll'>
       <Meta title='Feed' description='Crio - Artworks Feed' />
-      <ScrollBars
-        autoHide={false}
-        ref={scrolls}
-        renderTrackHorizontal={(props) => <div {...props} className='cr-scroll-horizontal' />}
-        renderThumbHorizontal={(props) => <div {...props} className='cr-thumb-horizontal' />}
-        style={{ width: '100%', height: 276 + 41 }}
-      >
-        <div className='posters-list'>
+      <div className='posters-list'>
+        <Carousel
+          responsive={slickResponsive}
+          ref={slick}
+          slidesToShow={4}
+          slidesToScroll={4}
+          dots={false}
+          infinite
+        >
           {videoPosters.concat(videoPosters).map((p, idx) => (
-            <PosterCard
-              key={idx}
-              index={idx}
-              poster={p}
-              author='Ann Bee'
-              description='Work’s name goes here'
-            />
+            <PosterCard key={idx} poster={p} author='Ann Bee' description='Work’s name goes here' />
           ))}
-        </div>
-      </ScrollBars>
+        </Carousel>
+      </div>
       <div className='slider-left'>
         <button onClick={handleScrollLeft}>
           <ArrowLeft />
@@ -156,6 +164,7 @@ export const Feed = () => {
           <Carousel
             afterChange={handlePosterChange}
             autoplay
+            autoplaySpeed={2500}
             effect='fade'
             className='cr-carousel__container'
           >
@@ -167,7 +176,7 @@ export const Feed = () => {
           </Carousel>
           <div className='cr-carousel__cards'>
             <div className='cr-carousel__cards--author'>
-              <img alt='Artist avatar' src={sampleAvatar} />
+              <img alt='Artist avatar' src={currentPoster.author.avatar} />
               <Text level='30' color='dark' inline>
                 © Artwork by &nbsp;
               </Text>

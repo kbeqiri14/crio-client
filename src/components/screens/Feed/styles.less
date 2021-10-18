@@ -24,12 +24,7 @@
     overflow: hidden;
     height: 276px;
     width: 100px;
-    &:hover {
-      button {
-        visibility: visible;
-        opacity: 1;
-      }
-    }
+    display: flex;
     button {
       height: 100%;
       background: transparent;
@@ -38,24 +33,16 @@
       cursor: pointer;
       display: flex;
       align-items: center;
-      visibility: hidden;
-      opacity: 0;
       transition: opacity 0.3s ease;
     }
   }
   &-left {
-    left: 0;
+    left: -9px;
     justify-content: flex-start;
-    button {
-      padding-left: 30px;
-    }
   }
   &-right {
     right: 0;
     justify-content: flex-end;
-    button {
-      padding-right: 30px;
-    }
   }
 }
 
@@ -161,34 +148,39 @@
   &__poster-scroll {
     width: 100%;
     max-width: 1440px;
-    margin-bottom: 45px;
+    margin-bottom: 39px;
+    margin-right: -13px;
     position: relative;
-    ::-webkit-scrollbar {
-      -webkit-appearance: none;
-      height: 1px;
-      background: @white_25;
-      &:vertical {
-        display: none;
-      }
-    }
-    ::-webkit-scrollbar-thumb {
-      border-radius: 0;
+    &:after {
+      display: block;
+      content: '';
       background-color: @white_75;
-      height: 2px;
+      width: 95%;
+      height: 1px;
+      margin-top: 41px;
+      margin-left: auto;
+      margin-right: auto;
     }
     .posters-list {
-      display: flex;
-      justify-content: flex-start;
-      align-items: flex-start;
-      flex-wrap: nowrap;
-      width: fit-content;
-      .video-grid__item-container {
+      .slick-slide {
+        margin: 0 11px;
         width: 326.5px;
+        max-width: 326.5px;
         height: 276px;
-        border-radius: 16px;
-        &:not(:last-child) {
-          margin-right: 22px;
+        > div {
+          height: 100%;
         }
+      }
+      .slick-track {
+        height: 100%;
+      }
+      .slick-list {
+        margin: 0 -11px;
+        height: 276px;
+      }
+      .video-grid__item-container {
+        border-radius: 16px;
+        height: 100%;
         img {
           height: 100%;
           width: 100%;

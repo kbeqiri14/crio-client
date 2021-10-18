@@ -25,7 +25,7 @@ export const AppRoutes = () => {
         <Route path={DEFAULT_PRIVATE_ROUTE} component={Feed} />
         <PublicOnlyRoute path='/pricing' component={PricingPlans} />
         <PublicOnlyRoute path='/cognito/callback' component={CognitoCallback} />
-        <PublicOnlyRoute exact path='/' component={Feed} />
+        <PublicOnlyRoute exact path='/' component={LandingPage} />
       </Switch>
     </Layout>
   );
