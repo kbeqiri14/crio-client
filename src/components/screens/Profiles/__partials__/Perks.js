@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { Col, Row } from 'antd';
 
 import { Text, Title } from '@ui-kit/Text';
-import perk1 from '@images/perks/perk-1.png'
+import perk1 from '@images/perks/perk-1.png';
 import perk2 from '@images/perks/perk-2.png';
 import perk3 from '@images/perks/perk-3.png';
 
@@ -43,7 +43,8 @@ const Perks = () => (
             <img alt={title} src={src} />
           </Col>
         </Row>
-      </Col>))}
+      </Col>
+    ))}
   </Row>
 );
 
