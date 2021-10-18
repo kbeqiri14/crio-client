@@ -2,8 +2,8 @@ import { memo, useCallback, useState } from 'react';
 import { Col, Row } from 'antd';
 
 import { Text } from '@ui-kit/Text';
-import Works from '../shared/Works';
-import Perks from '../shared/Perks';
+import Works from '../__partials__/Works';
+import Perks from '../__partials__/Perks';
 
 export const WorksAndPerks = () => {
   const [worksView, setWorksView] = useState(true);

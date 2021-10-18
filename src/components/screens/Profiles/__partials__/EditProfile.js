@@ -11,7 +11,7 @@ import { ReactComponent as CloseIcon } from '@svgs/close.svg';
 
 const Item = ({ text, span, size, control, name, defaultValue }) => (
   <Col span={span}>
-    <Title level={30} color='white'>{text}</Title>
+    <Title inline level={30} color='white'>{text}</Title>
     <Controller
       name={name}
       control={control}
