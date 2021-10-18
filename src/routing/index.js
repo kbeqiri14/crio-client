@@ -9,6 +9,7 @@ import LandingPage from '@screens/LandingPage';
 import { PricingPlans } from '@screens/PricingPlans';
 import { Feed } from '@screens/Feed';
 import CognitoCallback from '@screens/CognitoCallback';
+import CreatorProfile from '@screens/Profiles/Creator';
 
 export const AppRoutes = () => {
   const { user } = useCurrentUser();
@@ -23,6 +24,7 @@ export const AppRoutes = () => {
     <Layout>
       <Switch>
         <Route path={DEFAULT_PRIVATE_ROUTE} component={Feed} />
+        <Route path='/profile' component={CreatorProfile} />
         <PublicOnlyRoute path='/pricing' component={PricingPlans} />
         <PublicOnlyRoute path='/cognito/callback' component={CognitoCallback} />
         <PublicOnlyRoute exact path='/' component={LandingPage} />
