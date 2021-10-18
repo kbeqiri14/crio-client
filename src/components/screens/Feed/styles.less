@@ -163,6 +163,19 @@
     max-width: 1440px;
     margin-bottom: 45px;
     position: relative;
+    ::-webkit-scrollbar {
+      -webkit-appearance: none;
+      height: 1px;
+      background: @white_25;
+      &:vertical {
+        display: none;
+      }
+    }
+    ::-webkit-scrollbar-thumb {
+      border-radius: 0;
+      background-color: @white_75;
+      height: 2px;
+    }
     .posters-list {
       display: flex;
       justify-content: flex-start;

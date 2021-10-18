@@ -88,6 +88,7 @@ const ScrollPosters = () => {
     <div className='cr-feed__poster-scroll'>
       <Meta title='Feed' description='Crio - Artworks Feed' />
       <ScrollBars
+        autoHide={false}
         ref={scrolls}
         renderTrackHorizontal={(props) => <div {...props} className='cr-scroll-horizontal' />}
         renderThumbHorizontal={(props) => <div {...props} className='cr-thumb-horizontal' />}
