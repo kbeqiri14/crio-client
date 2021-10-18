@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from 'react';
+import { memo, useCallback } from 'react';
 import { Col, Modal, Row, Space } from 'antd';
 import { Controller, useForm } from 'react-hook-form';
 import { useMutation } from '@apollo/client';
@@ -24,7 +24,8 @@ const Item = ({ text, span, size, control, name, defaultValue }) => (
 const  EditProfile = ({ user, visible, closeModal }) => {
   const { control, handleSubmit } = useForm();
   const [updateUserInfo] = useMutation(updateUser);
-  const onsubmit = useCallback(attributes => updateUserInfo({ variables: { attributes } }), [updateUserInfo]);
+
+  const onSubmit = useCallback(attributes => updateUserInfo({ variables: { attributes } }), [updateUserInfo]);
 
   return (
     <Modal width={828} visible={visible} footer={null} closeIcon={<CloseIcon />} onCancel={closeModal}>
@@ -50,7 +51,7 @@ const  EditProfile = ({ user, visible, closeModal }) => {
               filled
               fillColor='white'
               size='large'
-              onClick={handleSubmit(onsubmit)}
+              onClick={handleSubmit(onSubmit)}
             >
               SAVE
             </SecondaryButton>
