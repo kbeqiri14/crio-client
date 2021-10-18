@@ -9,7 +9,7 @@ import { Input } from '@ui-kit/Input';
 import { SecondaryButton } from '@ui-kit/Button';
 import { ReactComponent as CloseIcon } from '@svgs/close.svg';
 
-const Item = ({ text, span, size, control, name, defaultValue }) => (
+const Item = ({ text, span, size, control, name, disabled, defaultValue }) => (
   <Col span={span}>
     <Title inline level={30} color='white'>
       {text}
@@ -18,7 +18,7 @@ const Item = ({ text, span, size, control, name, defaultValue }) => (
       name={name}
       control={control}
       defaultValue={defaultValue}
-      render={({ field }) => <Input size={size} {...field} />}
+      render={({ field }) => <Input size={size} {...field} disabled={disabled} />}
     />
   </Col>
 );
@@ -77,6 +77,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
           control={control}
           name='email'
           defaultValue={user?.email}
+          disabled
         />
         <Col>
           <Space>

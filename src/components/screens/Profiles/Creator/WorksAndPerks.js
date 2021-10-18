@@ -19,7 +19,7 @@ export const WorksAndPerks = () => {
           className={worksView ? 'active' : 'inactive'}
           onClick={showWorks}
         >
-          Works 126
+          WORKS 126
         </Text>
       </Col>
       <Col span={22}>
@@ -29,7 +29,7 @@ export const WorksAndPerks = () => {
           className={!worksView ? 'active' : 'inactive'}
           onClick={showPerks}
         >
-          Perks
+          PERKS
         </Text>
       </Col>
       <Col span={24}>{worksView ? <Works /> : <Perks />}</Col>
