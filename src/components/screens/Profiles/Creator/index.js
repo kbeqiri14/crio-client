@@ -1,8 +1,8 @@
 import { Fragment, memo, useState } from 'react';
 
 import { useCurrentUser } from '@app/auth/hooks';
-import PersonalInfo from '../shared/PersonalInfo';
-import EditProfile from '../shared/EditProfile';
+import PersonalInfo from '../__partials__/PersonalInfo';
+import EditProfile from '../__partials__/EditProfile';
 import WorksAndPerks from './WorksAndPerks';
 import '../styles.less';
 
