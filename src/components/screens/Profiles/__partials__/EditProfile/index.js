@@ -3,6 +3,7 @@ import { Col, Modal, Row, Space } from 'antd';
 import { Controller, useForm } from 'react-hook-form';
 import { useMutation } from '@apollo/client';
 
+import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { updateUser } from '@app/graphql/mutations/user.mutation';
 import { Title } from '@ui-kit/Text';
 import { Input } from '@ui-kit/Input';
@@ -54,10 +55,15 @@ const FormRow = ({ children }) => {
 const EditProfile = ({ user, visible, closeModal }) => {
   const { control, handleSubmit } = useForm();
   const [updateUserInfo] = useMutation(updateUser);
+  const { dispatchUser } = useLoggedInUser();
 
   const onSubmit = useCallback(
-    (attributes) => updateUserInfo({ variables: { attributes } }),
-    [updateUserInfo],
+    attributes => updateUserInfo({ variables: { attributes },
+      update: data => {
+        dispatchUser(data);
+        closeModal();
+      }, }),
+    [closeModal, updateUserInfo, dispatchUser],
   );
 
   return (
@@ -81,7 +87,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
             size={25}
             control={control}
             name='firstName'
-            defaultValue={user?.given_name}
+            defaultValue={user?.firstName}
           />
           <Item
             text='Last name'
@@ -89,7 +95,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
             size={25}
             control={control}
             name='lastName'
-            defaultValue={user?.family_name}
+            defaultValue={user?.lastName}
           />
         </FormRow>
         <FormRow>
@@ -99,7 +105,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
             size={56}
             control={control}
             name='username'
-            defaultValue={user?.sub}
+            defaultValue={user?.username}
           />
         </FormRow>
         <FormRow>
