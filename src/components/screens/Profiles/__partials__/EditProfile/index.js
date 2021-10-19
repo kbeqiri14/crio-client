@@ -8,8 +8,10 @@ import { Title } from '@ui-kit/Text';
 import { Input } from '@ui-kit/Input';
 import { SecondaryButton } from '@ui-kit/Button';
 import { ReactComponent as CloseIcon } from '@svgs/close.svg';
+import Visibility from './Visibility';
+import './styles.less';
 
-const Item = ({ text, span, size, control, name, defaultValue }) => (
+const Item = ({ text, span, size, control, name, disabled, defaultValue }) => (
   <Col span={span}>
     <Title inline level={30} color='white'>
       {text}
@@ -18,7 +20,7 @@ const Item = ({ text, span, size, control, name, defaultValue }) => (
       name={name}
       control={control}
       defaultValue={defaultValue}
-      render={({ field }) => <Input size={size} {...field} />}
+      render={({ field }) => <Input size={size} {...field} disabled={disabled} />}
     />
   </Col>
 );
@@ -62,6 +64,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
           name='lastName'
           defaultValue={user?.family_name}
         />
+        <Visibility />
         <Item
           text='Username*'
           span={16}
@@ -70,6 +73,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
           name='username'
           defaultValue={user?.sub}
         />
+        <Visibility />
         <Item
           text='Email'
           span={16}
@@ -77,7 +81,9 @@ const EditProfile = ({ user, visible, closeModal }) => {
           control={control}
           name='email'
           defaultValue={user?.email}
+          disabled
         />
+        <Visibility />
         <Col>
           <Space>
             <SecondaryButton filled fillColor='transparent' size='large' onClick={closeModal}>
