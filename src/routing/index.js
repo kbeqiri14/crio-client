@@ -1,9 +1,8 @@
 import { useCurrentUser } from '@app/auth/hooks';
-import history from '@configs/history';
-import { useEffect } from 'react';
-import { Route, Switch } from 'react-router-dom';
-import { PublicOnlyRoute } from '@app/routing/routes';
-import { DEFAULT_PRIVATE_ROUTE, DEFAULT_PUBLIC_ROUTE } from '@configs/constants';
+import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
+import { useEffect, useState } from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import { PrivateRoute } from '@app/routing/routes';
 import Layout from '@shared/Layout';
 import LandingPage from '@screens/LandingPage';
 import { PricingPlans } from '@screens/PricingPlans';
@@ -12,22 +11,35 @@ import CognitoCallback from '@screens/CognitoCallback';
 import CreatorProfile from '@screens/Profiles/Creator';
 
 export const AppRoutes = () => {
-  const { user } = useCurrentUser();
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const { user, loading } = useCurrentUser();
 
   useEffect(() => {
-    if (!user) {
-      history.push(DEFAULT_PUBLIC_ROUTE);
+    if (!loading) {
+      setIsAuthenticated(!!user);
     }
-  }, [user]);
+  }, [user, loading]);
+
+  if (loading) {
+    return <GlobalSpinner />;
+  }
 
   return (
     <Layout>
       <Switch>
-        <Route path={DEFAULT_PRIVATE_ROUTE} component={Feed} />
-        <Route path='/profile' component={CreatorProfile} />
-        <PublicOnlyRoute path='/pricing' component={PricingPlans} />
-        <PublicOnlyRoute path='/cognito/callback' component={CognitoCallback} />
-        <PublicOnlyRoute exact path='/' component={LandingPage} />
+        {/* PUBLIC ROUTES */}
+        <Route exact path='/'>
+          {isAuthenticated ? <Feed /> : <LandingPage />}
+        </Route>
+        <Route exact path='/pricing' component={PricingPlans} />
+        {!loading && !user && <Redirect to='/' />}
+        {/* PRIVATE ROUTES */}
+        <PrivateRoute
+          isAuthenticated={isAuthenticated}
+          path='/profile'
+          component={CreatorProfile}
+        />
+        <Route exact path='/cognito/callback' component={CognitoCallback} />
       </Switch>
     </Layout>
   );

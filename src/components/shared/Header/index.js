@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 import { Row, Col } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
 import { SecondaryButton } from '@ui-kit/Button';
-import { DEFAULT_PRIVATE_ROUTE, DEFAULT_PUBLIC_ROUTE } from '@configs/constants';
 
 import history from '@app/configs/history';
 import { useCurrentUser } from '@app/auth/hooks';
@@ -12,12 +11,12 @@ import { TabMenu } from './__partials__/TabMenu';
 import { ProfileMenu } from './__partials__/ProfileMenu';
 import './styles.less';
 
-const getTabItems = (isAuthenticated) => {
+const getTabItems = () => {
   return [
     {
       id: 'home',
       title: 'Home',
-      onClick: () => history.push(isAuthenticated ? DEFAULT_PRIVATE_ROUTE : DEFAULT_PUBLIC_ROUTE),
+      onClick: () => history.push('/'),
     },
     {
       id: 'pricing',
@@ -30,7 +29,7 @@ const getTabItems = (isAuthenticated) => {
 export const Header = () => {
   const location = useLocation();
   const { user, loading } = useCurrentUser();
-  const activeItem = location.pathname?.replace('/', '')?.replace('feed', '') || 'home';
+  const activeItem = location.pathname?.replace('/', '') || 'home';
 
   const menuItems = useMemo(() => getTabItems(!!user), [user]);
 
@@ -39,7 +38,7 @@ export const Header = () => {
       <Row justify='space-between' align='middle'>
         <Col className='header-start-group'>
           <div className='header-logo'>
-            <Link to={user ? DEFAULT_PRIVATE_ROUTE : DEFAULT_PUBLIC_ROUTE}>
+            <Link to='/'>
               <img alt='crio app logo' src={crio_logo} />
             </Link>
           </div>

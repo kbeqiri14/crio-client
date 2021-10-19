@@ -14,10 +14,15 @@ export const CognitoCallback = () => {
   const [createUser] = useMutation(signIn);
 
   useEffect(() => {
+    if (!access_token) {
+      history.push('/');
+    }
+  }, [access_token]);
+
+  useEffect(() => {
     if (access_token && user) {
       try {
-        createUser();
-        history.push(DEFAULT_PRIVATE_ROUTE);
+        createUser().then(() => history.push(DEFAULT_PRIVATE_ROUTE));
       } catch (e) {
         console.log('error creating user ', e);
       }
