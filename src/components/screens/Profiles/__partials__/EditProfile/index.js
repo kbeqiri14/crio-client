@@ -104,7 +104,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
       closeIcon={<CloseIcon />}
       onCancel={closeModal}
     >
-      <Row justify='center' gutter={[0, 67]}>
+      <Row justify='center' gutter={[0, 55]}>
         <Header />
         <Col span={24}>
           <Row gutter={[50, 32]}>
