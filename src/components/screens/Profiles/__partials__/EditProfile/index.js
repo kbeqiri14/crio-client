@@ -8,6 +8,8 @@ import { Title } from '@ui-kit/Text';
 import { Input } from '@ui-kit/Input';
 import { SecondaryButton } from '@ui-kit/Button';
 import { ReactComponent as CloseIcon } from '@svgs/close.svg';
+import { ReactComponent as PublicIcon } from '@svgs/public.svg';
+import { ReactComponent as PrivateIcon } from '@svgs/private.svg';
 import Visibility from './Visibility';
 import './styles.less';
 
@@ -25,14 +27,29 @@ const Item = ({ text, span, size, control, name, disabled, defaultValue }) => (
   </Col>
 );
 
-const FormRow = ({ children }) => (
-  <Col span={24}>
-    <Row justify='center' align='bottom' gutter={20}>
-      {children}
-      <Visibility />
-    </Row>
-  </Col>
-)
+const menuItems = [
+  {
+    title: 'Public',
+    value: 'public',
+    icon: <PublicIcon />,
+  },
+  {
+    title: 'Only me',
+    value: 'only_me',
+    icon: <PrivateIcon />,
+  },
+];
+
+const FormRow = ({ children }) => {
+  return (
+    <Col span={24}>
+      <Row justify='center' align='bottom' gutter={20}>
+        {children}
+        <Visibility options={menuItems} onChange={undefined} />
+      </Row>
+    </Col>
+  );
+};
 
 const EditProfile = ({ user, visible, closeModal }) => {
   const { control, handleSubmit } = useForm();
