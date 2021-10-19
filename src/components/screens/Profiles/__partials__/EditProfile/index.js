@@ -1,5 +1,5 @@
 import { memo, useCallback } from 'react';
-import { Col, Modal, Row, Space } from 'antd';
+import { Col, Modal, Row } from 'antd';
 import { Controller, useForm } from 'react-hook-form';
 import { useMutation } from '@apollo/client';
 
@@ -14,20 +14,6 @@ import { ReactComponent as PrivateIcon } from '@svgs/private.svg';
 import Visibility from './Visibility';
 import './styles.less';
 
-const Item = ({ text, span, size, control, name, disabled, defaultValue }) => (
-  <Col span={span}>
-    <Title inline level={30} color='white'>
-      {text}
-    </Title>
-    <Controller
-      name={name}
-      control={control}
-      defaultValue={defaultValue}
-      render={({ field }) => <Input size={size} {...field} disabled={disabled} />}
-    />
-  </Col>
-);
-
 const menuItems = [
   {
     title: 'Public',
@@ -41,16 +27,59 @@ const menuItems = [
   },
 ];
 
-const FormRow = ({ children }) => {
-  return (
-    <Col span={24}>
-      <Row justify='center' align='bottom' gutter={20}>
-        {children}
-        <Visibility options={menuItems} onChange={undefined} />
-      </Row>
-    </Col>
-  );
-};
+const Header = () => (
+  <Col span={24}>
+    <Title level={10} color='white'>
+      Edit Profile
+    </Title>
+  </Col>
+);
+
+const Footer = ({ onCancel, onSave }) => (
+  <Col>
+    <Row gutter={30}>
+      <Col>
+        <SecondaryButton filled fillColor='transparent' size='large' onClick={onCancel}>
+          CANCEL
+        </SecondaryButton>
+      </Col>
+      <Col>
+        <SecondaryButton filled fillColor='white' size='large' onClick={onSave}>
+          SAVE
+        </SecondaryButton>
+      </Col>
+    </Row>
+  </Col>
+);
+
+const Item = ({ text, span, control, name, disabled, defaultValue }) => (
+  <Col span={span}>
+    <Row gutter={[0, 10]}>
+      <Col span={24}>
+        <Title inline level={30} color='white'>
+          {text}
+        </Title>
+      </Col>
+      <Col span={24}>
+        <Controller
+          name={name}
+          control={control}
+          defaultValue={defaultValue}
+          render={({ field }) => <Input {...field} disabled={disabled} />}
+        />
+      </Col>
+    </Row>
+  </Col>
+);
+
+const FormRow = ({ children }) => (
+  <Col span={24}>
+    <Row justify='center' align='bottom' gutter={20}>
+      {children}
+      <Visibility options={menuItems} onChange={undefined} />
+    </Row>
+  </Col>
+);
 
 const EditProfile = ({ user, visible, closeModal }) => {
   const { control, handleSubmit } = useForm();
@@ -75,61 +104,48 @@ const EditProfile = ({ user, visible, closeModal }) => {
       closeIcon={<CloseIcon />}
       onCancel={closeModal}
     >
-      <Row justify='center' gutter={[50, 32]}>
+      <Row justify='center' gutter={[0, 67]}>
+        <Header />
         <Col span={24}>
-          <Title level={10} color='white'>
-            Edit Profile
-          </Title>
+          <Row gutter={[50, 32]}>
+            <FormRow>
+              <Item
+                text='First name'
+                span={9}
+                control={control}
+                name='firstName'
+                defaultValue={user?.firstName || user?.given_name}
+              />
+              <Item
+                text='Last name'
+                span={9}
+                control={control}
+                name='lastName'
+                defaultValue={user?.lastName || user?.family_name}
+              />
+            </FormRow>
+            <FormRow>
+              <Item
+                text='Username*'
+                span={18}
+                control={control}
+                name='username'
+                defaultValue={user?.username || user?.sub}
+              />
+            </FormRow>
+            <FormRow>
+              <Item
+                text='Email'
+                span={18}
+                control={control}
+                name='email'
+                defaultValue={user?.email}
+                disabled
+              />
+            </FormRow>
+          </Row>
         </Col>
-        <FormRow>
-          <Item
-            text='First name'
-            span={8}
-            size={25}
-            control={control}
-            name='firstName'
-            defaultValue={user?.firstName || user?.given_name}
-          />
-          <Item
-            text='Last name'
-            span={8}
-            size={25}
-            control={control}
-            name='lastName'
-            defaultValue={user?.lastName || user?.family_name}
-          />
-        </FormRow>
-        <FormRow>
-          <Item
-            text='Username*'
-            span={16}
-            size={56}
-            control={control}
-            name='username'
-            defaultValue={user?.username || user?.sub}
-          />
-        </FormRow>
-        <FormRow>
-          <Item
-            text='Email'
-            span={16}
-            size={56}
-            control={control}
-            name='email'
-            defaultValue={user?.email}
-            disabled
-          />
-        </FormRow>
-        <Col>
-          <Space>
-            <SecondaryButton filled fillColor='transparent' size='large' onClick={closeModal}>
-              CANCEL
-            </SecondaryButton>
-            <SecondaryButton filled fillColor='white' size='large' onClick={handleSubmit(onSubmit)}>
-              SAVE
-            </SecondaryButton>
-          </Space>
-        </Col>
+        <Footer onCancel={closeModal} onSave={handleSubmit(onSubmit)} />
       </Row>
     </Modal>
   );

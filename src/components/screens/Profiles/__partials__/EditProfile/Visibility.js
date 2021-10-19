@@ -54,13 +54,13 @@ const Visibility = ({ options = [], defaultValue, onChange }) => {
   );
 
   return options ? (
-    <Col span={8}>
+    <Col span={6}>
       <Dropdown
         onVisibleChange={handleVisibilityChange}
         placement='bottomCenter'
         className='cr-visibility-dropdown'
         overlay={visibilityOverlay}
-        trigger={['hover']}
+        trigger={['click']}
       >
         <button className='dropdown-container'>
           <Row justify='space-between' align='middle'>
