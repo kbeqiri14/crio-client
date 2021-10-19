@@ -12,27 +12,33 @@ export const WorksAndPerks = () => {
 
   return (
     <Row className='container' gutter={[0, 47]}>
-      <Col span={2}>
-        <Text
-          level='40'
-          color='white_75'
-          className={worksView ? 'active' : 'inactive'}
-          onClick={showWorks}
-        >
-          WORKS 126
-        </Text>
+      <Col span={24}>
+        <Row gutter={50}>
+          <Col>
+            <Text
+              level='40'
+              color='white_75'
+              className={worksView ? 'active' : 'inactive'}
+              onClick={showWorks}
+            >
+              WORKS 126
+            </Text>
+          </Col>
+          <Col>
+            <Text
+              level={40}
+              color='white_75'
+              className={!worksView ? 'active' : 'inactive'}
+              onClick={showPerks}
+            >
+              PERKS
+            </Text>
+          </Col>
+        </Row>
       </Col>
-      <Col span={22}>
-        <Text
-          level={40}
-          color='white_75'
-          className={!worksView ? 'active' : 'inactive'}
-          onClick={showPerks}
-        >
-          PERKS
-        </Text>
+      <Col span={24}>
+        {worksView ? <Works /> : <Perks />}
       </Col>
-      <Col span={24}>{worksView ? <Works /> : <Perks />}</Col>
     </Row>
   );
 };
