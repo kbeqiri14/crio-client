@@ -13,7 +13,7 @@ export const WorksAndPerks = () => {
   return (
     <Row className='container' gutter={[0, 47]}>
       <Col span={24}>
-        <Row gutter={50}>
+        <Row gutter={50} className='tab'>
           <Col>
             <Text
               level='40'

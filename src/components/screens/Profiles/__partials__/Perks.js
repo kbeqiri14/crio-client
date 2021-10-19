@@ -34,7 +34,7 @@ const Perks = () => (
               {title}
             </Title>
           </Col>
-          <Col span={9}>
+          <Col md={18} lg={15} xl={12} xxl={9}>
             <Text level={10} color='white'>
               {desc}
             </Text>
