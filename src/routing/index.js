@@ -1,8 +1,9 @@
 import { useCurrentUser } from '@app/auth/hooks';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import { useEffect, useState } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import { PrivateRoute } from '@app/routing/routes';
+
 import Layout from '@shared/Layout';
 import LandingPage from '@screens/LandingPage';
 import { PricingPlans } from '@screens/PricingPlans';
@@ -13,6 +14,12 @@ import CreatorProfile from '@screens/Profiles/Creator';
 export const AppRoutes = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const { user, loading } = useCurrentUser();
+  const pathName = useLocation();
+
+  useEffect(() => {
+    document.body.scrollTop = 0;
+    window.scrollTo(0, 0);
+  }, [pathName]);
 
   useEffect(() => {
     if (!loading) {
