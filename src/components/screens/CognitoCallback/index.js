@@ -16,7 +16,11 @@ export const CognitoCallback = () => {
   useQuery(me, {
     onCompleted: (data) => {
       if (access_token && user) {
-        dispatchUser({ ...user?.attributes, ...data?.me })
+        dispatchUser({
+          ...user?.attributes,
+          ...data?.me,
+          email: user?.attributes?.email,
+        });
         history.push(DEFAULT_PRIVATE_ROUTE);
       }
     },
