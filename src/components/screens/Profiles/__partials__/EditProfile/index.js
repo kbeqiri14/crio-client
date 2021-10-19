@@ -54,19 +54,17 @@ const FormRow = ({ children }) => {
 
 const EditProfile = ({ user, visible, closeModal }) => {
   const { control, handleSubmit } = useForm();
-  const [updateUserInfo] = useMutation(updateUser);
+  const [updateUserInfo] = useMutation(updateUser, {
+    onCompleted: (data) => {
+      dispatchUser({ ...user, ...data.updateUser });
+      closeModal();
+    },
+  });
   const { dispatchUser } = useLoggedInUser();
 
   const onSubmit = useCallback(
-    (attributes) =>
-      updateUserInfo({
-        variables: { attributes },
-        update: (data) => {
-          dispatchUser(data);
-          closeModal();
-        },
-      }),
-    [closeModal, updateUserInfo, dispatchUser],
+    (attributes) => updateUserInfo({ variables: { attributes } }),
+    [updateUserInfo],
   );
 
   return (
@@ -90,7 +88,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
             size={25}
             control={control}
             name='firstName'
-            defaultValue={user?.firstName}
+            defaultValue={user?.firstName || user?.given_name}
           />
           <Item
             text='Last name'
@@ -98,7 +96,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
             size={25}
             control={control}
             name='lastName'
-            defaultValue={user?.lastName}
+            defaultValue={user?.lastName || user?.family_name}
           />
         </FormRow>
         <FormRow>
@@ -108,7 +106,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
             size={56}
             control={control}
             name='username'
-            defaultValue={user?.username}
+            defaultValue={user?.username || user?.sub}
           />
         </FormRow>
         <FormRow>
