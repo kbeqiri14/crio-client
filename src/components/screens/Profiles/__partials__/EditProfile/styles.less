@@ -44,11 +44,11 @@
   }
   &:hover {
     background-color: #686c73;
-    .ant-col:last-child {
-      svg {
-        transform: rotate(-180deg);
-        transform-origin: center;
-      }
+  }
+  .dropdown-arrow.rotate {
+    svg {
+      transform: rotate(-180deg);
+      transform-origin: center;
     }
   }
   .ant-row {
@@ -59,7 +59,7 @@
     svg {
       transition: all 0.3s;
     }
-    &:first-child {
+    &.option-icon {
       display: flex;
       justify-content: flex-start;
       align-items: center;

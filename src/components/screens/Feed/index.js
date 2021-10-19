@@ -102,6 +102,7 @@ const ScrollPosters = () => {
       <Meta title='Feed' description='Crio - Artworks Feed' />
       <div className='posters-list'>
         <Carousel
+          variableWidth
           responsive={slickResponsive}
           ref={slick}
           slidesToShow={4}

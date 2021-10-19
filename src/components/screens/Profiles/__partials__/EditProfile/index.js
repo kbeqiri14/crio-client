@@ -58,12 +58,12 @@ const EditProfile = ({ user, visible, closeModal }) => {
     onCompleted: (data) => {
       dispatchUser({ ...user, ...data.updateUser });
       closeModal();
-    }
+    },
   });
   const { dispatchUser } = useLoggedInUser();
 
   const onSubmit = useCallback(
-    attributes => updateUserInfo({ variables: { attributes } }),
+    (attributes) => updateUserInfo({ variables: { attributes } }),
     [updateUserInfo],
   );
 

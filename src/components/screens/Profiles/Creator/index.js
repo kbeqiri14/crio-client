@@ -12,7 +12,10 @@ export const CreatorProfile = () => {
   const { user } = useCurrentUser();
   const { user: loggedInUser } = useLoggedInUser();
 
-  const userInfo = useMemo(() => ({ ...user?.attributes, ...loggedInUser }), [user?.attributes, loggedInUser]);
+  const userInfo = useMemo(
+    () => ({ ...user?.attributes, ...loggedInUser }),
+    [user?.attributes, loggedInUser],
+  );
 
   return (
     <Fragment>
