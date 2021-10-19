@@ -25,6 +25,15 @@ const Item = ({ text, span, size, control, name, disabled, defaultValue }) => (
   </Col>
 );
 
+const FormRow = ({ children }) => (
+  <Col span={24}>
+    <Row justify='center' align='bottom' gutter={20}>
+      {children}
+      <Visibility />
+    </Row>
+  </Col>
+)
+
 const EditProfile = ({ user, visible, closeModal }) => {
   const { control, handleSubmit } = useForm();
   const [updateUserInfo] = useMutation(updateUser);
@@ -42,48 +51,51 @@ const EditProfile = ({ user, visible, closeModal }) => {
       closeIcon={<CloseIcon />}
       onCancel={closeModal}
     >
-      <Row justify='center' align='bottom' gutter={[80, 32]}>
+      <Row justify='center' gutter={[50, 32]}>
         <Col span={24}>
           <Title level={10} color='white'>
             Edit Profile
           </Title>
         </Col>
-        <Item
-          text='First name'
-          span={8}
-          size={25}
-          control={control}
-          name='firstName'
-          defaultValue={user?.given_name}
-        />
-        <Item
-          text='Last name'
-          span={8}
-          size={25}
-          control={control}
-          name='lastName'
-          defaultValue={user?.family_name}
-        />
-        <Visibility />
-        <Item
-          text='Username*'
-          span={16}
-          size={56}
-          control={control}
-          name='username'
-          defaultValue={user?.sub}
-        />
-        <Visibility />
-        <Item
-          text='Email'
-          span={16}
-          size={56}
-          control={control}
-          name='email'
-          defaultValue={user?.email}
-          disabled
-        />
-        <Visibility />
+        <FormRow>
+          <Item
+            text='First name'
+            span={8}
+            size={25}
+            control={control}
+            name='firstName'
+            defaultValue={user?.given_name}
+          />
+          <Item
+            text='Last name'
+            span={8}
+            size={25}
+            control={control}
+            name='lastName'
+            defaultValue={user?.family_name}
+          />
+        </FormRow>
+        <FormRow>
+          <Item
+            text='Username*'
+            span={16}
+            size={56}
+            control={control}
+            name='username'
+            defaultValue={user?.sub}
+          />
+        </FormRow>
+        <FormRow>
+          <Item
+            text='Email'
+            span={16}
+            size={56}
+            control={control}
+            name='email'
+            defaultValue={user?.email}
+            disabled
+          />
+        </FormRow>
         <Col>
           <Space>
             <SecondaryButton filled fillColor='transparent' size='large' onClick={closeModal}>
