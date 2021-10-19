@@ -30,7 +30,7 @@ const getTabItems = (isAuthenticated) => {
 export const Header = () => {
   const location = useLocation();
   const { user, loading } = useCurrentUser();
-  const activeItem = location.pathname?.replace('/', '') || 'home';
+  const activeItem = location.pathname?.replace('/', '')?.replace('feed', '') || 'home';
 
   const menuItems = useMemo(() => getTabItems(!!user), [user]);
 
