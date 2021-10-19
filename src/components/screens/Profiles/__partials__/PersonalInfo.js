@@ -24,7 +24,7 @@ const PersonalInfo = ({ user, editProfile }) => {
           </Col>
           <Col>
             <Title level={10} color='white'>
-              {user?.firstName} {user?.lastName}
+              {user?.firstName || user?.given_name} {user?.lastName || user?.family_name}
             </Title>
             {user?.email && (
               <Text level={10} underline color='white_75'>
