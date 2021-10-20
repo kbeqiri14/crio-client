@@ -112,7 +112,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
             <FormRow>
               <Item
                 text='First name'
-                span={9}
+                span={8}
                 control={control}
                 name='firstName'
                 defaultValue={user?.firstName || user?.given_name}
@@ -128,7 +128,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
             <FormRow>
               <Item
                 text='Username*'
-                span={18}
+                span={17}
                 control={control}
                 name='username'
                 defaultValue={user?.username || `${user?.firstName || user?.given_name} ${user?.lastName || user?.family_name}`}
@@ -137,7 +137,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
             <FormRow>
               <Item
                 text='Email'
-                span={18}
+                span={17}
                 control={control}
                 name='email'
                 defaultValue={user?.email}

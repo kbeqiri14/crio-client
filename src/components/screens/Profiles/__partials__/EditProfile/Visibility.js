@@ -54,7 +54,7 @@ const Visibility = ({ options = [], defaultValue, onChange }) => {
   );
 
   return options ? (
-    <Col span={6}>
+    <Col span={7}>
       <Dropdown
         onVisibleChange={handleVisibilityChange}
         placement='bottomCenter'
