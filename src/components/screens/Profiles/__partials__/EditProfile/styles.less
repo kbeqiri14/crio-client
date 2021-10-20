@@ -1,60 +1,62 @@
 @import 'variables';
 
-.ant-modal-body {
-  padding: 66px 50px 46px 50px !important;
-}
+.profile {
+  .ant-modal-body {
+    padding: 66px 50px 46px 50px !important;
+  }
 
-.ant-modal-content {
-  background: linear-gradient(138.67deg, rgba(133, 182, 255, 0.31) -1.22%, rgba(66, 76, 90, 0.115) 107.33%);
-  background-image: url('../../../../../assets/images/modal-background.png');
-  box-shadow: inset -4.28235px -3.42588px 34.2588px rgba(28, 28, 28, 0.25), inset 4.28235px 3.42588px 34.2588px rgba(242, 244, 255, 0.25);
-  backdrop-filter: blur(215px);
-  border-radius: 27px;
-}
+  .ant-modal-content {
+    background: linear-gradient(138.67deg, rgba(133, 182, 255, 0.31) -1.22%, rgba(66, 76, 90, 0.115) 107.33%);
+    background-image: url('../../../../../assets/images/modal-background.png');
+    box-shadow: inset -4.28235px -3.42588px 34.2588px rgba(28, 28, 28, 0.25), inset 4.28235px 3.42588px 34.2588px rgba(242, 244, 255, 0.25);
+    backdrop-filter: blur(215px);
+    border-radius: 27px;
+  }
 
-.ant-modal-close {
-  top: -35px;
-  right: 10px;
-}
+  .ant-modal-close {
+    top: -35px;
+    right: 10px;
+  }
 
-.dropdown-container {
-  border-radius: 12px;
-  background-color: @black_25;
-  padding: 15px;
-  border: none;
-  min-width: 160px;
-  height: 50px;
-  cursor: pointer;
-  &:focus-visible {
+  .dropdown-container {
+    border-radius: 12px;
+    background-color: @black_25;
+    padding: 15px;
     border: none;
-    outline: none;
-    box-shadow: none;
-  }
-  &:hover {
-    background-color: #686c73;
-  }
-  .dropdown-arrow.rotate {
-    svg {
-      transform: rotate(-180deg);
-      transform-origin: center;
+    min-width: 160px;
+    height: 50px;
+    cursor: pointer;
+    &:focus-visible {
+      border: none;
+      outline: none;
+      box-shadow: none;
     }
-  }
-  .ant-row {
-    height: 100%;
-  }
-  .ant-col {
-    line-height: 14px;
-    svg {
-      transition: all 0.3s;
+    &:hover {
+      background-color: #686c73;
     }
-    &.option-icon {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      height: 100%;
-      margin-right: 13px;
+    .dropdown-arrow.rotate {
       svg {
-        margin-right: 15px;
+        transform: rotate(-180deg);
+        transform-origin: center;
+      }
+    }
+    .ant-row {
+      height: 100%;
+    }
+    .ant-col {
+      line-height: 14px;
+      svg {
+        transition: all 0.3s;
+      }
+      &.option-icon {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        height: 100%;
+        margin-right: 13px;
+        svg {
+          margin-right: 15px;
+        }
       }
     }
   }

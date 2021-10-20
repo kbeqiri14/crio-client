@@ -103,6 +103,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
       footer={null}
       closeIcon={<CloseIcon />}
       onCancel={closeModal}
+      className='profile'
     >
       <Row justify='center' gutter={[0, 55]}>
         <Header />
