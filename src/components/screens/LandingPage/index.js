@@ -6,6 +6,7 @@ import { useCurrentUser } from '@app/auth/hooks';
 import { renderPosters } from '@shared/PostersList';
 import { ConnectButton } from '@shared/ConnectButton';
 import { Footer } from '@shared/Footer';
+import { Meta } from '@shared/Meta';
 import { Text, Title } from '@ui-kit/Text';
 import { SecondaryButton } from '@ui-kit/Button';
 import { getPosters } from './posters';
@@ -30,6 +31,7 @@ export const LandingPage = () => {
 
   return (
     <div className='cr-landing__container'>
+      <Meta title='Crio | Home' description='Crio - Landing Page' />
       <section className='cr-landing__banner'>
         <div>
           <div className='cr-landing__banner__heading'>
@@ -47,7 +49,7 @@ export const LandingPage = () => {
           {postersList}
         </Row>
         <Row className={cc(['cr-landing__video-grid__see-all', { 'list-loaded': listLoaded }])}>
-          {!listLoaded && <SecondaryButton onClick={handleLoadList}>See All</SecondaryButton>}
+          {!listLoaded && <SecondaryButton onClick={handleLoadList}>SEE ALL</SecondaryButton>}
         </Row>
       </section>
       <section className='cr-landing__about-perks'>

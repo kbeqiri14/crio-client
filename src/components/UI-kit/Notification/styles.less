@@ -1,0 +1,53 @@
+@import 'variables';
+
+.success-toast {
+  background-color: @success !important;
+}
+
+.info-toast {
+  background-color: @primary !important;
+  .anticon {
+    color: white !important;
+  }
+}
+
+.warning-toast {
+  background-color: #e7961d !important;
+}
+
+.error-toast {
+  background-color: @error !important;
+  .ant-notification-notice-description {
+    word-break: break-word;
+  }
+}
+
+.success-toast,
+.error-toast,
+.info-toast,
+.warning-toast {
+  position: relative;
+  overflow: visible !important;
+  padding: 10px 21px !important;
+  border-radius: 6px;
+  color: white !important;
+  .ant-notification-notice-message,
+  .ant-notification-notice-description {
+    color: white;
+    font-size: 16px;
+    line-height: 18px;
+  }
+  .ant-notification-notice-icon {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .ant-notification-notice-close {
+    top: 5px;
+    right: 7px;
+    //transform: translate(50%, -50%);
+    background-color: rgba(0, 0, 0, 0);
+    .ant-notification-close-x {
+      color: white;
+    }
+  }
+}

@@ -17,6 +17,7 @@ export const ConnectButton = memo(({ disabled, size = 'large' }) => {
         disabled={disabled || loading}
         filled
         fillColor='secondary'
+        textColor='white'
         size={size}
       >
         Connect with Facebook

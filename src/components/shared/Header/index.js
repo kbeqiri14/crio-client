@@ -1,5 +1,7 @@
+import { useMemo } from 'react';
 import { Row, Col } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
+import { SecondaryButton } from '@ui-kit/Button';
 
 import history from '@app/configs/history';
 import { useCurrentUser } from '@app/auth/hooks';
@@ -9,23 +11,27 @@ import { TabMenu } from './__partials__/TabMenu';
 import { ProfileMenu } from './__partials__/ProfileMenu';
 import './styles.less';
 
-const tabItems = [
-  {
-    id: 'home',
-    title: 'Home',
-    onClick: () => history.push('/'),
-  },
-  {
-    id: 'pricing',
-    title: 'Pricing',
-    onClick: () => history.push('/pricing'),
-  },
-];
+const getTabItems = () => {
+  return [
+    {
+      id: 'home',
+      title: 'Home',
+      onClick: () => history.push('/'),
+    },
+    {
+      id: 'pricing',
+      title: 'Pricing',
+      onClick: () => history.push('/pricing'),
+    },
+  ];
+};
 
 export const Header = () => {
   const location = useLocation();
   const { user, loading } = useCurrentUser();
   const activeItem = location.pathname?.replace('/', '') || 'home';
+
+  const menuItems = useMemo(() => getTabItems(!!user), [user]);
 
   return (
     <header className='crio-app-header'>
@@ -37,7 +43,7 @@ export const Header = () => {
             </Link>
           </div>
           <div className='header-tab-menu'>
-            <TabMenu defaultActiveItem={activeItem} menuItems={tabItems} />
+            <TabMenu defaultActiveItem={activeItem} menuItems={menuItems} />
           </div>
         </Col>
         <Col className='header-end-group'>
@@ -45,6 +51,11 @@ export const Header = () => {
             <ProfileMenu user={user} />
           ) : (
             !loading && <ConnectButton size='regular' disabled={loading} />
+          )}
+          {user && (
+            <SecondaryButton filled textColor='white'>
+              UPLOAD
+            </SecondaryButton>
           )}
         </Col>
       </Row>

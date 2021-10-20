@@ -3,12 +3,20 @@
 .drop-button {
   border-radius: 6px;
   padding: 5px 20px 5px 5px;
+  cursor: pointer;
+  img {
+    width: 40px;
+    height: 40px;
+  }
 }
 
 .dropdown {
   position: relative;
   display: inline-block;
-  padding: 5px;
+  padding: 10px;
+  &:not(:last-child) {
+    margin-right: 16px;
+  }
 }
 
 .dropdown-content {
@@ -37,7 +45,6 @@
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
   }
-  background-color: @white_25;
   &:last-child {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;

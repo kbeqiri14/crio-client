@@ -13,3 +13,16 @@ export const signIn = gql`
     }
   }
 `;
+
+export const updateUser = gql`
+  mutation updateUser($attributes: UserAttributes!) {
+    updateUser(attributes: $attributes) {
+      id
+      userId
+      email
+      username
+      firstName
+      lastName
+    }
+  }
+`;

@@ -5,9 +5,10 @@ import { Text } from '@ui-kit/Text';
 import { arrayChunk, getRandomInt } from '@utils/helpers';
 import { ReactComponent as PlayIcon } from '@svgs/play.svg';
 
-const PosterCard = memo(({ poster, author, description }) => (
-  <div className='video-grid__item-container'>
+export const PosterCard = memo(({ poster, index, author, description, ...props }) => (
+  <div className='video-grid__item-container' {...props}>
     <img alt='Crio artworks poster' src={poster} />
+    {(index || index === 0) && <div className='poster-number'>{index}</div>}
     <Row justify='space-between' align='bottom' className='video-grid__item-panel'>
       <Col>
         <div>
