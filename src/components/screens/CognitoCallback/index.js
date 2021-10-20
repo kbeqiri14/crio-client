@@ -20,6 +20,7 @@ export const CognitoCallback = () => {
           ...user?.attributes,
           ...data?.me,
           email: user?.attributes?.email,
+          username: `${user?.attributes?.firstName || user?.attributes?.given_name} ${user?.attributes?.lastName || user?.attributes?.family_name}`,
         });
         history.push(DEFAULT_PRIVATE_ROUTE);
       }

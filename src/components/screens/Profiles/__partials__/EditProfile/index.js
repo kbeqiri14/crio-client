@@ -131,8 +131,8 @@ const EditProfile = ({ user, visible, closeModal }) => {
                 span={18}
                 control={control}
                 name='username'
-                defaultValue={user?.username || user?.sub}
-              />
+                defaultValue={user?.username || `${user?.firstName || user?.given_name} ${user?.lastName || user?.family_name}`}
+          />
             </FormRow>
             <FormRow>
               <Item
