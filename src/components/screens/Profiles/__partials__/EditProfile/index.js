@@ -35,16 +35,16 @@ const Header = () => (
   </Col>
 );
 
-const Footer = ({ onCancel, onSave }) => (
+const Footer = ({ loading, onCancel, onSave }) => (
   <Col>
     <Row gutter={30}>
       <Col>
-        <SecondaryButton filled fillColor='transparent' size='large' onClick={onCancel}>
+        <SecondaryButton textColor='white_75' borderColor='white_75' size='large' onClick={onCancel}>
           CANCEL
         </SecondaryButton>
       </Col>
       <Col>
-        <SecondaryButton filled fillColor='white' size='large' onClick={onSave}>
+        <SecondaryButton filled fillColor='white_25' textColor='white_75' size='large' disabled={loading} onClick={onSave}>
           SAVE
         </SecondaryButton>
       </Col>
@@ -83,7 +83,7 @@ const FormRow = ({ children }) => (
 
 const EditProfile = ({ user, visible, closeModal }) => {
   const { control, handleSubmit } = useForm();
-  const [updateUserInfo] = useMutation(updateUser, {
+  const [updateUserInfo, { loading }] = useMutation(updateUser, {
     onCompleted: (data) => {
       dispatchUser({ ...user, ...data.updateUser });
       closeModal();
@@ -145,7 +145,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
             </FormRow>
           </Row>
         </Col>
-        <Footer onCancel={closeModal} onSave={handleSubmit(onSubmit)} />
+        <Footer loading={loading} onCancel={closeModal} onSave={handleSubmit(onSubmit)} />
       </Row>
     </Modal>
   );

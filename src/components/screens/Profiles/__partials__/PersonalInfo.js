@@ -39,9 +39,9 @@ const PersonalInfo = ({ user, editProfile }) => {
       </Col>
       <Col>
         <SecondaryButton
-          filled
-          fillColor='transparent'
           size='large'
+          textColor='white'
+          borderColor='white'
           icon={<PencilIcon />}
           onClick={editProfile}
         >

@@ -53,7 +53,7 @@ export const Header = () => {
             !loading && <ConnectButton size='regular' disabled={loading} />
           )}
           {user && (
-            <SecondaryButton filled fillColor='primary'>
+            <SecondaryButton filled textColor='white'>
               UPLOAD
             </SecondaryButton>
           )}

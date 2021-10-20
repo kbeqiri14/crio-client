@@ -39,7 +39,6 @@
   height: 44px;
   border-radius: 500px;
   min-width: 140px;
-  border: 1px solid @primary;
   cursor: pointer;
   position: relative;
   overflow: hidden;
@@ -59,9 +58,6 @@
       }
     }
   }
-  &__text {
-    color: @primary;
-  }
   &:not(:disabled)&:hover {
     background-color: @black_25;
   }
@@ -74,9 +70,6 @@
   }
   &.filled {
     border: none;
-    .cr-button-secondary__text {
-      color: @white;
-    }
     &:hover {
       &:after {
         display: block;
@@ -101,6 +94,21 @@
   }
 }
 
+.border-color {
+  &-primary {
+    border: 1px solid @primary;
+  }
+  &-secondary {
+    border: 1px solid @secondary;
+  }
+  &-white {
+    border: 1px solid @white;
+  }
+  &-white_75 {
+    border: 1px solid @white_75;
+  }
+}
+
 .filled-color {
   &-primary {
     background-image: @gradient-1;
@@ -113,11 +121,7 @@
   &-tertiary {
     background-image: @gradient-3;
   }
-  &-white {
+  &-white_25 {
     background-color: @white_25;
-  }
-  &-transparent {
-    background-color: transparent;
-    border: 1px solid @white !important;
   }
 }
