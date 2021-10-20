@@ -74,7 +74,7 @@ export const PricingPlans = () => {
             </div>
             <PerksList isFree={false} listItems={perksListPro} />
             <div className='cr-pricing__card--action'>
-              <SecondaryButton size='large' filled fillColor='tertiary' isBlock>
+              <SecondaryButton size='large' textColor='white' filled fillColor='tertiary' isBlock>
                 GET STARTED
               </SecondaryButton>
             </div>

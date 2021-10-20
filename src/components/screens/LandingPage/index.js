@@ -49,7 +49,7 @@ export const LandingPage = () => {
           {postersList}
         </Row>
         <Row className={cc(['cr-landing__video-grid__see-all', { 'list-loaded': listLoaded }])}>
-          {!listLoaded && <SecondaryButton onClick={handleLoadList}>See All</SecondaryButton>}
+          {!listLoaded && <SecondaryButton onClick={handleLoadList}>SEE ALL</SecondaryButton>}
         </Row>
       </section>
       <section className='cr-landing__about-perks'>
