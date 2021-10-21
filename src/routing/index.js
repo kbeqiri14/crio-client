@@ -1,11 +1,11 @@
-import { PresentationView } from '@shared/PresentationView';
-import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { useEffect, useState } from 'react';
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
+
 import { useCurrentUser } from '@app/auth/hooks';
-import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
-import Layout from '@shared/Layout';
 import { PrivateRoute } from '@app/routing/routes';
+import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
+import { PresentationView, usePresentation } from '@shared/PresentationView';
+import Layout from '@shared/Layout';
 
 import LandingPage from '@screens/LandingPage';
 import { PricingPlans } from '@screens/PricingPlans';
