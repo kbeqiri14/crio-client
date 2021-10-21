@@ -31,7 +31,7 @@ const PersonalInfo = ({ user, editProfile }) => {
             {user?.email && (
               <Text level={10} underline color='white_75'>
                 <MailIcon />
-                <a href='mailto:support@evolveme.health'>{user.email}</a>
+                <a href={`mailto:${user.email}`}>{user.email}</a>
               </Text>
             )}
           </Col>
