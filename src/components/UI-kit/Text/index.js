@@ -33,7 +33,6 @@ export const Text = ({
   level,
   children,
   inline = false,
-  underline = false,
   className,
   color,
   onClick,
@@ -44,7 +43,6 @@ export const Text = ({
       className={cc([
         'crio-text',
         `text-${level}`,
-        { 'crio-text-underline': underline },
         `crio-text--color--${color}`,
         className,
       ])}

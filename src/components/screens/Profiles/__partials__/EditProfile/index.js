@@ -8,6 +8,7 @@ import { updateUser } from '@app/graphql/mutations/user.mutation';
 import { Title } from '@ui-kit/Text';
 import { Input } from '@ui-kit/Input';
 import { SecondaryButton } from '@ui-kit/Button';
+import { successToast } from '@ui-kit/Notification';
 import { ReactComponent as CloseIcon } from '@svgs/close.svg';
 import { ReactComponent as PublicIcon } from '@svgs/public.svg';
 import { ReactComponent as PrivateIcon } from '@svgs/private.svg';
@@ -35,7 +36,7 @@ const Header = () => (
   </Col>
 );
 
-const Footer = ({ loading, onCancel, onSave }) => (
+const Footer = ({ loading, disabled, onCancel, onSave }) => (
   <Col>
     <Row gutter={30}>
       <Col>
@@ -44,7 +45,7 @@ const Footer = ({ loading, onCancel, onSave }) => (
         </SecondaryButton>
       </Col>
       <Col>
-        <SecondaryButton filled fillColor='white_25' textColor='white_75' size='large' disabled={loading} onClick={onSave}>
+        <SecondaryButton filled fillColor='white_25' textColor='white_75' size='large' loading={loading} onClick={onSave}>
           SAVE
         </SecondaryButton>
       </Col>
@@ -87,6 +88,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
     onCompleted: (data) => {
       dispatchUser({ ...user, ...data.updateUser });
       closeModal();
+      successToast('Your profile has been updated.')
     },
   });
   const { dispatchUser } = useLoggedInUser();
@@ -127,7 +129,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
             </FormRow>
             <FormRow>
               <Item
-                text='Username*'
+                text='Username *'
                 span={17}
                 control={control}
                 name='username'

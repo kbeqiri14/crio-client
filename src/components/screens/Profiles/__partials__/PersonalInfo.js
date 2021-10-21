@@ -29,7 +29,7 @@ const PersonalInfo = ({ user, editProfile }) => {
               {user?.firstName || user?.given_name} {user?.lastName || user?.family_name}
             </Title>
             {user?.email && (
-              <Text level={10} underline color='white_75'>
+              <Text level={10} color='white_75'>
                 <MailIcon />
                 <a href={`mailto:${user.email}`}>{user.email}</a>
               </Text>
