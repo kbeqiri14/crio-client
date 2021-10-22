@@ -1,83 +1,58 @@
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
-import { Col, Dropdown, Row } from 'antd';
-import cc from 'classcat';
+import { memo, useCallback, useState } from 'react';
+import { Col, Dropdown, Menu, Row } from 'antd';
 
 import { Title } from '@ui-kit/Text';
 import { ReactComponent as ArrowBottomIcon } from '@svgs/arrow-down.svg';
 
+const Item = memo(({ icon, label, showIcon }) => (
+  <Row align='middle' className='visibility'>
+    <Col span={5}>
+      {icon}
+    </Col>
+    <Col span={16}>
+      <Title inline level={30} color='white'>
+        {label}
+      </Title>
+    </Col>
+    <Col span={3}>
+      {showIcon && <ArrowBottomIcon />}
+    </Col>
+  </Row>
+));
+
 const Visibility = ({ options = [], defaultValue, onChange }) => {
-  const [selectedValue, setSelectedValue] = useState();
-  const [dropdownVisible, setDropDownVisible] = useState(false);
+  const [selectedValue, setSelectedValue] = useState(options.find(({ value }) => value === defaultValue) || options[0]);
 
-  useEffect(() => {
-    if (options?.length) {
-      const defaultSelected = options.find((op) => op.value === defaultValue);
-      setSelectedValue(defaultSelected || options[0]);
-    }
-  }, [options, defaultValue]);
-
-  const handleVisibilityChange = useCallback((visible) => {
-    setDropDownVisible(visible);
-  }, []);
-
-  const handleSelectNameVisible = useCallback(
+  const handleMenuItemClick = useCallback(
     (option) => () => {
       setSelectedValue(option);
-      onChange?.(option.value);
+      onChange(option.value);
     },
     [onChange],
   );
+  console.log(selectedValue)
 
-  const visibilityOverlay = useMemo(
-    () =>
-      options ? (
+  const menu = <Menu>
+    {
+      options
+        .filter(({ value }) => value !== selectedValue.value)
+        .map((item) => (
+          <Menu.Item key={item.value} onClick={handleMenuItemClick(item)}>
+            <Item icon={item.icon} label={item.title} />
+          </Menu.Item>
+        ))
+    }
+  </Menu>;
+
+  return (
+    <Col span={6}>
+      <Dropdown overlay={menu} trigger={['click']}>
         <div>
-          {options
-            .filter((itm) => itm?.value !== selectedValue?.value)
-            .map((item) => (
-              <div key={item.value}>
-                <button onClick={handleSelectNameVisible(item)} className='dropdown-container'>
-                  <Row justify='space-between' align='middle'>
-                    <Col className='option-icon'>
-                      {item.icon}
-                      <Title inline level={30} color='white'>
-                        {item.title}
-                      </Title>
-                    </Col>
-                  </Row>
-                </button>
-              </div>
-            ))}
+          <Item icon={selectedValue.icon} label={selectedValue.title} showIcon />
         </div>
-      ) : null,
-    [handleSelectNameVisible, options, selectedValue?.value],
-  );
-
-  return options ? (
-    <Col span={7}>
-      <Dropdown
-        onVisibleChange={handleVisibilityChange}
-        placement='bottomCenter'
-        className='cr-visibility-dropdown'
-        overlay={visibilityOverlay}
-        trigger={['click']}
-      >
-        <button className='dropdown-container'>
-          <Row justify='space-between' align='middle'>
-            <Col className='option-icon'>
-              {selectedValue?.icon}
-              <Title inline level={30} color='white'>
-                {selectedValue?.title}
-              </Title>
-            </Col>
-            <Col className={cc(['dropdown-arrow', { rotate: dropdownVisible }])}>
-              <ArrowBottomIcon />
-            </Col>
-          </Row>
-        </button>
       </Dropdown>
     </Col>
-  ) : null;
+  );
 };
 
 export default memo(Visibility);

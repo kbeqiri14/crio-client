@@ -53,7 +53,7 @@ export const FormRow = memo(({ children }) => (
   <Col span={24}>
     <Row justify='center' align='bottom' gutter={20}>
       {children}
-      <Visibility options={menuItems} onChange={undefined} />
+      <Visibility options={menuItems} onChange={() => undefined} />
     </Row>
   </Col>
 ));

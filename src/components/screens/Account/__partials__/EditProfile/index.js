@@ -27,7 +27,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
               <Item
                 name='firstName'
                 label='First name'
-                span={8}
+                span={9}
                 control={control}
                 defaultValue={user?.firstName || user?.given_name}
               />
@@ -43,7 +43,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
               <Item
                 name='username'
                 label='Username *'
-                span={17}
+                span={18}
                 control={control}
                 defaultValue={user?.username || `${user?.firstName || user?.given_name} ${user?.lastName || user?.family_name}`}
               />
@@ -52,7 +52,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
               <Item
                 name='email'
                 label='Email'
-                span={17}
+                span={18}
                 control={control}
                 defaultValue={user?.email}
                 disabled
