@@ -1,10 +1,12 @@
-import { useCurrentUser } from '@app/auth/hooks';
-import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import { useEffect, useState } from 'react';
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
-import { PrivateRoute } from '@app/routing/routes';
 
+import { useCurrentUser } from '@app/auth/hooks';
+import { PrivateRoute } from '@app/routing/routes';
+import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
+import { PresentationView, usePresentation } from '@shared/PresentationView';
 import Layout from '@shared/Layout';
+
 import LandingPage from '@screens/LandingPage';
 import { PricingPlans } from '@screens/PricingPlans';
 import { Feed } from '@screens/Feed';
@@ -14,6 +16,7 @@ import MyAccount from '@screens/Account';
 export const AppRoutes = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const { user, loading } = useCurrentUser();
+  const { videoInfo, isVisible, hide } = usePresentation();
   const pathName = useLocation();
 
   useEffect(() => {
@@ -45,6 +48,7 @@ export const AppRoutes = () => {
         <PrivateRoute isAuthenticated={isAuthenticated} path='/profile' component={null} />
         <Route exact path='/cognito/callback' component={CognitoCallback} />
       </Switch>
+      <PresentationView onCancel={hide} videoInfo={videoInfo} visible={isVisible} />
     </Layout>
   );
 };

@@ -1,10 +1,10 @@
-import { Meta } from '@shared/Meta';
 import { Fragment, useRef, useState } from 'react';
 import { Carousel, Row } from 'antd';
 import { Link } from 'react-router-dom';
 import { getPosters } from '@screens/LandingPage/posters';
-import { Footer } from '@shared/Footer';
 import { PosterCard, renderPosters } from '@shared/PostersList';
+import { Footer } from '@shared/Footer';
+import { Meta } from '@shared/Meta';
 import { Text, Title } from '@ui-kit/Text';
 import { SecondaryButton } from '@ui-kit/Button';
 import uuid from '@utils/uuid';
@@ -111,7 +111,7 @@ const ScrollPosters = () => {
           infinite
         >
           {videoPosters.concat(videoPosters).map((p, idx) => (
-            <PosterCard key={idx} poster={p} author='Ann Bee' description='Work’s name goes here' />
+            <PosterCard key={idx} poster={p} author='Ann Bee' title='Work’s name goes here' />
           ))}
         </Carousel>
       </div>
