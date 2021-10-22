@@ -1,0 +1,64 @@
+@import 'variables';
+
+.crio-slider {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: visible;
+  &.with-scroll {
+    .swiper-scrollbar {
+      z-index: 2;
+      background-color: @white_25;
+      width: 100%;
+      left: 0;
+      height: 1px;
+      bottom: -41px;
+      .swiper-scrollbar-drag {
+        height: 2px;
+        background-color: @white_75;
+      }
+    }
+  }
+}
+
+.swiper-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  .ant-col {
+    all: unset;
+  }
+}
+
+.swiper-button {
+  &-next {
+    right: 14px;
+    background-image: url('../../../assets/svgs/arrow-right.svg');
+  }
+  &-prev {
+    left: 14px;
+    background-image: url('../../../assets/svgs/arrow-left.svg');
+  }
+  &-next,
+  &-prev {
+    &:after {
+      display: none;
+    }
+    &:focus-visible {
+      outline: none;
+      border: none;
+    }
+    &:active {
+      box-shadow: inset 0 0 4px 4px rgba(0, 0, 0, 0.25);
+    }
+    &:disabled {
+      visibility: hidden;
+    }
+    background-color: transparent;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 0 13px rgba(81, 81, 81, 0.5);
+    height: 60px;
+    width: 60px;
+  }
+}

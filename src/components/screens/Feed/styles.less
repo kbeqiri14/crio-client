@@ -1,21 +1,5 @@
 @import 'variables';
 
-.cr-scroll-horizontal {
-  position: absolute;
-  height: 1px !important;
-  width: 100%;
-  max-width: calc(1394px - 46px);
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  background: @white_25;
-}
-
-.cr-thumb-horizontal {
-  height: 2px !important;
-  background: @white_75;
-}
-
 .slider {
   &-left,
   &-right {
@@ -150,36 +134,13 @@
     width: 100%;
     max-width: 1440px;
     margin-bottom: 39px;
-    margin-right: -13px;
     position: relative;
-    &:after {
-      display: block;
-      content: '';
-      background-color: @white_75;
-      width: 95%;
-      height: 1px;
-      margin-top: 41px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .posters-list {
-      .slick-slide {
-        margin: 0 11px;
-        width: 326.5px;
-        max-width: 326.5px;
-        height: 276px;
-        > div {
-          height: 100%;
-        }
-      }
-      .slick-track {
-        height: 100%;
-      }
-      .slick-list {
-        margin: 0 -11px;
-        height: 276px;
-      }
-    }
+  }
+}
+
+.random-works {
+  &:not(:first-child) {
+    margin-top: 45px;
   }
 }
 
@@ -207,6 +168,7 @@
   align-items: center;
   flex-flow: column nowrap;
   padding: 0 34px;
+  overflow: hidden;
   &__author {
     align-self: flex-start;
     margin-bottom: 30px;

@@ -1,4 +1,4 @@
-import { Fragment, useRef, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { Carousel, Row } from 'antd';
 import { Link } from 'react-router-dom';
 import { getPosters } from '@screens/LandingPage/posters';
@@ -7,13 +7,12 @@ import { Footer } from '@shared/Footer';
 import { Meta } from '@shared/Meta';
 import { Text, Title } from '@ui-kit/Text';
 import { SecondaryButton } from '@ui-kit/Button';
+import { Slider } from '@ui-kit/Slider';
 import uuid from '@utils/uuid';
 import samplePoster from '@images/posters/carousel-poster.jpg';
 import samplePoster1 from '@images/posters/carousel-poster.png';
 import samplePoster2 from '@images/posters/carousel-poster-2.jpg';
 import samplePoster3 from '@images/posters/carousel-poster-3.jpg';
-import { ReactComponent as ArrowLeft } from '@svgs/arrow-left.svg';
-import { ReactComponent as ArrowRight } from '@svgs/arrow-right.svg';
 import './styles.less';
 
 const carouselPosters = [
@@ -60,71 +59,36 @@ const carouselPosters = [
     },
   },
 ];
-const slickResponsive = [
-  {
-    breakpoint: 1440,
-    settings: {
-      slidesToShow: 3,
-      slidesToScroll: 3,
-    },
+const SliderBreakPoints = {
+  1440: {
+    slidesPerView: 4,
+    slidesPerGroup: 4,
   },
-  {
-    breakpoint: 1024,
-    settings: {
-      slidesToShow: 2,
-      slidesToScroll: 2,
-    },
+  1024: {
+    slidesPerView: 3,
+    slidesPerGroup: 3,
   },
-  {
-    breakpoint: 600,
-    settings: {
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      centerMode: true,
-    },
+  600: {
+    slidesPerView: 2,
+    slidesPerGroup: 2,
   },
-];
+  240: {
+    slidesPerView: 1,
+    slidesPerGroup: 1,
+  },
+};
 
 const videoPosters = getPosters(8);
 const authorVideoPosters = getPosters(15);
 
 const ScrollPosters = () => {
-  const slick = useRef();
-
-  const handleScrollRight = () => {
-    slick.current.next();
-  };
-  const handleScrollLeft = () => {
-    slick.current.prev();
-  };
   return (
     <div className='cr-feed__poster-scroll'>
-      <Meta title='Feed' description='Crio - Artworks Feed' />
-      <div className='posters-list'>
-        <Carousel
-          variableWidth
-          responsive={slickResponsive}
-          ref={slick}
-          slidesToShow={4}
-          slidesToScroll={4}
-          dots={false}
-          infinite
-        >
-          {videoPosters.concat(videoPosters).map((p, idx) => (
-            <PosterCard key={idx} poster={p} author='Ann Bee' title='Work’s name goes here' />
-          ))}
-        </Carousel>
-      </div>
-      <div className='slider-left'>
-        <button onClick={handleScrollLeft}>
-          <ArrowLeft />
-        </button>
-      </div>
-      <div className='slider-right'>
-        <button onClick={handleScrollRight}>
-          <ArrowRight />
-        </button>
-      </div>
+      <Slider withScroll breakpoints={SliderBreakPoints}>
+        {videoPosters.concat(videoPosters).map((p, idx) => (
+          <PosterCard key={idx} poster={p} author='Ann Bee' title='Work’s name goes here' />
+        ))}
+      </Slider>
     </div>
   );
 };
@@ -138,7 +102,7 @@ const RandomAuthorArtworks = ({ posters }) => (
       </Title>
     </div>
     <ScrollPosters />
-    <Row gutter={[22, 35]} className='cr-landing__video-grid__container'>
+    <Row gutter={[22, 35]} className='cr-landing__video-grid__container random-works'>
       {posters}
     </Row>
   </Fragment>
@@ -160,6 +124,7 @@ export const Feed = () => {
 
   return (
     <div className='cr-feed'>
+      <Meta title='Feed' description='Crio - Artworks Feed' />
       <section className='cr-feed__poster-carousel'>
         <div className='cr-carousel'>
           <Carousel

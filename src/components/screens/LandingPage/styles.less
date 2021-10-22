@@ -46,11 +46,11 @@
 }
 
 .video-grid__item {
-  height: 276px;
   display: flex;
   justify-content: center;
   align-items: stretch;
   &-container {
+    height: 276px;
     position: relative;
     overflow: hidden;
     cursor: pointer;
@@ -70,7 +70,7 @@
     object-fit: cover;
     line-height: 0;
   }
-  &.large {
+  &.large &-container {
     height: 587px;
   }
   &-panel {
