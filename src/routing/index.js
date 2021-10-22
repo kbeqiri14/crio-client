@@ -9,7 +9,7 @@ import LandingPage from '@screens/LandingPage';
 import { PricingPlans } from '@screens/PricingPlans';
 import { Feed } from '@screens/Feed';
 import CognitoCallback from '@screens/CognitoCallback';
-import CreatorProfile from '@screens/Profiles/Creator';
+import MyAccount from '@screens/Account';
 
 export const AppRoutes = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
@@ -41,11 +41,8 @@ export const AppRoutes = () => {
         <Route exact path='/pricing' component={PricingPlans} />
         {!loading && !user && <Redirect to='/' />}
         {/* PRIVATE ROUTES */}
-        <PrivateRoute
-          isAuthenticated={isAuthenticated}
-          path='/profile'
-          component={CreatorProfile}
-        />
+        <PrivateRoute isAuthenticated={isAuthenticated} path='/account' component={MyAccount} />
+        <PrivateRoute isAuthenticated={isAuthenticated} path='/profile' component={null} />
         <Route exact path='/cognito/callback' component={CognitoCallback} />
       </Switch>
     </Layout>

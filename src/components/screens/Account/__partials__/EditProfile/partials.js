@@ -29,12 +29,12 @@ export const Header = memo(() => (
   </Col>
 ));
 
-export const Item = memo(({ name, text, span, control, disabled, defaultValue }) => (
+export const Item = memo(({ name, label, span, control, disabled, defaultValue }) => (
   <Col span={span}>
     <Row gutter={[0, 10]}>
       <Col span={24}>
         <Title inline level={30} color='white'>
-          {text}
+          {label}
         </Title>
       </Col>
       <Col span={24}>

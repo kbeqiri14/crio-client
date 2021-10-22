@@ -17,7 +17,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
       footer={null}
       closeIcon={<CloseIcon />}
       onCancel={closeModal}
-      className='profile'
+      className='edit-profile'
     >
       <Row justify='center' gutter={[0, 55]}>
         <Header />
@@ -26,14 +26,14 @@ const EditProfile = ({ user, visible, closeModal }) => {
             <FormRow>
               <Item
                 name='firstName'
-                text='First name'
+                label='First name'
                 span={8}
                 control={control}
                 defaultValue={user?.firstName || user?.given_name}
               />
               <Item
                 name='lastName'
-                text='Last name'
+                label='Last name'
                 span={9}
                 control={control}
                 defaultValue={user?.lastName || user?.family_name}
@@ -42,7 +42,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
             <FormRow>
               <Item
                 name='username'
-                text='Username *'
+                label='Username *'
                 span={17}
                 control={control}
                 defaultValue={user?.username || `${user?.firstName || user?.given_name} ${user?.lastName || user?.family_name}`}
@@ -51,7 +51,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
             <FormRow>
               <Item
                 name='email'
-                text='Email'
+                label='Email'
                 span={17}
                 control={control}
                 defaultValue={user?.email}
