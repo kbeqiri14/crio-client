@@ -30,7 +30,6 @@ const Visibility = ({ options = [], defaultValue, onChange }) => {
     },
     [onChange],
   );
-  console.log(selectedValue)
 
   const menu = <Menu>
     {

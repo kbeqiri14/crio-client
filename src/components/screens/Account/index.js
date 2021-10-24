@@ -1,4 +1,4 @@
-import { Fragment, memo, useState } from 'react';
+import { Fragment, memo, useCallback, useState } from 'react';
 import { Space, Switch } from 'antd';
 import { useQuery } from '@apollo/client';
 
@@ -14,6 +14,8 @@ export const MyAccount = () => {
   const [isCreator, setIsCreator] = useState(true);
   const { user, dispatchUser } = useLoggedInUser();
 
+  const editProfile = useCallback(() => setVisible(true), []);
+  const closeModal = useCallback(() => setVisible(false), []);
   useQuery(me, {
     onCompleted: (data) => dispatchUser(data?.me),
     onError: (data) => console.log(data, 'error'),
@@ -25,8 +27,8 @@ export const MyAccount = () => {
         <Title inline level='10' color='white'>Creator view</Title>
         <Switch checked={isCreator} onChange={() => setIsCreator(!isCreator)} />
       </Space>
-      <PersonalInfo user={user} editProfile={() => setVisible(true)} />
-      <EditProfile user={user} visible={visible} closeModal={() => setVisible(false)} />
+      <PersonalInfo user={user} editProfile={editProfile} />
+      {visible && <EditProfile user={user} visible={visible} closeModal={closeModal} />}
       <Details isCreator={isCreator} />
     </Fragment>
   );

@@ -9,12 +9,9 @@ import './styles.less';
 
 const { TabPane } = Tabs;
 
-function callback(key) {
-  console.log(key);
-}
 const Details = ({ isProfile, isCreator }) => (
   <Fragment>
-    <Tabs defaultActiveKey='1' onChange={callback} className='profile-details'>
+    <Tabs defaultActiveKey='1' className='profile-details'>
       <TabPane tab={isProfile || isCreator ? 'WORKS 126' : 'FOLLOWING: 2'} key='1'>
         {isProfile || isCreator ? <Works /> : <Followings />}
       </TabPane>

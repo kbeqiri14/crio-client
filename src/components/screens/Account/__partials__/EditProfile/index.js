@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import { Col, Modal, Row } from 'antd';
 import { useForm } from 'react-hook-form';
 
@@ -8,7 +8,17 @@ import Footer from './Footer';
 import './styles.less';
 
 const EditProfile = ({ user, visible, closeModal }) => {
-  const { control, handleSubmit } = useForm();
+  const { control, watch, handleSubmit } = useForm();
+  const firstName = watch('firstName');
+  const lastName = watch('lastName');
+  const username = watch('username');
+
+  const disabled = useMemo(() => (
+    username !== ''
+    && ((firstName && user?.firstName !== firstName)
+      || (lastName && user?.lastName !== lastName)
+      || (username && user?.username !== username))
+  ), [user?.firstName, user?.lastName, user?.username, firstName, lastName, username])
 
   return (
     <Modal
@@ -29,14 +39,14 @@ const EditProfile = ({ user, visible, closeModal }) => {
                 label='First name'
                 span={9}
                 control={control}
-                defaultValue={user?.firstName || user?.given_name}
+                defaultValue={user?.firstName}
               />
               <Item
                 name='lastName'
                 label='Last name'
                 span={9}
                 control={control}
-                defaultValue={user?.lastName || user?.family_name}
+                defaultValue={user?.lastName}
               />
             </FormRow>
             <FormRow>
@@ -45,7 +55,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
                 label='Username *'
                 span={18}
                 control={control}
-                defaultValue={user?.username || `${user?.firstName || user?.given_name} ${user?.lastName || user?.family_name}`}
+                defaultValue={user?.username}
               />
             </FormRow>
             <FormRow>
@@ -60,7 +70,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
             </FormRow>
           </Row>
         </Col>
-        <Footer user={user} closeModal={closeModal} handleSubmit={handleSubmit} />
+        <Footer user={user} disabled={!disabled} closeModal={closeModal} handleSubmit={handleSubmit} />
       </Row>
     </Modal>
   );

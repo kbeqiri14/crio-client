@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback } from 'react';
 import { Col, Row } from 'antd';
 import { useMutation } from '@apollo/client';
 
@@ -7,7 +7,7 @@ import { updateUser } from '@app/graphql/mutations/user.mutation';
 import { successToast } from '@ui-kit/Notification';
 import { SecondaryButton } from '@ui-kit/Button';
 
-const Footer = ({ user, closeModal, handleSubmit }) => {
+const Footer = ({ user, disabled, closeModal, handleSubmit }) => {
   const [updateUserInfo, { loading }] = useMutation(updateUser, {
     onCompleted: (data) => {
       dispatchUser({ ...user, ...data.updateUser });
@@ -21,7 +21,6 @@ const Footer = ({ user, closeModal, handleSubmit }) => {
     (attributes) => updateUserInfo({ variables: { attributes } }),
     [updateUserInfo],
   );
-  const disabled = useMemo(() => !!user.username, [user.username]);
 
   return <Col>
     <Row gutter={30}>
