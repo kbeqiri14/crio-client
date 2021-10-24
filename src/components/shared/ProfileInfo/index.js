@@ -7,10 +7,10 @@ import { ReactComponent as MailIcon } from '@svgs/mail.svg';
 import profile from '@images/profile.png';
 import './styles.less';
 
-const ProfileInfo = ({ name, username, email, src, isCreator }) => (
+const ProfileInfo = ({ name, username, email, picture, isCreator }) => (
   <Row align='middle' gutter={30} className='profile-info'>
     <Col>
-      <img alt='profile' src={src || profile} />
+      <img alt='profile' src={picture || profile} />
       {isCreator && <CreatorIcon className='creator-icon' />}
     </Col>
     <Col>

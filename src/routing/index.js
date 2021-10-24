@@ -12,6 +12,7 @@ import { PricingPlans } from '@screens/PricingPlans';
 import { Feed } from '@screens/Feed';
 import CognitoCallback from '@screens/CognitoCallback';
 import MyAccount from '@screens/Account';
+import Profile from '@screens/Profile';
 
 export const AppRoutes = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
@@ -45,7 +46,7 @@ export const AppRoutes = () => {
         {!loading && !user && <Redirect to='/' />}
         {/* PRIVATE ROUTES */}
         <PrivateRoute isAuthenticated={isAuthenticated} path='/account' component={MyAccount} />
-        <PrivateRoute isAuthenticated={isAuthenticated} path='/profile' component={null} />
+        <PrivateRoute isAuthenticated={isAuthenticated} path='/profile' component={Profile} />
         <Route exact path='/cognito/callback' component={CognitoCallback} />
       </Switch>
       <PresentationView onCancel={hide} videoInfo={videoInfo} visible={isVisible} />

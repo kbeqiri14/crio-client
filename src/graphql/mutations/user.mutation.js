@@ -5,11 +5,11 @@ export const signIn = gql`
     saveUser {
       id
       userId
+      fbUserId
       email
       username
       firstName
       lastName
-      creator
     }
   }
 `;

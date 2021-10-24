@@ -98,7 +98,7 @@ const RandomAuthorArtworks = ({ posters }) => (
     <div className='cr-artworks-section__author'>
       <Title level='10' color='white' inline>
         © Artwork by &nbsp;
-        <Link>Ann Bee</Link>
+        <Link to='/profile/Ann Bee'>Ann Bee</Link>
       </Title>
     </div>
     <ScrollPosters />
@@ -146,11 +146,9 @@ export const Feed = () => {
               <Text level='30' color='dark' inline>
                 © Artwork by &nbsp;
               </Text>
-              <Link>
-                <Text level='30' color='secondary' inline>
-                  {currentPoster.author.name}
-                </Text>
-              </Link>
+              <Text level='30' color='secondary' inline>
+                <Link to={`/profile/${currentPoster.author.name}`}>{currentPoster.author.name}</Link>
+              </Text>
             </div>
             <div className='cr-carousel__cards--title'>
               <Title level='10' color='dark'>

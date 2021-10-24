@@ -1,8 +1,9 @@
-import { Fragment, memo, useMemo, useState } from 'react';
+import { Fragment, memo, useState } from 'react';
 import { Space, Switch } from 'antd';
+import { useQuery } from '@apollo/client';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
-import { useCurrentUser } from '@app/auth/hooks';
+import { me } from '@app/graphql/queries/users.query';
 import { Title } from '@ui-kit/Text';
 import PersonalInfo from './__partials__/PersonalInfo';
 import EditProfile from './__partials__/EditProfile';
@@ -11,21 +12,21 @@ import Details from './Details';
 export const MyAccount = () => {
   const [visible, setVisible] = useState(false);
   const [isCreator, setIsCreator] = useState(true);
-  const { user } = useCurrentUser();
-  const { user: loggedInUser } = useLoggedInUser();
+  const { user, dispatchUser } = useLoggedInUser();
 
-  const userInfo = useMemo(
-    () => ({ ...user?.attributes, ...loggedInUser }),
-    [user?.attributes, loggedInUser],
-  );
+  useQuery(me, {
+    onCompleted: (data) => dispatchUser(data?.me),
+    onError: (data) => console.log(data, 'error'),
+  });
+
   return (
     <Fragment>
       <Space style={{ padding: '10px 40px' }}>
         <Title inline level='10' color='white'>Creator view</Title>
         <Switch checked={isCreator} onChange={() => setIsCreator(!isCreator)} />
       </Space>
-      <PersonalInfo user={userInfo} editProfile={() => setVisible(true)} />
-      <EditProfile user={userInfo} visible={visible} closeModal={() => setVisible(false)} />
+      <PersonalInfo user={user} editProfile={() => setVisible(true)} />
+      <EditProfile user={user} visible={visible} closeModal={() => setVisible(false)} />
       <Details isCreator={isCreator} />
     </Fragment>
   );

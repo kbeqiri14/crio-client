@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { Col, Row } from 'antd';
 import { useMutation } from '@apollo/client';
 
@@ -21,6 +21,7 @@ const Footer = ({ user, closeModal, handleSubmit }) => {
     (attributes) => updateUserInfo({ variables: { attributes } }),
     [updateUserInfo],
   );
+  const disabled = useMemo(() => !!user.username, [user.username]);
 
   return <Col>
     <Row gutter={30}>
@@ -32,8 +33,8 @@ const Footer = ({ user, closeModal, handleSubmit }) => {
       <Col>
         <SecondaryButton
           filled
-          fillColor='white_25'
-          textColor='white_75'
+          fillColor={disabled ? 'white_25' : undefined}
+          textColor={disabled ? 'white_75' : 'white'}
           size='large'
           loading={loading}
           onClick={handleSubmit(onSubmit)}

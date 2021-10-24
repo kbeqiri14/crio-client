@@ -5,6 +5,7 @@ import { PosterCard } from '@shared/PostersList';
 import ProfileInfo from '@shared/ProfileInfo';
 import { getPosters } from '@screens/LandingPage/posters';
 import { Slider } from '@ui-kit/Slider';
+import fan from '@images/fan.png';
 
 const videoPosters = getPosters(8);
 const SliderBreakPoints = {
@@ -42,6 +43,7 @@ const mockCreator = {
   name: 'Ben Dee',
   username: 'allergic_designer',
   email: 'ben.dee@gmail.com',
+  picture: fan,
 };
 
 const FollowingRow = () => (
