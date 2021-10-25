@@ -1,39 +1,5 @@
 @import 'variables';
 
-.slider {
-  &-left,
-  &-right {
-    position: absolute;
-    top: 0;
-    overflow: hidden;
-    height: 276px;
-    width: 100px;
-    display: flex;
-    button {
-      &:focus-visible {
-        border: none;
-        outline: none;
-        box-shadow: none;
-      }
-      height: 100%;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      transition: opacity 0.3s ease;
-    }
-  }
-  &-left {
-    left: -9px;
-    justify-content: flex-start;
-  }
-  &-right {
-    right: 0;
-    justify-content: flex-end;
-  }
-}
-
 .cr-feed {
   &__poster-carousel {
     height: 649px;
