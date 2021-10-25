@@ -28,6 +28,8 @@ const EditProfile = ({ user, visible, closeModal }) => {
       closeIcon={<CloseIcon />}
       onCancel={closeModal}
       className='edit-profile'
+      transitionName='none'
+      maskTransitionName='none'
     >
       <Row justify='center' gutter={[0, 55]}>
         <Header />
