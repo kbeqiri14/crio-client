@@ -6,7 +6,7 @@ import 'swiper/swiper.min.css';
 import 'swiper/components/navigation/navigation.min.css';
 import './styles.less';
 
-export const SliderScroll = () => <div className='swiper-scrollbar' />;
+window.swipersCount = 0;
 
 export const Slider = ({
   children,
@@ -17,6 +17,12 @@ export const Slider = ({
   breakpoints,
 }) => {
   const swiper = useRef();
+  const { current: classNames } = useRef({
+    scrollClass: `swiper-scrollbar-${window.swipersCount}`,
+    nextBtnClass: `swiper-button-next-${window.swipersCount}`,
+    prevBtnClass: `swiper-button-prev-${window.swipersCount}`,
+    containerClass: `instance-${window.swipersCount}`,
+  });
 
   useLayoutEffect(() => {
     const modules = [Navigation];
@@ -32,35 +38,36 @@ export const Slider = ({
       grabCursor: true,
       spaceBetween: gap,
       navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
+        nextEl: `.${classNames.nextBtnClass}`,
+        prevEl: `.${classNames.prevBtnClass}`,
       },
       scrollbar: {
-        el: '.swiper-scrollbar',
+        el: `.${classNames.scrollClass}`,
         hide: false,
       },
       breakpoints,
     };
 
     if (!swiper.current) {
-      swiper.current = new Swiper('.swiper-container', swiperParameters);
+      swiper.current = new Swiper(`.${classNames.containerClass}`, swiperParameters);
+      window.swipersCount++;
     } else {
       swiper.current.update();
     }
-  }, [breakpoints, gap, slidesPerGroup, slidesPerView, withScroll]);
+  }, [breakpoints, classNames, gap, slidesPerGroup, slidesPerView, withScroll]);
 
   return (
     <div className={cc(['crio-slider', { 'with-scroll': withScroll }])}>
-      <div className={cc(['swiper-container'])}>
+      <div className={cc(['swiper-container', classNames.containerClass])}>
         <div className='swiper-wrapper'>
           {Children.map(children, (child) => (
             <div className='swiper-slide'>{child}</div>
           ))}
         </div>
-        <button className='swiper-button-prev' />
-        <button className='swiper-button-next' />
+        <button className={cc([classNames.prevBtnClass, 'swiper-button-prev'])} />
+        <button className={cc([classNames.nextBtnClass, 'swiper-button-next'])} />
       </div>
-      <SliderScroll />
+      <div className={cc([classNames.scrollClass, 'swiper-scrollbar'])} />
     </div>
   );
 };
