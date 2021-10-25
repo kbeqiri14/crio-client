@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { Col, Modal, Row } from 'antd';
-import ReactPlayer from 'react-player/vimeo';
 import { getPosters } from '@screens/LandingPage/posters';
 import { PosterCard } from '@shared/PostersList';
 import { Text, Title } from '@ui-kit/Text';
@@ -27,46 +26,49 @@ export const PresentationView = ({ visible, videoInfo, onCancel }) => {
       className='video-view-modal'
     >
       <div className='video-view-container'>
-        <div className='video-view-column'>
-          <Row justify='start' align='middle' className='video-view-author'>
-            <Col>
-              <img src={videoInfo.author.avatar} alt='Author avatar' />
-            </Col>
-            <Col>
-              <div>
-                <Title level='10' color='white' inline>
-                  {videoInfo.title}
-                </Title>
-              </div>
-              <div>
-                <Link>
-                  <Title level='20' color='primary' inline>
-                    {videoInfo.author.name}
-                  </Title>
-                </Link>
-              </div>
-            </Col>
-          </Row>
-          <Row className='video-view__player'>
-            <ReactPlayer
-              style={{
-                borderRadius: '16px',
-              }}
-              className='cr-video-player'
-              width='100%'
-              height='100%'
-              controls
-              url={videoInfo?.url}
-            />
-          </Row>
-          <Row>
+        <Row className='video-view-column'>
+          <Col span={18} offset={3} className='video-view-author'>
+            <Row align='middle'>
+              <Col className='author-avatar'>
+                <img src={videoInfo.author.avatar} alt='Author avatar' />
+              </Col>
+              <Col>
+                <Row>
+                  <Col span={24}>
+                    <Title level='10' color='white' inline>
+                      {videoInfo.title}
+                    </Title>
+                  </Col>
+                  <Col span={24}>
+                    <Link>
+                      <Title level='20' color='primary' inline>
+                        {videoInfo.author.name}
+                      </Title>
+                    </Link>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+          </Col>
+          <Col span={18} offset={3}>
+            <div className='video-view__player embed-responsive aspect-ratio-16/9'>
+              <iframe
+                title={videoInfo.title || 'Crio video player'}
+                src='https://player.vimeo.com/video/382975976?h=dc77330a55&color=ffffff&title=0&byline=0&portrait=0'
+                frameBorder='0'
+                allow='autoplay; fullscreen; picture-in-picture'
+                allowFullScreen
+              />
+            </div>
+          </Col>
+          <Col span={18} offset={3}>
             <Text level='10' color='white'>
               {videoInfo.description}
             </Text>
-          </Row>
-        </div>
-        <div className='video-player-more'>
-          <div className='column'>
+          </Col>
+        </Row>
+        <Row justify='start' className='video-player-more'>
+          <Col span={18} offset={3} className='column'>
             <Row justify='space-between' align='middle'>
               <Col>
                 <Text level='40' color='white'>
@@ -81,17 +83,15 @@ export const PresentationView = ({ visible, videoInfo, onCancel }) => {
                 </Link>
               </Col>
             </Row>
-            <Row justify='center' align='middle'>
-              <Row gutter={[22, 0]} justify='center' align='middle'>
-                {posters.map((p, idx) => (
-                  <Col span={8} key={idx}>
-                    <PosterCard poster={p} author='Ann Bee' title='Blah' />
-                  </Col>
-                ))}
-              </Row>
+            <Row gutter={[22, 22]} justify='center' align='middle'>
+              {posters.map((p, idx) => (
+                <Col xl={8} md={12} sm={24} xs={24} key={idx}>
+                  <PosterCard poster={p} author='Ann Bee' title='Blah' />
+                </Col>
+              ))}
             </Row>
-          </div>
-        </div>
+          </Col>
+        </Row>
       </div>
     </Modal>
   );
