@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/client';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { me } from '@app/graphql/queries/users.query';
 import { Title } from '@ui-kit/Text';
+import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import PersonalInfo from './__partials__/PersonalInfo';
 import EditProfile from './__partials__/EditProfile';
 import Details from './Details';
@@ -16,7 +17,7 @@ export const MyAccount = () => {
 
   const editProfile = useCallback(() => setVisible(true), []);
   const closeModal = useCallback(() => setVisible(false), []);
-  useQuery(me, {
+  const { loading } = useQuery(me, {
     onCompleted: (data) => dispatchUser(data?.me),
     onError: (data) => console.log(data, 'error'),
   });
@@ -27,7 +28,7 @@ export const MyAccount = () => {
         <Title inline level='10' color='white'>Creator view</Title>
         <Switch checked={isCreator} onChange={() => setIsCreator(!isCreator)} />
       </Space>
-      <PersonalInfo user={user} editProfile={editProfile} />
+      {loading ? <GlobalSpinner /> : <PersonalInfo user={user} editProfile={editProfile} />}
       {visible && <EditProfile user={user} visible={visible} closeModal={closeModal} />}
       <Details isCreator={isCreator} />
     </Fragment>

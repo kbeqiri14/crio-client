@@ -32,10 +32,10 @@ const Footer = ({ user, disabled, closeModal, handleSubmit }) => {
       <Col>
         <SecondaryButton
           filled
-          fillColor={disabled ? 'white_25' : undefined}
           textColor={disabled ? 'white_75' : 'white'}
           size='large'
           loading={loading}
+          disabled={disabled}
           onClick={handleSubmit(onSubmit)}
         >
           SAVE

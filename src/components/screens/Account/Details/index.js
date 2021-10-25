@@ -1,7 +1,6 @@
 import { Fragment, memo } from 'react';
 import { Tabs } from 'antd';
 
-import { ReactComponent as GreenSunIcon } from '@svgs/follow.svg';
 import Followings from '../../Profile/Fan/Followings';
 import Works from '../../Profile/Creator/Works';
 import Perks from '../../Profile/Creator/Perks';
@@ -19,7 +18,6 @@ const Details = ({ isProfile, isCreator }) => (
         <Perks isProfile={isProfile} />
       </TabPane>}
     </Tabs>
-    <GreenSunIcon />
   </Fragment>
 );
 
