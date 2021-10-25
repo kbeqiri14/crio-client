@@ -47,8 +47,6 @@ export const Slider = ({
     } else {
       swiper.current.update();
     }
-
-    return () => swiper.current.destroy();
   }, [breakpoints, gap, slidesPerGroup, slidesPerView, withScroll]);
 
   return (
