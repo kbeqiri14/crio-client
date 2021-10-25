@@ -13,12 +13,14 @@ const EditProfile = ({ user, visible, closeModal }) => {
   const lastName = watch('lastName');
   const username = watch('username');
 
-  const disabled = useMemo(() => (
-    username !== ''
-    && ((firstName && user?.firstName !== firstName)
-      || (lastName && user?.lastName !== lastName)
-      || (username && user?.username !== username))
-  ), [user?.firstName, user?.lastName, user?.username, firstName, lastName, username])
+  const disabled = useMemo(
+    () =>
+      username !== '' &&
+      ((firstName && user?.firstName !== firstName) ||
+        (lastName && user?.lastName !== lastName) ||
+        (username && user?.username !== username)),
+    [user?.firstName, user?.lastName, user?.username, firstName, lastName, username],
+  );
 
   return (
     <Modal
@@ -72,7 +74,12 @@ const EditProfile = ({ user, visible, closeModal }) => {
             </FormRow>
           </Row>
         </Col>
-        <Footer user={user} disabled={!disabled} closeModal={closeModal} handleSubmit={handleSubmit} />
+        <Footer
+          user={user}
+          disabled={!disabled}
+          closeModal={closeModal}
+          handleSubmit={handleSubmit}
+        />
       </Row>
     </Modal>
   );

@@ -2,6 +2,7 @@ import { Fragment, useState } from 'react';
 import { Carousel, Row } from 'antd';
 import { Link } from 'react-router-dom';
 import { getPosters } from '@screens/LandingPage/posters';
+import { usePresentation, defaultMockValue } from '@shared/PresentationView';
 import { PosterCard, renderPosters } from '@shared/PostersList';
 import { Footer } from '@shared/Footer';
 import { Meta } from '@shared/Meta';
@@ -81,19 +82,25 @@ const SliderBreakPoints = {
 const videoPosters = getPosters(8);
 const authorVideoPosters = getPosters(15);
 
-const ScrollPosters = () => {
+const ScrollPosters = ({ handleClick }) => {
   return (
     <div className='cr-feed__poster-scroll'>
       <Slider withScroll breakpoints={SliderBreakPoints}>
         {videoPosters.concat(videoPosters).map((p, idx) => (
-          <PosterCard key={idx} poster={p} author='Ann Bee' title='Work’s name goes here' />
+          <PosterCard
+            onClick={() => handleClick(defaultMockValue)}
+            key={idx}
+            poster={p}
+            author='Ann Bee'
+            title='Work’s name goes here'
+          />
         ))}
       </Slider>
     </div>
   );
 };
 
-const RandomAuthorArtworks = ({ posters }) => (
+const RandomAuthorArtworks = ({ posters, handleClick }) => (
   <Fragment>
     <div className='cr-artworks-section__author'>
       <Title level='10' color='white' inline>
@@ -101,7 +108,7 @@ const RandomAuthorArtworks = ({ posters }) => (
         <Link to='/profile/Ann Bee'>Ann Bee</Link>
       </Title>
     </div>
-    <ScrollPosters />
+    <ScrollPosters handleClick={handleClick} />
     <Row gutter={[22, 35]} className='cr-landing__video-grid__container random-works'>
       {posters}
     </Row>
@@ -109,8 +116,9 @@ const RandomAuthorArtworks = ({ posters }) => (
 );
 
 export const Feed = () => {
-  const [topPosters] = useState(renderPosters(videoPosters, 0));
-  const [bottomPosters] = useState(renderPosters(authorVideoPosters, 3));
+  const { show } = usePresentation();
+  const [topPosters] = useState(renderPosters(videoPosters, 0, show));
+  const [bottomPosters] = useState(renderPosters(authorVideoPosters, 3, show));
   const [authorBlocks, setAuthorBlocks] = useState(Array.from({ length: 1 }, () => uuid()));
   const [currentPoster, setCurrentPoster] = useState(carouselPosters[0]);
 
@@ -147,7 +155,9 @@ export const Feed = () => {
                 © Artwork by &nbsp;
               </Text>
               <Text level='30' color='secondary' inline>
-                <Link to={`/profile/${currentPoster.author.name}`}>{currentPoster.author.name}</Link>
+                <Link to={`/profile/${currentPoster.author.name}`}>
+                  {currentPoster.author.name}
+                </Link>
               </Text>
             </div>
             <div className='cr-carousel__cards--title'>
@@ -169,7 +179,7 @@ export const Feed = () => {
         </Row>
         <div className='cr-artworks-section'>
           {authorBlocks.map((blockId) => (
-            <RandomAuthorArtworks key={blockId} posters={bottomPosters} />
+            <RandomAuthorArtworks handleClick={show} key={blockId} posters={bottomPosters} />
           ))}
           <Row className='cr-landing__video-grid__see-all'>
             <SecondaryButton onClick={handleLoadMore}>LOAD MORE</SecondaryButton>

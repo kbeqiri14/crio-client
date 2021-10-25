@@ -36,22 +36,22 @@ export const SecondaryButton = ({
       onClick={onClick}
       disabled={disabled}
     >
-      {
-        loading
-          ? <LoaderIcon color={textColor} className='loader' />
-          : <Fragment>
-              {icon}
-              {size === 'large' ? (
-                <Title inline level='30' color={textColor} className='cr-button-secondary__text'>
-                  {children}
-                </Title>
-              ) : (
-                <Text inline level='40' color={textColor} className='cr-button-secondary__text'>
-                  {children}
-                </Text>
-              )}
-            </Fragment>
-      }
+      {loading ? (
+        <LoaderIcon color={textColor} className='loader' />
+      ) : (
+        <Fragment>
+          {icon}
+          {size === 'large' ? (
+            <Title inline level='30' color={textColor} className='cr-button-secondary__text'>
+              {children}
+            </Title>
+          ) : (
+            <Text inline level='40' color={textColor} className='cr-button-secondary__text'>
+              {children}
+            </Text>
+          )}
+        </Fragment>
+      )}
     </button>
   );
 };

@@ -14,9 +14,11 @@ const Details = ({ isProfile, isCreator }) => (
       <TabPane tab={isProfile || isCreator ? 'WORKS 126' : 'FOLLOWING: 2'} key='1'>
         {isProfile || isCreator ? <Works /> : <Followings />}
       </TabPane>
-      {(isProfile || isCreator) && <TabPane tab='PERKS' key='2'>
-        <Perks isProfile={isProfile} />
-      </TabPane>}
+      {(isProfile || isCreator) && (
+        <TabPane tab='PERKS' key='2'>
+          <Perks isProfile={isProfile} />
+        </TabPane>
+      )}
     </Tabs>
   </Fragment>
 );

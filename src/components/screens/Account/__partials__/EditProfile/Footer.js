@@ -12,7 +12,7 @@ const Footer = ({ user, disabled, closeModal, handleSubmit }) => {
     onCompleted: (data) => {
       dispatchUser({ ...user, ...data.updateUser });
       closeModal();
-      successToast('Your profile has been updated.')
+      successToast('Your profile has been updated.');
     },
   });
   const { dispatchUser } = useLoggedInUser();
@@ -22,27 +22,34 @@ const Footer = ({ user, disabled, closeModal, handleSubmit }) => {
     [updateUserInfo],
   );
 
-  return <Col>
-    <Row gutter={30}>
-      <Col>
-        <SecondaryButton textColor='white_75' borderColor='white_75' size='large' onClick={closeModal}>
-          CANCEL
-        </SecondaryButton>
-      </Col>
-      <Col>
-        <SecondaryButton
-          filled
-          textColor={disabled ? 'white_75' : 'white'}
-          size='large'
-          loading={loading}
-          disabled={disabled}
-          onClick={handleSubmit(onSubmit)}
-        >
-          SAVE
-        </SecondaryButton>
-      </Col>
-    </Row>
-  </Col>
+  return (
+    <Col>
+      <Row gutter={30}>
+        <Col>
+          <SecondaryButton
+            textColor='white_75'
+            borderColor='white_75'
+            size='large'
+            onClick={closeModal}
+          >
+            CANCEL
+          </SecondaryButton>
+        </Col>
+        <Col>
+          <SecondaryButton
+            filled
+            textColor={disabled ? 'white_75' : 'white'}
+            size='large'
+            loading={loading}
+            disabled={disabled}
+            onClick={handleSubmit(onSubmit)}
+          >
+            SAVE
+          </SecondaryButton>
+        </Col>
+      </Row>
+    </Col>
+  );
 };
 
 export default memo(Footer);

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Col, Modal, Row } from 'antd';
 import { getPosters } from '@screens/LandingPage/posters';
+import { defaultMockValue, usePresentation } from '@shared/PresentationView/PresentationContext';
 import { PosterCard } from '@shared/PostersList';
 import { Text, Title } from '@ui-kit/Text';
 import { ReactComponent as CloseIcon } from '@svgs/x.svg';
@@ -8,9 +9,11 @@ import './styles.less';
 
 const posters = getPosters(3);
 
-export { usePresentation, PresentationProvider } from './PresentationContext';
+export { usePresentation, PresentationProvider, defaultMockValue } from './PresentationContext';
 
 export const PresentationView = ({ visible, videoInfo, onCancel }) => {
+  const { show } = usePresentation();
+
   if (!videoInfo.author || !videoInfo.url) {
     return null;
   }
@@ -86,7 +89,12 @@ export const PresentationView = ({ visible, videoInfo, onCancel }) => {
             <Row gutter={[22, 22]} justify='center' align='middle'>
               {posters.map((p, idx) => (
                 <Col xl={8} md={12} sm={24} xs={24} key={idx}>
-                  <PosterCard poster={p} author='Ann Bee' title='Blah' />
+                  <PosterCard
+                    onClick={() => show(defaultMockValue)}
+                    poster={p}
+                    author='Ann Bee'
+                    title='Blah'
+                  />
                 </Col>
               ))}
             </Row>

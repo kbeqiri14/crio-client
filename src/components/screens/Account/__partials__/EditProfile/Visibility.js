@@ -6,22 +6,20 @@ import { ReactComponent as ArrowBottomIcon } from '@svgs/arrow-down.svg';
 
 const Item = memo(({ icon, label, showIcon }) => (
   <Row align='middle' className='visibility'>
-    <Col span={5}>
-      {icon}
-    </Col>
+    <Col span={5}>{icon}</Col>
     <Col span={16}>
       <Title inline level={30} color='white'>
         {label}
       </Title>
     </Col>
-    <Col span={3}>
-      {showIcon && <ArrowBottomIcon />}
-    </Col>
+    <Col span={3}>{showIcon && <ArrowBottomIcon />}</Col>
   </Row>
 ));
 
 const Visibility = ({ options = [], defaultValue, onChange }) => {
-  const [selectedValue, setSelectedValue] = useState(options.find(({ value }) => value === defaultValue) || options[0]);
+  const [selectedValue, setSelectedValue] = useState(
+    options.find(({ value }) => value === defaultValue) || options[0],
+  );
 
   const handleMenuItemClick = useCallback(
     (option) => () => {
@@ -31,17 +29,17 @@ const Visibility = ({ options = [], defaultValue, onChange }) => {
     [onChange],
   );
 
-  const menu = <Menu>
-    {
-      options
+  const menu = (
+    <Menu>
+      {options
         .filter(({ value }) => value !== selectedValue.value)
         .map((item) => (
           <Menu.Item key={item.value} onClick={handleMenuItemClick(item)}>
             <Item icon={item.icon} label={item.title} />
           </Menu.Item>
-        ))
-    }
-  </Menu>;
+        ))}
+    </Menu>
+  );
 
   return (
     <Col span={6}>

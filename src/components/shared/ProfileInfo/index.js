@@ -17,9 +17,11 @@ const ProfileInfo = ({ name, username, email, picture, isCreator }) => (
       <Title level={10} color='white'>
         {name}
       </Title>
-      {username && <Title level={30} color='white'>
-        @{username}
-      </Title>}
+      {username && (
+        <Title level={30} color='white'>
+          @{username}
+        </Title>
+      )}
       {email && (
         <Text level={10} color='white_75'>
           <MailIcon />

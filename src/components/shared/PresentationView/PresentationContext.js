@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 
-const defaultMockValue = {
+export const defaultMockValue = {
   title: 'Work’s name goes here',
   description:
     'Hi everyone!\n\nToday I wanna share with you my work.\nYour feedback and appreciation are always welcome.',

@@ -25,7 +25,9 @@ export const MyAccount = () => {
   return (
     <Fragment>
       <Space style={{ padding: '10px 40px' }}>
-        <Title inline level='10' color='white'>Creator view</Title>
+        <Title inline level='10' color='white'>
+          Creator view
+        </Title>
         <Switch checked={isCreator} onChange={() => setIsCreator(!isCreator)} />
       </Space>
       {loading ? <GlobalSpinner /> : <PersonalInfo user={user} editProfile={editProfile} />}
