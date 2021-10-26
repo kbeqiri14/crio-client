@@ -44,7 +44,10 @@ const ScrollPosters = () => {
 const FollowingRow = ({ user }) => (
   <Row justify='center'>
     <Col span={6}>
-      <ProfileInfo {...{ ...user, picture: require(`../../../../assets/images/mock-creators/${user.firstName}.png`).default }} />
+      <ProfileInfo
+        isFollowing
+        {...{ ...user, picture: require(`../../../../assets/images/mock-creators/${user.firstName}.png`).default }}
+      />
     </Col>
     <Col span={14}>
       <div className='cr-artworks-section'>

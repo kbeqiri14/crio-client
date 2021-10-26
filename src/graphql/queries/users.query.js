@@ -2,6 +2,7 @@ import { gql } from '@apollo/client';
 
 export const me_fragment = gql`
   fragment Me on UserInfo {
+    id
     email
     userId
     fbUserId

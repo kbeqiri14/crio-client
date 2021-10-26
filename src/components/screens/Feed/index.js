@@ -105,7 +105,7 @@ const RandomAuthorArtworks = ({ posters, handleClick }) => (
     <div className='cr-artworks-section__author'>
       <Title level='10' color='white' inline>
         © Artwork by &nbsp;
-        <Link to='/profile/Ann Bee'>Ann Bee</Link>
+        <Link>Ann Bee</Link>
       </Title>
     </div>
     <ScrollPosters handleClick={handleClick} />
@@ -154,7 +154,7 @@ export const Feed = () => {
               <Text level='30' color='dark' inline>
                 © Artwork by &nbsp;
               </Text>
-              <Link to={`/profile/${currentPoster.author.name}`}>
+              <Link>
                 <Text level='30' color='secondary' inline>
                   {currentPoster.author.name}
                 </Text>
