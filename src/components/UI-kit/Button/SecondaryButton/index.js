@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cc from 'classcat';
 
 import { Text, Title } from '@ui-kit/Text';
-import { ReactComponent as LoaderIcon } from '@svgs/loader.svg';
+import { Spinner } from '@ui-kit/Spinner';
 
 export const SecondaryButton = ({
   children,
@@ -36,9 +36,9 @@ export const SecondaryButton = ({
       onClick={onClick}
       disabled={disabled}
     >
-      {loading ? (
-        <LoaderIcon color={textColor} className='loader' />
-      ) : (
+      {loading
+        ? <Spinner spinning={true} color={textColor} />
+        : (
         <Fragment>
           {icon}
           {size === 'large' ? (

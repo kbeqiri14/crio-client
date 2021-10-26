@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/client';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { me } from '@app/graphql/queries/users.query';
 import { Title } from '@ui-kit/Text';
-import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
+import { Spinner } from '@ui-kit/Spinner';
 import PersonalInfo from './__partials__/PersonalInfo';
 import EditProfile from './__partials__/EditProfile';
 import Details from './Details';
@@ -30,7 +30,9 @@ export const MyAccount = () => {
         </Title>
         <Switch checked={isCreator} onChange={() => setIsCreator(!isCreator)} />
       </Space>
-      {loading ? <GlobalSpinner /> : <PersonalInfo user={user} editProfile={editProfile} />}
+      <Spinner spinning={loading} color='white'>
+        <PersonalInfo user={user} editProfile={editProfile} />
+      </Spinner>
       {visible && <EditProfile user={user} visible={visible} closeModal={closeModal} />}
       <Details isCreator={isCreator} />
     </Fragment>
