@@ -8,9 +8,13 @@ import ProfileInfo from '@shared/ProfileInfo';
 import './styles.less';
 
 const PersonalInfo = ({ isProfile, user, editProfile }) => {
-  const picture = useMemo(() => (
-    user.fbUserId ? `https://graph.facebook.com/${user.fbUserId}/picture?height=350&width=350` : user.picture
-  ), [user.fbUserId, user.picture]);
+  const picture = useMemo(
+    () =>
+      user.fbUserId
+        ? `https://graph.facebook.com/${user.fbUserId}/picture?height=350&width=350`
+        : user.picture,
+    [user.fbUserId, user.picture],
+  );
 
   return (
     <Row justify='space-between' align='middle' className='personal-info'>
@@ -20,7 +24,8 @@ const PersonalInfo = ({ isProfile, user, editProfile }) => {
           username={isProfile ? user?.username : undefined}
           email={user?.email}
           picture={picture}
-          isCreator={user?.isCreator} />
+          isCreator={user?.isCreator}
+        />
       </Col>
       <Col>
         <SecondaryButton

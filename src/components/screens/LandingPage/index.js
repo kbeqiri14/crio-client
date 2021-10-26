@@ -25,13 +25,12 @@ export const LandingPage = () => {
   const [listLoaded, setListLoaded] = useState(false);
 
   const { show } = usePresentation();
-  const handleClickPoster = (info) => show(info);
   const [postersList, setPostersList] = useState(
-    renderPosters(videoPosters, largePostersCount, handleClickPoster),
+    renderPosters(videoPosters, largePostersCount, show),
   );
 
   const handleLoadList = () => {
-    setPostersList([...postersList, ...renderPosters(videoPosters, largePostersCount)]);
+    setPostersList([...postersList, ...renderPosters(videoPosters, largePostersCount, show)]);
     setListLoaded(true);
   };
 
