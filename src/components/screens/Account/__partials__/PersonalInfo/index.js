@@ -22,9 +22,10 @@ const PersonalInfo = ({ isProfile, user, editProfile }) => {
         <ProfileInfo
           firstName={user?.firstName}
           lastName={user?.lastName}
-          username={isProfile ? user?.username : undefined}
+          username={user?.username}
           email={user?.email}
           picture={picture}
+          isProfile={isProfile}
           isCreator={user?.isCreator}
         />
       </Col>

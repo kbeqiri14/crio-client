@@ -2,12 +2,14 @@ import { memo, useState } from 'react';
 import { Row } from 'antd';
 
 import { renderPosters } from '@shared/PostersList';
+import { usePresentation } from '@shared/PresentationView';
 import { getPosters } from '@screens/LandingPage/posters';
 
 const videoPosters = getPosters(8);
 
 const Works = () => {
-  const [topPosters] = useState(renderPosters(videoPosters, 0));
+  const { show } = usePresentation();
+  const [topPosters] = useState(renderPosters(videoPosters, 0, show));
 
   return (
     <div className='cr-feed__posters-list cr-landing__video-grid'>

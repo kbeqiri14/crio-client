@@ -5,11 +5,11 @@ import { useQuery } from '@apollo/client';
 import { getCreatorUsers } from '@app/graphql/queries/users.query';
 import { PosterCard } from '@shared/PostersList';
 import ProfileInfo from '@shared/ProfileInfo';
+import { usePresentation, defaultMockValue } from '@shared/PresentationView';
 import { getPosters } from '@screens/LandingPage/posters';
 import { Slider } from '@ui-kit/Slider';
 import { Spinner } from '@ui-kit/Spinner';
 
-const videoPosters = getPosters(8);
 const SliderBreakPoints = {
   1440: {
     slidesPerView: 4,
@@ -28,20 +28,27 @@ const SliderBreakPoints = {
     slidesPerGroup: 1,
   },
 };
+const videoPosters = getPosters(8);
 
-const ScrollPosters = () => {
+const ScrollPosters = ({ handleClick }) => {
   return (
     <div className='cr-feed__poster-scroll'>
       <Slider withScroll breakpoints={SliderBreakPoints}>
         {videoPosters.concat(videoPosters).map((p, idx) => (
-          <PosterCard key={idx} poster={p} author='Ann Bee' title='Work’s name goes here' />
+          <PosterCard
+            onClick={() => handleClick(defaultMockValue)}
+            key={idx}
+            poster={p}
+            author='Ann Bee'
+            title='Work’s name goes here'
+          />
         ))}
       </Slider>
     </div>
   );
 };
 
-const FollowingRow = ({ user }) => (
+const FollowingRow = ({ user, handleClick }) => (
   <Row justify='center'>
     <Col span={6}>
       <ProfileInfo
@@ -51,17 +58,21 @@ const FollowingRow = ({ user }) => (
     </Col>
     <Col span={14}>
       <div className='cr-artworks-section'>
-        <ScrollPosters />
+        <ScrollPosters handleClick={handleClick} />
       </div>
     </Col>
   </Row>
 );
 
 const Followings = () => {
+  const { show } = usePresentation();
   const { data, loading } = useQuery(getCreatorUsers);
-  return <Spinner spinning={loading} color='white'>
-    {data?.getCreatorUsers?.map(({ userId, ...user }) => <FollowingRow key={userId} user={user} />)}
-  </Spinner>
+
+  return (
+    <Spinner spinning={loading} color='white'>
+      {data?.getCreatorUsers?.map(({ userId, ...user }) => <FollowingRow key={userId} user={user} handleClick={show} />)}
+    </Spinner>
+  );
 };
 
 export default memo(Followings);
