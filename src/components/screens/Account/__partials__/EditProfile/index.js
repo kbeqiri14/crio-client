@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import { Col, Modal, Row } from 'antd';
 import { useForm } from 'react-hook-form';
 
@@ -12,13 +12,6 @@ const EditProfile = ({ user, visible, closeModal }) => {
   const firstName = watch('firstName');
   const lastName = watch('lastName');
   const username = watch('username');
-
-  const disabled = useMemo(() => (
-    username !== ''
-    && ((firstName && user?.firstName !== firstName)
-      || (lastName && user?.lastName !== lastName)
-      || (username && user?.username !== username))
-  ), [user?.firstName, user?.lastName, user?.username, firstName, lastName, username])
 
   return (
     <Modal
@@ -72,7 +65,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
             </FormRow>
           </Row>
         </Col>
-        <Footer user={user} disabled={!disabled} closeModal={closeModal} handleSubmit={handleSubmit} />
+        <Footer updatedData={{ firstName, lastName, username }} closeModal={closeModal} handleSubmit={handleSubmit} />
       </Row>
     </Modal>
   );

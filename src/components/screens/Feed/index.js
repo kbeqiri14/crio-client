@@ -146,9 +146,11 @@ export const Feed = () => {
               <Text level='30' color='dark' inline>
                 © Artwork by &nbsp;
               </Text>
-              <Text level='30' color='secondary' inline>
-                <Link to={`/profile/${currentPoster.author.name}`}>{currentPoster.author.name}</Link>
-              </Text>
+              <Link to={`/profile/${currentPoster.author.name}`}>
+                <Text level='30' color='secondary' inline>
+                  {currentPoster.author.name}
+                </Text>
+              </Link>
             </div>
             <div className='cr-carousel__cards--title'>
               <Title level='10' color='dark'>
