@@ -28,3 +28,13 @@ export const getUser = gql`
   }
   ${me_fragment}
 `;
+
+
+export const getCreatorUsers = gql`
+  query {
+    getCreatorUsers {
+      ...Me
+    }
+  }
+  ${me_fragment}
+`;

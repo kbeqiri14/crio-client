@@ -1,11 +1,13 @@
 import { memo } from 'react';
 import { Col, Row } from 'antd';
+import { useQuery } from '@apollo/client';
 
+import { getCreatorUsers } from '@app/graphql/queries/users.query';
 import { PosterCard } from '@shared/PostersList';
 import ProfileInfo from '@shared/ProfileInfo';
 import { getPosters } from '@screens/LandingPage/posters';
 import { Slider } from '@ui-kit/Slider';
-import fan from '@images/fan.png';
+import { Spinner } from '@ui-kit/Spinner';
 
 const videoPosters = getPosters(8);
 const SliderBreakPoints = {
@@ -39,17 +41,10 @@ const ScrollPosters = () => {
   );
 };
 
-const mockCreator = {
-  name: 'Ben Dee',
-  username: 'allergic_designer',
-  email: 'ben.dee@gmail.com',
-  picture: fan,
-};
-
-const FollowingRow = () => (
+const FollowingRow = ({ user }) => (
   <Row justify='center'>
     <Col span={6}>
-      <ProfileInfo {...mockCreator} />
+      <ProfileInfo {...{ ...user, picture: require(`../../../../assets/images/mock-creators/${user.firstName}.png`).default }} />
     </Col>
     <Col span={14}>
       <div className='cr-artworks-section'>
@@ -59,6 +54,11 @@ const FollowingRow = () => (
   </Row>
 );
 
-const Followings = () => [1, 2].map((item) => <FollowingRow key={item} />);
+const Followings = () => {
+  const { data, loading } = useQuery(getCreatorUsers);
+  return <Spinner spinning={loading} color='white'>
+    {data?.getCreatorUsers?.map(({ userId, ...user }) => <FollowingRow key={userId} user={user} />)}
+  </Spinner>
+};
 
 export default memo(Followings);

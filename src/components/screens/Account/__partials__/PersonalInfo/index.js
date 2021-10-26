@@ -20,7 +20,8 @@ const PersonalInfo = ({ isProfile, user, editProfile }) => {
     <Row justify='space-between' align='middle' className='personal-info'>
       <Col span={16}>
         <ProfileInfo
-          name={`${user?.firstName || ''} ${user?.lastName || ''}`}
+          firstName={user?.firstName}
+          lastName={user?.lastName}
           username={isProfile ? user?.username : undefined}
           email={user?.email}
           picture={picture}
