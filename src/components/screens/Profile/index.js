@@ -28,11 +28,11 @@ export const Profile = () => {
     variables: { followingId: pathname.split('/')[2] },
     onCompleted: data => {
       if (data?.createFollowing) {
-        setIsFollow(true);
+        setIsFollow(!isFollow);
       }
     },
   });
-  const handleClick = useCallback(() => !isFollow && follow({ variables: { followingId: pathname.split('/')[2] } }), [follow, isFollow, pathname])
+  const handleClick = useCallback(() => follow({ variables: { followingId: pathname.split('/')[2] } }), [follow, pathname])
 
   return (
     <Fragment>
