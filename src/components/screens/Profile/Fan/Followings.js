@@ -9,11 +9,11 @@ import { Slider } from '@ui-kit/Slider';
 import { Spinner } from '@ui-kit/Spinner';
 
 const SliderBreakPoints = {
-  1024: {
+  800: {
     slidesPerView: 3,
     slidesPerGroup: 3,
   },
-  600: {
+  500: {
     slidesPerView: 2,
     slidesPerGroup: 2,
   },
@@ -27,7 +27,7 @@ const videoPosters = getPosters(8);
 const ScrollPosters = ({ handleClick }) => {
   return (
     <div className='cr-feed__poster-scroll'>
-      <Slider withScroll breakpoints={SliderBreakPoints}>
+      <Slider withScroll breakpoints={SliderBreakPoints} breakpointsBase='container'>
         {videoPosters.concat(videoPosters).map((p, idx) => (
           <PosterCard
             onClick={() => handleClick(defaultMockValue)}
