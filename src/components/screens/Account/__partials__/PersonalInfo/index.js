@@ -21,6 +21,7 @@ const PersonalInfo = ({
         : user.picture,
     [user.fbUserId, user.picture],
   );
+  const buttonLabel = useMemo(() => isProfile ? `${isFollow ? 'UN' : ''}FOLLOW` : 'EDIT PROFILE', [isProfile, isFollow]);
 
   return (
     <Row justify='space-between' align='middle' className='personal-info'>
@@ -44,7 +45,7 @@ const PersonalInfo = ({
           loading={loading}
           onClick={onClick}
         >
-          {(isFollow ? 'UNFOLLOW' : 'FOLLOW') || 'EDIT PROFILE'}
+          {buttonLabel}
         </SecondaryButton>
       </Col>
     </Row>
