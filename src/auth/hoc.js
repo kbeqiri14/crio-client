@@ -23,7 +23,7 @@ export const isNotAuth = (WrappedComponent) => {
       return null;
     }
     if (!!user) {
-      return <Redirect to='/profile' />;
+      return <Redirect to='/account' />;
     }
 
     return <WrappedComponent {...props} />;

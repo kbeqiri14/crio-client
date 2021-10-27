@@ -29,25 +29,11 @@ export const Title = ({ level, children, className, inline = false, color, onCli
   );
 };
 
-export const Text = ({
-  level,
-  children,
-  inline = false,
-  underline = false,
-  className,
-  color,
-  onClick,
-}) => {
+export const Text = ({ level, children, inline = false, className, color, onClick }) => {
   const TextTag = inline ? 'span' : 'p';
   return (
     <TextTag
-      className={cc([
-        'crio-text',
-        `text-${level}`,
-        { 'crio-text-underline': underline },
-        `crio-text--color--${color}`,
-        className,
-      ])}
+      className={cc(['crio-text', `text-${level}`, `crio-text--color--${color}`, className])}
       onClick={onClick}
     >
       {children}

@@ -2,6 +2,7 @@ import { memo } from 'react';
 import { Col, Row } from 'antd';
 
 import { Text, Title } from '@ui-kit/Text';
+import { SecondaryButton } from '@ui-kit/Button';
 import perk1 from '@images/perks/perk-1.png';
 import perk2 from '@images/perks/perk-2.png';
 import perk3 from '@images/perks/perk-3.png';
@@ -24,8 +25,17 @@ const perks = [
   },
 ];
 
-const Perks = () => (
+const SubscribeButton = () => (
+  <Col>
+    <SecondaryButton size='large' textColor='white' filled fillColor='tertiary'>
+      SUBSCRIBE TO GET ACCESS
+    </SecondaryButton>
+  </Col>
+);
+
+const Perks = ({ isProfile }) => (
   <Row gutter={[0, 44]} justify='center' className='perks'>
+    {isProfile && <SubscribeButton key='top' />}
     {perks.map(({ title, desc, src }) => (
       <Col key={title}>
         <Row justify='center'>
@@ -45,6 +55,7 @@ const Perks = () => (
         </Row>
       </Col>
     ))}
+    {isProfile && <SubscribeButton key='bottom' />}
   </Row>
 );
 

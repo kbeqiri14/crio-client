@@ -1,0 +1,37 @@
+@import 'variables';
+
+.profile-details {
+  background-color: @black_25;
+  padding: 44px 23px 82px 65px;
+  .ant-tabs-nav-list {
+    padding-bottom: 30px;
+  }
+  :not(.ant-tabs-tab-active).ant-tabs-tab:hover {
+    border-radius: 37px;
+    background-color: @white_50;
+  }
+  .ant-tabs-tab-btn {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 22px;
+    padding: 0 18px;
+    color: @white !important;
+  }
+  .ant-tabs-ink-bar,
+  .ant-tabs-nav::before {
+    display: none;
+  }
+  .ant-tabs-tab-active {
+    border-radius: 37px;
+    border: 1px solid @white_50;
+    color: @white_50;
+  }
+  .perks {
+    text-align: center;
+    img {
+      margin-top: 40px;
+      max-width: 686px;
+      max-height: 273px;
+    }
+  }
+}

@@ -1,6 +1,9 @@
+import { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cc from 'classcat';
+
 import { Text, Title } from '@ui-kit/Text';
+import { Spinner } from '@ui-kit/Spinner';
 
 export const SecondaryButton = ({
   children,
@@ -14,6 +17,7 @@ export const SecondaryButton = ({
   size = 'regular',
   className = '',
   isBlock = false,
+  loading = false,
 }) => {
   return (
     <button
@@ -25,21 +29,28 @@ export const SecondaryButton = ({
           [`border-color-${borderColor}`]: !!borderColor,
           large: size === 'large',
           'is-block': isBlock,
+          'is-loading': loading,
         },
         className,
       ])}
       onClick={onClick}
       disabled={disabled}
     >
-      {icon}
-      {size === 'large' ? (
-        <Title inline level='30' color={textColor} className='cr-button-secondary__text'>
-          {children}
-        </Title>
-      ) : (
-        <Text inline level='40' color={textColor} className='cr-button-secondary__text'>
-          {children}
-        </Text>
+      {loading
+        ? <Spinner spinning={true} color={textColor} />
+        : (
+        <Fragment>
+          {icon}
+          {size === 'large' ? (
+            <Title inline level='30' color={textColor} className='cr-button-secondary__text'>
+              {children}
+            </Title>
+          ) : (
+            <Text inline level='40' color={textColor} className='cr-button-secondary__text'>
+              {children}
+            </Text>
+          )}
+        </Fragment>
       )}
     </button>
   );

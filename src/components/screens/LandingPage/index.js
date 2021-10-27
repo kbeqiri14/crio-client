@@ -3,6 +3,7 @@ import { Row } from 'antd';
 import cc from 'classcat';
 
 import { useCurrentUser } from '@app/auth/hooks';
+import { usePresentation } from '@shared/PresentationView';
 import { renderPosters } from '@shared/PostersList';
 import { ConnectButton } from '@shared/ConnectButton';
 import { Footer } from '@shared/Footer';
@@ -22,10 +23,14 @@ const videoPosters = getPosters(videosCount);
 export const LandingPage = () => {
   const { user, loading } = useCurrentUser();
   const [listLoaded, setListLoaded] = useState(false);
-  const [postersList, setPostersList] = useState(renderPosters(videoPosters, largePostersCount));
+
+  const { show } = usePresentation();
+  const [postersList, setPostersList] = useState(
+    renderPosters(videoPosters, largePostersCount, show),
+  );
 
   const handleLoadList = () => {
-    setPostersList([...postersList, ...renderPosters(videoPosters, largePostersCount)]);
+    setPostersList([...postersList, ...renderPosters(videoPosters, largePostersCount, show)]);
     setListLoaded(true);
   };
 

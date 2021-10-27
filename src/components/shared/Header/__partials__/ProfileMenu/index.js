@@ -20,7 +20,7 @@ export const ProfileMenu = ({ user }) => {
         <i className='arrow-down' />
       </div>
       <div className='dropdown-content'>
-        <Text inline level='20' onClick={() => history.push('/profile')}>
+        <Text inline level='20' onClick={() => history.push('/account')}>
           My Profile
         </Text>
         <Text inline level='20' onClick={logout}>

@@ -35,12 +35,22 @@
 @grid-gap-horizontal: 22px;
 @grid-gap-vertical: 34px;
 
+.video-grid__item-container {
+  border-radius: 16px;
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+  }
+}
+
 .video-grid__item {
-  height: 276px;
   display: flex;
   justify-content: center;
   align-items: stretch;
   &-container {
+    height: 276px;
     position: relative;
     overflow: hidden;
     cursor: pointer;
@@ -60,7 +70,7 @@
     object-fit: cover;
     line-height: 0;
   }
-  &.large {
+  &.large &-container {
     height: 587px;
   }
   &-panel {

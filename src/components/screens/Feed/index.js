@@ -1,19 +1,19 @@
-import { Meta } from '@shared/Meta';
-import { Fragment, useRef, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { Carousel, Row } from 'antd';
 import { Link } from 'react-router-dom';
 import { getPosters } from '@screens/LandingPage/posters';
-import { Footer } from '@shared/Footer';
+import { usePresentation, defaultMockValue } from '@shared/PresentationView';
 import { PosterCard, renderPosters } from '@shared/PostersList';
+import { Footer } from '@shared/Footer';
+import { Meta } from '@shared/Meta';
 import { Text, Title } from '@ui-kit/Text';
 import { SecondaryButton } from '@ui-kit/Button';
+import { Slider } from '@ui-kit/Slider';
 import uuid from '@utils/uuid';
 import samplePoster from '@images/posters/carousel-poster.jpg';
 import samplePoster1 from '@images/posters/carousel-poster.png';
 import samplePoster2 from '@images/posters/carousel-poster-2.jpg';
 import samplePoster3 from '@images/posters/carousel-poster-3.jpg';
-import { ReactComponent as ArrowLeft } from '@svgs/arrow-left.svg';
-import { ReactComponent as ArrowRight } from '@svgs/arrow-right.svg';
 import './styles.less';
 
 const carouselPosters = [
@@ -60,76 +60,47 @@ const carouselPosters = [
     },
   },
 ];
-const slickResponsive = [
-  {
-    breakpoint: 1440,
-    settings: {
-      slidesToShow: 3,
-      slidesToScroll: 3,
-    },
+const SliderBreakPoints = {
+  1440: {
+    slidesPerView: 4,
+    slidesPerGroup: 4,
   },
-  {
-    breakpoint: 1024,
-    settings: {
-      slidesToShow: 2,
-      slidesToScroll: 2,
-    },
+  1024: {
+    slidesPerView: 3,
+    slidesPerGroup: 3,
   },
-  {
-    breakpoint: 600,
-    settings: {
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      centerMode: true,
-    },
+  600: {
+    slidesPerView: 2,
+    slidesPerGroup: 2,
   },
-];
+  240: {
+    slidesPerView: 1,
+    slidesPerGroup: 1,
+  },
+};
 
 const videoPosters = getPosters(8);
 const authorVideoPosters = getPosters(15);
 
-const ScrollPosters = () => {
-  const slick = useRef();
-
-  const handleScrollRight = () => {
-    slick.current.next();
-  };
-  const handleScrollLeft = () => {
-    slick.current.prev();
-  };
+const ScrollPosters = ({ handleClick }) => {
   return (
     <div className='cr-feed__poster-scroll'>
-      <Meta title='Feed' description='Crio - Artworks Feed' />
-      <div className='posters-list'>
-        <Carousel
-          variableWidth
-          responsive={slickResponsive}
-          ref={slick}
-          slidesToShow={4}
-          slidesToScroll={4}
-          dots={false}
-          infinite
-        >
-          {videoPosters.concat(videoPosters).map((p, idx) => (
-            <PosterCard key={idx} poster={p} author='Ann Bee' description='Work’s name goes here' />
-          ))}
-        </Carousel>
-      </div>
-      <div className='slider-left'>
-        <button onClick={handleScrollLeft}>
-          <ArrowLeft />
-        </button>
-      </div>
-      <div className='slider-right'>
-        <button onClick={handleScrollRight}>
-          <ArrowRight />
-        </button>
-      </div>
+      <Slider withScroll breakpoints={SliderBreakPoints}>
+        {videoPosters.concat(videoPosters).map((p, idx) => (
+          <PosterCard
+            onClick={() => handleClick(defaultMockValue)}
+            key={idx}
+            poster={p}
+            author='Ann Bee'
+            title='Work’s name goes here'
+          />
+        ))}
+      </Slider>
     </div>
   );
 };
 
-const RandomAuthorArtworks = ({ posters }) => (
+const RandomAuthorArtworks = ({ posters, handleClick }) => (
   <Fragment>
     <div className='cr-artworks-section__author'>
       <Title level='10' color='white' inline>
@@ -137,16 +108,17 @@ const RandomAuthorArtworks = ({ posters }) => (
         <Link>Ann Bee</Link>
       </Title>
     </div>
-    <ScrollPosters />
-    <Row gutter={[22, 35]} className='cr-landing__video-grid__container'>
+    <ScrollPosters handleClick={handleClick} />
+    <Row gutter={[22, 35]} className='cr-landing__video-grid__container random-works'>
       {posters}
     </Row>
   </Fragment>
 );
 
 export const Feed = () => {
-  const [topPosters] = useState(renderPosters(videoPosters, 0));
-  const [bottomPosters] = useState(renderPosters(authorVideoPosters, 3));
+  const { show } = usePresentation();
+  const [topPosters] = useState(renderPosters(videoPosters, 0, show));
+  const [bottomPosters] = useState(renderPosters(authorVideoPosters, 3, show));
   const [authorBlocks, setAuthorBlocks] = useState(Array.from({ length: 1 }, () => uuid()));
   const [currentPoster, setCurrentPoster] = useState(carouselPosters[0]);
 
@@ -160,6 +132,7 @@ export const Feed = () => {
 
   return (
     <div className='cr-feed'>
+      <Meta title='Feed' description='Crio - Artworks Feed' />
       <section className='cr-feed__poster-carousel'>
         <div className='cr-carousel'>
           <Carousel
@@ -206,7 +179,7 @@ export const Feed = () => {
         </Row>
         <div className='cr-artworks-section'>
           {authorBlocks.map((blockId) => (
-            <RandomAuthorArtworks key={blockId} posters={bottomPosters} />
+            <RandomAuthorArtworks handleClick={show} key={blockId} posters={bottomPosters} />
           ))}
           <Row className='cr-landing__video-grid__see-all'>
             <SecondaryButton onClick={handleLoadMore}>LOAD MORE</SecondaryButton>
