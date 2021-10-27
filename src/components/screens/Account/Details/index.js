@@ -12,12 +12,11 @@ const { TabPane } = Tabs;
 const Details = ({
   isProfile,
   isCreator,
-  hasFollowings,
-  action,
+  isFollow,
   loadingIsFollowing,
   loadingFollowings,
   followings,
-}) => console.log(action, isProfile && (action === 'FOLLOW'), 'actionactionaction') || (
+}) => (
   <Fragment>
     <Tabs defaultActiveKey='1' className='profile-details'>
       <TabPane tab={isProfile || isCreator ? 'WORKS 126' : `FOLLOWING: ${followings?.length || ''}`} key='1'>
@@ -26,7 +25,7 @@ const Details = ({
             ? (
                 loadingIsFollowing
                   ? <Spinner spinning={true} color='white' />
-                  : <Works isLock={isProfile && (action === 'FOLLOW')} />
+                  : <Works isLock={isProfile && !isFollow} />
               )
             : <Followings followings={followings} loadingFollowings={loadingFollowings} />
         }

@@ -10,7 +10,7 @@ import './styles.less';
 const PersonalInfo = ({
   user,
   isProfile,
-  action,
+  isFollow,
   loading,
   onClick,
 }) => {
@@ -21,7 +21,6 @@ const PersonalInfo = ({
         : user.picture,
     [user.fbUserId, user.picture],
   );
-  // const button = useMemo(() => isProfile ? `${hasFollowings ? 'UN' : ''}FOLLOW` : 'EDIT PROFILE', [hasFollowings, isProfile]);
 
   return (
     <Row justify='space-between' align='middle' className='personal-info'>
@@ -45,7 +44,7 @@ const PersonalInfo = ({
           loading={loading}
           onClick={onClick}
         >
-          {action || 'EDIT PROFILE'}
+          {(isFollow ? 'UNFOLLOW' : 'FOLLOW') || 'EDIT PROFILE'}
         </SecondaryButton>
       </Col>
     </Row>
