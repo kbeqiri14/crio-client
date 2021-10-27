@@ -54,12 +54,28 @@
     position: relative;
     overflow: hidden;
     cursor: pointer;
+    &.lock {
+      pointer-events: none;
+    }
     &:hover {
       .video-grid__item-panel {
         display: flex;
         transform: translateY(0);
       }
     }
+  }
+  .video-grid__item-lock {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 0%;
+    right: 0%;
+    top: 0%;
+    bottom: 0%;
+    background: @black_25;
+    backdrop-filter: blur(8px);
+    border-radius: 15px;
   }
   img {
     display: block;

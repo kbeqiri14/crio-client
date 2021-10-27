@@ -7,9 +7,9 @@ import { getPosters } from '@screens/LandingPage/posters';
 
 const videoPosters = getPosters(8);
 
-const Works = () => {
+const Works = ({ isLock }) => {
   const { show } = usePresentation();
-  const [topPosters] = useState(renderPosters(videoPosters, 0, show));
+  const [topPosters] = useState(renderPosters(videoPosters, 0, show, isLock));
 
   return (
     <div className='cr-feed__posters-list cr-landing__video-grid'>

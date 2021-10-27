@@ -1,9 +1,9 @@
-import { Fragment, memo, useCallback, useState } from 'react';
+import { Fragment, memo, useEffect, useCallback, useState } from 'react';
 import { Space, Switch } from 'antd';
-import { useQuery } from '@apollo/client';
+import { useLazyQuery, useQuery } from '@apollo/client';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
-import { me } from '@app/graphql/queries/users.query';
+import { getFollowings, getCreatorUsers, me } from '@app/graphql/queries/users.query';
 import { Title } from '@ui-kit/Text';
 import { Spinner } from '@ui-kit/Spinner';
 import PersonalInfo from './__partials__/PersonalInfo';
@@ -21,6 +21,15 @@ export const MyAccount = () => {
     onCompleted: (data) => dispatchUser(data?.me),
     onError: (data) => console.log(data, 'error'),
   });
+  const [getCreators, { data: creators, loading: loadingCreators }] = useLazyQuery(getCreatorUsers);
+  // const [getUserFollowings, { data: followings, loading: loadingFollowings }] = useLazyQuery(getFollowings, { fetchPolicy: 'no-cache' });
+
+  useEffect(() => {
+    if (!isCreator) {
+      // getUserFollowings();
+      getCreators();
+    }
+  }, [isCreator, getCreators]);
 
   return (
     <Fragment>
@@ -31,10 +40,14 @@ export const MyAccount = () => {
         <Switch checked={isCreator} onChange={() => setIsCreator(!isCreator)} />
       </Space>
       <Spinner spinning={loading} color='white'>
-        <PersonalInfo user={user} editProfile={editProfile} />
+        <PersonalInfo user={user} onClick={editProfile} />
       </Spinner>
       {visible && <EditProfile user={user} visible={visible} closeModal={closeModal} />}
-      <Details isCreator={isCreator} />
+      <Details
+        isCreator={isCreator}
+        followings={creators?.getCreatorUsers}
+        loadingFollowings={loadingCreators}
+      />
     </Fragment>
   );
 };

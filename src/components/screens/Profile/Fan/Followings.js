@@ -1,8 +1,6 @@
 import { memo } from 'react';
 import { Col, Row } from 'antd';
-import { useQuery } from '@apollo/client';
 
-import { getCreatorUsers } from '@app/graphql/queries/users.query';
 import { PosterCard } from '@shared/PostersList';
 import ProfileInfo from '@shared/ProfileInfo';
 import { usePresentation, defaultMockValue } from '@shared/PresentationView';
@@ -11,10 +9,6 @@ import { Slider } from '@ui-kit/Slider';
 import { Spinner } from '@ui-kit/Spinner';
 
 const SliderBreakPoints = {
-  1440: {
-    slidesPerView: 4,
-    slidesPerGroup: 4,
-  },
   1024: {
     slidesPerView: 3,
     slidesPerGroup: 3,
@@ -64,13 +58,12 @@ const FollowingRow = ({ user, handleClick }) => (
   </Row>
 );
 
-const Followings = () => {
+const Followings = ({ loadingFollowings, followings }) => {
   const { show } = usePresentation();
-  const { data, loading } = useQuery(getCreatorUsers);
 
   return (
-    <Spinner spinning={loading} color='white'>
-      {data?.getCreatorUsers?.map(({ userId, ...user }) => <FollowingRow key={userId} user={user} handleClick={show} />)}
+    <Spinner spinning={loadingFollowings} color='white'>
+      {followings?.map(({ userId, ...user }) => <FollowingRow key={user.id} user={user} handleClick={show} />)}
     </Spinner>
   );
 };
