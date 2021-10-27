@@ -7,7 +7,13 @@ import { ReactComponent as UnFollowIcon } from '@svgs/unfollow.svg';
 import ProfileInfo from '@shared/ProfileInfo';
 import './styles.less';
 
-const PersonalInfo = ({ isProfile, user, editProfile }) => {
+const PersonalInfo = ({
+  user,
+  isProfile,
+  isFollow,
+  loading,
+  onClick,
+}) => {
   const picture = useMemo(
     () =>
       user.fbUserId
@@ -15,6 +21,7 @@ const PersonalInfo = ({ isProfile, user, editProfile }) => {
         : user.picture,
     [user.fbUserId, user.picture],
   );
+  const buttonLabel = useMemo(() => isProfile ? `${isFollow ? 'UN' : ''}FOLLOW` : 'EDIT PROFILE', [isProfile, isFollow]);
 
   return (
     <Row justify='space-between' align='middle' className='personal-info'>
@@ -35,9 +42,10 @@ const PersonalInfo = ({ isProfile, user, editProfile }) => {
           textColor={isProfile ? undefined : 'white'}
           borderColor={isProfile ? undefined : 'white'}
           icon={isProfile ? <UnFollowIcon /> : <PencilIcon />}
-          onClick={editProfile}
+          loading={loading}
+          onClick={onClick}
         >
-          {isProfile ? 'UNFOLLOW' : 'EDIT PROFILE'}
+          {buttonLabel}
         </SecondaryButton>
       </Col>
     </Row>

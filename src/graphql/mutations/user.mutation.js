@@ -26,3 +26,9 @@ export const updateUser = gql`
     }
   }
 `;
+
+export const createFollowing = gql`
+  mutation createFollowing($followingId: ID!) {
+    createFollowing(followingId: $followingId)
+  }
+`;

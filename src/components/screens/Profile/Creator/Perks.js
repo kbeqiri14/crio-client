@@ -35,7 +35,7 @@ const SubscribeButton = () => (
 
 const Perks = ({ isProfile }) => (
   <Row gutter={[0, 44]} justify='center' className='perks'>
-    {isProfile && <SubscribeButton key='top' />}
+    {/* {isProfile && <SubscribeButton key='top' />} */}
     {perks.map(({ title, desc, src }) => (
       <Col key={title}>
         <Row justify='center'>
@@ -55,7 +55,7 @@ const Perks = ({ isProfile }) => (
         </Row>
       </Col>
     ))}
-    {isProfile && <SubscribeButton key='bottom' />}
+    {/* {isProfile && <SubscribeButton key='bottom' />} */}
   </Row>
 );
 

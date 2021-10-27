@@ -1,30 +1,54 @@
-import { Fragment, memo } from 'react';
+import { Fragment, memo, useCallback, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 
-import { getUser } from '@app/graphql/queries/users.query';
+import { isFollowing, getUser } from '@app/graphql/queries/users.query';
+import { createFollowing } from '@app/graphql/mutations/user.mutation';
 import PersonalInfo from '@screens/Account/__partials__/PersonalInfo';
 import Details from '@screens/Account/Details';
-import { Spinner } from '../../UI-kit/Spinner';
+import { Spinner } from '@ui-kit/Spinner';
 
 export const Profile = () => {
   const { pathname } = useLocation();
-  const { data, loading } = useQuery(getUser, {
+  const [isFollow, setIsFollow] = useState(false);
+
+  const { data: users, loading: loadingUser } = useQuery(getUser, {
     variables: { id: pathname.split('/')[2] },
-  })
+  });
+  const { loading: loadingIsFollowing } = useQuery(isFollowing, {
+    variables: { followingId: pathname.split('/')[2] },
+    fetchPolicy: 'no-cache',
+    onCompleted: data => {
+      if (data?.isFollowing) {
+        setIsFollow(true);
+      }
+    },
+  });
+  const [follow, { loading: loadingFollowing }] = useMutation(createFollowing, {
+    variables: { followingId: pathname.split('/')[2] },
+    onCompleted: data => {
+      if (data?.createFollowing) {
+        setIsFollow(!isFollow);
+      }
+    },
+  });
+  const handleClick = useCallback(() => follow({ variables: { followingId: pathname.split('/')[2] } }), [follow, pathname])
 
   return (
     <Fragment>
-      <Spinner spinning={loading}>
+      <Spinner spinning={loadingUser || loadingIsFollowing} color='white'>
         <PersonalInfo
           isProfile
           user={{
-            ...data?.getUser,
-            picture: data?.getUser?.firstName ? require(`../../../assets/images/mock-creators/${data?.getUser?.firstName}.png`).default : undefined,
+            ...users?.getUser,
+            picture: users?.getUser?.firstName ? require(`../../../assets/images/mock-creators/${users?.getUser?.firstName}.png`).default : undefined,
           }}
+          isFollow={isFollow}
+          loading={loadingFollowing}
+          onClick={handleClick}
         />
       </Spinner>
-      <Details isProfile />
+      <Details isProfile isFollow={isFollow} loadingIsFollowing={loadingIsFollowing} />
     </Fragment>
   );
 };

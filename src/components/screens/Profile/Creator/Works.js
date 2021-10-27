@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { Row } from 'antd';
 
 import { renderPosters } from '@shared/PostersList';
@@ -7,9 +7,11 @@ import { getPosters } from '@screens/LandingPage/posters';
 
 const videoPosters = getPosters(8);
 
-const Works = () => {
+const Works = ({ isLock }) => {
   const { show } = usePresentation();
-  const [topPosters] = useState(renderPosters(videoPosters, 0, show));
+  const [topPosters, setTopPosters] = useState(renderPosters(videoPosters, 0, show, isLock));
+
+  useEffect(() => setTopPosters(renderPosters(videoPosters, 0, show, isLock)),[isLock, show]);
 
   return (
     <div className='cr-feed__posters-list cr-landing__video-grid'>

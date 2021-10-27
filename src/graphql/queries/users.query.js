@@ -30,7 +30,6 @@ export const getUser = gql`
   ${me_fragment}
 `;
 
-
 export const getCreatorUsers = gql`
   query {
     getCreatorUsers {
@@ -38,4 +37,19 @@ export const getCreatorUsers = gql`
     }
   }
   ${me_fragment}
+`;
+
+export const getFollowings = gql`
+  query {
+    getFollowings {
+      ...Me
+    }
+  }
+  ${me_fragment}
+`;
+
+export const isFollowing = gql`
+  query isFollowing($followingId: ID!) {
+    isFollowing(followingId: $followingId)
+  }
 `;
