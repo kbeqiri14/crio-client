@@ -48,12 +48,12 @@ const LargeVideoPoster = memo(({ poster, onClick }) => (
   </Col>
 ));
 
-const VideoPostersBlock = memo(({ posters, isLock, onClick }) => console.log(isLock) || (
+const VideoPostersBlock = memo(({ posters, isLock, nonLock, onClick }) => (
   <Col xs={24} lg={24} xl={12} span={12}>
     <Row justify='center' align='top' gutter={[22, 35]}>
       {posters.map((p, index) => (
         <Col key={index} xs={12} lg={12} xl={12} span={12} className='video-grid__item'>
-          <PosterCard isLock={posters[0] === p ? false : isLock} onClick={onClick} poster={p} lock author='Ann Bee' title='Work’s name goes here' />
+          <PosterCard isLock={p === nonLock ? false : isLock} onClick={onClick} poster={p} lock author='Ann Bee' title='Work’s name goes here' />
         </Col>
       ))}
     </Row>
@@ -79,7 +79,7 @@ export const renderPosters = (videoPosters, largePostersCount, handleClick, isLo
   const largePosters = getRandomIndices(videoPosters.length, largePostersCount);
   const posterLinks = videoPosters.filter((_, idx) => !largePosters.has(idx));
   const regularPosterElements = arrayChunk(posterLinks, 4).map((vp) => (
-    <VideoPostersBlock isLock={isLock} onClick={handleClick} key={uuid()} posters={vp} />
+    <VideoPostersBlock isLock={isLock} nonLock={posterLinks[0]} onClick={handleClick} key={uuid()} posters={vp} />
   ));
   const largePosterElements = videoPosters
     .filter((_, idx) => largePosters.has(idx))
