@@ -37,42 +37,41 @@ const Footer = ({ updatedData, closeModal, handleSubmit }) => {
   const disabled = useMemo(() => {
     const { firstName, lastName, username } = updatedData;
     return !(username !== ''
-    && ((firstName && user?.firstName !== firstName)
-      || (lastName && user?.lastName !== lastName)
-      || (username && user?.username !== username)))
-  }, [updatedData, user?.firstName, user?.lastName, user?.username])
+      && ((firstName && user?.firstName !== firstName)
+        || (lastName && user?.lastName !== lastName)
+        || (username && user?.username !== username)))
+  }, [updatedData, user?.firstName, user?.lastName, user?.username]);
+
   const onSubmit = useCallback(
     (attributes) => updateUserInfo({ variables: { attributes } }),
     [updateUserInfo],
   );
 
   return (
-    <Col>
-      <Row gutter={30}>
-        <Col>
-          <SecondaryButton
-            textColor='white_75'
-            borderColor='white_75'
-            size='large'
-            onClick={closeModal}
-          >
-            CANCEL
-          </SecondaryButton>
-        </Col>
-        <Col>
-          <SecondaryButton
-            filled
-            textColor={disabled ? 'white_75' : 'white'}
-            size='large'
-            loading={loading}
-            disabled={disabled}
-            onClick={handleSubmit(onSubmit)}
-          >
-            SAVE
-          </SecondaryButton>
-        </Col>
-      </Row>
-    </Col>
+    <Row gutter={30}>
+      <Col>
+        <SecondaryButton
+          textColor='white_75'
+          borderColor='white_75'
+          size='large'
+          onClick={closeModal}
+        >
+          CANCEL
+        </SecondaryButton>
+      </Col>
+      <Col>
+        <SecondaryButton
+          filled
+          textColor={disabled ? 'white_75' : 'white'}
+          size='large'
+          loading={loading}
+          disabled={disabled}
+          onClick={handleSubmit(onSubmit)}
+        >
+          SAVE
+        </SecondaryButton>
+      </Col>
+    </Row>
   );
 };
 

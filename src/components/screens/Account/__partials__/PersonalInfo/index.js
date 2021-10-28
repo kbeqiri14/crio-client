@@ -4,6 +4,7 @@ import { Col, Row } from 'antd';
 import { SecondaryButton } from '@ui-kit/Button';
 import { ReactComponent as PencilIcon } from '@svgs/pencil.svg';
 import { ReactComponent as UnFollowIcon } from '@svgs/unfollow.svg';
+import { ReactComponent as FollowIcon } from '@svgs/follow.svg';
 import ProfileInfo from '@shared/ProfileInfo';
 import './styles.less';
 
@@ -22,6 +23,12 @@ const PersonalInfo = ({
     [user.fbUserId, user.picture],
   );
   const buttonLabel = useMemo(() => isProfile ? `${isFollow ? 'UN' : ''}FOLLOW` : 'EDIT PROFILE', [isProfile, isFollow]);
+  const buttonIcon = useMemo(() => {
+    if (isProfile) {
+      return isFollow ? <UnFollowIcon /> : <FollowIcon />;
+    }
+    return <PencilIcon />;
+  }, [isProfile, isFollow]);
 
   return (
     <Row justify='space-between' align='middle' className='personal-info'>
@@ -41,7 +48,7 @@ const PersonalInfo = ({
           size='large'
           textColor={isProfile ? undefined : 'white'}
           borderColor={isProfile ? undefined : 'white'}
-          icon={isProfile ? <UnFollowIcon /> : <PencilIcon />}
+          icon={buttonIcon}
           loading={loading}
           onClick={onClick}
         >

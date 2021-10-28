@@ -15,7 +15,7 @@ export const Slider = ({
   slidesPerGroup = 4,
   gap = 22,
   breakpoints,
-  ...props
+  breakpointsBase,
 }) => {
   const swiper = useRef();
   const { current: classNames } = useRef({
@@ -47,7 +47,7 @@ export const Slider = ({
         hide: false,
       },
       breakpoints,
-      ...props,
+      breakpointsBase,
     };
 
     if (!swiper.current) {
@@ -56,7 +56,7 @@ export const Slider = ({
     } else {
       swiper.current.update();
     }
-  }, [breakpoints, classNames, gap, slidesPerGroup, slidesPerView, withScroll, props]);
+  }, [breakpoints, classNames, gap, slidesPerGroup, slidesPerView, withScroll, breakpointsBase]);
 
   return (
     <div className={cc(['crio-slider', { 'with-scroll': withScroll }])}>

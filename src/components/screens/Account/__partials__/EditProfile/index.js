@@ -65,7 +65,9 @@ const EditProfile = ({ user, visible, closeModal }) => {
             </FormRow>
           </Row>
         </Col>
-        <Footer updatedData={{ firstName, lastName, username }} closeModal={closeModal} handleSubmit={handleSubmit} />
+        <Col>
+          <Footer updatedData={{ firstName, lastName, username }} closeModal={closeModal} handleSubmit={handleSubmit} />
+        </Col>
       </Row>
     </Modal>
   );
