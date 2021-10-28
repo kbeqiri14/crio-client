@@ -6,7 +6,7 @@ import { SecondaryButton } from '@ui-kit/Button/SecondaryButton';
 import fbIcon from '@svgs/fb-button-icon.svg';
 import './styles.less';
 
-export const ConnectButton = memo(({ disabled, size = 'large' }) => {
+export const ConnectButton = memo(({ size = 'large' }) => {
   const { loading, login } = useFacebook();
 
   return (
@@ -14,7 +14,7 @@ export const ConnectButton = memo(({ disabled, size = 'large' }) => {
       <img alt='facebook connect icon' src={fbIcon} className='banner__fb-icon' />
       <SecondaryButton
         onClick={login}
-        disabled={disabled || loading}
+        disabled={loading}
         filled
         fillColor='secondary'
         textColor='white'

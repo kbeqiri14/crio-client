@@ -21,10 +21,9 @@ const videosCount = smallPostersCount + largePostersCount;
 const videoPosters = getPosters(videosCount);
 
 export const LandingPage = () => {
-  const { user, loading } = useCurrentUser();
-  const [listLoaded, setListLoaded] = useState(false);
-
+  const { user } = useCurrentUser();
   const { show } = usePresentation();
+  const [listLoaded, setListLoaded] = useState(false);
   const [postersList, setPostersList] = useState(
     renderPosters(videoPosters, largePostersCount, show),
   );
@@ -46,7 +45,7 @@ export const LandingPage = () => {
             Crio is a leading community platform for creatives to showcase their work and interact
             with fans across the globe
           </div>
-          {!user && <ConnectButton disabled={loading} />}
+          {!user && <ConnectButton />}
         </div>
       </section>
       <section className='cr-landing__video-grid'>
@@ -79,7 +78,7 @@ export const LandingPage = () => {
         </div>
         {!user && (
           <div className='about-perks__connect'>
-            <ConnectButton disabled={loading} />
+            <ConnectButton />
           </div>
         )}
       </section>
