@@ -1,12 +1,11 @@
 import { memo, useCallback, useMemo } from 'react';
-import { Col, Row } from 'antd';
 import { useMutation } from '@apollo/client';
 
 import { me } from '@app/graphql/queries/users.query';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { updateUser } from '@app/graphql/mutations/user.mutation';
+import ActionButtons from '@shared/ActionButtons';
 import { successToast } from '@ui-kit/Notification';
-import { SecondaryButton } from '@ui-kit/Button';
 
 const Footer = ({ updatedData, closeModal, handleSubmit }) => {
   const { user, dispatchUser } = useLoggedInUser();
@@ -48,30 +47,11 @@ const Footer = ({ updatedData, closeModal, handleSubmit }) => {
   );
 
   return (
-    <Row gutter={30}>
-      <Col>
-        <SecondaryButton
-          textColor='white_75'
-          borderColor='white_75'
-          size='large'
-          onClick={closeModal}
-        >
-          CANCEL
-        </SecondaryButton>
-      </Col>
-      <Col>
-        <SecondaryButton
-          filled
-          textColor={disabled ? 'white_75' : 'white'}
-          size='large'
-          loading={loading}
-          disabled={disabled}
-          onClick={handleSubmit(onSubmit)}
-        >
-          SAVE
-        </SecondaryButton>
-      </Col>
-    </Row>
+    <ActionButtons
+      loading={loading}
+      disabled={disabled}
+      onCancel={closeModal}
+      onSave={handleSubmit(onSubmit)}/>
   );
 };
 
