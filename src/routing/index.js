@@ -11,7 +11,7 @@ import LandingPage from '@screens/LandingPage';
 import { PricingPlans } from '@screens/PricingPlans';
 import { Feed } from '@screens/Feed';
 import CognitoCallback from '@screens/CognitoCallback';
-import MyAccount from '@screens/Account';
+import Account from '@screens/Account';
 import Profile from '@screens/Profile';
 
 export const AppRoutes = () => {
@@ -45,7 +45,7 @@ export const AppRoutes = () => {
         <Route exact path='/pricing' component={PricingPlans} />
         {!loading && !user && <Redirect to='/' />}
         {/* PRIVATE ROUTES */}
-        <PrivateRoute isAuthenticated={isAuthenticated} path='/account' component={MyAccount} />
+        <PrivateRoute isAuthenticated={isAuthenticated} path='/account' component={Account} />
         <PrivateRoute isAuthenticated={isAuthenticated} path='/profile' component={Profile} />
         <Route exact path='/cognito/callback' component={CognitoCallback} />
       </Switch>

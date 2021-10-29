@@ -1,8 +1,8 @@
 import { memo } from 'react';
-import { Col, Modal, Row } from 'antd';
+import { Col, Row } from 'antd';
 import { useForm } from 'react-hook-form';
 
-import { ReactComponent as CloseIcon } from '@svgs/close.svg';
+import { BlurredModal } from '@ui-kit/Modal';
 import { FormRow, Header, Item } from './partials';
 import Footer from './Footer';
 import './styles.less';
@@ -14,16 +14,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
   const username = watch('username');
 
   return (
-    <Modal
-      width={828}
-      visible={visible}
-      footer={null}
-      closeIcon={<CloseIcon />}
-      onCancel={closeModal}
-      className='edit-profile'
-      transitionName='none'
-      maskTransitionName='none'
-    >
+    <BlurredModal width={828} visible={visible} onCancel={closeModal}>
       <Row justify='center' gutter={[0, 55]}>
         <Header />
         <Col span={24}>
@@ -69,7 +60,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
           <Footer updatedData={{ firstName, lastName, username }} closeModal={closeModal} handleSubmit={handleSubmit} />
         </Col>
       </Row>
-    </Modal>
+    </BlurredModal>
   );
 };
 
