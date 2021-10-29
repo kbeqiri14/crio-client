@@ -10,15 +10,15 @@
   background-color: @black_25 !important;
   padding: 13px;
   line-height: 23px !important;
+  &:hover,
+  &:focus-visible {
+    border: 1px solid @primary_75 !important;
+    outline: none;
+  }
   &.disabled {
     color: @white_50;
     cursor: not-allowed;
     border: 1px solid @white_25 !important;
     background-color: transparent !important;
-  }
-  &:hover,
-  &:focus-visible {
-    border: 1px solid @primary_75 !important;
-    outline: none;
   }
 }
