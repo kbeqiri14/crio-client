@@ -33,7 +33,7 @@ export const Item = memo(({ name, label, span, control, disabled, defaultValue }
   <Col span={span}>
     <Row gutter={[0, 10]}>
       <Col span={24}>
-        <Title inline level={30} color='white'>
+        <Title inline level={30} color={disabled ? 'white_50' : 'white'}>
           {label}
         </Title>
       </Col>
