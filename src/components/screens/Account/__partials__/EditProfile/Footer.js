@@ -39,10 +39,10 @@ const Footer = ({ notHidden, updatedData, closeModal, handleSubmit }) => {
   });
 
   const disabled = useMemo(() => {
-    const { firstName, lastName, username, nameVisible, usernameVisible, emailVisible } = updatedData;
+    const { firstName, lastName, username, nameVisible, usernameVisible, emailVisible } = updatedData;console.log( user?.firstName === '', 333)
     return !(notHidden && username !== ''
-      && ((firstName && user?.firstName !== firstName)
-        || (lastName && user?.lastName !== lastName)
+      && (((firstName && user?.firstName !== firstName) || firstName === '')
+        || ((lastName && user?.lastName !== lastName) || lastName === '')
         || (username && user?.username !== username)
         || (nameVisible && user?.visibility?.name !== nameVisible)
         || (usernameVisible && user?.visibility?.username !== usernameVisible)

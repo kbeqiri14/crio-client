@@ -50,7 +50,7 @@ export const FormRow = memo(({
   setTooltipVisible,
 }) => (
   <Col span={24}>
-    <Row justify='center' align='bottom' gutter={20}>
+    <Row align='bottom' gutter={20}>
       {children}
       <Col span={6}>
         <Tooltip

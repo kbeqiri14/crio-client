@@ -7,7 +7,7 @@ import { ReactComponent as ArrowBottomIcon } from '@svgs/arrow-down.svg';
 
 const { Option } = Select;
 
-const Item = ({ label, icon }) => <Title inline level={30} color='white'>{icon}{label}</Title>
+const Item = ({ label, icon }) => <>{icon}<Title inline level={30} color='white'>{label}</Title></>
 
 const Visibility = ({ options, name, control, defaultValue, setTooltipVisible }) => {
   const [selectedValue, setSelectedValue] = useState(

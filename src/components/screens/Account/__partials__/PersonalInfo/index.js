@@ -43,7 +43,7 @@ const PersonalInfo = ({
           isCreator={user?.isCreator}
         />
       </Col>
-      <Col>
+      <Col span={3}>
         <SecondaryButton
           size='large'
           textColor={isProfile ? undefined : 'white'}

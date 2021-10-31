@@ -18,9 +18,9 @@ const EditProfile = ({ user, visible, closeModal }) => {
   const usernameVisible = watch('usernameVisible');
   const emailVisible = watch('emailVisible');
   const updatedData = useMemo(() => ({
-    firstName,
-    lastName,
-    username,
+    firstName: firstName?.trim(),
+    lastName: lastName?.trim(),
+    username: username?.trim(),
     nameVisible,
     usernameVisible,
     emailVisible,
