@@ -1,18 +1,36 @@
 @import 'variables';
 
 .visibility {
-  cursor: pointer;
-  padding: 11px 15px;
-  border-radius: 12px;
-  background-color: @black_25;
-  &:hover {
-    background-color: @white_50;
+  .ant-select-selector {
+    width: 160px !important;
+    height: 50px !important;
+    padding-Top: 15px !important;
+    border: none !important;
+    border-radius: 12px !important;
+    background-color: @black_25 !important;
+    &:hover {
+      background-color: @white_50 !important;
+    }
   }
 }
-.ant-dropdown-menu,
-.ant-dropdown-menu-item,
-.ant-dropdown-menu-item-active {
-  padding: 0;
-  border-radius: 12px;
+
+.ant-select-dropdown {
+  border: none !important;
+  border-radius: 12px !important;
+  background-color: @black_25 !important;
+  &:hover {
+    background-color: @white_50 !important;
+  }
+}
+.ant-select-item-option {
   background-color: transparent !important;
+}
+.ant-select-item-option-active {
+  background-color: transparent !important;
+}
+
+.ant-tooltip-inner {
+  width: 173px;
+  padding: 12px 16px 26px 13px !important;
+  border-radius: 4px !important;
 }

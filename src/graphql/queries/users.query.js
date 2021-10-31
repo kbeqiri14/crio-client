@@ -9,6 +9,7 @@ export const me_fragment = gql`
     username
     firstName
     lastName
+    visibility
   }
 `;
 
