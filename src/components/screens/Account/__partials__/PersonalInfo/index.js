@@ -10,6 +10,7 @@ import './styles.less';
 
 const PersonalInfo = ({
   user,
+  isCreator,
   isProfile,
   isFollow,
   loading,
@@ -40,7 +41,7 @@ const PersonalInfo = ({
           email={user?.email}
           picture={picture}
           isProfile={isProfile}
-          isCreator={user?.isCreator}
+          isCreator={isCreator || (isProfile && !isFollow)}
         />
       </Col>
       <Col span={3}>
