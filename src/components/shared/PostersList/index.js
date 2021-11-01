@@ -3,8 +3,8 @@ import { memo } from 'react';
 import { Col, Row } from 'antd';
 import { Text } from '@ui-kit/Text';
 import { arrayChunk, getRandomInt } from '@utils/helpers';
+import lockImage from '@images/lock.png';
 import { ReactComponent as PlayIcon } from '@svgs/play.svg';
-import { ReactComponent as LockIcon } from '@svgs/lock.svg';
 
 export const PosterCard = memo(({ poster, index, author, title, isLock, onClick, ...props }) => {
   const handleClick = () => {
@@ -20,7 +20,7 @@ export const PosterCard = memo(({ poster, index, author, title, isLock, onClick,
   };
   return (
     <div className={`video-grid__item-container ${isLock ? 'lock' : ''}`} onClick={handleClick} {...props}>
-      <img alt='Crio artworks poster' src={poster} />
+      <img alt='Crio artworks poster' src={poster} className={isLock ? 'lock' : ''} />
       {(index || index === 0) && <div className='poster-number'>{index}</div>}
       <Row justify='space-between' align='bottom' className='video-grid__item-panel'>
         <Col>
@@ -36,7 +36,7 @@ export const PosterCard = memo(({ poster, index, author, title, isLock, onClick,
         </Col>
       </Row>
       {isLock && <div className='video-grid__item-lock'>
-        <LockIcon />
+        <img alt='lock' src={lockImage} />
       </div>}
     </div>
   );

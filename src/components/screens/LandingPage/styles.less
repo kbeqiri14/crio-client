@@ -74,8 +74,11 @@
     top: 0%;
     bottom: 0%;
     background: @black_25;
-    backdrop-filter: blur(8px);
     border-radius: 15px;
+    img {
+      width: 102px !important;
+      height: 102px !important;
+    }
   }
   img {
     display: block;
@@ -85,6 +88,9 @@
     max-width: 100%;
     object-fit: cover;
     line-height: 0;
+    &.lock {
+      filter: blur(8px);
+    }
   }
   &.large &-container {
     height: 587px;
