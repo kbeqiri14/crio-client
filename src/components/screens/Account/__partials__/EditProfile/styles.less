@@ -1,10 +1,9 @@
 @import 'variables';
 
 .visibility {
+    width: 100% !important;
   .ant-select-selector {
-    width: 166px !important;
-    height: 50px !important;
-    padding-top: 15px !important;
+    height: 100% !important;
     border: none !important;
     border-color: transparent !important;
     border-right-width: 0 !important;
@@ -15,13 +14,14 @@
       background-color: @white_50 !important;
     }
     .ant-select-selection-item {
+      padding: 10px 0 !important;
       display: flex;
-      margin-top: -2px;
+      align-items: center;
     }
   }
 }
 .ant-select-dropdown {
-  height: 50px !important;
+  padding: 8px 0 !important;
   border: none !important;
   border-radius: 12px !important;
   background-color: @black_25 !important;
@@ -37,7 +37,7 @@
 }
 .ant-select-item-option-content {
   display: flex;
-  margin-top: 4px;
+  align-items: center;
 }
 
 .ant-tooltip {
