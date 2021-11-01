@@ -1,4 +1,4 @@
-import { Fragment, memo } from 'react';
+import { memo } from 'react';
 import { Tabs } from 'antd';
 
 import { Spinner } from '@ui-kit/Spinner';
@@ -17,27 +17,25 @@ const Details = ({
   loadingFollowings,
   followings,
 }) => (
-  <Fragment>
-    <Tabs defaultActiveKey='1' className='profile-details'>
-      <TabPane tab={isProfile || isCreator ? 'WORKS 126' : `FOLLOWING: ${followings?.length || ''}`} key='1'>
-        {
-          isProfile || isCreator
-            ? (
-                loadingIsFollowing
-                  ? <Spinner spinning={true} color='white' />
-                  : <Works isLock={isProfile && !isFollow} />
-              )
-            : <Followings followings={followings} loadingFollowings={loadingFollowings} />
-        }
-      </TabPane>
+  <Tabs defaultActiveKey='1' className='profile-details'>
+    <TabPane key='1' tab={isProfile || isCreator ? 'WORKS 126' : `FOLLOWING: ${followings?.length || ''}`}>
       {
-        (isProfile || isCreator) && (
-          <TabPane tab='PERKS' key='2'>
-            <Perks isProfile={isProfile} />
-          </TabPane>)
+        isProfile || isCreator
+          ? (
+              loadingIsFollowing
+                ? <Spinner spinning={true} color='white' />
+                : <Works isLock={isProfile && !isFollow} />
+            )
+          : <Followings followings={followings} loadingFollowings={loadingFollowings} />
       }
-    </Tabs>
-  </Fragment>
+    </TabPane>
+    {
+      (isProfile || isCreator) && (
+        <TabPane key='2' tab='PERKS'>
+          <Perks isProfile={isProfile} />
+        </TabPane>)
+    }
+  </Tabs>
 );
 
 export default memo(Details);

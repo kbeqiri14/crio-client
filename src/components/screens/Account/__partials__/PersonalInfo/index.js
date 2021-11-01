@@ -10,6 +10,7 @@ import './styles.less';
 
 const PersonalInfo = ({
   user,
+  isCreator,
   isProfile,
   isFollow,
   loading,
@@ -40,10 +41,10 @@ const PersonalInfo = ({
           email={user?.email}
           picture={picture}
           isProfile={isProfile}
-          isCreator={user?.isCreator}
+          isCreator={isCreator || isProfile}
         />
       </Col>
-      <Col>
+      <Col span={8} className='right'>
         <SecondaryButton
           size='large'
           textColor={isProfile ? undefined : 'white'}
