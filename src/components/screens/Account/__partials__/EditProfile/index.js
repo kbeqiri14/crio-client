@@ -1,63 +1,113 @@
-import { memo } from 'react';
+import { memo, useMemo, useState } from 'react';
 import { Col, Row } from 'antd';
 import { useForm } from 'react-hook-form';
 
+import { Title } from '@ui-kit/Text';
 import { BlurredModal } from '@ui-kit/Modal';
-import { FormRow, Header, Item } from './partials';
+import { FormRow, FormItem } from './partials';
 import Footer from './Footer';
 import './styles.less';
 
 const EditProfile = ({ user, visible, closeModal }) => {
+  const [tooltipVisible, setTooltipVisible] = useState();
   const { control, watch, handleSubmit } = useForm();
   const firstName = watch('firstName');
   const lastName = watch('lastName');
   const username = watch('username');
+  const nameVisible = watch('nameVisible');
+  const usernameVisible = watch('usernameVisible');
+  const emailVisible = watch('emailVisible');
+  const updatedData = useMemo(() => ({
+    firstName: firstName?.trim(),
+    lastName: lastName?.trim(),
+    username: username?.trim(),
+    nameVisible,
+    usernameVisible,
+    emailVisible,
+  }), [firstName, lastName, username, nameVisible, usernameVisible, emailVisible]);
+
+  const notHidden = useMemo(() => {
+    return [
+      nameVisible || user?.visibility?.name,
+      usernameVisible || user?.visibility?.username,
+      emailVisible || user?.visibility?.email
+    ].some(item => !item || item !== 'only_me');
+  }, [
+      emailVisible,
+      nameVisible,
+      usernameVisible,
+      user?.visibility?.name,
+      user?.visibility?.username,
+      user?.visibility?.email,
+  ]);
 
   return (
     <BlurredModal width={828} visible={visible} onCancel={closeModal}>
       <Row justify='center' gutter={[0, 55]}>
-        <Header />
+        <Col span={24}>
+          <Title level={10} color='white'>
+            Edit Profile
+          </Title>
+        </Col>
         <Col span={24}>
           <Row gutter={[50, 32]}>
-            <FormRow>
-              <Item
+            <FormRow
+              name='nameVisible'
+              control={control}
+              defaultValue={user?.visibility?.name}
+              tooltipVisible={tooltipVisible === 'nameVisible' && !notHidden}
+              setTooltipVisible={setTooltipVisible}
+            >
+              <FormItem
+                span={9}
                 name='firstName'
                 label='First name'
-                span={9}
                 control={control}
-                defaultValue={user?.firstName}
-              />
-              <Item
+                defaultValue={user?.firstName} />
+              <FormItem
+                span={9}
                 name='lastName'
                 label='Last name'
-                span={9}
                 control={control}
-                defaultValue={user?.lastName}
-              />
+                defaultValue={user?.lastName} />
             </FormRow>
-            <FormRow>
-              <Item
+            <FormRow
+              name='usernameVisible'
+              control={control}
+              defaultValue={user?.visibility?.username}
+              tooltipVisible={tooltipVisible === 'usernameVisible' && !notHidden}
+              setTooltipVisible={setTooltipVisible}
+            >
+              <FormItem
+                span={18}
                 name='username'
                 label='Username *'
-                span={18}
                 control={control}
-                defaultValue={user?.username}
-              />
+                defaultValue={user?.username} />
             </FormRow>
-            <FormRow>
-              <Item
+            <FormRow
+              name='emailVisible'
+              control={control}
+              defaultValue={user?.visibility?.email}
+              tooltipVisible={tooltipVisible === 'emailVisible' && !notHidden}
+              setTooltipVisible={setTooltipVisible}
+            >
+              <FormItem
+                span={18}
                 name='email'
                 label='Email'
-                span={18}
                 control={control}
                 defaultValue={user?.email}
-                disabled
-              />
+                disabled />
             </FormRow>
           </Row>
         </Col>
         <Col>
-          <Footer updatedData={{ firstName, lastName, username }} closeModal={closeModal} handleSubmit={handleSubmit} />
+          <Footer
+            notHidden={notHidden}
+            updatedData={updatedData}
+            closeModal={closeModal}
+            handleSubmit={handleSubmit} />
         </Col>
       </Row>
     </BlurredModal>

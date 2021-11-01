@@ -40,7 +40,7 @@ export const MyAccount = () => {
         <Switch checked={isCreator} onChange={() => setIsCreator(!isCreator)} />
       </Space>
       <Spinner spinning={loading} color='white'>
-        <PersonalInfo user={user} onClick={editProfile} />
+        <PersonalInfo user={user} onClick={editProfile} isCreator={isCreator} />
       </Spinner>
       {visible && <EditProfile user={user} visible={visible} closeModal={closeModal} />}
       <Details
