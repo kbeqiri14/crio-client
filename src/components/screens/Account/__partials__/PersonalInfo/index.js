@@ -41,10 +41,10 @@ const PersonalInfo = ({
           email={user?.email}
           picture={picture}
           isProfile={isProfile}
-          isCreator={isCreator || (isProfile && !isFollow)}
+          isCreator={isCreator || isProfile}
         />
       </Col>
-      <Col span={3}>
+      <Col span={8} className='right'>
         <SecondaryButton
           size='large'
           textColor={isProfile ? undefined : 'white'}
