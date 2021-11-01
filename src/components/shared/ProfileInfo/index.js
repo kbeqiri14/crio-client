@@ -28,7 +28,7 @@ const ProfileInfo = ({
         <img alt='profile' src={picture || profile} width={size} height={size} />
         {isCreator && <CreatorIcon className='creator-icon' />}
       </Col>
-      <Col>
+      <Col className='info'>
         <Title level={10} color='white'>
           {isFollowing ? <Link to={`/profile/${id}`}>{name}</Link> : name}
         </Title>
