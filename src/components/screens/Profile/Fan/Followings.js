@@ -47,6 +47,7 @@ const FollowingRow = ({ user, handleClick }) => (
     <Col span={6}>
       <ProfileInfo
         isFollowing
+        following
         {...{ ...user, picture: require(`../../../../assets/images/mock-creators/${user.firstName}.png`).default }}
       />
     </Col>
