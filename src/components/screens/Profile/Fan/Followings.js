@@ -44,10 +44,9 @@ const ScrollPosters = ({ handleClick }) => {
 
 const FollowingRow = ({ user, handleClick }) => (
   <Row justify='center'>
-    <Col span={6}>
+    <Col span={6} className='following-info'>
       <ProfileInfo
         isFollowing
-        following
         {...{ ...user, picture: require(`../../../../assets/images/mock-creators/${user.firstName}.png`).default }}
       />
     </Col>
