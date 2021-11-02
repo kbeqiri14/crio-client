@@ -102,7 +102,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
             </FormRow>
           </Row>
         </Col>
-        <Col>
+        <Col span={24}>
           <Footer
             notHidden={notHidden}
             updatedData={updatedData}

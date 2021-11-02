@@ -11,7 +11,7 @@ const ActionButtons = ({
   loading,
   disabled,
 }) => (
-  <Row gutter={30}>
+  <Row justify='center' gutter={30}>
     <Col>
       <SecondaryButton
         textColor='white_75'

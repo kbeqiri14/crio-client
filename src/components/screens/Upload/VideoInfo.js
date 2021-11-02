@@ -26,7 +26,7 @@ const VideoInfo = ({ onCancel, onContinue }) => (
       </div>
       <RemoveIcon className='remove' />
     </Col>
-    <Col span={12} offset={10}>
+    <Col span={24}>
       <ActionButtons saveText='CONTINUE' onCancel={onCancel} onSave={onContinue} />
     </Col>
   </Row>
