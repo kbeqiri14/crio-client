@@ -1,12 +1,9 @@
-import { Fragment, memo, useState } from 'react';
-import { Col, Row } from 'antd';
+import { Fragment, memo, useCallback, useState } from 'react';
 
-import { Input } from '@ui-kit/Input';
-import ActionButtons from '@shared/ActionButtons';
-import { ReactComponent as PlayIcon } from '@svgs/play-big.svg';
-import { ReactComponent as RemoveIcon } from '@svgs/remove.svg';
+import history from '@app/configs/history';
 import DragAndDrop from './DragAndDrop';
 import Uploading from './Uploading';
+import VideoInfo from './VideoInfo';
 import CoverImage from './CoverImage';
 import './styles.less';
 
@@ -18,36 +15,17 @@ const Upload = () => {
   const [uploadedVideoVisible, setUploadedVideoVisible] = useState(false);
   const [coverImageVisible, setCoverImageVisible] = useState(false);
 
+  const handleCancel = useCallback(() => history.push('/account'), []);
+  const handleUploading = useCallback(() => setUploadingVisible(true), []);
+  const handleCoverImageUploading = useCallback(() => setCoverImageVisible(true), []);
+  const handleClose = useCallback(() => {
+    setCoverImageVisible(false);
+    handleCancel();
+  }, [handleCancel]);
+
   return (
     <Fragment>
-      {uploadedVideoVisible && <Row gutter={[0, 50]} className='upload'>
-        <Col span={8} offset={6}>
-          <Input placeholder='Write the artwork title' />
-        </Col>
-        <Col span={8} offset={6}>
-          <Input placeholder='Write anything what you’d like to mention about this work' />
-        </Col>
-        <Col span={24}>
-          <div className='video-view__player embed-responsive aspect-ratio-16/9'>
-            <iframe
-              title='Crio video player'
-              src='https://player.vimeo.com/video/382975976?h=dc77330a55&color=ffffff&title=0&byline=0&portrait=0'
-              frameBorder='0'
-              allow='autoplay; fullscreen; picture-in-picture'
-              allowFullScreen
-            />
-          </div>
-          <RemoveIcon className='remove' />
-        </Col>
-        <Col span={12} offset={10}>
-          <ActionButtons saveText='CONTINUE' onSave={() => setCoverImageVisible(true)} />
-        </Col>
-      </Row>}
-      {!uploadedVideoVisible && <DragAndDrop onContinue={() => setUploadingVisible(true)} />}
-      {coverImageVisible && <CoverImage
-        visible={coverImageVisible}
-        setVisible={setCoverImageVisible}
-      />}
+      {!uploadedVideoVisible && <DragAndDrop onCancel={handleCancel} onContinue={handleUploading} />}
       {uploadingVisible && <Uploading
         percent={percent}
         setPercent={setPercent}
@@ -57,6 +35,8 @@ const Upload = () => {
         setVisible={setUploadingVisible}
         setUploadedVideoVisible={setUploadedVideoVisible}
       />}
+      {uploadedVideoVisible && <VideoInfo onCancel={handleCancel} onContinue={handleCoverImageUploading} />}
+      {coverImageVisible && <CoverImage visible={coverImageVisible} onClose={handleClose} />}
     </Fragment>
   );
 };

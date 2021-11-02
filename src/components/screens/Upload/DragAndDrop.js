@@ -5,7 +5,7 @@ import ActionButtons from '@shared/ActionButtons';
 import { Text, Title } from '@ui-kit/Text';
 import { ReactComponent as DragAndDropIcon } from '@svgs/drag-and-drop.svg';
 
-const DragAndDrop = ({ onContinue }) => (
+const DragAndDrop = ({ onCancel, onContinue }) => (
   <Row gutter={[0, 50]} className='upload'>
     <Col span={24}>
       <Title inline level='10' color='white'>Upload your artwork</Title>
@@ -24,7 +24,7 @@ const DragAndDrop = ({ onContinue }) => (
       </Row>
     </Col>
     <Col span={12} offset={10}>
-      <ActionButtons saveText='CONTINUE' onSave={onContinue} />
+      <ActionButtons saveText='CONTINUE' onCancel={onCancel} onSave={onContinue} />
     </Col>
   </Row>
 );

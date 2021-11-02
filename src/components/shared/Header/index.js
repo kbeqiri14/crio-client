@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { Row, Col } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
 import { SecondaryButton } from '@ui-kit/Button';
@@ -32,6 +32,7 @@ export const Header = () => {
   const activeItem = location.pathname?.replace('/', '') || 'home';
 
   const menuItems = useMemo(() => getTabItems(!!user), [user]);
+  const upload = useCallback(() => console.log(243243243) || history.push('/upload'), []);
 
   return (
     <header className='crio-app-header'>
@@ -53,7 +54,7 @@ export const Header = () => {
               : !loading && <ConnectButton size='regular' />
           }
           {user && (
-            <SecondaryButton filled textColor='white'>
+            <SecondaryButton filled textColor='white' onClick={upload}>
               UPLOAD
             </SecondaryButton>
           )}

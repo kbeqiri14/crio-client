@@ -2,7 +2,7 @@ import { memo, useCallback, useEffect } from 'react';
 import { Progress } from 'antd';
 
 import { Text, Title } from '@ui-kit/Text';
-import Modal from '@ui-kit/Modal';
+import { BlurredModal } from '@ui-kit/Modal';
 import './styles.less';
 
 const Uploading = ({
@@ -28,11 +28,11 @@ const Uploading = ({
   });
 
   return (
-    <Modal blurred visible={visible} width={686} onCancel={closeModal}>
+    <BlurredModal blurred visible={visible} width={686} onCancel={closeModal}>
       <Title level={10} color='white'>Uploading</Title>
       <Text level={30} color='white_75'>{`${percent} % . ${remainingTime} left`}</Text>
       <Progress percent={percent} showInfo={false} />
-    </Modal>
+    </BlurredModal>
   );
 };
 
