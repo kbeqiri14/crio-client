@@ -30,13 +30,13 @@ const ProfileInfo = ({
         {isCreator && <CreatorIcon className='creator-icon' />}
       </Col>
       <Col className={isFollowing ? 'info' : ''}>
-        {visibility.name === 'public' && <Title level={10} color='white'>
+        {visibility?.name === 'public' && <Title level={10} color='white'>
           {isFollowing ? <Link to={`/profile/${id}`}>{name}</Link> : name}
         </Title>}
-        {visibility.username === 'public' && <Title level={30} color='white'>
+        {visibility?.username === 'public' && <Title level={30} color='white'>
           @{isFollowing ? <Link to={`/profile/${id}`}>{username}</Link> : username}
         </Title>}
-        {visibility.email === 'public' && (
+        {visibility?.email === 'public' && (
           <Text level={10} color='white_75'>
             <MailIcon />
             {isProfile || isFollowing ? <a href={`mailto:${email}`}>{email}</a> : email}
