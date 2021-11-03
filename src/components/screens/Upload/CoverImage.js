@@ -4,7 +4,7 @@ import { Col, Row, Upload } from 'antd';
 import ActionButtons from '@shared/ActionButtons';
 import { Text, Title } from '@ui-kit/Text';
 import { BlurredModal } from '@ui-kit/Modal';
-import { ReactComponent as CoverImageIcon } from '@svgs/cover-image.svg';
+import coverImage from '@images/cover-image.png';
 
 const { Dragger } = Upload;
 
@@ -49,7 +49,7 @@ const CoverImage = ({ visible, onClose}) => {
                   <Col span={24}>
                     <Row justify='center' align='center' gutter={[0, 11]} className='dray-and-drop'>
                       <Col span={24}>
-                        <CoverImageIcon />
+                        <img alt='cover' src={coverImage} />
                       </Col>
                       <Col span={24}>
                         <Text inline level='10' color='white'>Drag and drop an image, or <a href='/'>Upload</a></Text>
