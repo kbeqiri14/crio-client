@@ -52,7 +52,7 @@ const CoverImage = ({ visible, onClose}) => {
                         <img alt='cover' src={coverImage} />
                       </Col>
                       <Col span={24}>
-                        <Text inline level='10' color='white'>Drag and drop an image, or <a href='/'>Upload</a></Text>
+                        <Text inline level='10' color='white'>Drag and drop an image, or <a>Upload</a></Text>
                       </Col>
                     </Row>
                   </Col>

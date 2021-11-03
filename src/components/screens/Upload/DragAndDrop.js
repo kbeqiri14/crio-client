@@ -53,7 +53,7 @@ const DragAndDrop = ({ onCancel, onContinue }) => {
           </Row>
         </Col>
         <Col span={24}>
-          <ActionButtons saveText='CONTINUE' onCancel={onCancel} onSave={onContinue} />
+          <ActionButtons saveText='CONTINUE' disabled={!fileName} onCancel={onCancel} onSave={onContinue} />
         </Col>
       </Row>
     </Dragger>
