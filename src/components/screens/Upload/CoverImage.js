@@ -33,7 +33,7 @@ const CoverImage = ({ visible, onClose}) => {
   return (
     <Dragger {...props}>
       <BlurredModal blurred maskClosable={false} visible={visible} width={686} onCancel={onClose}>
-        <Row gutter={[0, 40]} className='upload small'>
+        <Row gutter={[0, 40]} className='cover-image'>
           <Col span={24}>
             <Title inline level='10' color='white'>Upload cover image</Title>
           </Col>
@@ -47,12 +47,12 @@ const CoverImage = ({ visible, onClose}) => {
                 </Col>
               : (<Fragment>
                   <Col span={24}>
-                    <Row justify='center' align='center' gutter={[0, 11]} className='dray-and-drop small'>
+                    <Row justify='center' align='center' gutter={[0, 11]} className='dray-and-drop'>
                       <Col span={24}>
                         <CoverImageIcon />
                       </Col>
                       <Col span={24}>
-                        <Text inline level='10' color='white'>Drag and drop an image, or <a>Upload</a></Text>
+                        <Text inline level='10' color='white'>Drag and drop an image, or <a href='/'>Upload</a></Text>
                       </Col>
                     </Row>
                   </Col>

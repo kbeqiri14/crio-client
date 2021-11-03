@@ -1,35 +1,50 @@
-import { memo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { Col, Row } from 'antd';
 
 import ActionButtons from '@shared/ActionButtons';
 import { Input } from '@ui-kit/Input';
+import poster1 from '@images/posters/sample-poster-1.png';
 import { ReactComponent as PlayIcon } from '@svgs/play-big.svg';
 import { ReactComponent as RemoveIcon } from '@svgs/remove.svg';
 
-const VideoInfo = ({ onCancel, onContinue }) => (
-  <Row gutter={[0, 50]}>
-    <Col span={8} offset={6}>
-      <Input placeholder='Write the artwork title' />
-    </Col>
-    <Col span={8} offset={6}>
-      <Input placeholder='Write anything what you’d like to mention about this work' />
-    </Col>
-    <Col span={24}>
-      <div>
-        <iframe
-          title='Crio video player'
-          src='https://player.vimeo.com/video/382975976?h=dc77330a55&color=ffffff&title=0&byline=0&portrait=0'
-          frameBorder='0'
-          allow='autoplay; fullscreen; picture-in-picture'
-          allowFullScreen
+const VideoInfo = ({ onCancel, onContinue }) => {
+  const { control, watch, handleSubmit } = useForm();
+  const title = watch('title');
+  const desc = watch('desc');
+
+  const disabled = useMemo(() => !title || !desc, [desc, title]);
+  const onSubmit = useCallback(() => {
+    console.log(title, desc)
+    onContinue();
+  }, [title, desc, onContinue]);
+
+  return (
+    <Row justify='start' className='video-info'>
+      <Col span={24}>
+        <Controller
+          name='title'
+          control={control}
+          render={({ field }) => <Input {...field} className='title' placeholder='Write the artwork title' />}
         />
-      </div>
-      <RemoveIcon className='remove' />
-    </Col>
-    <Col span={24}>
-      <ActionButtons saveText='CONTINUE' onCancel={onCancel} onSave={onContinue} />
-    </Col>
-  </Row>
-);
+      </Col>
+      <Col span={24}>
+        <Controller
+          name='desc'
+          control={control}
+          render={({ field }) => <Input {...field} placeholder='Write anything what you’d like to mention about this work' />}
+        />
+      </Col>
+      <Col span={24} className='player'>
+        <img alt='video' src={poster1} />
+        <RemoveIcon className='remove' />
+        <PlayIcon className='play' />
+      </Col>
+      <Col span={24}>
+        <ActionButtons saveText='CONTINUE' disabled={disabled} onCancel={onCancel} onSave={handleSubmit(onSubmit)} />
+      </Col>
+    </Row>
+    );
+  };
 
 export default memo(VideoInfo);

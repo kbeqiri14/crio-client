@@ -17,8 +17,20 @@ const DragAndDrop = ({ onCancel, onContinue }) => {
     onDrop(e) {
       setFileName(e.dataTransfer.files?.[0]?.name);
     },
+    beforeUpload(file) {
+      const getSource = async () => {
+        const src = await new Promise(resolve => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => resolve(reader.result);
+        });
+        console.log(src)
+      };
+      getSource();
+    },
   };
 
+  console.log(process.env.REACT_APP_COGNITO_REDIRECT_SIGN_OUT, 'REACT_APP_COGNITO_REDIRECT_SIGN_OUTREACT_APP_COGNITO_REDIRECT_SIGN_OUT')
   return (
     <Dragger {...props}>
       <Row gutter={[0, 50]} className='upload'>

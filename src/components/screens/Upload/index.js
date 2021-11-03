@@ -10,7 +10,6 @@ import './styles.less';
 const Upload = () => {
   const [percent, setPercent] = useState(0);
   const [remainingTime, setRemainingTime] = useState(100);
-  const [state, setState] = useState();
   const [uploadingVisible, setUploadingVisible] = useState(false);
   const [uploadedVideoVisible, setUploadedVideoVisible] = useState(false);
   const [coverImageVisible, setCoverImageVisible] = useState(false);

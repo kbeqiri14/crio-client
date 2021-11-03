@@ -1,7 +1,7 @@
 @import 'variables';
 
 .upload {
-  padding: 34px 0 63px;
+  padding: 34px 20px 63px;
   text-align: center;
   img {
     min-width: 520px;
@@ -10,26 +10,54 @@
     height: 284px;
     border-radius: 43px;
   }
-  &.small {
-    padding: 39px 59px 31px !important;
-  }
   .dray-and-drop {
     padding: 89px 0;
     border: 1px dashed @white_50;
     border-radius: 43px;
-    &.small {
-      padding: 56px 0 !important;
+  }
+}
+.cover-image {
+  padding: 39px 59px 31px !important;
+  text-align: center;
+  .dray-and-drop {
+    padding: 56px;
+    border: 1px dashed @white_50;
+    border-radius: 43px;
+  }
+}
+
+.video-info {
+  padding: 45px 0;
+  text-align: center;
+  input {
+    width: 670px !important;
+    background-color: transparent !important;
+    &:hover,
+    &:focus-visible {
+      border: 1px solid transparent !important;
     }
   }
-  .play {
-    position: absolute;
-    top: 50%;
-    left: 50%;
+  input.title {
+    font-size: 26px;
   }
-  .remove {
-    position: absolute;
-    top: 4%;
-    right: 25%;
+  .player {
+    padding: 24px 0 48px;
+    img {
+      max-width: 922px;
+      max-height: 538px;
+      filter: blur(3px);
+      border-radius: 16px;
+    }
+    .remove {
+      position: absolute;
+      top: 7%;
+      right: 33%;
+    }
+    .play {
+      position: absolute;
+      top: 37%;
+      left: 47%;
+    }
   }
 }
 

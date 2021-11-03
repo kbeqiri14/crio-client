@@ -22,15 +22,15 @@ const Uploading = ({
         setVisible(false);
         setUploadedVideoVisible(true);
       }
-      setPercent(percent + 10) || setRemainingTime(remainingTime - 1);
-    }, 300);
+      setPercent(percent + 1) || setRemainingTime(remainingTime - 1);
+    }, 50);
     return () => clearInterval(interval);
   });
 
   return (
     <BlurredModal blurred visible={visible} width={686} onCancel={closeModal}>
       <Title level={10} color='white'>Uploading</Title>
-      <Text level={30} color='white_75'>{`${percent} % . ${remainingTime} left`}</Text>
+      <Text level={30} color='white_75'>{`${percent} % - ${100 - percent} minutes left`}</Text>
       <Progress percent={percent} showInfo={false} />
     </BlurredModal>
   );

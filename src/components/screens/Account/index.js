@@ -3,7 +3,7 @@ import { Space, Switch } from 'antd';
 import { useLazyQuery, useQuery } from '@apollo/client';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
-import { getFollowings, getCreatorUsers, me } from '@app/graphql/queries/users.query';
+import { getCreatorUsers, me } from '@app/graphql/queries/users.query';
 import { Title } from '@ui-kit/Text';
 import { Spinner } from '@ui-kit/Spinner';
 import PersonalInfo from './__partials__/PersonalInfo';

@@ -41,7 +41,7 @@ export const AppRoutes = () => {
       <Switch>
         {/* PUBLIC ROUTES */}
         <Route exact path='/'>
-          {isAuthenticated ? <Feed /> : <Upload />}
+          {isAuthenticated ? <Feed /> : <LandingPage />}
         </Route>
         <Route exact path='/pricing' component={PricingPlans} />
         {!loading && !user && <Redirect to='/' />}
