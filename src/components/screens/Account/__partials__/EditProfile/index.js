@@ -42,7 +42,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
   ]);
 
   return (
-    <BlurredModal width={828} visible={visible} onCancel={closeModal}>
+    <BlurredModal width={828} visible={visible} onCancel={closeModal} className='edit-profile'>
       <Row justify='center' gutter={[0, 55]}>
         <Col span={24}>
           <Title level={10} color='white'>
@@ -102,7 +102,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
             </FormRow>
           </Row>
         </Col>
-        <Col>
+        <Col span={24}>
           <Footer
             notHidden={notHidden}
             updatedData={updatedData}
