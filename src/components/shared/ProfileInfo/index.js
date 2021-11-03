@@ -32,11 +32,9 @@ const ProfileInfo = ({
         <Title level={10} color='white'>
           {isFollowing ? <Link to={`/profile/${id}`}>{name}</Link> : name}
         </Title>
-        {(isProfile || isFollowing) && (
-          <Title level={30} color='white'>
-            @{isFollowing ? <Link to={`/profile/${id}`}>{username}</Link> : username}
-          </Title>
-        )}
+        <Title level={30} color='white'>
+          @{isFollowing ? <Link to={`/profile/${id}`}>{username}</Link> : username}
+        </Title>
         {email && (
           <Text level={10} color='white_75'>
             <MailIcon />
