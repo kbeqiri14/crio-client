@@ -42,7 +42,7 @@ const CoverImage = ({ visible, onClose}) => {
           </Col>
           {
             source
-              ? <Col>
+              ? <Col className='uploaded-image'>
                   <img alt='uploaded file' src={source} />
                 </Col>
               : (<Fragment>

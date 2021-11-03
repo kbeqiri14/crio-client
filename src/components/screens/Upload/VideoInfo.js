@@ -6,7 +6,6 @@ import ActionButtons from '@shared/ActionButtons';
 import { Input } from '@ui-kit/Input';
 import thumbnail from '@images/thumbnail.png';
 import { ReactComponent as PlayIcon } from '@svgs/play-big.svg';
-import { ReactComponent as RemoveIcon } from '@svgs/remove.svg';
 
 const VideoInfo = ({ onCancel, onContinue }) => {
   const { control, watch, handleSubmit } = useForm();
@@ -37,7 +36,6 @@ const VideoInfo = ({ onCancel, onContinue }) => {
       </Col>
       <Col span={24} className='player'>
         <img alt='video' src={thumbnail} />
-        <RemoveIcon className='remove' />
         <PlayIcon className='play' />
       </Col>
       <Col span={24}>
