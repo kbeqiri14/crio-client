@@ -8,6 +8,12 @@ import { getPosters } from '@screens/LandingPage/posters';
 import { Slider } from '@ui-kit/Slider';
 import { Spinner } from '@ui-kit/Spinner';
 
+const mockUsers = [
+  'will.y@gmail.com',
+  'lisa.west@gmail.com',
+  'ji.yeon@gmail.com',
+  'smith@gmail.com',
+];
 const SliderBreakPoints = {
   800: {
     slidesPerView: 3,
@@ -47,7 +53,12 @@ const FollowingRow = ({ user, handleClick }) => (
     <Col span={6} className='following-info'>
       <ProfileInfo
         isFollowing
-        {...{ ...user, picture: require(`../../../../assets/images/mock-creators/${user.firstName}.png`).default }}
+        {...{
+          ...user,
+          picture: mockUsers.includes(user?.email)
+            ? require(`../../../../assets/images/mock-creators/${user.firstName}.png`).default
+            : undefined,
+        }}
       />
     </Col>
     <Col span={14}>
