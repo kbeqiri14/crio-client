@@ -30,7 +30,6 @@ const DragAndDrop = ({ onCancel, onContinue }) => {
     },
   };
 
-  console.log(process.env.REACT_APP_COGNITO_REDIRECT_SIGN_OUT, 'REACT_APP_COGNITO_REDIRECT_SIGN_OUTREACT_APP_COGNITO_REDIRECT_SIGN_OUT')
   return (
     <Dragger {...props}>
       <Row gutter={[0, 50]} className='upload'>

@@ -32,7 +32,7 @@ export const Header = () => {
   const activeItem = location.pathname?.replace('/', '') || 'home';
 
   const menuItems = useMemo(() => getTabItems(!!user), [user]);
-  const upload = useCallback(() => console.log(243243243) || history.push('/upload'), []);
+  const upload = useCallback(() => history.push('/upload'), []);
 
   return (
     <header className='crio-app-header'>
