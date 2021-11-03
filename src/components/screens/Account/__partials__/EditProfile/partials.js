@@ -2,6 +2,7 @@ import { Fragment, memo } from 'react';
 import { Col, Row, Tooltip } from 'antd';
 import { Controller } from 'react-hook-form';
 
+import { keys } from '@constants/visibility';
 import { Text, Title } from '@ui-kit/Text';
 import { Input } from '@ui-kit/Input';
 import { ReactComponent as PublicIcon } from '@svgs/public.svg';
@@ -11,12 +12,12 @@ import Visibility from './Visibility';
 const options = [
   {
     label: 'Public',
-    value: 'public',
+    value: keys.PUBLIC,
     icon: <PublicIcon />,
   },
   {
     label: 'Only me',
-    value: 'only_me',
+    value: keys.PRIVATE,
     icon: <PrivateIcon />,
   },
 ];

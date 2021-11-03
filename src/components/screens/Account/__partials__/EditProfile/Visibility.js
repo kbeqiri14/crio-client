@@ -2,6 +2,7 @@ import { memo, useCallback, useState } from 'react';
 import { Select } from 'antd';
 import { Controller } from 'react-hook-form';
 
+import { keys } from '@constants/visibility';
 import { Title } from '@ui-kit/Text';
 import { ReactComponent as ArrowBottomIcon } from '@svgs/arrow-down.svg';
 
@@ -15,7 +16,7 @@ const Visibility = ({ options, name, control, defaultValue, setTooltipVisible })
   );
   const handleMenuItemClick = useCallback(option => {
     setSelectedValue(options.find(({ value }) => value === option));
-    setTooltipVisible(option === 'only_me' ? name : undefined);
+    setTooltipVisible(option === keys.PRIVATE ? name : undefined);
   }, [name, options, setTooltipVisible]);
 
   return (

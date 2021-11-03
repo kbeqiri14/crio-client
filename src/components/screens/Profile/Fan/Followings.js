@@ -57,7 +57,7 @@ const FollowingRow = ({ user, handleClick }) => (
           ...user,
           picture: mockUsers.includes(user?.email)
             ? require(`../../../../assets/images/mock-creators/${user.firstName}.png`).default
-            : undefined,
+            : `https://graph.facebook.com/${user?.fbUserId}/picture?height=350&width=350`,
         }}
       />
     </Col>

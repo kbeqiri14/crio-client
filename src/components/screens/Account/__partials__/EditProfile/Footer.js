@@ -1,4 +1,5 @@
 import { memo, useCallback, useMemo } from 'react';
+import { isEqual } from 'lodash';
 import { useMutation } from '@apollo/client';
 
 import { me } from '@app/graphql/queries/users.query';
@@ -7,7 +8,7 @@ import { updateUser } from '@app/graphql/mutations/user.mutation';
 import ActionButtons from '@shared/ActionButtons';
 import { successToast } from '@ui-kit/Notification';
 
-const Footer = ({ notHidden, updatedData, closeModal, handleSubmit }) => {
+const Footer = ({ updatedData, closeModal, handleSubmit }) => {
   const { user, dispatchUser } = useLoggedInUser();
   const [updateUserInfo, { loading }] = useMutation(updateUser, {
     update: (cache, mutationResult) => {
@@ -21,11 +22,6 @@ const Footer = ({ notHidden, updatedData, closeModal, handleSubmit }) => {
             me: {
               ...(existingData?.me || {}),
               ...updatedData,
-              visibility: {
-                name: updatedData?.nameVisible || user?.visibility?.name,
-                username: updatedData?.usernameVisible || user?.visibility?.username,
-                email: updatedData?.emailVisible || user?.visibility?.email,
-              }
             },
           },
         });
@@ -39,52 +35,26 @@ const Footer = ({ notHidden, updatedData, closeModal, handleSubmit }) => {
   });
 
   const disabled = useMemo(() => {
-    const { firstName, lastName, username, nameVisible, usernameVisible, emailVisible } = updatedData;
-    return !(notHidden && username !== ''
+    const { firstName, lastName, username, visibility } = updatedData;
+    return !(visibility.length && username !== ''
       && (((firstName && user?.firstName !== firstName) || (firstName === '' && !!user?.firstName))
         || ((lastName && user?.lastName !== lastName) || (lastName === '' && !!user?.lastName))
         || (username && user?.username !== username)
-        || (nameVisible && user?.visibility?.name !== nameVisible)
-        || (usernameVisible && user?.visibility?.username !== usernameVisible)
-        || (emailVisible && user?.visibility?.email !== emailVisible))
+        || (!isEqual(visibility, user.visibility)))
     )
-  }, [
-    notHidden,
-    updatedData,
-    user?.firstName,
-    user?.lastName,
-    user?.username,
-    user?.visibility?.name,
-    user?.visibility?.username,
-    user?.visibility?.email,
-  ]);
+  }, [updatedData, user?.firstName, user?.lastName, user?.username, user?.visibility]);
 
-  const onSubmit = useCallback(
-    (attributes) => {
-      const { nameVisible, usernameVisible, emailVisible, ...rest } = attributes;
-      return updateUserInfo({
-        variables: {
-          attributes: {
-            ...rest,
-            visibility: {
-              name: updatedData.nameVisible || user?.visibility?.name,
-              username: updatedData.usernameVisible || user?.visibility?.username,
-              email: updatedData.emailVisible || user?.visibility?.email,
-            }
-          }
-        }
-      });
+  const onSubmit = useCallback(attributes => updateUserInfo({
+    variables: {
+      attributes: {
+        ...attributes,
+        visibility: updatedData.visibility,
+        nameVisible: undefined,
+        usernameVisible: undefined,
+        emailVisible: undefined,
+      },
     },
-    [
-      updateUserInfo,
-      updatedData?.nameVisible,
-      updatedData?.usernameVisible,
-      updatedData?.emailVisible,
-      user?.visibility?.name,
-      user?.visibility?.username,
-      user?.visibility?.email,
-    ],
-  );
+  }), [updatedData.visibility, updateUserInfo]);
 
   return (
     <ActionButtons
