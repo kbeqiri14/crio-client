@@ -8,6 +8,13 @@ import PersonalInfo from '@screens/Account/__partials__/PersonalInfo';
 import Details from '@screens/Account/Details';
 import { Spinner } from '@ui-kit/Spinner';
 
+const mockUsers = [
+  'will.y@gmail.com',
+  'lisa.west@gmail.com',
+  'ji.yeon@gmail.com',
+  'smith@gmail.com',
+];
+
 export const Profile = () => {
   const { pathname } = useLocation();
   const [isFollow, setIsFollow] = useState(false);
@@ -41,7 +48,9 @@ export const Profile = () => {
           isProfile
           user={{
             ...users?.getUser,
-            picture: users?.getUser?.firstName ? require(`../../../assets/images/mock-creators/${users?.getUser?.firstName}.png`).default : undefined,
+            picture: mockUsers.includes(users?.getUser?.email)
+              ? (users?.getUser?.firstName ? require(`../../../assets/images/mock-creators/${users?.getUser?.firstName}.png`).default : undefined)
+              : undefined
           }}
           isFollow={isFollow}
           loading={loadingFollowing}

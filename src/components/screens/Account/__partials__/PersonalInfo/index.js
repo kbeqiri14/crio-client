@@ -40,6 +40,7 @@ const PersonalInfo = ({
           username={user?.username}
           email={user?.email}
           picture={picture}
+          visibility={user?.visibility}
           isProfile={isProfile}
           isCreator={isCreator || isProfile}
         />
