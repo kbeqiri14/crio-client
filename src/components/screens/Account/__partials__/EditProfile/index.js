@@ -43,8 +43,6 @@ const EditProfile = ({ user, visible, closeModal }) => {
     visibility,
   }), [firstName, lastName, username, visibility]);
 
-  const notHidden = useMemo(() => visibility.length, [visibility.length])
-
   return (
     <BlurredModal width={828} visible={visible} onCancel={closeModal} className='edit-profile'>
       <Row justify='center' gutter={[0, 55]}>
@@ -59,7 +57,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
               name='nameVisible'
               control={control}
               defaultValue={user?.visibility?.includes(fields.NAME) ? keys.PUBLIC : keys.PRIVATE}
-              tooltipVisible={tooltipVisible === 'nameVisible' && !notHidden}
+              tooltipVisible={tooltipVisible === 'nameVisible' && !visibility?.length}
               setTooltipVisible={setTooltipVisible}
             >
               <FormItem
@@ -79,7 +77,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
               name='usernameVisible'
               control={control}
               defaultValue={user?.visibility?.includes(fields.USERNAME) ? keys.PUBLIC : keys.PRIVATE}
-              tooltipVisible={tooltipVisible === 'usernameVisible' && !notHidden}
+              tooltipVisible={tooltipVisible === 'usernameVisible' && !visibility?.length}
               setTooltipVisible={setTooltipVisible}
             >
               <FormItem
@@ -93,7 +91,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
               name='emailVisible'
               control={control}
               defaultValue={user?.visibility?.includes(fields.EMAIL) ? keys.PUBLIC : keys.PRIVATE}
-              tooltipVisible={tooltipVisible === 'emailVisible' && !notHidden}
+              tooltipVisible={tooltipVisible === 'emailVisible' && !visibility?.length}
               setTooltipVisible={setTooltipVisible}
             >
               <FormItem
@@ -107,11 +105,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
           </Row>
         </Col>
         <Col span={24}>
-          <Footer
-            notHidden={notHidden}
-            updatedData={updatedData}
-            closeModal={closeModal}
-            handleSubmit={handleSubmit} />
+          <Footer updatedData={updatedData} closeModal={closeModal} handleSubmit={handleSubmit} />
         </Col>
       </Row>
     </BlurredModal>

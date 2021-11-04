@@ -8,12 +8,6 @@ import { getPosters } from '@screens/LandingPage/posters';
 import { Slider } from '@ui-kit/Slider';
 import { Spinner } from '@ui-kit/Spinner';
 
-const mockUsers = [
-  'will.y@gmail.com',
-  'lisa.west@gmail.com',
-  'ji.yeon@gmail.com',
-  'smith@gmail.com',
-];
 const SliderBreakPoints = {
   800: {
     slidesPerView: 3,
@@ -51,15 +45,7 @@ const ScrollPosters = ({ handleClick }) => {
 const FollowingRow = ({ user, handleClick }) => (
   <Row justify='center'>
     <Col span={6} className='following-info'>
-      <ProfileInfo
-        isFollowing
-        {...{
-          ...user,
-          picture: mockUsers.includes(user?.email)
-            ? require(`../../../../assets/images/mock-creators/${user.firstName}.png`).default
-            : `https://graph.facebook.com/${user?.fbUserId}/picture?height=350&width=350`,
-        }}
-      />
+      <ProfileInfo user={user} isFollowing />
     </Col>
     <Col span={14}>
       <div className='cr-artworks-section'>

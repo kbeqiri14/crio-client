@@ -1,7 +1,7 @@
-import { memo, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { memo, useCallback, useMemo } from 'react';
 import { Col, Row } from 'antd';
 
+import history from '@configs/history';
 import { fields } from '@constants/visibility';
 import { Text, Title } from '@ui-kit/Text';
 import { ReactComponent as CreatorIcon } from '@svgs/creator.svg';
@@ -9,46 +9,46 @@ import { ReactComponent as MailIcon } from '@svgs/mail.svg';
 import profile from '@images/profile.png';
 import './styles.less';
 
-const ProfileInfo = ({
-  id,
-  firstName,
-  lastName,
-  username,
-  email,
-  picture,
-  visibility,
-  isProfile,
-  isFollowing,
-  isCreator,
-}) => {
-  const name = useMemo(() => `${firstName || ''} ${lastName || ''}`, [firstName, lastName]);
+const ProfileInfo = ({ user = {}, isProfile, isFollowing, isCreator }) => {
+  const {
+    id,
+    fbUserId,
+    firstName,
+    lastName,
+    username,
+    email,
+    visibility,
+  } = user;
   const size = useMemo(() => isFollowing ? 96 : 134, [isFollowing]);
-  const isMain = useMemo(() => !isProfile && !isFollowing, [isProfile, isFollowing]);
+  const name = useMemo(() => `${firstName || ''} ${lastName || ''}`, [firstName, lastName]);
+  const source = useMemo(() => fbUserId
+    ? `https://graph.facebook.com/${fbUserId}/picture?height=350&width=350`
+    : profile,
+    [fbUserId],
+  );
+  const visible = useMemo(() => {
+    const main = !isProfile && !isFollowing;
+    return {
+      name: main || (!main && visibility?.includes(fields.NAME)),
+      username: main || (!main && visibility?.includes(fields.USERNAME)),
+      email: main || (!main && visibility?.includes(fields.EMAIL)),
+    };
+  }, [isFollowing, isProfile, visibility]);
+  const visitProfile = useCallback(() => isFollowing && history.push(`/profile/${id}`), [isFollowing, id]);
 
   return (
-    <Row align='middle' gutter={30} className='profile-info'>
+    <Row align='middle' gutter={30} className={`profile ${isFollowing ? 'following' : ''}`}>
       <Col>
-        {isFollowing
-          ? <Link to={`/profile/${id}`}>
-              <img alt='profile' src={picture || profile} width={size} height={size} />
-            </Link>
-          : <img alt='profile' src={picture || profile} width={size} height={size} />}
+        <img alt='profile' src={source} width={size} height={size} onClick={visitProfile} />
         {isCreator && <CreatorIcon className='creator-icon' />}
       </Col>
-      <Col className={isFollowing ? 'info' : ''}>
-        {(isMain || (!isMain && visibility?.includes(fields.NAME)))
-          && <Title level={10} color='white'>
-          {isFollowing ? <Link to={`/profile/${id}`}>{name}</Link> : name}
-        </Title>}
-        {(isMain || (!isMain && visibility?.includes(fields.USERNAME)))
-          && <Title level={30} color='white'>
-          @{isFollowing ? <Link to={`/profile/${id}`}>{username}</Link> : username}
-        </Title>}
-        {(isMain || (!isMain && visibility?.includes(fields.EMAIL)))
-          && <Text level={10} color='white_75'>
-            <MailIcon />
-            {isProfile || isFollowing ? <a href={`mailto:${email}`}>{email}</a> : email}
-          </Text>}
+      <Col className='info'>
+        {visible.name && <Title level={10} color='white' onClick={visitProfile}>{name}</Title>}
+        {visible.username && <Title level={30} color='white' onClick={visitProfile}>@{username}</Title>}
+        {visible.email && <Text level={10} color='white_75'>
+          <MailIcon />
+          {isProfile || isFollowing ? <a href={`mailto:${email}`}>{email}</a> : email}
+        </Text>}
       </Col>
     </Row>
   );
