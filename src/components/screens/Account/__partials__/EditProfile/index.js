@@ -2,6 +2,7 @@ import { memo, useMemo, useState } from 'react';
 import { Col, Row } from 'antd';
 import { useForm } from 'react-hook-form';
 
+import { fields, keys } from '@constants/visibility';
 import { Title } from '@ui-kit/Text';
 import { BlurredModal } from '@ui-kit/Modal';
 import { FormRow, FormItem } from './partials';
@@ -17,29 +18,32 @@ const EditProfile = ({ user, visible, closeModal }) => {
   const nameVisible = watch('nameVisible');
   const usernameVisible = watch('usernameVisible');
   const emailVisible = watch('emailVisible');
+
+  const visibility = useMemo(() => {
+    const include = [];
+    const exclude = [];
+    Object.entries({
+      name: nameVisible, username: usernameVisible, email: emailVisible,
+    }).forEach(([key, value]) => {
+      if (value) {
+        if (value === keys.PUBLIC) {
+          include.push(key);
+        } else {
+          exclude.push(key);
+        }
+      }
+    });
+    return [...new Set([...user?.visibility, ...include])].filter(item => !exclude.includes(item));
+  }, [nameVisible, usernameVisible, emailVisible, user?.visibility]);
+
   const updatedData = useMemo(() => ({
     firstName: firstName?.trim(),
     lastName: lastName?.trim(),
     username: username?.trim(),
-    nameVisible,
-    usernameVisible,
-    emailVisible,
-  }), [firstName, lastName, username, nameVisible, usernameVisible, emailVisible]);
+    visibility,
+  }), [firstName, lastName, username, visibility]);
 
-  const notHidden = useMemo(() => {
-    return [
-      nameVisible || user?.visibility?.name,
-      usernameVisible || user?.visibility?.username,
-      emailVisible || user?.visibility?.email
-    ].some(item => !item || item !== 'only_me');
-  }, [
-      emailVisible,
-      nameVisible,
-      usernameVisible,
-      user?.visibility?.name,
-      user?.visibility?.username,
-      user?.visibility?.email,
-  ]);
+  const notHidden = useMemo(() => visibility.length, [visibility.length])
 
   return (
     <BlurredModal width={828} visible={visible} onCancel={closeModal} className='edit-profile'>
@@ -54,7 +58,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
             <FormRow
               name='nameVisible'
               control={control}
-              defaultValue={user?.visibility?.name}
+              defaultValue={user?.visibility?.includes(fields.NAME) ? keys.PUBLIC : keys.PRIVATE}
               tooltipVisible={tooltipVisible === 'nameVisible' && !notHidden}
               setTooltipVisible={setTooltipVisible}
             >
@@ -74,7 +78,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
             <FormRow
               name='usernameVisible'
               control={control}
-              defaultValue={user?.visibility?.username}
+              defaultValue={user?.visibility?.includes(fields.USERNAME) ? keys.PUBLIC : keys.PRIVATE}
               tooltipVisible={tooltipVisible === 'usernameVisible' && !notHidden}
               setTooltipVisible={setTooltipVisible}
             >
@@ -88,7 +92,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
             <FormRow
               name='emailVisible'
               control={control}
-              defaultValue={user?.visibility?.email}
+              defaultValue={user?.visibility?.includes(fields.EMAIL) ? keys.PUBLIC : keys.PRIVATE}
               tooltipVisible={tooltipVisible === 'emailVisible' && !notHidden}
               setTooltipVisible={setTooltipVisible}
             >
