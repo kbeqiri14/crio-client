@@ -47,12 +47,12 @@ const CoverImage = ({ visible, onClose}) => {
                 </Col>
               : (<Fragment>
                   <Col span={24}>
-                    <Row justify='center' align='center' gutter={[0, 11]} className='dray-and-drop'>
+                    <Row justify='center' align='center' gutter={[0, 11]} className='drag-and-drop'>
                       <Col span={24}>
                         <img alt='cover' src={coverImage} />
                       </Col>
                       <Col span={24}>
-                        <Text inline level='10' color='white'>Drag and drop an image, or <a href='/'>Upload</a></Text>
+                        <Text inline level='10' color='white'>Drag and drop an image, or <a>Upload</a></Text>
                       </Col>
                     </Row>
                   </Col>

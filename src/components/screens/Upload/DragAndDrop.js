@@ -37,7 +37,7 @@ const DragAndDrop = ({ onCancel, onContinue }) => {
           <Title inline level='10' color='white'>Upload your artwork</Title>
         </Col>
         <Col span={12} offset={6}>
-          <Row justify='center' align='center' gutter={[0, 11]} className='dray-and-drop'>
+          <Row justify='center' align='center' gutter={[0, 11]} className='drag-and-drop'>
             <Col span={24}>
               <img alt='drag-and-drop' src={dragAndDropImage} />
             </Col>
@@ -53,7 +53,7 @@ const DragAndDrop = ({ onCancel, onContinue }) => {
           </Row>
         </Col>
         <Col span={24}>
-          <ActionButtons saveText='CONTINUE' onCancel={onCancel} onSave={onContinue} />
+          <ActionButtons saveText='CONTINUE' disabled={!fileName} onCancel={onCancel} onSave={onContinue} />
         </Col>
       </Row>
     </Dragger>

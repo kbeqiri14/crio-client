@@ -12,7 +12,7 @@ const VideoInfo = ({ onCancel, onContinue }) => {
   const title = watch('title');
   const desc = watch('desc');
 
-  const disabled = useMemo(() => !title || !desc, [desc, title]);
+  const disabled = useMemo(() => !title?.trim() || !desc?.trim(), [desc, title]);
   const onSubmit = useCallback(() => {
     console.log(title, desc)
     onContinue();
