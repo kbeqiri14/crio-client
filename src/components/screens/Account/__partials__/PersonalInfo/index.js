@@ -16,13 +16,6 @@ const PersonalInfo = ({
   loading,
   onClick,
 }) => {
-  const picture = useMemo(
-    () =>
-      user.fbUserId
-        ? `https://graph.facebook.com/${user.fbUserId}/picture?height=350&width=350`
-        : user.picture,
-    [user.fbUserId, user.picture],
-  );
   const buttonLabel = useMemo(() => isProfile ? `${isFollow ? 'UN' : ''}FOLLOW` : 'EDIT PROFILE', [isProfile, isFollow]);
   const buttonIcon = useMemo(() => {
     if (isProfile) {
@@ -34,16 +27,7 @@ const PersonalInfo = ({
   return (
     <Row justify='space-between' align='middle' className='personal-info'>
       <Col span={16}>
-        <ProfileInfo
-          firstName={user?.firstName}
-          lastName={user?.lastName}
-          username={user?.username}
-          email={user?.email}
-          picture={picture}
-          visibility={user?.visibility}
-          isProfile={isProfile}
-          isCreator={isCreator || isProfile}
-        />
+        <ProfileInfo user={user} isProfile={isProfile} isCreator={isCreator || isProfile} />
       </Col>
       <Col span={8} className='right'>
         <SecondaryButton

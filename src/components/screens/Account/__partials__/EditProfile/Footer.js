@@ -10,29 +10,6 @@ import { successToast } from '@ui-kit/Notification';
 
 const Footer = ({ updatedData, closeModal, handleSubmit }) => {
   const { user, dispatchUser } = useLoggedInUser();
-  const [updateUserInfo, { loading }] = useMutation(updateUser, {
-    update: (cache, mutationResult) => {
-      if (mutationResult?.data?.updateUser) {
-        const existingData = cache.readQuery({
-          query: me,
-        });
-        cache.writeQuery({
-          query: me,
-          data: {
-            me: {
-              ...(existingData?.me || {}),
-              ...updatedData,
-            },
-          },
-        });
-      }
-    },
-    onCompleted: (data) => {
-      dispatchUser({ ...user, ...data.updateUser });
-      closeModal();
-      successToast('Your profile has been updated.');
-    },
-  });
 
   const disabled = useMemo(() => {
     const { firstName, lastName, username, visibility } = updatedData;
@@ -44,17 +21,26 @@ const Footer = ({ updatedData, closeModal, handleSubmit }) => {
     )
   }, [updatedData, user?.firstName, user?.lastName, user?.username, user?.visibility]);
 
-  const onSubmit = useCallback(attributes => updateUserInfo({
-    variables: {
-      attributes: {
-        ...attributes,
-        visibility: updatedData.visibility,
-        nameVisible: undefined,
-        usernameVisible: undefined,
-        emailVisible: undefined,
-      },
+  const [updateUserInfo, { loading }] = useMutation(updateUser, {
+    update: (cache, mutationResult) => {
+      if (mutationResult?.data?.updateUser) {
+        const existingData = cache.readQuery({ query: me });
+        cache.writeQuery({
+          query: me,
+          data: { me: { ...existingData?.me, ...updatedData } },
+        });
+      }
     },
-  }), [updatedData.visibility, updateUserInfo]);
+    onCompleted: (data) => {
+      dispatchUser({ ...user, ...data.updateUser });
+      closeModal();
+      successToast('Your profile has been updated.');
+    },
+  });
+
+  const onSubmit = useCallback(() => updateUserInfo({
+    variables: { attributes: updatedData },
+  }), [updatedData, updateUserInfo]);
 
   return (
     <ActionButtons
