@@ -1,13 +1,14 @@
-import { memo, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { Col, Row, Upload } from 'antd';
 
+import history from '@app/configs/history';
 import ActionButtons from '@shared/ActionButtons';
 import { Text, Title } from '@ui-kit/Text';
 import dragAndDropImage from '@images/drag-and-drop.png';
 
 const { Dragger } = Upload;
 
-const DragAndDrop = ({ onCancel, onContinue }) => {
+const DragAndDrop = ({ types, dispatch }) => {
   const [fileName, setFileName] = useState();
   const props = {
     name: 'file',
@@ -29,6 +30,8 @@ const DragAndDrop = ({ onCancel, onContinue }) => {
       getSource();
     },
   };
+  const onCancel = useCallback(() => history.push('/account'), []);
+  const onContinue = useCallback(() => dispatch({ type: types.UPLOADING }), [types, dispatch]);
 
   return (
     <Dragger {...props}>

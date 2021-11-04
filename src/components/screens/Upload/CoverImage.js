@@ -1,6 +1,7 @@
-import { Fragment, memo, useState } from 'react';
+import { Fragment, memo, useCallback, useState } from 'react';
 import { Col, Row, Upload } from 'antd';
 
+import history from '@app/configs/history';
 import ActionButtons from '@shared/ActionButtons';
 import { Text, Title } from '@ui-kit/Text';
 import { BlurredModal } from '@ui-kit/Modal';
@@ -8,8 +9,10 @@ import coverImage from '@images/cover-image.png';
 
 const { Dragger } = Upload;
 
-const CoverImage = ({ visible, onClose}) => {
+const CoverImage = ({ visible }) => {
   const [source, setSource] = useState();
+  const onCancel = useCallback(() => history.push('/account'), []);
+
   const props = {
     name: 'file',
     accept: 'image/*',
@@ -32,7 +35,7 @@ const CoverImage = ({ visible, onClose}) => {
 
   return (
     <Dragger {...props}>
-      <BlurredModal blurred maskClosable={false} visible={visible} width={686} onCancel={onClose}>
+      <BlurredModal blurred maskClosable={false} visible={visible} width={686} onCancel={onCancel}>
         <Row gutter={[0, 40]} className='cover-image'>
           <Col span={24}>
             <Title inline level='10' color='white'>Upload cover image</Title>
@@ -59,7 +62,7 @@ const CoverImage = ({ visible, onClose}) => {
                 </Fragment>)
           }
           <Col span={24}>
-            <ActionButtons cancelText='SKIP' saveText='PUBLISH' disabled={!source} onCancel={onClose} onSave={onClose} />
+            <ActionButtons cancelText='SKIP' saveText='PUBLISH' disabled={!source} onCancel={onCancel} onSave={onCancel} />
           </Col>
         </Row>
       </BlurredModal>

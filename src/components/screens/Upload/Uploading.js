@@ -5,33 +5,24 @@ import { Text, Title } from '@ui-kit/Text';
 import { BlurredModal } from '@ui-kit/Modal';
 import './styles.less';
 
-const Uploading = ({
-  visible,
-  setVisible,
-  percent = 0,
-  setPercent,
-  remainingTime,
-  setRemainingTime,
-  setUploadedVideoVisible,
-}) => {
-  const closeModal = useCallback(() => setVisible(false), [setVisible]);
+const Uploading = ({ state, types, dispatch }) => {
+  const closeModal = useCallback(() => dispatch({ type: types.UPLOADED_VIDEO_VISIBLE }), [types, dispatch]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (percent === 100) {
-        setVisible(false);
-        setUploadedVideoVisible(true);
+      if (state.percent === 100) {
+        dispatch({ type: types.UPLOADED_VIDEO_VISIBLE });
       }
-      setPercent(percent + 1) || setRemainingTime(remainingTime - 1);
+      dispatch({ type: types.UPDATE_VIDEO_STATUS, percent: state.percent + 1 });
     }, 50);
     return () => clearInterval(interval);
-  });
+  }, [state.percent, types.UPDATE_VIDEO_STATUS, types.UPLOADED_VIDEO_VISIBLE, dispatch]);
 
   return (
-    <BlurredModal blurred visible={visible} width={686} onCancel={closeModal}>
+    <BlurredModal blurred visible={state.uploadingVisible} width={686} onCancel={closeModal}>
       <Title level={10} color='white'>Uploading</Title>
-      <Text level={30} color='white_75'>{`${percent} % - ${100 - percent} minutes left`}</Text>
-      <Progress percent={percent} showInfo={false} />
+      <Text level={30} color='white_75'>{`${state.percent} % - ${100 - state.percent} minutes left`}</Text>
+      <Progress percent={state.percent} showInfo={false} />
     </BlurredModal>
   );
 };

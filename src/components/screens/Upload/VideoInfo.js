@@ -2,21 +2,23 @@ import { memo, useCallback, useMemo } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Col, Row } from 'antd';
 
+import history from '@app/configs/history';
 import ActionButtons from '@shared/ActionButtons';
 import { Input } from '@ui-kit/Input';
 import thumbnail from '@images/thumbnail.png';
 import { ReactComponent as PlayIcon } from '@svgs/play-big.svg';
 
-const VideoInfo = ({ onCancel, onContinue }) => {
+const VideoInfo = ({ types, dispatch }) => {
   const { control, watch, handleSubmit } = useForm();
   const title = watch('title');
   const desc = watch('desc');
 
   const disabled = useMemo(() => !title?.trim() || !desc?.trim(), [desc, title]);
+  const onCancel = useCallback(() => history.push('/account'), []);
   const onSubmit = useCallback(() => {
-    console.log(title, desc)
-    onContinue();
-  }, [title, desc, onContinue]);
+    console.log(title, desc);
+    dispatch({ type: types.UPLOAD_COVER_IMAGE })
+  }, [title, desc, types, dispatch]);
 
   return (
     <Row justify='start' className='video-info'>

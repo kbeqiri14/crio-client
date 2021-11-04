@@ -1,41 +1,47 @@
-import { Fragment, memo, useCallback, useState } from 'react';
+import { Fragment, memo, useReducer } from 'react';
 
-import history from '@app/configs/history';
 import DragAndDrop from './DragAndDrop';
 import Uploading from './Uploading';
 import VideoInfo from './VideoInfo';
 import CoverImage from './CoverImage';
 import './styles.less';
 
-const Upload = () => {
-  const [percent, setPercent] = useState(0);
-  const [remainingTime, setRemainingTime] = useState(100);
-  const [uploadingVisible, setUploadingVisible] = useState(false);
-  const [uploadedVideoVisible, setUploadedVideoVisible] = useState(false);
-  const [coverImageVisible, setCoverImageVisible] = useState(false);
+const types = {
+  UPLOADING: 1,
+  UPDATE_VIDEO_STATUS: 2,
+  UPLOADED_VIDEO_VISIBLE: 3,
+  UPLOAD_COVER_IMAGE: 4,
+};
 
-  const handleCancel = useCallback(() => history.push('/account'), []);
-  const handleUploading = useCallback(() => setUploadingVisible(true), []);
-  const handleCoverImageUploading = useCallback(() => setCoverImageVisible(true), []);
-  const handleClose = useCallback(() => {
-    setCoverImageVisible(false);
-    handleCancel();
-  }, [handleCancel]);
+const reducer = (state, { type, ...payload }) => {
+  switch (type) {
+    case types.UPLOADING:
+      return { ...state, uploadingVisible: true };
+    case types.UPDATE_VIDEO_STATUS:
+      return { ...state, percent: payload.percent, remainingTime: payload.remainingTime };
+    case types.UPLOADED_VIDEO_VISIBLE:
+      return { ...state, uploadingVisible: false, uploadedVideoVisible: true };
+    case types.UPLOAD_COVER_IMAGE:
+      return { ...state, uploadedVideoVisible: false, coverImageVisible: true };
+    default:
+      return state;
+  }
+};
+
+const Upload = () => {
+  const [state, dispatch] = useReducer(reducer, {
+    percent: 0,
+    uploadingVisible: false,
+    uploadedVideoVisible: false,
+    coverImageVisible: false,
+  });
 
   return (
     <Fragment>
-      {!uploadedVideoVisible && <DragAndDrop onCancel={handleCancel} onContinue={handleUploading} />}
-      {uploadingVisible && <Uploading
-        percent={percent}
-        setPercent={setPercent}
-        remainingTime={remainingTime}
-        setRemainingTime={setRemainingTime}
-        visible={uploadingVisible}
-        setVisible={setUploadingVisible}
-        setUploadedVideoVisible={setUploadedVideoVisible}
-      />}
-      {uploadedVideoVisible && <VideoInfo onCancel={handleCancel} onContinue={handleCoverImageUploading} />}
-      {coverImageVisible && <CoverImage visible={coverImageVisible} onClose={handleClose} />}
+      {!state.uploadedVideoVisible && <DragAndDrop types={types} dispatch={dispatch} />}
+      {state.uploadingVisible && <Uploading state={state} types={types} dispatch={dispatch} />}
+      {state.uploadedVideoVisible && <VideoInfo types={types} dispatch={dispatch} />}
+      {state.coverImageVisible && <CoverImage visible={state.coverImageVisible} types={types} dispatch={dispatch} />}
     </Fragment>
   );
 };
