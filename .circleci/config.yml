@@ -53,6 +53,7 @@ workflows:
           context:
             - aws-account #should be specified on circleci
             - tidepool-npm #should be specified on circleci
+            - slack-secrets #should be specified on circleci
           requires:
             - test-client
           filters:
