@@ -4,22 +4,28 @@ import { Col, Row } from 'antd';
 import { useMutation } from '@apollo/client';
 
 import history from '@app/configs/history';
-import { deleteArtwork } from '@app/graphql/mutations/artwork.mutation';
+import { deleteArtwork, updateArtwork } from '@app/graphql/mutations/artwork.mutation';
 import ActionButtons from '@shared/ActionButtons';
 import { Input } from '@ui-kit/Input';
 import thumbnail from '@images/thumbnail.png';
 import { ReactComponent as PlayIcon } from '@svgs/play-big.svg';
 
-const VideoInfo = ({ types, dispatch }) => {
+const VideoInfo = ({ artworkId, types, dispatch }) => {
   const { control, watch, handleSubmit } = useForm();
   const title = watch('title');
   const desc = watch('desc');
 
-  const [removeArtwork, { loading: deletingArtwork }] = useMutation(deleteArtwork, { variables: { artworkId: '1' } });
+  const [requestUpdateArtwork, { loading: updatingArtwork }] = useMutation(updateArtwork, {
+    variables: { attributes: { id: artworkId, title, description: desc } },
+  });
+  const [removeArtwork, { loading: deletingArtwork }] = useMutation(deleteArtwork, { variables: { artworkId: artworkId } });
 
   const disabled = useMemo(() => !title?.trim() || !desc?.trim(), [desc, title]);
   const onCancel = useCallback(() => removeArtwork() && history.push('/account'), [removeArtwork]);
-  const onContinue = useCallback(() => dispatch({ type: types.UPLOAD_COVER_IMAGE }), [types.UPLOAD_COVER_IMAGE, dispatch]);
+  const onContinue = useCallback(() => {
+    requestUpdateArtwork();
+    dispatch({ type: types.UPLOAD_COVER_IMAGE });
+  }, [types.UPLOAD_COVER_IMAGE, dispatch, requestUpdateArtwork]);
 
   return (
     <Row justify='start' className='video-info'>
@@ -45,6 +51,7 @@ const VideoInfo = ({ types, dispatch }) => {
         <ActionButtons
           saveText='CONTINUE'
           cancelLoading={deletingArtwork}
+          loading={updatingArtwork}
           disabled={disabled}
           onCancel={onCancel}
           onSave={handleSubmit(onContinue)} />

@@ -43,7 +43,7 @@ const Upload = () => {
     <Fragment>
       {!state.uploadedVideoVisible && <DragAndDrop types={types} dispatch={dispatch} />}
       {state.uploadingVisible && <Uploading state={state} types={types} dispatch={dispatch} />}
-      {state.uploadedVideoVisible && <VideoInfo types={types} dispatch={dispatch} />}
+      {state.uploadedVideoVisible && <VideoInfo artworkId={state.artworkId} types={types} dispatch={dispatch} />}
       {state.coverImageVisible && <CoverImage visible={state.coverImageVisible} types={types} dispatch={dispatch} />}
     </Fragment>
   );
