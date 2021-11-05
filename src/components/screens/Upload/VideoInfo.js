@@ -4,7 +4,7 @@ import { Col, Row } from 'antd';
 import { useMutation } from '@apollo/client';
 
 import history from '@app/configs/history';
-import { deleteArtwork, updateArtwork } from '@app/graphql/mutations/artwork.mutation';
+import { deleteArtwork, updateMetadata } from '@app/graphql/mutations/artwork.mutation';
 import ActionButtons from '@shared/ActionButtons';
 import { Input } from '@ui-kit/Input';
 import thumbnail from '@images/thumbnail.png';
@@ -15,17 +15,17 @@ const VideoInfo = ({ artworkId, types, dispatch }) => {
   const title = watch('title');
   const desc = watch('desc');
 
-  const [requestUpdateArtwork, { loading: updatingArtwork }] = useMutation(updateArtwork, {
-    variables: { attributes: { id: artworkId, title, description: desc } },
+  const [updateArtwork, { loading: updatingArtwork }] = useMutation(updateMetadata, {
+    variables: { params: { artworkId, title, description: desc } },
   });
   const [removeArtwork, { loading: deletingArtwork }] = useMutation(deleteArtwork, { variables: { artworkId: artworkId } });
 
   const disabled = useMemo(() => !title?.trim() || !desc?.trim(), [desc, title]);
   const onCancel = useCallback(() => removeArtwork() && history.push('/account'), [removeArtwork]);
   const onContinue = useCallback(() => {
-    requestUpdateArtwork();
+    updateArtwork();
     dispatch({ type: types.UPLOAD_COVER_IMAGE });
-  }, [types.UPLOAD_COVER_IMAGE, dispatch, requestUpdateArtwork]);
+  }, [types.UPLOAD_COVER_IMAGE, dispatch, updateArtwork]);
 
   return (
     <Row justify='start' className='video-info'>

@@ -21,7 +21,7 @@ const reducer = (state, { type, ...payload }) => {
     case types.UPDATE_VIDEO_STATUS:
       return { ...state, percent: payload.percent, remainingTime: payload.remainingTime };
     case types.UPLOADED_VIDEO_VISIBLE:
-      return { ...state, uploadingVisible: false, uploadedVideoVisible: true };
+      return { ...state, uploadingVisible: false, uploadedVideoVisible: true, artworkId: payload.artworkId };
     case types.UPLOAD_COVER_IMAGE:
       return { ...state, uploadedVideoVisible: false, coverImageVisible: true };
     case types.SET_VIDEO_URI:
@@ -38,7 +38,7 @@ const Upload = () => {
     uploadedVideoVisible: false,
     coverImageVisible: false,
   });
-
+console.log(state.videoUri, 'statestate')
   return (
     <Fragment>
       {!state.uploadedVideoVisible && <DragAndDrop types={types} dispatch={dispatch} />}

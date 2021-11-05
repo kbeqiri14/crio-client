@@ -15,18 +15,9 @@ export const createArtwork = gql`
   }
 `;
 
-export const updateArtwork = gql`
-  mutation updateArtwork($attributes: ArtworkInfo!) {
-    updateArtwork(attributes: $attributes) {
-      id
-      userId
-      videoUri
-      thumbnailUri
-      title
-      description
-      status
-      pictures_uri
-    }
+export const updateMetadata = gql`
+  mutation updateMetadata($params: ThumbnailParams!) {
+    updateMetadata(params: $params)
   }
 `;
 

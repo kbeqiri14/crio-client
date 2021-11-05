@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { memo, useCallback, useEffect } from 'react';
 import { Progress } from 'antd';
 import { useMutation } from '@apollo/client';
@@ -10,12 +11,12 @@ import './styles.less';
 const Uploading = ({ state, types, dispatch }) => {
   const closeModal = useCallback(() => dispatch({ type: types.UPLOADED_VIDEO_VISIBLE }), [types, dispatch]);
   const [saveArtwork] = useMutation(createArtwork, {
-    variables: { videoUri: state.videoUri || '' },
-    onCompleted: () => dispatch({ type: types.UPLOADED_VIDEO_VISIBLE }),
-    onError: () => dispatch({ type: types.UPLOADED_VIDEO_VISIBLE }),
+    variables: { videoUri: state.videoUri },
+    onCompleted: ({ createArtwork }) => dispatch({ type: types.UPLOADED_VIDEO_VISIBLE, artworkId: createArtwork.id }),
   });
 
   useEffect(() => {
+    // const upload = async () => axios.post(state.upload_link);
     const interval = setInterval(() => {
       if (state.percent === 100) {
         saveArtwork();
