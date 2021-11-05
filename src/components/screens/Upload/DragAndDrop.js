@@ -14,7 +14,6 @@ const DragAndDrop = ({ types, dispatch }) => {
     name: 'file',
     action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
     showUploadList: false,
-    openFileDialogOnClick: false,
     onDrop(e) {
       setFileName(e.dataTransfer.files?.[0]?.name);
     },
@@ -34,12 +33,12 @@ const DragAndDrop = ({ types, dispatch }) => {
   const onContinue = useCallback(() => dispatch({ type: types.UPLOADING }), [types, dispatch]);
 
   return (
-    <Dragger {...props}>
-      <Row gutter={[0, 50]} className='upload'>
-        <Col span={24}>
-          <Title inline level='10' color='white'>Upload your artwork</Title>
-        </Col>
-        <Col span={12} offset={6}>
+    <Row justify='center'gutter={[0, 50]} className='upload'>
+      <Col span={24}>
+        <Title inline level='10' color='white'>Upload your artwork</Title>
+      </Col>
+      <Col span={12}>
+        <Dragger {...props}>
           <Row justify='center' align='center' gutter={[0, 11]} className='drag-and-drop'>
             <Col span={24}>
               <img alt='drag-and-drop' src={dragAndDropImage} />
@@ -54,12 +53,13 @@ const DragAndDrop = ({ types, dispatch }) => {
               <Text inline level='10' color='white'>{fileName}</Text>
             </Col>}
           </Row>
-        </Col>
-        <Col span={24}>
-          <ActionButtons saveText='CONTINUE' disabled={!fileName} onCancel={onCancel} onSave={onContinue} />
-        </Col>
-      </Row>
-    </Dragger>
+        </Dragger>
+      </Col>
+      <Col span={24}>
+        <ActionButtons saveText='CONTINUE' disabled={!fileName} onCancel={onCancel} onSave={onContinue} />
+      </Col>
+    </Row>
+
   );
 };
 
