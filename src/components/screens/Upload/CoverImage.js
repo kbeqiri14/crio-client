@@ -1,4 +1,4 @@
-import { Fragment, memo, useCallback, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { Col, Row, Upload } from 'antd';
 
 import history from '@app/configs/history';
@@ -42,7 +42,7 @@ const CoverImage = ({ visible }) => {
           <Text inline level='10' color='white'>If skipped we will generate a cover image from video.</Text>
         </Col>
         <Col span={24}>
-          {!source
+          {source
             ? <img alt='uploaded file' src={source} className='uploaded-image' />
             : <Dragger {...props}>
               <Row justify='center' align='center' gutter={[0, 11]} className='drag-and-drop'>

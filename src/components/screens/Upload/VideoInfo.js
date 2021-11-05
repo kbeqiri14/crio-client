@@ -1,8 +1,10 @@
 import { memo, useCallback, useMemo } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Col, Row } from 'antd';
+import { useMutation } from '@apollo/client';
 
 import history from '@app/configs/history';
+import { createArtwork, deleteArtwork } from '@app/graphql/mutations/artwork.mutation';
 import ActionButtons from '@shared/ActionButtons';
 import { Input } from '@ui-kit/Input';
 import thumbnail from '@images/thumbnail.png';
@@ -13,12 +15,18 @@ const VideoInfo = ({ types, dispatch }) => {
   const title = watch('title');
   const desc = watch('desc');
 
+  const [saveArtwork, { loading: creatingArtwork }] = useMutation(createArtwork, {
+    variables: {
+      artwork: { title, description: desc }
+    },
+    onCompleted: () => dispatch({ type: types.UPLOAD_COVER_IMAGE }),
+    onError: () => dispatch({ type: types.UPLOAD_COVER_IMAGE }),
+  });
+
+  const [removeArtwork, { loading: deletingArtwork }] = useMutation(deleteArtwork, { variables: { artworkId: '1' } });
+
   const disabled = useMemo(() => !title?.trim() || !desc?.trim(), [desc, title]);
-  const onCancel = useCallback(() => history.push('/account'), []);
-  const onSubmit = useCallback(() => {
-    console.log(title, desc);
-    dispatch({ type: types.UPLOAD_COVER_IMAGE })
-  }, [title, desc, types, dispatch]);
+  const onCancel = useCallback(() => removeArtwork() && history.push('/account'), [removeArtwork]);
 
   return (
     <Row justify='start' className='video-info'>
@@ -41,7 +49,13 @@ const VideoInfo = ({ types, dispatch }) => {
         <PlayIcon className='play' />
       </Col>
       <Col span={24}>
-        <ActionButtons saveText='CONTINUE' disabled={disabled} onCancel={onCancel} onSave={handleSubmit(onSubmit)} />
+        <ActionButtons
+          saveText='CONTINUE'
+          cancelLoading={deletingArtwork}
+          loading={creatingArtwork}
+          disabled={disabled}
+          onCancel={onCancel}
+          onSave={handleSubmit(saveArtwork)} />
       </Col>
     </Row>
     );

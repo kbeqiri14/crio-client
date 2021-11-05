@@ -8,6 +8,7 @@ const ActionButtons = ({
   saveText = 'SAVE',
   onCancel,
   onSave,
+  cancelLoading,
   loading,
   disabled,
 }) => (
@@ -17,6 +18,7 @@ const ActionButtons = ({
         textColor='white_75'
         borderColor='white_75'
         size='large'
+        cancelLoading={cancelLoading}
         onClick={onCancel}
       >
         {cancelText}
