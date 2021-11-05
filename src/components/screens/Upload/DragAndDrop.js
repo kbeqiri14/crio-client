@@ -1,7 +1,9 @@
 import { memo, useCallback, useState } from 'react';
 import { Col, Row, Upload } from 'antd';
+import { useLazyQuery } from '@apollo/client';
 
 import history from '@app/configs/history';
+import { getUploadUrl } from '@app/graphql/queries/artworks.query';
 import ActionButtons from '@shared/ActionButtons';
 import { Text, Title } from '@ui-kit/Text';
 import dragAndDropImage from '@images/drag-and-drop.png';
@@ -10,27 +12,23 @@ const { Dragger } = Upload;
 
 const DragAndDrop = ({ types, dispatch }) => {
   const [fileName, setFileName] = useState();
+  const [requestUploadUrl, { data, loading }] = useLazyQuery(getUploadUrl, {
+    onCompleted: ({ uri }) => dispatch({ type: types.SET_VIDEO_URI, videoUri: uri }),
+  });
+  const onCancel = useCallback(() => history.push('/account'), []);
+  const onContinue = useCallback(() => dispatch({ type: types.UPLOADING }), [types, dispatch]);
+
   const props = {
     name: 'file',
-    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+    action: data?.upload_link,
     showUploadList: false,
     onDrop(e) {
       setFileName(e.dataTransfer.files?.[0]?.name);
-    },
-    beforeUpload(file) {
-      const getSource = async () => {
-        const src = await new Promise(resolve => {
-          const reader = new FileReader();
-          reader.readAsDataURL(file);
-          reader.onload = () => resolve(reader.result);
-        });
-        console.log(src)
-      };
-      getSource();
+      requestUploadUrl({
+        variables: { size: e.dataTransfer.files?.[0]?.size },
+      });
     },
   };
-  const onCancel = useCallback(() => history.push('/account'), []);
-  const onContinue = useCallback(() => dispatch({ type: types.UPLOADING }), [types, dispatch]);
 
   return (
     <Row justify='center'gutter={[0, 50]} className='upload'>
@@ -56,7 +54,7 @@ const DragAndDrop = ({ types, dispatch }) => {
         </Dragger>
       </Col>
       <Col span={24}>
-        <ActionButtons saveText='CONTINUE' disabled={!fileName} onCancel={onCancel} onSave={onContinue} />
+        <ActionButtons saveText='CONTINUE' disabled={!(fileName && !loading)} onCancel={onCancel} onSave={onContinue} />
       </Col>
     </Row>
 

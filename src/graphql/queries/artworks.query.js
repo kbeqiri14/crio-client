@@ -13,6 +13,17 @@ export const artwork_fragment = gql`
   }
 `;
 
+export const getUploadUrl = gql`
+  query getUploadUrl($size: Int!) {
+    getUploadUrl(size: $size) {
+      uri
+      upload_link
+      status
+      pictures_uri
+    }
+  }
+`;
+
 export const getArtworks = gql`
   query {
     getArtworks {

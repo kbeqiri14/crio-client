@@ -11,6 +11,7 @@ const types = {
   UPDATE_VIDEO_STATUS: 2,
   UPLOADED_VIDEO_VISIBLE: 3,
   UPLOAD_COVER_IMAGE: 4,
+  SET_VIDEO_URI: 5,
 };
 
 const reducer = (state, { type, ...payload }) => {
@@ -23,6 +24,8 @@ const reducer = (state, { type, ...payload }) => {
       return { ...state, uploadingVisible: false, uploadedVideoVisible: true };
     case types.UPLOAD_COVER_IMAGE:
       return { ...state, uploadedVideoVisible: false, coverImageVisible: true };
+    case types.SET_VIDEO_URI:
+      return { ...state, videoUri: payload.videoUri };
     default:
       return state;
   }
