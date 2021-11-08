@@ -12,20 +12,23 @@ import dragAndDropImage from '@images/drag-and-drop.png';
 const { Dragger } = Upload;
 
 const DragAndDrop = ({ types, dispatch }) => {
-  const [fileName, setFileName] = useState();
-  const [requestUploadUrl, { data, loading }] = useLazyQuery(getUploadUrl, {
-    onCompleted: ({ getUploadUrl }) => dispatch({ type: types.SET_VIDEO_URI, videoUri: getUploadUrl.uri }),
+  const [file, setFile] = useState();
+  const [requestUploadUrl, { loading }] = useLazyQuery(getUploadUrl, {
+    onCompleted: ({ getUploadUrl }) => dispatch({
+      type: types.SET_VIDEO_URI,
+      videoUri: getUploadUrl.uri,
+      uploadLink: getUploadUrl.upload_link,
+    }),
   });
   const onCancel = useCallback(() => history.push('/account'), []);
-  const onContinue = useCallback(() => dispatch({ type: types.UPLOADING }), [types, dispatch]);
+  const onContinue = useCallback(() => dispatch({ type: types.UPLOADING, file }), [file, types.UPLOADING, dispatch]);
 
   const props = {
     name: 'file',
-    action: data?.upload_link,
-    openFileDialogOnClick: !loading,
+    disabled: loading,
     showUploadList: false,
-    onDrop(e) {
-      setFileName(e.dataTransfer.files?.[0]?.name);
+    onDrop: (e) => {
+      setFile(e.dataTransfer.files?.[0]);
       requestUploadUrl({
         variables: { size: e.dataTransfer.files?.[0]?.size },
       });
@@ -50,15 +53,15 @@ const DragAndDrop = ({ types, dispatch }) => {
               <Col span={24}>
                 <Text inline level='10' color='white'>1920 x 1080 higher recommended. Max 20GB each.</Text>
               </Col>
-              {fileName && <Col span={24}>
-                <Text inline level='10' color='white'>{fileName}</Text>
+              {file?.name && <Col span={24}>
+                <Text inline level='10' color='white'>{file.name}</Text>
               </Col>}
             </Row>
           </Dragger>
         </Spinner>
       </Col>
       <Col span={24}>
-        <ActionButtons saveText='CONTINUE' disabled={!(fileName && !loading)} onCancel={onCancel} onSave={onContinue} />
+        <ActionButtons saveText='CONTINUE' disabled={!(file?.name && !loading)} onCancel={onCancel} onSave={onContinue} />
       </Col>
     </Row>
 

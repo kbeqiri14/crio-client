@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { memo, useCallback, useEffect } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { Progress } from 'antd';
 import { useMutation } from '@apollo/client';
 
@@ -9,22 +9,55 @@ import { BlurredModal } from '@ui-kit/Modal';
 import './styles.less';
 
 const Uploading = ({ state, types, dispatch }) => {
+  const [loading, setLoading] = useState(true);
   const closeModal = useCallback(() => dispatch({ type: types.UPLOADED_VIDEO_VISIBLE }), [types, dispatch]);
-  const [saveArtwork] = useMutation(createArtwork, {
+  const [saveArtwork, { loading: creatingArtwork }] = useMutation(createArtwork, {
     variables: { videoUri: state.videoUri },
     onCompleted: ({ createArtwork }) => dispatch({ type: types.UPLOADED_VIDEO_VISIBLE, artworkId: createArtwork.id }),
   });
 
   useEffect(() => {
-    // const upload = async () => axios.post(state.upload_link);
-    const interval = setInterval(() => {
-      if (state.percent === 100) {
-        saveArtwork();
+    const upload = async () => {
+      try {
+        const request = await axios.patch(state.uploadLink, state.file, {
+          headers: {
+            Accept: 'application/vnd.vimeo.*+json;version=3.4',
+            'Content-Type': 'application/offset+octet-stream',
+            'Tus-Resumable': '1.0.0',
+            'Upload-Offset': 0,
+          },
+        });
+        if (request.status === 204) {
+          saveArtwork();
+        }
+      } catch (e) {
+        console.log(e);
+      } finally {
+        setLoading(false);
       }
-      dispatch({ type: types.UPDATE_VIDEO_STATUS, percent: state.percent + 1 });
+    }
+    if (state.file && state.uploadLink) {
+      upload();
+    }
+  }, [state.file, state.uploadLink, saveArtwork])
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!loading && !creatingArtwork) {
+        dispatch({ type: types.UPLOADED_VIDEO_VISIBLE });
+      }
+      dispatch({ type: types.UPDATE_VIDEO_STATUS, percent: state.percent + 1.5 });
     }, 50);
     return () => clearInterval(interval);
-  }, [state.percent, types.UPDATE_VIDEO_STATUS, types.UPLOADED_VIDEO_VISIBLE, dispatch, saveArtwork]);
+  }, [
+      loading,
+      creatingArtwork,
+      state.percent,
+      types.UPDATE_VIDEO_STATUS,
+      types.UPLOADED_VIDEO_VISIBLE,
+      dispatch,
+      saveArtwork,
+    ]);
 
   return (
     <BlurredModal blurred visible={state.uploadingVisible} width={686} onCancel={closeModal}>

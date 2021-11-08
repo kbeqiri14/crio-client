@@ -1,7 +1,9 @@
 import { memo, useCallback, useState } from 'react';
 import { Col, Row, Upload } from 'antd';
+import { useMutation } from '@apollo/client';
 
 import history from '@app/configs/history';
+import { updateMetadata } from '@app/graphql/mutations/artwork.mutation';
 import ActionButtons from '@shared/ActionButtons';
 import { Text, Title } from '@ui-kit/Text';
 import { BlurredModal } from '@ui-kit/Modal';
@@ -9,17 +11,22 @@ import coverImage from '@images/cover-image.png';
 
 const { Dragger } = Upload;
 
-const CoverImage = ({ visible }) => {
+const CoverImage = ({ visible, artworkId }) => {
   const [source, setSource] = useState();
   const onCancel = useCallback(() => history.push('/account'), []);
-
+console.log(source, 'sourcesource')
+  const [updateArtwork, { loading: updatingArtwork }] = useMutation(updateMetadata);
   const props = {
     name: 'file',
     accept: 'image/*',
-    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+    disabled: updatingArtwork,
     showUploadList: false,
     listType: 'picture',
+    onDrop(e) {
+      console.log(e)
+    },
     beforeUpload(file) {
+      console.log(file)
       const getSource = async () => {
         const src = await new Promise(resolve => {
           const reader = new FileReader();
@@ -31,6 +38,10 @@ const CoverImage = ({ visible }) => {
       getSource();
     },
   };
+
+  const onContinue = useCallback(() => updateArtwork({
+    variables: { params: { artworkId, image: source, mime: 'image/png' } },
+  }), [artworkId, source, updateArtwork])
 
   return (
     <BlurredModal blurred maskClosable={false} visible={visible} width={686} onCancel={onCancel}>
@@ -56,7 +67,7 @@ const CoverImage = ({ visible }) => {
             </Dragger>}
         </Col>
         <Col span={24}>
-          <ActionButtons cancelText='SKIP' saveText='PUBLISH' disabled={!source} onCancel={onCancel} onSave={onCancel} />
+          <ActionButtons cancelText='SKIP' saveText='PUBLISH' onCancel={onCancel} onSave={onContinue} />
         </Col>
       </Row>
     </BlurredModal>

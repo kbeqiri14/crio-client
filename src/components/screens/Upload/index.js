@@ -17,7 +17,7 @@ const types = {
 const reducer = (state, { type, ...payload }) => {
   switch (type) {
     case types.UPLOADING:
-      return { ...state, uploadingVisible: true };
+      return { ...state, uploadingVisible: true, file: payload.file };
     case types.UPDATE_VIDEO_STATUS:
       return { ...state, percent: payload.percent, remainingTime: payload.remainingTime };
     case types.UPLOADED_VIDEO_VISIBLE:
@@ -25,7 +25,7 @@ const reducer = (state, { type, ...payload }) => {
     case types.UPLOAD_COVER_IMAGE:
       return { ...state, uploadedVideoVisible: false, coverImageVisible: true };
     case types.SET_VIDEO_URI:
-      return { ...state, videoUri: payload.videoUri };
+      return { ...state, videoUri: payload.videoUri, uploadLink: payload.uploadLink };
     default:
       return state;
   }
@@ -44,7 +44,7 @@ console.log(state.videoUri, 'statestate')
       {!state.uploadedVideoVisible && <DragAndDrop types={types} dispatch={dispatch} />}
       {state.uploadingVisible && <Uploading state={state} types={types} dispatch={dispatch} />}
       {state.uploadedVideoVisible && <VideoInfo artworkId={state.artworkId} types={types} dispatch={dispatch} />}
-      {state.coverImageVisible && <CoverImage visible={state.coverImageVisible} types={types} dispatch={dispatch} />}
+      {state.coverImageVisible && <CoverImage visible={state.coverImageVisible} artworkId={state.artworkId} />}
     </Fragment>
   );
 };
