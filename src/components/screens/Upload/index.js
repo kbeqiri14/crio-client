@@ -38,7 +38,7 @@ const Upload = () => {
     uploadedVideoVisible: false,
     coverImageVisible: false,
   });
-console.log(state.videoUri, 'statestate')
+
   return (
     <Fragment>
       {!state.uploadedVideoVisible && <DragAndDrop types={types} dispatch={dispatch} />}

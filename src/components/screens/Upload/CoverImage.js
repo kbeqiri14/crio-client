@@ -14,7 +14,6 @@ const { Dragger } = Upload;
 const CoverImage = ({ visible, artworkId }) => {
   const [source, setSource] = useState();
   const onCancel = useCallback(() => history.push('/account'), []);
-console.log(source, 'sourcesource')
   const [updateArtwork, { loading: updatingArtwork }] = useMutation(updateMetadata);
   const props = {
     name: 'file',
@@ -22,11 +21,7 @@ console.log(source, 'sourcesource')
     disabled: updatingArtwork,
     showUploadList: false,
     listType: 'picture',
-    onDrop(e) {
-      console.log(e)
-    },
     beforeUpload(file) {
-      console.log(file)
       const getSource = async () => {
         const src = await new Promise(resolve => {
           const reader = new FileReader();

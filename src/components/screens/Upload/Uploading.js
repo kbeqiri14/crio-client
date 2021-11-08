@@ -6,6 +6,7 @@ import { useMutation } from '@apollo/client';
 import { createArtwork } from '@app/graphql/mutations/artwork.mutation';
 import { Text, Title } from '@ui-kit/Text';
 import { BlurredModal } from '@ui-kit/Modal';
+import { errorToast } from '@ui-kit/Notification';
 import './styles.less';
 
 const Uploading = ({ state, types, dispatch }) => {
@@ -31,7 +32,7 @@ const Uploading = ({ state, types, dispatch }) => {
           saveArtwork();
         }
       } catch (e) {
-        console.log(e);
+        errorToast('Uploading Error', 'Something went wrong. Please try later.');
       } finally {
         setLoading(false);
       }

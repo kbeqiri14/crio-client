@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { Col, Row, Upload } from 'antd';
 import { useLazyQuery } from '@apollo/client';
 
@@ -7,19 +7,25 @@ import { getUploadUrl } from '@app/graphql/queries/artworks.query';
 import ActionButtons from '@shared/ActionButtons';
 import { Text, Title } from '@ui-kit/Text';
 import { Spinner } from '@ui-kit/Spinner';
+import { errorToast } from '@ui-kit/Notification';
 import dragAndDropImage from '@images/drag-and-drop.png';
 
 const { Dragger } = Upload;
 
 const DragAndDrop = ({ types, dispatch }) => {
   const [file, setFile] = useState();
-  const [requestUploadUrl, { loading }] = useLazyQuery(getUploadUrl, {
+  const [requestUploadUrl, { data, loading }] = useLazyQuery(getUploadUrl, {
     onCompleted: ({ getUploadUrl }) => dispatch({
       type: types.SET_VIDEO_URI,
       videoUri: getUploadUrl.uri,
       uploadLink: getUploadUrl.upload_link,
     }),
+    onError: () => errorToast('Error', 'Something went wrong. Please try later.'),
   });
+
+  const disabled = useMemo(() => !(data?.getUploadUrl?.uri && file?.name && !loading), [
+    data?.getUploadUrl?.uri, file?.name, loading,
+  ]);
   const onCancel = useCallback(() => history.push('/account'), []);
   const onContinue = useCallback(() => dispatch({ type: types.UPLOADING, file }), [file, types.UPLOADING, dispatch]);
 
@@ -61,7 +67,7 @@ const DragAndDrop = ({ types, dispatch }) => {
         </Spinner>
       </Col>
       <Col span={24}>
-        <ActionButtons saveText='CONTINUE' disabled={!(file?.name && !loading)} onCancel={onCancel} onSave={onContinue} />
+        <ActionButtons saveText='CONTINUE' disabled={disabled} onCancel={onCancel} onSave={onContinue} />
       </Col>
     </Row>
 
