@@ -6,12 +6,12 @@ import { arrayChunk, getRandomInt } from '@utils/helpers';
 import lockImage from '@images/lock.png';
 import { ReactComponent as PlayIcon } from '@svgs/play.svg';
 
-export const PosterCard = memo(({ poster, index, author, title, isLock, onClick, ...props }) => {
+export const PosterCard = memo(({ poster, index, author, title, description, videoUri, isLock, isReal, onClick, ...props }) => {
   const handleClick = () => {
     onClick?.({
       title,
-      description: 'Bruh',
-      url: 'https://vimeo.com/436328286',
+      description: description || 'Bruh',
+      id: videoUri.substring(videoUri.lastIndexOf('/') + 1),
       author: {
         name: author,
         avatar: `https://avatars.dicebear.com/api/pixel-art/${Date.now()}.svg`,
@@ -28,8 +28,9 @@ export const PosterCard = memo(({ poster, index, author, title, isLock, onClick,
             <Text level='60'>{author}</Text>
           </div>
           <div>
-            <Text level='50'>{title}</Text>
+            <Text level={isReal ? '40' : '50'}>{title}</Text>
           </div>
+          {isReal && <Text level='50'>{description}</Text>}
         </Col>
         <Col>
           <PlayIcon />
@@ -48,14 +49,29 @@ const LargeVideoPoster = memo(({ poster, onClick }) => (
   </Col>
 ));
 
-const VideoPostersBlock = memo(({ posters, isLock, nonLock, onClick }) => (
+const VideoPostersBlock = memo(({ posters, isLock, nonLock, isReal, onClick }) => (
   <Col xs={24} lg={24} xl={12} span={12}>
     <Row justify='center' align='top' gutter={[22, 35]}>
-      {posters.map((p, index) => (
-        <Col key={index} xs={12} lg={12} xl={12} span={12} className='video-grid__item'>
-          <PosterCard isLock={p === nonLock ? false : isLock} onClick={onClick} poster={p} lock author='Ann Bee' title='Work’s name goes here' />
-        </Col>
-      ))}
+      {
+        isReal
+          ? posters.map(({ id, title, description, thumbnailUri, videoUri }, index) => (
+            <Col key={index} xs={12} lg={12} xl={12} span={12} className='video-grid__item'>
+              <PosterCard
+                title={title}
+                description={description}
+                poster={thumbnailUri}
+                videoUri={videoUri}
+                isLock={id === nonLock ? false : isLock}
+                isReal={isReal}
+                onClick={onClick} />
+            </Col>
+          ))
+          : posters.map((p, index) => (
+            <Col key={index} xs={12} lg={12} xl={12} span={12} className='video-grid__item'>
+              <PosterCard isLock={p === nonLock ? false : isLock} onClick={onClick} poster={p} lock author='Ann Bee' title='Work’s name goes here' />
+            </Col>
+          ))
+      }
     </Row>
   </Col>
 ));
@@ -75,11 +91,11 @@ const getRandomIndices = (arrLength, indicesCount) => {
   return indices;
 };
 
-export const renderPosters = (videoPosters, largePostersCount, handleClick, isLock) => {
+export const renderPosters = (videoPosters = [], largePostersCount, handleClick, isLock, isReal) => {
   const largePosters = getRandomIndices(videoPosters.length, largePostersCount);
   const posterLinks = videoPosters.filter((_, idx) => !largePosters.has(idx));
   const regularPosterElements = arrayChunk(posterLinks, 4).map((vp) => (
-    <VideoPostersBlock isLock={isLock} nonLock={posterLinks[0]} onClick={handleClick} key={uuid()} posters={vp} />
+    <VideoPostersBlock isLock={isLock} isReal={isReal} nonLock={isReal ? posterLinks[0]?.id : posterLinks[0]} onClick={handleClick} key={uuid()} posters={vp} />
   ));
   const largePosterElements = videoPosters
     .filter((_, idx) => largePosters.has(idx))
