@@ -32,3 +32,12 @@ export const getArtworks = gql`
   }
   ${artwork_fragment}
 `;
+
+export const getUserArtworks = gql`
+  query getUserArtworks($id: ID) {
+    getUserArtworks(id: $id) {
+      ...ArtworkAttributes
+    }
+  }
+  ${artwork_fragment}
+`;

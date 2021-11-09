@@ -11,7 +11,7 @@ export const PosterCard = memo(({ poster, index, author, title, description, vid
     onClick?.({
       title,
       description: description || 'Bruh',
-      id: videoUri.substring(videoUri.lastIndexOf('/') + 1),
+      id: videoUri?.substring(videoUri?.lastIndexOf('/') + 1),
       author: {
         name: author,
         avatar: `https://avatars.dicebear.com/api/pixel-art/${Date.now()}.svg`,

@@ -1,8 +1,9 @@
 import { memo, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Row } from 'antd';
 import { useQuery } from '@apollo/client';
 
-import { getArtworks } from '@app/graphql/queries/artworks.query';
+import { getUserArtworks } from '@app/graphql/queries/artworks.query';
 import { renderPosters } from '@shared/PostersList';
 import { usePresentation } from '@shared/PresentationView';
 import { getPosters } from '@screens/LandingPage/posters';
@@ -11,12 +12,14 @@ import { Spinner } from '@ui-kit/Spinner';
 const videoPosters = getPosters(8);
 
 const Works = ({ isLock }) => {
+  const { pathname } = useLocation();
   const [works, setWorks] = useState();
   const { show } = usePresentation();
   const [topPosters, setTopPosters] = useState(null);
 
-  const { loading } = useQuery(getArtworks, {
-    onCompleted: ({ getArtworks }) => console.log(getArtworks) || setWorks(getArtworks),
+  const { loading } = useQuery(getUserArtworks, {
+    variables: { id: pathname.split('/')[2] },
+    onCompleted: ({ getUserArtworks }) => setWorks(getUserArtworks),
   });
 
   useEffect(() => setTopPosters(renderPosters(works?.length ? works : videoPosters, 0, show, isLock, works?.length)),[isLock, works, show]);

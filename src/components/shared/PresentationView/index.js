@@ -14,9 +14,6 @@ export { usePresentation, PresentationProvider, defaultMockValue } from './Prese
 export const PresentationView = ({ visible, videoInfo, onCancel }) => {
   const { show } = usePresentation();
 
-  if (!videoInfo.author || !videoInfo.id) {
-    return null;
-  }
   return (
     <Modal
       onCancel={onCancel}
@@ -33,7 +30,7 @@ export const PresentationView = ({ visible, videoInfo, onCancel }) => {
           <Col span={18} offset={3} className='video-view-author'>
             <Row align='middle'>
               <Col className='author-avatar'>
-                <img src={videoInfo.author.avatar} alt='Author avatar' />
+                <img src={videoInfo.author?.avatar} alt='Author avatar' />
               </Col>
               <Col>
                 <Row>
@@ -45,7 +42,7 @@ export const PresentationView = ({ visible, videoInfo, onCancel }) => {
                   <Col span={24}>
                     <Link>
                       <Title level='20' color='primary' inline>
-                        {videoInfo.author.name}
+                        {videoInfo.author?.name}
                       </Title>
                     </Link>
                   </Col>
@@ -75,7 +72,7 @@ export const PresentationView = ({ visible, videoInfo, onCancel }) => {
             <Row justify='space-between' align='middle'>
               <Col>
                 <Text level='40' color='white'>
-                  More by {videoInfo.author.name}
+                  More by {videoInfo.author?.name}
                 </Text>
               </Col>
               <Col>
