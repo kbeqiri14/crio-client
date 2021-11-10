@@ -1,8 +1,10 @@
 import { memo, useCallback, useState } from 'react';
+import axios from 'axios';
 import { Col, Row, Upload } from 'antd';
-import { useMutation } from '@apollo/client';
+import { useLazyQuery, useMutation } from '@apollo/client';
 
 import history from '@app/configs/history';
+import { getUploadImageLink } from '@app/graphql/queries/artworks.query';
 import { updateMetadata } from '@app/graphql/mutations/artwork.mutation';
 import ActionButtons from '@shared/ActionButtons';
 import { Text, Title } from '@ui-kit/Text';
@@ -11,22 +13,22 @@ import coverImage from '@images/cover-image.png';
 
 const { Dragger } = Upload;
 
-const CoverImage = ({ visible, artworkId }) => {
+const CoverImage = ({ visible, artworkId = 35 }) => {
   const [source, setSource] = useState();
-
+  const [file, setFile] = useState();
+  const onCancel = useCallback(() => history.push('/account'), []);
   const [updateArtwork, { loading: updatingArtwork }] = useMutation(updateMetadata, {
-    onCompleted: () => history.push('/account'),
+    onCompleted: () => history.push('/account')
   });
-  const onCancel = useCallback(() => updateArtwork({
-    variables: { params: { artworkId } },
-  }), [artworkId, updateArtwork]);
-
   const props = {
     name: 'file',
     accept: 'image/*',
     disabled: updatingArtwork,
     showUploadList: false,
     listType: 'picture',
+    onDrop: (e) => {
+      setFile(e.dataTransfer.files?.[0]);
+    },
     beforeUpload(file) {
       const getSource = async () => {
         const src = await new Promise(resolve => {
@@ -39,6 +41,18 @@ const CoverImage = ({ visible, artworkId }) => {
       getSource();
     },
   };
+  const [requestUploadUrl, { loading: loadingUploadUrl }] = useLazyQuery(getUploadImageLink, {
+    fetchPolicy: 'no-cache',
+    variables: { artworkId },
+    onCompleted: async ({ getUploadImageLink }) => {
+      const { status} = await axios.put(getUploadImageLink.link, file, { headers: { 'Content-Type': 'image/png' } });
+      if (status === 200) {
+        updateArtwork({
+          variables: { params: { artworkId, uri: getUploadImageLink.uri } },
+        });
+      }
+    },
+  });
 
   return (
     <BlurredModal blurred maskClosable={false} visible={visible} width={686} onCancel={onCancel}>
@@ -64,7 +78,7 @@ const CoverImage = ({ visible, artworkId }) => {
             </Dragger>}
         </Col>
         <Col span={24}>
-          <ActionButtons cancelText='SKIP' saveText='PUBLISH' onCancel={onCancel} onSave={onCancel} />
+          <ActionButtons cancelText='SKIP' saveText='PUBLISH' loading={loadingUploadUrl || updatingArtwork} onCancel={onCancel} onSave={requestUploadUrl} />
         </Col>
       </Row>
     </BlurredModal>
