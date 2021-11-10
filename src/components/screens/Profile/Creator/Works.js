@@ -22,12 +22,22 @@ const Works = ({ isLock }) => {
     onCompleted: ({ getUserArtworks }) => setWorks(getUserArtworks),
   });
 
-  useEffect(() => setTopPosters(renderPosters(works?.length ? works : videoPosters, 0, show, isLock, works?.length)),[isLock, works, show]);
+  useEffect(
+    () =>
+      setTopPosters(
+        renderPosters(works?.length ? works : videoPosters, 0, show, isLock, works?.length),
+      ),
+    [isLock, works, show],
+  );
 
   return (
     <Spinner spinning={loading} color='white'>
       <div className='cr-feed__posters-list cr-landing__video-grid'>
-        <Row gutter={[22, 35]} className='cr-landing__video-grid__container'>
+        <Row
+          style={{ width: '100%' }}
+          gutter={[22, 35]}
+          className='cr-landing__video-grid__container'
+        >
           {!loading && topPosters}
         </Row>
       </div>
