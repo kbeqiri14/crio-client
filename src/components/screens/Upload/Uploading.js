@@ -6,6 +6,7 @@ import { useMutation } from '@apollo/client';
 import { createArtwork } from '@app/graphql/mutations/artwork.mutation';
 import { Text, Title } from '@ui-kit/Text';
 import { BlurredModal } from '@ui-kit/Modal';
+import { Spinner } from '@ui-kit/Spinner';
 import { errorToast } from '@ui-kit/Notification';
 import './styles.less';
 
@@ -21,7 +22,7 @@ const formatRemainingTime = (time) => {
 };
 
 const Uploading = ({ state, types, dispatch }) => {
-  const [saveArtwork] = useMutation(createArtwork, {
+  const [saveArtwork, { loading }] = useMutation(createArtwork, {
     variables: { videoUri: state.videoUri },
     onCompleted: ({ createArtwork }) => dispatch({ type: types.UPLOADED_VIDEO_VISIBLE, artworkId: createArtwork.id }),
   });
@@ -61,9 +62,11 @@ const Uploading = ({ state, types, dispatch }) => {
 
   return (
     <BlurredModal blurred visible={state.uploadingVisible} closable={false} maskClosable={false} width={686}>
-      <Title level={10} color='white'>Uploading</Title>
-      <Text level={30} color='white_75'>{`${state.percent} % - ${formatRemainingTime(state.remainingTime)}`}</Text>
-      <Progress percent={state.percent} showInfo={false} />
+      <Spinner spinning={loading} color='white'>
+        <Title level={10} color='white'>Uploading</Title>
+        <Text level={30} color='white_75'>{`${state.percent} % - ${formatRemainingTime(state.remainingTime)}`}</Text>
+        <Progress percent={state.percent} showInfo={false} />
+      </Spinner>
     </BlurredModal>
   );
 };

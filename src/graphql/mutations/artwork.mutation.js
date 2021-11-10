@@ -21,6 +21,12 @@ export const updateMetadata = gql`
   }
 `;
 
+export const updateArtworks = gql`
+  mutation {
+    updateArtworks
+  }
+`;
+
 export const deleteArtwork = gql`
   mutation deleteArtwork($params: DeletingParams!) {
     deleteArtwork(params: $params)
