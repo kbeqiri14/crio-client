@@ -87,16 +87,12 @@ const CoverImage = ({ visible, artworkId = 35 }) => {
           )}
         </Col>
         <Col span={24}>
-<<<<<<< HEAD
-          <ActionButtons cancelText='SKIP' saveText='PUBLISH' loading={loadingUploadUrl || updatingArtwork} onCancel={onCancel} onSave={requestUploadUrl} />
-=======
           <ActionButtons
             cancelText='SKIP'
             saveText='PUBLISH'
+            loading={loadingUploadUrl || updatingArtwork}
             onCancel={onCancel}
-            onSave={onCancel}
-          />
->>>>>>> 583ad716d30d3703137d46c3e04decb344c74125
+            onSave={requestUploadUrl} />
         </Col>
       </Row>
     </BlurredModal>
