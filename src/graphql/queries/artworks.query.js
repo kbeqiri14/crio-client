@@ -24,6 +24,12 @@ export const getUploadUrl = gql`
   }
 `;
 
+export const getUploadImageLink = gql`
+  query getUploadImageLink($artworkId: ID!) {
+    getUploadImageLink(artworkId: $artworkId)
+  }
+`;
+
 export const getArtworks = gql`
   query {
     getArtworks {

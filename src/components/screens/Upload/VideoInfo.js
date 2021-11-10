@@ -1,31 +1,24 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Col, Row } from 'antd';
 import { useMutation } from '@apollo/client';
 
-import history from '@app/configs/history';
-import { deleteArtwork, updateMetadata } from '@app/graphql/mutations/artwork.mutation';
+import { updateMetadata } from '@app/graphql/mutations/artwork.mutation';
 import ActionButtons from '@shared/ActionButtons';
 import { Input } from '@ui-kit/Input';
-import thumbnail from '@images/thumbnail.png';
-import { ReactComponent as PlayIcon } from '@svgs/play-big.svg';
+import ReactPlayer from 'react-player';
 
-const VideoInfo = ({ artworkId, types, dispatch }) => {
+const VideoInfo = ({ artworkId, file, types, dispatch, removingArtwork, removeArtwork }) => {
   const { control, watch, handleSubmit } = useForm();
   const title = watch('title');
   const desc = watch('desc');
 
+  const disabled = useMemo(() => !title?.trim() || !desc?.trim(), [desc, title]);
+
   const [updateArtwork, { loading: updatingArtwork }] = useMutation(updateMetadata, {
     variables: { params: { artworkId, title, description: desc } },
+    onCompleted: () => dispatch({ type: types.UPLOAD_COVER_IMAGE }),
   });
-  const [removeArtwork, { loading: deletingArtwork }] = useMutation(deleteArtwork, { variables: { artworkId: artworkId } });
-
-  const disabled = useMemo(() => !title?.trim() || !desc?.trim(), [desc, title]);
-  const onCancel = useCallback(() => removeArtwork() && history.push('/account'), [removeArtwork]);
-  const onContinue = useCallback(() => {
-    updateArtwork();
-    dispatch({ type: types.UPLOAD_COVER_IMAGE });
-  }, [types.UPLOAD_COVER_IMAGE, dispatch, updateArtwork]);
 
   return (
     <Row justify='start' className='video-info'>
@@ -44,17 +37,16 @@ const VideoInfo = ({ artworkId, types, dispatch }) => {
         />
       </Col>
       <Col span={24} className='player'>
-        <img alt='video' src={thumbnail} />
-        <PlayIcon className='play' />
+        <ReactPlayer url={URL.createObjectURL(file)} controls={true}/>
       </Col>
       <Col span={24}>
         <ActionButtons
           saveText='CONTINUE'
-          cancelLoading={deletingArtwork}
+          cancelLoading={removingArtwork}
           loading={updatingArtwork}
           disabled={disabled}
-          onCancel={onCancel}
-          onSave={handleSubmit(onContinue)} />
+          onCancel={removeArtwork}
+          onSave={handleSubmit(updateArtwork)} />
       </Col>
     </Row>
     );

@@ -1,8 +1,7 @@
-import { memo, useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { Col, Row, Upload } from 'antd';
 import { useLazyQuery } from '@apollo/client';
 
-import history from '@app/configs/history';
 import { getUploadUrl } from '@app/graphql/queries/artworks.query';
 import ActionButtons from '@shared/ActionButtons';
 import { Text, Title } from '@ui-kit/Text';
@@ -12,9 +11,9 @@ import dragAndDropImage from '@images/drag-and-drop.png';
 
 const { Dragger } = Upload;
 
-const DragAndDrop = ({ types, dispatch }) => {
-  const [file, setFile] = useState();
+const DragAndDrop = ({ file, types, dispatch, removingArtwork, removeArtwork }) => {
   const [requestUploadUrl, { data, loading }] = useLazyQuery(getUploadUrl, {
+    fetchPolicy: 'no-cache',
     onCompleted: ({ getUploadUrl }) => dispatch({
       type: types.SET_VIDEO_URI,
       videoUri: getUploadUrl.uri,
@@ -26,15 +25,14 @@ const DragAndDrop = ({ types, dispatch }) => {
   const disabled = useMemo(() => !(data?.getUploadUrl?.uri && file?.name && !loading), [
     data?.getUploadUrl?.uri, file?.name, loading,
   ]);
-  const onCancel = useCallback(() => history.push('/account'), []);
-  const onContinue = useCallback(() => dispatch({ type: types.UPLOADING, file }), [file, types.UPLOADING, dispatch]);
+  const onContinue = useCallback(() => dispatch({ type: types.UPLOADING }), [types.UPLOADING, dispatch]);
 
   const props = {
     name: 'file',
     disabled: loading,
     showUploadList: false,
     onDrop: (e) => {
-      setFile(e.dataTransfer.files?.[0]);
+      dispatch({ type: types.SET_FILE, file: e.dataTransfer.files?.[0] });
       requestUploadUrl({
         variables: { size: e.dataTransfer.files?.[0]?.size },
       });
@@ -67,10 +65,15 @@ const DragAndDrop = ({ types, dispatch }) => {
         </Spinner>
       </Col>
       <Col span={24}>
-        <ActionButtons saveText='CONTINUE' disabled={disabled} onCancel={onCancel} onSave={onContinue} />
+        <ActionButtons
+          saveText='CONTINUE'
+          disabled={disabled}
+          cancelLoading={removingArtwork}
+          cancelDisabled={loading}
+          onCancel={removeArtwork}
+          onSave={onContinue} />
       </Col>
     </Row>
-
   );
 };
 

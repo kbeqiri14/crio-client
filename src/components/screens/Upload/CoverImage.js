@@ -13,8 +13,14 @@ const { Dragger } = Upload;
 
 const CoverImage = ({ visible, artworkId }) => {
   const [source, setSource] = useState();
-  const onCancel = useCallback(() => history.push('/account'), []);
-  const [updateArtwork, { loading: updatingArtwork }] = useMutation(updateMetadata);
+
+  const [updateArtwork, { loading: updatingArtwork }] = useMutation(updateMetadata, {
+    onCompleted: () => history.push('/account'),
+  });
+  const onCancel = useCallback(() => updateArtwork({
+    variables: { params: { artworkId } },
+  }), [artworkId, updateArtwork]);
+
   const props = {
     name: 'file',
     accept: 'image/*',
@@ -33,10 +39,6 @@ const CoverImage = ({ visible, artworkId }) => {
       getSource();
     },
   };
-
-  const onContinue = useCallback(() => updateArtwork({
-    variables: { params: { artworkId, image: source, mime: 'image/png' } },
-  }), [artworkId, source, updateArtwork])
 
   return (
     <BlurredModal blurred maskClosable={false} visible={visible} width={686} onCancel={onCancel}>
@@ -62,7 +64,7 @@ const CoverImage = ({ visible, artworkId }) => {
             </Dragger>}
         </Col>
         <Col span={24}>
-          <ActionButtons cancelText='SKIP' saveText='PUBLISH' onCancel={onCancel} onSave={onContinue} />
+          <ActionButtons cancelText='SKIP' saveText='PUBLISH' onCancel={onCancel} onSave={onCancel} />
         </Col>
       </Row>
     </BlurredModal>

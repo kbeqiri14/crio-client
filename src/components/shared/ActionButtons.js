@@ -9,16 +9,18 @@ const ActionButtons = ({
   onCancel,
   onSave,
   cancelLoading,
+  cancelDisabled,
   loading,
   disabled,
 }) => (
   <Row justify='center' gutter={30}>
     <Col>
       <SecondaryButton
-        textColor='white_75'
+        textColor={cancelLoading ? 'white' : 'white_75'}
         borderColor='white_75'
         size='large'
-        cancelLoading={cancelLoading}
+        loading={cancelLoading}
+        disabled={cancelDisabled}
         onClick={onCancel}
       >
         {cancelText}

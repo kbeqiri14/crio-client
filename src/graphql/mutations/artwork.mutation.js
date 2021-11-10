@@ -22,7 +22,7 @@ export const updateMetadata = gql`
 `;
 
 export const deleteArtwork = gql`
-  mutation deleteArtwork($artworkId: ID!) {
-    deleteArtwork(artworkId: $artworkId)
+  mutation deleteArtwork($params: DeletingParams!) {
+    deleteArtwork(params: $params)
   }
 `;

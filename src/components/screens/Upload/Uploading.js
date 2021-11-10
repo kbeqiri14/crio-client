@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { memo, useCallback, useEffect, useMemo } from 'react';
+import { memo, useEffect } from 'react';
 import { Progress } from 'antd';
 import { useMutation } from '@apollo/client';
 
@@ -9,22 +9,22 @@ import { BlurredModal } from '@ui-kit/Modal';
 import { errorToast } from '@ui-kit/Notification';
 import './styles.less';
 
+const timeStarted = new Date();
+const formatRemainingTime = (time) => {
+  let formattedTime = time;
+  let timeUnit = 'seconds';
+  if (time > 60) {
+    formattedTime = time / 60;
+    timeUnit = 'minutes'
+  }
+  return `${Math.round(formattedTime)} ${timeUnit} left`;
+};
+
 const Uploading = ({ state, types, dispatch }) => {
-  const closeModal = useCallback(() => dispatch({ type: types.UPLOADED_VIDEO_VISIBLE }), [types, dispatch]);
   const [saveArtwork] = useMutation(createArtwork, {
     variables: { videoUri: state.videoUri },
     onCompleted: ({ createArtwork }) => dispatch({ type: types.UPLOADED_VIDEO_VISIBLE, artworkId: createArtwork.id }),
   });
-  const timeStarted = useMemo(() => new Date(), []);
-  const formatRemainingTime = useCallback((time) => {
-    let formattedTime = time;
-    let timeUnit = 'seconds';
-    if (time > 60) {
-      formattedTime = time / 60;
-      timeUnit = 'minutes'
-    }
-    return `${formattedTime} ${timeUnit} left`;
-  }, []);
 
   useEffect(() => {
     const upload = async () => {
@@ -36,14 +36,14 @@ const Uploading = ({ state, types, dispatch }) => {
             'Tus-Resumable': '1.0.0',
             'Upload-Offset': 0,
           },
-          onUploadProgress: function(progressEvent) {
-            var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          onUploadProgress: progressEvent => {
+            const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
             const timeElapsed = (new Date()) - timeStarted;
             const uploadSpeed = progressEvent.loaded / (timeElapsed / 1000);
             dispatch({
-              type: types.UPDATE_VIDEO_STATUS,
+              type: types.UPDATE_UPLOADING_STATE,
               percent: percentCompleted,
-              remainingTime: Math.round((progressEvent.total - progressEvent.loaded) / uploadSpeed),
+              remainingTime: (progressEvent.total - progressEvent.loaded) / uploadSpeed,
             });
           }
         });
@@ -57,10 +57,10 @@ const Uploading = ({ state, types, dispatch }) => {
     if (state.file && state.uploadLink) {
       upload();
     }
-  }, [state.file, state.uploadLink, timeStarted, types.UPDATE_VIDEO_STATUS, types.UPLOADED_VIDEO_VISIBLE, dispatch, saveArtwork])
+  }, [state.file, state.uploadLink, types.UPDATE_UPLOADING_STATE, types.UPLOADED_VIDEO_VISIBLE, dispatch, saveArtwork])
 
   return (
-    <BlurredModal blurred visible={state.uploadingVisible} width={686} onCancel={closeModal}>
+    <BlurredModal blurred visible={state.uploadingVisible} closable={false} maskClosable={false} width={686}>
       <Title level={10} color='white'>Uploading</Title>
       <Text level={30} color='white_75'>{`${state.percent} % - ${formatRemainingTime(state.remainingTime)}`}</Text>
       <Progress percent={state.percent} showInfo={false} />
