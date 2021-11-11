@@ -1,35 +1,37 @@
 @import 'variables';
 
 .upload {
-  padding: 34px 20px 63px;
+  padding: 34px 0 63px;
   text-align: center;
-  .dray-and-drop {
+  .drag-and-drop {
     padding: 89px 0;
-    border: 1px dashed @white_50;
-    border-radius: 43px;
     img {
-      min-height: 127px;
+      min-height: 200px;
+      max-width: 270px;
     }
+  }
+  .ant-spin-container{
+    border-radius: 43px;
   }
 }
 .cover-image {
-  padding: 39px 59px 31px !important;
+  padding: 15px 35px 7px;
   text-align: center;
   img {
-    min-height: 200px;
+    min-height: 127;
+    max-width: 184px;
   }
-  .dray-and-drop {
-    padding: 56px;
-    border: 1px dashed @white_50;
-    border-radius: 43px;
+  .drag-and-drop {
+    padding: 33px 0 25px;
   }
   .uploaded-image {
     margin: auto;
-    img {
-      max-width: 568px;
-      max-height: 259px;
-      border-radius: 43px;
-    }
+    max-width: 568px;
+    max-height: 259px;
+    border-radius: 43px;
+  }
+  .desc {
+    margin-top: -20px;
   }
 }
 
@@ -48,23 +50,22 @@
     font-size: 26px;
   }
   .player {
+    display: flex;
+    justify-content: center;
     padding: 24px 0 48px;
-    min-width: 922px;
     min-height: 538px;
-    .remove {
-      position: absolute;
-      top: 7%;
-      right: 33%;
-    }
-    .play {
-      position: absolute;
-      top: 37%;
-      left: 47%;
+    video {
+      border-radius: 16px;
     }
   }
 }
 
 .ant-upload.ant-upload-drag {
-  border: none !important;
+  border-color: @white_50;
+  border-radius: 43px;
   background: none !important;
+}
+.ant-upload:hover,
+.ant-upload.ant-upload-drag.ant-upload-drag-hover {
+  border-color: @white_50 !important;
 }
