@@ -36,9 +36,9 @@ export const SecondaryButton = ({
       onClick={onClick}
       disabled={disabled}
     >
-      {loading
-        ? <Spinner spinning={true} color={textColor} />
-        : (
+      {loading ? (
+        <Spinner spinning={true} color={textColor} />
+      ) : (
         <Fragment>
           {icon}
           {size === 'large' ? (

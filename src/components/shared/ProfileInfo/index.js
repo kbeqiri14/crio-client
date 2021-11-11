@@ -10,20 +10,12 @@ import profile from '@images/profile.png';
 import './styles.less';
 
 const ProfileInfo = ({ user = {}, isProfile, isFollowing, isCreator }) => {
-  const {
-    id,
-    fbUserId,
-    firstName,
-    lastName,
-    username,
-    email,
-    visibility,
-  } = user;
-  const size = useMemo(() => isFollowing ? 96 : 134, [isFollowing]);
+  const { id, fbUserId, firstName, lastName, username, email, visibility } = user;
+  const size = useMemo(() => (isFollowing ? 96 : 134), [isFollowing]);
   const name = useMemo(() => `${firstName || ''} ${lastName || ''}`, [firstName, lastName]);
-  const source = useMemo(() => fbUserId
-    ? `https://graph.facebook.com/${fbUserId}/picture?height=350&width=350`
-    : profile,
+  const source = useMemo(
+    () =>
+      fbUserId ? `https://graph.facebook.com/${fbUserId}/picture?height=350&width=350` : profile,
     [fbUserId],
   );
   const visible = useMemo(() => {
@@ -34,7 +26,10 @@ const ProfileInfo = ({ user = {}, isProfile, isFollowing, isCreator }) => {
       email: main || (!main && visibility?.includes(fields.EMAIL)),
     };
   }, [isFollowing, isProfile, visibility]);
-  const visitProfile = useCallback(() => isFollowing && history.push(`/profile/${id}`), [isFollowing, id]);
+  const visitProfile = useCallback(
+    () => isFollowing && history.push(`/profile/${id}`),
+    [isFollowing, id],
+  );
 
   return (
     <Row align='middle' gutter={30} className={`profile ${isFollowing ? 'following' : ''}`}>
@@ -43,12 +38,22 @@ const ProfileInfo = ({ user = {}, isProfile, isFollowing, isCreator }) => {
         {isCreator && <CreatorIcon className='creator-icon' />}
       </Col>
       <Col className='info'>
-        {visible.name && <Title level={10} color='white' onClick={visitProfile}>{name}</Title>}
-        {visible.username && <Title level={30} color='white' onClick={visitProfile}>@{username}</Title>}
-        {visible.email && <Text level={10} color='white_75'>
-          <MailIcon />
-          {isProfile || isFollowing ? <a href={`mailto:${email}`}>{email}</a> : email}
-        </Text>}
+        {visible.name && (
+          <Title level={10} color='white' onClick={visitProfile}>
+            {name}
+          </Title>
+        )}
+        {visible.username && (
+          <Title level={30} color='white' onClick={visitProfile}>
+            @{username}
+          </Title>
+        )}
+        {visible.email && (
+          <Text level={10} color='white_75'>
+            <MailIcon />
+            {isProfile || isFollowing ? <a href={`mailto:${email}`}>{email}</a> : email}
+          </Text>
+        )}
       </Col>
     </Row>
   );

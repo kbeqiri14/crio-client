@@ -54,7 +54,9 @@ export const PresentationView = ({ visible, videoInfo, onCancel }) => {
             <div className='video-view__player embed-responsive aspect-ratio-16/9'>
               <iframe
                 title={videoInfo.title || 'Crio video player'}
-                src={`https://player.vimeo.com/video/${videoInfo.id || 382975976}?h=dc77330a55&color=ffffff&title=0&byline=0&portrait=0`}
+                src={`https://player.vimeo.com/video/${
+                  videoInfo.id || 382975976
+                }?h=dc77330a55&color=ffffff&title=0&byline=0&portrait=0`}
                 frameBorder='0'
                 allow='autoplay; fullscreen; picture-in-picture'
                 allowFullScreen

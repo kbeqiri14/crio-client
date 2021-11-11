@@ -43,7 +43,9 @@ export const MyAccount = () => {
           Creator view
         </Title>
         <Switch checked={isCreator} onChange={() => setIsCreator(!isCreator)} />
-        <SecondaryButton loading={updatingArtworks} onClick={requestUpdateArtworks}>Update artworks</SecondaryButton>
+        <SecondaryButton loading={updatingArtworks} onClick={requestUpdateArtworks}>
+          Update artworks
+        </SecondaryButton>
       </Space>
       <Spinner spinning={loading} color='white'>
         <PersonalInfo user={user} onClick={editProfile} isCreator={isCreator} />

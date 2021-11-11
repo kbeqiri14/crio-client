@@ -8,16 +8,26 @@ import { ReactComponent as ArrowBottomIcon } from '@svgs/arrow-down.svg';
 
 const { Option } = Select;
 
-const Item = ({ label, icon }) => <>{icon}<Title inline level={30} color='white'>{label}</Title></>
+const Item = ({ label, icon }) => (
+  <>
+    {icon}
+    <Title inline level={30} color='white'>
+      {label}
+    </Title>
+  </>
+);
 
 const Visibility = ({ options, name, control, defaultValue, setTooltipVisible }) => {
   const [selectedValue, setSelectedValue] = useState(
     options.find(({ value }) => value === defaultValue) || options[0],
   );
-  const handleMenuItemClick = useCallback(option => {
-    setSelectedValue(options.find(({ value }) => value === option));
-    setTooltipVisible(option === keys.PRIVATE ? name : undefined);
-  }, [name, options, setTooltipVisible]);
+  const handleMenuItemClick = useCallback(
+    (option) => {
+      setSelectedValue(options.find(({ value }) => value === option));
+      setTooltipVisible(option === keys.PRIVATE ? name : undefined);
+    },
+    [name, options, setTooltipVisible],
+  );
 
   return (
     <Controller
@@ -27,20 +37,18 @@ const Visibility = ({ options, name, control, defaultValue, setTooltipVisible })
         <Select
           {...field}
           suffixIcon={<ArrowBottomIcon />}
-          defaultValue={<Item label={selectedValue.label} icon={selectedValue.icon}/>}
-          value={<Item label={selectedValue.label} icon={selectedValue.icon}/>}
+          defaultValue={<Item label={selectedValue.label} icon={selectedValue.icon} />}
+          value={<Item label={selectedValue.label} icon={selectedValue.icon} />}
           onSelect={handleMenuItemClick}
           className='visibility'
         >
-          {
-            options
-              .filter(({ value }) => value !== selectedValue.value)
-              .map(({ value, label, icon }) => (
-                <Option key={value}>
-                  <Item label={label} icon={icon} />
-                </Option>
-              ))
-          }
+          {options
+            .filter(({ value }) => value !== selectedValue.value)
+            .map(({ value, label, icon }) => (
+              <Option key={value}>
+                <Item label={label} icon={icon} />
+              </Option>
+            ))}
         </Select>
       )}
     />

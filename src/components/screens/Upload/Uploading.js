@@ -16,7 +16,7 @@ const formatRemainingTime = (time) => {
   let timeUnit = 'seconds';
   if (time > 60) {
     formattedTime = time / 60;
-    timeUnit = 'minutes'
+    timeUnit = 'minutes';
   }
   return `${Math.round(formattedTime)} ${timeUnit} left`;
 };
@@ -24,7 +24,8 @@ const formatRemainingTime = (time) => {
 const Uploading = ({ state, types, dispatch }) => {
   const [saveArtwork, { loading }] = useMutation(createArtwork, {
     variables: { videoUri: state.videoUri },
-    onCompleted: ({ createArtwork }) => dispatch({ type: types.UPLOADED_VIDEO_VISIBLE, artworkId: createArtwork.id }),
+    onCompleted: ({ createArtwork }) =>
+      dispatch({ type: types.UPLOADED_VIDEO_VISIBLE, artworkId: createArtwork.id }),
   });
 
   useEffect(() => {
@@ -37,16 +38,16 @@ const Uploading = ({ state, types, dispatch }) => {
             'Tus-Resumable': '1.0.0',
             'Upload-Offset': 0,
           },
-          onUploadProgress: progressEvent => {
+          onUploadProgress: (progressEvent) => {
             const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-            const timeElapsed = (new Date()) - timeStarted;
+            const timeElapsed = new Date() - timeStarted;
             const uploadSpeed = progressEvent.loaded / (timeElapsed / 1000);
             dispatch({
               type: types.UPDATE_UPLOADING_STATE,
               percent: percentCompleted,
               remainingTime: (progressEvent.total - progressEvent.loaded) / uploadSpeed,
             });
-          }
+          },
         });
         if (request.status === 204) {
           saveArtwork();
@@ -54,17 +55,34 @@ const Uploading = ({ state, types, dispatch }) => {
       } catch (e) {
         errorToast('Uploading Error', 'Something went wrong. Please try later.');
       }
-    }
+    };
     if (state.file && state.uploadLink) {
       upload();
     }
-  }, [state.file, state.uploadLink, types.UPDATE_UPLOADING_STATE, types.UPLOADED_VIDEO_VISIBLE, dispatch, saveArtwork])
+  }, [
+    state.file,
+    state.uploadLink,
+    types.UPDATE_UPLOADING_STATE,
+    types.UPLOADED_VIDEO_VISIBLE,
+    dispatch,
+    saveArtwork,
+  ]);
 
   return (
-    <BlurredModal blurred visible={state.uploadingVisible} closable={false} maskClosable={false} width={686}>
+    <BlurredModal
+      blurred
+      visible={state.uploadingVisible}
+      closable={false}
+      maskClosable={false}
+      width={686}
+    >
       <Spinner spinning={loading} color='white'>
-        <Title level={10} color='white'>Uploading</Title>
-        <Text level={30} color='white_75'>{`${state.percent} % - ${formatRemainingTime(state.remainingTime)}`}</Text>
+        <Title level={10} color='white'>
+          Uploading
+        </Title>
+        <Text level={30} color='white_75'>{`${state.percent} % - ${formatRemainingTime(
+          state.remainingTime,
+        )}`}</Text>
         <Progress percent={state.percent} showInfo={false} />
       </Spinner>
     </BlurredModal>

@@ -18,7 +18,7 @@ const CoverImage = ({ visible, artworkId = 35 }) => {
   const [file, setFile] = useState();
   const onCancel = useCallback(() => history.push('/account'), []);
   const [updateArtwork, { loading: updatingArtwork }] = useMutation(updateMetadata, {
-    onCompleted: () => history.push('/account')
+    onCompleted: () => history.push('/account'),
   });
   const props = {
     name: 'file',
@@ -45,7 +45,9 @@ const CoverImage = ({ visible, artworkId = 35 }) => {
     fetchPolicy: 'no-cache',
     variables: { artworkId },
     onCompleted: async ({ getUploadImageLink }) => {
-      const { status} = await axios.put(getUploadImageLink.link, file, { headers: { 'Content-Type': 'image/png' } });
+      const { status } = await axios.put(getUploadImageLink.link, file, {
+        headers: { 'Content-Type': 'image/png' },
+      });
       if (status === 200) {
         updateArtwork({
           variables: { params: { artworkId, uri: getUploadImageLink.uri } },
@@ -92,7 +94,8 @@ const CoverImage = ({ visible, artworkId = 35 }) => {
             saveText='PUBLISH'
             loading={loadingUploadUrl || updatingArtwork}
             onCancel={onCancel}
-            onSave={requestUploadUrl} />
+            onSave={requestUploadUrl}
+          />
         </Col>
       </Row>
     </BlurredModal>

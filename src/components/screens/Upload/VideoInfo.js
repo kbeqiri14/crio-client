@@ -27,14 +27,27 @@ const VideoInfo = ({ artworkId, file, types, dispatch, removingArtwork, removeAr
         <Controller
           name='title'
           control={control}
-          render={({ field }) => <Input {...field} maxlength={50} className='title' placeholder='Write the artwork title' />}
+          render={({ field }) => (
+            <Input
+              {...field}
+              maxlength={50}
+              className='title'
+              placeholder='Write the artwork title'
+            />
+          )}
         />
       </Col>
       <Col span={24}>
         <Controller
           name='desc'
           control={control}
-          render={({ field }) => <Input {...field} maxlength={80} placeholder='Write anything what you’d like to mention about this work' />}
+          render={({ field }) => (
+            <Input
+              {...field}
+              maxlength={80}
+              placeholder='Write anything what you’d like to mention about this work'
+            />
+          )}
         />
       </Col>
       <Col span={24} className='player'>
@@ -47,10 +60,11 @@ const VideoInfo = ({ artworkId, file, types, dispatch, removingArtwork, removeAr
           loading={updatingArtwork}
           disabled={disabled}
           onCancel={removeArtwork}
-          onSave={handleSubmit(updateArtwork)} />
+          onSave={handleSubmit(updateArtwork)}
+        />
       </Col>
     </Row>
-    );
-  };
+  );
+};
 
 export default memo(VideoInfo);

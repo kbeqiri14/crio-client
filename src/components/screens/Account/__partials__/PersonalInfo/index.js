@@ -8,15 +8,11 @@ import { ReactComponent as FollowIcon } from '@svgs/follow.svg';
 import ProfileInfo from '@shared/ProfileInfo';
 import './styles.less';
 
-const PersonalInfo = ({
-  user,
-  isCreator,
-  isProfile,
-  isFollow,
-  loading,
-  onClick,
-}) => {
-  const buttonLabel = useMemo(() => isProfile ? `${isFollow ? 'UN' : ''}FOLLOW` : 'EDIT PROFILE', [isProfile, isFollow]);
+const PersonalInfo = ({ user, isCreator, isProfile, isFollow, loading, onClick }) => {
+  const buttonLabel = useMemo(
+    () => (isProfile ? `${isFollow ? 'UN' : ''}FOLLOW` : 'EDIT PROFILE'),
+    [isProfile, isFollow],
+  );
   const buttonIcon = useMemo(() => {
     if (isProfile) {
       return isFollow ? <UnFollowIcon /> : <FollowIcon />;

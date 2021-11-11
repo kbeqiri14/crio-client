@@ -18,7 +18,7 @@ export const Profile = () => {
   const { loading: loadingIsFollowing } = useQuery(isFollowing, {
     variables: { followingId: pathname.split('/')[2] },
     fetchPolicy: 'no-cache',
-    onCompleted: data => {
+    onCompleted: (data) => {
       if (data?.isFollowing) {
         setIsFollow(true);
       }
@@ -26,13 +26,16 @@ export const Profile = () => {
   });
   const [follow, { loading: loadingFollowing }] = useMutation(createFollowing, {
     variables: { followingId: pathname.split('/')[2] },
-    onCompleted: data => {
+    onCompleted: (data) => {
       if (data?.createFollowing) {
         setIsFollow(!isFollow);
       }
     },
   });
-  const handleClick = useCallback(() => follow({ variables: { followingId: pathname.split('/')[2] } }), [follow, pathname])
+  const handleClick = useCallback(
+    () => follow({ variables: { followingId: pathname.split('/')[2] } }),
+    [follow, pathname],
+  );
 
   return (
     <Fragment>

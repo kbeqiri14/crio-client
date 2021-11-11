@@ -14,18 +14,23 @@ const { Dragger } = Upload;
 const DragAndDrop = ({ file, types, dispatch, removingArtwork, removeArtwork }) => {
   const [requestUploadUrl, { data, loading }] = useLazyQuery(getUploadUrl, {
     fetchPolicy: 'no-cache',
-    onCompleted: ({ getUploadUrl }) => dispatch({
-      type: types.SET_VIDEO_URI,
-      videoUri: getUploadUrl.uri,
-      uploadLink: getUploadUrl.upload_link,
-    }),
+    onCompleted: ({ getUploadUrl }) =>
+      dispatch({
+        type: types.SET_VIDEO_URI,
+        videoUri: getUploadUrl.uri,
+        uploadLink: getUploadUrl.upload_link,
+      }),
     onError: () => errorToast('Error', 'Something went wrong. Please try later.'),
   });
 
-  const disabled = useMemo(() => !(data?.getUploadUrl?.uri && file?.name && !loading), [
-    data?.getUploadUrl?.uri, file?.name, loading,
-  ]);
-  const onContinue = useCallback(() => dispatch({ type: types.UPLOADING }), [types.UPLOADING, dispatch]);
+  const disabled = useMemo(
+    () => !(data?.getUploadUrl?.uri && file?.name && !loading),
+    [data?.getUploadUrl?.uri, file?.name, loading],
+  );
+  const onContinue = useCallback(
+    () => dispatch({ type: types.UPLOADING }),
+    [types.UPLOADING, dispatch],
+  );
 
   const props = {
     name: 'file',
@@ -41,9 +46,11 @@ const DragAndDrop = ({ file, types, dispatch, removingArtwork, removeArtwork }) 
   };
 
   return (
-    <Row justify='center'gutter={[0, 50]} className='upload'>
+    <Row justify='center' gutter={[0, 50]} className='upload'>
       <Col span={24}>
-        <Title inline level='10' color='white'>Upload your artwork</Title>
+        <Title inline level='10' color='white'>
+          Upload your artwork
+        </Title>
       </Col>
       <Col span={12}>
         <Dragger {...props}>
@@ -53,14 +60,22 @@ const DragAndDrop = ({ file, types, dispatch, removingArtwork, removeArtwork }) 
                 <img alt='drag-and-drop' src={dragAndDropImage} />
               </Col>
               <Col span={24}>
-                <Text inline level='10' color='white'>Drag and drop a video</Text>
+                <Text inline level='10' color='white'>
+                  Drag and drop a video
+                </Text>
               </Col>
               <Col span={24}>
-                <Text inline level='10' color='white'>1920 x 1080 higher recommended. Max 20GB each.</Text>
+                <Text inline level='10' color='white'>
+                  1920 x 1080 higher recommended. Max 20GB each.
+                </Text>
               </Col>
-              {file?.name && <Col span={24}>
-                <Text inline level='10' color='white'>{file.name}</Text>
-              </Col>}
+              {file?.name && (
+                <Col span={24}>
+                  <Text inline level='10' color='white'>
+                    {file.name}
+                  </Text>
+                </Col>
+              )}
             </Row>
           </Spinner>
         </Dragger>
@@ -72,7 +87,8 @@ const DragAndDrop = ({ file, types, dispatch, removingArtwork, removeArtwork }) 
           cancelLoading={removingArtwork}
           cancelDisabled={loading}
           onCancel={removeArtwork}
-          onSave={onContinue} />
+          onSave={onContinue}
+        />
       </Col>
     </Row>
   );

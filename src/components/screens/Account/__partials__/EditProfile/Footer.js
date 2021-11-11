@@ -13,12 +13,16 @@ const Footer = ({ updatedData, closeModal, handleSubmit }) => {
 
   const disabled = useMemo(() => {
     const { firstName, lastName, username, visibility } = updatedData;
-    return !(visibility.length && username !== ''
-      && (((firstName && user?.firstName !== firstName) || (firstName === '' && !!user?.firstName))
-        || ((lastName && user?.lastName !== lastName) || (lastName === '' && !!user?.lastName))
-        || (username && user?.username !== username)
-        || (!isEqual(visibility, user.visibility)))
-    )
+    return !(
+      visibility.length &&
+      username !== '' &&
+      ((firstName && user?.firstName !== firstName) ||
+        (firstName === '' && !!user?.firstName) ||
+        (lastName && user?.lastName !== lastName) ||
+        (lastName === '' && !!user?.lastName) ||
+        (username && user?.username !== username) ||
+        !isEqual(visibility, user.visibility))
+    );
   }, [updatedData, user?.firstName, user?.lastName, user?.username, user?.visibility]);
 
   const [updateUserInfo, { loading }] = useMutation(updateUser, {
@@ -38,16 +42,21 @@ const Footer = ({ updatedData, closeModal, handleSubmit }) => {
     },
   });
 
-  const onSubmit = useCallback(() => updateUserInfo({
-    variables: { attributes: updatedData },
-  }), [updatedData, updateUserInfo]);
+  const onSubmit = useCallback(
+    () =>
+      updateUserInfo({
+        variables: { attributes: updatedData },
+      }),
+    [updatedData, updateUserInfo],
+  );
 
   return (
     <ActionButtons
       loading={loading}
       disabled={disabled}
       onCancel={closeModal}
-      onSave={handleSubmit(onSubmit)}/>
+      onSave={handleSubmit(onSubmit)}
+    />
   );
 };
 
