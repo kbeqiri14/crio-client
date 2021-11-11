@@ -45,8 +45,8 @@ const DragAndDrop = ({ file, types, dispatch, removingArtwork, removeArtwork }) 
         <Title inline level='10' color='white'>Upload your artwork</Title>
       </Col>
       <Col span={12}>
-        <Spinner spinning={loading} color='white'>
-          <Dragger {...props}>
+        <Dragger {...props}>
+          <Spinner spinning={loading} color='white'>
             <Row justify='center' align='center' gutter={[0, 11]} className='drag-and-drop'>
               <Col span={24}>
                 <img alt='drag-and-drop' src={dragAndDropImage} />
@@ -61,8 +61,8 @@ const DragAndDrop = ({ file, types, dispatch, removingArtwork, removeArtwork }) 
                 <Text inline level='10' color='white'>{file.name}</Text>
               </Col>}
             </Row>
-          </Dragger>
-        </Spinner>
+          </Spinner>
+        </Dragger>
       </Col>
       <Col span={24}>
         <ActionButtons

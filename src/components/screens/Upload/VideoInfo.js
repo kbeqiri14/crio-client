@@ -14,6 +14,7 @@ const VideoInfo = ({ artworkId, file, types, dispatch, removingArtwork, removeAr
   const desc = watch('desc');
 
   const disabled = useMemo(() => !title?.trim() || !desc?.trim(), [desc, title]);
+  const url = useMemo(() => URL.createObjectURL(file), [file]);
 
   const [updateArtwork, { loading: updatingArtwork }] = useMutation(updateMetadata, {
     variables: { params: { artworkId, title, description: desc } },
@@ -37,7 +38,7 @@ const VideoInfo = ({ artworkId, file, types, dispatch, removingArtwork, removeAr
         />
       </Col>
       <Col span={24} className='player'>
-        <ReactPlayer url={URL.createObjectURL(file)} controls={true}/>
+        <ReactPlayer url={url} controls={true} width={922} height={538} />
       </Col>
       <Col span={24}>
         <ActionButtons
