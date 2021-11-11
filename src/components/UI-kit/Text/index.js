@@ -33,7 +33,13 @@ export const Text = ({ level, children, inline = false, className, color, ellips
   const TextTag = inline ? 'span' : 'p';
   return (
     <TextTag
-      className={cc(['crio-text', `text-${level}`, `crio-text--color--${color}`, {ellipsis}, className])}
+      className={cc([
+        'crio-text',
+        `text-${level}`,
+        `crio-text--color--${color}`,
+        { ellipsis },
+        className,
+      ])}
       onClick={onClick}
     >
       {children}

@@ -60,7 +60,9 @@ const Followings = ({ loadingFollowings, followings }) => {
 
   return (
     <Spinner spinning={loadingFollowings} color='white'>
-      {followings?.map(({ userId, ...user }) => <FollowingRow key={user.id} user={user} handleClick={show} />)}
+      {followings?.map(({ userId, ...user }) => (
+        <FollowingRow key={user.id} user={user} handleClick={show} />
+      ))}
     </Spinner>
   );
 };

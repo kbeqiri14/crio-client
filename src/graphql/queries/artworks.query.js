@@ -26,8 +26,7 @@ export const getUploadUrl = gql`
 
 export const getUploadImageLink = gql`
   query getUploadImageLink($artworkId: ID!) {
-    getUploadImageLink(artworkId: $artworkId)
-    {
+    getUploadImageLink(artworkId: $artworkId) {
       uri
       link
     }

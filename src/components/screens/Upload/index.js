@@ -28,7 +28,12 @@ const reducer = (state, { type, ...payload }) => {
     case types.UPDATE_UPLOADING_STATE:
       return { ...state, percent: payload.percent, remainingTime: payload.remainingTime };
     case types.UPLOADED_VIDEO_VISIBLE:
-      return { ...state, uploadingVisible: false, uploadedVideoVisible: true, artworkId: payload.artworkId };
+      return {
+        ...state,
+        uploadingVisible: false,
+        uploadedVideoVisible: true,
+        artworkId: payload.artworkId,
+      };
     case types.UPLOAD_COVER_IMAGE:
       return { ...state, uploadedVideoVisible: false, coverImageVisible: true };
     case types.SET_FILE:
@@ -56,21 +61,29 @@ const Upload = () => {
 
   return (
     <Fragment>
-      {!state.uploadedVideoVisible && <DragAndDrop
-        file={state.file}
-        types={types}
-        dispatch={dispatch}
-        removingArtwork={removingArtwork}
-        removeArtwork={removeArtwork} />}
+      {!state.uploadedVideoVisible && (
+        <DragAndDrop
+          file={state.file}
+          types={types}
+          dispatch={dispatch}
+          removingArtwork={removingArtwork}
+          removeArtwork={removeArtwork}
+        />
+      )}
       {state.uploadingVisible && <Uploading state={state} types={types} dispatch={dispatch} />}
-      {state.uploadedVideoVisible && <VideoInfo
-        artworkId={state.artworkId}
-        file={state.file}
-        types={types}
-        dispatch={dispatch}
-        removingArtwork={removingArtwork}
-        removeArtwork={removeArtwork} />}
-      {state.coverImageVisible && <CoverImage visible={state.coverImageVisible} artworkId={state.artworkId} />}
+      {state.uploadedVideoVisible && (
+        <VideoInfo
+          artworkId={state.artworkId}
+          file={state.file}
+          types={types}
+          dispatch={dispatch}
+          removingArtwork={removingArtwork}
+          removeArtwork={removeArtwork}
+        />
+      )}
+      {state.coverImageVisible && (
+        <CoverImage visible={state.coverImageVisible} artworkId={state.artworkId} />
+      )}
     </Fragment>
   );
 };

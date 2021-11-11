@@ -42,35 +42,37 @@ export const FormItem = memo(({ span, name, label, control, disabled, defaultVal
   </Col>
 ));
 
-export const FormRow = memo(({
-  children,
-  name,
-  control,
-  defaultValue,
-  tooltipVisible,
-  setTooltipVisible,
-}) => (
-  <Col span={24}>
-    <Row align='bottom' gutter={20}>
-      {children}
-      <Col span={6}>
-        <Tooltip
-          visible={tooltipVisible}
-          color='rgba(112, 114, 128, 1)'
-          placement='right'
-          title={<Fragment>
-            <Title level={30} color='white'>Warning</Title>
-            <Text level={20} color='white'>You can’t hide all information from profile.</Text>
-          </Fragment>}
-        >
-          <Visibility
-            options={options}
-            name={name}
-            control={control}
-            defaultValue={defaultValue}
-            setTooltipVisible={setTooltipVisible} />
-        </Tooltip>
-      </Col>
-    </Row>
-  </Col>
-));
+export const FormRow = memo(
+  ({ children, name, control, defaultValue, tooltipVisible, setTooltipVisible }) => (
+    <Col span={24}>
+      <Row align='bottom' gutter={20}>
+        {children}
+        <Col span={6}>
+          <Tooltip
+            visible={tooltipVisible}
+            color='rgba(112, 114, 128, 1)'
+            placement='right'
+            title={
+              <Fragment>
+                <Title level={30} color='white'>
+                  Warning
+                </Title>
+                <Text level={20} color='white'>
+                  You can’t hide all information from profile.
+                </Text>
+              </Fragment>
+            }
+          >
+            <Visibility
+              options={options}
+              name={name}
+              control={control}
+              defaultValue={defaultValue}
+              setTooltipVisible={setTooltipVisible}
+            />
+          </Tooltip>
+        </Col>
+      </Row>
+    </Col>
+  ),
+);

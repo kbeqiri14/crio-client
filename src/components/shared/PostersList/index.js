@@ -33,9 +33,15 @@ export const PosterCard = memo(
               <Text level='60'>{author}</Text>
             </div>
             <div>
-              <Text level={isReal ? '40' : '50'} ellipsis>{title}</Text>
+              <Text level={isReal ? '40' : '50'} ellipsis>
+                {title}
+              </Text>
             </div>
-            {isReal && <Text level='50' ellipsis>{description}</Text>}
+            {isReal && (
+              <Text level='50' ellipsis>
+                {description}
+              </Text>
+            )}
           </Col>
           <Col span={1}>
             <PlayIcon />

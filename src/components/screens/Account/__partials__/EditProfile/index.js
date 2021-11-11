@@ -23,7 +23,9 @@ const EditProfile = ({ user, visible, closeModal }) => {
     const include = [];
     const exclude = [];
     Object.entries({
-      name: nameVisible, username: usernameVisible, email: emailVisible,
+      name: nameVisible,
+      username: usernameVisible,
+      email: emailVisible,
     }).forEach(([key, value]) => {
       if (value) {
         if (value === keys.PUBLIC) {
@@ -33,15 +35,20 @@ const EditProfile = ({ user, visible, closeModal }) => {
         }
       }
     });
-    return [...new Set([...user?.visibility, ...include])].filter(item => !exclude.includes(item));
+    return [...new Set([...user?.visibility, ...include])].filter(
+      (item) => !exclude.includes(item),
+    );
   }, [nameVisible, usernameVisible, emailVisible, user?.visibility]);
 
-  const updatedData = useMemo(() => ({
-    firstName: firstName?.trim(),
-    lastName: lastName?.trim(),
-    username: username?.trim(),
-    visibility,
-  }), [firstName, lastName, username, visibility]);
+  const updatedData = useMemo(
+    () => ({
+      firstName: firstName?.trim(),
+      lastName: lastName?.trim(),
+      username: username?.trim(),
+      visibility,
+    }),
+    [firstName, lastName, username, visibility],
+  );
 
   return (
     <BlurredModal width={828} visible={visible} onCancel={closeModal} className='edit-profile'>
@@ -65,18 +72,22 @@ const EditProfile = ({ user, visible, closeModal }) => {
                 name='firstName'
                 label='First name'
                 control={control}
-                defaultValue={user?.firstName} />
+                defaultValue={user?.firstName}
+              />
               <FormItem
                 span={9}
                 name='lastName'
                 label='Last name'
                 control={control}
-                defaultValue={user?.lastName} />
+                defaultValue={user?.lastName}
+              />
             </FormRow>
             <FormRow
               name='usernameVisible'
               control={control}
-              defaultValue={user?.visibility?.includes(fields.USERNAME) ? keys.PUBLIC : keys.PRIVATE}
+              defaultValue={
+                user?.visibility?.includes(fields.USERNAME) ? keys.PUBLIC : keys.PRIVATE
+              }
               tooltipVisible={tooltipVisible === 'usernameVisible' && !visibility?.length}
               setTooltipVisible={setTooltipVisible}
             >
@@ -85,7 +96,8 @@ const EditProfile = ({ user, visible, closeModal }) => {
                 name='username'
                 label='Username *'
                 control={control}
-                defaultValue={user?.username} />
+                defaultValue={user?.username}
+              />
             </FormRow>
             <FormRow
               name='emailVisible'
@@ -100,7 +112,8 @@ const EditProfile = ({ user, visible, closeModal }) => {
                 label='Email'
                 control={control}
                 defaultValue={user?.email}
-                disabled />
+                disabled
+              />
             </FormRow>
           </Row>
         </Col>
