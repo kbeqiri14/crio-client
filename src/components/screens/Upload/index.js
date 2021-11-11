@@ -1,8 +1,11 @@
-import { Fragment, memo, useReducer } from 'react';
+import { Fragment, memo, useCallback, useReducer } from 'react';
 import { useMutation } from '@apollo/client';
 
 import history from '@app/configs/history';
+import ActionButtons from '@shared/ActionButtons';
 import { deleteArtwork } from '@app/graphql/mutations/artwork.mutation';
+import { Title } from '@ui-kit/Text';
+import { BlurredModal } from '@ui-kit/Modal';
 import DragAndDrop from './DragAndDrop';
 import Uploading from './Uploading';
 import VideoInfo from './VideoInfo';
@@ -17,33 +20,28 @@ const types = {
   UPLOAD_COVER_IMAGE: 5,
   SET_FILE: 6,
   SET_VIDEO_URI: 7,
+  CONFIRMATION_VISIBLE: 8,
+  CONFIRMATION_HIDE: 9,
 };
-
-const reducer = (state, { type, ...payload }) => {
-  switch (type) {
-    case types.UPLOADING:
-      return { ...state, uploadingVisible: true };
-    case types.CANCEL_UPLOADING:
-      return { ...state, uploadingVisible: false, file: undefined };
-    case types.UPDATE_UPLOADING_STATE:
-      return { ...state, percent: payload.percent, remainingTime: payload.remainingTime };
-    case types.UPLOADED_VIDEO_VISIBLE:
-      return {
-        ...state,
-        uploadingVisible: false,
-        uploadedVideoVisible: true,
-        artworkId: payload.artworkId,
-      };
-    case types.UPLOAD_COVER_IMAGE:
-      return { ...state, coverImageVisible: true };
-    case types.SET_FILE:
-      return { ...state, file: payload.file };
-    case types.SET_VIDEO_URI:
-      return { ...state, videoUri: payload.videoUri, uploadLink: payload.uploadLink };
-    default:
-      return state;
-  }
-};
+const setState = (payload) => ({
+  [types.UPLOADING]: { uploadingVisible: true },
+  [types.CANCEL_UPLOADING]: { uploadingVisible: false, file: undefined },
+  [types.UPDATE_UPLOADING_STATE]: {
+    percent: payload.percent,
+    remainingTime: payload.remainingTime,
+  },
+  [types.UPLOADED_VIDEO_VISIBLE]: {
+    uploadingVisible: false,
+    uploadedVideoVisible: true,
+    artworkId: payload.artworkId,
+  },
+  [types.UPLOAD_COVER_IMAGE]: { coverImageVisible: true },
+  [types.SET_FILE]: { file: payload.file },
+  [types.SET_VIDEO_URI]: { videoUri: payload.videoUri, uploadLink: payload.uploadLink },
+  [types.CONFIRMATION_VISIBLE]: { confirmationVisible: true },
+  [types.CONFIRMATION_HIDE]: { confirmationVisible: false },
+});
+const reducer = (state, { type, ...payload }) => ({ ...state, ...setState(payload)[type] });
 
 const Upload = () => {
   const [state, dispatch] = useReducer(reducer, {
@@ -52,8 +50,13 @@ const Upload = () => {
     uploadingVisible: false,
     uploadedVideoVisible: false,
     coverImageVisible: false,
+    confirmationVisible: false,
   });
 
+  const hideConfirmation = useCallback(
+    () => dispatch({ type: types.CONFIRMATION_HIDE }),
+    [dispatch],
+  );
   const [removeArtwork, { loading: removingArtwork }] = useMutation(deleteArtwork, {
     variables: { params: { artworkId: state.artworkId, videoUri: state.videoUri } },
     onCompleted: () => history.push('/account'),
@@ -63,11 +66,10 @@ const Upload = () => {
     <Fragment>
       {!state.uploadedVideoVisible && (
         <DragAndDrop
+          videoUri={state.videoUri}
           file={state.file}
           types={types}
           dispatch={dispatch}
-          removingArtwork={removingArtwork}
-          removeArtwork={removeArtwork}
         />
       )}
       {state.uploadingVisible && <Uploading state={state} types={types} dispatch={dispatch} />}
@@ -77,12 +79,30 @@ const Upload = () => {
           file={state.file}
           types={types}
           dispatch={dispatch}
-          removingArtwork={removingArtwork}
-          removeArtwork={removeArtwork}
         />
       )}
       {state.coverImageVisible && (
         <CoverImage visible={state.coverImageVisible} artworkId={state.artworkId} />
+      )}
+      {state.confirmationVisible && (
+        <BlurredModal
+          width={486}
+          maskClosable={false}
+          visible={state.confirmationVisible}
+          onCancel={hideConfirmation}
+          className='confirmation'
+        >
+          <Title level={30} color='white'>
+            Cancel the uploading?
+          </Title>
+          <ActionButtons
+            cancelText='NO'
+            saveText='YES, CANCEL'
+            loading={removingArtwork}
+            onCancel={hideConfirmation}
+            onSave={removeArtwork}
+          />
+        </BlurredModal>
       )}
     </Fragment>
   );
