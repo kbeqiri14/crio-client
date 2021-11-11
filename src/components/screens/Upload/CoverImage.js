@@ -9,21 +9,18 @@ import { updateMetadata } from '@app/graphql/mutations/artwork.mutation';
 import ActionButtons from '@shared/ActionButtons';
 import { Text, Title } from '@ui-kit/Text';
 import { BlurredModal } from '@ui-kit/Modal';
+import { errorToast } from '@ui-kit/Notification';
 import coverImage from '@images/cover-image.png';
 
 const { Dragger } = Upload;
 
-const CoverImage = ({ visible, artworkId = 35 }) => {
+const CoverImage = ({ visible, artworkId }) => {
   const [source, setSource] = useState();
   const [file, setFile] = useState();
-  const onCancel = useCallback(() => history.push('/account'), []);
-  const [updateArtwork, { loading: updatingArtwork }] = useMutation(updateMetadata, {
-    onCompleted: () => history.push('/account'),
-  });
+  const [loading, setLoading] = useState(false);
   const props = {
     name: 'file',
     accept: 'image/*',
-    disabled: updatingArtwork,
     showUploadList: false,
     listType: 'picture',
     onDrop: (e) => {
@@ -41,7 +38,11 @@ const CoverImage = ({ visible, artworkId = 35 }) => {
       getSource();
     },
   };
-  const [requestUploadUrl, { loading: loadingUploadUrl }] = useLazyQuery(getUploadImageLink, {
+
+  const [updateArtwork] = useMutation(updateMetadata, {
+    onCompleted: () => history.push('/account'),
+  });
+  const [requestUploadUrl] = useLazyQuery(getUploadImageLink, {
     fetchPolicy: 'no-cache',
     variables: { artworkId },
     onCompleted: async ({ getUploadImageLink }) => {
@@ -51,10 +52,21 @@ const CoverImage = ({ visible, artworkId = 35 }) => {
       if (status === 200) {
         updateArtwork({
           variables: { params: { artworkId, uri: getUploadImageLink.uri } },
+          onCompleted: () => setLoading(false),
         });
       }
     },
+    onError: () => {
+      setLoading(false);
+      errorToast('Uploading Image Error', 'Something went wrong. Please try later.');
+    },
   });
+
+  const onCancel = useCallback(() => history.push('/account'), []);
+  const onSave = useCallback(() => {
+    setLoading(true);
+    requestUploadUrl();
+  }, [requestUploadUrl]);
 
   return (
     <BlurredModal blurred maskClosable={false} visible={visible} width={686} onCancel={onCancel}>
@@ -92,9 +104,10 @@ const CoverImage = ({ visible, artworkId = 35 }) => {
           <ActionButtons
             cancelText='SKIP'
             saveText='PUBLISH'
-            loading={loadingUploadUrl || updatingArtwork}
+            loading={loading}
+            disabled={!file}
             onCancel={onCancel}
-            onSave={requestUploadUrl}
+            onSave={onSave}
           />
         </Col>
       </Row>

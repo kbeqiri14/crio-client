@@ -9,19 +9,20 @@ import lockImage from '@images/lock.png';
 import loadingVideo from '@images/loading-video.png';
 import { ReactComponent as PlayIcon } from '@svgs/play.svg';
 
-export const PosterCard = memo(({
-  poster,
-  index,
-  author,
-  title,
-  description,
-  status,
-  videoUri,
-  isLock,
-  isReal,
-  onClick,
-  ...props
-}) => {
+export const PosterCard = memo(
+  ({
+    poster,
+    index,
+    author,
+    title,
+    description,
+    status,
+    videoUri,
+    isLock,
+    isReal,
+    onClick,
+    ...props
+  }) => {
     const handleClick = () => {
       onClick?.({
         title,
@@ -35,11 +36,17 @@ export const PosterCard = memo(({
     };
     return (
       <div
-        className={`video-grid__item-container ${(isLock || (isReal && status !== 'available')) ? 'lock' : ''}`}
+        className={`video-grid__item-container ${
+          isLock || (isReal && status !== 'available') ? 'lock' : ''
+        }`}
         onClick={handleClick}
         {...props}
       >
-        <img alt='Crio artworks poster' src={poster} className={isLock || (isReal && status !== 'available') ? 'lock' : ''} />
+        <img
+          alt='Crio artworks poster'
+          src={poster}
+          className={isLock || (isReal && status !== 'available') ? 'lock' : ''}
+        />
         {(index || index === 0) && <div className='poster-number'>{index}</div>}
         <Row justify='space-between' align='bottom' className='video-grid__item-panel'>
           <Col span={22}>
@@ -55,7 +62,9 @@ export const PosterCard = memo(({
             </div>
             {isReal && (
               <Tooltip title={description}>
-                <Text level='50' ellipsis>{description}</Text>
+                <Text level='50' ellipsis>
+                  {description}
+                </Text>
               </Tooltip>
             )}
           </Col>
@@ -65,16 +74,16 @@ export const PosterCard = memo(({
         </Row>
         {(isLock || (isReal && status !== 'available')) && (
           <div className='video-grid__item-lock'>
-            {
-              isLock
-                ? <img alt='lock' src={isLock ? lockImage : loadingVideo} />
-                : <CustomTooltip
-                    className='overlayProcess'
-                    description='Your video is being processed. It can take a while. Please wait.'
-                  >
-                    <img alt='lock' src={isLock ? lockImage : loadingVideo} />
-                  </CustomTooltip>
-            }
+            {isLock ? (
+              <img alt='lock' src={isLock ? lockImage : loadingVideo} />
+            ) : (
+              <CustomTooltip
+                className='overlayProcess'
+                description='Your video is being processed. It can take a while. Please wait.'
+              >
+                <img alt='lock' src={isLock ? lockImage : loadingVideo} />
+              </CustomTooltip>
+            )}
           </div>
         )}
       </div>

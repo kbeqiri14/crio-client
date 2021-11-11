@@ -35,7 +35,7 @@ const reducer = (state, { type, ...payload }) => {
         artworkId: payload.artworkId,
       };
     case types.UPLOAD_COVER_IMAGE:
-      return { ...state, uploadedVideoVisible: false, coverImageVisible: true };
+      return { ...state, coverImageVisible: true };
     case types.SET_FILE:
       return { ...state, file: payload.file };
     case types.SET_VIDEO_URI:

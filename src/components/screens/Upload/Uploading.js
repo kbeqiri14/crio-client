@@ -53,7 +53,7 @@ const Uploading = ({ state, types, dispatch }) => {
           saveArtwork();
         }
       } catch (e) {
-        errorToast('Uploading Error', 'Something went wrong. Please try later.');
+        errorToast('Uploading Video Error', 'Something went wrong. Please try later.');
       }
     };
     if (state.file && state.uploadLink) {

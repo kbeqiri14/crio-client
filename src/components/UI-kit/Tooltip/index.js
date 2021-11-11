@@ -12,9 +12,11 @@ export const CustomTooltip = ({ children, visible, title, description, className
     color='rgba(112, 114, 128, 1)'
     title={
       <Fragment>
-        {title && <Title level={30} color='white'>
-          {title}
-        </Title>}
+        {title && (
+          <Title level={30} color='white'>
+            {title}
+          </Title>
+        )}
         <Text level={20} color='white'>
           {description}
         </Text>
