@@ -28,16 +28,16 @@ export const PosterCard = memo(
         <img alt='Crio artworks poster' src={poster} className={isLock ? 'lock' : ''} />
         {(index || index === 0) && <div className='poster-number'>{index}</div>}
         <Row justify='space-between' align='bottom' className='video-grid__item-panel'>
-          <Col>
+          <Col span={22}>
             <div>
               <Text level='60'>{author}</Text>
             </div>
             <div>
-              <Text level={isReal ? '40' : '50'}>{title}</Text>
+              <Text level={isReal ? '40' : '50'} ellipsis>{title}</Text>
             </div>
-            {isReal && <Text level='50'>{description}</Text>}
+            {isReal && <Text level='50' ellipsis>{description}</Text>}
           </Col>
-          <Col>
+          <Col span={1}>
             <PlayIcon />
           </Col>
         </Row>

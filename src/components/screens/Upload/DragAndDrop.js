@@ -29,6 +29,7 @@ const DragAndDrop = ({ file, types, dispatch, removingArtwork, removeArtwork }) 
 
   const props = {
     name: 'file',
+    accept: 'video/*',
     disabled: loading,
     showUploadList: false,
     onDrop: (e) => {
