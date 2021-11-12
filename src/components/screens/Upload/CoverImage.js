@@ -15,17 +15,13 @@ import coverImage from '@images/cover-image.png';
 const { Dragger } = Upload;
 
 const CoverImage = ({ visible, artworkId }) => {
-  const [source, setSource] = useState();
-  const [file, setFile] = useState();
+  const [image, setImage] = useState({});
   const [loading, setLoading] = useState(false);
   const props = {
     name: 'file',
     accept: 'image/*',
     showUploadList: false,
     listType: 'picture',
-    onDrop: (e) => {
-      setFile(e.dataTransfer.files?.[0]);
-    },
     beforeUpload(file) {
       const getSource = async () => {
         const src = await new Promise((resolve) => {
@@ -33,7 +29,7 @@ const CoverImage = ({ visible, artworkId }) => {
           reader.readAsDataURL(file);
           reader.onload = () => resolve(reader.result);
         });
-        setSource(src);
+        setImage({ file, src });
       };
       getSource();
     },
@@ -46,7 +42,7 @@ const CoverImage = ({ visible, artworkId }) => {
     fetchPolicy: 'no-cache',
     variables: { artworkId },
     onCompleted: async ({ getUploadImageLink }) => {
-      const { status } = await axios.put(getUploadImageLink.link, file, {
+      const { status } = await axios.put(getUploadImageLink.link, image.file, {
         headers: { 'Content-Type': 'image/png' },
       });
       if (status === 200) {
@@ -82,8 +78,8 @@ const CoverImage = ({ visible, artworkId }) => {
           </Text>
         </Col>
         <Col span={24}>
-          {source ? (
-            <img alt='uploaded file' src={source} className='uploaded-image' />
+          {image.src ? (
+            <img alt='uploaded file' src={image.src} className='uploaded-image' />
           ) : (
             <Dragger {...props}>
               <Row justify='center' align='center' gutter={[0, 11]} className='drag-and-drop'>
@@ -105,7 +101,7 @@ const CoverImage = ({ visible, artworkId }) => {
             cancelText='SKIP'
             saveText='PUBLISH'
             loading={loading}
-            disabled={!file}
+            disabled={!image.file}
             onCancel={onCancel}
             onSave={onSave}
           />
