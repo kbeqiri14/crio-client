@@ -48,8 +48,8 @@ const perksListPro = [
 
 export const PricingPlans = () => {
   const { pathname } = useLocation();
-  const id = pathname.split('/')[2];
-  const goBack = useCallback(() => history.push(`/profile/${id}`), [id]);
+  const id = pathname.split('/').slice(-1)[0];
+  const goBack = useCallback(() => history.push(`/profile/perks/${id}`), [id]);
 
   return (
     <div className='cr-pricing'>

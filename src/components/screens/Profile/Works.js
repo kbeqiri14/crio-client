@@ -18,7 +18,7 @@ const Works = ({ isLock }) => {
   const [topPosters, setTopPosters] = useState(null);
 
   const { loading } = useQuery(getUserArtworks, {
-    variables: { id: pathname.split('/')[2] },
+    variables: { id: pathname.split('/').slice(-1)[0] },
     onCompleted: ({ getUserArtworks }) => setWorks(getUserArtworks),
     pollInterval: 30000, // 30 seconds
   });

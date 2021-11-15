@@ -47,8 +47,10 @@ const SubscribeButton = memo(({ subscribe, fillColor = 'tertiary', disabled, onC
 
 const Perks = ({ isProfile, isSubscribe }) => {
   const { pathname } = useLocation();
-  const id = pathname.split('/')[2];
-  const goPricing = useCallback(() => history.push(`/pricing/${id}`), [id]);
+  const goPricing = useCallback(
+    () => history.push(`/pricing/${pathname.split('/').slice(-1)[0]}`),
+    [pathname],
+  );
 
   return (
     <Row gutter={[0, 44]} justify='center' className='perks'>
