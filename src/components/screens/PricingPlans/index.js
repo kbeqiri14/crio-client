@@ -1,10 +1,15 @@
-import { Meta } from '@shared/Meta';
+import { useCallback } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Col, Row } from 'antd';
 import cc from 'classcat';
+
+import history from '@app/configs/history';
+import { Meta } from '@shared/Meta';
 import { Footer } from '@shared/Footer';
-import { SecondaryButton } from '@ui-kit/Button';
 import { Text, Title } from '@ui-kit/Text';
+import { SecondaryButton } from '@ui-kit/Button';
 import { ReactComponent as CheckMark } from '@svgs/green-check.svg';
+import { ReactComponent as BackIcon } from '@svgs/back.svg';
 import recommendedMarker from '@images/pricing-marker.png';
 import './styles.less';
 
@@ -42,9 +47,25 @@ const perksListPro = [
 ];
 
 export const PricingPlans = () => {
+  const { pathname } = useLocation();
+  const id = pathname.split('/')[2];
+  const goBack = useCallback(() => history.push(`/profile/${id}`), [id]);
+
   return (
     <div className='cr-pricing'>
       <Meta title='Pricing Plans' description='Crio - Pricing Plans' />
+      {id && (
+        <Row justify='center'>
+          <Col>
+            <BackIcon onClick={goBack} />
+          </Col>
+          <Col>
+            <Title level={20} color='white'>
+              Subscribe To Get Access
+            </Title>
+          </Col>
+        </Row>
+      )}
       <Row justify='center' align='stretch'>
         <Col>
           <div className='cr-pricing__card'>
@@ -74,7 +95,14 @@ export const PricingPlans = () => {
             </div>
             <PerksList isFree={false} listItems={perksListPro} />
             <div className='cr-pricing__card--action'>
-              <SecondaryButton size='large' textColor='white' filled fillColor='tertiary' isBlock>
+              <SecondaryButton
+                size='large'
+                textColor='white'
+                filled
+                fillColor='tertiary'
+                isBlock
+                onClick={() => history.push(`/profile/${id}`)}
+              >
                 GET STARTED
               </SecondaryButton>
             </div>

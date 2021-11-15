@@ -43,7 +43,7 @@ export const AppRoutes = () => {
         <Route exact path='/'>
           {isAuthenticated ? <Feed /> : <LandingPage />}
         </Route>
-        <Route exact path='/pricing' component={PricingPlans} />
+        <Route path='/pricing/:id?' component={PricingPlans} />
         {!loading && !user && <Redirect to='/' />}
         {/* PRIVATE ROUTES */}
         <PrivateRoute isAuthenticated={isAuthenticated} path='/account' component={Account} />
