@@ -2,9 +2,9 @@ import { memo } from 'react';
 import { Tabs } from 'antd';
 
 import { Spinner } from '@ui-kit/Spinner';
-import Followings from '../../Profile/Fan/Followings';
-import Works from '../../Profile/Creator/Works';
-import Perks from '../../Profile/Creator/Perks';
+import Followings from '../../Profile/Followings';
+import Works from '../../Profile/Works';
+import Perks from '../../Profile/Perks';
 import './styles.less';
 
 const { TabPane } = Tabs;
