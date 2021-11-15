@@ -20,6 +20,7 @@ const Works = ({ isLock }) => {
   const { loading } = useQuery(getUserArtworks, {
     variables: { id: pathname.split('/')[2] },
     onCompleted: ({ getUserArtworks }) => setWorks(getUserArtworks),
+    pollInterval: 30000, // 30 seconds
   });
 
   useEffect(
@@ -31,14 +32,14 @@ const Works = ({ isLock }) => {
   );
 
   return (
-    <Spinner spinning={loading} color='white'>
+    <Spinner spinning={loading && !topPosters?.length} color='white'>
       <div className='cr-feed__posters-list cr-landing__video-grid'>
         <Row
           style={{ width: '100%' }}
           gutter={[22, 35]}
           className='cr-landing__video-grid__container'
         >
-          {!loading && topPosters}
+          {topPosters}
         </Row>
       </div>
     </Spinner>
