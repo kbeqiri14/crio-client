@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Row } from 'antd';
 import { useQuery } from '@apollo/client';
@@ -19,17 +19,20 @@ const Works = ({ isLock }) => {
 
   const { loading } = useQuery(getUserArtworks, {
     variables: { id: +pathname.split('/').slice(-1)[0] || undefined },
-    onCompleted: ({ getUserArtworks }) => setWorks(getUserArtworks),
+    onCompleted: ({ getUserArtworks }) => setWorks([...getUserArtworks]),
     pollInterval: 30000, // 30 seconds
   });
 
-  useEffect(
-    () =>
-      setTopPosters(
-        renderPosters(works?.length ? works : videoPosters, 0, show, isLock, works?.length),
-      ),
-    [isLock, works, show],
-  );
+  useEffect(() => {
+    const posters = renderPosters(
+      works?.length ? works : videoPosters,
+      0,
+      show,
+      isLock,
+      works?.length,
+    );
+    setTopPosters([...posters]);
+  }, [isLock, works, show]);
 
   return (
     <Spinner spinning={loading && !topPosters?.length} color='white'>
