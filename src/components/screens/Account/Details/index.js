@@ -6,6 +6,7 @@ import { useLazyQuery } from '@apollo/client';
 import history from '@app/configs/history';
 import { isSubscriber } from '@app/graphql/queries/users.query';
 import { Spinner } from '@ui-kit/Spinner';
+import { ReactComponent as Subscription } from '@svgs/subscription.svg';
 import Followings from '../../Profile/Followings';
 import Works from '../../Profile/Works';
 import Perks from '../../Profile/Perks';
@@ -63,24 +64,27 @@ const Details = ({
   }, [id, requestIsSubscriber]);
 
   return (
-    <Tabs defaultActiveKey={activeKey} className='profile-details' onTabClick={onTabClick}>
-      <TabPane key={tabs.WORKS} tab={tab}>
-        {isCreator || isProfile ? (
-          loadingIsFollowing ? (
-            <Spinner spinning={true} color='white' />
+    <div className='profile-details'>
+      <Tabs defaultActiveKey={activeKey} onTabClick={onTabClick}>
+        <TabPane key={tabs.WORKS} tab={tab}>
+          {isCreator || isProfile ? (
+            loadingIsFollowing ? (
+              <Spinner spinning={true} color='white' />
+            ) : (
+              <Works isLock={isProfile && !isFollow} />
+            )
           ) : (
-            <Works isLock={isProfile && !isFollow} />
-          )
-        ) : (
-          <Followings followings={followings} loadingFollowings={loadingFollowings} />
-        )}
-      </TabPane>
-      {(isCreator || isProfile) && (
-        <TabPane key={tabs.PERKS} tab='PERKS'>
-          <Perks isProfile={isProfile} loadingIsSubscriber={loadingIsSubscriber} isSubscribed={isSubscribed} />
+            <Followings followings={followings} loadingFollowings={loadingFollowings} />
+          )}
         </TabPane>
-      )}
-    </Tabs>
+        {(isCreator || isProfile) && (
+          <TabPane key={tabs.PERKS} tab='PERKS'>
+            <Perks isProfile={isProfile} loadingIsSubscriber={loadingIsSubscriber} isSubscribed={isSubscribed} />
+          </TabPane>
+        )}
+      </Tabs>
+      {isProfile && !isSubscribed && !loadingIsSubscriber && <Subscription className='subscription-icon' />}
+    </div>
   );
 };
 

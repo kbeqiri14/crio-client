@@ -74,17 +74,13 @@ export const PricingPlans = () => {
   return (
     <div className='cr-pricing'>
       <Meta title='Pricing Plans' description='Crio - Pricing Plans' />
-      {user && !loading && +id && (
-        <Row justify='center'>
-          <Col>
-            <BackIcon onClick={goBack} />
-          </Col>
-          <Col>
-            <Title level={20} color='white'>
-              Subscribe To Get Access
-            </Title>
-          </Col>
-        </Row>
+      {user && !loading && id && (
+        <div className='cr-pricing__header'>
+          <BackIcon onClick={goBack} />
+          <Title inline level={20} color='white'>
+            Subscribe To Get Access
+          </Title>
+        </div>
       )}
       <Row justify='center' align='stretch'>
         <Col>
