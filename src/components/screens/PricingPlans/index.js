@@ -53,17 +53,19 @@ const perksListPro = [
 export const PricingPlans = () => {
   const { pathname } = useLocation();
   const { user, loading } = useCurrentUser();
-  const id = pathname.split('/').slice(-1)[0];
+  const id = +pathname.split('/').slice(-1)[0];
   const goBack = useCallback(() => history.push(`/profile/perks/${id}`), [id]);
 
   const [subscribe, { loading: subscribing}] = useMutation(createSubscriber, {
-    variables: { subscriberId: id },
+    variables: { subscriberId: id || undefined },
     onCompleted: () => history.push(`/profile/${id}`),
   });
 
   const handleClick = useCallback(() => {
-    if (user && !loading && id) {
-      subscribe();
+    if (user && !loading) {
+      if (id) {
+        subscribe();
+      }
     } else {
       warningToast('Warning', 'Please sign in to get started.')
     }
@@ -72,7 +74,7 @@ export const PricingPlans = () => {
   return (
     <div className='cr-pricing'>
       <Meta title='Pricing Plans' description='Crio - Pricing Plans' />
-      {user && !loading && id && (
+      {user && !loading && +id && (
         <Row justify='center'>
           <Col>
             <BackIcon onClick={goBack} />
