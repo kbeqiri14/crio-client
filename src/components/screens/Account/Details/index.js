@@ -1,8 +1,10 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Tabs } from 'antd';
+import { useLazyQuery } from '@apollo/client';
 
 import history from '@app/configs/history';
+import { isSubscriber } from '@app/graphql/queries/users.query';
 import { Spinner } from '@ui-kit/Spinner';
 import Followings from '../../Profile/Followings';
 import Works from '../../Profile/Works';
@@ -25,6 +27,7 @@ const Details = ({
   loadingFollowings,
   followings,
 }) => {
+  const [isSubscribed, setIsSubscribed] = useState(false);
   const { pathname } = useLocation();
   const activeKey = useMemo(
     () => (pathname.split('/').includes('perks') ? tabs.PERKS : tabs.WORKS),
@@ -43,6 +46,21 @@ const Details = ({
     },
     [id],
   );
+  const [requestIsSubscriber, { loading: loadingIsSubscriber }] = useLazyQuery(isSubscriber, {
+    variables: { subscriberId: id },
+    fetchPolicy: 'no-cache',
+    onCompleted: (data) => {
+      if (data?.isSubscriber) {
+        setIsSubscribed(true);
+      }
+    },
+  });
+
+  useEffect(() => {
+    if (id) {
+      requestIsSubscriber();
+    }
+  }, [id, requestIsSubscriber]);
 
   return (
     <Tabs defaultActiveKey={activeKey} className='profile-details' onTabClick={onTabClick}>
@@ -59,7 +77,7 @@ const Details = ({
       </TabPane>
       {(isCreator || isProfile) && (
         <TabPane key={tabs.PERKS} tab='PERKS'>
-          <Perks isProfile={isProfile} />
+          <Perks isProfile={isProfile} loadingIsSubscriber={loadingIsSubscriber} isSubscribed={isSubscribed} />
         </TabPane>
       )}
     </Tabs>

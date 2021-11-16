@@ -45,7 +45,7 @@ const SubscribeButton = memo(({ subscribe, fillColor = 'tertiary', disabled, onC
   </SecondaryButton>
 ));
 
-const Perks = ({ isProfile, isSubscribe }) => {
+const Perks = ({ isProfile, loadingIsSubscriber, isSubscribed }) => {
   const { pathname } = useLocation();
   const goPricing = useCallback(
     () => history.push(`/pricing/${pathname.split('/').slice(-1)[0]}`),
@@ -54,7 +54,7 @@ const Perks = ({ isProfile, isSubscribe }) => {
 
   return (
     <Row gutter={[0, 44]} justify='center' className='perks'>
-      {isProfile && !isSubscribe && (
+      {isProfile && !isSubscribed && (
         <Col>
           <SubscribeButton key='top' subscribe onClick={goPricing} />
         </Col>
@@ -79,7 +79,7 @@ const Perks = ({ isProfile, isSubscribe }) => {
           </Row>
         </Col>
       ))}
-      {isProfile && !isSubscribe && (
+      {isProfile && !isSubscribed && (
         <Col>
           <SubscribeButton key='bottom' subscribe onClick={goPricing} />
         </Col>

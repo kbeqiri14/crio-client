@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Row } from 'antd';
 import { useQuery } from '@apollo/client';
@@ -18,7 +18,7 @@ const Works = ({ isLock }) => {
   const [topPosters, setTopPosters] = useState(null);
 
   const { loading } = useQuery(getUserArtworks, {
-    variables: { id: pathname.split('/').slice(-1)[0] },
+    variables: { id: +pathname.split('/').slice(-1)[0] || undefined },
     onCompleted: ({ getUserArtworks }) => setWorks(getUserArtworks),
     pollInterval: 30000, // 30 seconds
   });
