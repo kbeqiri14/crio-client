@@ -79,11 +79,17 @@ const Details = ({
         </TabPane>
         {(isCreator || isProfile) && (
           <TabPane key={tabs.PERKS} tab='PERKS'>
-            <Perks isProfile={isProfile} loadingIsSubscriber={loadingIsSubscriber} isSubscribed={isSubscribed} />
+            <Perks
+              isProfile={isProfile}
+              loadingIsSubscriber={loadingIsSubscriber}
+              isSubscribed={isSubscribed}
+            />
           </TabPane>
         )}
       </Tabs>
-      {isProfile && !isSubscribed && !loadingIsSubscriber && <Subscription className='subscription-icon' />}
+      {isProfile && !isSubscribed && !loadingIsSubscriber && (
+        <Subscription className='subscription-icon' />
+      )}
     </div>
   );
 };

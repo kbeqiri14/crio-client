@@ -56,7 +56,7 @@ export const PricingPlans = () => {
   const id = +pathname.split('/').slice(-1)[0];
   const goBack = useCallback(() => history.push(`/profile/perks/${id}`), [id]);
 
-  const [subscribe, { loading: subscribing}] = useMutation(createSubscriber, {
+  const [subscribe, { loading: subscribing }] = useMutation(createSubscriber, {
     variables: { subscriberId: id || undefined },
     onCompleted: () => history.push(`/profile/${id}`),
   });
@@ -67,7 +67,7 @@ export const PricingPlans = () => {
         subscribe();
       }
     } else {
-      warningToast('Warning', 'Please sign in to get started.')
+      warningToast('Warning', 'Please sign in to get started.');
     }
   }, [id, loading, user, subscribe]);
 

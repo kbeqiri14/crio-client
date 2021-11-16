@@ -80,9 +80,9 @@ const Uploading = ({ state, types, dispatch }) => {
         <Title level={10} color='white'>
           Uploading
         </Title>
-        <Text level={30} color='white_75'>{`${state.percent} % - ${formatRemainingTime(
-          state.remainingTime,
-        )}`}</Text>
+        <Text level={30} color='white_75'>
+          {`${state.percent} % - ${formatRemainingTime(state.remainingTime)}`}
+        </Text>
         <Progress percent={state.percent} showInfo={false} />
       </Spinner>
     </BlurredModal>

@@ -1,12 +1,12 @@
 import { memo, useCallback, useMemo } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import ReactPlayer from 'react-player';
 import { Col, Row } from 'antd';
 import { useMutation } from '@apollo/client';
 
 import { updateMetadata } from '@app/graphql/mutations/artwork.mutation';
 import ActionButtons from '@shared/ActionButtons';
 import { Input } from '@ui-kit/Input';
-import ReactPlayer from 'react-player';
 
 const VideoInfo = ({ artworkId, file, types, dispatch }) => {
   const { control, watch, handleSubmit } = useForm();
@@ -49,13 +49,14 @@ const VideoInfo = ({ artworkId, file, types, dispatch }) => {
             <Input
               {...field}
               maxlength={80}
+              className='description'
               placeholder='Write anything what you’d like to mention about this work'
             />
           )}
         />
       </Col>
       <Col span={24} className='player'>
-        <ReactPlayer url={url} controls={true} width={922} height={538} />
+        <ReactPlayer url={url} controls={true} width='inherit' height={520} />
       </Col>
       <Col span={24}>
         <ActionButtons
