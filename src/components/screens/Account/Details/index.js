@@ -1,6 +1,10 @@
-import { memo } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Tabs } from 'antd';
+import { useLazyQuery } from '@apollo/client';
 
+import history from '@app/configs/history';
+import { isSubscriber } from '@app/graphql/queries/users.query';
 import { Spinner } from '@ui-kit/Spinner';
 import Followings from '../../Profile/Followings';
 import Works from '../../Profile/Works';
@@ -9,35 +13,75 @@ import './styles.less';
 
 const { TabPane } = Tabs;
 
+const tabs = {
+  WORKS: '1',
+  PERKS: '2',
+};
+
 const Details = ({
+  id,
   isProfile,
   isCreator,
   isFollow,
   loadingIsFollowing,
   loadingFollowings,
   followings,
-}) => (
-  <Tabs defaultActiveKey='1' className='profile-details'>
-    <TabPane
-      key='1'
-      tab={isProfile || isCreator ? 'WORKS 126' : `FOLLOWING: ${followings?.length || ''}`}
-    >
-      {isProfile || isCreator ? (
-        loadingIsFollowing ? (
-          <Spinner spinning={true} color='white' />
+}) => {
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const { pathname } = useLocation();
+  const activeKey = useMemo(
+    () => (pathname.split('/').includes('perks') ? tabs.PERKS : tabs.WORKS),
+    [pathname],
+  );
+  const tab = useMemo(
+    () => (isCreator || isProfile ? 'WORKS 126' : `FOLLOWING: ${followings?.length || ''}`),
+    [isCreator, isProfile, followings?.length],
+  );
+  const onTabClick = useCallback(
+    (key) => {
+      const followingId = id ? `/${id}` : '';
+      return history.push(
+        `${id ? '/profile' : '/account'}${key === tabs.PERKS ? '/perks' : ''}${followingId}`,
+      );
+    },
+    [id],
+  );
+  const [requestIsSubscriber, { loading: loadingIsSubscriber }] = useLazyQuery(isSubscriber, {
+    variables: { subscriberId: id },
+    fetchPolicy: 'no-cache',
+    onCompleted: (data) => {
+      if (data?.isSubscriber) {
+        setIsSubscribed(true);
+      }
+    },
+  });
+
+  useEffect(() => {
+    if (id) {
+      requestIsSubscriber();
+    }
+  }, [id, requestIsSubscriber]);
+
+  return (
+    <Tabs defaultActiveKey={activeKey} className='profile-details' onTabClick={onTabClick}>
+      <TabPane key={tabs.WORKS} tab={tab}>
+        {isCreator || isProfile ? (
+          loadingIsFollowing ? (
+            <Spinner spinning={true} color='white' />
+          ) : (
+            <Works isLock={isProfile && !isFollow} />
+          )
         ) : (
-          <Works isLock={isProfile && !isFollow} />
-        )
-      ) : (
-        <Followings followings={followings} loadingFollowings={loadingFollowings} />
-      )}
-    </TabPane>
-    {(isProfile || isCreator) && (
-      <TabPane key='2' tab='PERKS'>
-        <Perks isProfile={isProfile} />
+          <Followings followings={followings} loadingFollowings={loadingFollowings} />
+        )}
       </TabPane>
-    )}
-  </Tabs>
-);
+      {(isCreator || isProfile) && (
+        <TabPane key={tabs.PERKS} tab='PERKS'>
+          <Perks isProfile={isProfile} loadingIsSubscriber={loadingIsSubscriber} isSubscribed={isSubscribed} />
+        </TabPane>
+      )}
+    </Tabs>
+  );
+};
 
 export default memo(Details);

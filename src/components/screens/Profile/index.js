@@ -1,4 +1,4 @@
-import { Fragment, memo, useCallback, useState } from 'react';
+import { Fragment, memo, useCallback, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 
@@ -11,12 +11,11 @@ import { Spinner } from '@ui-kit/Spinner';
 export const Profile = () => {
   const { pathname } = useLocation();
   const [isFollow, setIsFollow] = useState(false);
+  const id = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
 
-  const { data: users, loading: loadingUser } = useQuery(getUser, {
-    variables: { id: pathname.split('/')[2] },
-  });
+  const { data: users, loading: loadingUser } = useQuery(getUser, { variables: { id } });
   const { loading: loadingIsFollowing } = useQuery(isFollowing, {
-    variables: { followingId: pathname.split('/')[2] },
+    variables: { followingId: id },
     fetchPolicy: 'no-cache',
     onCompleted: (data) => {
       if (data?.isFollowing) {
@@ -25,17 +24,15 @@ export const Profile = () => {
     },
   });
   const [follow, { loading: loadingFollowing }] = useMutation(createFollowing, {
-    variables: { followingId: pathname.split('/')[2] },
+    variables: { followingId: id },
     onCompleted: (data) => {
       if (data?.createFollowing) {
         setIsFollow(!isFollow);
       }
     },
   });
-  const handleClick = useCallback(
-    () => follow({ variables: { followingId: pathname.split('/')[2] } }),
-    [follow, pathname],
-  );
+
+  const handleClick = useCallback(() => follow({ variables: { followingId: id } }), [follow, id]);
 
   return (
     <Fragment>
@@ -48,7 +45,7 @@ export const Profile = () => {
           onClick={handleClick}
         />
       </Spinner>
-      <Details isProfile isFollow={isFollow} loadingIsFollowing={loadingIsFollowing} />
+      <Details isProfile id={id} isFollow={isFollow} loadingIsFollowing={loadingIsFollowing} />
     </Fragment>
   );
 };

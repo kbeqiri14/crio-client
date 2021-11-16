@@ -54,3 +54,9 @@ export const isFollowing = gql`
     isFollowing(followingId: $followingId)
   }
 `;
+
+export const isSubscriber = gql`
+  query isSubscriber($subscriberId: ID!) {
+    isSubscriber(subscriberId: $subscriberId)
+  }
+`;

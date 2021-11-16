@@ -33,3 +33,9 @@ export const createFollowing = gql`
     createFollowing(followingId: $followingId)
   }
 `;
+
+export const createSubscriber = gql`
+  mutation createSubscriber($subscriberId: ID!) {
+    createSubscriber(subscriberId: $subscriberId)
+  }
+`;

@@ -2,12 +2,16 @@ import { useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Col, Row } from 'antd';
 import cc from 'classcat';
+import { useMutation } from '@apollo/client';
 
 import history from '@app/configs/history';
+import { useCurrentUser } from '@app/auth/hooks';
+import { createSubscriber } from '@app/graphql/mutations/user.mutation';
 import { Meta } from '@shared/Meta';
 import { Footer } from '@shared/Footer';
 import { Text, Title } from '@ui-kit/Text';
 import { SecondaryButton } from '@ui-kit/Button';
+import { warningToast } from '@ui-kit/Notification';
 import { ReactComponent as CheckMark } from '@svgs/green-check.svg';
 import { ReactComponent as BackIcon } from '@svgs/back.svg';
 import recommendedMarker from '@images/pricing-marker.png';
@@ -48,13 +52,27 @@ const perksListPro = [
 
 export const PricingPlans = () => {
   const { pathname } = useLocation();
-  const id = pathname.split('/')[2];
-  const goBack = useCallback(() => history.push(`/profile/${id}`), [id]);
+  const { user, loading } = useCurrentUser();
+  const id = pathname.split('/').slice(-1)[0];
+  const goBack = useCallback(() => history.push(`/profile/perks/${id}`), [id]);
+
+  const [subscribe, { loading: subscribing}] = useMutation(createSubscriber, {
+    variables: { subscriberId: id },
+    onCompleted: () => history.push(`/profile/${id}`),
+  });
+
+  const handleClick = useCallback(() => {
+    if (user && !loading && id) {
+      subscribe();
+    } else {
+      warningToast('Warning', 'Please sign in to get started.')
+    }
+  }, [id, loading, user, subscribe]);
 
   return (
     <div className='cr-pricing'>
       <Meta title='Pricing Plans' description='Crio - Pricing Plans' />
-      {id && (
+      {user && !loading && id && (
         <Row justify='center'>
           <Col>
             <BackIcon onClick={goBack} />
@@ -101,7 +119,8 @@ export const PricingPlans = () => {
                 filled
                 fillColor='tertiary'
                 isBlock
-                onClick={() => history.push(`/profile/${id}`)}
+                loading={subscribing}
+                onClick={handleClick}
               >
                 GET STARTED
               </SecondaryButton>
