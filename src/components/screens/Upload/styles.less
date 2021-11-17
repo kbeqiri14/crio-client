@@ -14,6 +14,26 @@
     border-radius: 43px;
   }
 }
+
+.uploading {
+  .ant-modal-body {
+    padding: 15px 35px 25px !important;
+  }
+  .ant-progress {
+    margin-top: 20px;
+  }
+  .ant-progress-bg {
+    background: @gradient-4;
+    .ant-progress-status-success {
+      background: @gradient-4;
+    }
+  }
+  .ant-progress-inner {
+    background-color: rgba(202, 235, 255, 0.25);
+    height: 6px;
+  }
+}
+
 .cover-image {
   padding: 15px 35px 7px;
   text-align: center;
@@ -45,15 +65,18 @@
     &:focus-visible {
       border: 1px solid transparent !important;
     }
-  }
-  input.title {
-    font-size: 26px;
+    &.title {
+      font-size: 26px;
+    }
+    &.description {
+      color: @white_75;
+    }
   }
   .player {
     display: flex;
     justify-content: center;
     padding: 24px 0 48px;
-    min-height: 538px;
+    min-height: 520px;
     video {
       border-radius: 16px;
     }
@@ -68,4 +91,15 @@
 .ant-upload:hover,
 .ant-upload.ant-upload-drag.ant-upload-drag-hover {
   border-color: @white_50 !important;
+}
+
+.confirmation {
+  text-align: center;
+  .ant-modal-body {
+    padding: 63px 0 60px !important;
+  }
+  h4 {
+    text-align: center;
+    margin-bottom: 50px;
+  }
 }

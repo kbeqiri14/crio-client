@@ -18,27 +18,42 @@ const Works = ({ isLock }) => {
   const [topPosters, setTopPosters] = useState(null);
 
   const { loading } = useQuery(getUserArtworks, {
-    variables: { id: pathname.split('/')[2] },
-    onCompleted: ({ getUserArtworks }) => setWorks(getUserArtworks),
+    variables: { id: +pathname.split('/').slice(-1)[0] || undefined },
+    onCompleted: ({ getUserArtworks }) => {
+      const posters = renderPosters(
+        works?.length ? getUserArtworks : videoPosters,
+        0,
+        show,
+        isLock,
+        works?.length,
+      );
+      setWorks(getUserArtworks);
+      setTopPosters(posters);
+    },
+    notifyOnNetworkStatusChange: true,
+    pollInterval: 30000,
   });
 
-  useEffect(
-    () =>
-      setTopPosters(
-        renderPosters(works?.length ? works : videoPosters, 0, show, isLock, works?.length),
-      ),
-    [isLock, works, show],
-  );
+  useEffect(() => {
+    const posters = renderPosters(
+      works?.length ? works : videoPosters,
+      0,
+      show,
+      isLock,
+      works?.length,
+    );
+    setTopPosters(posters);
+  }, [isLock, works, show]);
 
   return (
-    <Spinner spinning={loading} color='white'>
+    <Spinner spinning={loading && !topPosters?.length} color='white'>
       <div className='cr-feed__posters-list cr-landing__video-grid'>
         <Row
           style={{ width: '100%' }}
           gutter={[22, 35]}
           className='cr-landing__video-grid__container'
         >
-          {!loading && topPosters}
+          {topPosters}
         </Row>
       </div>
     </Spinner>

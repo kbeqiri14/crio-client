@@ -1,6 +1,7 @@
 @import 'variables';
 
 .profile-details {
+  position: relative;
   background-color: @black_25;
   padding: 44px 0 82px 0;
   .ant-tabs-nav-list {
@@ -28,14 +29,28 @@
     color: @white_50;
   }
   .perks {
+    max-width: 686px;
+    margin: auto;
     text-align: center;
     img {
+      min-width: 686px;
+      min-height: 273px;
+      width: 100%;
+      height: auto;
       margin-top: 40px;
-      max-width: 686px;
-      max-height: 273px;
+    }
+    .container button {
+      position: absolute;
+      bottom: 17%;
+      left: 11%;
     }
   }
   .following-info {
     padding-left: 34px;
+  }
+  .subscription-icon {
+    position: absolute;
+    top: 53px;
+    left: 340px;
   }
 }

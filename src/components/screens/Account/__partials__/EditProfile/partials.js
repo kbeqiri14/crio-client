@@ -1,9 +1,10 @@
-import { Fragment, memo } from 'react';
-import { Col, Row, Tooltip } from 'antd';
+import { memo } from 'react';
+import { Col, Row } from 'antd';
 import { Controller } from 'react-hook-form';
 
 import { keys } from '@constants/visibility';
-import { Text, Title } from '@ui-kit/Text';
+import { CustomTooltip } from '@ui-kit/Tooltip';
+import { Title } from '@ui-kit/Text';
 import { Input } from '@ui-kit/Input';
 import { ReactComponent as PublicIcon } from '@svgs/public.svg';
 import { ReactComponent as PrivateIcon } from '@svgs/private.svg';
@@ -48,20 +49,12 @@ export const FormRow = memo(
       <Row align='bottom' gutter={20}>
         {children}
         <Col span={6}>
-          <Tooltip
+          <CustomTooltip
             visible={tooltipVisible}
-            color='rgba(112, 114, 128, 1)'
             placement='right'
-            title={
-              <Fragment>
-                <Title level={30} color='white'>
-                  Warning
-                </Title>
-                <Text level={20} color='white'>
-                  You can’t hide all information from profile.
-                </Text>
-              </Fragment>
-            }
+            className='overlayVisibility'
+            title='Warning'
+            description='You can’t hide all information from profile.'
           >
             <Visibility
               options={options}
@@ -70,7 +63,7 @@ export const FormRow = memo(
               defaultValue={defaultValue}
               setTooltipVisible={setTooltipVisible}
             />
-          </Tooltip>
+          </CustomTooltip>
         </Col>
       </Row>
     </Col>

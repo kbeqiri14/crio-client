@@ -42,7 +42,7 @@
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  line-height: 0;
+  line-height: 1px;
   &.is-block {
     display: block;
     width: 100%;
@@ -62,7 +62,7 @@
       }
     }
   }
-  &:not(:disabled)&:hover {
+  &:hover:enabled {
     background-color: @black_25;
   }
   &:disabled {
@@ -124,6 +124,9 @@
   }
   &-tertiary {
     background-image: @gradient-3;
+  }
+  &-fourth {
+    background-image: @gradient-2;
   }
   &-white_25 {
     background-color: @white_25;

@@ -19,12 +19,12 @@ export const AppRoutes = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const { user, loading } = useCurrentUser();
   const { videoInfo, isVisible, hide } = usePresentation();
-  const pathName = useLocation();
+  const { pathname } = useLocation();
 
-  useEffect(() => {
+    useEffect(() => {
     document.body.scrollTop = 0;
     window.scrollTo(0, 0);
-  }, [pathName]);
+  }, [pathname]);
 
   useEffect(() => {
     if (!loading) {
@@ -43,7 +43,7 @@ export const AppRoutes = () => {
         <Route exact path='/'>
           {isAuthenticated ? <Feed /> : <LandingPage />}
         </Route>
-        <Route exact path='/pricing' component={PricingPlans} />
+        <Route path='/pricing/:id?' component={PricingPlans} />
         {!loading && !user && <Redirect to='/' />}
         {/* PRIVATE ROUTES */}
         <PrivateRoute isAuthenticated={isAuthenticated} path='/account' component={Account} />

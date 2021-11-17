@@ -1,14 +1,14 @@
-import { memo, useMemo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import ReactPlayer from 'react-player';
 import { Col, Row } from 'antd';
 import { useMutation } from '@apollo/client';
 
 import { updateMetadata } from '@app/graphql/mutations/artwork.mutation';
 import ActionButtons from '@shared/ActionButtons';
 import { Input } from '@ui-kit/Input';
-import ReactPlayer from 'react-player';
 
-const VideoInfo = ({ artworkId, file, types, dispatch, removingArtwork, removeArtwork }) => {
+const VideoInfo = ({ artworkId, file, types, dispatch }) => {
   const { control, watch, handleSubmit } = useForm();
   const title = watch('title');
   const desc = watch('desc');
@@ -16,6 +16,10 @@ const VideoInfo = ({ artworkId, file, types, dispatch, removingArtwork, removeAr
   const disabled = useMemo(() => !title?.trim() || !desc?.trim(), [desc, title]);
   const url = useMemo(() => URL.createObjectURL(file), [file]);
 
+  const onCancel = useCallback(
+    () => dispatch({ type: types.CONFIRMATION_VISIBLE }),
+    [types.CONFIRMATION_VISIBLE, dispatch],
+  );
   const [updateArtwork, { loading: updatingArtwork }] = useMutation(updateMetadata, {
     variables: { params: { artworkId, title, description: desc } },
     onCompleted: () => dispatch({ type: types.UPLOAD_COVER_IMAGE }),
@@ -45,21 +49,21 @@ const VideoInfo = ({ artworkId, file, types, dispatch, removingArtwork, removeAr
             <Input
               {...field}
               maxlength={80}
+              className='description'
               placeholder='Write anything what you’d like to mention about this work'
             />
           )}
         />
       </Col>
       <Col span={24} className='player'>
-        <ReactPlayer url={url} controls={true} width={922} height={538} />
+        <ReactPlayer url={url} controls={true} width='inherit' height={520} />
       </Col>
       <Col span={24}>
         <ActionButtons
           saveText='CONTINUE'
-          cancelLoading={removingArtwork}
           loading={updatingArtwork}
           disabled={disabled}
-          onCancel={removeArtwork}
+          onCancel={onCancel}
           onSave={handleSubmit(updateArtwork)}
         />
       </Col>

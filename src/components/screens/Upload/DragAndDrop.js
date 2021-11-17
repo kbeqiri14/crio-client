@@ -1,8 +1,10 @@
 import { memo, useCallback, useMemo } from 'react';
 import { Col, Row, Upload } from 'antd';
-import { useLazyQuery } from '@apollo/client';
+import { useLazyQuery, useMutation } from '@apollo/client';
 
+import history from '@app/configs/history';
 import { getUploadUrl } from '@app/graphql/queries/artworks.query';
+import { deleteArtwork } from '@app/graphql/mutations/artwork.mutation';
 import ActionButtons from '@shared/ActionButtons';
 import { Text, Title } from '@ui-kit/Text';
 import { Spinner } from '@ui-kit/Spinner';
@@ -11,7 +13,7 @@ import dragAndDropImage from '@images/drag-and-drop.png';
 
 const { Dragger } = Upload;
 
-const DragAndDrop = ({ file, types, dispatch, removingArtwork, removeArtwork }) => {
+const DragAndDrop = ({ videoUri, file, types, dispatch }) => {
   const [requestUploadUrl, { data, loading }] = useLazyQuery(getUploadUrl, {
     fetchPolicy: 'no-cache',
     onCompleted: ({ getUploadUrl }) =>
@@ -22,10 +24,17 @@ const DragAndDrop = ({ file, types, dispatch, removingArtwork, removeArtwork }) 
       }),
     onError: () => errorToast('Error', 'Something went wrong. Please try later.'),
   });
+  const [removeArtwork, { loading: removingArtwork }] = useMutation(deleteArtwork, {
+    variables: { params: { videoUri } },
+  });
 
   const disabled = useMemo(
     () => !(data?.getUploadUrl?.uri && file?.name && !loading),
     [data?.getUploadUrl?.uri, file?.name, loading],
+  );
+  const onCancel = useCallback(
+    () => (videoUri ? dispatch({ type: types.CONFIRMATION_VISIBLE }) : history.push('/account')),
+    [videoUri, dispatch, types.CONFIRMATION_VISIBLE],
   );
   const onContinue = useCallback(
     () => dispatch({ type: types.UPLOADING }),
@@ -35,13 +44,15 @@ const DragAndDrop = ({ file, types, dispatch, removingArtwork, removeArtwork }) 
   const props = {
     name: 'file',
     accept: 'video/*',
-    disabled: loading,
+    disabled: loading || removingArtwork,
     showUploadList: false,
-    onDrop: (e) => {
-      dispatch({ type: types.SET_FILE, file: e.dataTransfer.files?.[0] });
-      requestUploadUrl({
-        variables: { size: e.dataTransfer.files?.[0]?.size },
-      });
+    beforeUpload: (newFile) => {
+      if (file) {
+        removeArtwork();
+      }
+      dispatch({ type: types.SET_FILE, file: newFile });
+      requestUploadUrl({ variables: { size: newFile.size } });
+      return false;
     },
   };
 
@@ -84,9 +95,8 @@ const DragAndDrop = ({ file, types, dispatch, removingArtwork, removeArtwork }) 
         <ActionButtons
           saveText='CONTINUE'
           disabled={disabled}
-          cancelLoading={removingArtwork}
           cancelDisabled={loading}
-          onCancel={removeArtwork}
+          onCancel={onCancel}
           onSave={onContinue}
         />
       </Col>

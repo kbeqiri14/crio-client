@@ -9,26 +9,19 @@ import { updateMetadata } from '@app/graphql/mutations/artwork.mutation';
 import ActionButtons from '@shared/ActionButtons';
 import { Text, Title } from '@ui-kit/Text';
 import { BlurredModal } from '@ui-kit/Modal';
+import { errorToast } from '@ui-kit/Notification';
 import coverImage from '@images/cover-image.png';
 
 const { Dragger } = Upload;
 
-const CoverImage = ({ visible, artworkId = 35 }) => {
-  const [source, setSource] = useState();
-  const [file, setFile] = useState();
-  const onCancel = useCallback(() => history.push('/account'), []);
-  const [updateArtwork, { loading: updatingArtwork }] = useMutation(updateMetadata, {
-    onCompleted: () => history.push('/account'),
-  });
+const CoverImage = ({ visible, artworkId }) => {
+  const [image, setImage] = useState({});
+  const [loading, setLoading] = useState(false);
   const props = {
     name: 'file',
     accept: 'image/*',
-    disabled: updatingArtwork,
     showUploadList: false,
     listType: 'picture',
-    onDrop: (e) => {
-      setFile(e.dataTransfer.files?.[0]);
-    },
     beforeUpload(file) {
       const getSource = async () => {
         const src = await new Promise((resolve) => {
@@ -36,25 +29,41 @@ const CoverImage = ({ visible, artworkId = 35 }) => {
           reader.readAsDataURL(file);
           reader.onload = () => resolve(reader.result);
         });
-        setSource(src);
+        setImage({ file, src });
       };
       getSource();
+      return false;
     },
   };
-  const [requestUploadUrl, { loading: loadingUploadUrl }] = useLazyQuery(getUploadImageLink, {
+
+  const [updateArtwork] = useMutation(updateMetadata, {
+    onCompleted: () => history.push('/account'),
+  });
+  const [requestUploadUrl] = useLazyQuery(getUploadImageLink, {
     fetchPolicy: 'no-cache',
     variables: { artworkId },
     onCompleted: async ({ getUploadImageLink }) => {
-      const { status } = await axios.put(getUploadImageLink.link, file, {
+      const { status } = await axios.put(getUploadImageLink.link, image.file, {
         headers: { 'Content-Type': 'image/png' },
       });
       if (status === 200) {
         updateArtwork({
           variables: { params: { artworkId, uri: getUploadImageLink.uri } },
+          onCompleted: () => setLoading(false),
         });
       }
     },
+    onError: () => {
+      setLoading(false);
+      errorToast('Uploading Image Error', 'Something went wrong. Please try later.');
+    },
   });
+
+  const onCancel = useCallback(() => history.push('/account'), []);
+  const onSave = useCallback(() => {
+    setLoading(true);
+    requestUploadUrl();
+  }, [requestUploadUrl]);
 
   return (
     <BlurredModal blurred maskClosable={false} visible={visible} width={686} onCancel={onCancel}>
@@ -70,8 +79,8 @@ const CoverImage = ({ visible, artworkId = 35 }) => {
           </Text>
         </Col>
         <Col span={24}>
-          {source ? (
-            <img alt='uploaded file' src={source} className='uploaded-image' />
+          {image.src ? (
+            <img alt='uploaded file' src={image.src} className='uploaded-image' />
           ) : (
             <Dragger {...props}>
               <Row justify='center' align='center' gutter={[0, 11]} className='drag-and-drop'>
@@ -92,9 +101,10 @@ const CoverImage = ({ visible, artworkId = 35 }) => {
           <ActionButtons
             cancelText='SKIP'
             saveText='PUBLISH'
-            loading={loadingUploadUrl || updatingArtwork}
+            loading={loading}
+            disabled={!image.file}
             onCancel={onCancel}
-            onSave={requestUploadUrl}
+            onSave={onSave}
           />
         </Col>
       </Row>

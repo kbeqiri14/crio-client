@@ -1,10 +1,19 @@
-import { Meta } from '@shared/Meta';
+import { useCallback } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Col, Row } from 'antd';
 import cc from 'classcat';
+import { useMutation } from '@apollo/client';
+
+import history from '@app/configs/history';
+import { useCurrentUser } from '@app/auth/hooks';
+import { createSubscriber } from '@app/graphql/mutations/user.mutation';
+import { Meta } from '@shared/Meta';
 import { Footer } from '@shared/Footer';
-import { SecondaryButton } from '@ui-kit/Button';
 import { Text, Title } from '@ui-kit/Text';
+import { SecondaryButton } from '@ui-kit/Button';
+import { warningToast } from '@ui-kit/Notification';
 import { ReactComponent as CheckMark } from '@svgs/green-check.svg';
+import { ReactComponent as BackIcon } from '@svgs/back.svg';
 import recommendedMarker from '@images/pricing-marker.png';
 import './styles.less';
 
@@ -42,9 +51,37 @@ const perksListPro = [
 ];
 
 export const PricingPlans = () => {
+  const { pathname } = useLocation();
+  const { user, loading } = useCurrentUser();
+  const id = +pathname.split('/').slice(-1)[0];
+  const goBack = useCallback(() => history.push(`/profile/perks/${id}`), [id]);
+
+  const [subscribe, { loading: subscribing }] = useMutation(createSubscriber, {
+    variables: { subscriberId: id || undefined },
+    onCompleted: () => history.push(`/profile/${id}`),
+  });
+
+  const handleClick = useCallback(() => {
+    if (user && !loading) {
+      if (id) {
+        subscribe();
+      }
+    } else {
+      warningToast('Warning', 'Please sign in to get started.');
+    }
+  }, [id, loading, user, subscribe]);
+
   return (
     <div className='cr-pricing'>
       <Meta title='Pricing Plans' description='Crio - Pricing Plans' />
+      {user && !loading && id && (
+        <div className='cr-pricing__header'>
+          <BackIcon onClick={goBack} />
+          <Title inline level={20} color='white'>
+            Subscribe To Get Access
+          </Title>
+        </div>
+      )}
       <Row justify='center' align='stretch'>
         <Col>
           <div className='cr-pricing__card'>
@@ -74,7 +111,15 @@ export const PricingPlans = () => {
             </div>
             <PerksList isFree={false} listItems={perksListPro} />
             <div className='cr-pricing__card--action'>
-              <SecondaryButton size='large' textColor='white' filled fillColor='tertiary' isBlock>
+              <SecondaryButton
+                size='large'
+                textColor='white'
+                filled
+                fillColor='tertiary'
+                isBlock
+                loading={subscribing}
+                onClick={handleClick}
+              >
                 GET STARTED
               </SecondaryButton>
             </div>
