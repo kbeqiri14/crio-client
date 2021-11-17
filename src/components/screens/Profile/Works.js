@@ -30,6 +30,7 @@ const Works = ({ isLock }) => {
       setWorks(getUserArtworks);
       setTopPosters(posters);
     },
+    notifyOnNetworkStatusChange: true,
     pollInterval: 30000,
   });
 

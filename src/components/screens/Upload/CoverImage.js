@@ -32,6 +32,7 @@ const CoverImage = ({ visible, artworkId }) => {
         setImage({ file, src });
       };
       getSource();
+      return false;
     },
   };
 

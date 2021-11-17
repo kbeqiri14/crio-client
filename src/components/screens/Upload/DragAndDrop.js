@@ -52,6 +52,7 @@ const DragAndDrop = ({ videoUri, file, types, dispatch }) => {
       }
       dispatch({ type: types.SET_FILE, file: newFile });
       requestUploadUrl({ variables: { size: newFile.size } });
+      return false;
     },
   };
 
