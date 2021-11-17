@@ -55,7 +55,7 @@ export const PresentationView = ({ visible, videoInfo, onCancel }) => {
               <iframe
                 title={videoInfo.title || 'Crio video player'}
                 src={`https://player.vimeo.com/video/${
-                  videoInfo.videoUri?.replace('videos', 'video') || 382975976
+                  videoInfo.id || 382975976
                 }?h=dc77330a55&color=ffffff&title=0&byline=0&portrait=0`}
                 frameBorder='0'
                 allow='autoplay; fullscreen; picture-in-picture'
