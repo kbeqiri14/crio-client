@@ -24,7 +24,7 @@ then
 elif [ "${CIRCLE_BRANCH}" == "staging" ]
 then
   {
-    echo "export REACT_APP_GQL_ROOT=https://crio-staging-api.tlabs.app/prod/graphql/"
+    echo "export REACT_APP_GQL_ROOT=https://crio-staging-api.tlabs.app/graphql/"
     echo "export SUBDOMAIN_NAME=crio-staging"
     echo "export STACK_REGION=us-west-2"
     echo "export APP_NAME=crio-staging"
