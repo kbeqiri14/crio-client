@@ -12,22 +12,22 @@ import perk1Subscribe from '@images/perks/perk-1-subscribe.png';
 import perk2Subscribe from '@images/perks/perk-2-subscribe.png';
 import perk3Subscribe from '@images/perks/perk-3-subscribe.png';
 
-const getPerks = (isProfile) => [
+const getPerks = (isSubscribed) => [
   {
     title: 'Tier 1 Perks',
     desc: 'LIMITED SUPPLY: This offering can include rewards ranging from personal video edits, 1 on 1 time, discounts on merchandise, and much more!  ',
-    src: isProfile ? perk1Subscribe : perk1,
+    src: isSubscribed ? perk1Subscribe : perk1,
   },
   {
     title: 'Tier 2 Perks',
     desc: 'This offering can include rewards ranging from tutorials, printables, shoutouts, and much more!',
-    src: isProfile ? perk2Subscribe : perk2,
+    src: isSubscribed ? perk2Subscribe : perk2,
     fillColor: 'secondary',
   },
   {
     title: 'Tier 3 Perks',
     desc: 'This offering can include various downloadable content such as wallpapers, asset packs, and much more! ',
-    src: isProfile ? perk3Subscribe : perk3,
+    src: isSubscribed ? perk3Subscribe : perk3,
     fillColor: 'fourth',
   },
 ];
@@ -59,7 +59,7 @@ const Perks = ({ isProfile, loadingIsSubscriber, isSubscribed }) => {
           <SubscribeButton key='top' subscribe onClick={goPricing} />
         </Col>
       )}
-      {getPerks(isProfile).map(({ title, desc, src, fillColor }) => (
+      {getPerks(isProfile && isSubscribed).map(({ title, desc, src, fillColor }) => (
         <Col key={title}>
           <Row justify='center'>
             <Col span={24}>
@@ -74,7 +74,7 @@ const Perks = ({ isProfile, loadingIsSubscriber, isSubscribed }) => {
             </Col>
             <Col span={24} className='container'>
               <img alt={title} src={src} />
-              {isProfile && <SubscribeButton fillColor={fillColor} />}
+              {isProfile && isSubscribed && <SubscribeButton fillColor={fillColor} />}
             </Col>
           </Row>
         </Col>

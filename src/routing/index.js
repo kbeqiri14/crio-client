@@ -19,12 +19,12 @@ export const AppRoutes = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const { user, loading } = useCurrentUser();
   const { videoInfo, isVisible, hide } = usePresentation();
-  const pathName = useLocation();
+  const { pathname } = useLocation();
 
-  useEffect(() => {
+    useEffect(() => {
     document.body.scrollTop = 0;
     window.scrollTo(0, 0);
-  }, [pathName]);
+  }, [pathname]);
 
   useEffect(() => {
     if (!loading) {
