@@ -19,8 +19,18 @@ const Works = ({ isLock }) => {
 
   const { loading } = useQuery(getUserArtworks, {
     variables: { id: +pathname.split('/').slice(-1)[0] || undefined },
-    onCompleted: ({ getUserArtworks }) => setWorks([...getUserArtworks]),
-    pollInterval: 30000, // 30 seconds
+    onCompleted: ({ getUserArtworks }) => {
+      const posters = renderPosters(
+        works?.length ? getUserArtworks : videoPosters,
+        0,
+        show,
+        isLock,
+        works?.length,
+      );
+      setWorks(getUserArtworks);
+      setTopPosters(posters);
+    },
+    pollInterval: 30000,
   });
 
   useEffect(() => {
@@ -31,7 +41,7 @@ const Works = ({ isLock }) => {
       isLock,
       works?.length,
     );
-    setTopPosters([...posters]);
+    setTopPosters(posters);
   }, [isLock, works, show]);
 
   return (
