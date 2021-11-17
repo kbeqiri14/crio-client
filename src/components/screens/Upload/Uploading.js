@@ -8,7 +8,6 @@ import { Text, Title } from '@ui-kit/Text';
 import { BlurredModal } from '@ui-kit/Modal';
 import { Spinner } from '@ui-kit/Spinner';
 import { errorToast } from '@ui-kit/Notification';
-import './styles.less';
 
 const timeStarted = new Date();
 const formatRemainingTime = (time) => {
@@ -75,13 +74,15 @@ const Uploading = ({ state, types, dispatch }) => {
       closable={false}
       maskClosable={false}
       width={686}
+      className='uploading'
     >
       <Spinner spinning={loading} color='white'>
         <Title level={10} color='white'>
           Uploading
         </Title>
-        <Text level={30} color='white_75'>
-          {`${state.percent} % - ${formatRemainingTime(state.remainingTime)}`}
+        <Text level={20} color='white_75'>
+          <span>{state.percent} % &bull; </span>
+          <span>{formatRemainingTime(state.remainingTime)}</span>
         </Text>
         <Progress percent={state.percent} showInfo={false} />
       </Spinner>
