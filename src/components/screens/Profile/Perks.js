@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Col, Row } from 'antd';
 
@@ -32,7 +32,7 @@ const getPerks = (isSubscribed) => [
   },
 ];
 
-const SubscribeButton = memo(({ subscribe, fillColor = 'tertiary', disabled, onClick }) => (
+const Button = memo(({ subscribe, fillColor = 'tertiary', disabled, onClick }) => (
   <SecondaryButton
     size='large'
     textColor={disabled ? 'white_75' : 'white'}
@@ -40,12 +40,21 @@ const SubscribeButton = memo(({ subscribe, fillColor = 'tertiary', disabled, onC
     fillColor={fillColor}
     disabled={disabled}
     onClick={onClick}
+    isBlock={subscribe}
   >
     {subscribe ? 'SUBSCRIBE TO GET ACCESS' : 'GET STARTED'}
   </SecondaryButton>
 ));
 
-const Perks = ({ isProfile, loadingIsSubscriber, isSubscribed }) => {
+const SubscribeButton = memo(({ isProfile, isSubscribed, onClick }) =>
+  isProfile && !isSubscribed ? (
+    <Col className='subscribe'>
+      <Button key='top' subscribe onClick={onClick} />
+    </Col>
+  ) : null,
+);
+
+const Perks = ({ isProfile, isSubscribed }) => {
   const { pathname } = useLocation();
   const goPricing = useCallback(
     () => history.push(`/pricing/${pathname.split('/').slice(-1)[0]}`),
@@ -54,11 +63,7 @@ const Perks = ({ isProfile, loadingIsSubscriber, isSubscribed }) => {
 
   return (
     <Row gutter={[0, 44]} justify='center' className='perks'>
-      {isProfile && !isSubscribed && (
-        <Col>
-          <SubscribeButton key='top' subscribe onClick={goPricing} />
-        </Col>
-      )}
+      <SubscribeButton isProfile={isProfile} isSubscribed={isSubscribed} onClick={goPricing} />
       {getPerks(isProfile && isSubscribed).map(({ title, desc, src, fillColor }) => (
         <Col key={title}>
           <Row justify='center'>
@@ -74,16 +79,12 @@ const Perks = ({ isProfile, loadingIsSubscriber, isSubscribed }) => {
             </Col>
             <Col span={24} className='container'>
               <img alt={title} src={src} />
-              {isProfile && isSubscribed && <SubscribeButton fillColor={fillColor} />}
+              {isProfile && isSubscribed && <Button fillColor={fillColor} />}
             </Col>
           </Row>
         </Col>
       ))}
-      {isProfile && !isSubscribed && (
-        <Col>
-          <SubscribeButton key='bottom' subscribe onClick={goPricing} />
-        </Col>
-      )}
+      <SubscribeButton isProfile={isProfile} isSubscribed={isSubscribed} onClick={goPricing} />
     </Row>
   );
 };

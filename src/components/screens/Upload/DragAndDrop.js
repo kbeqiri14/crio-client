@@ -66,7 +66,7 @@ const DragAndDrop = ({ videoUri, file, types, dispatch }) => {
       <Col span={12}>
         <Dragger {...props}>
           <Spinner spinning={loading} color='white'>
-            <Row justify='center' align='center' gutter={[0, 11]} className='drag-and-drop'>
+            <Row justify='center' align='center' gutter={[0, 25]} className='drag-and-drop'>
               <Col span={24}>
                 <img alt='drag-and-drop' src={dragAndDropImage} />
               </Col>
