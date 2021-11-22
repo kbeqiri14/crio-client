@@ -1,7 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Row } from 'antd';
 import cc from 'classcat';
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { useLazyQuery, useQuery, useReactiveVar } from '@apollo/client';
 
 import { randomNumberVar } from '@configs/client-cache';
 import { useCurrentUser } from '@app/auth/hooks';
@@ -26,33 +26,32 @@ export const LandingPage = () => {
   const [requestRandomArtworks] = useLazyQuery(getRandomArtworks, {
     fetchPolicy: 'no-cache',
     onCompleted: ({ getRandomArtworks }) => {
-      setOffset(offset + 10);
+      setOffset(offset + 15);
       setPostersList([...postersList, ...renderPosters(getRandomArtworks, 3, show, false, true)]);
     },
   });
 
+  const count = useReactiveVar(randomNumberVar);
+  const requestWorks = useCallback(
+    (n) =>
+      console.log(n) || requestRandomArtworks({
+        fetchPolicy: 'no-cache',
+        variables: { params: { count: n || count, offset } },
+      }),
+    [count, offset, requestRandomArtworks],
+  );
   const { data } = useQuery(getRandomArtworksCount, {
     onCompleted: ({ getRandomArtworksCount }) => {
       const n = Math.floor(Math.random() * getRandomArtworksCount + 1);
       randomNumberVar(n);
-      requestRandomArtworks({ variables: { params: { count: n, offset } } });
+      requestWorks(n);
     },
   });
   const end = useMemo(
     () => data?.getRandomArtworksCount <= offset,
     [data?.getRandomArtworksCount, offset],
   );
-
-  // const count = useReactiveVar(randomNumberVar);
-  // const requestWorks = useCallback(
-  //   (n) =>
-  //     requestRandomArtworks({
-  //       fetchPolicy: 'no-cache',
-  //       variables: { params: { count: n || count, offset } },
-  //     }),
-  //   [count, offset, requestRandomArtworks],
-  // );
-  // const handleLoadList = () => requestRandomArtworks({ variables: { params: { count, offset } } });
+  const handleLoadList = useCallback(() => requestWorks(), [requestWorks]);
 
   return (
     <div className='cr-landing__container'>
@@ -74,7 +73,7 @@ export const LandingPage = () => {
           {postersList}
         </Row>
         <Row className={cc(['cr-landing__video-grid__see-all', { 'list-loaded': end }])}>
-          {!end && <SecondaryButton onClick={undefined}>SEE ALL</SecondaryButton>}
+          {!end && <SecondaryButton onClick={handleLoadList}>SEE MORE</SecondaryButton>}
         </Row>
       </section>
       <section className='cr-landing__about-perks'>
