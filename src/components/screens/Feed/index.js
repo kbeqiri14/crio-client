@@ -1,7 +1,7 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useCallback, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Carousel, Row } from 'antd';
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { useLazyQuery, useQuery, useReactiveVar } from '@apollo/client';
 
 import { randomNumberVar } from '@configs/client-cache';
 import { getRandomArtworksCount, getRandomArtworks } from '@app/graphql/queries/artworks.query';
@@ -78,23 +78,30 @@ export const Feed = () => {
   const [bottomPosters, setBottomPosters] = useState([]);
   const [currentPoster, setCurrentPoster] = useState(carPosters?.[0]);
   const [authorBlocks] = useState(Array.from({ length: 1 }, () => uuid()));
+  const count = useReactiveVar(randomNumberVar);
 
-  const [requestRandomArtworks] = useLazyQuery(getRandomArtworks, {
+  const [requestRandomArtworks, { loading }] = useLazyQuery(getRandomArtworks, {
     fetchPolicy: 'no-cache',
     onCompleted: ({ getRandomArtworks }) => {
       if (!offset) {
         setCarPosters(getRandomArtworks.slice(0, 4));
         setTopPosters(renderPosters(getRandomArtworks.slice(4, 12), 0, show, false, true));
+        setOffset(4 + 8 + 15);
+        setBottomPosters([
+          ...bottomPosters,
+          ...renderPosters(getRandomArtworks.slice(12), 3, show, false, true),
+        ]);
+        return;
       }
-      setOffset(offset + 10);
+      setOffset(offset + 15);
       setBottomPosters([
         ...bottomPosters,
-        ...renderPosters(getRandomArtworks.slice(12), 3, show, false, true),
+        ...renderPosters(getRandomArtworks, 3, show, false, true),
       ]);
     },
   });
 
-  useQuery(getRandomArtworksCount, {
+  const { data } = useQuery(getRandomArtworksCount, {
     onCompleted: ({ getRandomArtworksCount }) => {
       const n = Math.floor(Math.random() * getRandomArtworksCount + 1);
       randomNumberVar(n);
@@ -103,8 +110,14 @@ export const Feed = () => {
       });
     },
   });
-  // const end = useMemo(() => data?.getRandomArtworksCount <= offset, [data?.getRandomArtworksCount, offset]);
-  // const handleLoadMore = () => setAuthorBlocks(authorBlocks.concat([uuid()]));
+
+  const end = useMemo(
+    () => data?.getRandomArtworksCount <= offset,
+    [data?.getRandomArtworksCount, offset],
+  );
+  const handleLoadMore = useCallback(() => requestRandomArtworks({
+    variables: { params: { count, offset, limit: 15 } },
+  }), [count, offset, requestRandomArtworks]);
 
   const handlePosterChange = (index) => setCurrentPoster(carPosters[index]);
 
@@ -164,9 +177,9 @@ export const Feed = () => {
           {authorBlocks.map((blockId) => (
             <RandomAuthorArtworks handleClick={show} key={blockId} posters={bottomPosters} />
           ))}
-          <Row className='cr-landing__video-grid__see-all'>
-            <SecondaryButton onClick={undefined}>LOAD MORE</SecondaryButton>
-          </Row>
+          {!end && offset && (<Row className='cr-landing__video-grid__see-all'>
+            <SecondaryButton loading={loading && offset} onClick={handleLoadMore}>LOAD MORE</SecondaryButton>
+          </Row>)}
         </div>
       </section>
       <Footer />

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { Row } from 'antd';
 import cc from 'classcat';
 import { useLazyQuery, useQuery, useReactiveVar } from '@apollo/client';
@@ -22,8 +22,9 @@ export const LandingPage = () => {
 
   const { user } = useCurrentUser();
   const { show } = usePresentation();
+  const count = useReactiveVar(randomNumberVar);
 
-  const [requestRandomArtworks] = useLazyQuery(getRandomArtworks, {
+  const [requestRandomArtworks, { loading }] = useLazyQuery(getRandomArtworks, {
     fetchPolicy: 'no-cache',
     onCompleted: ({ getRandomArtworks }) => {
       setOffset(offset + 15);
@@ -31,27 +32,28 @@ export const LandingPage = () => {
     },
   });
 
-  const count = useReactiveVar(randomNumberVar);
-  const requestWorks = useCallback(
+  const requestArtworks = useCallback(
     (n) =>
-      console.log(n) || requestRandomArtworks({
-        fetchPolicy: 'no-cache',
+      requestRandomArtworks({
         variables: { params: { count: n || count, offset } },
       }),
     [count, offset, requestRandomArtworks],
   );
+
   const { data } = useQuery(getRandomArtworksCount, {
     onCompleted: ({ getRandomArtworksCount }) => {
       const n = Math.floor(Math.random() * getRandomArtworksCount + 1);
       randomNumberVar(n);
-      requestWorks(n);
+      requestArtworks(n);
     },
   });
+
   const end = useMemo(
     () => data?.getRandomArtworksCount <= offset,
     [data?.getRandomArtworksCount, offset],
   );
-  const handleLoadList = useCallback(() => requestWorks(), [requestWorks]);
+
+  const handleLoadList = useCallback(() => requestArtworks(), [requestArtworks]);
 
   return (
     <div className='cr-landing__container'>
@@ -73,7 +75,11 @@ export const LandingPage = () => {
           {postersList}
         </Row>
         <Row className={cc(['cr-landing__video-grid__see-all', { 'list-loaded': end }])}>
-          {!end && <SecondaryButton onClick={handleLoadList}>SEE MORE</SecondaryButton>}
+          {!end && offset && (
+            <SecondaryButton loading={loading && offset} onClick={handleLoadList}>
+              SEE MORE
+            </SecondaryButton>
+          )}
         </Row>
       </section>
       <section className='cr-landing__about-perks'>
