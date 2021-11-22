@@ -13,6 +13,19 @@ export const artwork_fragment = gql`
   }
 `;
 
+export const work_fragment = gql`
+  fragment WorkDetailAttributes on WorkDetail {
+    id
+    userId
+    name
+    fbUserId
+    videoUri
+    thumbnailUri
+    title
+    description
+  }
+`;
+
 export const getUploadUrl = gql`
   query getUploadUrl($size: Int!) {
     getUploadUrl(size: $size) {
@@ -49,4 +62,19 @@ export const getUserArtworks = gql`
     }
   }
   ${artwork_fragment}
+`;
+
+export const getRandomArtworksCount = gql`
+  query {
+    getRandomArtworksCount
+  }
+`;
+
+export const getRandomArtworks = gql`
+  query getRandomArtworks($params: paginationParams!) {
+    getRandomArtworks(params: $params) {
+      ...WorkDetailAttributes
+    }
+  }
+  ${work_fragment}
 `;

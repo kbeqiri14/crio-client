@@ -11,12 +11,12 @@ const posters = getPosters(3);
 
 export { usePresentation, PresentationProvider, defaultMockValue } from './PresentationContext';
 
-export const PresentationView = ({ visible, videoInfo, onCancel }) => {
-  const { show } = usePresentation();
+export const PresentationView = ({ visible, videoInfo, isAuthenticated }) => {
+  const { show, hide } = usePresentation();
 
   return (
     <Modal
-      onCancel={onCancel}
+      onCancel={hide}
       visible={visible}
       maskClosable={false}
       footer={false}
@@ -30,7 +30,7 @@ export const PresentationView = ({ visible, videoInfo, onCancel }) => {
           <Col span={18} offset={3} className='video-view-author'>
             <Row align='middle'>
               <Col className='author-avatar'>
-                <img src={videoInfo.author?.avatar} alt='Author avatar' />
+                {videoInfo.fbUserId && <img src={videoInfo.avatar} alt='Author avatar' />}
               </Col>
               <Col>
                 <Row>
@@ -40,11 +40,15 @@ export const PresentationView = ({ visible, videoInfo, onCancel }) => {
                     </Title>
                   </Col>
                   <Col span={24}>
-                    <Link>
-                      <Title level='20' color='primary' inline>
-                        {videoInfo.author?.name}
-                      </Title>
-                    </Link>
+                    <Title level='20' color='primary' inline>
+                      {isAuthenticated ? (
+                        <Link to={`/profile/${videoInfo.userId}`} onClick={hide}>
+                          {videoInfo.name}
+                        </Link>
+                      ) : (
+                        videoInfo.name
+                      )}
+                    </Title>
                   </Col>
                 </Row>
               </Col>
@@ -74,15 +78,17 @@ export const PresentationView = ({ visible, videoInfo, onCancel }) => {
             <Row justify='space-between' align='middle'>
               <Col>
                 <Text level='40' color='white'>
-                  More by {videoInfo.author?.name}
+                  More by {videoInfo.name}
                 </Text>
               </Col>
               <Col>
-                <Link>
-                  <Text level='20' color='primary'>
-                    View profile
-                  </Text>
-                </Link>
+                {isAuthenticated && (
+                  <Link to={`/profile/${videoInfo.userId}`} onClick={hide}>
+                    <Text level='20' color='primary'>
+                      View profile
+                    </Text>
+                  </Link>
+                )}
               </Col>
             </Row>
             <Row gutter={[22, 22]} justify='center' align='middle'>
@@ -90,8 +96,8 @@ export const PresentationView = ({ visible, videoInfo, onCancel }) => {
                 <Col xl={8} md={12} sm={24} xs={24} key={idx}>
                   <PosterCard
                     onClick={() => show(defaultMockValue)}
-                    poster={p}
-                    author='Ann Bee'
+                    thumbnailUri={p}
+                    name='Ann Bee'
                     title='Blah'
                   />
                 </Col>

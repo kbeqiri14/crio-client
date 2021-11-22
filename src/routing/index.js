@@ -18,10 +18,10 @@ import Upload from '@screens/Upload';
 export const AppRoutes = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const { user, loading } = useCurrentUser();
-  const { videoInfo, isVisible, hide } = usePresentation();
+  const { videoInfo, isVisible } = usePresentation();
   const { pathname } = useLocation();
 
-    useEffect(() => {
+  useEffect(() => {
     document.body.scrollTop = 0;
     window.scrollTo(0, 0);
   }, [pathname]);
@@ -51,7 +51,11 @@ export const AppRoutes = () => {
         <PrivateRoute isAuthenticated={isAuthenticated} path='/upload' component={Upload} />
         <Route exact path='/cognito/callback' component={CognitoCallback} />
       </Switch>
-      <PresentationView onCancel={hide} videoInfo={videoInfo} visible={isVisible} />
+      <PresentationView
+        visible={isVisible}
+        videoInfo={videoInfo}
+        isAuthenticated={isAuthenticated}
+      />
     </Layout>
   );
 };

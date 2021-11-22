@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Row } from 'antd';
 import cc from 'classcat';
+import { useLazyQuery, useQuery } from '@apollo/client';
 
+import { randomNumberVar } from '@configs/client-cache';
 import { useCurrentUser } from '@app/auth/hooks';
+import { getRandomArtworksCount, getRandomArtworks } from '@app/graphql/queries/artworks.query';
 import { usePresentation } from '@shared/PresentationView';
 import { renderPosters } from '@shared/PostersList';
 import { ConnectButton } from '@shared/ConnectButton';
@@ -10,28 +13,46 @@ import { Footer } from '@shared/Footer';
 import { Meta } from '@shared/Meta';
 import { Text, Title } from '@ui-kit/Text';
 import { SecondaryButton } from '@ui-kit/Button';
-import { getPosters } from './posters';
 import aboutPerks from '@images/about-perks.png';
 import './styles.less';
 
-const multiplier = 3;
-const smallPostersCount = multiplier * 4;
-const largePostersCount = multiplier;
-const videosCount = smallPostersCount + largePostersCount;
-const videoPosters = getPosters(videosCount);
-
 export const LandingPage = () => {
+  const [offset, setOffset] = useState(0);
+  const [postersList, setPostersList] = useState([]);
+
   const { user } = useCurrentUser();
   const { show } = usePresentation();
-  const [listLoaded, setListLoaded] = useState(false);
-  const [postersList, setPostersList] = useState(
-    renderPosters(videoPosters, largePostersCount, show),
+
+  const [requestRandomArtworks] = useLazyQuery(getRandomArtworks, {
+    fetchPolicy: 'no-cache',
+    onCompleted: ({ getRandomArtworks }) => {
+      setOffset(offset + 10);
+      setPostersList([...postersList, ...renderPosters(getRandomArtworks, 3, show, false, true)]);
+    },
+  });
+
+  const { data } = useQuery(getRandomArtworksCount, {
+    onCompleted: ({ getRandomArtworksCount }) => {
+      const n = Math.floor(Math.random() * getRandomArtworksCount + 1);
+      randomNumberVar(n);
+      requestRandomArtworks({ variables: { params: { count: n, offset } } });
+    },
+  });
+  const end = useMemo(
+    () => data?.getRandomArtworksCount <= offset,
+    [data?.getRandomArtworksCount, offset],
   );
 
-  const handleLoadList = () => {
-    setPostersList([...postersList, ...renderPosters(videoPosters, largePostersCount, show)]);
-    setListLoaded(true);
-  };
+  // const count = useReactiveVar(randomNumberVar);
+  // const requestWorks = useCallback(
+  //   (n) =>
+  //     requestRandomArtworks({
+  //       fetchPolicy: 'no-cache',
+  //       variables: { params: { count: n || count, offset } },
+  //     }),
+  //   [count, offset, requestRandomArtworks],
+  // );
+  // const handleLoadList = () => requestRandomArtworks({ variables: { params: { count, offset } } });
 
   return (
     <div className='cr-landing__container'>
@@ -52,8 +73,8 @@ export const LandingPage = () => {
         <Row gutter={[22, 35]} className='cr-landing__video-grid__container'>
           {postersList}
         </Row>
-        <Row className={cc(['cr-landing__video-grid__see-all', { 'list-loaded': listLoaded }])}>
-          {!listLoaded && <SecondaryButton onClick={handleLoadList}>SEE ALL</SecondaryButton>}
+        <Row className={cc(['cr-landing__video-grid__see-all', { 'list-loaded': end }])}>
+          {!end && <SecondaryButton onClick={undefined}>SEE ALL</SecondaryButton>}
         </Row>
       </section>
       <section className='cr-landing__about-perks'>

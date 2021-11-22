@@ -32,8 +32,8 @@ const ScrollPosters = ({ handleClick }) => {
           <PosterCard
             onClick={() => handleClick(defaultMockValue)}
             key={idx}
-            poster={p}
-            author='Ann Bee'
+            thumbnailUri={p}
+            name='Ann Bee'
             title='Work’s name goes here'
           />
         ))}
