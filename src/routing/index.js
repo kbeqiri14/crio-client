@@ -37,7 +37,7 @@ export const AppRoutes = () => {
   }
 
   return (
-    <Layout>
+    <Layout isAuthenticated={isAuthenticated}>
       <Switch>
         {/* PUBLIC ROUTES */}
         <Route exact path='/'>

@@ -26,7 +26,7 @@ const getTabItems = () => {
   ];
 };
 
-export const Header = () => {
+export const Header = ({ isAuthenticated }) => {
   const location = useLocation();
   const { user } = useLoggedInUser();
   const activeItem = location.pathname?.replace('/', '') || 'home';
@@ -48,7 +48,7 @@ export const Header = () => {
           </div>
         </Col>
         <Col className='header-end-group'>
-          {user ? <ProfileMenu user={user} /> : <ConnectButton size='regular' />}
+          {isAuthenticated && user ? <ProfileMenu user={user} /> : <ConnectButton size='regular' />}
           {user?.isCreator && (
             <SecondaryButton filled textColor='white' onClick={upload}>
               UPLOAD
