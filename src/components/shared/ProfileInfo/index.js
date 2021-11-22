@@ -9,8 +9,8 @@ import { ReactComponent as MailIcon } from '@svgs/mail.svg';
 import profile from '@images/profile.png';
 import './styles.less';
 
-const ProfileInfo = ({ user = {}, isProfile, isFollowing, isCreator }) => {
-  const { id, fbUserId, firstName, lastName, username, email, visibility } = user;
+const ProfileInfo = ({ user, isProfile, isFollowing, isCreator }) => {
+  const { id, fbUserId, firstName, lastName, username, email, visibility } = user || {};
   const size = useMemo(() => (isFollowing ? 96 : 134), [isFollowing]);
   const name = useMemo(() => `${firstName || ''} ${lastName || ''}`, [firstName, lastName]);
   const source = useMemo(

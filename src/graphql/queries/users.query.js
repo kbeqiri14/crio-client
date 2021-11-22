@@ -10,6 +10,7 @@ export const me_fragment = gql`
     firstName
     lastName
     visibility
+    isCreator
   }
 `;
 

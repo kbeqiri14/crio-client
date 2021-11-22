@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { SecondaryButton } from '@ui-kit/Button';
 
 import history from '@app/configs/history';
-import { useCurrentUser } from '@app/auth/hooks';
+import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import crio_logo from '@images/crio-logo.svg';
 import { ConnectButton } from '@shared/ConnectButton';
 import { TabMenu } from './__partials__/TabMenu';
@@ -28,7 +28,7 @@ const getTabItems = () => {
 
 export const Header = () => {
   const location = useLocation();
-  const { user, loading } = useCurrentUser();
+  const { user } = useLoggedInUser();
   const activeItem = location.pathname?.replace('/', '') || 'home';
 
   const menuItems = useMemo(() => getTabItems(!!user), [user]);
@@ -48,8 +48,8 @@ export const Header = () => {
           </div>
         </Col>
         <Col className='header-end-group'>
-          {user ? <ProfileMenu user={user} /> : !loading && <ConnectButton size='regular' />}
-          {user && (
+          {user ? <ProfileMenu user={user} /> : <ConnectButton size='regular' />}
+          {user?.isCreator && (
             <SecondaryButton filled textColor='white' onClick={upload}>
               UPLOAD
             </SecondaryButton>
