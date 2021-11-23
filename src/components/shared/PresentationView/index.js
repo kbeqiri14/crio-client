@@ -59,7 +59,7 @@ export const PresentationView = ({ visible, videoInfo, isAuthenticated }) => {
               <iframe
                 title={videoInfo.title || 'Crio video player'}
                 src={`https://player.vimeo.com/video/${
-                  videoInfo.id || 382975976
+                  videoInfo.url || 382975976
                 }?h=dc77330a55&color=ffffff&title=0&byline=0&portrait=0`}
                 frameBorder='0'
                 allow='autoplay; fullscreen; picture-in-picture'
@@ -94,10 +94,15 @@ export const PresentationView = ({ visible, videoInfo, isAuthenticated }) => {
             <Row gutter={[22, 22]} justify='center' align='middle'>
               {data?.map((poster, idx) => (
                 <Col xl={8} md={12} sm={24} xs={24} key={idx}>
-                  <PosterCard {...poster} onClick={() => show({
-                    ...poster,
-                    avatar: `https://graph.facebook.com/${poster.fbUserId}/picture?height=350&width=350`,
-                  })} />
+                  <PosterCard
+                    {...poster}
+                    onClick={() =>
+                      show({
+                        ...poster,
+                        avatar: `https://graph.facebook.com/${poster.fbUserId}/picture?height=350&width=350`,
+                      })
+                    }
+                  />
                 </Col>
               ))}
             </Row>

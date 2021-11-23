@@ -29,7 +29,7 @@ export const PosterCard = memo(
       onClick?.({
         title,
         description: description,
-        id: videoUri?.substring(videoUri?.lastIndexOf('/') + 1),
+        url: videoUri?.replace('/videos/', ''),
         userId,
         fbUserId,
         name,
