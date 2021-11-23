@@ -14,7 +14,7 @@ import { SecondaryButton } from '@ui-kit/Button';
 import { warningToast } from '@ui-kit/Notification';
 import { ReactComponent as CheckMark } from '@svgs/green-check.svg';
 import { ReactComponent as BackIcon } from '@svgs/back.svg';
-import recommendedMarker from '@images/pricing-marker.png';
+import { ReactComponent as RecommendIcon } from '@svgs/recommend.svg';
 import './styles.less';
 
 const PerksListItem = ({ listIcon, content, isFree }) => {
@@ -93,11 +93,7 @@ export const PricingPlans = () => {
         </Col>
         <Col>
           <div className='cr-pricing__card is-paid'>
-            <img
-              src={recommendedMarker}
-              alt='Prising Pro recommended'
-              className='recommended-marker'
-            />
+            <RecommendIcon className='recommended-marker'/>
             <Title level='10' color='white'>
               Pro
             </Title>
