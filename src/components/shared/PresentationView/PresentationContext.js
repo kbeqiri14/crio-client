@@ -1,22 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 
-export const defaultMockValue = {
-  title: 'Work’s name goes here',
-  description:
-    'Hi everyone!\n\nToday I wanna share with you my work.\nYour feedback and appreciation are always welcome.',
-  url: 'https://vimeo.com/436328286',
-  name: 'Ann Bee',
-  avatar: `https://avatars.dicebear.com/api/pixel-art/${Date.now()}.svg`,
-};
-
-const contextValue = {
-  isVisible: false,
-  videoInfo: defaultMockValue,
-  show: () => undefined,
-  hide: () => undefined,
-};
-
-export const PresentationContext = createContext(contextValue);
+export const PresentationContext = createContext();
 
 export const usePresentation = () => {
   return useContext(PresentationContext);

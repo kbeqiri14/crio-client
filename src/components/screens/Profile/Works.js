@@ -5,19 +5,17 @@ import { useQuery } from '@apollo/client';
 
 import { getUserArtworks } from '@app/graphql/queries/artworks.query';
 import { renderPosters } from '@shared/PostersList';
-import { usePresentation } from '@shared/PresentationView';
 import { Spinner } from '@ui-kit/Spinner';
 
 const Works = ({ isLock }) => {
   const { pathname } = useLocation();
   const [works, setWorks] = useState([]);
-  const { show } = usePresentation();
   const [topPosters, setTopPosters] = useState([]);
 
   const { loading } = useQuery(getUserArtworks, {
     variables: { id: +pathname.split('/').slice(-1)[0] || undefined },
     onCompleted: ({ getUserArtworks }) => {
-      const posters = renderPosters(getUserArtworks, 0, show, isLock);
+      const posters = renderPosters(getUserArtworks, 0, isLock);
       setWorks(getUserArtworks);
       setTopPosters(posters);
     },
@@ -27,9 +25,9 @@ const Works = ({ isLock }) => {
   });
 
   useEffect(() => {
-    const posters = renderPosters(works, 0, show, isLock);
+    const posters = renderPosters(works, 0, isLock);
     setTopPosters(posters);
-  }, [isLock, works, show]);
+  }, [isLock, works]);
 
   return (
     <Spinner spinning={loading} color='white'>

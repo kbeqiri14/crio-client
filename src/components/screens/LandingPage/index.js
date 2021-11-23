@@ -4,7 +4,6 @@ import cc from 'classcat';
 
 import { useCurrentUser } from '@app/auth/hooks';
 import { useRandomArtworks } from '@root/src/hooks/useRandomArtworks';
-import { usePresentation } from '@shared/PresentationView';
 import { renderPosters } from '@shared/PostersList';
 import { ConnectButton } from '@shared/ConnectButton';
 import { Footer } from '@shared/Footer';
@@ -19,12 +18,11 @@ export const LandingPage = () => {
   const [postersList, setPostersList] = useState([]);
 
   const { user } = useCurrentUser();
-  const { show } = usePresentation();
 
   const { isEnd, loadingArtworks, loadMore  } = useRandomArtworks(
     ({ getRandomArtworks }) => {
       setOffset(offset + 15);
-      setPostersList([...postersList, ...renderPosters(getRandomArtworks, 3, show, false, true)]);
+      setPostersList([...postersList, ...renderPosters(getRandomArtworks, 3, false, true)]);
     },
     offset,
   );

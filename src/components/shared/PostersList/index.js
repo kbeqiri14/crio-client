@@ -1,6 +1,7 @@
 import { memo, useMemo } from 'react';
 import { Col, Row, Tooltip } from 'antd';
 
+import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { CustomTooltip } from '@ui-kit/Tooltip';
 import { Text } from '@ui-kit/Text';
 import uuid from '@utils/uuid';
@@ -24,18 +25,18 @@ export const PosterCard = memo(
     onClick,
     ...props
   }) => {
+    const { show } = usePresentation();
     const lock = useMemo(() => isLock || (status && status !== 'available'), [isLock, status]);
-    const handleClick = () => {
-      onClick?.({
-        title,
-        description: description,
-        id: videoUri?.substring(videoUri?.lastIndexOf('/') + 1),
-        userId,
-        fbUserId,
-        name,
-        avatar: `https://graph.facebook.com/${fbUserId}/picture?height=350&width=350`,
-      });
-    };
+    const handleClick = () => show({
+      title,
+      description,
+      id: videoUri?.substring(videoUri?.lastIndexOf('/') + 1),
+      userId,
+      fbUserId,
+      name,
+      avatar: `https://graph.facebook.com/${fbUserId}/picture?height=350&width=350`,
+    });
+
     return (
       <div
         className={`video-grid__item-container ${lock ? 'lock' : ''}`}
@@ -85,22 +86,18 @@ export const PosterCard = memo(
   },
 );
 
-const LargeVideoPoster = memo(({ poster, onClick }) => (
+const LargeVideoPoster = memo(({ poster }) => (
   <Col span={12} xs={24} xl={12} lg={24} className='video-grid__item large'>
-    <PosterCard {...poster} onClick={onClick} />
+    <PosterCard {...poster} />
   </Col>
 ));
 
-const VideoPostersBlock = memo(({ posters, isLock, nonLock, onClick }) => (
+const VideoPostersBlock = memo(({ posters, isLock, nonLock }) => (
   <Col xs={24} lg={24} xl={12} span={12}>
     <Row justify='start' align='top' gutter={[22, 35]}>
       {posters.map((poster, index) => (
         <Col key={index} xs={12} lg={12} xl={12} span={12} className='video-grid__item'>
-          <PosterCard
-            {...poster}
-            isLock={poster.id === nonLock ? false : isLock}
-            onClick={onClick}
-          />
+          <PosterCard {...poster} isLock={poster.id === nonLock ? false : isLock} />
         </Col>
       ))}
     </Row>
@@ -122,21 +119,20 @@ const getRandomIndices = (arrLength, indicesCount) => {
   return indices;
 };
 
-export const renderPosters = (videoPosters = [], largePostersCount, handleClick, isLock) => {
+export const renderPosters = (videoPosters = [], largePostersCount, isLock) => {
   const largePosters = getRandomIndices(videoPosters.length, largePostersCount);
   const posterLinks = videoPosters.filter((_, idx) => !largePosters.has(idx));
   const regularPosterElements = arrayChunk(posterLinks, 4).map((vp) => (
     <VideoPostersBlock
       isLock={isLock}
       nonLock={posterLinks[0]?.id}
-      onClick={handleClick}
       key={uuid()}
       posters={vp}
     />
   ));
   const largePosterElements = videoPosters
     .filter((_, idx) => largePosters.has(idx))
-    .map((vp) => <LargeVideoPoster onClick={handleClick} key={uuid()} poster={vp} />);
+    .map((vp) => <LargeVideoPoster key={uuid()} poster={vp} />);
 
   const insertionPoints = getRandomIndices(regularPosterElements.length, largePostersCount);
 

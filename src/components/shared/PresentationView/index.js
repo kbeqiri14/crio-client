@@ -8,10 +8,10 @@ import { Text, Title } from '@ui-kit/Text';
 import { ReactComponent as CloseIcon } from '@svgs/x.svg';
 import './styles.less';
 
-export { usePresentation, PresentationProvider, defaultMockValue } from './PresentationContext';
+export { usePresentation, PresentationProvider } from './PresentationContext';
 
 export const PresentationView = ({ visible, videoInfo, isAuthenticated }) => {
-  const { show, hide } = usePresentation();
+  const { hide } = usePresentation();
   const { data } = useUserMoreArtworks(videoInfo.userId);
 
   return (
@@ -94,10 +94,7 @@ export const PresentationView = ({ visible, videoInfo, isAuthenticated }) => {
             <Row gutter={[22, 22]} justify='center' align='middle'>
               {data?.map((poster, idx) => (
                 <Col xl={8} md={12} sm={24} xs={24} key={idx}>
-                  <PosterCard {...poster} onClick={() => show({
-                    ...poster,
-                    avatar: `https://graph.facebook.com/${poster.fbUserId}/picture?height=350&width=350`,
-                  })} />
+                  <PosterCard {...poster} />
                 </Col>
               ))}
             </Row>

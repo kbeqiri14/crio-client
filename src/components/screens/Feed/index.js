@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Carousel, Row } from 'antd';
 
 import { useRandomArtworks } from '@root/src/hooks/useRandomArtworks';
-import { usePresentation, defaultMockValue } from '@shared/PresentationView';
 import { PosterCard, renderPosters } from '@shared/PostersList';
 import { Footer } from '@shared/Footer';
 import { Meta } from '@shared/Meta';
@@ -35,13 +34,18 @@ const SliderBreakPoints = {
 
 const videoPosters = getPosters(8);
 
-const ScrollPosters = ({ handleClick }) => {
-  return (
+const RandomAuthorArtworks = ({ posters }) => (
+  <Fragment>
+    <div className='cr-artworks-section__author'>
+      <Title level='10' color='white' inline>
+        © Artwork by &nbsp;
+        <Link>Ann Bee</Link>
+      </Title>
+    </div>
     <div className='cr-feed__poster-scroll'>
       <Slider withScroll breakpoints={SliderBreakPoints}>
         {videoPosters.concat(videoPosters).map((p, idx) => (
           <PosterCard
-            onClick={() => handleClick(defaultMockValue)}
             key={idx}
             thumbnailUri={p}
             name='Ann Bee'
@@ -50,18 +54,6 @@ const ScrollPosters = ({ handleClick }) => {
         ))}
       </Slider>
     </div>
-  );
-};
-
-const RandomAuthorArtworks = ({ posters, handleClick }) => (
-  <Fragment>
-    <div className='cr-artworks-section__author'>
-      <Title level='10' color='white' inline>
-        © Artwork by &nbsp;
-        <Link>Ann Bee</Link>
-      </Title>
-    </div>
-    <ScrollPosters handleClick={handleClick} />
     <Row gutter={[22, 35]} className='cr-landing__video-grid__container random-works'>
       {posters}
     </Row>
@@ -69,7 +61,6 @@ const RandomAuthorArtworks = ({ posters, handleClick }) => (
 );
 
 export const Feed = () => {
-  const { show } = usePresentation();
   const [offset, setOffset] = useState(0);
   const [carPosters, setCarPosters] = useState([]);
   const [topPosters, setTopPosters] = useState([]);
@@ -81,18 +72,18 @@ export const Feed = () => {
     ({ getRandomArtworks }) => {
       if (!offset) {
         setCarPosters(getRandomArtworks.slice(0, 4));
-        setTopPosters(renderPosters(getRandomArtworks.slice(4, 12), 0, show, false, true));
+        setTopPosters(renderPosters(getRandomArtworks.slice(4, 12), 0, false, true));
         setOffset(4 + 8 + 15);
         setBottomPosters([
           ...bottomPosters,
-          ...renderPosters(getRandomArtworks.slice(12), 3, show, false, true),
+          ...renderPosters(getRandomArtworks.slice(12), 3, false, true),
         ]);
         return;
       }
       setOffset(offset + 15);
       setBottomPosters([
         ...bottomPosters,
-        ...renderPosters(getRandomArtworks, 3, show, false, true),
+        ...renderPosters(getRandomArtworks, 3, false, true),
       ]);
     },
     offset,
@@ -155,7 +146,7 @@ export const Feed = () => {
         </Row>
         <div className='cr-artworks-section'>
           {authorBlocks.map((blockId) => (
-            <RandomAuthorArtworks handleClick={show} key={blockId} posters={bottomPosters} />
+            <RandomAuthorArtworks key={blockId} posters={bottomPosters} />
           ))}
           {!isEnd && offset && (
             <Row className='cr-landing__video-grid__see-all'>
