@@ -1,11 +1,9 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useState } from 'react';
 import { Row } from 'antd';
 import cc from 'classcat';
-import { useLazyQuery, useQuery, useReactiveVar } from '@apollo/client';
 
-import { randomNumberVar } from '@configs/client-cache';
 import { useCurrentUser } from '@app/auth/hooks';
-import { getRandomArtworksCount, getRandomArtworks } from '@app/graphql/queries/artworks.query';
+import { useRandomArtworks } from '@root/src/hooks/useRandomArtworks';
 import { usePresentation } from '@shared/PresentationView';
 import { renderPosters } from '@shared/PostersList';
 import { ConnectButton } from '@shared/ConnectButton';
@@ -22,38 +20,14 @@ export const LandingPage = () => {
 
   const { user } = useCurrentUser();
   const { show } = usePresentation();
-  const count = useReactiveVar(randomNumberVar);
 
-  const [requestRandomArtworks, { loading }] = useLazyQuery(getRandomArtworks, {
-    fetchPolicy: 'no-cache',
-    onCompleted: ({ getRandomArtworks }) => {
+  const { isEnd, loadingArtworks, loadMore  } = useRandomArtworks(
+    ({ getRandomArtworks }) => {
       setOffset(offset + 15);
       setPostersList([...postersList, ...renderPosters(getRandomArtworks, 3, show, false, true)]);
     },
-  });
-
-  const requestArtworks = useCallback(
-    (n) =>
-      requestRandomArtworks({
-        variables: { params: { count: n || count, offset } },
-      }),
-    [count, offset, requestRandomArtworks],
+    offset,
   );
-
-  const { data } = useQuery(getRandomArtworksCount, {
-    onCompleted: ({ getRandomArtworksCount }) => {
-      const n = Math.floor(Math.random() * getRandomArtworksCount + 1);
-      randomNumberVar(n);
-      requestArtworks(n);
-    },
-  });
-
-  const end = useMemo(
-    () => data?.getRandomArtworksCount <= offset,
-    [data?.getRandomArtworksCount, offset],
-  );
-
-  const handleLoadList = useCallback(() => requestArtworks(), [requestArtworks]);
 
   return (
     <div className='cr-landing__container'>
@@ -74,9 +48,9 @@ export const LandingPage = () => {
         <Row gutter={[22, 35]} className='cr-landing__video-grid__container'>
           {postersList}
         </Row>
-        <Row className={cc(['cr-landing__video-grid__see-all', { 'list-loaded': end }])}>
-          {!end && offset && (
-            <SecondaryButton loading={loading && offset} onClick={handleLoadList}>
+        <Row className={cc(['cr-landing__video-grid__see-all', { 'list-loaded': isEnd }])}>
+          {!isEnd && offset && (
+            <SecondaryButton loading={loadingArtworks && offset} onClick={loadMore}>
               SEE MORE
             </SecondaryButton>
           )}
