@@ -92,7 +92,7 @@ const Upload = () => {
           onCancel={hideConfirmation}
           className='confirmation'
         >
-          <Title level={30} color='white'>
+          <Title level={10} color='white'>
             Cancel the uploading?
           </Title>
           <ActionButtons
