@@ -68,22 +68,22 @@ export const Feed = () => {
   const [currentPoster, setCurrentPoster] = useState(carPosters?.[0]);
   const [authorBlocks] = useState(Array.from({ length: 1 }, () => uuid()));
 
-  const { isEnd, loadingArtworks, loadMore } = useRandomArtworks(
+  const { isEnd, loading, loadMore } = useRandomArtworks(
     ({ getRandomArtworks }) => {
       if (!offset) {
         setCarPosters(getRandomArtworks.slice(0, 4));
-        setTopPosters(renderPosters(getRandomArtworks.slice(4, 12), 0, false, true));
+        setTopPosters(renderPosters(getRandomArtworks.slice(4, 12), 0));
         setOffset(4 + 8 + 15);
         setBottomPosters([
           ...bottomPosters,
-          ...renderPosters(getRandomArtworks.slice(12), 3, false, true),
+          ...renderPosters(getRandomArtworks.slice(12), 3),
         ]);
         return;
       }
       setOffset(offset + 15);
       setBottomPosters([
         ...bottomPosters,
-        ...renderPosters(getRandomArtworks, 3, false, true),
+        ...renderPosters(getRandomArtworks, 3),
       ]);
     },
     offset,
@@ -150,7 +150,7 @@ export const Feed = () => {
           ))}
           {!isEnd && offset && (
             <Row className='cr-landing__video-grid__see-all'>
-              <SecondaryButton loading={loadingArtworks && offset} onClick={loadMore}>
+              <SecondaryButton loading={loading} onClick={loadMore}>
                 LOAD MORE
               </SecondaryButton>
             </Row>

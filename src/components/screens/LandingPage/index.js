@@ -19,10 +19,10 @@ export const LandingPage = () => {
 
   const { user } = useCurrentUser();
 
-  const { isEnd, loadingArtworks, loadMore  } = useRandomArtworks(
+  const { isEnd, loading, loadMore  } = useRandomArtworks(
     ({ getRandomArtworks }) => {
       setOffset(offset + 15);
-      setPostersList([...postersList, ...renderPosters(getRandomArtworks, 3, false, true)]);
+      setPostersList([...postersList, ...renderPosters(getRandomArtworks, 3)]);
     },
     offset,
   );
@@ -48,7 +48,7 @@ export const LandingPage = () => {
         </Row>
         <Row className={cc(['cr-landing__video-grid__see-all', { 'list-loaded': isEnd }])}>
           {!isEnd && offset && (
-            <SecondaryButton loading={loadingArtworks && offset} onClick={loadMore}>
+            <SecondaryButton loading={loading} onClick={loadMore}>
               SEE MORE
             </SecondaryButton>
           )}

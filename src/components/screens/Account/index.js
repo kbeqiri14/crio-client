@@ -1,40 +1,33 @@
 import { Fragment, memo, useEffect, useCallback, useState } from 'react';
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
-import { getFollowings, me } from '@app/graphql/queries/users.query';
-import { Spinner } from '@ui-kit/Spinner';
+import { getFollowings } from '@app/graphql/queries/users.query';
 import PersonalInfo from './__partials__/PersonalInfo';
 import EditProfile from './__partials__/EditProfile';
 import Details from './Details';
 
 export const MyAccount = () => {
   const [visible, setVisible] = useState(false);
-  const { user, dispatchUser } = useLoggedInUser();
+  const { user } = useLoggedInUser();
 
   const editProfile = useCallback(() => setVisible(true), []);
   const closeModal = useCallback(() => setVisible(false), []);
 
-  const { loading } = useQuery(me, {
-    onCompleted: (data) => dispatchUser(data?.me),
-    onError: (data) => console.log(data, 'error'),
-  });
   const [requestFollowings, { data: followings, loading: loadingFollowings }] = useLazyQuery(
     getFollowings,
     { fetchPolicy: 'no-cache' },
   );
 
   useEffect(() => {
-    if (!loading && user && !user.isCreator) {
+    if (user && !user.isCreator) {
       requestFollowings();
     }
-  }, [loading, user, requestFollowings]);
+  }, [user, requestFollowings]);
 
   return (
     <Fragment>
-      <Spinner spinning={loading} color='white'>
-        <PersonalInfo user={user} onClick={editProfile} isCreator={user.isCreator} />
-      </Spinner>
+      <PersonalInfo user={user} onClick={editProfile} isCreator={user.isCreator} />
       {visible && <EditProfile user={user} visible={visible} closeModal={closeModal} />}
       <Details
         isCreator={user.isCreator}
