@@ -1,18 +1,18 @@
 import { Link } from 'react-router-dom';
 import { Col, Modal, Row } from 'antd';
-import { getPosters } from '@screens/LandingPage/posters';
-import { defaultMockValue, usePresentation } from '@shared/PresentationView/PresentationContext';
+
+import { useUserMoreArtworks } from '@root/src/hooks/useUserMoreArtworks';
+import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { PosterCard } from '@shared/PostersList';
 import { Text, Title } from '@ui-kit/Text';
 import { ReactComponent as CloseIcon } from '@svgs/x.svg';
 import './styles.less';
 
-const posters = getPosters(3);
-
 export { usePresentation, PresentationProvider, defaultMockValue } from './PresentationContext';
 
 export const PresentationView = ({ visible, videoInfo, isAuthenticated }) => {
   const { show, hide } = usePresentation();
+  const { data } = useUserMoreArtworks(videoInfo.userId);
 
   return (
     <Modal
@@ -92,14 +92,12 @@ export const PresentationView = ({ visible, videoInfo, isAuthenticated }) => {
               </Col>
             </Row>
             <Row gutter={[22, 22]} justify='center' align='middle'>
-              {posters.map((p, idx) => (
+              {data?.map((poster, idx) => (
                 <Col xl={8} md={12} sm={24} xs={24} key={idx}>
-                  <PosterCard
-                    onClick={() => show(defaultMockValue)}
-                    thumbnailUri={p}
-                    name='Ann Bee'
-                    title='Blah'
-                  />
+                  <PosterCard {...poster} onClick={() => show({
+                    ...poster,
+                    avatar: `https://graph.facebook.com/${poster.fbUserId}/picture?height=350&width=350`,
+                  })} />
                 </Col>
               ))}
             </Row>

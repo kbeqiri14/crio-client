@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useMemo } from 'react';
-import { useLazyQuery, useReactiveVar } from '@apollo/client';
+import { useCallback, useMemo, useState } from 'react';
+import { useLazyQuery, useQuery, useReactiveVar } from '@apollo/client';
 
 import { randomNumberVar } from '@configs/client-cache';
 import { getRandomArtworksCount, getRandomArtworks } from '@app/graphql/queries/artworks.query';
@@ -7,14 +7,19 @@ import { getRandomArtworksCount, getRandomArtworks } from '@app/graphql/queries/
 const LIMIT = 15;
 
 export const useRandomArtworks = (onCompleted, offset = 0, limit = LIMIT) => {
+  const [loading, setLoading] = useState(true);
   const count = useReactiveVar(randomNumberVar);
 
-  const [requestRandomArtworks, { loading: loadingArtworks }] = useLazyQuery(getRandomArtworks, {
+  const [requestRandomArtworks] = useLazyQuery(getRandomArtworks, {
     fetchPolicy: 'no-cache',
-    onCompleted,
+    onCompleted: (result) => {
+      onCompleted(result);
+      setLoading(false);
+    },
+    onError: () => setLoading(false),
   });
 
-  const [requestRandomArtworksCount, { data, loading: loadingArtworksCount }] = useLazyQuery(
+  const { data: artworksCount } = useQuery(
     getRandomArtworksCount,
     {
       onCompleted: ({ getRandomArtworksCount }) => {
@@ -24,28 +29,21 @@ export const useRandomArtworks = (onCompleted, offset = 0, limit = LIMIT) => {
           variables: { params: { count: n, offset, limit } },
         });
       },
+      onError: () => setLoading(false),
     },
   );
 
   const isEnd = useMemo(
-    () => data?.getRandomArtworksCount <= offset,
-    [data?.getRandomArtworksCount, offset],
+    () => artworksCount?.getRandomArtworksCount <= offset,
+    [artworksCount?.getRandomArtworksCount, offset],
   );
 
-  const loadMore = useCallback(
-    () =>
-      requestRandomArtworks({
-        variables: { params: { count, offset, limit: LIMIT } },
-      }),
-    [count, offset, requestRandomArtworks],
-  );
+  const loadMore = useCallback( () => {
+    setLoading(true);
+    requestRandomArtworks({
+      variables: { params: { count, offset, limit: LIMIT } },
+    });
+  }, [count, offset, requestRandomArtworks]);
 
-  useEffect(requestRandomArtworksCount, [requestRandomArtworksCount]);
-
-  return {
-    isEnd,
-    loadingArtworks,
-    loadingArtworksCount,
-    loadMore,
-  };
+  return { isEnd, loading, loadMore };
 };
