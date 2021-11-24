@@ -58,7 +58,7 @@ export const PricingPlans = () => {
   const handleClick = useCallback(() => {
     if (user && !loading) {
       if (id) {
-        window.open(STRIPE_PAYMENT_URL, '_blank', 'noopener noreferrer nofollow').focus();
+        window.open(STRIPE_PAYMENT_URL, '_blank', 'noopener,noreferrer,nofollow').focus();
       }
     } else {
       warningToast('Warning', 'Please sign in to get started.');
