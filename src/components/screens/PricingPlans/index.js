@@ -2,11 +2,10 @@ import { useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Col, Row } from 'antd';
 import cc from 'classcat';
-import { useMutation } from '@apollo/client';
 
 import history from '@app/configs/history';
+import { STRIPE_PAYMENT_URL } from '@configs/environment';
 import { useCurrentUser } from '@app/auth/hooks';
-import { createSubscriber } from '@app/graphql/mutations/user.mutation';
 import { Meta } from '@shared/Meta';
 import { Footer } from '@shared/Footer';
 import { Text, Title } from '@ui-kit/Text';
@@ -56,20 +55,15 @@ export const PricingPlans = () => {
   const id = +pathname.split('/').slice(-1)[0];
   const goBack = useCallback(() => history.push(`/profile/perks/${id}`), [id]);
 
-  const [subscribe, { loading: subscribing }] = useMutation(createSubscriber, {
-    variables: { subscriberId: id || undefined },
-    onCompleted: () => history.push(`/profile/${id}`),
-  });
-
   const handleClick = useCallback(() => {
     if (user && !loading) {
       if (id) {
-        subscribe();
+        window.open(STRIPE_PAYMENT_URL, '_blank', 'noopener noreferrer nofollow').focus();
       }
     } else {
       warningToast('Warning', 'Please sign in to get started.');
     }
-  }, [id, loading, user, subscribe]);
+  }, [id, loading, user]);
 
   return (
     <div className='cr-pricing'>
@@ -93,7 +87,7 @@ export const PricingPlans = () => {
         </Col>
         <Col>
           <div className='cr-pricing__card is-paid'>
-            <RecommendIcon className='recommended-marker'/>
+            <RecommendIcon className='recommended-marker' />
             <Title level='10' color='white'>
               Pro
             </Title>
@@ -113,7 +107,6 @@ export const PricingPlans = () => {
                 filled
                 fillColor='tertiary'
                 isBlock
-                loading={subscribing}
                 onClick={handleClick}
               >
                 GET STARTED

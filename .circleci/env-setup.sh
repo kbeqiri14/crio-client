@@ -17,9 +17,8 @@ then
     echo "export REACT_APP_COGNITO_APP_CLIENT_ID=1b76ir6odhsf56d9u051hfvu43"
     echo "export REACT_APP_COGNITO_USER_POOL_ID=us-west-2_JVspvFNBB"
     echo "export REACT_APP_COGNITO_DOMAIN1=crio-development-auth.auth.us-west-2.amazoncognito.com"
-    echo "export REACT_APP_COGNITO_REDIRECT_SIGN_IN=https://crio-qa.tlabs.app/cognito/callback"
-    echo "export REACT_APP_COGNITO_REDIRECT_SIGN_OUT=https://crio-qa.tlabs.app"
     echo "export REACT_APP_FB_APP_ID=644393000298985"
+    echo "export REACT_APP_STRIPE_PAYMENT_URL=https://buy.stripe.com/test_aEU7w2ek11RycpO144"
   } >> "$BASH_ENV"
 elif [ "${CIRCLE_BRANCH}" == "staging" ]
 then
@@ -32,9 +31,8 @@ then
     echo "export REACT_APP_COGNITO_APP_CLIENT_ID=5nl699lvu2gmhat36pita5he9c"
     echo "export REACT_APP_COGNITO_USER_POOL_ID=us-west-2_ALXn4YGWa"
     echo "export REACT_APP_COGNITO_DOMAIN1=crio-staging-auth.auth.us-west-2.amazoncognito.com"
-    echo "export REACT_APP_COGNITO_REDIRECT_SIGN_IN=https://crio-staging.tlabs.app/cognito/callback"
-    echo "export REACT_APP_COGNITO_REDIRECT_SIGN_OUT=https://crio-staging.tlabs.app"
     echo "export REACT_APP_FB_APP_ID=1945366748964292"
+    echo "export REACT_APP_STRIPE_PAYMENT_URL=https://buy.stripe.com/test_aEU7w2ek11RycpO144"
   } >> "$BASH_ENV"
 elif [ "${CIRCLE_BRANCH}" == "master" ]
 then
