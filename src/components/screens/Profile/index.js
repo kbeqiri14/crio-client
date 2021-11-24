@@ -1,3 +1,4 @@
+import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import { Fragment, memo, useCallback, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -6,7 +7,6 @@ import { isFollowing, getUser } from '@app/graphql/queries/users.query';
 import { createFollowing } from '@app/graphql/mutations/user.mutation';
 import PersonalInfo from '@screens/Account/__partials__/PersonalInfo';
 import Details from '@screens/Account/Details';
-import { Spinner } from '@ui-kit/Spinner';
 
 export const Profile = () => {
   const { pathname } = useLocation();
@@ -36,15 +36,14 @@ export const Profile = () => {
 
   return (
     <Fragment>
-      <Spinner spinning={loadingUser || loadingIsFollowing} color='white'>
-        <PersonalInfo
-          isProfile
-          user={users?.getUser}
-          isFollow={isFollow}
-          loading={loadingFollowing}
-          onClick={handleClick}
-        />
-      </Spinner>
+      {loadingUser && <GlobalSpinner />}
+      <PersonalInfo
+        isProfile
+        user={users?.getUser}
+        isFollow={isFollow}
+        loading={loadingFollowing}
+        onClick={handleClick}
+      />
       <Details isProfile id={id} isFollow={isFollow} loadingIsFollowing={loadingIsFollowing} />
     </Fragment>
   );

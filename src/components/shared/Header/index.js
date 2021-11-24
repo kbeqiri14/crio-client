@@ -11,19 +11,22 @@ import { TabMenu } from './__partials__/TabMenu';
 import { ProfileMenu } from './__partials__/ProfileMenu';
 import './styles.less';
 
-const getTabItems = () => {
-  return [
+const getTabItems = (isCreator) => {
+  const items = [
     {
       id: 'home',
       title: 'Home',
       onClick: () => history.push('/'),
     },
-    {
+  ];
+  if (!isCreator) {
+    items.push({
       id: 'pricing',
       title: 'Pricing',
       onClick: () => history.push('/pricing'),
-    },
-  ];
+    });
+  }
+  return items;
 };
 
 export const Header = ({ isAuthenticated }) => {
@@ -31,7 +34,7 @@ export const Header = ({ isAuthenticated }) => {
   const { user } = useLoggedInUser();
   const activeItem = location.pathname?.replace('/', '') || 'home';
 
-  const menuItems = useMemo(() => getTabItems(!!user), [user]);
+  const menuItems = useMemo(() => getTabItems(user.isCreator), [user]);
   const upload = useCallback(() => history.push('/upload'), []);
 
   return (

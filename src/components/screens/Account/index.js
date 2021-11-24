@@ -1,3 +1,4 @@
+import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import { Fragment, memo, useEffect, useCallback, useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
 
@@ -27,6 +28,7 @@ export const MyAccount = () => {
 
   return (
     <Fragment>
+      {!user?.id && <GlobalSpinner />}
       <PersonalInfo user={user} onClick={editProfile} isCreator={user.isCreator} />
       {visible && <EditProfile user={user} visible={visible} closeModal={closeModal} />}
       <Details

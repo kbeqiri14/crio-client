@@ -57,13 +57,11 @@ export const PricingPlans = () => {
 
   const handleClick = useCallback(() => {
     if (user && !loading) {
-      if (id) {
-        window.open(STRIPE_PAYMENT_URL, '_blank', 'noopener,noreferrer,nofollow').focus();
-      }
+      window.open(STRIPE_PAYMENT_URL, '_blank', 'noopener,noreferrer,nofollow');
     } else {
       warningToast('Warning', 'Please sign in to get started.');
     }
-  }, [id, loading, user]);
+  }, [loading, user]);
 
   return (
     <div className='cr-pricing'>

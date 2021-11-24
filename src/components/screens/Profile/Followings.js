@@ -33,12 +33,7 @@ const FollowingRow = ({ user }) => (
         <div className='cr-feed__poster-scroll'>
           <Slider withScroll breakpoints={SliderBreakPoints} breakpointsBase='container'>
             {videoPosters.concat(videoPosters).map((p, idx) => (
-              <PosterCard
-                key={idx}
-                thumbnailUri={p}
-                name='Ann Bee'
-                title='Work’s name goes here'
-              />
+              <PosterCard key={idx} thumbnailUri={p} name='Ann Bee' title='Work’s name goes here' />
             ))}
           </Slider>
         </div>
@@ -49,8 +44,8 @@ const FollowingRow = ({ user }) => (
 
 const Followings = ({ loadingFollowings, followings }) => (
   <Spinner spinning={loadingFollowings} color='white'>
-    {followings?.map(({ userId, ...user }) => (
-      <FollowingRow key={user.id} user={user} />
+    {followings?.map(({ userId, ...user }, idx) => (
+      <FollowingRow key={user.id + idx} user={user} />
     ))}
   </Spinner>
 );

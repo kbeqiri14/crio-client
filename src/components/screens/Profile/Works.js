@@ -30,7 +30,7 @@ const Works = ({ isLock }) => {
   }, [isLock, works]);
 
   return (
-    <Spinner spinning={loading} color='white'>
+    <Spinner spinning={loading && !topPosters?.length} color='white'>
       <div className='cr-feed__posters-list cr-landing__video-grid'>
         <Row
           style={{ width: '100%' }}
