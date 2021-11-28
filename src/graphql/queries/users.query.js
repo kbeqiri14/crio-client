@@ -11,6 +11,14 @@ export const me_fragment = gql`
     lastName
     visibility
     isCreator
+    vouchers {
+      tier1
+      tier2
+      tier3
+    }
+    payments {
+      customerEmail
+    }
   }
 `;
 
