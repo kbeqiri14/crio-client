@@ -27,15 +27,16 @@ export const PosterCard = memo(
   }) => {
     const { show } = usePresentation();
     const lock = useMemo(() => isLock || (status && status !== 'available'), [isLock, status]);
-    const handleClick = () => show({
-      title,
-      description,
-      id: videoUri?.substring(videoUri?.lastIndexOf('/') + 1),
-      userId,
-      fbUserId,
-      name,
-      avatar: `https://graph.facebook.com/${fbUserId}/picture?height=350&width=350`,
-    });
+    const handleClick = () =>
+      show({
+        title,
+        description,
+        id: videoUri?.substring(videoUri?.lastIndexOf('/') + 1),
+        userId,
+        fbUserId,
+        name,
+        avatar: `https://graph.facebook.com/${fbUserId}/picture?height=350&width=350`,
+      });
 
     return (
       <div
@@ -123,12 +124,7 @@ export const renderPosters = (videoPosters = [], largePostersCount, isLock) => {
   const largePosters = getRandomIndices(videoPosters.length, largePostersCount);
   const posterLinks = videoPosters.filter((_, idx) => !largePosters.has(idx));
   const regularPosterElements = arrayChunk(posterLinks, 4).map((vp) => (
-    <VideoPostersBlock
-      isLock={isLock}
-      nonLock={posterLinks[0]?.id}
-      key={uuid()}
-      posters={vp}
-    />
+    <VideoPostersBlock isLock={isLock} nonLock={posterLinks[0]?.id} key={uuid()} posters={vp} />
   ));
   const largePosterElements = videoPosters
     .filter((_, idx) => largePosters.has(idx))

@@ -45,12 +45,7 @@ const RandomAuthorArtworks = ({ posters }) => (
     <div className='cr-feed__poster-scroll'>
       <Slider withScroll breakpoints={SliderBreakPoints}>
         {videoPosters.concat(videoPosters).map((p, idx) => (
-          <PosterCard
-            key={idx}
-            thumbnailUri={p}
-            name='Ann Bee'
-            title='Work’s name goes here'
-          />
+          <PosterCard key={idx} thumbnailUri={p} name='Ann Bee' title='Work’s name goes here' />
         ))}
       </Slider>
     </div>
@@ -74,17 +69,11 @@ export const Feed = () => {
         setCarPosters(getRandomArtworks.slice(0, 4));
         setTopPosters(renderPosters(getRandomArtworks.slice(4, 12), 0));
         setOffset(4 + 8 + 15);
-        setBottomPosters([
-          ...bottomPosters,
-          ...renderPosters(getRandomArtworks.slice(12), 3),
-        ]);
+        setBottomPosters([...bottomPosters, ...renderPosters(getRandomArtworks.slice(12), 3)]);
         return;
       }
       setOffset(offset + 15);
-      setBottomPosters([
-        ...bottomPosters,
-        ...renderPosters(getRandomArtworks, 3),
-      ]);
+      setBottomPosters([...bottomPosters, ...renderPosters(getRandomArtworks, 3)]);
     },
     offset,
     offset ? 15 : 4 + 8 + 15,

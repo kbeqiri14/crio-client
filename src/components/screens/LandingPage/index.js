@@ -19,13 +19,10 @@ export const LandingPage = () => {
 
   const { user } = useCurrentUser();
 
-  const { isEnd, loading, loadMore  } = useRandomArtworks(
-    ({ getRandomArtworks }) => {
-      setOffset(offset + 15);
-      setPostersList([...postersList, ...renderPosters(getRandomArtworks, 3)]);
-    },
-    offset,
-  );
+  const { isEnd, loading, loadMore } = useRandomArtworks(({ getRandomArtworks }) => {
+    setOffset(offset + 15);
+    setPostersList([...postersList, ...renderPosters(getRandomArtworks, 3)]);
+  }, offset);
 
   return (
     <div className='cr-landing__container'>
@@ -33,7 +30,7 @@ export const LandingPage = () => {
       <section className='cr-landing__banner'>
         <div>
           <div className='cr-landing__banner__heading'>
-            <h1>Discover the world’s top animators and creatives</h1>
+            <h1>Discover the Best Visual Content from your Favorite Creators</h1>
           </div>
           <div className='cr-landing__banner__desc'>
             Crio is a leading community platform for creatives to showcase their work and interact
