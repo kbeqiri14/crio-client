@@ -48,19 +48,10 @@ export const PosterCard = memo(
         {(index || index === 0) && <div className='poster-number'>{index}</div>}
         <Row justify='space-between' align='bottom' className='video-grid__item-panel'>
           <Col span={22}>
-            <div>
-              <Text level='60'>{name}</Text>
-            </div>
-            <div>
-              <Tooltip title={title}>
-                <Text level={'50'} ellipsis>
-                  {title}
-                </Text>
-              </Tooltip>
-            </div>
-            <Tooltip title={description}>
-              <Text level='50' ellipsis>
-                {description}
+            <Text level='60'>{name}</Text>
+            <Tooltip title={title}>
+              <Text level={'50'} ellipsis>
+                {title}
               </Text>
             </Tooltip>
           </Col>
