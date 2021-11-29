@@ -16,6 +16,7 @@ export const PresentationView = ({ visible, videoInfo, isAuthenticated }) => {
 
   return (
     <Modal
+      destroyOnClose
       onCancel={hide}
       visible={visible}
       maskClosable={false}

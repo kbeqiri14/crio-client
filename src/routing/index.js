@@ -65,7 +65,10 @@ export const AppRoutes = () => {
       crioUser.isFan &&
       (!crioUser.isSubscribed || !crioUser.subscribePeriodIsValid)
     ) {
-      timeout = setInterval(() => getLoggedInUser(), 5000); // once in 30 seconds
+      if (timeout) {
+        clearInterval(timeout);
+      }
+      timeout = setInterval(() => getLoggedInUser(), 30000); // once in 30 seconds
     }
     return () => {
       if (timeout) {
@@ -74,7 +77,7 @@ export const AppRoutes = () => {
     };
   }, [crioUser, getLoggedInUser]);
 
-  if (loading && !crioUser) {
+  if (loading) {
     return <GlobalSpinner />;
   }
 
