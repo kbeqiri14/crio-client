@@ -18,6 +18,10 @@ export const me_fragment = gql`
     }
     payments {
       customerEmail
+      periodStart
+      periodEnd
+      subscriptionStatus
+      lastEventSnapshot
     }
   }
 `;
