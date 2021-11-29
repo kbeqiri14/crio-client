@@ -9,8 +9,11 @@ import './styles.less';
 export const ProfileMenu = ({ user }) => {
   const { logout } = useFacebook();
   const source = useMemo(
-    () => (user.attributes?.picture ? JSON.parse(user.attributes.picture)?.data?.url : profile),
-    [user?.attributes?.picture],
+    () =>
+      user?.fbUserId
+        ? `https://graph.facebook.com/${user.fbUserId}/picture?height=350&width=350`
+        : profile,
+    [user.fbUserId],
   );
 
   return (
