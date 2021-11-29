@@ -21,17 +21,21 @@ export const useRandomArtworks = (onCompleted, offset = 0, limit = LIMIT) => {
 
   const { data: artworksCount } = useQuery(getRandomArtworksCount, {
     onCompleted: ({ getRandomArtworksCount }) => {
-      const n = Math.floor(Math.random() * getRandomArtworksCount + 1);
-      randomNumberVar(n);
-      requestRandomArtworks({
-        variables: { params: { count: n, offset, limit } },
-      });
+      if (getRandomArtworksCount > 0) {
+        const n = Math.floor(Math.random() * getRandomArtworksCount + 1);
+        randomNumberVar(n);
+        requestRandomArtworks({
+          variables: { params: { count: n, offset, limit } },
+        });
+      } else {
+        setLoading(false);
+      }
     },
     onError: () => setLoading(false),
   });
 
   const isEnd = useMemo(
-    () => artworksCount?.getRandomArtworksCount <= offset,
+    () => artworksCount?.getRandomArtworksCount <= offset + 8,
     [artworksCount?.getRandomArtworksCount, offset],
   );
 
