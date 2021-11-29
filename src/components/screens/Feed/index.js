@@ -127,12 +127,12 @@ export const Feed = () => {
               </Link>
             </div>
             <div className='cr-carousel__cards--title'>
-              <Title level='10' color='dark'>
+              <Title level='10' color='dark' ellipsis>
                 {currentPoster?.title}
               </Title>
             </div>
             <div className='cr-carousel__cards--desc'>
-              <Text level='10' color='black_75'>
+              <Text level='10' color='black_75' ellipsis>
                 {currentPoster?.description}
               </Text>
             </div>

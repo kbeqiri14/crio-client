@@ -3,7 +3,6 @@ import { Col, Row } from 'antd';
 
 import { PosterCard } from '@shared/PostersList';
 import ProfileInfo from '@shared/ProfileInfo';
-import { getPosters } from '@screens/LandingPage/posters';
 import { Slider } from '@ui-kit/Slider';
 import { Spinner } from '@ui-kit/Spinner';
 
@@ -21,9 +20,8 @@ const SliderBreakPoints = {
     slidesPerGroup: 1,
   },
 };
-const videoPosters = getPosters(8);
 
-const FollowingRow = ({ user }) => (
+const FollowingRow = ({ user, artworks }) => (
   <Row justify='center'>
     <Col span={6} className='following-info'>
       <ProfileInfo user={user} isFollowing />
@@ -32,8 +30,8 @@ const FollowingRow = ({ user }) => (
       <div className='cr-artworks-section'>
         <div className='cr-feed__poster-scroll'>
           <Slider withScroll breakpoints={SliderBreakPoints} breakpointsBase='container'>
-            {videoPosters.concat(videoPosters).map((p, idx) => (
-              <PosterCard key={idx} thumbnailUri={p} name='Ann Bee' title='Work’s name goes here' />
+            {artworks?.map((poster, idx) => (
+              <PosterCard key={idx} name={user.name} fbUserId={user.fbUserId} {...poster} />
             ))}
           </Slider>
         </div>
@@ -44,8 +42,8 @@ const FollowingRow = ({ user }) => (
 
 const Followings = ({ loadingFollowings, followings }) => (
   <Spinner spinning={loadingFollowings} color='white'>
-    {followings?.map(({ userId, ...user }, idx) => (
-      <FollowingRow key={user.id + idx} user={user} />
+    {followings?.map(({ artworks, ...user }, idx) => (
+      <FollowingRow key={user.id + idx} user={user} artworks={artworks} />
     ))}
   </Spinner>
 );

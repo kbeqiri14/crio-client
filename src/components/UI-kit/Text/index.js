@@ -7,7 +7,7 @@ const levelMapping = {
   30: 4,
 };
 
-export const Title = ({ level, children, className, inline = false, color, onClick }) => {
+export const Title = ({ level, children, className, inline = false, color, ellipsis, onClick }) => {
   const TitleTag = inline ? 'span' : `h${levelMapping[level]}`;
 
   if (!TitleTag) {
@@ -20,6 +20,7 @@ export const Title = ({ level, children, className, inline = false, color, onCli
         'crio-heading',
         `header-${level}`,
         `crio-heading--color--${color}`,
+        { ellipsis },
         className,
       ])}
       onClick={onClick}

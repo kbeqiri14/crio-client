@@ -67,11 +67,13 @@ export const AppRoutes = () => {
           <PrivateRoute isAuthenticated={isAuthenticated} path='/upload' component={Upload} />
           <Route exact path='/cognito/callback' component={CognitoCallback} />
         </Switch>
-        {isVisible && <PresentationView
-          visible={isVisible}
-          videoInfo={videoInfo}
-          isAuthenticated={isAuthenticated}
-        />}
+        {isVisible && (
+          <PresentationView
+            visible={isVisible}
+            videoInfo={videoInfo}
+            isAuthenticated={isAuthenticated}
+          />
+        )}
       </main>
     </div>
   );

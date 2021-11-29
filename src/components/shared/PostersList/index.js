@@ -27,15 +27,16 @@ export const PosterCard = memo(
   }) => {
     const { show } = usePresentation();
     const lock = useMemo(() => isLock || (status && status !== 'available'), [isLock, status]);
-    const handleClick = () => show({
-      title,
-      description,
-      id: videoUri?.substring(videoUri?.lastIndexOf('/') + 1),
-      userId,
-      fbUserId,
-      name,
-      avatar: `https://graph.facebook.com/${fbUserId}/picture?height=350&width=350`,
-    });
+    const handleClick = () =>
+      show({
+        title,
+        description,
+        id: videoUri?.substring(videoUri?.lastIndexOf('/') + 1),
+        userId,
+        fbUserId,
+        name,
+        avatar: `https://graph.facebook.com/${fbUserId}/picture?height=350&width=350`,
+      });
 
     return (
       <div
@@ -47,19 +48,10 @@ export const PosterCard = memo(
         {(index || index === 0) && <div className='poster-number'>{index}</div>}
         <Row justify='space-between' align='bottom' className='video-grid__item-panel'>
           <Col span={22}>
-            <div>
-              <Text level='60'>{name}</Text>
-            </div>
-            <div>
-              <Tooltip title={title}>
-                <Text level={'50'} ellipsis>
-                  {title}
-                </Text>
-              </Tooltip>
-            </div>
-            <Tooltip title={description}>
-              <Text level='50' ellipsis>
-                {description}
+            <Text level='60'>{name}</Text>
+            <Tooltip title={title}>
+              <Text level={'50'} ellipsis>
+                {title}
               </Text>
             </Tooltip>
           </Col>
@@ -123,12 +115,7 @@ export const renderPosters = (videoPosters = [], largePostersCount, isLock) => {
   const largePosters = getRandomIndices(videoPosters.length, largePostersCount);
   const posterLinks = videoPosters.filter((_, idx) => !largePosters.has(idx));
   const regularPosterElements = arrayChunk(posterLinks, 4).map((vp) => (
-    <VideoPostersBlock
-      isLock={isLock}
-      nonLock={posterLinks[0]?.id}
-      key={uuid()}
-      posters={vp}
-    />
+    <VideoPostersBlock isLock={isLock} nonLock={posterLinks[0]?.id} key={uuid()} posters={vp} />
   ));
   const largePosterElements = videoPosters
     .filter((_, idx) => largePosters.has(idx))

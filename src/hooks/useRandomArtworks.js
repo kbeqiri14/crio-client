@@ -19,26 +19,23 @@ export const useRandomArtworks = (onCompleted, offset = 0, limit = LIMIT) => {
     onError: () => setLoading(false),
   });
 
-  const { data: artworksCount } = useQuery(
-    getRandomArtworksCount,
-    {
-      onCompleted: ({ getRandomArtworksCount }) => {
-        const n = Math.floor(Math.random() * getRandomArtworksCount + 1);
-        randomNumberVar(n);
-        requestRandomArtworks({
-          variables: { params: { count: n, offset, limit } },
-        });
-      },
-      onError: () => setLoading(false),
+  const { data: artworksCount } = useQuery(getRandomArtworksCount, {
+    onCompleted: ({ getRandomArtworksCount }) => {
+      const n = Math.floor(Math.random() * getRandomArtworksCount + 1);
+      randomNumberVar(n);
+      requestRandomArtworks({
+        variables: { params: { count: n, offset, limit } },
+      });
     },
-  );
+    onError: () => setLoading(false),
+  });
 
   const isEnd = useMemo(
     () => artworksCount?.getRandomArtworksCount <= offset,
     [artworksCount?.getRandomArtworksCount, offset],
   );
 
-  const loadMore = useCallback( () => {
+  const loadMore = useCallback(() => {
     setLoading(true);
     requestRandomArtworks({
       variables: { params: { count, offset, limit: LIMIT } },

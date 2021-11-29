@@ -38,15 +38,14 @@ const PerksList = ({ listItems, isFree }) => {
 };
 
 const perksListFree = [
-  'View all content across the entire platform from your favourite creators',
-  'Access to never-before seen exclusive content',
+  'View all publicly available content across the entire platform from your favorite creators',
   'Behind the scenes footage',
 ];
 const perksListPro = [
-  ...perksListFree,
-  `1 Voucher / month for Tier 1 Perks \n(e.g., Personal Video Edits from any creator)`,
-  `2 Vouchers / month for Tier 2 Perks \n(e.g., Video EditingTutorials from any creator)`,
-  `3 Vouchers / month for Tier 3 Perks \n(e.g., Asset packs, downloadable content, etc.)`,
+  'View all content across the entire platform from all your favorite creators',
+  'Behind the scenes footage',
+  'Access to never-before seen exclusive content',
+  '5 Vouchers / month to redeem for various perks from any of your favorite creators (e.g., personal video edits, downloadable content, tutorials, merchandise, and much more!)',
 ];
 
 export const PricingPlans = () => {
@@ -91,7 +90,7 @@ export const PricingPlans = () => {
             </Title>
             <div className='cr-pricing__card--price'>
               <Title level='10' color='white' inline>
-                $8
+                $5
               </Title>
               <Text level='30' color='white_75' inline>
                 / month
