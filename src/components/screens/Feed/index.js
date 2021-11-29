@@ -93,7 +93,7 @@ export const Feed = () => {
   return (
     <div className='cr-feed'>
       <Meta title='Feed' description='Crio - Artworks Feed' />
-      {loading && <GlobalSpinner />}
+      {!carPosters?.length && <GlobalSpinner />}
       <section className='cr-feed__poster-carousel'>
         <div className='cr-carousel'>
           <Carousel

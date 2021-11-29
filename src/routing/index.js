@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import { useLazyQuery } from '@apollo/client';
+import { isFuture } from 'date-fns';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { useCurrentUser } from '@app/auth/hooks';
@@ -20,13 +21,24 @@ import Upload from '@screens/Upload';
 export const AppRoutes = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const { user, loading } = useCurrentUser();
-  const { dispatchUser } = useLoggedInUser();
+  const { dispatchUser, user: crioUser } = useLoggedInUser();
   const { videoInfo, isVisible } = usePresentation();
   const { pathname } = useLocation();
 
   const [getLoggedInUser] = useLazyQuery(me, {
-    onCompleted: (data) => dispatchUser(data?.me),
+    onCompleted: (data) => {
+      let userInfo;
+      if (data?.me) {
+        userInfo = { ...data.me };
+        userInfo.isFan = userInfo.isCreator;
+        userInfo.isSubscribed = userInfo.payment?.subscriptionStatus === 'active';
+        const periodEnd = userInfo.payment?.periodEnd;
+        userInfo.subscribePeriodIsValid = periodEnd ? isFuture(new Date(periodEnd)) : false;
+      }
+      dispatchUser(userInfo);
+    },
     onError: (data) => console.log(data, 'error'),
+    fetchPolicy: 'cache-and-network',
   });
 
   useEffect(() => {
@@ -46,7 +58,23 @@ export const AppRoutes = () => {
     }
   }, [getLoggedInUser, loading, user]);
 
-  if (loading) {
+  useEffect(() => {
+    let timeout;
+    if (
+      crioUser &&
+      crioUser.isFan &&
+      (!crioUser.isSubscribed || !crioUser.subscribePeriodIsValid)
+    ) {
+      timeout = setInterval(() => getLoggedInUser(), 5000); // once in 30 seconds
+    }
+    return () => {
+      if (timeout) {
+        clearInterval(timeout);
+      }
+    };
+  }, [crioUser, getLoggedInUser]);
+
+  if (loading && !crioUser) {
     return <GlobalSpinner />;
   }
 

@@ -16,7 +16,7 @@ export const me_fragment = gql`
       tier2
       tier3
     }
-    payments {
+    payment {
       customerEmail
       periodStart
       periodEnd

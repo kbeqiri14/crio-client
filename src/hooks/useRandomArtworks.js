@@ -11,7 +11,7 @@ export const useRandomArtworks = (onCompleted, offset = 0, limit = LIMIT) => {
   const count = useReactiveVar(randomNumberVar);
 
   const [requestRandomArtworks] = useLazyQuery(getRandomArtworks, {
-    fetchPolicy: 'no-cache',
+    fetchPolicy: 'cache-and-network',
     onCompleted: (result) => {
       onCompleted(result);
       setLoading(false);
@@ -31,7 +31,7 @@ export const useRandomArtworks = (onCompleted, offset = 0, limit = LIMIT) => {
   });
 
   const isEnd = useMemo(
-    () => artworksCount?.getRandomArtworksCount <= offset,
+    () => artworksCount?.getRandomArtworksCount <= offset + 8,
     [artworksCount?.getRandomArtworksCount, offset],
   );
 
