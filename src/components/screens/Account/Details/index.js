@@ -21,6 +21,7 @@ const tabs = {
 
 const Details = ({
   id,
+  name,
   isProfile,
   isCreator,
   isFollow,
@@ -71,7 +72,7 @@ const Details = ({
             loadingIsFollowing ? (
               <Spinner spinning={true} color='white' />
             ) : (
-              <Works isLock={isProfile && !isFollow} />
+              <Works name={name} isProfile={isProfile} isLock={isProfile && !isFollow} />
             )
           ) : (
             <Followings followings={followings} loadingFollowings={loadingFollowings} />

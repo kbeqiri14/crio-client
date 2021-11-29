@@ -13,7 +13,7 @@ export const Profile = () => {
   const [isFollow, setIsFollow] = useState(false);
   const id = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
 
-  const { data: users, loading: loadingUser } = useQuery(getUser, { variables: { id } });
+  const { data: userData, loading: loadingUser } = useQuery(getUser, { variables: { id } });
   const { loading: loadingIsFollowing } = useQuery(isFollowing, {
     variables: { followingId: id },
     fetchPolicy: 'no-cache',
@@ -32,6 +32,17 @@ export const Profile = () => {
     },
   });
 
+  const name = useMemo(() => {
+    const { visibility, ...user } = userData?.getUser || {};
+    if (visibility?.includes('name')) {
+      return `${user?.firstName} ${user?.lastName}`;
+    }
+    if (visibility?.includes('username')) {
+      return user?.username;
+    }
+    return user?.email;
+  }, [userData?.getUser]);
+
   const handleClick = useCallback(() => follow({ variables: { followingId: id } }), [follow, id]);
 
   return (
@@ -39,12 +50,18 @@ export const Profile = () => {
       {loadingUser && <GlobalSpinner />}
       <PersonalInfo
         isProfile
-        user={users?.getUser}
+        user={userData?.getUser}
         isFollow={isFollow}
         loading={loadingFollowing}
         onClick={handleClick}
       />
-      <Details isProfile id={id} isFollow={isFollow} loadingIsFollowing={loadingIsFollowing} />
+      <Details
+        isProfile
+        id={id}
+        name={name}
+        isFollow={isFollow}
+        loadingIsFollowing={loadingIsFollowing}
+      />
     </Fragment>
   );
 };

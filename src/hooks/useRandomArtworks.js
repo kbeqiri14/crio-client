@@ -21,7 +21,7 @@ export const useRandomArtworks = (onCompleted, offset = 0, limit = LIMIT) => {
 
   const { data: artworksCount } = useQuery(getRandomArtworksCount, {
     onCompleted: ({ getRandomArtworksCount }) => {
-      if (getRandomArtworksCount > 0) {
+      if (getRandomArtworksCount >= 8) {
         const n = Math.floor(Math.random() * getRandomArtworksCount + 1);
         randomNumberVar(n);
         requestRandomArtworks({

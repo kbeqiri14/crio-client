@@ -5,6 +5,7 @@ import { PosterCard } from '@shared/PostersList';
 import ProfileInfo from '@shared/ProfileInfo';
 import { Slider } from '@ui-kit/Slider';
 import { Spinner } from '@ui-kit/Spinner';
+import emptyFollowings from '@images/empty-followings.png';
 
 const SliderBreakPoints = {
   800: {
@@ -42,9 +43,15 @@ const FollowingRow = ({ user, artworks }) => (
 
 const Followings = ({ loadingFollowings, followings }) => (
   <Spinner spinning={loadingFollowings} color='white'>
-    {followings?.map(({ artworks, ...user }, idx) => (
-      <FollowingRow key={user.id + idx} user={user} artworks={artworks} />
-    ))}
+    {!loadingFollowings && !followings?.length ? (
+      <div className='empty-followings'>
+        <img alt='no followings' src={emptyFollowings} width={301} height={266} />
+      </div>
+    ) : (
+      followings?.map(({ artworks, ...user }, idx) => (
+        <FollowingRow key={user.id + idx} user={user} artworks={artworks} />
+      ))
+    )}
   </Spinner>
 );
 
