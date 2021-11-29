@@ -1,4 +1,4 @@
-import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
+// import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import { Spinner } from '@ui-kit/Spinner';
 import { Fragment, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -93,7 +93,7 @@ export const Feed = () => {
   return (
     <div className='cr-feed'>
       <Meta title='Feed' description='Crio - Artworks Feed' />
-      {!carPosters?.length && <GlobalSpinner />}
+      {/*{!carPosters?.length && <GlobalSpinner />}*/}
       <section className='cr-feed__poster-carousel'>
         <div className='cr-carousel'>
           <Carousel

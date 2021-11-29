@@ -1,3 +1,4 @@
+import cc from 'classcat';
 import { memo, useMemo } from 'react';
 import { Col, Row, Tooltip } from 'antd';
 
@@ -27,6 +28,7 @@ export const PosterCard = memo(
   }) => {
     const { show } = usePresentation();
     const lock = useMemo(() => isLock || (status && status !== 'available'), [isLock, status]);
+
     const handleClick = () =>
       show({
         title,
@@ -39,41 +41,41 @@ export const PosterCard = memo(
       });
 
     return (
-      <div
-        className={`video-grid__item-container ${lock ? 'lock' : ''}`}
-        onClick={handleClick}
-        {...props}
+      <CustomTooltip
+        visible={false}
+        className='overlayProcess'
+        description='Your video is being processed. It can take a while. Please wait.'
       >
-        <img alt='Crio artworks poster' src={thumbnailUri} className={lock ? 'lock' : ''} />
-        {(index || index === 0) && <div className='poster-number'>{index}</div>}
-        <Row justify='space-between' align='bottom' className='video-grid__item-panel'>
-          <Col span={22}>
-            <Text level='60'>{name}</Text>
-            <Tooltip title={title}>
-              <Text level={'50'} ellipsis>
-                {title}
-              </Text>
-            </Tooltip>
-          </Col>
-          <Col span={1}>
-            <PlayIcon />
-          </Col>
-        </Row>
-        {lock && (
-          <div className='video-grid__item-lock'>
-            {isLock ? (
+        <div
+          className={cc([
+            'video-grid__item-container',
+            { processing: status !== 'available', lock },
+          ])}
+          onClick={handleClick}
+          {...props}
+        >
+          <img alt='Crio artworks poster' src={thumbnailUri} className={cc([{ lock }])} />
+          {(index || index === 0) && <div className='poster-number'>{index}</div>}
+          <Row justify='space-between' align='bottom' className='video-grid__item-panel'>
+            <Col span={22}>
+              <Text level='60'>{name}</Text>
+              <Tooltip title={title}>
+                <Text level={'50'} ellipsis>
+                  {title}
+                </Text>
+              </Tooltip>
+            </Col>
+            <Col span={1}>
+              <PlayIcon />
+            </Col>
+          </Row>
+          {lock && (
+            <div className='video-grid__item-lock'>
               <img alt='lock' src={isLock ? lockImage : loadingVideo} />
-            ) : (
-              <CustomTooltip
-                className='overlayProcess'
-                description='Your video is being processed. It can take a while. Please wait.'
-              >
-                <img alt='lock' src={isLock ? lockImage : loadingVideo} />
-              </CustomTooltip>
-            )}
-          </div>
-        )}
-      </div>
+            </div>
+          )}
+        </div>
+      </CustomTooltip>
     );
   },
 );

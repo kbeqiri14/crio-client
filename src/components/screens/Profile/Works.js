@@ -23,7 +23,7 @@ const Works = ({ isLock }) => {
 
   return (
     <Spinner spinning={loading && !works?.length} color='white'>
-      <div className='cr-feed__posters-list cr-landing__video-grid'>
+      <div className='cr-feed__posters-list cr-landing__video-grid profile-artworks-list'>
         <Row
           style={{ width: '100%' }}
           gutter={[22, 35]}
