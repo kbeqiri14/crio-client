@@ -21,7 +21,7 @@ export const useRandomArtworks = (onCompleted, offset = 0, limit = LIMIT) => {
 
   const { data: artworksCount } = useQuery(getRandomArtworksCount, {
     onCompleted: ({ getRandomArtworksCount }) => {
-      if (getRandomArtworksCount >= 15 && limit === LIMIT) {
+      if (getRandomArtworksCount >= 15 || (limit === LIMIT && getRandomArtworksCount >= 27)) {
         const n = Math.floor(Math.random() * getRandomArtworksCount + 1);
         randomNumberVar(n);
         requestRandomArtworks({
@@ -35,7 +35,7 @@ export const useRandomArtworks = (onCompleted, offset = 0, limit = LIMIT) => {
   });
 
   const isEnd = useMemo(
-    () => artworksCount?.getRandomArtworksCount <= offset + 8,
+    () => artworksCount?.getRandomArtworksCount <= offset + 15,
     [artworksCount?.getRandomArtworksCount, offset],
   );
 

@@ -25,18 +25,20 @@ const PersonalInfo = ({ user, isCreator, isProfile, isFollow, loading, onClick }
       <Col span={16}>
         <ProfileInfo user={user} isProfile={isProfile} isCreator={isCreator || isProfile} />
       </Col>
-      <Col span={8} className='right'>
-        <SecondaryButton
-          size='large'
-          textColor={isProfile ? undefined : 'white'}
-          borderColor={isProfile ? undefined : 'white'}
-          icon={buttonIcon}
-          loading={loading}
-          onClick={onClick}
-        >
-          {buttonLabel}
-        </SecondaryButton>
-      </Col>
+      {!(isCreator && isProfile) && (
+        <Col span={8} className='right'>
+          <SecondaryButton
+            size='large'
+            textColor={isProfile ? undefined : 'white'}
+            borderColor={isProfile ? undefined : 'white'}
+            icon={buttonIcon}
+            loading={loading}
+            onClick={onClick}
+          >
+            {buttonLabel}
+          </SecondaryButton>
+        </Col>
+      )}
     </Row>
   );
 };
