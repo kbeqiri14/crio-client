@@ -74,7 +74,7 @@ export const PresentationView = ({ visible, videoInfo, isAuthenticated }) => {
             </Text>
           </Col>
         </Row>
-        {data?.count >= 3 && (
+        {data?.length >= 3 && (
           <Row justify='start' className='video-player-more'>
             <Col span={18} offset={3} className='column'>
               <Row justify='space-between' align='middle'>
