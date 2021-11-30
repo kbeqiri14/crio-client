@@ -3,7 +3,7 @@
 {
   echo "export STACK_ACCOUNT=$(aws sts get-caller-identity --query "Account" --output text)"
   echo "export NODE_ENV=production"
-  echo "export DOMAIN_NAME=tlabs.app"
+  echo "export DOMAIN_NAME=criointeractive.com"
 } >> "$BASH_ENV"
 
 if [ "${CIRCLE_BRANCH}" == "develop" ]
