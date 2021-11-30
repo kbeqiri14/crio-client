@@ -40,6 +40,13 @@
   &.processing {
     z-index: 102;
     position: relative;
+    .video-grid__item-lock img {
+      animation-name: rotateLock;
+      animation-duration: 3s;
+      animation-fill-mode: forwards;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
   }
   img {
     height: 100%;
@@ -93,11 +100,6 @@
     img {
       width: 102px !important;
       height: 102px !important;
-      animation-name: rotateLock;
-      animation-duration: 3s;
-      animation-fill-mode: forwards;
-      animation-iteration-count: infinite;
-      animation-timing-function: linear;
     }
   }
   img {

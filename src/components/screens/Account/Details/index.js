@@ -1,12 +1,17 @@
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useLazyQuery, useMutation } from '@apollo/client';
+import { isFuture } from 'date-fns';
 import { Tabs } from 'antd';
-import { useLazyQuery } from '@apollo/client';
 
-import history from '@app/configs/history';
-import { isSubscriber } from '@app/graphql/queries/users.query';
-import { Spinner } from '@ui-kit/Spinner';
+import { SendEmailModal } from '@screens/Account/__partials__/SendEmailModal';
+import { me } from '@app/graphql/queries/users.query';
+import { contactCreator } from '@app/graphql/mutations/user.mutation';
 import { ReactComponent as Subscription } from '@svgs/subscription.svg';
+import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
+import history from '@app/configs/history';
+import { Spinner } from '@ui-kit/Spinner';
+import { errorToast, successToast } from '@ui-kit/Notification';
 import Followings from '../../Profile/Followings';
 import Works from '../../Profile/Works';
 import Perks from '../../Profile/Perks';
@@ -29,8 +34,51 @@ const Details = ({
   loadingFollowings,
   followings,
 }) => {
-  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [selectedTier, setSelectedTier] = useState(undefined);
+  const { user, dispatchUser } = useLoggedInUser();
   const { pathname } = useLocation();
+
+  const [getLoggedInUser] = useLazyQuery(me, {
+    onCompleted: (data) => {
+      let userInfo;
+      if (data?.me) {
+        userInfo = { ...data.me };
+        userInfo.isFan = userInfo.isCreator;
+        userInfo.isSubscribed = userInfo.payment?.subscriptionStatus === 'active';
+        const periodEnd = userInfo.payment?.periodEnd;
+        userInfo.subscribePeriodIsValid = periodEnd ? isFuture(new Date(periodEnd)) : false;
+      }
+      dispatchUser(userInfo);
+    },
+    onError: (data) => console.log(data, 'error'),
+    fetchPolicy: 'network-only',
+  });
+
+  const [sendEmail, { loading }] = useMutation(contactCreator, {
+    onCompleted: (data) => {
+      successToast('The message is successfully sent!');
+      setSelectedTier(undefined);
+      getLoggedInUser();
+    },
+    onError: () => errorToast('Something went wrong!', 'Please, try again later!'),
+  });
+
+  const handleContactCreator = useCallback(
+    async (message) => {
+      await sendEmail({
+        variables: {
+          mailInfo: {
+            tier: selectedTier.toString(),
+            creatorId: +id,
+            message,
+          },
+        },
+      });
+    },
+    [id, selectedTier, sendEmail],
+  );
+
+  const isSubscribed = useMemo(() => user.subscribePeriodIsValid && user.isSubscribed, [user]);
   const activeKey = useMemo(
     () => (pathname.split('/').includes('perks') ? tabs.PERKS : tabs.WORKS),
     [pathname],
@@ -48,21 +96,6 @@ const Details = ({
     },
     [id],
   );
-  const [requestIsSubscriber, { loading: loadingIsSubscriber }] = useLazyQuery(isSubscriber, {
-    variables: { subscriberId: id },
-    fetchPolicy: 'no-cache',
-    onCompleted: (data) => {
-      if (data?.isSubscriber) {
-        setIsSubscribed(true);
-      }
-    },
-  });
-
-  useEffect(() => {
-    if (id) {
-      requestIsSubscriber();
-    }
-  }, [id, requestIsSubscriber]);
 
   return (
     <div className='profile-details'>
@@ -78,14 +111,24 @@ const Details = ({
             <Followings followings={followings} loadingFollowings={loadingFollowings} />
           )}
         </TabPane>
-        {(isCreator || isProfile) && (
+        {(isCreator || isProfile) && user && (
           <TabPane key={tabs.PERKS} tab='PERKS'>
-            <Perks isProfile={isProfile} isSubscribed={isSubscribed} />
+            <Perks
+              vouchers={user.vouchers}
+              onButtonClick={setSelectedTier}
+              isProfile={isProfile}
+              isSubscribed={isSubscribed}
+            />
           </TabPane>
         )}
       </Tabs>
-      {isProfile && !isSubscribed && !loadingIsSubscriber && (
-        <Subscription className='subscription-icon' />
+      {isProfile && !isSubscribed && <Subscription className='subscription-icon' />}
+      {!!selectedTier && (
+        <SendEmailModal
+          onCancel={() => setSelectedTier(undefined)}
+          loading={loading}
+          handleSendEmail={handleContactCreator}
+        />
       )}
     </div>
   );
