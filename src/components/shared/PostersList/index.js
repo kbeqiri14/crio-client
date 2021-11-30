@@ -2,7 +2,6 @@ import cc from 'classcat';
 import { memo, useMemo } from 'react';
 import { Col, Row, Tooltip } from 'antd';
 
-import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { CustomTooltip } from '@ui-kit/Tooltip';
 import { Text } from '@ui-kit/Text';
@@ -28,19 +27,8 @@ export const PosterCard = memo(
     onClick,
     ...props
   }) => {
-    const { user: loggedInUser } = useLoggedInUser();
     const { show } = usePresentation();
 
-    const userName = useMemo(() => {
-      const { visibility, ...user } = loggedInUser || {};
-      if (visibility?.includes('name')) {
-        return `${user?.firstName} ${user?.lastName}`;
-      }
-      if (visibility?.includes('username')) {
-        return user?.username;
-      }
-      return user?.email;
-    }, [loggedInUser]);
     const lock = useMemo(() => isLock || (status && status !== 'available'), [isLock, status]);
 
     const handleClick = () =>
@@ -51,7 +39,7 @@ export const PosterCard = memo(
         artworkId,
         userId,
         fbUserId,
-        name: name || userName,
+        name,
         avatar: `https://graph.facebook.com/${fbUserId}/picture?height=350&width=350`,
       });
 
