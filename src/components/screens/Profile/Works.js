@@ -13,11 +13,13 @@ import emptyArtworks from '@images/empty-artworks.png';
 
 const Works = ({ isProfile, name, isLock }) => {
   const { pathname } = useLocation();
+  const [initialPolling, setInitialPolling] = useState(true);
   const [works, setWorks] = useState([]);
 
   const { loading } = useQuery(getUserArtworks, {
     variables: { id: +pathname.split('/').slice(-1)[0] || undefined },
     onCompleted: ({ getUserArtworks }) => {
+      setInitialPolling(false);
       setWorks(getUserArtworks);
     },
     fetchPolicy: 'no-cache',
@@ -28,8 +30,8 @@ const Works = ({ isProfile, name, isLock }) => {
   const upload = useCallback(() => history.push('/upload'), []);
 
   return (
-    <Spinner spinning={loading && !works?.length} color='white'>
-      {!loading && !works?.length ? (
+    <Spinner spinning={initialPolling && loading && !works?.length} color='white'>
+      {(!loading || !initialPolling) && !works?.length ? (
         <Row justify='center' gutter={[0, 30]} className='empty-artworks'>
           <Col span={24}>
             <img alt='no artworks' src={emptyArtworks} width={301} height={216} />
@@ -40,7 +42,7 @@ const Works = ({ isProfile, name, isLock }) => {
             </Text>
           </Col>
           {!isProfile && (
-            <Col span={24}>
+            <Col>
               <SecondaryButton filled textColor='white' onClick={upload}>
                 UPLOAD
               </SecondaryButton>
