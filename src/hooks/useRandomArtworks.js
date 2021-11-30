@@ -35,7 +35,7 @@ export const useRandomArtworks = (onCompleted, offset = 0, limit = LIMIT) => {
   });
 
   const isEnd = useMemo(
-    () => artworksCount?.getRandomArtworksCount <= offset + 8,
+    () => artworksCount?.getRandomArtworksCount <= offset + 15,
     [artworksCount?.getRandomArtworksCount, offset],
   );
 
