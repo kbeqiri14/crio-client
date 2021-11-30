@@ -2,11 +2,10 @@ import { useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Col, Row } from 'antd';
 import cc from 'classcat';
-import { useMutation } from '@apollo/client';
 
 import history from '@app/configs/history';
+import { STRIPE_PAYMENT_URL } from '@configs/environment';
 import { useCurrentUser } from '@app/auth/hooks';
-import { createSubscriber } from '@app/graphql/mutations/user.mutation';
 import { Meta } from '@shared/Meta';
 import { Footer } from '@shared/Footer';
 import { Text, Title } from '@ui-kit/Text';
@@ -39,15 +38,14 @@ const PerksList = ({ listItems, isFree }) => {
 };
 
 const perksListFree = [
-  'View all content across the entire platform from your favourite creators',
-  'Access to never-before seen exclusive content',
+  'View all publicly available content across the entire platform from your favorite creators',
   'Behind the scenes footage',
 ];
 const perksListPro = [
-  ...perksListFree,
-  `1 Voucher / month for Tier 1 Perks \n(e.g., Personal Video Edits from any creator)`,
-  `2 Vouchers / month for Tier 2 Perks \n(e.g., Video EditingTutorials from any creator)`,
-  `3 Vouchers / month for Tier 3 Perks \n(e.g., Asset packs, downloadable content, etc.)`,
+  'View all content across the entire platform from all your favorite creators',
+  'Behind the scenes footage',
+  'Access to never-before seen exclusive content',
+  '5 Vouchers / month to redeem for various perks from any of your favorite creators (e.g., personal video edits, downloadable content, tutorials, merchandise, and much more!)',
 ];
 
 export const PricingPlans = () => {
@@ -56,20 +54,13 @@ export const PricingPlans = () => {
   const id = +pathname.split('/').slice(-1)[0];
   const goBack = useCallback(() => history.push(`/profile/perks/${id}`), [id]);
 
-  const [subscribe, { loading: subscribing }] = useMutation(createSubscriber, {
-    variables: { subscriberId: id || undefined },
-    onCompleted: () => history.push(`/profile/${id}`),
-  });
-
   const handleClick = useCallback(() => {
     if (user && !loading) {
-      if (id) {
-        subscribe();
-      }
+      window.open(STRIPE_PAYMENT_URL, '_blank', 'noopener,noreferrer,nofollow');
     } else {
       warningToast('Warning', 'Please sign in to get started.');
     }
-  }, [id, loading, user, subscribe]);
+  }, [loading, user]);
 
   return (
     <div className='cr-pricing'>
@@ -93,13 +84,13 @@ export const PricingPlans = () => {
         </Col>
         <Col>
           <div className='cr-pricing__card is-paid'>
-            <RecommendIcon className='recommended-marker'/>
+            <RecommendIcon className='recommended-marker' />
             <Title level='10' color='white'>
               Pro
             </Title>
             <div className='cr-pricing__card--price'>
               <Title level='10' color='white' inline>
-                $8
+                $5
               </Title>
               <Text level='30' color='white_75' inline>
                 / month
@@ -113,7 +104,6 @@ export const PricingPlans = () => {
                 filled
                 fillColor='tertiary'
                 isBlock
-                loading={subscribing}
                 onClick={handleClick}
               >
                 GET STARTED

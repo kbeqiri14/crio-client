@@ -1,22 +1,23 @@
 import { Link } from 'react-router-dom';
 import { Col, Modal, Row } from 'antd';
-import { getPosters } from '@screens/LandingPage/posters';
-import { defaultMockValue, usePresentation } from '@shared/PresentationView/PresentationContext';
+
+import { useUserMoreArtworks } from '@root/src/hooks/useUserMoreArtworks';
+import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { PosterCard } from '@shared/PostersList';
 import { Text, Title } from '@ui-kit/Text';
 import { ReactComponent as CloseIcon } from '@svgs/x.svg';
 import './styles.less';
 
-const posters = getPosters(3);
+export { usePresentation, PresentationProvider } from './PresentationContext';
 
-export { usePresentation, PresentationProvider, defaultMockValue } from './PresentationContext';
-
-export const PresentationView = ({ visible, videoInfo, onCancel }) => {
-  const { show } = usePresentation();
+export const PresentationView = ({ visible, videoInfo, isAuthenticated }) => {
+  const { hide } = usePresentation();
+  const { data } = useUserMoreArtworks(videoInfo.userId, videoInfo.artworkId);
 
   return (
     <Modal
-      onCancel={onCancel}
+      destroyOnClose
+      onCancel={hide}
       visible={visible}
       maskClosable={false}
       footer={false}
@@ -30,7 +31,7 @@ export const PresentationView = ({ visible, videoInfo, onCancel }) => {
           <Col span={18} offset={3} className='video-view-author'>
             <Row align='middle'>
               <Col className='author-avatar'>
-                <img src={videoInfo.author?.avatar} alt='Author avatar' />
+                {videoInfo.fbUserId && <img src={videoInfo.avatar} alt='Author avatar' />}
               </Col>
               <Col>
                 <Row>
@@ -40,11 +41,15 @@ export const PresentationView = ({ visible, videoInfo, onCancel }) => {
                     </Title>
                   </Col>
                   <Col span={24}>
-                    <Link>
-                      <Title level='20' color='primary' inline>
-                        {videoInfo.author?.name}
-                      </Title>
-                    </Link>
+                    <Title level='20' color='primary' inline>
+                      {isAuthenticated ? (
+                        <Link to={`/profile/${videoInfo.userId}`} onClick={hide}>
+                          {videoInfo.name}
+                        </Link>
+                      ) : (
+                        videoInfo.name
+                      )}
+                    </Title>
                   </Col>
                 </Row>
               </Col>
@@ -69,36 +74,35 @@ export const PresentationView = ({ visible, videoInfo, onCancel }) => {
             </Text>
           </Col>
         </Row>
-        <Row justify='start' className='video-player-more'>
-          <Col span={18} offset={3} className='column'>
-            <Row justify='space-between' align='middle'>
-              <Col>
-                <Text level='40' color='white'>
-                  More by {videoInfo.author?.name}
-                </Text>
-              </Col>
-              <Col>
-                <Link>
-                  <Text level='20' color='primary'>
-                    View profile
+        {data?.length >= 3 && (
+          <Row justify='start' className='video-player-more'>
+            <Col span={18} offset={3} className='column'>
+              <Row justify='space-between' align='middle'>
+                <Col>
+                  <Text level='40' color='white'>
+                    More by {videoInfo.name}
                   </Text>
-                </Link>
-              </Col>
-            </Row>
-            <Row gutter={[22, 22]} justify='center' align='middle'>
-              {posters.map((p, idx) => (
-                <Col xl={8} md={12} sm={24} xs={24} key={idx}>
-                  <PosterCard
-                    onClick={() => show(defaultMockValue)}
-                    poster={p}
-                    author='Ann Bee'
-                    title='Blah'
-                  />
                 </Col>
-              ))}
-            </Row>
-          </Col>
-        </Row>
+                <Col>
+                  {isAuthenticated && (
+                    <Link to={`/profile/${videoInfo.userId}`} onClick={hide}>
+                      <Text level='20' color='primary'>
+                        View profile
+                      </Text>
+                    </Link>
+                  )}
+                </Col>
+              </Row>
+              <Row gutter={[22, 22]} justify='center' align='middle'>
+                {data?.map((poster, idx) => (
+                  <Col xl={8} md={12} sm={24} xs={24} key={idx}>
+                    <PosterCard {...poster} />
+                  </Col>
+                ))}
+              </Row>
+            </Col>
+          </Row>
+        )}
       </div>
     </Modal>
   );

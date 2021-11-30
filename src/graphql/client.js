@@ -43,6 +43,7 @@ const links = ApolloLink.from([errorLink, authLink, httpLink]);
 
 export const client = new ApolloClient({
   link: links,
+  connectToDevTools: true,
   cache: new InMemoryCache({
     typePolicies: {
       Entity: {

@@ -13,6 +13,21 @@ export const artwork_fragment = gql`
   }
 `;
 
+export const work_fragment = gql`
+  fragment WorkDetailAttributes on WorkDetail {
+    id
+    artworkId
+    userId
+    fbUserId
+    name
+    videoUri
+    thumbnailUri
+    title
+    description
+    status
+  }
+`;
+
 export const getUploadUrl = gql`
   query getUploadUrl($size: Int!) {
     getUploadUrl(size: $size) {
@@ -45,8 +60,23 @@ export const getArtworks = gql`
 export const getUserArtworks = gql`
   query getUserArtworks($id: ID) {
     getUserArtworks(id: $id) {
-      ...ArtworkAttributes
+      ...WorkDetailAttributes
     }
   }
-  ${artwork_fragment}
+  ${work_fragment}
+`;
+
+export const getRandomArtworksCount = gql`
+  query {
+    getRandomArtworksCount
+  }
+`;
+
+export const getRandomArtworks = gql`
+  query getRandomArtworks($params: paginationParams!) {
+    getRandomArtworks(params: $params) {
+      ...WorkDetailAttributes
+    }
+  }
+  ${work_fragment}
 `;

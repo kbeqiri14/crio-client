@@ -10,6 +10,19 @@ export const me_fragment = gql`
     firstName
     lastName
     visibility
+    isCreator
+    vouchers {
+      tier1
+      tier2
+      tier3
+    }
+    payment {
+      customerEmail
+      periodStart
+      periodEnd
+      subscriptionStatus
+      lastEventSnapshot
+    }
   }
 `;
 
@@ -40,13 +53,33 @@ export const getCreatorUsers = gql`
   ${me_fragment}
 `;
 
+export const following_info_fragment = gql`
+  fragment FollowingInfoAttributes on FollowingInfo {
+    id
+    userId
+    fbUserId
+    name
+    email
+    username
+    firstName
+    lastName
+    visibility
+    artworks {
+      videoUri
+      thumbnailUri
+      title
+      description
+    }
+  }
+`;
+
 export const getFollowings = gql`
   query {
     getFollowings {
-      ...Me
+      ...FollowingInfoAttributes
     }
   }
-  ${me_fragment}
+  ${following_info_fragment}
 `;
 
 export const isFollowing = gql`

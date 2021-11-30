@@ -14,6 +14,12 @@ export const signIn = gql`
   }
 `;
 
+export const contactCreator = gql`
+  mutation contactCreator($mailInfo: MailInfo!) {
+    contactCreator(mailInfo: $mailInfo)
+  }
+`;
+
 export const updateUser = gql`
   mutation updateUser($attributes: UserAttributes!) {
     updateUser(attributes: $attributes) {

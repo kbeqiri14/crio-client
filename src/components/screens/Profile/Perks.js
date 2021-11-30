@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Col, Row } from 'antd';
 
@@ -12,25 +12,31 @@ import perk1Subscribe from '@images/perks/perk-1-subscribe.png';
 import perk2Subscribe from '@images/perks/perk-2-subscribe.png';
 import perk3Subscribe from '@images/perks/perk-3-subscribe.png';
 
-const getPerks = (isSubscribed) => [
-  {
-    title: 'Tier 1 Perks',
-    desc: 'LIMITED SUPPLY: This offering can include rewards ranging from personal video edits, 1 on 1 time, discounts on merchandise, and much more!  ',
-    src: isSubscribed ? perk1Subscribe : perk1,
-  },
-  {
-    title: 'Tier 2 Perks',
-    desc: 'This offering can include rewards ranging from tutorials, printables, shoutouts, and much more!',
-    src: isSubscribed ? perk2Subscribe : perk2,
-    fillColor: 'secondary',
-  },
-  {
-    title: 'Tier 3 Perks',
-    desc: 'This offering can include various downloadable content such as wallpapers, asset packs, and much more! ',
-    src: isSubscribed ? perk3Subscribe : perk3,
-    fillColor: 'fourth',
-  },
-];
+const getPerks = (isSubscribed, vouchers) => {
+  const perksArr = [
+    {
+      id: 1,
+      title: 'Tier 1 Perks',
+      desc: 'LIMITED SUPPLY: This offering can include rewards ranging from personal video edits, 1 on 1 time, discounts on merchandise, and much more!  ',
+      src: isSubscribed ? perk1Subscribe : perk1,
+    },
+    {
+      id: 2,
+      title: 'Tier 2 Perks',
+      desc: 'This offering can include rewards ranging from tutorials, printables, shoutouts, and much more!',
+      src: isSubscribed ? perk2Subscribe : perk2,
+      fillColor: 'secondary',
+    },
+    {
+      id: 3,
+      title: 'Tier 3 Perks',
+      desc: 'This offering can include various downloadable content such as wallpapers, asset packs, and much more! ',
+      src: isSubscribed ? perk3Subscribe : perk3,
+      fillColor: 'fourth',
+    },
+  ];
+  return perksArr.filter((perk) => vouchers[`tier${perk.id}`] > 0);
+};
 
 const Button = memo(({ subscribe, fillColor = 'tertiary', disabled, onClick }) => (
   <SecondaryButton
@@ -54,17 +60,21 @@ const SubscribeButton = memo(({ isProfile, isSubscribed, onClick }) =>
   ) : null,
 );
 
-const Perks = ({ isProfile, isSubscribed }) => {
+const Perks = ({ isProfile, isSubscribed, vouchers, onButtonClick }) => {
   const { pathname } = useLocation();
   const goPricing = useCallback(
     () => history.push(`/pricing/${pathname.split('/').slice(-1)[0]}`),
     [pathname],
   );
 
+  if (!vouchers) {
+    return null;
+  }
+
   return (
     <Row gutter={[0, 44]} justify='center' className='perks'>
       <SubscribeButton isProfile={isProfile} isSubscribed={isSubscribed} onClick={goPricing} />
-      {getPerks(isProfile && isSubscribed).map(({ title, desc, src, fillColor }) => (
+      {getPerks(isProfile && isSubscribed, vouchers).map(({ id, title, desc, src, fillColor }) => (
         <Col key={title}>
           <Row justify='center'>
             <Col span={24}>
@@ -79,7 +89,9 @@ const Perks = ({ isProfile, isSubscribed }) => {
             </Col>
             <Col span={24} className='container'>
               <img alt={title} src={src} />
-              {isProfile && isSubscribed && <Button fillColor={fillColor} />}
+              {isProfile && isSubscribed && (
+                <Button onClick={() => onButtonClick(id)} fillColor={fillColor} />
+              )}
             </Col>
           </Row>
         </Col>

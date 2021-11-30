@@ -1,8 +1,11 @@
-import { Fragment, useState } from 'react';
-import { Carousel, Row } from 'antd';
+// import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
+import { Spinner } from '@ui-kit/Spinner';
+import { Fragment, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getPosters } from '@screens/LandingPage/posters';
-import { usePresentation, defaultMockValue } from '@shared/PresentationView';
+import { Carousel, Row } from 'antd';
+import { Img } from 'react-image';
+
+import { useRandomArtworks } from '@root/src/hooks/useRandomArtworks';
 import { PosterCard, renderPosters } from '@shared/PostersList';
 import { Footer } from '@shared/Footer';
 import { Meta } from '@shared/Meta';
@@ -10,56 +13,9 @@ import { Text, Title } from '@ui-kit/Text';
 import { SecondaryButton } from '@ui-kit/Button';
 import { Slider } from '@ui-kit/Slider';
 import uuid from '@utils/uuid';
-import samplePoster from '@images/posters/carousel-poster.jpg';
-import samplePoster1 from '@images/posters/carousel-poster.png';
-import samplePoster2 from '@images/posters/carousel-poster-2.jpg';
-import samplePoster3 from '@images/posters/carousel-poster-3.jpg';
+import { getPosters } from '@screens/LandingPage/posters';
 import './styles.less';
 
-const carouselPosters = [
-  {
-    id: 1,
-    url: samplePoster,
-    title: 'Editorial series for Quartz',
-    description:
-      'This time, we have been asked for three different illustration sets for Quartz’s homepage.',
-    author: {
-      name: 'Ann Bee',
-      avatar: 'https://avatars.dicebear.com/api/pixel-art/Ann_Bee.svg',
-    },
-  },
-  {
-    id: 2,
-    url: samplePoster1,
-    title: 'The Camper Cartel',
-    description: 'We helped Slip.Stream to create music videos in minutes.',
-    author: {
-      name: 'Lew Chan',
-      avatar: 'https://avatars.dicebear.com/api/pixel-art/Lew_Chan.svg',
-    },
-  },
-  {
-    id: 3,
-    url: samplePoster2,
-    title: 'Design for video automation',
-    description:
-      'Starting from the branded colors of the logo, we developed a fresh color palette.',
-    author: {
-      name: 'Design Studio Kraft',
-      avatar: 'https://avatars.dicebear.com/api/pixel-art/Design_Studio_Kraft.svg',
-    },
-  },
-  {
-    id: 4,
-    url: samplePoster3,
-    title: 'MUSIC VIDEO CONCEPTS',
-    description: 'These are not commissioned pieces for the songs,they are just experiments.',
-    author: {
-      name: 'Into Dust',
-      avatar: `https://avatars.dicebear.com/api/pixel-art/Into_Dust.svg`,
-    },
-  },
-];
 const SliderBreakPoints = {
   1440: {
     slidesPerView: 4,
@@ -80,35 +36,22 @@ const SliderBreakPoints = {
 };
 
 const videoPosters = getPosters(8);
-const authorVideoPosters = getPosters(15);
 
-const ScrollPosters = ({ handleClick }) => {
-  return (
-    <div className='cr-feed__poster-scroll'>
-      <Slider withScroll breakpoints={SliderBreakPoints}>
-        {videoPosters.concat(videoPosters).map((p, idx) => (
-          <PosterCard
-            onClick={() => handleClick(defaultMockValue)}
-            key={idx}
-            poster={p}
-            author='Ann Bee'
-            title='Work’s name goes here'
-          />
-        ))}
-      </Slider>
-    </div>
-  );
-};
-
-const RandomAuthorArtworks = ({ posters, handleClick }) => (
+const RandomAuthorArtworks = ({ posters }) => (
   <Fragment>
     <div className='cr-artworks-section__author'>
       <Title level='10' color='white' inline>
         © Artwork by &nbsp;
-        <Link>Ann Bee</Link>
+        <Link to='/'>Ann Bee</Link>
       </Title>
     </div>
-    <ScrollPosters handleClick={handleClick} />
+    <div className='cr-feed__poster-scroll'>
+      <Slider withScroll breakpoints={SliderBreakPoints}>
+        {videoPosters.concat(videoPosters).map((p, idx) => (
+          <PosterCard key={idx} thumbnailUri={p} name='Ann Bee' title='Work’s name goes here' />
+        ))}
+      </Slider>
+    </div>
     <Row gutter={[22, 35]} className='cr-landing__video-grid__container random-works'>
       {posters}
     </Row>
@@ -116,23 +59,41 @@ const RandomAuthorArtworks = ({ posters, handleClick }) => (
 );
 
 export const Feed = () => {
-  const { show } = usePresentation();
-  const [topPosters] = useState(renderPosters(videoPosters, 0, show));
-  const [bottomPosters] = useState(renderPosters(authorVideoPosters, 3, show));
-  const [authorBlocks, setAuthorBlocks] = useState(Array.from({ length: 1 }, () => uuid()));
-  const [currentPoster, setCurrentPoster] = useState(carouselPosters[0]);
+  const [offset, setOffset] = useState(0);
+  const [carPosters, setCarPosters] = useState([]);
+  const [topPosters, setTopPosters] = useState([]);
+  const [bottomPosters, setBottomPosters] = useState([]);
+  const [currentPoster, setCurrentPoster] = useState();
+  const [authorBlocks] = useState(Array.from({ length: 1 }, () => uuid()));
 
-  const handlePosterChange = (index) => {
-    setCurrentPoster(carouselPosters[index]);
-  };
+  const { isEnd, loading, loadMore } = useRandomArtworks(
+    ({ getRandomArtworks }) => {
+      if (!offset) {
+        setCarPosters(getRandomArtworks.slice(0, 4));
+        setTopPosters(renderPosters(getRandomArtworks.slice(4, 12), 0));
+        setOffset(4 + 8 + 15);
+        setBottomPosters([...bottomPosters, ...renderPosters(getRandomArtworks.slice(12), 3)]);
+        return;
+      }
+      setOffset(offset + 15);
+      setBottomPosters([...bottomPosters, ...renderPosters(getRandomArtworks, 3)]);
+    },
+    offset,
+    offset ? 15 : 4 + 8 + 15,
+  );
 
-  const handleLoadMore = () => {
-    setAuthorBlocks(authorBlocks.concat([uuid()]));
-  };
+  useEffect(() => {
+    if (carPosters.length && !currentPoster) {
+      setCurrentPoster(carPosters[0]);
+    }
+  }, [carPosters, currentPoster]);
+
+  const handlePosterChange = (index) => setCurrentPoster(carPosters[index]);
 
   return (
     <div className='cr-feed'>
       <Meta title='Feed' description='Crio - Artworks Feed' />
+      {/*{!carPosters?.length && <GlobalSpinner />}*/}
       <section className='cr-feed__poster-carousel'>
         <div className='cr-carousel'>
           <Carousel
@@ -142,32 +103,37 @@ export const Feed = () => {
             effect='fade'
             className='cr-carousel__container'
           >
-            {carouselPosters.map((pic) => (
+            {carPosters?.map((pic) => (
               <div className='cr-carousel__item' key={pic.id}>
-                <img alt={pic.title} src={pic.url} />
+                <Img alt={pic.title} src={pic.thumbnailUri} loader={<Spinner />} />
               </div>
             ))}
           </Carousel>
           <div className='cr-carousel__cards'>
             <div className='cr-carousel__cards--author'>
-              <img alt='Artist avatar' src={currentPoster.author.avatar} />
+              {currentPoster?.fbUserId && (
+                <img
+                  alt='Artist avatar'
+                  src={`https://graph.facebook.com/${currentPoster?.fbUserId}/picture?height=350&width=350`}
+                />
+              )}
               <Text level='30' color='dark' inline>
                 © Artwork by &nbsp;
               </Text>
-              <Link>
+              <Link to={`/profile/${currentPoster?.userId}`}>
                 <Text level='30' color='secondary' inline>
-                  {currentPoster.author.name}
+                  {currentPoster?.name}
                 </Text>
               </Link>
             </div>
             <div className='cr-carousel__cards--title'>
-              <Title level='10' color='dark'>
-                {currentPoster.title}
+              <Title level='10' color='dark' ellipsis>
+                {currentPoster?.title}
               </Title>
             </div>
             <div className='cr-carousel__cards--desc'>
-              <Text level='10' color='black_75'>
-                {currentPoster.description}
+              <Text level='10' color='black_75' ellipsis>
+                {currentPoster?.description}
               </Text>
             </div>
           </div>
@@ -179,11 +145,15 @@ export const Feed = () => {
         </Row>
         <div className='cr-artworks-section'>
           {authorBlocks.map((blockId) => (
-            <RandomAuthorArtworks handleClick={show} key={blockId} posters={bottomPosters} />
+            <RandomAuthorArtworks key={blockId} posters={bottomPosters} />
           ))}
-          <Row className='cr-landing__video-grid__see-all'>
-            <SecondaryButton onClick={handleLoadMore}>LOAD MORE</SecondaryButton>
-          </Row>
+          {!isEnd && offset && (
+            <Row className='cr-landing__video-grid__see-all'>
+              <SecondaryButton loading={loading} onClick={loadMore}>
+                LOAD MORE
+              </SecondaryButton>
+            </Row>
+          )}
         </div>
       </section>
       <Footer />

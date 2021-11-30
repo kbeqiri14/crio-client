@@ -1,9 +1,11 @@
-import uuid from '@utils/uuid';
-import { memo } from 'react';
+import cc from 'classcat';
+import { memo, useMemo } from 'react';
 import { Col, Row, Tooltip } from 'antd';
 
+import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { CustomTooltip } from '@ui-kit/Tooltip';
 import { Text } from '@ui-kit/Text';
+import uuid from '@utils/uuid';
 import { arrayChunk, getRandomInt } from '@utils/helpers';
 import lockImage from '@images/lock.png';
 import loadingVideo from '@images/loading-video.png';
@@ -11,122 +13,95 @@ import { ReactComponent as PlayIcon } from '@svgs/play.svg';
 
 export const PosterCard = memo(
   ({
-    poster,
     index,
-    author,
+    name,
+    artworkId,
+    userId,
+    fbUserId,
     title,
     description,
     status,
     videoUri,
+    thumbnailUri,
     isLock,
-    isReal,
     onClick,
     ...props
   }) => {
-    const handleClick = () => {
-      onClick?.({
+    const { show } = usePresentation();
+
+    const lock = useMemo(() => isLock || (status && status !== 'available'), [isLock, status]);
+
+    const handleClick = () =>
+      show({
         title,
-        description: description || 'Bruh',
+        description,
         id: videoUri?.substring(videoUri?.lastIndexOf('/') + 1),
-        author: {
-          name: author,
-          avatar: `https://avatars.dicebear.com/api/pixel-art/${Date.now()}.svg`,
-        },
+        artworkId,
+        userId,
+        fbUserId,
+        name,
+        avatar: `https://graph.facebook.com/${fbUserId}/picture?height=350&width=350`,
       });
-    };
+
     return (
-      <div
-        className={`video-grid__item-container ${
-          isLock || (isReal && status !== 'available') ? 'lock' : ''
-        }`}
-        onClick={handleClick}
-        {...props}
+      <CustomTooltip
+        visible={false}
+        className='overlayProcess'
+        description='Your video is being processed. It can take a while. Please wait.'
       >
-        <img
-          alt='Crio artworks poster'
-          src={poster}
-          className={isLock || (isReal && status !== 'available') ? 'lock' : ''}
-        />
-        {(index || index === 0) && <div className='poster-number'>{index}</div>}
-        <Row justify='space-between' align='bottom' className='video-grid__item-panel'>
-          <Col span={22}>
-            <div>
-              <Text level='60'>{author}</Text>
-            </div>
-            <div>
+        <div
+          className={cc([
+            'video-grid__item-container',
+            { processing: status !== 'available', lock },
+          ])}
+          onClick={handleClick}
+          {...props}
+        >
+          <img alt='Crio artworks poster' src={thumbnailUri} className={cc([{ lock }])} />
+          {(index || index === 0) && <div className='poster-number'>{index}</div>}
+          <Row
+            justify='space-between'
+            align='bottom'
+            wrap={false}
+            className='video-grid__item-panel'
+          >
+            <Col span={22}>
+              <Text level='60'>{name}</Text>
               <Tooltip title={title}>
-                <Text level={isReal ? '40' : '50'} ellipsis>
+                <Text level={'50'} ellipsis>
                   {title}
                 </Text>
               </Tooltip>
-            </div>
-            {isReal && (
-              <Tooltip title={description}>
-                <Text level='50' ellipsis>
-                  {description}
-                </Text>
-              </Tooltip>
-            )}
-          </Col>
-          <Col span={1}>
-            <PlayIcon />
-          </Col>
-        </Row>
-        {(isLock || (isReal && status !== 'available')) && (
-          <div className='video-grid__item-lock'>
-            {isLock ? (
+            </Col>
+            <Col span={1}>
+              <PlayIcon />
+            </Col>
+          </Row>
+          {lock && (
+            <div className='video-grid__item-lock'>
               <img alt='lock' src={isLock ? lockImage : loadingVideo} />
-            ) : (
-              <CustomTooltip
-                className='overlayProcess'
-                description='Your video is being processed. It can take a while. Please wait.'
-              >
-                <img alt='lock' src={isLock ? lockImage : loadingVideo} />
-              </CustomTooltip>
-            )}
-          </div>
-        )}
-      </div>
+            </div>
+          )}
+        </div>
+      </CustomTooltip>
     );
   },
 );
 
-const LargeVideoPoster = memo(({ poster, onClick }) => (
+const LargeVideoPoster = memo(({ poster }) => (
   <Col span={12} xs={24} xl={12} lg={24} className='video-grid__item large'>
-    <PosterCard onClick={onClick} poster={poster} author='Ann Bee' title='Work’s name goes here' />
+    <PosterCard {...poster} />
   </Col>
 ));
 
-const VideoPostersBlock = memo(({ posters, isLock, nonLock, isReal, onClick }) => (
+const VideoPostersBlock = memo(({ posters, isLock, nonLock }) => (
   <Col xs={24} lg={24} xl={12} span={12}>
     <Row justify='start' align='top' gutter={[22, 35]}>
-      {isReal
-        ? posters.map(({ id, title, description, status, thumbnailUri, videoUri }, index) => (
-            <Col key={index} xs={12} lg={12} xl={12} span={12} className='video-grid__item'>
-              <PosterCard
-                title={title}
-                description={description}
-                status={status}
-                poster={thumbnailUri}
-                videoUri={videoUri}
-                isLock={id === nonLock ? false : isLock}
-                isReal={true}
-                onClick={onClick}
-              />
-            </Col>
-          ))
-        : posters.map((p, index) => (
-            <Col key={index} xs={12} lg={12} xl={12} span={12} className='video-grid__item'>
-              <PosterCard
-                isLock={p === nonLock ? false : isLock}
-                onClick={onClick}
-                poster={p}
-                lock
-                author='Ann Bee'
-                title='Work’s name goes here'
-              />
-            </Col>
-          ))}
+      {posters.map((poster, index) => (
+        <Col key={index} xs={12} lg={12} xl={12} span={12} className='video-grid__item'>
+          <PosterCard {...poster} isLock={poster.id === nonLock ? false : isLock} />
+        </Col>
+      ))}
     </Row>
   </Col>
 ));
@@ -146,28 +121,15 @@ const getRandomIndices = (arrLength, indicesCount) => {
   return indices;
 };
 
-export const renderPosters = (
-  videoPosters = [],
-  largePostersCount,
-  handleClick,
-  isLock,
-  isReal,
-) => {
+export const renderPosters = (videoPosters = [], largePostersCount, isLock) => {
   const largePosters = getRandomIndices(videoPosters.length, largePostersCount);
   const posterLinks = videoPosters.filter((_, idx) => !largePosters.has(idx));
   const regularPosterElements = arrayChunk(posterLinks, 4).map((vp) => (
-    <VideoPostersBlock
-      isLock={isLock}
-      isReal={isReal}
-      nonLock={isReal ? posterLinks[0]?.id : posterLinks[0]}
-      onClick={handleClick}
-      key={uuid()}
-      posters={vp}
-    />
+    <VideoPostersBlock isLock={isLock} nonLock={posterLinks[0]?.id} key={uuid()} posters={vp} />
   ));
   const largePosterElements = videoPosters
     .filter((_, idx) => largePosters.has(idx))
-    .map((vp) => <LargeVideoPoster onClick={handleClick} key={uuid()} poster={vp} />);
+    .map((vp) => <LargeVideoPoster key={uuid()} poster={vp} />);
 
   const insertionPoints = getRandomIndices(regularPosterElements.length, largePostersCount);
 

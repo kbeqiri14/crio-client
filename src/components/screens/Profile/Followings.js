@@ -3,10 +3,9 @@ import { Col, Row } from 'antd';
 
 import { PosterCard } from '@shared/PostersList';
 import ProfileInfo from '@shared/ProfileInfo';
-import { usePresentation, defaultMockValue } from '@shared/PresentationView';
-import { getPosters } from '@screens/LandingPage/posters';
 import { Slider } from '@ui-kit/Slider';
 import { Spinner } from '@ui-kit/Spinner';
+import emptyFollowings from '@images/empty-followings.png';
 
 const SliderBreakPoints = {
   800: {
@@ -22,49 +21,38 @@ const SliderBreakPoints = {
     slidesPerGroup: 1,
   },
 };
-const videoPosters = getPosters(8);
 
-const ScrollPosters = ({ handleClick }) => {
-  return (
-    <div className='cr-feed__poster-scroll'>
-      <Slider withScroll breakpoints={SliderBreakPoints} breakpointsBase='container'>
-        {videoPosters.concat(videoPosters).map((p, idx) => (
-          <PosterCard
-            onClick={() => handleClick(defaultMockValue)}
-            key={idx}
-            poster={p}
-            author='Ann Bee'
-            title='Work’s name goes here'
-          />
-        ))}
-      </Slider>
-    </div>
-  );
-};
-
-const FollowingRow = ({ user, handleClick }) => (
+const FollowingRow = ({ user, artworks }) => (
   <Row justify='center'>
     <Col span={6} className='following-info'>
       <ProfileInfo user={user} isFollowing />
     </Col>
     <Col span={14}>
       <div className='cr-artworks-section'>
-        <ScrollPosters handleClick={handleClick} />
+        <div className='cr-feed__poster-scroll'>
+          <Slider withScroll breakpoints={SliderBreakPoints} breakpointsBase='container'>
+            {artworks?.map((poster, idx) => (
+              <PosterCard key={idx} name={user.name} fbUserId={user.fbUserId} {...poster} />
+            ))}
+          </Slider>
+        </div>
       </div>
     </Col>
   </Row>
 );
 
-const Followings = ({ loadingFollowings, followings }) => {
-  const { show } = usePresentation();
-
-  return (
-    <Spinner spinning={loadingFollowings} color='white'>
-      {followings?.map(({ userId, ...user }) => (
-        <FollowingRow key={user.id} user={user} handleClick={show} />
-      ))}
-    </Spinner>
-  );
-};
+const Followings = ({ loadingFollowings, followings }) => (
+  <Spinner spinning={loadingFollowings} color='white'>
+    {!loadingFollowings && !followings?.length ? (
+      <div className='empty-followings'>
+        <img alt='no followings' src={emptyFollowings} width={301} height={266} />
+      </div>
+    ) : (
+      followings?.map(({ artworks, ...user }, idx) => (
+        <FollowingRow key={user.id + idx} user={user} artworks={artworks} />
+      ))
+    )}
+  </Spinner>
+);
 
 export default memo(Followings);

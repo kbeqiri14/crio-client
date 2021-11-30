@@ -3,35 +3,26 @@ import { Row } from 'antd';
 import cc from 'classcat';
 
 import { useCurrentUser } from '@app/auth/hooks';
-import { usePresentation } from '@shared/PresentationView';
+import { useRandomArtworks } from '@root/src/hooks/useRandomArtworks';
 import { renderPosters } from '@shared/PostersList';
 import { ConnectButton } from '@shared/ConnectButton';
 import { Footer } from '@shared/Footer';
 import { Meta } from '@shared/Meta';
 import { Text, Title } from '@ui-kit/Text';
 import { SecondaryButton } from '@ui-kit/Button';
-import { getPosters } from './posters';
 import aboutPerks from '@images/about-perks.png';
 import './styles.less';
 
-const multiplier = 3;
-const smallPostersCount = multiplier * 4;
-const largePostersCount = multiplier;
-const videosCount = smallPostersCount + largePostersCount;
-const videoPosters = getPosters(videosCount);
-
 export const LandingPage = () => {
-  const { user } = useCurrentUser();
-  const { show } = usePresentation();
-  const [listLoaded, setListLoaded] = useState(false);
-  const [postersList, setPostersList] = useState(
-    renderPosters(videoPosters, largePostersCount, show),
-  );
+  const [offset, setOffset] = useState(0);
+  const [postersList, setPostersList] = useState([]);
 
-  const handleLoadList = () => {
-    setPostersList([...postersList, ...renderPosters(videoPosters, largePostersCount, show)]);
-    setListLoaded(true);
-  };
+  const { user } = useCurrentUser();
+
+  const { isEnd, loading, loadMore } = useRandomArtworks(({ getRandomArtworks }) => {
+    setOffset(offset + 15);
+    setPostersList([...postersList, ...renderPosters(getRandomArtworks, 3)]);
+  }, offset);
 
   return (
     <div className='cr-landing__container'>
@@ -39,7 +30,7 @@ export const LandingPage = () => {
       <section className='cr-landing__banner'>
         <div>
           <div className='cr-landing__banner__heading'>
-            <h1>Discover the world’s top animators and creatives</h1>
+            <h1>Discover the Best Visual Content from your Favorite Creators</h1>
           </div>
           <div className='cr-landing__banner__desc'>
             Crio is a leading community platform for creatives to showcase their work and interact
@@ -52,8 +43,12 @@ export const LandingPage = () => {
         <Row gutter={[22, 35]} className='cr-landing__video-grid__container'>
           {postersList}
         </Row>
-        <Row className={cc(['cr-landing__video-grid__see-all', { 'list-loaded': listLoaded }])}>
-          {!listLoaded && <SecondaryButton onClick={handleLoadList}>SEE ALL</SecondaryButton>}
+        <Row className={cc(['cr-landing__video-grid__see-all', { 'list-loaded': isEnd }])}>
+          {!isEnd && offset && (
+            <SecondaryButton loading={loading} onClick={loadMore}>
+              SEE MORE
+            </SecondaryButton>
+          )}
         </Row>
       </section>
       <section className='cr-landing__about-perks'>

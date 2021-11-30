@@ -14,7 +14,7 @@
   justify-content: flex-start;
   align-items: center;
   &__heading {
-    width: 528px;
+    width: 720px;
     h1 {
       font-weight: bold;
       font-size: 45px;
@@ -37,6 +37,17 @@
 
 .video-grid__item-container {
   border-radius: 16px;
+  &.processing {
+    z-index: 102;
+    position: relative;
+    .video-grid__item-lock img {
+      animation-name: rotateLock;
+      animation-duration: 3s;
+      animation-fill-mode: forwards;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+  }
   img {
     height: 100%;
     width: 100%;
@@ -51,6 +62,7 @@
   align-items: stretch;
   &-container {
     height: 276px;
+    width: 100%;
     position: relative;
     overflow: hidden;
     cursor: pointer;
@@ -64,15 +76,25 @@
       }
     }
   }
+
+  @keyframes rotateLock {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
   .video-grid__item-lock {
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
-    left: 0%;
-    right: 0%;
-    top: 0%;
-    bottom: 0%;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
     background: @black_25;
     border-radius: 15px;
     img {
@@ -199,6 +221,22 @@
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+  }
+}
+
+.profile-artworks-list {
+  .highlight-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: @black_75;
+    z-index: 101;
+    &.visible {
+      display: block;
     }
   }
 }
