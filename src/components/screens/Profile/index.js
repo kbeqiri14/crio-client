@@ -3,6 +3,7 @@ import { Fragment, memo, useCallback, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 
+import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { isFollowing, getUser } from '@app/graphql/queries/users.query';
 import { createFollowing } from '@app/graphql/mutations/user.mutation';
 import PersonalInfo from '@screens/Account/__partials__/PersonalInfo';
@@ -10,6 +11,7 @@ import Details from '@screens/Account/Details';
 
 export const Profile = () => {
   const { pathname } = useLocation();
+  const { user } = useLoggedInUser();
   const [isFollow, setIsFollow] = useState(false);
   const id = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
 
@@ -52,6 +54,7 @@ export const Profile = () => {
         isProfile
         user={userData?.getUser}
         isFollow={isFollow}
+        isCreator={user?.isCreator}
         loading={loadingFollowing}
         onClick={handleClick}
       />
