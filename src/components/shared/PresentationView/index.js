@@ -12,7 +12,7 @@ export { usePresentation, PresentationProvider } from './PresentationContext';
 
 export const PresentationView = ({ visible, videoInfo, isAuthenticated }) => {
   const { hide } = usePresentation();
-  const { data } = useUserMoreArtworks(videoInfo.userId);
+  const { data } = useUserMoreArtworks(videoInfo.userId, videoInfo.artworkId);
 
   return (
     <Modal
@@ -74,33 +74,35 @@ export const PresentationView = ({ visible, videoInfo, isAuthenticated }) => {
             </Text>
           </Col>
         </Row>
-        <Row justify='start' className='video-player-more'>
-          <Col span={18} offset={3} className='column'>
-            <Row justify='space-between' align='middle'>
-              <Col>
-                <Text level='40' color='white'>
-                  More by {videoInfo.name}
-                </Text>
-              </Col>
-              <Col>
-                {isAuthenticated && (
-                  <Link to={`/profile/${videoInfo.userId}`} onClick={hide}>
-                    <Text level='20' color='primary'>
-                      View profile
-                    </Text>
-                  </Link>
-                )}
-              </Col>
-            </Row>
-            <Row gutter={[22, 22]} justify='center' align='middle'>
-              {data?.map((poster, idx) => (
-                <Col xl={8} md={12} sm={24} xs={24} key={idx}>
-                  <PosterCard {...poster} />
+        {data?.count >= 3 && (
+          <Row justify='start' className='video-player-more'>
+            <Col span={18} offset={3} className='column'>
+              <Row justify='space-between' align='middle'>
+                <Col>
+                  <Text level='40' color='white'>
+                    More by {videoInfo.name}
+                  </Text>
                 </Col>
-              ))}
-            </Row>
-          </Col>
-        </Row>
+                <Col>
+                  {isAuthenticated && (
+                    <Link to={`/profile/${videoInfo.userId}`} onClick={hide}>
+                      <Text level='20' color='primary'>
+                        View profile
+                      </Text>
+                    </Link>
+                  )}
+                </Col>
+              </Row>
+              <Row gutter={[22, 22]} justify='center' align='middle'>
+                {data?.map((poster, idx) => (
+                  <Col xl={8} md={12} sm={24} xs={24} key={idx}>
+                    <PosterCard {...poster} />
+                  </Col>
+                ))}
+              </Row>
+            </Col>
+          </Row>
+        )}
       </div>
     </Modal>
   );

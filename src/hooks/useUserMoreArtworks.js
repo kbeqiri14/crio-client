@@ -3,7 +3,7 @@ import { useLazyQuery, useQuery } from '@apollo/client';
 
 import { getRandomArtworksCount, getRandomArtworks } from '@app/graphql/queries/artworks.query';
 
-export const useUserMoreArtworks = (userId) => {
+export const useUserMoreArtworks = (userId, artworkId) => {
   const [loading, setLoading] = useState(true);
 
   const [requestRandomArtworks, { data }] = useLazyQuery(getRandomArtworks, {
@@ -16,7 +16,7 @@ export const useUserMoreArtworks = (userId) => {
     onCompleted: ({ getRandomArtworksCount }) => {
       const n = Math.floor(Math.random() * getRandomArtworksCount + 1);
       requestRandomArtworks({
-        variables: { params: { userId, count: n, limit: 3 } },
+        variables: { params: { userId, artworkId, count: n, limit: 3 } },
       });
     },
     onError: () => setLoading(false),

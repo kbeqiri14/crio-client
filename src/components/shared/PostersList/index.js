@@ -15,6 +15,7 @@ export const PosterCard = memo(
   ({
     index,
     name,
+    artworkId,
     userId,
     fbUserId,
     title,
@@ -34,6 +35,7 @@ export const PosterCard = memo(
         title,
         description,
         id: videoUri?.substring(videoUri?.lastIndexOf('/') + 1),
+        artworkId,
         userId,
         fbUserId,
         name,
