@@ -34,7 +34,7 @@ export const Header = ({ isAuthenticated }) => {
   const { user } = useLoggedInUser();
   const activeItem = location.pathname?.replace('/', '') || 'home';
 
-  const showPricing = user
+  const showPricing = user.id
     ? user.isFan && (!user.isSubscribed || !user.subscribePeriodIsValid)
     : true;
   const menuItems = useMemo(() => getTabItems(showPricing), [showPricing]);

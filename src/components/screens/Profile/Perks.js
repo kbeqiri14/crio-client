@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Col, Row } from 'antd';
 
@@ -11,6 +11,7 @@ import perk3 from '@images/perks/perk-3.png';
 import perk1Subscribe from '@images/perks/perk-1-subscribe.png';
 import perk2Subscribe from '@images/perks/perk-2-subscribe.png';
 import perk3Subscribe from '@images/perks/perk-3-subscribe.png';
+import { ReactComponent as EmptyState } from '@svgs/perks-empty.svg';
 
 const getPerks = (isSubscribed, vouchers) => {
   const perksArr = [
@@ -67,6 +68,11 @@ const Perks = ({ isProfile, isSubscribed, vouchers, onButtonClick }) => {
     [pathname],
   );
 
+  const perksList = useMemo(
+    () => getPerks(isProfile && isSubscribed, vouchers),
+    [isProfile, isSubscribed, vouchers],
+  );
+
   if (isSubscribed && !vouchers) {
     return null;
   }
@@ -74,7 +80,7 @@ const Perks = ({ isProfile, isSubscribed, vouchers, onButtonClick }) => {
   return (
     <Row gutter={[0, 44]} justify='center' className='perks'>
       <SubscribeButton isProfile={isProfile} isSubscribed={isSubscribed} onClick={goPricing} />
-      {getPerks(isProfile && isSubscribed, vouchers).map(({ id, title, desc, src, fillColor }) => (
+      {perksList.map(({ id, title, desc, src, fillColor }) => (
         <Col key={title}>
           <Row justify='center'>
             <Col span={24}>
@@ -96,6 +102,20 @@ const Perks = ({ isProfile, isSubscribed, vouchers, onButtonClick }) => {
           </Row>
         </Col>
       ))}
+      {!perksList?.length && (
+        <div className='perks-empty'>
+          <EmptyState />
+          <div>
+            <Text level='20' color='white'>
+              You have used all vouchers available for this month.
+            </Text>
+            <Text level='20' color='white'>
+              Please, contact <a href='mailto:info@criointeractive.com'>info@criointeractive.com</a>{' '}
+              for more help.
+            </Text>
+          </div>
+        </div>
+      )}
       <SubscribeButton isProfile={isProfile} isSubscribed={isSubscribed} onClick={goPricing} />
     </Row>
   );

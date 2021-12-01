@@ -46,6 +46,11 @@ export const AppRoutes = () => {
 
   useEffect(() => {
     document.body.scrollTop = 0;
+    document.querySelector('.crio-app-container')?.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'auto',
+    });
     window.scrollTo(0, 0);
   }, [pathname]);
 

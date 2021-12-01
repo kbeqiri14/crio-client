@@ -1,12 +1,35 @@
 @import 'variables';
 
 .cr-landing__footer {
-  height: 110px;
   display: flex;
   justify-content: center;
   align-items: stretch;
   background-color: @black_25;
   color: @white_75;
+  padding: 41px;
+  &--links {
+    margin-left: auto;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: flex-end;
+    > div > a {
+      width: 32px;
+      height: 32px;
+    }
+    .cr-legal-docs {
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: flex-start;
+      align-items: stretch;
+      position: relative;
+      right: -41px;
+      a {
+        display: block;
+        color: @white_75;
+      }
+    }
+  }
   &-wrapper {
     flex-grow: 1;
     max-width: calc(690px + 23px);
