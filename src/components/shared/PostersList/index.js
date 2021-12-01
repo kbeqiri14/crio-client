@@ -1,5 +1,5 @@
 import cc from 'classcat';
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import { Col, Row, Tooltip } from 'antd';
 
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
@@ -29,7 +29,8 @@ export const PosterCard = memo(
   }) => {
     const { show } = usePresentation();
 
-    const lock = useMemo(() => isLock || (status && status !== 'available'), [isLock, status]);
+    const lock = isLock;
+    const unavailable = status && status !== 'available';
 
     const handleClick = () =>
       show({
@@ -45,41 +46,49 @@ export const PosterCard = memo(
 
     return (
       <CustomTooltip
-        visible={false}
+        trigger={unavailable && !lock ? ['hover'] : []}
         className='overlayProcess'
         description='Your video is being processed. It can take a while. Please wait.'
       >
         <div
-          className={cc([
-            'video-grid__item-container',
-            { processing: status !== 'available', lock },
-          ])}
+          className={cc(['video-grid__item-container', { processing: unavailable, lock }])}
           onClick={handleClick}
           {...props}
         >
-          <img alt='Crio artworks poster' src={thumbnailUri} className={cc([{ lock }])} />
+          <img
+            alt='Crio artworks poster'
+            src={thumbnailUri}
+            className={cc([{ lock: lock || unavailable }])}
+          />
           {(index || index === 0) && <div className='poster-number'>{index}</div>}
-          <Row
-            justify='space-between'
-            align='bottom'
-            wrap={false}
-            className='video-grid__item-panel'
-          >
-            <Col span={22}>
-              <Text level='60'>{name}</Text>
-              <Tooltip title={title}>
-                <Text level={'50'} ellipsis>
-                  {title}
-                </Text>
-              </Tooltip>
-            </Col>
-            <Col span={1}>
-              <PlayIcon />
-            </Col>
-          </Row>
+          {!lock && !unavailable && (
+            <Row
+              justify='space-between'
+              align='bottom'
+              wrap={false}
+              className='video-grid__item-panel'
+            >
+              <Col span={22}>
+                <Text level='60'>{name}</Text>
+                <Tooltip title={title}>
+                  <Text level={'50'} ellipsis>
+                    {title}
+                  </Text>
+                </Tooltip>
+              </Col>
+              <Col span={1}>
+                <PlayIcon />
+              </Col>
+            </Row>
+          )}
           {lock && (
             <div className='video-grid__item-lock'>
-              <img alt='lock' src={isLock ? lockImage : loadingVideo} />
+              <img alt='lock' src={lockImage} />
+            </div>
+          )}
+          {!lock && unavailable && (
+            <div className='video-grid__item-lock'>
+              <img alt='lock' src={loadingVideo} />
             </div>
           )}
         </div>

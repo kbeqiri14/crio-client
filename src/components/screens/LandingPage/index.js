@@ -10,6 +10,7 @@ import { Footer } from '@shared/Footer';
 import { Meta } from '@shared/Meta';
 import { Text, Title } from '@ui-kit/Text';
 import { SecondaryButton } from '@ui-kit/Button';
+import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import aboutPerks from '@images/about-perks.png';
 import './styles.less';
 
@@ -27,6 +28,7 @@ export const LandingPage = () => {
   return (
     <div className='cr-landing__container'>
       <Meta title='Crio | Home' description='Crio - Landing Page' />
+      {!postersList?.length && <GlobalSpinner />}
       <section className='cr-landing__banner'>
         <div>
           <div className='cr-landing__banner__heading'>

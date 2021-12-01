@@ -35,7 +35,7 @@ const getPerks = (isSubscribed, vouchers) => {
       fillColor: 'fourth',
     },
   ];
-  return perksArr.filter((perk) => vouchers[`tier${perk.id}`] > 0);
+  return isSubscribed ? perksArr.filter((perk) => vouchers[`tier${perk.id}`] > 0) : perksArr;
 };
 
 const Button = memo(({ subscribe, fillColor = 'tertiary', disabled, onClick }) => (
@@ -67,7 +67,7 @@ const Perks = ({ isProfile, isSubscribed, vouchers, onButtonClick }) => {
     [pathname],
   );
 
-  if (!vouchers) {
+  if (isSubscribed && !vouchers) {
     return null;
   }
 

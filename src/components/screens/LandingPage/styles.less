@@ -40,7 +40,7 @@
   &.processing {
     z-index: 102;
     position: relative;
-    .video-grid__item-lock img {
+    &:not(.lock) .video-grid__item-lock img {
       animation-name: rotateLock;
       animation-duration: 3s;
       animation-fill-mode: forwards;
@@ -66,9 +66,6 @@
     position: relative;
     overflow: hidden;
     cursor: pointer;
-    &.lock {
-      pointer-events: none;
-    }
     &:hover {
       .video-grid__item-panel {
         display: flex;

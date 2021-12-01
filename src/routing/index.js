@@ -30,7 +30,7 @@ export const AppRoutes = () => {
       let userInfo;
       if (data?.me) {
         userInfo = { ...data.me };
-        userInfo.isFan = userInfo.isCreator;
+        userInfo.isFan = !userInfo.isCreator;
         userInfo.isSubscribed = userInfo.payment?.subscriptionStatus === 'active';
         const periodEnd = userInfo.payment?.periodEnd;
         userInfo.subscribePeriodIsValid = periodEnd ? isFuture(new Date(periodEnd)) : false;
