@@ -66,9 +66,12 @@ export const getUserArtworks = gql`
   ${work_fragment}
 `;
 
-export const getRandomArtworksCount = gql`
+export const getRandomArtworksInfo = gql`
   query {
-    getRandomArtworksCount
+    getRandomArtworksInfo {
+      count
+      creatorIds
+    }
   }
 `;
 

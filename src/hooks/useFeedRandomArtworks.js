@@ -2,9 +2,8 @@ import { useCallback, useMemo, useState } from 'react';
 import { useLazyQuery, useQuery, useReactiveVar } from '@apollo/client';
 
 import { creatorUserIdsVar, randomNumberVar } from '@configs/client-cache';
-import { getCreatorUserIds } from '@app/graphql/queries/users.query';
 import {
-  getRandomArtworksCount,
+  getRandomArtworksInfo,
   getRandomArtworksForFeed,
 } from '@app/graphql/queries/artworks.query';
 
@@ -15,9 +14,6 @@ export const useFeedRandomArtworks = (onCompleted, userId = 2, offset = 0, limit
   const count = useReactiveVar(randomNumberVar);
   // const creatorUserIds = useReactiveVar(creatorUserIdsVar);
 
-  useQuery(getCreatorUserIds, {
-    onCompleted: (data) => creatorUserIdsVar(data.getCreatorUserIds),
-  });
   const [requestRandomArtworks, { data }] = useLazyQuery(getRandomArtworksForFeed, {
     fetchPolicy: 'cache-and-network',
     onCompleted: (result) => {
@@ -27,10 +23,13 @@ export const useFeedRandomArtworks = (onCompleted, userId = 2, offset = 0, limit
     onError: () => setLoading(false),
   });
 
-  const { data: artworksCount } = useQuery(getRandomArtworksCount, {
-    onCompleted: ({ getRandomArtworksCount }) => {
-      if (getRandomArtworksCount >= 15 || (limit === LIMIT && getRandomArtworksCount >= 27)) {
-        const n = Math.floor(Math.random() * getRandomArtworksCount + 1);
+  const { data: artworksCount } = useQuery(getRandomArtworksInfo, {
+    onCompleted: ({ getRandomArtworksInfo }) => {
+      if (
+        getRandomArtworksInfo.count >= 15 ||
+        (limit === LIMIT && getRandomArtworksInfo.count >= 27)
+      ) {
+        const n = Math.floor(Math.random() * getRandomArtworksInfo.count + 1);
         randomNumberVar(n);
         requestRandomArtworks({
           variables: { params: { count: n, userId, offset, limit } },
@@ -43,8 +42,8 @@ export const useFeedRandomArtworks = (onCompleted, userId = 2, offset = 0, limit
   });
 
   const isEnd = useMemo(
-    () => artworksCount?.getRandomArtworksCount <= offset + 15,
-    [artworksCount?.getRandomArtworksCount, offset],
+    () => artworksCount?.getRandomArtworksInfo?.count <= offset + 15,
+    [artworksCount?.getRandomArtworksInfo?.count, offset],
   );
 
   const loadMore = useCallback(() => {
