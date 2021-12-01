@@ -34,7 +34,9 @@ export const Header = ({ isAuthenticated }) => {
   const { user } = useLoggedInUser();
   const activeItem = location.pathname?.replace('/', '') || 'home';
 
-  const showPricing = user.isFan && (!user.isSubscribed || !user.subscribePeriodIsValid);
+  const showPricing = user
+    ? user.isFan && (!user.isSubscribed || !user.subscribePeriodIsValid)
+    : true;
   const menuItems = useMemo(() => getTabItems(showPricing), [showPricing]);
   const upload = useCallback(() => history.push('/upload'), []);
 
