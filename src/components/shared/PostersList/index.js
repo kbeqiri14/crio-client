@@ -59,7 +59,12 @@ export const PosterCard = memo(
         >
           <img alt='Crio artworks poster' src={thumbnailUri} className={cc([{ lock }])} />
           {(index || index === 0) && <div className='poster-number'>{index}</div>}
-          <Row justify='space-between' align='bottom' className='video-grid__item-panel'>
+          <Row
+            justify='space-between'
+            align='bottom'
+            wrap={false}
+            className='video-grid__item-panel'
+          >
             <Col span={22}>
               <Text level='60'>{name}</Text>
               <Tooltip title={title}>

@@ -24,6 +24,7 @@ export const work_fragment = gql`
     thumbnailUri
     title
     description
+    status
   }
 `;
 

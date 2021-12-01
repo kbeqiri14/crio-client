@@ -11,7 +11,7 @@ import { TabMenu } from './__partials__/TabMenu';
 import { ProfileMenu } from './__partials__/ProfileMenu';
 import './styles.less';
 
-const getTabItems = (isCreator) => {
+const getTabItems = (showPricing) => {
   const items = [
     {
       id: 'home',
@@ -19,7 +19,7 @@ const getTabItems = (isCreator) => {
       onClick: () => history.push('/'),
     },
   ];
-  if (!isCreator) {
+  if (showPricing) {
     items.push({
       id: 'pricing',
       title: 'Pricing',
@@ -34,7 +34,8 @@ export const Header = ({ isAuthenticated }) => {
   const { user } = useLoggedInUser();
   const activeItem = location.pathname?.replace('/', '') || 'home';
 
-  const menuItems = useMemo(() => getTabItems(user.isCreator), [user]);
+  const showPricing = user.isFan && (!user.isSubscribed || !user.subscribePeriodIsValid);
+  const menuItems = useMemo(() => getTabItems(showPricing), [showPricing]);
   const upload = useCallback(() => history.push('/upload'), []);
 
   return (
