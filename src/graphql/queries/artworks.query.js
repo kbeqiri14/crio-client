@@ -66,9 +66,12 @@ export const getUserArtworks = gql`
   ${work_fragment}
 `;
 
-export const getRandomArtworksCount = gql`
+export const getRandomArtworksInfo = gql`
   query {
-    getRandomArtworksCount
+    getRandomArtworksInfo {
+      count
+      creatorIds
+    }
   }
 `;
 
@@ -76,6 +79,20 @@ export const getRandomArtworks = gql`
   query getRandomArtworks($params: paginationParams!) {
     getRandomArtworks(params: $params) {
       ...WorkDetailAttributes
+    }
+  }
+  ${work_fragment}
+`;
+
+export const getRandomArtworksForFeed = gql`
+  query getRandomArtworksForFeed($params: paginationParams!) {
+    getRandomArtworksForFeed(params: $params) {
+      artworks {
+        ...WorkDetailAttributes
+      }
+      userArtworks {
+        ...WorkDetailAttributes
+      }
     }
   }
   ${work_fragment}

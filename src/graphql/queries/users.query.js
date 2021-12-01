@@ -44,15 +44,6 @@ export const getUser = gql`
   ${me_fragment}
 `;
 
-export const getCreatorUsers = gql`
-  query {
-    getCreatorUsers {
-      ...Me
-    }
-  }
-  ${me_fragment}
-`;
-
 export const following_info_fragment = gql`
   fragment FollowingInfoAttributes on FollowingInfo {
     id

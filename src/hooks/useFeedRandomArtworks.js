@@ -1,16 +1,20 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useLazyQuery, useQuery, useReactiveVar } from '@apollo/client';
 
-import { randomNumberVar } from '@configs/client-cache';
-import { getRandomArtworksInfo, getRandomArtworks } from '@app/graphql/queries/artworks.query';
+import { creatorIdsVar, randomNumberVar } from '@configs/client-cache';
+import {
+  getRandomArtworksInfo,
+  getRandomArtworksForFeed,
+} from '@app/graphql/queries/artworks.query';
 
 const LIMIT = 15;
 
-export const useRandomArtworks = (onCompleted, offset = 0, limit = LIMIT) => {
+export const useFeedRandomArtworks = (onCompleted, offset = 0, limit = LIMIT) => {
   const [loading, setLoading] = useState(true);
   const count = useReactiveVar(randomNumberVar);
+  const creatorIds = useReactiveVar(creatorIdsVar);
 
-  const [requestRandomArtworks] = useLazyQuery(getRandomArtworks, {
+  const [requestRandomArtworks] = useLazyQuery(getRandomArtworksForFeed, {
     fetchPolicy: 'cache-and-network',
     onCompleted: (result) => {
       onCompleted(result);
@@ -27,8 +31,11 @@ export const useRandomArtworks = (onCompleted, offset = 0, limit = LIMIT) => {
       ) {
         const n = Math.floor(Math.random() * getRandomArtworksInfo.count + 1);
         randomNumberVar(n);
+        creatorIdsVar(getRandomArtworksInfo.creatorIds);
         requestRandomArtworks({
-          variables: { params: { count: n, offset, limit } },
+          variables: {
+            params: { count: n, userId: getRandomArtworksInfo.creatorIds?.[0], offset, limit },
+          },
         });
       } else {
         setLoading(false);
@@ -45,9 +52,16 @@ export const useRandomArtworks = (onCompleted, offset = 0, limit = LIMIT) => {
   const loadMore = useCallback(() => {
     setLoading(true);
     requestRandomArtworks({
-      variables: { params: { count, offset, limit: LIMIT } },
+      variables: {
+        params: {
+          count,
+          userId: creatorIds?.[parseInt((offset - 27) / LIMIT) + 1],
+          offset,
+          limit: LIMIT,
+        },
+      },
     });
-  }, [count, offset, requestRandomArtworks]);
+  }, [count, creatorIds, offset, requestRandomArtworks]);
 
   return { isEnd, loading, loadMore };
 };
