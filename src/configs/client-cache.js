@@ -2,4 +2,4 @@ import { makeVar } from '@apollo/client';
 
 export const loggedInUserVar = makeVar({});
 export const randomNumberVar = makeVar(1);
-export const creatorUserIdsVar = makeVar([]);
+export const creatorIdsVar = makeVar([]);

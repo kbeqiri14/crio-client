@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useLazyQuery, useQuery, useReactiveVar } from '@apollo/client';
 
-import { creatorUserIdsVar, randomNumberVar } from '@configs/client-cache';
+import { creatorIdsVar, randomNumberVar } from '@configs/client-cache';
 import {
   getRandomArtworksInfo,
   getRandomArtworksForFeed,
@@ -9,12 +9,12 @@ import {
 
 const LIMIT = 15;
 
-export const useFeedRandomArtworks = (onCompleted, userId = 2, offset = 0, limit = LIMIT) => {
+export const useFeedRandomArtworks = (onCompleted, offset = 0, limit = LIMIT) => {
   const [loading, setLoading] = useState(true);
   const count = useReactiveVar(randomNumberVar);
-  // const creatorUserIds = useReactiveVar(creatorUserIdsVar);
+  const creatorIds = useReactiveVar(creatorIdsVar);
 
-  const [requestRandomArtworks, { data }] = useLazyQuery(getRandomArtworksForFeed, {
+  const [requestRandomArtworks] = useLazyQuery(getRandomArtworksForFeed, {
     fetchPolicy: 'cache-and-network',
     onCompleted: (result) => {
       onCompleted(result);
@@ -23,7 +23,7 @@ export const useFeedRandomArtworks = (onCompleted, userId = 2, offset = 0, limit
     onError: () => setLoading(false),
   });
 
-  const { data: artworksCount } = useQuery(getRandomArtworksInfo, {
+  const { data: artworksInfo } = useQuery(getRandomArtworksInfo, {
     onCompleted: ({ getRandomArtworksInfo }) => {
       if (
         getRandomArtworksInfo.count >= 15 ||
@@ -31,8 +31,11 @@ export const useFeedRandomArtworks = (onCompleted, userId = 2, offset = 0, limit
       ) {
         const n = Math.floor(Math.random() * getRandomArtworksInfo.count + 1);
         randomNumberVar(n);
+        creatorIdsVar(getRandomArtworksInfo.creatorIds);
         requestRandomArtworks({
-          variables: { params: { count: n, userId, offset, limit } },
+          variables: {
+            params: { count: n, userId: getRandomArtworksInfo.creatorIds?.[0], offset, limit },
+          },
         });
       } else {
         setLoading(false);
@@ -42,16 +45,23 @@ export const useFeedRandomArtworks = (onCompleted, userId = 2, offset = 0, limit
   });
 
   const isEnd = useMemo(
-    () => artworksCount?.getRandomArtworksInfo?.count <= offset + 15,
-    [artworksCount?.getRandomArtworksInfo?.count, offset],
+    () => artworksInfo?.getRandomArtworksInfo?.count <= offset + 15,
+    [artworksInfo?.getRandomArtworksInfo?.count, offset],
   );
 
   const loadMore = useCallback(() => {
     setLoading(true);
     requestRandomArtworks({
-      variables: { params: { count, userId: 2, offset, limit: LIMIT } },
+      variables: {
+        params: {
+          count,
+          userId: creatorIds?.[parseInt((offset - 27) / LIMIT) + 1],
+          offset,
+          limit: LIMIT,
+        },
+      },
     });
-  }, [count, offset, requestRandomArtworks]);
+  }, [count, creatorIds, offset, requestRandomArtworks]);
 
-  return { isEnd, loading, data: data?.getRandomArtworksForFeed, loadMore };
+  return { isEnd, loading, loadMore };
 };

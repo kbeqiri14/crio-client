@@ -86,7 +86,6 @@ export const Feed = () => {
       ]);
       setOffset(offset + 15);
     },
-    2,
     offset,
     offset ? 15 : 4 + 8 + 15,
   );

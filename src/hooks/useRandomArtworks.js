@@ -19,7 +19,7 @@ export const useRandomArtworks = (onCompleted, offset = 0, limit = LIMIT) => {
     onError: () => setLoading(false),
   });
 
-  const { data: artworksCount } = useQuery(getRandomArtworksInfo, {
+  const { data: artworksInfo } = useQuery(getRandomArtworksInfo, {
     onCompleted: ({ getRandomArtworksInfo }) => {
       if (
         getRandomArtworksInfo.count >= 15 ||
@@ -38,8 +38,8 @@ export const useRandomArtworks = (onCompleted, offset = 0, limit = LIMIT) => {
   });
 
   const isEnd = useMemo(
-    () => artworksCount?.getRandomArtworksInfo?.count <= offset + 15,
-    [artworksCount?.getRandomArtworksInfo?.count, offset],
+    () => artworksInfo?.getRandomArtworksInfo?.count <= offset + 15,
+    [artworksInfo?.getRandomArtworksInfo?.count, offset],
   );
 
   const loadMore = useCallback(() => {
