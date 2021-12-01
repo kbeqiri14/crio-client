@@ -1,19 +1,17 @@
-// import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
-import { Spinner } from '@ui-kit/Spinner';
+import { memo } from 'react';
 import { Fragment, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Carousel, Row } from 'antd';
 import { Img } from 'react-image';
 
-import { useRandomArtworks } from '@root/src/hooks/useRandomArtworks';
+import { useFeedRandomArtworks } from '@app/hooks/useFeedRandomArtworks';
 import { PosterCard, renderPosters } from '@shared/PostersList';
 import { Footer } from '@shared/Footer';
 import { Meta } from '@shared/Meta';
+import { Slider } from '@ui-kit/Slider';
+import { Spinner } from '@ui-kit/Spinner';
 import { Text, Title } from '@ui-kit/Text';
 import { SecondaryButton } from '@ui-kit/Button';
-import { Slider } from '@ui-kit/Slider';
-import uuid from '@utils/uuid';
-import { getPosters } from '@screens/LandingPage/posters';
 import './styles.less';
 
 const SliderBreakPoints = {
@@ -35,65 +33,75 @@ const SliderBreakPoints = {
   },
 };
 
-const videoPosters = getPosters(8);
-
-const RandomAuthorArtworks = ({ posters }) => (
+const RandomAuthorArtworks = memo(({ blockPosters }) => (
   <Fragment>
     <div className='cr-artworks-section__author'>
       <Title level='10' color='white' inline>
         © Artwork by &nbsp;
-        <Link to='/'>Ann Bee</Link>
+        <Link to={`/profile/${blockPosters.authorPosters?.[0]?.userId}`}>
+          {blockPosters.authorPosters?.[0]?.name}
+        </Link>
       </Title>
     </div>
     <div className='cr-feed__poster-scroll'>
       <Slider withScroll breakpoints={SliderBreakPoints}>
-        {videoPosters.concat(videoPosters).map((p, idx) => (
-          <PosterCard key={idx} thumbnailUri={p} name='Ann Bee' title='Work’s name goes here' />
+        {blockPosters.authorPosters?.map((poster, idx) => (
+          <PosterCard key={idx} {...poster} />
         ))}
       </Slider>
     </div>
     <Row gutter={[22, 35]} className='cr-landing__video-grid__container random-works'>
-      {posters}
+      {blockPosters.posters}
     </Row>
   </Fragment>
-);
+));
 
 export const Feed = () => {
   const [offset, setOffset] = useState(0);
-  const [carPosters, setCarPosters] = useState([]);
+  const [carouselPosters, setCarouselPosters] = useState([]);
   const [topPosters, setTopPosters] = useState([]);
-  const [bottomPosters, setBottomPosters] = useState([]);
+  const [blockPosters, setBlockPosters] = useState([]);
   const [currentPoster, setCurrentPoster] = useState();
-  const [authorBlocks] = useState(Array.from({ length: 1 }, () => uuid()));
 
-  const { isEnd, loading, loadMore } = useRandomArtworks(
-    ({ getRandomArtworks }) => {
+  const { isEnd, loading, loadMore } = useFeedRandomArtworks(
+    ({ getRandomArtworksForFeed }) => {
       if (!offset) {
-        setCarPosters(getRandomArtworks.slice(0, 4));
-        setTopPosters(renderPosters(getRandomArtworks.slice(4, 12), 0));
+        setCarouselPosters(getRandomArtworksForFeed.artworks.slice(0, 4));
+        setTopPosters(renderPosters(getRandomArtworksForFeed.artworks.slice(4, 12), 0));
+        setBlockPosters([
+          {
+            authorPosters: getRandomArtworksForFeed.userArtworks,
+            posters: renderPosters(getRandomArtworksForFeed.artworks.slice(12), 3),
+          },
+        ]);
         setOffset(4 + 8 + 15);
-        setBottomPosters([...bottomPosters, ...renderPosters(getRandomArtworks.slice(12), 3)]);
         return;
       }
+      setBlockPosters([
+        ...blockPosters,
+        {
+          authorPosters: getRandomArtworksForFeed.userArtworks,
+          posters: renderPosters(getRandomArtworksForFeed.artworks, 3),
+        },
+      ]);
       setOffset(offset + 15);
-      setBottomPosters([...bottomPosters, ...renderPosters(getRandomArtworks, 3)]);
     },
+    2,
     offset,
     offset ? 15 : 4 + 8 + 15,
   );
 
   useEffect(() => {
-    if (carPosters.length && !currentPoster) {
-      setCurrentPoster(carPosters[0]);
+    if (carouselPosters.length && !currentPoster) {
+      setCurrentPoster(carouselPosters[0]);
     }
-  }, [carPosters, currentPoster]);
+  }, [carouselPosters, currentPoster]);
 
-  const handlePosterChange = (index) => setCurrentPoster(carPosters[index]);
+  const handlePosterChange = (index) => setCurrentPoster(carouselPosters[index]);
 
   return (
     <div className='cr-feed'>
       <Meta title='Feed' description='Crio - Artworks Feed' />
-      {/*{!carPosters?.length && <GlobalSpinner />}*/}
       <section className='cr-feed__poster-carousel'>
         <div className='cr-carousel'>
           <Carousel
@@ -103,7 +111,7 @@ export const Feed = () => {
             effect='fade'
             className='cr-carousel__container'
           >
-            {carPosters?.map((pic) => (
+            {carouselPosters?.map((pic) => (
               <div className='cr-carousel__item' key={pic.id}>
                 <Img alt={pic.title} src={pic.thumbnailUri} loader={<Spinner />} />
               </div>
@@ -144,8 +152,8 @@ export const Feed = () => {
           {topPosters}
         </Row>
         <div className='cr-artworks-section'>
-          {authorBlocks.map((blockId) => (
-            <RandomAuthorArtworks key={blockId} posters={bottomPosters} />
+          {blockPosters.map((item, index) => (
+            <RandomAuthorArtworks key={index} blockPosters={item} />
           ))}
           {!isEnd && offset && (
             <Row className='cr-landing__video-grid__see-all'>

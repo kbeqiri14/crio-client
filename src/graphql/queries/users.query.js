@@ -44,13 +44,10 @@ export const getUser = gql`
   ${me_fragment}
 `;
 
-export const getCreatorUsers = gql`
+export const getCreatorUserIds = gql`
   query {
-    getCreatorUsers {
-      ...Me
-    }
+    getCreatorUserIds
   }
-  ${me_fragment}
 `;
 
 export const following_info_fragment = gql`
