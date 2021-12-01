@@ -15,6 +15,14 @@ echo "----env vars -----"
 echo "----end env vars -----"
 
 npm run build --max-old-space-size=4096
-aws s3 cp build s3://"$APP_NAME"-website/ --recursive
+
+if [ -z "$BUCKET_NAME" ]
+then
+      bucket="$APP_NAME"-website
+else
+      bucket=$BUCKET_NAME
+fi
+echo $bucket
+aws s3 cp build s3://"$bucket"/ --recursive
 
 npm run generate-config -- "${APP_NAME}" "${STACK_REGION}" ./invalidate-cache.sh;
