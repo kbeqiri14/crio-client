@@ -12,6 +12,7 @@ import { Slider } from '@ui-kit/Slider';
 import { Spinner } from '@ui-kit/Spinner';
 import { Text, Title } from '@ui-kit/Text';
 import { SecondaryButton } from '@ui-kit/Button';
+import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import './styles.less';
 
 const SliderBreakPoints = {
@@ -101,6 +102,7 @@ export const Feed = () => {
   return (
     <div className='cr-feed'>
       <Meta title='Feed' description='Crio - Artworks Feed' />
+      {!carouselPosters?.length && <GlobalSpinner />}
       <section className='cr-feed__poster-carousel'>
         <div className='cr-carousel'>
           <Carousel
@@ -124,11 +126,11 @@ export const Feed = () => {
                   src={`https://graph.facebook.com/${currentPoster?.fbUserId}/picture?height=350&width=350`}
                 />
               )}
-              <Text level='30' color='dark' inline>
+              <Text level='30' color='dark'>
                 © Artwork by &nbsp;
               </Text>
               <Link to={`/profile/${currentPoster?.userId}`}>
-                <Text level='30' color='secondary' inline>
+                <Text level='30' color='secondary' inline ellipsis>
                   {currentPoster?.name}
                 </Text>
               </Link>
