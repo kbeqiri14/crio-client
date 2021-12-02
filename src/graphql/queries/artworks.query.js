@@ -71,8 +71,12 @@ export const getRandomArtworksInfo = gql`
     getRandomArtworksInfo {
       count
       creatorIds
+      artworks {
+        ...WorkDetailAttributes
+      }
     }
   }
+  ${work_fragment}
 `;
 
 export const getRandomArtworks = gql`
@@ -87,10 +91,13 @@ export const getRandomArtworks = gql`
 export const getRandomArtworksForFeed = gql`
   query getRandomArtworksForFeed($params: paginationParams!) {
     getRandomArtworksForFeed(params: $params) {
-      artworks {
+      topArtworks {
         ...WorkDetailAttributes
       }
       userArtworks {
+        ...WorkDetailAttributes
+      }
+      artworks {
         ...WorkDetailAttributes
       }
     }
