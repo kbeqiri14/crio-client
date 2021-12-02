@@ -8,10 +8,25 @@ import { deleteArtwork } from '@app/graphql/mutations/artwork.mutation';
 import ActionButtons from '@shared/ActionButtons';
 import { Text, Title } from '@ui-kit/Text';
 import { Spinner } from '@ui-kit/Spinner';
-import { errorToast } from '@ui-kit/Notification';
+import { errorToast, warningToast } from '@ui-kit/Notification';
 import dragAndDropImage from '@images/drag-and-drop.png';
 
 const { Dragger } = Upload;
+
+const validateVideo = (file) =>
+  new Promise((resolve, reject) => {
+    const videoEl = document.createElement('video');
+    videoEl.src = window.URL.createObjectURL(file);
+    videoEl.onloadedmetadata = () => {
+      window.URL.revokeObjectURL(videoEl.src);
+      const { name, type } = file;
+      const { videoWidth, videoHeight } = videoEl;
+      resolve({ name, type, videoHeight, videoWidth });
+    };
+    videoEl.onerror = () => {
+      reject(new TypeError('Wrong file type provided'));
+    };
+  });
 
 const DragAndDrop = ({ videoUri, file, types, dispatch }) => {
   const [requestUploadUrl, { data, loading }] = useLazyQuery(getUploadUrl, {
@@ -46,9 +61,16 @@ const DragAndDrop = ({ videoUri, file, types, dispatch }) => {
     accept: 'video/*',
     disabled: loading || removingArtwork,
     showUploadList: false,
-    beforeUpload: (newFile) => {
+    beforeUpload: async (newFile) => {
       if (file) {
         removeArtwork();
+      }
+
+      try {
+        await validateVideo(newFile);
+      } catch (e) {
+        warningToast('Validation Failed', 'Please, make sure to choose only a file of video type!');
+        return false;
       }
       dispatch({ type: types.SET_FILE, file: newFile });
       requestUploadUrl({ variables: { size: newFile.size } });
