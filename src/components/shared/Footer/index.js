@@ -11,7 +11,7 @@ import './styles.less';
 
 export const Footer = memo(() => (
   <footer className='cr-landing__footer'>
-    <Row justify='stretch' align='middle' className='cr-landing__footer-wrapper'>
+    <Row justify='stretch' align='top' className='cr-landing__footer-wrapper'>
       <Col span={8} className='cr-landing__footer-logo'>
         <Link to='/'>
           <img alt='Crio logo' src={crioLogo} />
@@ -20,7 +20,7 @@ export const Footer = memo(() => (
       <Col span={8}>
         <Text level='20'>Crio ©2021. All right reserved</Text>
       </Col>
-      <Col span={8}>
+      <Col className='cr-landing__footer--links' span={8}>
         <div>
           <a
             href={FACEBOOK_LINK}
@@ -46,6 +46,17 @@ export const Footer = memo(() => (
           >
             <InstaIcon />
           </a>
+        </div>
+        <div className='cr-legal-docs'>
+          <Text level='20'>
+            <Link to='/terms-of-use'>Terms of Usage</Link>
+          </Text>
+          <Text level='20'>
+            <Link to='/terms-and-conditions'>Terms and Conditions</Link>
+          </Text>
+          <Text level='20'>
+            <Link to='/privacy-policy'>Privacy Policy</Link>
+          </Text>
         </div>
       </Col>
     </Row>

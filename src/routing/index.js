@@ -1,3 +1,5 @@
+import TermsAndConditions from '@screens/Terms and Policy/TermsAndConditions';
+import TermsOfUse from '@screens/Terms and Policy/TermsOfUse';
 import { useEffect, useState } from 'react';
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import { useLazyQuery } from '@apollo/client';
@@ -10,6 +12,7 @@ import { me } from '@app/graphql/queries/users.query';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import Header from '@shared/Header';
 import { PresentationView, usePresentation } from '@shared/PresentationView';
+import PrivacyPolicy from '@screens/Terms and Policy/PrivacyPolicy';
 import LandingPage from '@screens/LandingPage';
 import { PricingPlans } from '@screens/PricingPlans';
 import { Feed } from '@screens/Feed';
@@ -43,6 +46,11 @@ export const AppRoutes = () => {
 
   useEffect(() => {
     document.body.scrollTop = 0;
+    document.querySelector('.crio-app-container')?.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'auto',
+    });
     window.scrollTo(0, 0);
   }, [pathname]);
 
@@ -89,6 +97,15 @@ export const AppRoutes = () => {
           {/* PUBLIC ROUTES */}
           <Route exact path='/'>
             {isAuthenticated ? <Feed /> : <LandingPage />}
+          </Route>
+          <Route path='/privacy-policy' exact>
+            <PrivacyPolicy />
+          </Route>
+          <Route path='/terms-and-conditions' exact>
+            <TermsAndConditions />
+          </Route>
+          <Route path='/terms-of-use' exact>
+            <TermsOfUse />
           </Route>
           <Route path='/pricing/:id?' component={PricingPlans} />
           {!loading && !user && <Redirect to='/' />}
