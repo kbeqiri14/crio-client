@@ -28,7 +28,7 @@ export const LandingPage = () => {
   return (
     <div className='cr-landing__container'>
       <Meta title='Crio | Home' description='Crio - Landing Page' />
-      {!postersList?.length && <GlobalSpinner />}
+      {loading && <GlobalSpinner />}
       <section className='cr-landing__banner'>
         <div>
           <div className='cr-landing__banner__heading'>

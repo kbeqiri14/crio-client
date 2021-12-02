@@ -26,8 +26,8 @@ export const useFeedRandomArtworks = (onCompleted, offset = 0, limit = LIMIT) =>
   const { data: artworksInfo } = useQuery(getRandomArtworksInfo, {
     onCompleted: ({ getRandomArtworksInfo }) => {
       if (
-        getRandomArtworksInfo.count >= 15 ||
-        (limit === LIMIT && getRandomArtworksInfo.count >= 27)
+        getRandomArtworksInfo.count > 27 ||
+        (limit === LIMIT && getRandomArtworksInfo.count > 27)
       ) {
         const n = Math.floor(Math.random() * getRandomArtworksInfo.count + 1);
         randomNumberVar(n);

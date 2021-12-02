@@ -17,7 +17,7 @@
 </g>
 <rect x="56" y="43" width="202.414" height="173" rx="31.7974" fill="#CAEBFF" fill-opacity="0.25"/>
 <path d="M141 102V164" stroke="white" stroke-dasharray="5 5"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M205 102H108C108 105.866 104.866 109 101 109V157C104.866 157 108 160.134 108 164H205C205 160.134 208.134 157 212 157V109C208.134 109 205 105.866 205 102Z" fill="white" fill-opacity="0.5"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M212 109V157C208.134 157 205 160.134 205 164H108C108 160.134 104.866 157 101 157V109C104.866 109 108 105.866 108 102H205C205 105.866 208.134 109 212 109Z" fill="white" fill-opacity="0.5"/>
 <rect x="151" y="118" width="49" height="2.744" rx="1.372" fill="white" fill-opacity="0.25"/>
 <rect x="151" y="131.744" width="49" height="2.744" rx="1.372" fill="white" fill-opacity="0.25"/>
 <rect x="151" y="145.488" width="49" height="2.744" rx="1.372" fill="white" fill-opacity="0.25"/>
