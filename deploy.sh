@@ -16,7 +16,7 @@ echo "----end env vars -----"
 
 npm run build --max-old-space-size=4096
 
-if [ -z "$BUCKET_NAME" ]
+if [ -z ${BUCKET_NAME+x} ]
 then
       bucket="$APP_NAME"-website
 else
