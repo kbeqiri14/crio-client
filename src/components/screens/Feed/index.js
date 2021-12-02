@@ -103,7 +103,7 @@ export const Feed = () => {
   return (
     <div className='cr-feed'>
       <Meta title='Feed' description='Crio - Artworks Feed' />
-      {loading && <GlobalSpinner />}
+      {loading && !offset && <GlobalSpinner />}
       {!loading && !carouselPosters.length ? (
         <Row justify='center' gutter={[0, 30]} className='empty-artworks'>
           <Col span={24}>
