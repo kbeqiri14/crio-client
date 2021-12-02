@@ -25,10 +25,7 @@ export const useFeedRandomArtworks = (onCompleted, offset = 0, limit = LIMIT) =>
 
   const { data: artworksInfo } = useQuery(getRandomArtworksInfo, {
     onCompleted: ({ getRandomArtworksInfo }) => {
-      if (
-        getRandomArtworksInfo.count >= 15 ||
-        (limit === LIMIT && getRandomArtworksInfo.count >= 27)
-      ) {
+      if (getRandomArtworksInfo.count >= 8) {
         const n = Math.floor(Math.random() * getRandomArtworksInfo.count + 1);
         randomNumberVar(n);
         creatorIdsVar(getRandomArtworksInfo.creatorIds);
@@ -45,7 +42,7 @@ export const useFeedRandomArtworks = (onCompleted, offset = 0, limit = LIMIT) =>
   });
 
   const isEnd = useMemo(
-    () => artworksInfo?.getRandomArtworksInfo?.count <= offset + 15,
+    () => artworksInfo?.getRandomArtworksInfo?.count <= offset + LIMIT,
     [artworksInfo?.getRandomArtworksInfo?.count, offset],
   );
 
@@ -55,7 +52,7 @@ export const useFeedRandomArtworks = (onCompleted, offset = 0, limit = LIMIT) =>
       variables: {
         params: {
           count,
-          userId: creatorIds?.[parseInt((offset - 27) / LIMIT) + 1],
+          userId: creatorIds?.[parseInt((offset - (8 + LIMIT)) / LIMIT) + 1],
           offset,
           limit: LIMIT,
         },
@@ -63,5 +60,10 @@ export const useFeedRandomArtworks = (onCompleted, offset = 0, limit = LIMIT) =>
     });
   }, [count, creatorIds, offset, requestRandomArtworks]);
 
-  return { isEnd, loading, loadMore };
+  return {
+    isEnd,
+    loading,
+    carouselPosters: artworksInfo?.getRandomArtworksInfo?.artworks || [],
+    loadMore,
+  };
 };

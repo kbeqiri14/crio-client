@@ -59,23 +59,23 @@ const RandomAuthorArtworks = memo(({ blockPosters }) => (
 
 export const Feed = () => {
   const [offset, setOffset] = useState(0);
-  const [carouselPosters, setCarouselPosters] = useState([]);
   const [topPosters, setTopPosters] = useState([]);
   const [blockPosters, setBlockPosters] = useState([]);
   const [currentPoster, setCurrentPoster] = useState();
 
-  const { isEnd, loading, loadMore } = useFeedRandomArtworks(
+  const { isEnd, loading, carouselPosters, loadMore } = useFeedRandomArtworks(
     ({ getRandomArtworksForFeed }) => {
       if (!offset) {
-        setCarouselPosters(getRandomArtworksForFeed.artworks.slice(0, 4));
-        setTopPosters(renderPosters(getRandomArtworksForFeed.artworks.slice(4, 12), 0));
+        setTopPosters(renderPosters(getRandomArtworksForFeed.topArtworks, 0));
         setBlockPosters([
           {
             authorPosters: getRandomArtworksForFeed.userArtworks,
-            posters: renderPosters(getRandomArtworksForFeed.artworks.slice(12), 3),
+            posters: getRandomArtworksForFeed.artworks
+              ? renderPosters(getRandomArtworksForFeed.artworks, 3)
+              : undefined,
           },
         ]);
-        setOffset(4 + 8 + 15);
+        setOffset(8 + 15);
         return;
       }
       setBlockPosters([
@@ -88,7 +88,7 @@ export const Feed = () => {
       setOffset(offset + 15);
     },
     offset,
-    offset ? 15 : 4 + 8 + 15,
+    offset ? 15 : 8 + 15,
   );
 
   useEffect(() => {
