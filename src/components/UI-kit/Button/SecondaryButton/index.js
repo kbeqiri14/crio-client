@@ -42,7 +42,12 @@ export const SecondaryButton = ({
         <Fragment>
           {icon}
           {size === 'large' ? (
-            <Title inline level='30' color={textColor} className='cr-button-secondary__text'>
+            <Title
+              inline
+              level='30'
+              color={textColor}
+              className='cr-button-secondary__text heading'
+            >
               {children}
             </Title>
           ) : (

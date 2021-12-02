@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Fragment, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Carousel, Row } from 'antd';
+import { Carousel, Col, Row } from 'antd';
 import { Img } from 'react-image';
 
 import { useFeedRandomArtworks } from '@app/hooks/useFeedRandomArtworks';
@@ -13,6 +13,7 @@ import { Spinner } from '@ui-kit/Spinner';
 import { Text, Title } from '@ui-kit/Text';
 import { SecondaryButton } from '@ui-kit/Button';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
+import emptyArtworks from '@images/empty-artworks.png';
 import './styles.less';
 
 const SliderBreakPoints = {
@@ -102,69 +103,84 @@ export const Feed = () => {
   return (
     <div className='cr-feed'>
       <Meta title='Feed' description='Crio - Artworks Feed' />
-      {!carouselPosters?.length && <GlobalSpinner />}
-      <section className='cr-feed__poster-carousel'>
-        <div className='cr-carousel'>
-          <Carousel
-            afterChange={handlePosterChange}
-            autoplay
-            autoplaySpeed={2500}
-            effect='fade'
-            className='cr-carousel__container'
-          >
-            {carouselPosters?.map((pic) => (
-              <div className='cr-carousel__item' key={pic.id}>
-                <Img alt={pic.title} src={pic.thumbnailUri} loader={<Spinner />} />
-              </div>
-            ))}
-          </Carousel>
-          <div className='cr-carousel__cards'>
-            <div className='cr-carousel__cards--author'>
-              {currentPoster?.fbUserId && (
-                <img
-                  alt='Artist avatar'
-                  src={`https://graph.facebook.com/${currentPoster?.fbUserId}/picture?height=350&width=350`}
-                />
-              )}
-              <Text level='30' color='dark'>
-                © Artwork by &nbsp;
-              </Text>
-              <Link to={`/profile/${currentPoster?.userId}`}>
-                <Text level='30' color='secondary' inline ellipsis>
-                  {currentPoster?.name}
-                </Text>
-              </Link>
-            </div>
-            <div className='cr-carousel__cards--title'>
-              <Title level='10' color='dark' ellipsis>
-                {currentPoster?.title}
-              </Title>
-            </div>
-            <div className='cr-carousel__cards--desc'>
-              <Text level='10' color='black_75' ellipsis>
-                {currentPoster?.description}
-              </Text>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section className='cr-feed__posters-list cr-landing__video-grid'>
-        <Row gutter={[22, 35]} className='cr-landing__video-grid__container'>
-          {topPosters}
+      {loading && <GlobalSpinner />}
+      {!loading && !carouselPosters.length ? (
+        <Row justify='center' gutter={[0, 30]} className='empty-artworks'>
+          <Col span={24}>
+            <img alt='no artworks' src={emptyArtworks} width={301} height={216} />
+          </Col>
+          <Col span={24}>
+            <Text level={20} color='white'>
+              There are no artworks yet
+            </Text>
+          </Col>
         </Row>
-        <div className='cr-artworks-section'>
-          {blockPosters.map((item, index) => (
-            <RandomAuthorArtworks key={index} blockPosters={item} />
-          ))}
-          {!isEnd && offset && (
-            <Row className='cr-landing__video-grid__see-all'>
-              <SecondaryButton loading={loading} onClick={loadMore}>
-                LOAD MORE
-              </SecondaryButton>
+      ) : (
+        <Fragment>
+          <section className='cr-feed__poster-carousel'>
+            <div className='cr-carousel'>
+              <Carousel
+                afterChange={handlePosterChange}
+                autoplay
+                autoplaySpeed={2500}
+                effect='fade'
+                className='cr-carousel__container'
+              >
+                {carouselPosters.map((pic) => (
+                  <div className='cr-carousel__item' key={pic.id}>
+                    <Img alt={pic.title} src={pic.thumbnailUri} loader={<Spinner />} />
+                  </div>
+                ))}
+              </Carousel>
+              <div className='cr-carousel__cards'>
+                <div className='cr-carousel__cards--author'>
+                  {currentPoster?.fbUserId && (
+                    <img
+                      alt='Artist avatar'
+                      src={`https://graph.facebook.com/${currentPoster?.fbUserId}/picture?height=350&width=350`}
+                    />
+                  )}
+                  <Text level='30' color='dark'>
+                    © Artwork by &nbsp;
+                  </Text>
+                  <Link to={`/profile/${currentPoster?.userId}`}>
+                    <Text level='30' color='secondary' inline ellipsis>
+                      {currentPoster?.name}
+                    </Text>
+                  </Link>
+                </div>
+                <div className='cr-carousel__cards--title'>
+                  <Title level='10' color='dark' ellipsis>
+                    {currentPoster?.title}
+                  </Title>
+                </div>
+                <div className='cr-carousel__cards--desc'>
+                  <Text level='10' color='black_75' ellipsis>
+                    {currentPoster?.description}
+                  </Text>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section className='cr-feed__posters-list cr-landing__video-grid'>
+            <Row gutter={[22, 35]} className='cr-landing__video-grid__container'>
+              {topPosters}
             </Row>
-          )}
-        </div>
-      </section>
+            <div className='cr-artworks-section'>
+              {blockPosters.map((item, index) => (
+                <RandomAuthorArtworks key={index} blockPosters={item} />
+              ))}
+              {!isEnd && offset && (
+                <Row className='cr-landing__video-grid__see-all'>
+                  <SecondaryButton loading={loading} onClick={loadMore}>
+                    LOAD MORE
+                  </SecondaryButton>
+                </Row>
+              )}
+            </div>
+          </section>
+        </Fragment>
+      )}
       <Footer />
     </div>
   );
