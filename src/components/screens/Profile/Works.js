@@ -1,15 +1,13 @@
-import { memo, useCallback, useState } from 'react';
+import { memo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Col, Row } from 'antd';
 import { useQuery } from '@apollo/client';
 
-import history from '@app/configs/history';
 import { getUserArtworks } from '@app/graphql/queries/artworks.query';
 import { PosterCard } from '@shared/PostersList';
 import { Spinner } from '@ui-kit/Spinner';
-import { Text } from '@ui-kit/Text';
-import { SecondaryButton } from '@ui-kit/Button';
-import emptyArtworks from '@images/empty-artworks.png';
+import { ReactComponent as Icon } from '@svgs/artworks-empty.svg';
+import EmptyState from '@shared/EmptyState';
 
 const Works = ({ isProfile, name, isLock }) => {
   const { pathname } = useLocation();
@@ -27,28 +25,14 @@ const Works = ({ isProfile, name, isLock }) => {
     pollInterval: 30000,
   });
 
-  const upload = useCallback(() => history.push('/upload'), []);
-
   return (
     <Spinner spinning={initialPolling && loading && !works?.length} color='white'>
       {(!loading || !initialPolling) && !works?.length ? (
-        <Row justify='center' gutter={[0, 30]} className='empty-artworks'>
-          <Col span={24}>
-            <img alt='no artworks' src={emptyArtworks} width={301} height={216} />
-          </Col>
-          <Col span={24}>
-            <Text level={20} color='white'>
-              {isProfile ? `${name} hasn’t added an artwork yet` : 'Upload your first artwork'}
-            </Text>
-          </Col>
-          {!isProfile && (
-            <Col>
-              <SecondaryButton filled textColor='white' onClick={upload}>
-                UPLOAD
-              </SecondaryButton>
-            </Col>
-          )}
-        </Row>
+        <EmptyState
+          Icon={Icon}
+          showButton={!isProfile}
+          text={isProfile ? `${name} hasn’t added an artwork yet` : 'Upload your first artwork'}
+        />
       ) : (
         <div className='cr-feed__posters-list cr-landing__video-grid profile-artworks-list'>
           <Row

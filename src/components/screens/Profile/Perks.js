@@ -11,7 +11,8 @@ import perk3 from '@images/perks/perk-3.png';
 import perk1Subscribe from '@images/perks/perk-1-subscribe.png';
 import perk2Subscribe from '@images/perks/perk-2-subscribe.png';
 import perk3Subscribe from '@images/perks/perk-3-subscribe.png';
-import { ReactComponent as EmptyState } from '@svgs/perks-empty.svg';
+import { ReactComponent as Icon } from '@svgs/perks-empty.svg';
+import EmptyState from '@shared/EmptyState';
 
 const getPerks = (isSubscribed, vouchers) => {
   const perksArr = [
@@ -103,18 +104,13 @@ const Perks = ({ isProfile, isSubscribed, vouchers, onButtonClick }) => {
         </Col>
       ))}
       {!perksList?.length && (
-        <div className='perks-empty'>
-          <EmptyState />
-          <div>
-            <Text level='20' color='white'>
-              You have used all vouchers available for this month.
-            </Text>
-            <Text level='20' color='white'>
-              Please, contact <a href='mailto:info@criointeractive.com'>info@criointeractive.com</a>{' '}
-              for more help.
-            </Text>
-          </div>
-        </div>
+        <Col>
+          <EmptyState
+            Icon={Icon}
+            text='You have used all vouchers available for this month.'
+            showMail
+          />
+        </Col>
       )}
       <SubscribeButton isProfile={isProfile} isSubscribed={isSubscribed} onClick={goPricing} />
     </Row>
