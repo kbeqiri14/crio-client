@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Fragment, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Carousel, Col, Row } from 'antd';
+import { Carousel, Row } from 'antd';
 import { Img } from 'react-image';
 
 import { useFeedRandomArtworks } from '@app/hooks/useFeedRandomArtworks';
@@ -13,7 +13,8 @@ import { Spinner } from '@ui-kit/Spinner';
 import { Text, Title } from '@ui-kit/Text';
 import { SecondaryButton } from '@ui-kit/Button';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
-import emptyArtworks from '@images/empty-artworks.png';
+import { ReactComponent as Icon } from '@svgs/feed-empty.svg';
+import EmptyState from '@shared/EmptyState';
 import './styles.less';
 
 const SliderBreakPoints = {
@@ -105,16 +106,7 @@ export const Feed = () => {
       <Meta title='Feed' description='Crio - Artworks Feed' />
       {loading && !offset && <GlobalSpinner />}
       {!loading && !carouselPosters.length ? (
-        <Row justify='center' gutter={[0, 30]} className='empty-artworks'>
-          <Col span={24}>
-            <img alt='no artworks' src={emptyArtworks} width={301} height={216} />
-          </Col>
-          <Col span={24}>
-            <Text level={20} color='white'>
-              There are no artworks yet
-            </Text>
-          </Col>
-        </Row>
+        <EmptyState Icon={Icon} text='There are no artworks yet' />
       ) : (
         <Fragment>
           <section className='cr-feed__poster-carousel'>
