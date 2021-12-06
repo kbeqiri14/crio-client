@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Fragment, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Carousel, Col, Row } from 'antd';
+import { Carousel, Row } from 'antd';
 import { Img } from 'react-image';
 
 import { useFeedRandomArtworks } from '@app/hooks/useFeedRandomArtworks';
@@ -13,7 +13,8 @@ import { Spinner } from '@ui-kit/Spinner';
 import { Text, Title } from '@ui-kit/Text';
 import { SecondaryButton } from '@ui-kit/Button';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
-import emptyArtworks from '@images/empty-artworks.png';
+import { ReactComponent as Icon } from '@svgs/feed-empty.svg';
+import EmptyState from '@shared/EmptyState';
 import './styles.less';
 
 const SliderBreakPoints = {
@@ -60,23 +61,23 @@ const RandomAuthorArtworks = memo(({ blockPosters }) => (
 
 export const Feed = () => {
   const [offset, setOffset] = useState(0);
-  const [carouselPosters, setCarouselPosters] = useState([]);
   const [topPosters, setTopPosters] = useState([]);
   const [blockPosters, setBlockPosters] = useState([]);
   const [currentPoster, setCurrentPoster] = useState();
 
-  const { isEnd, loading, loadMore } = useFeedRandomArtworks(
+  const { isEnd, loading, carouselPosters, loadMore } = useFeedRandomArtworks(
     ({ getRandomArtworksForFeed }) => {
       if (!offset) {
-        setCarouselPosters(getRandomArtworksForFeed.artworks.slice(0, 4));
-        setTopPosters(renderPosters(getRandomArtworksForFeed.artworks.slice(4, 12), 0));
+        setTopPosters(renderPosters(getRandomArtworksForFeed.topArtworks, 0));
         setBlockPosters([
           {
             authorPosters: getRandomArtworksForFeed.userArtworks,
-            posters: renderPosters(getRandomArtworksForFeed.artworks.slice(12), 3),
+            posters: getRandomArtworksForFeed.artworks
+              ? renderPosters(getRandomArtworksForFeed.artworks, 3)
+              : undefined,
           },
         ]);
-        setOffset(4 + 8 + 15);
+        setOffset(8 + 15);
         return;
       }
       setBlockPosters([
@@ -89,7 +90,7 @@ export const Feed = () => {
       setOffset(offset + 15);
     },
     offset,
-    offset ? 15 : 4 + 8 + 15,
+    offset ? 15 : 8 + 15,
   );
 
   useEffect(() => {
@@ -103,18 +104,9 @@ export const Feed = () => {
   return (
     <div className='cr-feed'>
       <Meta title='Feed' description='Crio - Artworks Feed' />
-      {loading && <GlobalSpinner />}
+      {loading && !offset && <GlobalSpinner />}
       {!loading && !carouselPosters.length ? (
-        <Row justify='center' gutter={[0, 30]} className='empty-artworks'>
-          <Col span={24}>
-            <img alt='no artworks' src={emptyArtworks} width={301} height={216} />
-          </Col>
-          <Col span={24}>
-            <Text level={20} color='white'>
-              There are no artworks yet
-            </Text>
-          </Col>
-        </Row>
+        <EmptyState Icon={Icon} text='There are no artworks yet' />
       ) : (
         <Fragment>
           <section className='cr-feed__poster-carousel'>

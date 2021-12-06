@@ -65,7 +65,7 @@ export const PricingPlans = () => {
   return (
     <div className='cr-pricing'>
       <Meta title='Pricing Plans' description='Crio - Pricing Plans' />
-      {user && !loading && id && (
+      {!!user && !loading && !!id && (
         <div className='cr-pricing__header'>
           <BackIcon onClick={goBack} />
           <Title inline level={20} color='white'>

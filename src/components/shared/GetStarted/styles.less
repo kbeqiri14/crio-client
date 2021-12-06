@@ -1,0 +1,36 @@
+@import 'variables';
+
+.get-started {
+  &__button {
+    width: 180px;
+  }
+  &__modal {
+    text-align: center;
+    .ant-modal-body {
+      padding: 60px 0 !important;
+    }
+  }
+}
+
+.cr-landing__connect {
+  position: relative;
+  svg {
+    line-height: 0;
+    position: absolute;
+    z-index: 10;
+    top: 50%;
+    left: 9px;
+    transform: translateY(-50%);
+  }
+  button {
+    padding: 0 63px;
+  }
+  &.google {
+    svg {
+      margin-left: 7px;
+    }
+    button {
+      padding: 0 74px;
+    }
+  }
+}

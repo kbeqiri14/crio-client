@@ -42,7 +42,12 @@ export const SecondaryButton = ({
         <Fragment>
           {icon}
           {size === 'large' ? (
-            <Title inline level='30' color={textColor} className='cr-button-secondary__text'>
+            <Title
+              inline
+              level='30'
+              color={textColor}
+              className='cr-button-secondary__text heading'
+            >
               {children}
             </Title>
           ) : (
@@ -61,7 +66,7 @@ export default SecondaryButton;
 SecondaryButton.propTypes = {
   children: PropTypes.node,
   disabled: PropTypes.bool,
-  fillColor: PropTypes.oneOf(['primary', 'secondary', 'tertiary', 'fourth', 'white_25']),
+  fillColor: PropTypes.oneOf(['primary', 'secondary', 'tertiary', 'fourth', 'fifth', 'white_25']),
   borderColor: PropTypes.oneOf(['primary', 'secondary', 'white', 'white_75']),
   size: PropTypes.oneOf(['regular', 'large']),
   filled: PropTypes.bool,

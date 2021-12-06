@@ -13,7 +13,7 @@ export const TermsAndConditions = () => {
         <Row>
           <Col span={24}>
             <Text color='white' level='20'>
-              Welcome to CrioInteractive!
+              Welcome to Crio Interactive!
             </Text>
             <Text color='white' level='20'>
               These terms and conditions outline the rules and regulations for the use of Crio
@@ -21,7 +21,7 @@ export const TermsAndConditions = () => {
             </Text>
             <Text color='white' level='20'>
               By accessing this website we assume you accept these terms and conditions. Do not
-              continue to use CrioInteractive if you do not agree to take all of the terms and
+              continue to use Crio Interactive if you do not agree to take all of the terms and
               conditions stated on this page.
             </Text>
             <Text color='white' level='20'>
@@ -43,7 +43,7 @@ export const TermsAndConditions = () => {
               Cookies
             </Title>
             <Text color='white' level='20'>
-              We employ the use of cookies. By accessing CrioInteractive, you agreed to use cookies
+              We employ the use of cookies. By accessing Crio Interactive, you agreed to use cookies
               in agreement with the Crio Interactive's Privacy Policy.
             </Text>
             <Text color='white' level='20'>
@@ -59,8 +59,8 @@ export const TermsAndConditions = () => {
             </Title>
             <Text color='white' level='20'>
               Unless otherwise stated, Crio Interactive and/or its licensors own the intellectual
-              property rights for all material on CrioInteractive. All intellectual property rights
-              are reserved. You may access this from CrioInteractive for your own personal use
+              property rights for all material on Crio Interactive. All intellectual property rights
+              are reserved. You may access this from Crio Interactive for your own personal use
               subjected to restrictions set in these terms and conditions.
             </Text>
             <Text color='white' level='20'>
@@ -69,22 +69,22 @@ export const TermsAndConditions = () => {
             <ul style={{ color: 'white' }}>
               <li>
                 <Text color='white' level='20'>
-                  Republish material from CrioInteractive
+                  Republish material from Crio Interactive
                 </Text>
               </li>
               <li>
                 <Text color='white' level='20'>
-                  Sell, rent or sub-license material from CrioInteractive
+                  Sell, rent or sub-license material from Crio Interactive
                 </Text>
               </li>
               <li>
                 <Text color='white' level='20'>
-                  Reproduce, duplicate or copy material from CrioInteractive
+                  Reproduce, duplicate or copy material from Crio Interactive
                 </Text>
               </li>
               <li>
                 <Text color='white' level='20'>
-                  Redistribute content from CrioInteractive
+                  Redistribute content from Crio Interactive
                 </Text>
               </li>
             </ul>
