@@ -55,6 +55,7 @@ export const Profile = () => {
         user={userData?.getUser}
         isFollow={isFollow}
         isCreator={user?.isCreator}
+        isCurrentUser={id === user.id}
         loading={loadingFollowing}
         onClick={handleClick}
       />
@@ -62,6 +63,7 @@ export const Profile = () => {
         isProfile
         id={id}
         name={name}
+        isCreator={user?.isCreator}
         isFollow={isFollow}
         loadingIsFollowing={loadingIsFollowing}
       />

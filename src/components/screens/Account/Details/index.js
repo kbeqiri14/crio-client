@@ -105,7 +105,11 @@ const Details = ({
             loadingIsFollowing ? (
               <Spinner spinning={true} color='white' />
             ) : (
-              <Works name={name} isProfile={isProfile} isLock={isProfile && !isFollow} />
+              <Works
+                name={name}
+                isProfile={isProfile}
+                isLock={!isCreator && isProfile && !isFollow}
+              />
             )
           ) : (
             <Followings followings={followings} loadingFollowings={loadingFollowings} />
