@@ -4,8 +4,8 @@ import cc from 'classcat';
 
 import { useCurrentUser } from '@app/auth/hooks';
 import { useRandomArtworks } from '@root/src/hooks/useRandomArtworks';
+import GetStarted from '@shared/GetStarted';
 import { renderPosters } from '@shared/PostersList';
-import { ConnectButton } from '@shared/ConnectButton';
 import { Footer } from '@shared/Footer';
 import { Meta } from '@shared/Meta';
 import { Text, Title } from '@ui-kit/Text';
@@ -38,7 +38,7 @@ export const LandingPage = () => {
             Crio is a leading community platform for creatives to showcase their work and interact
             with fans across the globe
           </div>
-          {!user && <ConnectButton />}
+          {!user && <GetStarted filled size='large' />}
         </div>
       </section>
       <section className='cr-landing__video-grid'>
@@ -75,7 +75,7 @@ export const LandingPage = () => {
         </div>
         {!user && (
           <div className='about-perks__connect'>
-            <ConnectButton />
+            <GetStarted filled size='large' />
           </div>
         )}
       </section>

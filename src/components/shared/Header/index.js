@@ -1,12 +1,12 @@
-import { useCallback, useMemo } from 'react';
+import { Fragment, useCallback, useMemo } from 'react';
 import { Row, Col } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
 import { SecondaryButton } from '@ui-kit/Button';
 
 import history from '@app/configs/history';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
+import GetStarted from '@shared/GetStarted';
 import crio_logo from '@images/crio-logo.svg';
-import { ConnectButton } from '@shared/ConnectButton';
 import { TabMenu } from './__partials__/TabMenu';
 import { ProfileMenu } from './__partials__/ProfileMenu';
 import './styles.less';
@@ -54,7 +54,14 @@ export const Header = ({ isAuthenticated }) => {
           </div>
         </Col>
         <Col className='header-end-group'>
-          {isAuthenticated && user ? <ProfileMenu user={user} /> : <ConnectButton size='regular' />}
+          {isAuthenticated && user ? (
+            <ProfileMenu user={user} />
+          ) : (
+            <Fragment>
+              <GetStarted text='Sign in' />
+              <GetStarted filled text='Sign up' />
+            </Fragment>
+          )}
           {user?.isCreator && (
             <SecondaryButton filled textColor='white' onClick={upload}>
               UPLOAD
