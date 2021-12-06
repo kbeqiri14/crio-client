@@ -42,6 +42,30 @@
           fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
     </script>
+    <script src="https://apis.google.com/js/api:client.js"></script>
+    <script>
+      var googleUser = {};
+      var googleLogin = function() {
+        gapi.load('auth2', function(){
+          // Retrieve the singleton for the GoogleAuth library and set up the client.
+          auth2 = gapi.auth2.init({
+            client_id: '867084421916-iurivn8ieb07fraucp1gacshvama1n7j.apps.googleusercontent.com',
+          });
+          attachSignin(document.getElementById('googleLogin'));
+        });
+      };
+
+      function attachSignin(element) {
+        console.log(element.id, 'element.id');
+        auth2.attachClickHandler(element, {},
+            function(googleUser) {
+              console.log(googleUser.getBasicProfile().getName(), 'getName')
+            }, function(error) {
+              alert(JSON.stringify(error, undefined, 2));
+            });
+      }
+    </script>
+    <!-- <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script> -->
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--

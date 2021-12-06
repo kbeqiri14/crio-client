@@ -35,10 +35,10 @@ const GetStarted = ({ filled, text, size }) => {
           className='get-started__modal'
         >
           <Row gutter={[0, 26]} justify='center'>
-            <Col className='cr-landing__connect google'>
+            <Col id='googleLogin' className='cr-landing__connect google'>
               <GoogleIcon />
               <SecondaryButton
-                onClick={undefined}
+                onClick={window.googleLogin}
                 disabled={loading}
                 filled
                 fillColor='primary'
