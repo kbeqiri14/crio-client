@@ -8,7 +8,7 @@ export const STRIPE_PAYMENT_URL = process.env.REACT_APP_STRIPE_PAYMENT_URL;
 export const COGNITO_REGION = process.env.REACT_APP_COGNITO_REGION;
 export const COGNITO_APP_CLIENT_ID = process.env.REACT_APP_COGNITO_APP_CLIENT_ID;
 export const COGNITO_USER_POOL_ID = process.env.REACT_APP_COGNITO_USER_POOL_ID;
-export const COGNITO_DOMAIN = process.env.REACT_APP_COGNITO_DOMAIN1;
+export const COGNITO_DOMAIN = process.env.REACT_APP_COGNITO_DOMAIN;
 export const COGNITO_REDIRECT_SIGN_IN = `${window.location.origin}/cognito/callback`;
 export const COGNITO_REDIRECT_SIGN_OUT = window.location.origin;
 
