@@ -14,7 +14,8 @@ const PrivacyPolicy = () => {
         <Row>
           <Col span={24}>
             <Text color='white' level='20'>
-              At Crio Interactive, accessible from https://criointeractive.com, one of our main
+              At Crio Interactive, accessible from{' '}
+              <a href='https://criointeractive.com'>https://criointeractive.com</a>, one of our main
               priorities is the privacy of our visitors. This Privacy Policy document contains types
               of information that is collected and recorded by Crio Interactive and how we use it.
             </Text>
