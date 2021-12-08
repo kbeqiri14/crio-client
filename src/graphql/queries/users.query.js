@@ -23,6 +23,7 @@ export const me_fragment = gql`
       subscriptionStatus
       lastEventSnapshot
     }
+    artworksCount
   }
 `;
 
