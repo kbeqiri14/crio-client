@@ -10,6 +10,7 @@ import { Meta } from '@shared/Meta';
 import { Footer } from '@shared/Footer';
 import { Text, Title } from '@ui-kit/Text';
 import { SecondaryButton } from '@ui-kit/Button';
+import { CustomTooltip } from '@ui-kit/Tooltip';
 import { warningToast } from '@ui-kit/Notification';
 import { ReactComponent as CheckMark } from '@svgs/green-check.svg';
 import { ReactComponent as BackIcon } from '@svgs/back.svg';
@@ -97,18 +98,25 @@ export const PricingPlans = () => {
               </Text>
             </div>
             <PerksList isFree={false} listItems={perksListPro} />
-            <div className='cr-pricing__card--action'>
-              <SecondaryButton
-                size='large'
-                textColor='white'
-                filled
-                fillColor='tertiary'
-                isBlock
-                onClick={handleClick}
-              >
-                GET STARTED
-              </SecondaryButton>
-            </div>
+            <CustomTooltip
+              placement='right'
+              className='overlay-subscription'
+              title='Warning'
+              description='Please, use the email address attached to your profile'
+            >
+              <div className='cr-pricing__card--action'>
+                <SecondaryButton
+                  size='large'
+                  textColor='white'
+                  filled
+                  fillColor='tertiary'
+                  isBlock
+                  onClick={handleClick}
+                >
+                  GET STARTED
+                </SecondaryButton>
+              </div>
+            </CustomTooltip>
           </div>
         </Col>
       </Row>

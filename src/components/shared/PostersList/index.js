@@ -50,7 +50,7 @@ export const PosterCard = memo(
     return (
       <CustomTooltip
         trigger={unavailable && !lock ? ['hover'] : []}
-        className='overlayProcess'
+        className='overlay-process'
         description='Your video is being processed. It can take a while. Please wait.'
       >
         <div
