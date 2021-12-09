@@ -8,15 +8,14 @@ import { BlurredModal } from '@ui-kit/Modal';
 import { SecondaryButton } from '@ui-kit/Button';
 import { errorToast, successToast } from '@ui-kit/Notification';
 
-export const CancelSubscription = memo(({ email }) => {
+export const CancelSubscription = memo(() => {
   const [visible, setVisible] = useState(false);
   const show = useCallback(() => setVisible(true), []);
   const hide = useCallback(() => setVisible(false), []);
   const [requestCancelSubscription, { loading }] = useMutation(cancelSubscription, {
-    variables: { email },
     onCompleted: () => {
       hide();
-      successToast('Your request for cancellation is successfully sent.');
+      successToast('Your cancellation request is successfully sent.');
     },
     onError: () => errorToast('Something went wrong!', 'Please, try again later!'),
   });
