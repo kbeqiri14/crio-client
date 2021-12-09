@@ -45,3 +45,9 @@ export const createSubscriber = gql`
     createSubscriber(subscriberId: $subscriberId)
   }
 `;
+
+export const cancelSubscription = gql`
+  mutation cancelSubscription($email: String!) {
+    cancelSubscription(email: $email)
+  }
+`;

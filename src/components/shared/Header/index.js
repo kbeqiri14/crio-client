@@ -53,7 +53,7 @@ export const Header = ({ isAuthenticated }) => {
           <div className='header-tab-menu'>
             <TabMenu defaultActiveItem={activeItem} menuItems={menuItems} />
           </div>
-          {user.isFan && !showPricing && <CancelSubscription />}
+          {user.isFan && !showPricing && <CancelSubscription email={user.email} />}
         </Col>
         <Col className='header-end-group'>
           {isAuthenticated && user ? (
