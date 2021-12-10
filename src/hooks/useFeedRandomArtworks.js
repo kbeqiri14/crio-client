@@ -47,12 +47,15 @@ export const useFeedRandomArtworks = (onCompleted, offset = 0, limit = LIMIT) =>
   );
 
   const loadMore = useCallback(() => {
+    const length = creatorIds?.length;
+    const index = parseInt((offset - (8 + LIMIT)) / LIMIT);
+    const calculatedIndex = index - parseInt((index - 1) / length) * length;
     setLoading(true);
     requestRandomArtworks({
       variables: {
         params: {
           count,
-          userId: creatorIds?.[parseInt((offset - (8 + LIMIT)) / LIMIT) + 1],
+          userId: creatorIds?.[(calculatedIndex + 1) % length],
           offset,
           limit: LIMIT,
         },
