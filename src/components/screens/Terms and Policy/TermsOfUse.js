@@ -16,7 +16,8 @@ export const TermsOfUse = () => {
               Version 1.0
             </Text>
             <Text color='white' level='20'>
-              The Crio Interactive website located at https://criointeractive.com is a copyrighted
+              The Crio Interactive website located at{' '}
+              <a href='https://criointeractive.com'>https://criointeractive.com</a> is a copyrighted
               work belonging to Crio Interactive. Certain features of the Site may be subject to
               additional guidelines, terms, or rules, which will be posted on the Site in connection
               with such features.

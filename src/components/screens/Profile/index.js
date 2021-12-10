@@ -63,6 +63,7 @@ export const Profile = () => {
         isProfile
         id={id}
         name={name}
+        artworksCount={userData?.getUser?.artworksCount}
         isCreator={user?.isCreator}
         isFollow={isFollow}
         loadingIsFollowing={loadingIsFollowing}

@@ -17,7 +17,8 @@ export const TermsAndConditions = () => {
             </Text>
             <Text color='white' level='20'>
               These terms and conditions outline the rules and regulations for the use of Crio
-              Interactive's Website, located at https://criointeractive.com.
+              Interactive's Website, located at{' '}
+              <a href='https://criointeractive.com'>https://criointeractive.com</a>.
             </Text>
             <Text color='white' level='20'>
               By accessing this website we assume you accept these terms and conditions. Do not
