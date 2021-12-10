@@ -2,6 +2,7 @@ import { memo, useCallback, useState } from 'react';
 import { useMutation } from '@apollo/client';
 
 import { cancelSubscription } from '@app/graphql/mutations/user.mutation';
+import { me } from '@app/graphql/queries/users.query';
 import ActionButtons from '@shared/ActionButtons';
 import { Title } from '@ui-kit/Text';
 import { BlurredModal } from '@ui-kit/Modal';
@@ -13,11 +14,31 @@ export const CancelSubscription = memo(() => {
   const show = useCallback(() => setVisible(true), []);
   const hide = useCallback(() => setVisible(false), []);
   const [requestCancelSubscription, { loading }] = useMutation(cancelSubscription, {
+    update: (cache, mutationResult) => {
+      if (mutationResult?.data?.cancelSubscription) {
+        const existingData = cache.readQuery({ query: me });
+        cache.writeQuery({
+          query: me,
+          data: {
+            me: {
+              ...existingData?.me,
+              payment: {
+                ...existingData?.me?.payment,
+                subscriptionCancel: true,
+              },
+            },
+          },
+        });
+      }
+    },
     onCompleted: () => {
       hide();
       successToast('Your cancellation request is successfully sent.');
     },
-    onError: () => errorToast('Something went wrong!', 'Please, try again later!'),
+    onError: () => {
+      hide();
+      errorToast('Something went wrong!', 'Please, try again later!');
+    },
   });
 
   return (
