@@ -27,6 +27,7 @@ const tabs = {
 const Details = ({
   id,
   name,
+  artworksCount,
   isProfile,
   isCreator,
   isFollow,
@@ -55,7 +56,7 @@ const Details = ({
   });
 
   const [sendEmail, { loading }] = useMutation(contactCreator, {
-    onCompleted: (data) => {
+    onCompleted: () => {
       successToast('The message is successfully sent!');
       setSelectedTier(undefined);
       getLoggedInUser();
@@ -84,8 +85,11 @@ const Details = ({
     [pathname],
   );
   const tab = useMemo(
-    () => (isCreator || isProfile ? 'WORKS 126' : `FOLLOWING: ${followings?.length || ''}`),
-    [isCreator, isProfile, followings?.length],
+    () =>
+      isCreator || isProfile
+        ? `WORKS ${isProfile ? artworksCount : user.artworksCount}`
+        : `FOLLOWING: ${followings?.length || ''}`,
+    [isCreator, isProfile, user.artworksCount, artworksCount, followings?.length],
   );
   const onTabClick = useCallback(
     (key) => {
@@ -105,7 +109,11 @@ const Details = ({
             loadingIsFollowing ? (
               <Spinner spinning={true} color='white' />
             ) : (
-              <Works name={name} isProfile={isProfile} isLock={isProfile && !isFollow} />
+              <Works
+                name={name}
+                isProfile={isProfile}
+                isLock={!isCreator && isProfile && !isFollow}
+              />
             )
           ) : (
             <Followings followings={followings} loadingFollowings={loadingFollowings} />

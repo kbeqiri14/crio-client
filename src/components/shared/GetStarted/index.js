@@ -41,8 +41,8 @@ const GetStarted = ({ filled, text, size }) => {
                 onClick={window.googleLogin}
                 disabled={loading}
                 filled
-                fillColor='primary'
-                textColor='white'
+                fillColor='fifth'
+                textColor='dark'
                 size='large'
               >
                 Connect with Google

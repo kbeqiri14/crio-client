@@ -32,22 +32,25 @@ export const PosterCard = memo(
     const lock = isLock;
     const unavailable = status && status !== 'available';
 
-    const handleClick = () =>
-      show({
-        title,
-        description,
-        id: videoUri?.substring(videoUri?.lastIndexOf('/') + 1),
-        artworkId,
-        userId,
-        fbUserId,
-        name,
-        avatar: `https://graph.facebook.com/${fbUserId}/picture?height=350&width=350`,
-      });
+    const handleClick = () => {
+      if (!isLock) {
+        show({
+          title,
+          description,
+          id: videoUri?.substring(videoUri?.lastIndexOf('/') + 1),
+          artworkId,
+          userId,
+          fbUserId,
+          name,
+          avatar: `https://graph.facebook.com/${fbUserId}/picture?height=350&width=350`,
+        });
+      }
+    };
 
     return (
       <CustomTooltip
         trigger={unavailable && !lock ? ['hover'] : []}
-        className='overlayProcess'
+        className='overlay-process'
         description='Your video is being processed. It can take a while. Please wait.'
       >
         <div

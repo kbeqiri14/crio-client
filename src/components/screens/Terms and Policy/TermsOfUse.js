@@ -16,7 +16,8 @@ export const TermsOfUse = () => {
               Version 1.0
             </Text>
             <Text color='white' level='20'>
-              The CrioInteractive website located at https://criointeractive.com is a copyrighted
+              The Crio Interactive website located at{' '}
+              <a href='https://criointeractive.com'>https://criointeractive.com</a> is a copyrighted
               work belonging to Crio Interactive. Certain features of the Site may be subject to
               additional guidelines, terms, or rules, which will be posted on the Site in connection
               with such features.
@@ -214,7 +215,7 @@ export const TermsOfUse = () => {
               <Title color='white' inline level='30'>
                 Cookies and Web Beacons. &nbsp;
               </Title>
-              Like any other website, CrioInteractive uses ‘cookies’. These cookies are used to
+              Like any other website, Crio Interactive uses ‘cookies’. These cookies are used to
               store information including visitors’ preferences, and the pages on the website that
               the visitor accessed or visited. The information is used to optimize the users’
               experience by customizing our web page content based on visitors’ browser type and/or
@@ -611,12 +612,18 @@ export const TermsOfUse = () => {
             <Title level='20' color='white'>
               Contact Information
             </Title>
-            <Text color='white' level='20'>
-              Address: 120 West 97th Street, New York, NY 10025
-            </Text>
-            <Text color='white' level='20'>
-              Email: klodi.beqiri@criointeractive.com
-            </Text>
+            <Row>
+              <Col span={6}>
+                <Text color='white' level='20'>
+                  Name: Klodian Beqiri
+                </Text>
+              </Col>
+              <Col>
+                <Text color='white' level='20'>
+                  Email: <a href={`mailto:info@criointeractive.com`}>info@criointeractive.com</a>
+                </Text>
+              </Col>
+            </Row>
           </Col>
         </Row>
       </div>

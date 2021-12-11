@@ -1,14 +1,15 @@
 import { Fragment, useCallback, useMemo } from 'react';
-import { Row, Col } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
-import { SecondaryButton } from '@ui-kit/Button';
+import { Row, Col } from 'antd';
 
 import history from '@app/configs/history';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import GetStarted from '@shared/GetStarted';
+import { SecondaryButton } from '@ui-kit/Button';
 import crio_logo from '@images/crio-logo.svg';
 import { TabMenu } from './__partials__/TabMenu';
 import { ProfileMenu } from './__partials__/ProfileMenu';
+import CancelSubscription from './__partials__/CancelSubscription';
 import './styles.less';
 
 const getTabItems = (showPricing) => {
@@ -52,6 +53,9 @@ export const Header = ({ isAuthenticated }) => {
           <div className='header-tab-menu'>
             <TabMenu defaultActiveItem={activeItem} menuItems={menuItems} />
           </div>
+          {user.isFan && !showPricing && !user?.payment?.subscriptionCancel && (
+            <CancelSubscription email={user.email} />
+          )}
         </Col>
         <Col className='header-end-group'>
           {isAuthenticated && user ? (
