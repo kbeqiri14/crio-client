@@ -5,6 +5,7 @@ export const me_fragment = gql`
     id
     email
     userId
+    providerType
     fbUserId
     username
     firstName
@@ -50,6 +51,7 @@ export const following_info_fragment = gql`
   fragment FollowingInfoAttributes on FollowingInfo {
     id
     userId
+    providerType
     fbUserId
     name
     email

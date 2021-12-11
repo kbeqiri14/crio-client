@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Carousel, Row } from 'antd';
 import { Img } from 'react-image';
 
+import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { useFeedRandomArtworks } from '@app/hooks/useFeedRandomArtworks';
 import { PosterCard, renderPosters } from '@shared/PostersList';
 import { Footer } from '@shared/Footer';
@@ -64,6 +65,7 @@ export const Feed = () => {
   const [topPosters, setTopPosters] = useState([]);
   const [blockPosters, setBlockPosters] = useState([]);
   const [currentPoster, setCurrentPoster] = useState();
+  const avatarUrl = useAvatarUrl(currentPoster?.providerType, currentPoster?.fbUserId);
 
   const { isEnd, loading, carouselPosters, loadMore } = useFeedRandomArtworks(
     ({ getRandomArtworksForFeed }) => {
@@ -126,12 +128,7 @@ export const Feed = () => {
               </Carousel>
               <div className='cr-carousel__cards'>
                 <div className='cr-carousel__cards--author'>
-                  {currentPoster?.fbUserId && (
-                    <img
-                      alt='Artist avatar'
-                      src={`https://graph.facebook.com/${currentPoster?.fbUserId}/picture?height=350&width=350`}
-                    />
-                  )}
+                  {currentPoster?.fbUserId && <img alt='Artist avatar' src={avatarUrl} />}
                   <Text level='30' color='dark'>
                     © Artwork by &nbsp;
                   </Text>

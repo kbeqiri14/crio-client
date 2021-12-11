@@ -1,23 +1,21 @@
 import { memo, useCallback, useMemo } from 'react';
 import { Col, Row } from 'antd';
 
+import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import history from '@configs/history';
 import { fields } from '@constants/visibility';
 import { Text, Title } from '@ui-kit/Text';
 import { ReactComponent as CreatorIcon } from '@svgs/creator.svg';
 import { ReactComponent as MailIcon } from '@svgs/mail.svg';
-import profile from '@images/profile.png';
 import './styles.less';
 
 const ProfileInfo = ({ user, isProfile, isFollowing, isCreator }) => {
-  const { userId, fbUserId, firstName, lastName, username, email, visibility } = user || {};
+  const { userId, providerType, fbUserId, firstName, lastName, username, email, visibility } =
+    user || {};
+  const avatarUrl = useAvatarUrl(providerType, fbUserId);
+
   const size = useMemo(() => (isFollowing ? 96 : 134), [isFollowing]);
   const name = useMemo(() => `${firstName || ''} ${lastName || ''}`, [firstName, lastName]);
-  const source = useMemo(
-    () =>
-      fbUserId ? `https://graph.facebook.com/${fbUserId}/picture?height=350&width=350` : profile,
-    [fbUserId],
-  );
   const visible = useMemo(() => {
     const main = !isProfile && !isFollowing;
     return {
@@ -34,7 +32,7 @@ const ProfileInfo = ({ user, isProfile, isFollowing, isCreator }) => {
   return (
     <Row align='middle' gutter={30} className={`profile ${isFollowing ? 'following' : ''}`}>
       <Col>
-        <img alt='profile' src={source} width={size} height={size} onClick={visitProfile} />
+        <img alt='profile' src={avatarUrl} width={size} height={size} onClick={visitProfile} />
         {isCreator && <CreatorIcon className='creator-icon' />}
       </Col>
       <Col className='info'>

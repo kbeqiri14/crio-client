@@ -2,6 +2,7 @@ import cc from 'classcat';
 import { memo } from 'react';
 import { Col, Row, Tooltip } from 'antd';
 
+import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { CustomTooltip } from '@ui-kit/Tooltip';
 import { Text } from '@ui-kit/Text';
@@ -17,6 +18,7 @@ export const PosterCard = memo(
     name,
     artworkId,
     userId,
+    providerType,
     fbUserId,
     title,
     description,
@@ -27,6 +29,7 @@ export const PosterCard = memo(
     onClick,
     ...props
   }) => {
+    const avatarUrl = useAvatarUrl(providerType, fbUserId);
     const { show } = usePresentation();
 
     const lock = isLock;
@@ -40,9 +43,10 @@ export const PosterCard = memo(
           id: videoUri?.substring(videoUri?.lastIndexOf('/') + 1),
           artworkId,
           userId,
+          providerType,
           fbUserId,
           name,
-          avatar: `https://graph.facebook.com/${fbUserId}/picture?height=350&width=350`,
+          avatar: avatarUrl,
         });
       }
     };
