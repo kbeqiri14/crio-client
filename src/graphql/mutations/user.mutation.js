@@ -6,7 +6,7 @@ export const signIn = gql`
       id
       userId
       providerType
-      fbUserId
+      providerUserId
       email
       username
       firstName

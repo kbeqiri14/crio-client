@@ -10,9 +10,9 @@ import { ReactComponent as MailIcon } from '@svgs/mail.svg';
 import './styles.less';
 
 const ProfileInfo = ({ user, isProfile, isFollowing, isCreator }) => {
-  const { userId, providerType, fbUserId, firstName, lastName, username, email, visibility } =
+  const { userId, providerType, providerUserId, firstName, lastName, username, email, visibility } =
     user || {};
-  const avatarUrl = useAvatarUrl(providerType, fbUserId);
+  const avatarUrl = useAvatarUrl(providerType, providerUserId);
 
   const size = useMemo(() => (isFollowing ? 96 : 134), [isFollowing]);
   const name = useMemo(() => `${firstName || ''} ${lastName || ''}`, [firstName, lastName]);

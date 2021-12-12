@@ -1,10 +1,9 @@
 import { ApolloClient, InMemoryCache, createHttpLink, ApolloLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
-import { Auth } from 'aws-amplify';
 
 import { GRAPHQL_ROOT } from '@app/configs/environment';
-import { getCurrentUser } from '@app/auth';
+import { getCurrentUser, signOut } from '@app/auth';
 
 const httpLink = createHttpLink({
   uri: GRAPHQL_ROOT,
@@ -26,7 +25,7 @@ const errorLink = onError(({ networkError, graphQLErrors }) => {
   if (graphQLErrors) {
     graphQLErrors.map(async ({ message }) => {
       if (message.includes('Not Authorized!')) {
-        await Auth.signOut();
+        await signOut();
         const loggedInUserVar = require('@configs/client-cache').loggedInUserVar;
         loggedInUserVar({});
         window.location.href = '/';

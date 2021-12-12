@@ -13,8 +13,13 @@ const GetStarted = ({ filled, text, size }) => {
 
   const show = useCallback(() => setVisible(true), []);
   const hide = useCallback(() => setVisible(false), []);
-  const googleSignIn = useCallback(() => signIn('Google'), []);
-  const facebookSignIn = useCallback(() => signIn('Facebook'), []);
+  const socialSignIn = useCallback(
+    (provider) => {
+      hide();
+      signIn(provider);
+    },
+    [hide],
+  );
 
   return (
     <div className='get-started'>
@@ -40,7 +45,7 @@ const GetStarted = ({ filled, text, size }) => {
             <Col id='googleLogin' className='cr-landing__connect google'>
               <GoogleIcon />
               <SecondaryButton
-                onClick={googleSignIn}
+                onClick={() => socialSignIn('Google')}
                 filled
                 fillColor='fifth'
                 textColor='dark'
@@ -52,7 +57,7 @@ const GetStarted = ({ filled, text, size }) => {
             <Col className='cr-landing__connect'>
               <FbIcon />
               <SecondaryButton
-                onClick={facebookSignIn}
+                onClick={() => socialSignIn('Facebook')}
                 filled
                 fillColor='secondary'
                 textColor='white'
