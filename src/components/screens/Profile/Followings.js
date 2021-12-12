@@ -33,7 +33,13 @@ const FollowingRow = ({ user, artworks }) => (
         <div className='cr-feed__poster-scroll'>
           <Slider withScroll breakpoints={SliderBreakPoints} breakpointsBase='container'>
             {artworks?.map((poster, idx) => (
-              <PosterCard key={idx} name={user.name} fbUserId={user.fbUserId} {...poster} />
+              <PosterCard
+                key={idx}
+                name={user.name}
+                providerType={user.providerType}
+                fbUserId={user.fbUserId}
+                {...poster}
+              />
             ))}
           </Slider>
         </div>

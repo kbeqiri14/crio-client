@@ -12,9 +12,6 @@ export const COGNITO_DOMAIN = process.env.REACT_APP_COGNITO_DOMAIN;
 export const COGNITO_REDIRECT_SIGN_IN = `${window.location.origin}/cognito/callback`;
 export const COGNITO_REDIRECT_SIGN_OUT = window.location.origin;
 
-//social
-export const FB_APP_ID = process.env.REACT_APP_FB_APP_ID;
-
 // Social Links
 export const FACEBOOK_LINK = process.env.REACT_APP_FACEBOOK_LINK || 'https://facebook.com';
 export const TWITTER_LINK = process.env.TWITTER_LINK || 'https://twitter.com';

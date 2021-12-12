@@ -38,11 +38,11 @@ Amplify.configure({
   },
 });
 
-export async function fbSignIn() {
+export async function signIn(provider) {
   try {
-    await Auth.federatedSignIn({ provider: 'Facebook' });
+    await Auth.federatedSignIn({ provider });
   } catch (error) {
-    console.log('error facebook signing in: ', error);
+    console.log('error signing in: ', error);
   }
 }
 

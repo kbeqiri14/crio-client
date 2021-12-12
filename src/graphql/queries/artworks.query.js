@@ -18,6 +18,7 @@ export const work_fragment = gql`
     id
     artworkId
     userId
+    providerType
     fbUserId
     name
     videoUri

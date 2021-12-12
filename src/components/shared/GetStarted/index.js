@@ -1,7 +1,7 @@
 import { memo, useCallback, useState } from 'react';
 import { Col, Row } from 'antd';
 
-import useFacebook from '@app/hooks/useFacebook';
+import { signIn } from '@app/auth';
 import { SecondaryButton } from '@ui-kit/Button';
 import { BlurredModal } from '@ui-kit/Modal';
 import { ReactComponent as GoogleIcon } from '@svgs/google-sign-in.svg';
@@ -10,9 +10,11 @@ import './styles.less';
 
 const GetStarted = ({ filled, text, size }) => {
   const [visible, setVisible] = useState(false);
+
   const show = useCallback(() => setVisible(true), []);
   const hide = useCallback(() => setVisible(false), []);
-  const { loading, login } = useFacebook();
+  const googleSignIn = useCallback(() => signIn('Google'), []);
+  const facebookSignIn = useCallback(() => signIn('Facebook'), []);
 
   return (
     <div className='get-started'>
@@ -38,8 +40,7 @@ const GetStarted = ({ filled, text, size }) => {
             <Col id='googleLogin' className='cr-landing__connect google'>
               <GoogleIcon />
               <SecondaryButton
-                onClick={window.googleLogin}
-                disabled={loading}
+                onClick={googleSignIn}
                 filled
                 fillColor='fifth'
                 textColor='dark'
@@ -51,8 +52,7 @@ const GetStarted = ({ filled, text, size }) => {
             <Col className='cr-landing__connect'>
               <FbIcon />
               <SecondaryButton
-                onClick={login}
-                disabled={loading}
+                onClick={facebookSignIn}
                 filled
                 fillColor='secondary'
                 textColor='white'

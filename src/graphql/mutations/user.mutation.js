@@ -5,6 +5,7 @@ export const signIn = gql`
     saveUser {
       id
       userId
+      providerType
       fbUserId
       email
       username
@@ -25,6 +26,7 @@ export const updateUser = gql`
     updateUser(attributes: $attributes) {
       id
       userId
+      providerType
       email
       username
       firstName
