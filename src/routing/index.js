@@ -30,15 +30,17 @@ export const AppRoutes = () => {
 
   const [getLoggedInUser] = useLazyQuery(me, {
     onCompleted: (data) => {
-      let userInfo;
       if (data?.me) {
-        userInfo = { ...data.me };
-        userInfo.isFan = !userInfo.isCreator;
-        userInfo.isSubscribed = userInfo.payment?.subscriptionStatus === 'active';
-        const periodEnd = userInfo.payment?.periodEnd;
-        userInfo.subscribePeriodIsValid = periodEnd ? isFuture(new Date(periodEnd)) : false;
+        const periodEnd = data.me.payment?.periodEnd;
+        dispatchUser({
+          ...data.me,
+          isFan: !data.me.isCreator,
+          isSubscribed: data.me.payment?.subscriptionStatus === 'active',
+          subscribePeriodIsValid: periodEnd ? isFuture(new Date(periodEnd)) : false,
+        });
+      } else if (user) {
+        getLoggedInUser();
       }
-      dispatchUser(userInfo);
     },
     onError: (data) => console.log(data, 'error'),
     fetchPolicy: 'cache-and-network',
