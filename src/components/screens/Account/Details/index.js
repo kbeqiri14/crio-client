@@ -88,7 +88,9 @@ const Details = ({
     () =>
       isCreator || isProfile
         ? `WORKS ${isProfile ? artworksCount : user.artworksCount}`
-        : `FOLLOWING: ${followings?.length || ''}`,
+        : followings?.length
+        ? `FOLLOWING: ${followings?.length}`
+        : 'FOLLOWING',
     [isCreator, isProfile, user.artworksCount, artworksCount, followings?.length],
   );
   const onTabClick = useCallback(
@@ -124,13 +126,14 @@ const Details = ({
             <Perks
               vouchers={user.vouchers}
               onButtonClick={setSelectedTier}
+              isCreator={isCreator}
               isProfile={isProfile}
               isSubscribed={isSubscribed}
             />
           </TabPane>
         )}
       </Tabs>
-      {isProfile && !isSubscribed && <Subscription className='subscription-icon' />}
+      {!isCreator && isProfile && !isSubscribed && <Subscription className='subscription-icon' />}
       {!!selectedTier && (
         <SendEmailModal
           onCancel={() => setSelectedTier(undefined)}

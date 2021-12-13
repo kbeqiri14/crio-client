@@ -5,7 +5,7 @@ import { Text } from '@ui-kit/Text';
 import './styles.less';
 
 export const ProfileMenu = ({ user }) => {
-  const avatarUrl = useAvatarUrl(user?.providerType, user?.providerUserId);
+  const avatarUrl = useAvatarUrl(user?.providerType, user?.providerUserId, user?.avatar);
 
   return (
     <div className='dropdown'>
