@@ -65,7 +65,7 @@ export const Feed = () => {
   const [topPosters, setTopPosters] = useState([]);
   const [blockPosters, setBlockPosters] = useState([]);
   const [currentPoster, setCurrentPoster] = useState();
-  const avatarUrl = useAvatarUrl(currentPoster?.providerType, currentPoster?.fbUserId);
+  const avatarUrl = useAvatarUrl(currentPoster?.providerType, currentPoster?.providerUserId);
 
   const { isEnd, loading, carouselPosters, loadMore } = useFeedRandomArtworks(
     ({ getRandomArtworksForFeed }) => {
@@ -128,7 +128,7 @@ export const Feed = () => {
               </Carousel>
               <div className='cr-carousel__cards'>
                 <div className='cr-carousel__cards--author'>
-                  {currentPoster?.fbUserId && <img alt='Artist avatar' src={avatarUrl} />}
+                  {currentPoster?.providerUserId && <img alt='Artist avatar' src={avatarUrl} />}
                   <Text level='30' color='dark'>
                     © Artwork by &nbsp;
                   </Text>

@@ -31,7 +31,7 @@ export const PresentationView = ({ visible, videoInfo, isAuthenticated }) => {
           <Col span={18} offset={3} className='video-view-author'>
             <Row align='middle'>
               <Col className='author-avatar'>
-                {videoInfo.fbUserId && <img src={videoInfo.avatar} alt='Author avatar' />}
+                {videoInfo.providerUserId && <img src={videoInfo.avatar} alt='Author avatar' />}
               </Col>
               <Col>
                 <Row>

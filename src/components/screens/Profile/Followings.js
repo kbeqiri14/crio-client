@@ -37,7 +37,7 @@ const FollowingRow = ({ user, artworks }) => (
                 key={idx}
                 name={user.name}
                 providerType={user.providerType}
-                fbUserId={user.fbUserId}
+                providerUserId={user.providerUserId}
                 {...poster}
               />
             ))}

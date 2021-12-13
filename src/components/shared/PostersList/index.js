@@ -19,7 +19,7 @@ export const PosterCard = memo(
     artworkId,
     userId,
     providerType,
-    fbUserId,
+    providerUserId,
     title,
     description,
     status,
@@ -29,7 +29,7 @@ export const PosterCard = memo(
     onClick,
     ...props
   }) => {
-    const avatarUrl = useAvatarUrl(providerType, fbUserId);
+    const avatarUrl = useAvatarUrl(providerType, providerUserId);
     const { show } = usePresentation();
 
     const lock = isLock;
@@ -44,7 +44,7 @@ export const PosterCard = memo(
           artworkId,
           userId,
           providerType,
-          fbUserId,
+          providerUserId,
           name,
           avatar: avatarUrl,
         });

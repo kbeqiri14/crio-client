@@ -1,14 +1,11 @@
-import { useCallback } from 'react';
-import { Auth } from 'aws-amplify';
-
 import history from '@app/configs/history';
+import { signOut } from '@app/auth';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { Text } from '@ui-kit/Text';
 import './styles.less';
 
 export const ProfileMenu = ({ user }) => {
-  const avatarUrl = useAvatarUrl(user?.providerType, user?.fbUserId);
-  const signOut = useCallback(() => Auth.signOut(), []);
+  const avatarUrl = useAvatarUrl(user?.providerType, user?.providerUserId);
 
   return (
     <div className='dropdown'>

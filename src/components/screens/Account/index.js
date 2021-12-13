@@ -17,14 +17,14 @@ export const MyAccount = () => {
 
   const [requestFollowings, { data: followings, loading: loadingFollowings }] = useLazyQuery(
     getFollowings,
-    { fetchPolicy: 'no-cache' },
+    { fetchPolicy: 'cache-and-network' },
   );
 
   useEffect(() => {
-    if (user && !user.isCreator) {
+    if (user?.id && !user?.isCreator) {
       requestFollowings();
     }
-  }, [user, requestFollowings]);
+  }, [user?.id, user?.isCreator, requestFollowings]);
 
   return (
     <Fragment>
