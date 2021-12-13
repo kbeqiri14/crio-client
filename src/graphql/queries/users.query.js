@@ -6,7 +6,7 @@ export const me_fragment = gql`
     email
     userId
     providerType
-    fbUserId
+    providerUserId
     username
     firstName
     lastName
@@ -52,7 +52,7 @@ export const following_info_fragment = gql`
     id
     userId
     providerType
-    fbUserId
+    providerUserId
     name
     email
     username
