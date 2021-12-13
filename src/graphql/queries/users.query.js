@@ -10,6 +10,7 @@ export const me_fragment = gql`
     username
     firstName
     lastName
+    avatar
     visibility
     isCreator
     vouchers {
@@ -58,6 +59,7 @@ export const following_info_fragment = gql`
     username
     firstName
     lastName
+    avatar
     visibility
     artworks {
       videoUri

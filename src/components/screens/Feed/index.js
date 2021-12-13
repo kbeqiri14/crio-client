@@ -65,7 +65,11 @@ export const Feed = () => {
   const [topPosters, setTopPosters] = useState([]);
   const [blockPosters, setBlockPosters] = useState([]);
   const [currentPoster, setCurrentPoster] = useState();
-  const avatarUrl = useAvatarUrl(currentPoster?.providerType, currentPoster?.providerUserId);
+  const avatarUrl = useAvatarUrl(
+    currentPoster?.providerType,
+    currentPoster?.providerUserId,
+    currentPoster?.avatar,
+  );
 
   const { isEnd, loading, carouselPosters, loadMore } = useFeedRandomArtworks(
     ({ getRandomArtworksForFeed }) => {

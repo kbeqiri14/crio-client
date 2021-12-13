@@ -38,7 +38,7 @@ export const AppRoutes = () => {
           isSubscribed: data.me.payment?.subscriptionStatus === 'active',
           subscribePeriodIsValid: periodEnd ? isFuture(new Date(periodEnd)) : false,
         });
-      } else if (user) {
+      } else if (user?.attributes?.email) {
         getLoggedInUser();
       }
     },

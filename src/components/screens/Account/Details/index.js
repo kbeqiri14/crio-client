@@ -88,7 +88,9 @@ const Details = ({
     () =>
       isCreator || isProfile
         ? `WORKS ${isProfile ? artworksCount : user.artworksCount}`
-        : `FOLLOWING: ${followings?.length || ''}`,
+        : followings?.length
+        ? `FOLLOWING: ${followings?.length}`
+        : 'FOLLOWING',
     [isCreator, isProfile, user.artworksCount, artworksCount, followings?.length],
   );
   const onTabClick = useCallback(

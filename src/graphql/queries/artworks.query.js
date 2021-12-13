@@ -20,6 +20,7 @@ export const work_fragment = gql`
     userId
     providerType
     providerUserId
+    avatar
     name
     videoUri
     thumbnailUri
