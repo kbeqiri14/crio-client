@@ -126,13 +126,14 @@ const Details = ({
             <Perks
               vouchers={user.vouchers}
               onButtonClick={setSelectedTier}
+              isCreator={isCreator}
               isProfile={isProfile}
               isSubscribed={isSubscribed}
             />
           </TabPane>
         )}
       </Tabs>
-      {isProfile && !isSubscribed && <Subscription className='subscription-icon' />}
+      {!isCreator && isProfile && !isSubscribed && <Subscription className='subscription-icon' />}
       {!!selectedTier && (
         <SendEmailModal
           onCancel={() => setSelectedTier(undefined)}

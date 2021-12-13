@@ -34,13 +34,7 @@ const GetStarted = ({ filled, text, size }) => {
         {text || 'Get Started'}
       </SecondaryButton>
       {visible && (
-        <BlurredModal
-          width={509}
-          maskClosable={false}
-          visible={visible}
-          onCancel={hide}
-          className='get-started__modal'
-        >
+        <BlurredModal width={509} visible={visible} onCancel={hide} className='get-started__modal'>
           <Row gutter={[0, 26]} justify='center'>
             <Col id='googleLogin' className='cr-landing__connect google'>
               <GoogleIcon />

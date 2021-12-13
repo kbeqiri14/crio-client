@@ -54,15 +54,15 @@ const Button = memo(({ subscribe, fillColor = 'tertiary', disabled, onClick }) =
   </SecondaryButton>
 ));
 
-const SubscribeButton = memo(({ isProfile, isSubscribed, onClick }) =>
-  isProfile && !isSubscribed ? (
+const SubscribeButton = memo(({ isCreator, isProfile, isSubscribed, onClick }) =>
+  !isCreator && isProfile && !isSubscribed ? (
     <Col className='subscribe'>
       <Button key='top' subscribe onClick={onClick} />
     </Col>
   ) : null,
 );
 
-const Perks = ({ isProfile, isSubscribed, vouchers, onButtonClick }) => {
+const Perks = ({ isCreator, isProfile, isSubscribed, vouchers, onButtonClick }) => {
   const { pathname } = useLocation();
   const goPricing = useCallback(
     () => history.push(`/pricing/${pathname.split('/').slice(-1)[0]}`),
@@ -80,7 +80,12 @@ const Perks = ({ isProfile, isSubscribed, vouchers, onButtonClick }) => {
 
   return (
     <Row gutter={[0, 44]} justify='center' className='perks'>
-      <SubscribeButton isProfile={isProfile} isSubscribed={isSubscribed} onClick={goPricing} />
+      <SubscribeButton
+        isCreator={isCreator}
+        isProfile={isProfile}
+        isSubscribed={isSubscribed}
+        onClick={goPricing}
+      />
       {perksList.map(({ id, title, desc, src, fillColor }) => (
         <Col key={title}>
           <Row justify='center'>
@@ -112,7 +117,12 @@ const Perks = ({ isProfile, isSubscribed, vouchers, onButtonClick }) => {
           />
         </Col>
       )}
-      <SubscribeButton isProfile={isProfile} isSubscribed={isSubscribed} onClick={goPricing} />
+      <SubscribeButton
+        isCreator={isCreator}
+        isProfile={isProfile}
+        isSubscribed={isSubscribed}
+        onClick={goPricing}
+      />
     </Row>
   );
 };
