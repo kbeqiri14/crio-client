@@ -97,11 +97,6 @@ const DragAndDrop = ({ videoUri, file, types, dispatch }) => {
                   Drag and drop a video
                 </Text>
               </Col>
-              <Col span={24}>
-                <Text inline level='10' color='white'>
-                  1920 x 1080 higher recommended. Max 20GB each.
-                </Text>
-              </Col>
               {file?.name && (
                 <Col span={24}>
                   <Text inline level='10' color='white'>
