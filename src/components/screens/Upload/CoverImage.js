@@ -55,7 +55,7 @@ const CoverImage = ({ visible, artworkId }) => {
     },
     onError: () => {
       setLoading(false);
-      errorToast('Uploading Image Error', 'Something went wrong. Please try later.');
+      errorToast('Something went wrong!', 'Please, try again later!');
     },
   });
 

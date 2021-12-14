@@ -37,7 +37,7 @@ const DragAndDrop = ({ videoUri, file, types, dispatch }) => {
         videoUri: getUploadUrl.uri,
         uploadLink: getUploadUrl.upload_link,
       }),
-    onError: () => errorToast('Error', 'Something went wrong. Please try later.'),
+    onError: () => errorToast('Something went wrong!', 'Please, try again later!'),
   });
   const [removeArtwork, { loading: removingArtwork }] = useMutation(deleteArtwork, {
     variables: { params: { videoUri } },

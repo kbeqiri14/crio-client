@@ -32,7 +32,7 @@ export const LandingPage = () => {
       <section className='cr-landing__banner'>
         <div>
           <div className='cr-landing__banner__heading'>
-            <h1>Discover the Best Visual Content from your Favorite Creators</h1>
+            <h1>Discover the Best Visual Content from Your Favorite Creators</h1>
           </div>
           <div className='cr-landing__banner__desc'>
             Crio is a leading community platform for creatives to showcase their work and interact

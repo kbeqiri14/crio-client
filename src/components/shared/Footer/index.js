@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'antd';
-import { Text } from '@ui-kit/Text';
+import { Text, Title } from '@ui-kit/Text';
 import crioLogo from '@images/crio-logo.svg';
 import './styles.less';
 
@@ -18,9 +18,9 @@ export const Footer = memo(() => (
       </Col>
       <Col className='cr-landing__footer--links' span={8}>
         <div className='cr-legal-docs'>
-          <a href={`mailto:info@criointeractive.com`} className='email'>
-            info@criointeractive.com
-          </a>
+          <Title level='30'>
+            <a href={`mailto:info@criointeractive.com`}>Contact Us</a>
+          </Title>
           <Text level='20'>
             <Link to='/terms-of-use'>Terms of Usage</Link>
           </Text>
