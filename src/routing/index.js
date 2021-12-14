@@ -2,9 +2,10 @@ import TermsAndConditions from '@screens/Terms and Policy/TermsAndConditions';
 import TermsOfUse from '@screens/Terms and Policy/TermsOfUse';
 import { useEffect, useState } from 'react';
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
-import { useLazyQuery } from '@apollo/client';
+import { useLazyQuery, useReactiveVar } from '@apollo/client';
 import { isFuture } from 'date-fns';
 
+import { signupErrorVar } from '@configs/client-cache';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { useCurrentUser } from '@app/auth/hooks';
 import { PrivateRoute } from '@app/routing/routes';
@@ -27,6 +28,7 @@ export const AppRoutes = () => {
   const { dispatchUser, user: crioUser } = useLoggedInUser();
   const { videoInfo, isVisible } = usePresentation();
   const { pathname } = useLocation();
+  const signupError = useReactiveVar(signupErrorVar);
 
   const [getLoggedInUser] = useLazyQuery(me, {
     onCompleted: (data) => {
@@ -38,8 +40,6 @@ export const AppRoutes = () => {
           isSubscribed: data.me.payment?.subscriptionStatus === 'active',
           subscribePeriodIsValid: periodEnd ? isFuture(new Date(periodEnd)) : false,
         });
-      } else if (user?.attributes?.email) {
-        getLoggedInUser();
       }
     },
     onError: (data) => console.log(data, 'error'),
@@ -58,15 +58,15 @@ export const AppRoutes = () => {
 
   useEffect(() => {
     if (!loading) {
-      setIsAuthenticated(!!user);
+      setIsAuthenticated(!signupError);
     }
-  }, [user, loading]);
+  }, [loading, signupError]);
 
   useEffect(() => {
-    if (user) {
+    if (!signupError) {
       getLoggedInUser();
     }
-  }, [getLoggedInUser, loading, user]);
+  }, [signupError, getLoggedInUser]);
 
   useEffect(() => {
     let timeout;
