@@ -17,12 +17,16 @@ export const CognitoCallback = () => {
   const [createUser] = useMutation(signIn, {
     onCompleted: (data) => {
       if (data.saveUser.error) {
+        window.localStorage.clear();
         errorToast('Sign up error', data.saveUser.error);
       } else {
         signupErrorVar(false);
       }
     },
-    onError: () => errorToast('Something went wrong!', 'Please, try again later!'),
+    onError: () => {
+      window.localStorage.clear();
+      errorToast('Something went wrong!', 'Please, try again later!');
+    },
   });
 
   useEffect(() => {
