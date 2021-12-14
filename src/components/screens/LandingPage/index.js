@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Row } from 'antd';
 import cc from 'classcat';
+import { useReactiveVar } from '@apollo/client';
 
-import { useCurrentUser } from '@app/auth/hooks';
+import { signupErrorVar } from '@configs/client-cache';
 import { useRandomArtworks } from '@root/src/hooks/useRandomArtworks';
 import GetStarted from '@shared/GetStarted';
 import { renderPosters } from '@shared/PostersList';
@@ -18,7 +19,7 @@ export const LandingPage = () => {
   const [offset, setOffset] = useState(0);
   const [postersList, setPostersList] = useState([]);
 
-  const { user } = useCurrentUser();
+  const signupError = useReactiveVar(signupErrorVar);
 
   const { isEnd, loading, loadMore } = useRandomArtworks(({ getRandomArtworks }) => {
     setOffset(offset + 15);
@@ -32,13 +33,13 @@ export const LandingPage = () => {
       <section className='cr-landing__banner'>
         <div>
           <div className='cr-landing__banner__heading'>
-            <h1>Discover the Best Visual Content from your Favorite Creators</h1>
+            <h1>Discover the Best Visual Content from Your Favorite Creators</h1>
           </div>
           <div className='cr-landing__banner__desc'>
             Crio is a leading community platform for creatives to showcase their work and interact
             with fans across the globe
           </div>
-          {!user && <GetStarted filled size='large' />}
+          {signupError && <GetStarted filled size='large' />}
         </div>
       </section>
       <section className='cr-landing__video-grid'>
@@ -54,7 +55,7 @@ export const LandingPage = () => {
         </Row>
       </section>
       <section className='cr-landing__about-perks'>
-        <div className={cc(['about-perks__wrapper', { 'is-signed-in': !!user }])}>
+        <div className={cc(['about-perks__wrapper', { 'is-signed-in': signupError }])}>
           <div className='about-perks__container'>
             <div className='about-perks__info'>
               <div className='about-perks__title'>
@@ -73,7 +74,7 @@ export const LandingPage = () => {
             </div>
           </div>
         </div>
-        {!user && (
+        {signupError && (
           <div className='about-perks__connect'>
             <GetStarted filled size='large' />
           </div>

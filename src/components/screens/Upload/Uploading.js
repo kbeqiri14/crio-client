@@ -25,6 +25,10 @@ const Uploading = ({ state, types, dispatch }) => {
     variables: { videoUri: state.videoUri },
     onCompleted: ({ createArtwork }) =>
       dispatch({ type: types.UPLOADED_VIDEO_VISIBLE, artworkId: createArtwork.id }),
+    onError: () => {
+      dispatch({ type: types.CANCEL_UPLOADING });
+      errorToast('Something went wrong!', 'Please, try again later!');
+    },
   });
 
   useEffect(() => {
@@ -52,7 +56,7 @@ const Uploading = ({ state, types, dispatch }) => {
           saveArtwork();
         }
       } catch (e) {
-        errorToast('Uploading Video Error', 'Something went wrong. Please try later.');
+        errorToast('Something went wrong!', 'Please, try again later!');
       }
     };
     if (state.file && state.uploadLink) {

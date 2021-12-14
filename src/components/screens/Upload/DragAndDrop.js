@@ -37,7 +37,7 @@ const DragAndDrop = ({ videoUri, file, types, dispatch }) => {
         videoUri: getUploadUrl.uri,
         uploadLink: getUploadUrl.upload_link,
       }),
-    onError: () => errorToast('Error', 'Something went wrong. Please try later.'),
+    onError: () => errorToast('Something went wrong!', 'Please, try again later!'),
   });
   const [removeArtwork, { loading: removingArtwork }] = useMutation(deleteArtwork, {
     variables: { params: { videoUri } },
@@ -95,11 +95,6 @@ const DragAndDrop = ({ videoUri, file, types, dispatch }) => {
               <Col span={24}>
                 <Text inline level='10' color='white'>
                   Drag and drop a video
-                </Text>
-              </Col>
-              <Col span={24}>
-                <Text inline level='10' color='white'>
-                  1920 x 1080 higher recommended. Max 20GB each.
                 </Text>
               </Col>
               {file?.name && (

@@ -2,17 +2,32 @@ import { DEFAULT_PRIVATE_ROUTE } from '@configs/constants';
 import { memo, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 
+import { signupErrorVar } from '@configs/client-cache';
 import history from '@app/configs/history';
 import { useCurrentUser } from '@app/auth/hooks';
 import { useQueryParams } from '@app/hooks/useRouter';
 import { signIn } from '@app/graphql/mutations/user.mutation';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
+import { errorToast } from '@ui-kit/Notification';
 
 export const CognitoCallback = () => {
   const { access_token } = useQueryParams();
   const { user } = useCurrentUser();
 
-  const [createUser] = useMutation(signIn);
+  const [createUser] = useMutation(signIn, {
+    onCompleted: (data) => {
+      if (data.saveUser.error) {
+        window.localStorage.clear();
+        errorToast('Sign up error', data.saveUser.error);
+      } else {
+        signupErrorVar(false);
+      }
+    },
+    onError: () => {
+      window.localStorage.clear();
+      errorToast('Something went wrong!', 'Please, try again later!');
+    },
+  });
 
   useEffect(() => {
     if (!access_token) {

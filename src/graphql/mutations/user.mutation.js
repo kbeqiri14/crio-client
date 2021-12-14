@@ -2,7 +2,9 @@ import { gql } from '@apollo/client';
 
 export const signIn = gql`
   mutation {
-    saveUser
+    saveUser {
+      error
+    }
   }
 `;
 
