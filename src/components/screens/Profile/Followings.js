@@ -23,30 +23,32 @@ const SliderBreakPoints = {
   },
 };
 
-const FollowingRow = ({ user, artworks }) => (
-  <Row justify='center'>
-    <Col span={6} className='following-info'>
-      <ProfileInfo user={user} isFollowing />
-    </Col>
-    <Col span={14}>
-      <div className='cr-artworks-section'>
-        <div className='cr-feed__poster-scroll'>
-          <Slider withScroll breakpoints={SliderBreakPoints} breakpointsBase='container'>
-            {artworks?.map((poster, idx) => (
-              <PosterCard
-                key={idx}
-                name={user.name}
-                providerType={user.providerType}
-                providerUserId={user.providerUserId}
-                {...poster}
-              />
-            ))}
-          </Slider>
+const FollowingRow = ({ user, artworks }) =>
+  console.log(artworks, user) || (
+    <Row justify='center'>
+      <Col span={6} className='following-info'>
+        <ProfileInfo user={user} isFollowing />
+      </Col>
+      <Col span={14}>
+        <div className='cr-artworks-section'>
+          <div className='cr-feed__poster-scroll'>
+            <Slider withScroll breakpoints={SliderBreakPoints} breakpointsBase='container'>
+              {artworks?.map((poster, idx) => (
+                <PosterCard
+                  key={idx}
+                  name={user.name}
+                  providerType={user.providerType}
+                  providerUserId={user.providerUserId}
+                  avatar={user.avatar}
+                  {...poster}
+                />
+              ))}
+            </Slider>
+          </div>
         </div>
-      </div>
-    </Col>
-  </Row>
-);
+      </Col>
+    </Row>
+  );
 
 const Followings = ({ loadingFollowings, followings }) => (
   <Spinner spinning={loadingFollowings} color='white'>
