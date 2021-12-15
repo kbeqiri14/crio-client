@@ -58,9 +58,9 @@ export const AppRoutes = () => {
 
   useEffect(() => {
     if (!loading) {
-      setIsAuthenticated(!signupError);
+      setIsAuthenticated(!!user);
     }
-  }, [loading, signupError]);
+  }, [loading, user]);
 
   useEffect(() => {
     if (!signupError) {
@@ -75,7 +75,7 @@ export const AppRoutes = () => {
       crioUser.isFan &&
       (!crioUser.isSubscribed ||
         !crioUser.subscribePeriodIsValid ||
-        user?.payment?.subscriptionCancel)
+        crioUser?.payment?.subscriptionCancel)
     ) {
       if (timeout) {
         clearInterval(timeout);
