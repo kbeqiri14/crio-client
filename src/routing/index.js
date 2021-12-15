@@ -58,9 +58,9 @@ export const AppRoutes = () => {
 
   useEffect(() => {
     if (!loading) {
-      setIsAuthenticated(!!user);
+      setIsAuthenticated(!signupError);
     }
-  }, [loading, user]);
+  }, [loading, signupError]);
 
   useEffect(() => {
     if (!signupError) {
