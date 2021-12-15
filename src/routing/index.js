@@ -73,7 +73,9 @@ export const AppRoutes = () => {
     if (
       crioUser &&
       crioUser.isFan &&
-      (!crioUser.isSubscribed || !crioUser.subscribePeriodIsValid)
+      (!crioUser.isSubscribed ||
+        !crioUser.subscribePeriodIsValid ||
+        crioUser?.payment?.subscriptionCancel)
     ) {
       if (timeout) {
         clearInterval(timeout);
@@ -85,7 +87,7 @@ export const AppRoutes = () => {
         clearInterval(timeout);
       }
     };
-  }, [crioUser, getLoggedInUser]);
+  }, [crioUser, getLoggedInUser, user?.payment?.subscriptionCancel]);
 
   if (loading) {
     return <GlobalSpinner />;
