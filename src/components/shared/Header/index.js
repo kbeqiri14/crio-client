@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Row, Col } from 'antd';
 
@@ -51,14 +51,7 @@ export const Header = ({ isAuthenticated }) => {
           </div>
         </Col>
         <Col className='header-end-group'>
-          {isAuthenticated && user ? (
-            <ProfileMenu user={user} />
-          ) : (
-            <Fragment>
-              <GetStarted text='Sign in' />
-              <GetStarted filled text='Sign up' />
-            </Fragment>
-          )}
+          {isAuthenticated && user ? <ProfileMenu user={user} /> : <GetStarted />}
           {user?.isCreator && (
             <SecondaryButton filled textColor='white' onClick={upload}>
               UPLOAD

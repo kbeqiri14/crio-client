@@ -39,7 +39,7 @@ export const LandingPage = () => {
             Crio is a leading community platform for creatives to showcase their work and interact
             with fans across the globe
           </div>
-          {signupError && <GetStarted filled size='large' />}
+          {signupError && <GetStarted size='large' />}
         </div>
       </section>
       <section className='cr-landing__video-grid'>
@@ -76,7 +76,7 @@ export const LandingPage = () => {
         </div>
         {signupError && (
           <div className='about-perks__connect'>
-            <GetStarted filled size='large' />
+            <GetStarted size='large' />
           </div>
         )}
       </section>

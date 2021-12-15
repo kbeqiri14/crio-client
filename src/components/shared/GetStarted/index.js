@@ -8,7 +8,7 @@ import { ReactComponent as GoogleIcon } from '@svgs/google-sign-in.svg';
 import { ReactComponent as FbIcon } from '@svgs/fb-sign-in.svg';
 import './styles.less';
 
-const GetStarted = ({ filled, text, size }) => {
+const GetStarted = ({ size }) => {
   const [visible, setVisible] = useState(false);
 
   const show = useCallback(() => setVisible(true), []);
@@ -24,14 +24,14 @@ const GetStarted = ({ filled, text, size }) => {
   return (
     <div className='get-started'>
       <SecondaryButton
-        filled={!!filled}
-        fillColor={filled ? 'secondary' : undefined}
-        textColor={filled ? 'white' : undefined}
+        filled
+        fillColor='secondary'
+        textColor='white'
         size={size}
-        className={size ? 'get-started__button' : ''}
+        className='get-started__button'
         onClick={show}
       >
-        {text || 'Get Started'}
+        Get Started
       </SecondaryButton>
       {visible && (
         <BlurredModal width={509} visible={visible} onCancel={hide} className='get-started__modal'>
