@@ -9,7 +9,6 @@ import { SecondaryButton } from '@ui-kit/Button';
 import crio_logo from '@images/crio-logo.svg';
 import { TabMenu } from './__partials__/TabMenu';
 import { ProfileMenu } from './__partials__/ProfileMenu';
-import CancelSubscription from './__partials__/CancelSubscription';
 import './styles.less';
 
 const getTabItems = (showPricing) => {
@@ -35,10 +34,7 @@ export const Header = ({ isAuthenticated }) => {
   const { user } = useLoggedInUser();
   const activeItem = location.pathname?.replace('/', '') || 'home';
 
-  const showPricing = user.id
-    ? user.isFan && (!user.isSubscribed || !user.subscribePeriodIsValid)
-    : true;
-  const menuItems = useMemo(() => getTabItems(showPricing), [showPricing]);
+  const menuItems = useMemo(() => getTabItems(!user.id || user?.isFan), [user?.id, user?.isFan]);
   const upload = useCallback(() => history.push('/upload'), []);
 
   return (
@@ -53,9 +49,6 @@ export const Header = ({ isAuthenticated }) => {
           <div className='header-tab-menu'>
             <TabMenu defaultActiveItem={activeItem} menuItems={menuItems} />
           </div>
-          {user.isFan && !showPricing && !user?.payment?.subscriptionCancel && (
-            <CancelSubscription email={user.email} />
-          )}
         </Col>
         <Col className='header-end-group'>
           {isAuthenticated && user ? (

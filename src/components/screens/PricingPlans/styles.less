@@ -11,25 +11,7 @@
     margin: 8px;
   }
   > div {
-    flex-grow: 1;
-    padding: 60px 0 38px;
-  }
-  > .ant-row .ant-col {
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: flex-start;
-    &:last-child {
-      justify-content: flex-start;
-    }
-    &:first-child {
-      margin-right: 8px;
-      margin-bottom: 8px;
-      .cr-pricing__card {
-        max-height: 425px;
-        margin-top: -110px;
-      }
-    }
+    padding: 60px 0;
   }
   &__header {
     display: flex;
@@ -61,7 +43,6 @@
     display: flex;
     flex-flow: column nowrap;
     flex-grow: 1;
-    max-height: 546px;
     .recommended-marker {
       position: absolute;
       top: 0;
@@ -73,7 +54,7 @@
     }
     &.is-paid {
       width: 477px;
-      // min-height: 546px;
+      min-height: 546px;
       > .crio-heading {
         margin-bottom: 22px;
         line-height: 21px;
@@ -87,6 +68,10 @@
         margin-right: 8px;
       }
     }
+  }
+  &__card:not(.is-paid) {
+    min-height: 425px;
+    margin-top: 42px;
   }
   &__perks-list {
     list-style-type: none;
@@ -113,6 +98,26 @@
       }
       &.is-pro &__icon {
         color: @success;
+      }
+    }
+  }
+  &__cancel-subscription {
+    text-align: center;
+    padding: 270px 0;
+    width: 477px;
+    margin: auto;
+    .info {
+      padding: 47px 0;
+      border-radius: 27px;
+      background: linear-gradient(
+        138.67deg,
+        rgba(133, 182, 255, 0.31) -1.22%,
+        rgba(66, 76, 90, 0.115) 107.33%
+      );
+      box-shadow: inset -4.28235px -3.42588px 34.2588px rgba(28, 28, 28, 0.25),
+        inset 4.28235px 3.42588px 34.2588px rgba(242, 244, 255, 0.25);
+      .desc {
+        width: 309px;
       }
     }
   }
