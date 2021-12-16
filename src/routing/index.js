@@ -1,10 +1,9 @@
-import TermsAndConditions from '@screens/Terms and Policy/TermsAndConditions';
-import TermsOfUse from '@screens/Terms and Policy/TermsOfUse';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
-import { useLazyQuery } from '@apollo/client';
 import { isFuture } from 'date-fns';
+import { useLazyQuery, useReactiveVar } from '@apollo/client';
 
+import { signupErrorVar } from '@configs/client-cache';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { useCurrentUser } from '@app/auth/hooks';
 import { PrivateRoute } from '@app/routing/routes';
@@ -13,6 +12,8 @@ import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import Header from '@shared/Header';
 import { PresentationView, usePresentation } from '@shared/PresentationView';
 import PrivacyPolicy from '@screens/Terms and Policy/PrivacyPolicy';
+import TermsAndConditions from '@screens/Terms and Policy/TermsAndConditions';
+import TermsOfUse from '@screens/Terms and Policy/TermsOfUse';
 import LandingPage from '@screens/LandingPage';
 import { PricingPlans } from '@screens/PricingPlans';
 import { Feed } from '@screens/Feed';
@@ -27,10 +28,16 @@ export const AppRoutes = () => {
   const { dispatchUser, user: crioUser } = useLoggedInUser();
   const { videoInfo, isVisible } = usePresentation();
   const { pathname } = useLocation();
+  const signupError = useReactiveVar(signupErrorVar);
+  const authenticated = useMemo(
+    () => !!user?.attributes?.email && (!signupError || localStorage.getItem('user')),
+    [signupError, user?.attributes?.email],
+  );
 
   const [getLoggedInUser] = useLazyQuery(me, {
     onCompleted: (data) => {
       if (data?.me) {
+        localStorage.setItem('user', true);
         const periodEnd = data.me.payment?.periodEnd;
         dispatchUser({
           ...data.me,
@@ -56,15 +63,15 @@ export const AppRoutes = () => {
 
   useEffect(() => {
     if (!loading) {
-      setIsAuthenticated(!!user?.attributes?.email);
+      setIsAuthenticated(authenticated);
     }
-  }, [loading, user?.attributes?.email]);
+  }, [authenticated, loading]);
 
   useEffect(() => {
-    if (!loading && !!user?.attributes?.email) {
+    if (authenticated) {
       getLoggedInUser();
     }
-  }, [loading, user?.attributes?.email, getLoggedInUser]);
+  }, [authenticated, getLoggedInUser]);
 
   useEffect(() => {
     let timeout;
