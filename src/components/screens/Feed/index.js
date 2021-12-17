@@ -126,7 +126,11 @@ export const Feed = () => {
               >
                 {carouselPosters.map((pic) => (
                   <div className='cr-carousel__item' key={pic.id}>
-                    <Img alt={pic.title} src={pic.thumbnailUri} loader={<Spinner />} />
+                    <Img
+                      alt={pic.title}
+                      src={`https://vumbnail.com/${pic.videoId}.jpg`}
+                      loader={<Spinner />}
+                    />
                   </div>
                 ))}
               </Carousel>

@@ -28,19 +28,19 @@ const validateVideo = (file) =>
     };
   });
 
-const DragAndDrop = ({ videoUri, file, types, dispatch }) => {
+const DragAndDrop = ({ videoId, file, types, dispatch }) => {
   const [requestUploadUrl, { data, loading }] = useLazyQuery(getUploadUrl, {
     fetchPolicy: 'no-cache',
     onCompleted: ({ getUploadUrl }) =>
       dispatch({
         type: types.SET_VIDEO_URI,
-        videoUri: getUploadUrl.uri,
+        videoId: getUploadUrl.uri.substring(getUploadUrl.uri.lastIndexOf('/') + 1),
         uploadLink: getUploadUrl.upload_link,
       }),
     onError: () => errorToast('Something went wrong!', 'Please, try again later!'),
   });
   const [removeArtwork, { loading: removingArtwork }] = useMutation(deleteArtwork, {
-    variables: { params: { videoUri } },
+    variables: { params: { videoId } },
   });
 
   const disabled = useMemo(
@@ -48,8 +48,8 @@ const DragAndDrop = ({ videoUri, file, types, dispatch }) => {
     [data?.getUploadUrl?.uri, file?.name, loading],
   );
   const onCancel = useCallback(
-    () => (videoUri ? dispatch({ type: types.CONFIRMATION_VISIBLE }) : history.push('/account')),
-    [videoUri, dispatch, types.CONFIRMATION_VISIBLE],
+    () => (videoId ? dispatch({ type: types.CONFIRMATION_VISIBLE }) : history.push('/account')),
+    [videoId, dispatch, types.CONFIRMATION_VISIBLE],
   );
   const onContinue = useCallback(
     () => dispatch({ type: types.UPLOADING }),

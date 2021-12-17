@@ -1,16 +1,14 @@
 import { gql } from '@apollo/client';
 
 export const createArtwork = gql`
-  mutation createArtwork($videoUri: String!) {
-    createArtwork(videoUri: $videoUri) {
+  mutation createArtwork($videoId: String!) {
+    createArtwork(videoId: $videoId) {
       id
       userId
-      videoUri
-      thumbnailUri
+      videoId
       title
       description
       status
-      pictures_uri
     }
   }
 `;
