@@ -109,7 +109,7 @@ export const PricingPlans = () => {
                 <PerksList isFree={false} listItems={perksListPro} />
                 <CustomTooltip
                   placement='right'
-                  className='overlay-subscription'
+                  className='default-overlay'
                   title='Warning'
                   description='Please, use the email address attached to your profile'
                 >

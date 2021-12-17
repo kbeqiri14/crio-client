@@ -3,26 +3,7 @@
   padding-top: 50px !important;
 }
 .ant-tooltip-inner {
-  border-radius: 4px !important;
-}
-
-.overlay-visibility {
-  .ant-tooltip-content {
-    .ant-tooltip-inner {
-      width: 173px;
-      padding: 12px 16px 26px 13px !important;
-    }
-    .ant-tooltip-arrow {
-      width: 40px !important;
-      height: 40px !important;
-      top: 50% !important;
-      left: 3px !important;
-    }
-    .ant-tooltip-arrow-content {
-      width: 22px !important;
-      height: 22px !important;
-    }
-  }
+  border-radius: 4px;
 }
 
 .overlay-process {
@@ -36,23 +17,35 @@
   }
 }
 
-.overlay-subscription {
-  .ant-tooltip-content {
-    .ant-tooltip-inner {
-      width: 173px;
-      padding: 13px !important;
-      border-radius: 4px !important;
-      font-size: 16px;
+.default-overlay {
+  &.ant-tooltip-placement-left {
+    .ant-tooltip-content {
+      .ant-tooltip-inner {
+        width: 173px;
+        padding: 13px;
+      }
+      .ant-tooltip-arrow {
+        right: -5px;
+        top: 50%;
+        border-top: 9px solid transparent;
+        border-bottom: 9px solid transparent;
+        border-left: 16px solid #707280;
+      }
     }
-    .ant-tooltip-arrow {
-      width: 40px !important;
-      height: 40px !important;
-      top: 50% !important;
-      left: 3px !important;
-    }
-    .ant-tooltip-arrow-content {
-      width: 22px !important;
-      height: 22px !important;
+  }
+  &.ant-tooltip-placement-right {
+    .ant-tooltip-content {
+      .ant-tooltip-inner {
+        width: 173px;
+        padding: 13px;
+      }
+      .ant-tooltip-arrow {
+        left: 16px;
+        top: 50%;
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent;
+        border-right: 18px solid #707280;
+      }
     }
   }
 }
