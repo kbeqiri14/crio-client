@@ -87,10 +87,8 @@ const Details = ({
   const tab = useMemo(
     () =>
       isCreator || isProfile
-        ? `WORKS ${isProfile ? artworksCount : user.artworksCount}`
-        : followings?.length
-        ? `FOLLOWING: ${followings?.length}`
-        : 'FOLLOWING',
+        ? `WORKS ${(isProfile ? artworksCount : user.artworksCount) || ''}`
+        : `FOLLOWING ${followings?.length || ''}`,
     [isCreator, isProfile, user.artworksCount, artworksCount, followings?.length],
   );
   const onTabClick = useCallback(

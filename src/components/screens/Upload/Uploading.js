@@ -11,13 +11,16 @@ import { errorToast } from '@ui-kit/Notification';
 
 const timeStarted = new Date();
 const formatRemainingTime = (time) => {
-  let formattedTime = time;
+  let formattedTime = Math.round(time);
   let timeUnit = 'seconds';
   if (time > 60) {
-    formattedTime = time / 60;
+    let minutes = Math.round(time / 60);
+    const hours = Math.round(minutes / 60);
+    minutes = minutes - hours * 60;
+    formattedTime = hours ? `${hours} hour ${minutes}` : minutes;
     timeUnit = 'minutes';
   }
-  return `${Math.round(formattedTime)} ${timeUnit} left`;
+  return `${formattedTime} ${timeUnit} left`;
 };
 
 const Uploading = ({ state, types, dispatch }) => {
