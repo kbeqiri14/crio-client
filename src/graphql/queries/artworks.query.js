@@ -4,10 +4,12 @@ export const artwork_fragment = gql`
   fragment ArtworkAttributes on Artwork {
     id
     userId
-    videoId
+    videoUri
+    thumbnailUri
     title
     description
     status
+    pictures_uri
   }
 `;
 
@@ -20,7 +22,8 @@ export const work_fragment = gql`
     providerUserId
     avatar
     name
-    videoId
+    videoUri
+    thumbnailUri
     title
     description
     status
@@ -33,6 +36,7 @@ export const getUploadUrl = gql`
       uri
       upload_link
       status
+      pictures_uri
     }
   }
 `;

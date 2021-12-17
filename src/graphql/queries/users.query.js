@@ -62,7 +62,8 @@ export const following_info_fragment = gql`
     avatar
     visibility
     artworks {
-      videoId
+      videoUri
+      thumbnailUri
       title
       description
     }

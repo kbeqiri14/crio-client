@@ -24,7 +24,8 @@ export const PosterCard = memo(
     title,
     description,
     status,
-    videoId,
+    videoUri,
+    thumbnailUri,
     isLock,
     onClick,
     ...props
@@ -40,7 +41,7 @@ export const PosterCard = memo(
         show({
           title,
           description,
-          id: videoId,
+          id: videoUri?.substring(videoUri?.lastIndexOf('/') + 1),
           artworkId,
           userId,
           providerType,
@@ -64,7 +65,7 @@ export const PosterCard = memo(
         >
           <img
             alt='Crio artworks poster'
-            src={`https://vumbnail.com/${videoId}.jpg`}
+            src={thumbnailUri}
             className={cc([{ lock: lock || unavailable }])}
           />
           {(index || index === 0) && <div className='poster-number'>{index}</div>}

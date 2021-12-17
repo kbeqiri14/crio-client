@@ -25,7 +25,7 @@ const formatRemainingTime = (time) => {
 
 const Uploading = ({ state, types, dispatch }) => {
   const [saveArtwork, { loading }] = useMutation(createArtwork, {
-    variables: { videoId: state.videoId },
+    variables: { videoUri: state.videoUri },
     onCompleted: ({ createArtwork }) =>
       dispatch({ type: types.UPLOADED_VIDEO_VISIBLE, artworkId: createArtwork.id }),
     onError: () => {

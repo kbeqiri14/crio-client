@@ -37,7 +37,7 @@ const setState = (payload) => ({
   },
   [types.UPLOAD_COVER_IMAGE]: { coverImageVisible: true },
   [types.SET_FILE]: { file: payload.file },
-  [types.SET_VIDEO_URI]: { videoId: payload.videoId, uploadLink: payload.uploadLink },
+  [types.SET_VIDEO_URI]: { videoUri: payload.videoUri, uploadLink: payload.uploadLink },
   [types.CONFIRMATION_VISIBLE]: { confirmationVisible: true },
   [types.CONFIRMATION_HIDE]: { confirmationVisible: false },
 });
@@ -58,14 +58,19 @@ const Upload = () => {
     [dispatch],
   );
   const [removeArtwork, { loading: removingArtwork }] = useMutation(deleteArtwork, {
-    variables: { params: { artworkId: state.artworkId, videoId: state.videoId } },
+    variables: { params: { artworkId: state.artworkId, videoUri: state.videoUri } },
     onCompleted: () => history.push('/account'),
   });
 
   return (
     <Fragment>
       {!state.uploadedVideoVisible && (
-        <DragAndDrop videoId={state.videoId} file={state.file} types={types} dispatch={dispatch} />
+        <DragAndDrop
+          videoUri={state.videoUri}
+          file={state.file}
+          types={types}
+          dispatch={dispatch}
+        />
       )}
       {state.uploadingVisible && <Uploading state={state} types={types} dispatch={dispatch} />}
       {state.uploadedVideoVisible && (
