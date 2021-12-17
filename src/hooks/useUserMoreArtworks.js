@@ -1,26 +1,37 @@
-import { useState } from 'react';
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { useEffect, useState } from 'react';
+import { useLazyQuery } from '@apollo/client';
 
-import { getRandomArtworksInfo, getRandomArtworks } from '@app/graphql/queries/artworks.query';
+import { isFollowing } from '@app/graphql/queries/users.query';
+import { getRandomArtworks } from '@app/graphql/queries/artworks.query';
+import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 
 export const useUserMoreArtworks = (userId, artworkId) => {
   const [loading, setLoading] = useState(true);
+  const { user } = useLoggedInUser();
 
   const [requestRandomArtworks, { data }] = useLazyQuery(getRandomArtworks, {
     fetchPolicy: 'no-cache',
+    variables: { params: { userId, artworkId, limit: 3 } },
     onCompleted: () => setLoading(false),
     onError: () => setLoading(false),
   });
-
-  useQuery(getRandomArtworksInfo, {
-    onCompleted: ({ getRandomArtworksInfo }) => {
-      const n = Math.floor(Math.random() * getRandomArtworksInfo.count + 1);
-      requestRandomArtworks({
-        variables: { params: { userId, artworkId, count: n, limit: 3 } },
-      });
+  const [requestIsFollowing] = useLazyQuery(isFollowing, {
+    variables: { followingId: userId },
+    fetchPolicy: 'no-cache',
+    onCompleted: (data) => {
+      if (data?.isFollowing) {
+        requestRandomArtworks();
+      }
     },
-    onError: () => setLoading(false),
   });
+
+  useEffect(() => {
+    if (!user || user.isCreator) {
+      requestRandomArtworks();
+    } else {
+      requestIsFollowing();
+    }
+  }, [requestIsFollowing, requestRandomArtworks, user]);
 
   return { loading, data: data?.getRandomArtworks };
 };
