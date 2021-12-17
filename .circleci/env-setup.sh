@@ -18,6 +18,7 @@ then
     echo "export REACT_APP_COGNITO_USER_POOL_ID=us-west-2_JVspvFNBB"
     echo "export REACT_APP_COGNITO_DOMAIN=crio-development-auth.auth.us-west-2.amazoncognito.com"
     echo "export REACT_APP_STRIPE_PAYMENT_URL=https://buy.stripe.com/test_aEU7w2ek11RycpO144"
+    echo "export REACT_APP_GTAG=UA-215522581-1"
   } >> "$BASH_ENV"
 elif [ "${CIRCLE_BRANCH}" == "staging" ]
 then
@@ -31,6 +32,7 @@ then
     echo "export REACT_APP_COGNITO_USER_POOL_ID=us-west-2_ALXn4YGWa"
     echo "export REACT_APP_COGNITO_DOMAIN=auth.criointeractive.com"
     echo "export REACT_APP_STRIPE_PAYMENT_URL=https://buy.stripe.com/test_aEU7w2ek11RycpO144"
+    echo "export REACT_APP_GTAG=UA-215522581-1"
   } >> "$BASH_ENV"
 elif [ "${CIRCLE_BRANCH}" == "master" ]
 then
@@ -45,6 +47,7 @@ then
     echo "export REACT_APP_COGNITO_DOMAIN=oauth.criointeractive.com"
     echo "export REACT_APP_STRIPE_PAYMENT_URL=https://buy.stripe.com/4gw4ib1fXggn0KcdQQ"
     echo "export BUCKET_NAME=criointeractive.com"
+    echo "export REACT_APP_GTAG=UA-215522581-1"
   } >> "$BASH_ENV"
 else
   #should not be executed
