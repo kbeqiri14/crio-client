@@ -3,7 +3,7 @@ import { Fragment, memo, useEffect, useCallback, useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
-import { getFollowings } from '@app/graphql/queries/users.query';
+import { getFollowings, getFollowingsCount } from '@app/graphql/queries/users.query';
 import PersonalInfo from './__partials__/PersonalInfo';
 import EditProfile from './__partials__/EditProfile';
 import Details from './Details';
@@ -19,17 +19,29 @@ export const MyAccount = () => {
     getFollowings,
     { fetchPolicy: 'cache-and-network' },
   );
+  const [requestFollowingsCount, { data: followingsCount }] = useLazyQuery(getFollowingsCount, {
+    fetchPolicy: 'cache-and-network',
+  });
 
   useEffect(() => {
-    if (user?.id && !user?.isCreator) {
-      requestFollowings();
+    if (user?.id) {
+      if (user?.isCreator) {
+        requestFollowingsCount();
+      } else {
+        requestFollowings();
+      }
     }
-  }, [user?.id, user?.isCreator, requestFollowings]);
+  }, [user?.id, user?.isCreator, requestFollowings, requestFollowingsCount]);
 
   return (
     <Fragment>
       {!user?.id && <GlobalSpinner />}
-      <PersonalInfo user={user} onClick={editProfile} isCreator={user.isCreator} />
+      <PersonalInfo
+        user={user}
+        followingsCount={followingsCount?.getFollowingsCount}
+        onClick={editProfile}
+        isCreator={user.isCreator}
+      />
       {visible && <EditProfile user={user} visible={visible} closeModal={closeModal} />}
       <Details
         isCreator={user.isCreator}

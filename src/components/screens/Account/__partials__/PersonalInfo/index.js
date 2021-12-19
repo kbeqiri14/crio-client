@@ -8,7 +8,15 @@ import { ReactComponent as FollowIcon } from '@svgs/follow.svg';
 import ProfileInfo from '@shared/ProfileInfo';
 import './styles.less';
 
-const PersonalInfo = ({ user, isCreator, isProfile, isFollow, loading, onClick }) => {
+const PersonalInfo = ({
+  user,
+  followingsCount,
+  isCreator,
+  isProfile,
+  isFollow,
+  loading,
+  onClick,
+}) => {
   const buttonLabel = useMemo(
     () => (isProfile ? `${isFollow ? 'UN' : ''}FOLLOW` : 'EDIT PROFILE'),
     [isProfile, isFollow],
@@ -23,7 +31,12 @@ const PersonalInfo = ({ user, isCreator, isProfile, isFollow, loading, onClick }
   return (
     <Row justify='space-between' align='middle' className='personal-info'>
       <Col span={16}>
-        <ProfileInfo user={user} isProfile={isProfile} isCreator={isCreator || isProfile} />
+        <ProfileInfo
+          user={user}
+          followingsCount={followingsCount}
+          isProfile={isProfile}
+          isCreator={isCreator || isProfile}
+        />
       </Col>
       {!(isCreator && isProfile) && (
         <Col span={8} className='right'>

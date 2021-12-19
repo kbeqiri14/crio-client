@@ -79,6 +79,12 @@ export const getFollowings = gql`
   ${following_info_fragment}
 `;
 
+export const getFollowingsCount = gql`
+  query {
+    getFollowingsCount
+  }
+`;
+
 export const isFollowing = gql`
   query isFollowing($followingId: ID!) {
     isFollowing(followingId: $followingId)
