@@ -47,7 +47,7 @@ then
     echo "export REACT_APP_COGNITO_DOMAIN=oauth.criointeractive.com"
     echo "export REACT_APP_STRIPE_PAYMENT_URL=https://buy.stripe.com/4gw4ib1fXggn0KcdQQ"
     echo "export BUCKET_NAME=criointeractive.com"
-    echo "export REACT_APP_GTAG=UA-215522581-1"
+    echo "export REACT_APP_GTAG=UA-215590535-1"
   } >> "$BASH_ENV"
 else
   #should not be executed
