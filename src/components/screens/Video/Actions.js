@@ -28,6 +28,8 @@ const Actions = memo((props) => {
       <div className='actions'>
         <div className='action-button'>
           <div className='dot' />
+          <div className='dot' />
+          <div className='dot' />
         </div>
         <div className='action-content'>
           <Text inline level='20' onClick={handleEdit}>
