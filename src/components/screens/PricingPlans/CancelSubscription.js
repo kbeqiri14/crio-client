@@ -4,9 +4,8 @@ import { useMutation } from '@apollo/client';
 
 import { cancelSubscription } from '@app/graphql/mutations/user.mutation';
 import { me } from '@app/graphql/queries/users.query';
-import ActionButtons from '@shared/ActionButtons';
+import Confirmation from '@shared/Confirmation';
 import { Title, Text } from '@ui-kit/Text';
-import { BlurredModal } from '@ui-kit/Modal';
 import { errorToast, successToast } from '@ui-kit/Notification';
 
 export const CancelSubscription = memo(() => {
@@ -72,24 +71,13 @@ export const CancelSubscription = memo(() => {
         </Col>
       </Row>
       {visible && (
-        <BlurredModal
-          width={486}
-          maskClosable={false}
+        <Confirmation
           visible={visible}
+          title='Cancel the subscription?'
+          loading={loading}
+          onConfirm={requestCancelSubscription}
           onCancel={hide}
-          className='confirmation'
-        >
-          <Title level={10} color='white'>
-            Cancel the subscription?
-          </Title>
-          <ActionButtons
-            cancelText='NO'
-            saveText='YES, CANCEL'
-            loading={loading}
-            onCancel={hide}
-            onSave={requestCancelSubscription}
-          />
-        </BlurredModal>
+        />
       )}
     </div>
   );

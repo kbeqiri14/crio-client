@@ -1,29 +1,42 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useEffect, useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Controller, useForm } from 'react-hook-form';
-import ReactPlayer from 'react-player';
 import { Col, Row } from 'antd';
 import { useMutation } from '@apollo/client';
 
+import history from '@app/configs/history';
 import { updateMetadata } from '@app/graphql/mutations/artwork.mutation';
 import ActionButtons from '@shared/ActionButtons';
 import { Input } from '@ui-kit/Input';
+import { successToast } from '@ui-kit/Notification';
 
-const VideoInfo = ({ artworkId, file, types, dispatch }) => {
+const Video = () => {
+  const { state } = useLocation();
   const { control, watch, handleSubmit } = useForm();
   const title = watch('title');
   const desc = watch('desc');
 
   const disabled = useMemo(() => !title?.trim() || !desc?.trim(), [desc, title]);
-  const url = useMemo(() => URL.createObjectURL(file), [file]);
 
-  const onCancel = useCallback(
-    () => dispatch({ type: types.CONFIRMATION_VISIBLE }),
-    [types.CONFIRMATION_VISIBLE, dispatch],
+  const onCancel = useCallback(() => history.push('/account'), []);
+  const videoId = useMemo(
+    () => state?.videoUri?.substring(state?.videoUri?.lastIndexOf('/') + 1),
+    [state?.videoUri],
   );
+
   const [updateArtwork, { loading: updatingArtwork }] = useMutation(updateMetadata, {
-    variables: { params: { artworkId, title, description: desc } },
-    onCompleted: () => dispatch({ type: types.UPLOAD_COVER_IMAGE }),
+    variables: { params: { artworkId: state?.artworkId, title, description: desc } },
+    onCompleted: () => {
+      history.push('/account');
+      successToast('The video info is successfully updated.');
+    },
   });
+
+  useEffect(() => {
+    if (!state) {
+      history.push('/account');
+    }
+  }, [state]);
 
   return (
     <Row justify='start' className='video-info'>
@@ -31,6 +44,7 @@ const VideoInfo = ({ artworkId, file, types, dispatch }) => {
         <Controller
           name='title'
           control={control}
+          defaultValue={state?.title}
           render={({ field }) => (
             <Input
               {...field}
@@ -45,6 +59,7 @@ const VideoInfo = ({ artworkId, file, types, dispatch }) => {
         <Controller
           name='desc'
           control={control}
+          defaultValue={state?.description}
           render={({ field }) => (
             <Input
               {...field}
@@ -56,11 +71,19 @@ const VideoInfo = ({ artworkId, file, types, dispatch }) => {
         />
       </Col>
       <Col span={24} className='player'>
-        <ReactPlayer url={url} controls={true} width='inherit' height={520} />
+        <div className='video-view__player embed-responsive aspect-ratio-16/9'>
+          <iframe
+            title={'Crio video player'}
+            src={`https://player.vimeo.com/video/${videoId}?h=dc77330a55&color=ffffff&title=0&byline=0&portrait=0`}
+            frameBorder='0'
+            allow='autoplay; fullscreen; picture-in-picture'
+            allowFullScreen
+          />
+        </div>
       </Col>
       <Col span={24}>
         <ActionButtons
-          saveText='CONTINUE'
+          saveText='UPDATE'
           loading={updatingArtwork}
           disabled={disabled}
           onCancel={onCancel}
@@ -71,4 +94,4 @@ const VideoInfo = ({ artworkId, file, types, dispatch }) => {
   );
 };
 
-export default memo(VideoInfo);
+export default memo(Video);

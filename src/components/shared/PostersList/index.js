@@ -11,6 +11,7 @@ import { arrayChunk, getRandomInt } from '@utils/helpers';
 import lockImage from '@images/lock.png';
 import loadingVideo from '@images/loading-video.png';
 import { ReactComponent as PlayIcon } from '@svgs/play.svg';
+import Actions from '@screens/Video/Actions';
 
 export const PosterCard = memo(
   ({
@@ -27,6 +28,7 @@ export const PosterCard = memo(
     videoUri,
     thumbnailUri,
     isLock,
+    showActions,
     onClick,
     ...props
   }) => {
@@ -60,13 +62,21 @@ export const PosterCard = memo(
       >
         <div
           className={cc(['video-grid__item-container', { processing: unavailable, lock }])}
-          onClick={handleClick}
           {...props}
         >
+          {showActions && (
+            <Actions
+              artworkId={artworkId}
+              videoUri={videoUri}
+              title={title}
+              description={description}
+            />
+          )}
           <img
             alt='Crio artworks poster'
             src={thumbnailUri}
             className={cc([{ lock: lock || unavailable }])}
+            onClick={handleClick}
           />
           {(index || index === 0) && <div className='poster-number'>{index}</div>}
           {!lock && !unavailable && (
@@ -75,6 +85,7 @@ export const PosterCard = memo(
               align='bottom'
               wrap={false}
               className='video-grid__item-panel'
+              onClick={handleClick}
             >
               <Col span={22}>
                 <Text level='60'>{name}</Text>

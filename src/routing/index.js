@@ -21,6 +21,7 @@ import CognitoCallback from '@screens/CognitoCallback';
 import Account from '@screens/Account';
 import Profile from '@screens/Profile';
 import Upload from '@screens/Upload';
+import Video from '@screens/Video';
 
 export const AppRoutes = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
@@ -122,6 +123,7 @@ export const AppRoutes = () => {
           <PrivateRoute isAuthenticated={isAuthenticated} path='/account' component={Account} />
           <PrivateRoute isAuthenticated={isAuthenticated} path='/profile' component={Profile} />
           <PrivateRoute isAuthenticated={isAuthenticated} path='/upload' component={Upload} />
+          <PrivateRoute isAuthenticated={isAuthenticated} path='/video' component={Video} />
           <Route exact path='/cognito/callback' component={CognitoCallback} />
         </Switch>
         {isVisible && (

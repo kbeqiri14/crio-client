@@ -2,10 +2,8 @@ import { Fragment, memo, useCallback, useReducer } from 'react';
 import { useMutation } from '@apollo/client';
 
 import history from '@app/configs/history';
-import ActionButtons from '@shared/ActionButtons';
+import Confirmation from '@shared/Confirmation';
 import { deleteArtwork } from '@app/graphql/mutations/artwork.mutation';
-import { Title } from '@ui-kit/Text';
-import { BlurredModal } from '@ui-kit/Modal';
 import DragAndDrop from './DragAndDrop';
 import Uploading from './Uploading';
 import VideoInfo from './VideoInfo';
@@ -85,24 +83,13 @@ const Upload = () => {
         <CoverImage visible={state.coverImageVisible} artworkId={state.artworkId} />
       )}
       {state.confirmationVisible && (
-        <BlurredModal
-          width={486}
-          maskClosable={false}
+        <Confirmation
           visible={state.confirmationVisible}
+          title='Cancel the uploading?'
+          loading={removingArtwork}
+          onConfirm={removeArtwork}
           onCancel={hideConfirmation}
-          className='confirmation'
-        >
-          <Title level={10} color='white'>
-            Cancel the uploading?
-          </Title>
-          <ActionButtons
-            cancelText='NO'
-            saveText='YES, CANCEL'
-            loading={removingArtwork}
-            onCancel={hideConfirmation}
-            onSave={removeArtwork}
-          />
-        </BlurredModal>
+        />
       )}
     </Fragment>
   );
