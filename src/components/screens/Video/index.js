@@ -71,7 +71,7 @@ const Video = () => {
         />
       </Col>
       <Col span={24} className='player'>
-        <div className='video-view__player embed-responsive aspect-ratio-16/9'>
+        <div className='edit-video video-view__player embed-responsive aspect-ratio-16/9'>
           <iframe
             title={'Crio video player'}
             src={`https://player.vimeo.com/video/${videoId}?h=dc77330a55&color=ffffff&title=0&byline=0&portrait=0`}
