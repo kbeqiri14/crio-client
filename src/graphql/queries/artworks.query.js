@@ -50,9 +50,9 @@ export const getUploadImageLink = gql`
   }
 `;
 
-export const getArtworks = gql`
-  query {
-    getArtworks {
+export const getArtwork = gql`
+  query getArtwork($artworkId: ID!) {
+    getArtwork(artworkId: $artworkId) {
       ...ArtworkAttributes
     }
   }

@@ -17,7 +17,7 @@ const formatRemainingTime = (time) => {
     let minutes = Math.round(time / 60);
     const hours = Math.round(minutes / 60);
     minutes = minutes - hours * 60;
-    formattedTime = hours ? `${hours} hour ${minutes}` : minutes;
+    formattedTime = hours ? `${hours} hour ${minutes < 0 ? 0 : minutes}` : minutes;
     timeUnit = 'minutes';
   }
   return `${formattedTime} ${timeUnit} left`;

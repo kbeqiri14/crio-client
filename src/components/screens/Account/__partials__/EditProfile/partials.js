@@ -52,7 +52,7 @@ export const FormRow = memo(
           <CustomTooltip
             visible={tooltipVisible}
             placement='right'
-            className='overlay-visibility'
+            className='default-overlay'
             title='Warning'
             description='You can’t hide all information from profile.'
           >
