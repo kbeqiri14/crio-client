@@ -26,12 +26,12 @@ export const useUserMoreArtworks = (userId, artworkId) => {
   });
 
   useEffect(() => {
-    if (!user || user.isCreator) {
+    if (!user?.id || user.isCreator) {
       requestRandomArtworks();
     } else {
       requestIsFollowing();
     }
-  }, [requestIsFollowing, requestRandomArtworks, user]);
+  }, [requestIsFollowing, requestRandomArtworks, user?.id, user?.isCreator]);
 
   return { loading, data: data?.getRandomArtworks };
 };
