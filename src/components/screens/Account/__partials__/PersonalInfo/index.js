@@ -10,7 +10,7 @@ import './styles.less';
 
 const PersonalInfo = ({
   user,
-  followingsCount,
+  followersCount,
   isCreator,
   isProfile,
   isFollow,
@@ -33,7 +33,7 @@ const PersonalInfo = ({
       <Col span={16}>
         <ProfileInfo
           user={user}
-          followingsCount={followingsCount}
+          followersCount={followersCount}
           isProfile={isProfile}
           isCreator={isCreator || isProfile}
         />

@@ -9,7 +9,7 @@ import { ReactComponent as CreatorIcon } from '@svgs/creator.svg';
 import { ReactComponent as MailIcon } from '@svgs/mail.svg';
 import './styles.less';
 
-const ProfileInfo = ({ user, followingsCount, isProfile, isFollowing, isCreator }) => {
+const ProfileInfo = ({ user, followersCount, isProfile, isFollowing, isCreator }) => {
   const {
     userId,
     providerType,
@@ -63,7 +63,7 @@ const ProfileInfo = ({ user, followingsCount, isProfile, isFollowing, isCreator 
         )}
         {isCreator && !isProfile && !isFollowing && (
           <Title level={30} color='white'>
-            Followers: {followingsCount}
+            Followers: {followersCount}
           </Title>
         )}
       </Col>

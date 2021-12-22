@@ -27,6 +27,7 @@ export const me_fragment = gql`
       subscriptionCancel
     }
     artworksCount
+    followersCount
   }
 `;
 
@@ -79,9 +80,9 @@ export const getFollowings = gql`
   ${following_info_fragment}
 `;
 
-export const getFollowingsCount = gql`
+export const getFollowersCount = gql`
   query {
-    getFollowingsCount
+    getFollowersCount
   }
 `;
 
