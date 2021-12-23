@@ -8,8 +8,6 @@ import { Text, Title } from '@ui-kit/Text';
 import { ReactComponent as CloseIcon } from '@svgs/x.svg';
 import './styles.less';
 
-export { usePresentation, PresentationProvider } from './PresentationContext';
-
 export const PresentationView = ({ isAuthenticated }) => {
   const { hide, isVisible, videoInfo } = usePresentation();
   const { data } = useUserMoreArtworks(videoInfo.userId, videoInfo.artworkId);
