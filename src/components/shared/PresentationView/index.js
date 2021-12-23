@@ -10,15 +10,15 @@ import './styles.less';
 
 export { usePresentation, PresentationProvider } from './PresentationContext';
 
-export const PresentationView = ({ visible, videoInfo, isAuthenticated }) => {
-  const { hide } = usePresentation();
+export const PresentationView = ({ isAuthenticated }) => {
+  const { hide, isVisible, videoInfo } = usePresentation();
   const { data } = useUserMoreArtworks(videoInfo.userId, videoInfo.artworkId);
 
   return (
     <Modal
       destroyOnClose
       onCancel={hide}
-      visible={visible}
+      visible={isVisible}
       maskClosable={false}
       footer={false}
       width='100%'
@@ -59,9 +59,7 @@ export const PresentationView = ({ visible, videoInfo, isAuthenticated }) => {
             <div className='video-view__player embed-responsive aspect-ratio-16/9'>
               <iframe
                 title={videoInfo.title || 'Crio video player'}
-                src={`https://player.vimeo.com/video/${
-                  videoInfo.id || 382975976
-                }?h=dc77330a55&color=ffffff&title=0&byline=0&portrait=0`}
+                src={`https://player.vimeo.com/video/${videoInfo.id}?h=dc77330a55&color=ffffff&title=0&byline=0&portrait=0`}
                 frameBorder='0'
                 allow='autoplay; fullscreen; picture-in-picture'
                 allowFullScreen

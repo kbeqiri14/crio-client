@@ -27,6 +27,21 @@ export const Profile = () => {
   });
   const [follow, { loading: loadingFollowing }] = useMutation(createFollowing, {
     variables: { followingId: id },
+    update: (cache, mutationResult) => {
+      if (mutationResult.data.createFollowing) {
+        const existingData = cache.readQuery({ query: getUser, variables: { id } });
+        cache.writeQuery({
+          query: getUser,
+          variables: { id },
+          data: {
+            getUser: {
+              ...existingData?.getUser,
+              followersCount: existingData?.getUser?.followersCount + (isFollow ? -1 : 1),
+            },
+          },
+        });
+      }
+    },
     onCompleted: (data) => {
       if (data?.createFollowing) {
         setIsFollow(!isFollow);
@@ -49,10 +64,11 @@ export const Profile = () => {
 
   return (
     <Fragment>
-      {loadingUser && <GlobalSpinner />}
+      {loadingUser && loadingIsFollowing && <GlobalSpinner />}
       <PersonalInfo
         isProfile
         user={userData?.getUser}
+        followersCount={userData?.getUser?.followersCount}
         isFollow={isFollow}
         isCreator={user?.isCreator}
         isCurrentUser={id === user.id}

@@ -9,7 +9,7 @@ import { ReactComponent as CreatorIcon } from '@svgs/creator.svg';
 import { ReactComponent as MailIcon } from '@svgs/mail.svg';
 import './styles.less';
 
-const ProfileInfo = ({ user, followingsCount, isProfile, isFollowing, isCreator }) => {
+const ProfileInfo = ({ user, followersCount, isCreator, isProfile, isFollowing }) => {
   const {
     userId,
     providerType,
@@ -23,16 +23,18 @@ const ProfileInfo = ({ user, followingsCount, isProfile, isFollowing, isCreator 
   } = user || {};
   const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
 
+  const myAccount = useMemo(() => !isProfile && !isFollowing, [isProfile, isFollowing]);
   const size = useMemo(() => (isFollowing ? 96 : 134), [isFollowing]);
   const name = useMemo(() => `${firstName || ''} ${lastName || ''}`, [firstName, lastName]);
-  const visible = useMemo(() => {
-    const main = !isProfile && !isFollowing;
-    return {
-      name: main || (!main && visibility?.includes(fields.NAME)),
-      username: main || (!main && visibility?.includes(fields.USERNAME)),
-      email: main || (!main && visibility?.includes(fields.EMAIL)),
-    };
-  }, [isFollowing, isProfile, visibility]);
+  const visible = useMemo(
+    () => ({
+      name: myAccount || (!myAccount && visibility?.includes(fields.NAME)),
+      username: myAccount || (!myAccount && visibility?.includes(fields.USERNAME)),
+      email: myAccount || (!myAccount && visibility?.includes(fields.EMAIL)),
+    }),
+    [myAccount, visibility],
+  );
+
   const visitProfile = useCallback(
     () => isFollowing && history.push(`/profile/${userId}`),
     [isFollowing, userId],
@@ -42,7 +44,7 @@ const ProfileInfo = ({ user, followingsCount, isProfile, isFollowing, isCreator 
     <Row align='middle' gutter={30} className={`profile ${isFollowing ? 'following' : ''}`}>
       <Col>
         <img alt='profile' src={avatarUrl} width={size} height={size} onClick={visitProfile} />
-        {isCreator && <CreatorIcon className='creator-icon' />}
+        {(isCreator || isProfile) && <CreatorIcon className='creator-icon' />}
       </Col>
       <Col className='info'>
         {visible.name && (
@@ -61,9 +63,9 @@ const ProfileInfo = ({ user, followingsCount, isProfile, isFollowing, isCreator 
             {isProfile || isFollowing ? <a href={`mailto:${email}`}>{email}</a> : email}
           </Text>
         )}
-        {isCreator && !isProfile && !isFollowing && (
+        {!(myAccount && !isCreator) && !isFollowing && (
           <Title level={30} color='white'>
-            Followers: {followingsCount}
+            Followers: {followersCount}
           </Title>
         )}
       </Col>

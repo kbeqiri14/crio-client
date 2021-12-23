@@ -27,7 +27,7 @@ export const AppRoutes = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const { user, loading } = useCurrentUser();
   const { dispatchUser, user: crioUser } = useLoggedInUser();
-  const { videoInfo, isVisible } = usePresentation();
+  const { isVisible } = usePresentation();
   const { pathname } = useLocation();
   const signupError = useReactiveVar(signupErrorVar);
   const authenticated = useMemo(
@@ -126,13 +126,7 @@ export const AppRoutes = () => {
           <PrivateRoute isAuthenticated={isAuthenticated} path='/video' component={Video} />
           <Route exact path='/cognito/callback' component={CognitoCallback} />
         </Switch>
-        {isVisible && (
-          <PresentationView
-            visible={isVisible}
-            videoInfo={videoInfo}
-            isAuthenticated={isAuthenticated}
-          />
-        )}
+        {isVisible && <PresentationView isAuthenticated={isAuthenticated} />}
       </main>
     </div>
   );
