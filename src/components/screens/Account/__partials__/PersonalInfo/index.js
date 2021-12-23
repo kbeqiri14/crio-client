@@ -34,8 +34,8 @@ const PersonalInfo = ({
         <ProfileInfo
           user={user}
           followersCount={followersCount}
+          isCreator={isCreator}
           isProfile={isProfile}
-          isCreator={isCreator || isProfile}
         />
       </Col>
       {!(isCreator && isProfile) && (
