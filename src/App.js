@@ -3,7 +3,7 @@ import { ApolloProvider } from '@apollo/client';
 import { init as SentryInit, reactRouterV5Instrumentation } from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
 import { Router } from 'react-router-dom';
-import { PresentationProvider } from '@shared/PresentationView';
+import { PresentationProvider } from '@shared/PresentationView/PresentationContext';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import { env, isOnProduction, SENTRY_DSN } from '@configs/environment';
 import history from '@configs/history';

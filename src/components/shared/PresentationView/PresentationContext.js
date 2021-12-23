@@ -2,9 +2,7 @@ import { createContext, useContext, useState } from 'react';
 
 export const PresentationContext = createContext();
 
-export const usePresentation = () => {
-  return useContext(PresentationContext);
-};
+export const usePresentation = () => useContext(PresentationContext);
 
 export const PresentationProvider = ({ children }) => {
   const [videoInfo, setVideoInfo] = useState({});
