@@ -33,14 +33,13 @@ export const PosterCard = memo(
     ...props
   }) => {
     const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
-    const { show } = usePresentation();
+    const { setVideoInfo } = usePresentation();
 
-    const lock = isLock;
     const unavailable = status && status !== 'available';
 
     const handleClick = () => {
       if (!isLock) {
-        show({
+        setVideoInfo({
           title,
           description,
           id: videoUri?.substring(videoUri?.lastIndexOf('/') + 1),
@@ -56,12 +55,12 @@ export const PosterCard = memo(
 
     return (
       <CustomTooltip
-        trigger={unavailable && !lock ? ['hover'] : []}
+        trigger={unavailable && !isLock ? ['hover'] : []}
         className='overlay-process'
         description='Your video is being processed. It can take a while. Please wait.'
       >
         <div
-          className={cc(['video-grid__item-container', { processing: unavailable, lock }])}
+          className={cc(['video-grid__item-container', { processing: unavailable, lock: isLock }])}
           {...props}
         >
           {showActions && (
@@ -75,11 +74,11 @@ export const PosterCard = memo(
           <img
             alt='Crio artworks poster'
             src={thumbnailUri}
-            className={cc([{ lock: lock || unavailable }])}
+            className={cc([{ lock: isLock || unavailable }])}
             onClick={handleClick}
           />
           {(index || index === 0) && <div className='poster-number'>{index}</div>}
-          {!lock && !unavailable && (
+          {!isLock && !unavailable && (
             <Row
               justify='space-between'
               align='bottom'
@@ -100,12 +99,12 @@ export const PosterCard = memo(
               </Col>
             </Row>
           )}
-          {lock && (
+          {isLock && (
             <div className='video-grid__item-lock'>
               <img alt='lock' src={lockImage} />
             </div>
           )}
-          {!lock && unavailable && (
+          {!isLock && unavailable && (
             <div className='video-grid__item-lock'>
               <img alt='lock' src={loadingVideo} />
             </div>

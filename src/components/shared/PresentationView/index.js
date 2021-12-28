@@ -1,7 +1,11 @@
+import { useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Col, Modal, Row } from 'antd';
+import { useLazyQuery } from '@apollo/client';
 
-import { useUserMoreArtworks } from '@root/src/hooks/useUserMoreArtworks';
+import { isFollowing } from '@app/graphql/queries/users.query';
+import { getRandomArtworks } from '@app/graphql/queries/artworks.query';
+import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { PosterCard } from '@shared/PostersList';
 import { Text, Title } from '@ui-kit/Text';
@@ -9,8 +13,38 @@ import { ReactComponent as CloseIcon } from '@svgs/x.svg';
 import './styles.less';
 
 export const PresentationView = ({ isAuthenticated }) => {
-  const { hide, isVisible, videoInfo } = usePresentation();
-  const { data } = useUserMoreArtworks(videoInfo.userId, videoInfo.artworkId);
+  const { user } = useLoggedInUser();
+  const { isVisible, videoInfo, setVideoInfo } = usePresentation();
+  const hide = useCallback(() => setVideoInfo({}), [setVideoInfo]);
+
+  const [requestMoreArtworks, { data }] = useLazyQuery(getRandomArtworks, {
+    variables: { params: { userId: videoInfo.userId, artworkId: videoInfo.artworkId, limit: 3 } },
+  });
+  const [requestIsFollowing] = useLazyQuery(isFollowing, {
+    variables: { followingId: videoInfo.userId },
+    fetchPolicy: 'no-cache',
+    onCompleted: (data) => {
+      if (data?.isFollowing) {
+        requestMoreArtworks();
+      }
+    },
+  });
+
+  useEffect(() => {
+    if (!user.id || user.isCreator) {
+      requestMoreArtworks();
+    } else {
+      requestIsFollowing();
+    }
+  }, [requestIsFollowing, requestMoreArtworks, user.id, user.isCreator]);
+
+  useEffect(() => {
+    document.querySelector('.video-view-modal__wrapper')?.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'auto',
+    });
+  }, [videoInfo]);
 
   return (
     <Modal
@@ -70,7 +104,7 @@ export const PresentationView = ({ isAuthenticated }) => {
             </Text>
           </Col>
         </Row>
-        {data?.length >= 3 && (
+        {data?.getRandomArtworks?.length >= 3 && (
           <Row justify='start' className='video-player-more'>
             <Col span={18} offset={3} className='column'>
               <Row justify='space-between' align='middle'>
@@ -90,7 +124,7 @@ export const PresentationView = ({ isAuthenticated }) => {
                 </Col>
               </Row>
               <Row gutter={[22, 22]} justify='center' align='middle'>
-                {data?.map((poster, idx) => (
+                {data?.getRandomArtworks?.map((poster, idx) => (
                   <Col xl={8} md={12} sm={24} xs={24} key={idx}>
                     <PosterCard {...poster} />
                   </Col>
