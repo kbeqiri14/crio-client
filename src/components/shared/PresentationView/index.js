@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Col, Modal, Row } from 'antd';
 import { useLazyQuery } from '@apollo/client';
@@ -13,11 +13,11 @@ import { ReactComponent as CloseIcon } from '@svgs/x.svg';
 import './styles.less';
 
 export const PresentationView = ({ isAuthenticated }) => {
-  const { hide, isVisible, videoInfo } = usePresentation();
   const { user } = useLoggedInUser();
+  const { isVisible, videoInfo, setVideoInfo } = usePresentation();
+  const hide = useCallback(() => setVideoInfo({}), [setVideoInfo]);
 
   const [requestMoreArtworks, { data }] = useLazyQuery(getRandomArtworks, {
-    fetchPolicy: 'no-cache',
     variables: { params: { userId: videoInfo.userId, artworkId: videoInfo.artworkId, limit: 3 } },
   });
   const [requestIsFollowing] = useLazyQuery(isFollowing, {
@@ -37,6 +37,14 @@ export const PresentationView = ({ isAuthenticated }) => {
       requestIsFollowing();
     }
   }, [requestIsFollowing, requestMoreArtworks, user.id, user.isCreator]);
+
+  useEffect(() => {
+    document.querySelector('.video-view-modal__wrapper')?.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'auto',
+    });
+  }, [videoInfo]);
 
   return (
     <Modal
