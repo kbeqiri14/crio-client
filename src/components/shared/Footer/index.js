@@ -1,36 +1,44 @@
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'antd';
+
 import { Text, Title } from '@ui-kit/Text';
-import crioLogo from '@images/crio-logo.svg';
-import './styles.less';
+import logo from '@images/crio-logo.svg';
 
 export const Footer = memo(() => (
-  <footer className='cr-landing__footer'>
-    <Row justify='stretch' align='top' className='cr-landing__footer-wrapper'>
-      <Col span={8} className='cr-landing__footer-logo'>
+  <footer className='crio-footer'>
+    <Row justify='center' gutter={[150, 10]}>
+      <Col className='pointer'>
         <Link to='/'>
-          <img alt='Crio logo' src={crioLogo} />
+          <img alt='Crio logo' src={logo} width={48} height={28} />
         </Link>
       </Col>
-      <Col span={8}>
-        <Text level='20'>Crio ©2021. All right reserved</Text>
+      <Col>
+        <Text level='20' color='white_75'>
+          Crio ©2021. All right reserved
+        </Text>
       </Col>
-      <Col className='cr-landing__footer--links' span={8}>
-        <div className='cr-legal-docs'>
-          <Title level='30'>
-            <a href={`mailto:info@criointeractive.com`}>Contact Us</a>
+      <Col className='crio-footer--links'>
+        <a href={`mailto:info@criointeractive.com`}>
+          <Title level='30' color='white_75'>
+            Contact Us
           </Title>
-          <Text level='20'>
-            <Link to='/terms-of-use'>Terms of Usage</Link>
+        </a>
+        <Link to='/terms-of-use'>
+          <Text level='20' color='white_75'>
+            Terms of Usage
           </Text>
-          <Text level='20'>
-            <Link to='/terms-and-conditions'>Terms and Conditions</Link>
+        </Link>
+        <Link to='/terms-and-conditions'>
+          <Text level='20' color='white_75'>
+            Terms and Conditions
           </Text>
-          <Text level='20'>
-            <Link to='/privacy-policy'>Privacy Policy</Link>
+        </Link>
+        <Link to='/privacy-policy'>
+          <Text level='20' color='white_75'>
+            Privacy Policy
           </Text>
-        </div>
+        </Link>
       </Col>
     </Row>
   </footer>
