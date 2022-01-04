@@ -612,8 +612,8 @@ export const TermsOfUse = () => {
             <Title level='20' color='white'>
               Contact Information
             </Title>
-            <Row>
-              <Col span={6}>
+            <Row gutter={30}>
+              <Col>
                 <Text color='white' level='20'>
                   Name: Klodian Beqiri
                 </Text>
