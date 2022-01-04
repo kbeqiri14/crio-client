@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Fragment, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Carousel, Row } from 'antd';
+import { Carousel, Col, Row } from 'antd';
 import { Img } from 'react-image';
 
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
@@ -131,17 +131,21 @@ export const Feed = () => {
                 ))}
               </Carousel>
               <div className='cr-carousel__cards'>
-                <div className='cr-carousel__cards--author'>
-                  {currentPoster?.providerUserId && <img alt='Artist avatar' src={avatarUrl} />}
-                  <Text level='30' color='dark'>
-                    © Artwork by &nbsp;
-                  </Text>
-                  <Link to={`/profile/${currentPoster?.userId}`}>
-                    <Text level='30' color='secondary' inline ellipsis>
-                      {currentPoster?.name}
+                <Row className='cr-carousel__cards--author'>
+                  <Col>
+                    {currentPoster?.providerUserId && <img alt='Artist avatar' src={avatarUrl} />}
+                  </Col>
+                  <Col>
+                    <Text level='30' color='dark'>
+                      © Artwork by &nbsp;
                     </Text>
-                  </Link>
-                </div>
+                    <Link to={`/profile/${currentPoster?.userId}`}>
+                      <Text level='30' color='secondary' inline ellipsis>
+                        {currentPoster?.name}
+                      </Text>
+                    </Link>
+                  </Col>
+                </Row>
                 <div className='cr-carousel__cards--title'>
                   <Title level='10' color='dark' ellipsis>
                     {currentPoster?.title}

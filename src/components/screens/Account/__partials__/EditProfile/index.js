@@ -68,14 +68,14 @@ const EditProfile = ({ user, visible, closeModal }) => {
               setTooltipVisible={setTooltipVisible}
             >
               <FormItem
-                span={9}
+                size={14}
                 name='firstName'
                 label='First name'
                 control={control}
                 defaultValue={user?.firstName}
               />
               <FormItem
-                span={9}
+                size={14}
                 name='lastName'
                 label='Last name'
                 control={control}
@@ -92,7 +92,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
               setTooltipVisible={setTooltipVisible}
             >
               <FormItem
-                span={18}
+                size={43}
                 name='username'
                 label='Username *'
                 control={control}
@@ -107,7 +107,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
               setTooltipVisible={setTooltipVisible}
             >
               <FormItem
-                span={18}
+                size={49}
                 name='email'
                 label='Email'
                 control={control}
