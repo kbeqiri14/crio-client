@@ -55,7 +55,7 @@ export const LandingPage = () => {
         </Row>
       </section>
       <section className='cr-landing__about-perks'>
-        <div className={cc(['about-perks__wrapper', { 'is-signed-in': signupError }])}>
+        <div className='about-perks__wrapper'>
           <div className='about-perks__container'>
             <div className='about-perks__info'>
               <div className='about-perks__title'>

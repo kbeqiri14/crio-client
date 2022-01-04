@@ -23,8 +23,8 @@ const options = [
   },
 ];
 
-export const FormItem = memo(({ span, name, label, control, disabled, defaultValue }) => (
-  <Col span={span}>
+export const FormItem = memo(({ size, name, label, control, disabled, defaultValue }) => (
+  <Col>
     <Row gutter={[0, 10]}>
       <Col span={24}>
         <Title inline level={30} color={disabled ? 'white_50' : 'white'}>
@@ -36,7 +36,7 @@ export const FormItem = memo(({ span, name, label, control, disabled, defaultVal
           name={name}
           control={control}
           defaultValue={defaultValue}
-          render={({ field }) => <Input {...field} disabled={disabled} />}
+          render={({ field }) => <Input {...field} size={size} disabled={disabled} />}
         />
       </Col>
     </Row>
@@ -46,9 +46,9 @@ export const FormItem = memo(({ span, name, label, control, disabled, defaultVal
 export const FormRow = memo(
   ({ children, name, control, defaultValue, tooltipVisible, setTooltipVisible }) => (
     <Col span={24}>
-      <Row align='bottom' gutter={20}>
+      <Row align='bottom' gutter={[10, 20]}>
         {children}
-        <Col span={6}>
+        <Col>
           <CustomTooltip
             visible={tooltipVisible}
             placement='right'

@@ -1,65 +1,65 @@
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Row, Col } from 'antd';
 
 import history from '@app/configs/history';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import GetStarted from '@shared/GetStarted';
-import { SecondaryButton } from '@ui-kit/Button';
-import crio_logo from '@images/crio-logo.svg';
-import { TabMenu } from './__partials__/TabMenu';
+import { SecondaryButton, TabButton } from '@ui-kit/Button';
+import logo from '@images/crio-logo.svg';
 import { ProfileMenu } from './__partials__/ProfileMenu';
-import './styles.less';
 
 const getTabItems = (showPricing) => {
   const items = [
     {
       id: 'home',
       title: 'Home',
-      onClick: () => history.push('/'),
+      path: '/',
     },
   ];
   if (showPricing) {
     items.push({
       id: 'pricing',
       title: 'Pricing',
-      onClick: () => history.push('/pricing'),
+      path: '/pricing',
     });
   }
   return items;
 };
+const upload = () => history.push('/upload');
+const handleClick = (item) => () => history.push(item.path);
 
 export const Header = ({ isAuthenticated }) => {
   const location = useLocation();
   const { user } = useLoggedInUser();
-  const activeItem = location.pathname?.replace('/', '') || 'home';
 
   const menuItems = useMemo(() => getTabItems(!user.id || user?.isFan), [user?.id, user?.isFan]);
-  const upload = useCallback(() => history.push('/upload'), []);
+  const activeItem = useMemo(
+    () => location.pathname?.replace('/', '') || 'home',
+    [location.pathname],
+  );
 
   return (
-    <header className='crio-app-header'>
-      <Row justify='space-between' align='middle'>
-        <Col className='header-start-group'>
-          <div className='header-logo'>
-            <Link to='/'>
-              <img alt='crio app logo' src={crio_logo} />
-            </Link>
-          </div>
-          <div className='header-tab-menu'>
-            <TabMenu defaultActiveItem={activeItem} menuItems={menuItems} />
-          </div>
-        </Col>
-        <Col className='header-end-group'>
-          {isAuthenticated && user ? <ProfileMenu user={user} /> : <GetStarted />}
-          {user?.isCreator && (
-            <SecondaryButton filled textColor='white' onClick={upload}>
-              UPLOAD
-            </SecondaryButton>
-          )}
-        </Col>
-      </Row>
-    </header>
+    <Row justify='space-between' align='middle' gutter={5}>
+      <Col>
+        <Link to='/'>
+          <img alt='crio app logo' src={logo} width={68} height={40} className='logo' />
+        </Link>
+        {menuItems.map((menu) => (
+          <TabButton key={menu.id} isActive={activeItem === menu.id} onClick={handleClick(menu)}>
+            {menu.title}
+          </TabButton>
+        ))}
+      </Col>
+      <Col>
+        {isAuthenticated && user ? <ProfileMenu user={user} /> : <GetStarted />}
+        {user?.isCreator && (
+          <SecondaryButton filled textColor='white' onClick={upload}>
+            UPLOAD
+          </SecondaryButton>
+        )}
+      </Col>
+    </Row>
   );
 };
 

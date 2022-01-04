@@ -13,7 +13,7 @@ const ActionButtons = ({
   loading,
   disabled,
 }) => (
-  <Row justify='center' gutter={37}>
+  <Row justify='center' gutter={[37, 10]}>
     <Col>
       <SecondaryButton
         textColor={cancelLoading ? 'white' : 'white_75'}
