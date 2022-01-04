@@ -51,6 +51,18 @@ html {
     .logo {
       margin-right: 26px;
     }
+    @media (max-width: 767.98px) {
+      padding: 13px 0 13px 10px;
+      .get-started {
+        display: none;
+      }
+      .logo {
+        width: 55px;
+      }
+      > div {
+        justify-content: center;
+      }
+    }
   }
   main {
     height: calc(100vh - @app-header-height);
@@ -61,9 +73,11 @@ html {
 .crio-footer {
   background-color: @black_25;
   padding: 41px;
+  text-align: center;
   &--links {
     display: flex;
     flex-flow: column;
+    text-align: center;
   }
 }
 
