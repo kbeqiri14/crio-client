@@ -55,7 +55,7 @@ export const AppRoutes = () => {
 
   useEffect(() => {
     document.body.scrollTop = 0;
-    document.querySelector('.crio-app-container')?.scrollTo({
+    document.querySelector('.crio-container')?.scrollTo({
       top: 0,
       left: 0,
       behavior: 'auto',
@@ -101,9 +101,11 @@ export const AppRoutes = () => {
   }
 
   return (
-    <div className='crio-app-container'>
-      <Header isAuthenticated={isAuthenticated} />
-      <main className='crio-app-content'>
+    <div className='crio-container'>
+      <header>
+        <Header isAuthenticated={isAuthenticated} />
+      </header>
+      <main>
         <Switch>
           {/* PUBLIC ROUTES */}
           <Route exact path='/'>
