@@ -106,7 +106,7 @@ export const PresentationView = ({ isAuthenticated }) => {
         </Row>
         {data?.getRandomArtworks?.length >= 3 && (
           <Row justify='start' className='video-player-more'>
-            <Col span={18} offset={3} className='column'>
+            <Col span={18} className='column'>
               <Row justify='space-between' align='middle'>
                 <Col>
                   <Text level='40' color='white'>
