@@ -29,8 +29,8 @@ const PersonalInfo = ({
   }, [isProfile, isFollow]);
 
   return (
-    <Row justify='space-between' align='middle' className='personal-info'>
-      <Col span={16}>
+    <Row justify='space-between' align='middle' className='personal-info' gutter={[0, 10]}>
+      <Col>
         <ProfileInfo
           user={user}
           followersCount={followersCount}
@@ -39,7 +39,7 @@ const PersonalInfo = ({
         />
       </Col>
       {!(isCreator && isProfile) && (
-        <Col span={8} className='right'>
+        <Col className='right'>
           <SecondaryButton
             size='large'
             textColor={isProfile ? undefined : 'white'}

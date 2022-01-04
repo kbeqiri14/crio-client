@@ -24,11 +24,11 @@ const SliderBreakPoints = {
 };
 
 const FollowingRow = ({ user, artworks }) => (
-  <Row justify='center'>
-    <Col span={6} className='following-info'>
+  <Row justify='center' gutter={[0, 10]}>
+    <Col className='following-info'>
       <ProfileInfo user={user} isFollowing />
     </Col>
-    <Col span={14}>
+    <Col className='following-works'>
       <div className='cr-artworks-section'>
         <div className='cr-feed__poster-scroll'>
           <Slider withScroll breakpoints={SliderBreakPoints} breakpointsBase='container'>
