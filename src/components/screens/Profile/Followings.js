@@ -24,8 +24,8 @@ const SliderBreakPoints = {
 };
 
 const FollowingRow = ({ user, artworks }) => (
-  <Row justify='center' gutter={[0, 10]}>
-    <Col className='following-info'>
+  <Row justify='center' gutter={[0, 20]}>
+    <Col>
       <ProfileInfo user={user} isFollowing />
     </Col>
     <Col className='following-works'>
