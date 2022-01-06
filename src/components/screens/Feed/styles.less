@@ -45,12 +45,11 @@
         }
       }
       &__cards {
-        height: 263px;
         position: absolute;
         bottom: 0;
         left: 50%;
         transform: translate(-50%, 50%);
-        padding: 28px 68px;
+        padding: 28px 68px 80px;
         width: 100%;
         max-width: 686px;
         border-radius: 16px;
@@ -89,6 +88,9 @@
         &--desc {
           width: 100%;
           max-width: 509px;
+        }
+        @media (max-width: 767.98px) {
+          padding: 20px 38px 50px;
         }
       }
     }

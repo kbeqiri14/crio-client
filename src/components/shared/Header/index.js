@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Row, Col } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
 
 import history from '@app/configs/history';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
@@ -58,6 +59,7 @@ export const Header = ({ isAuthenticated }) => {
             UPLOAD
           </SecondaryButton>
         )}
+        {user?.isCreator && <UploadOutlined className='upload-icon' onClick={upload} />}
       </Col>
     </Row>
   );
