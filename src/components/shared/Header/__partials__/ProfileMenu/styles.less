@@ -3,24 +3,15 @@
 .dropdown {
   position: relative;
   display: inline-block;
-  padding: 10px;
-  &:hover .drop-button {
-    background-color: @white_25;
-  }
 }
 
-.show {
-  .dropdown-content {
-    display: block;
-  }
-  .drop-button {
-    background-color: @white_25;
-  }
+.show .dropdown-content {
+  display: block;
 }
 
 .drop-button {
   border-radius: 6px;
-  padding: 5px 20px 5px 5px;
+  padding-right: 20px;
   cursor: pointer;
   img {
     width: 40px;
@@ -36,7 +27,7 @@
   background-color: rgba(43, 43, 43, 1);
   min-width: 172px;
   right: 0;
-  top: 70px;
+  top: 53px;
   z-index: 1;
   box-shadow: 1px 1px 5px @white_10;
   span {
