@@ -59,14 +59,29 @@
       padding: 0 10px;
     }
   }
+  .following-info {
+    width: 336px;
+    padding-left: 30px;
+  }
   .following-works {
-    width: 1020px;
-    max-width: 1020px;
+    width: 1440px;
     @media (max-width: 767.98px) {
-      max-width: 470px;
+      max-width: 375px;
     }
     @media (min-width: 767.99px) and (max-width: 991.98px) {
-      max-width: 780px;
+      max-width: 432px;
+    }
+    @media (min-width: 991.99px) and (max-width: 1023.98px) {
+      max-width: 656px; // 992 - 336
+    }
+    @media (min-width: 1023.99px) and (max-width: 1199.98px) {
+      max-width: 688px; // 1024 - 336
+    }
+    @media (min-width: 1199.99px) and (max-width: 1399.98px) {
+      max-width: 864px; // 1200 - 336
+    }
+    @media (min-width: 1399.99px) {
+      max-width: 1064px; // 1400 - 336
     }
   }
   .subscription-icon {

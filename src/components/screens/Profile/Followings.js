@@ -9,11 +9,15 @@ import { ReactComponent as Icon } from '@svgs/followings-empty.svg';
 import EmptyState from '@shared/EmptyState';
 
 const SliderBreakPoints = {
-  800: {
+  864: {
+    slidesPerView: 4,
+    slidesPerGroup: 4,
+  },
+  656: {
     slidesPerView: 3,
     slidesPerGroup: 3,
   },
-  500: {
+  620: {
     slidesPerView: 2,
     slidesPerGroup: 2,
   },
@@ -25,7 +29,7 @@ const SliderBreakPoints = {
 
 const FollowingRow = ({ user, artworks }) => (
   <Row justify='center' gutter={[0, 20]}>
-    <Col>
+    <Col className='following-info'>
       <ProfileInfo user={user} isFollowing />
     </Col>
     <Col className='following-works'>
