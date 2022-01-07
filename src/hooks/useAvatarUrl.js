@@ -1,6 +1,6 @@
 import profile from '@images/profile.png';
 
-export const useAvatarUrl = (providerType, providerUserId, avatar) => {
+const useAvatarUrl = (providerType, providerUserId, avatar) => {
   if (!providerUserId) {
     return profile;
   }
