@@ -59,7 +59,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
           </Title>
         </Col>
         <Col span={24}>
-          <Row gutter={[50, 32]}>
+          <Row gutter={[50, 50]}>
             <FormRow
               name='nameVisible'
               control={control}
