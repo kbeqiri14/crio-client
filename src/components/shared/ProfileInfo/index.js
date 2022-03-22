@@ -29,7 +29,6 @@ const ProfileInfo = ({ user, followersCount, isCreator, isProfile, isFollowing }
   const visible = useMemo(
     () => ({
       name: myAccount || (!myAccount && visibility?.includes(fields.NAME)),
-      username: myAccount || (!myAccount && visibility?.includes(fields.USERNAME)),
       email: myAccount || (!myAccount && visibility?.includes(fields.EMAIL)),
     }),
     [myAccount, visibility],
@@ -52,11 +51,9 @@ const ProfileInfo = ({ user, followersCount, isCreator, isProfile, isFollowing }
             {name}
           </Title>
         )}
-        {visible.username && (
-          <Title level={30} color='white' onClick={visitProfile}>
-            @{username}
-          </Title>
-        )}
+        <Title level={30} color='white' onClick={visitProfile}>
+          @{username}
+        </Title>
         {visible.email && (
           <Text level={10} color='white_75'>
             <MailIcon />

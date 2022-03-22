@@ -121,15 +121,15 @@ export const AppRoutes = () => {
             <TermsOfUse />
           </Route>
           <Route path='/pricing/:id?' component={PricingPlans} />
+          <Route path='/profile' component={Profile} />
           {!loading && !user && <Redirect to='/' />}
           {/* PRIVATE ROUTES */}
           <PrivateRoute isAuthenticated={isAuthenticated} path='/account' component={Account} />
-          <PrivateRoute isAuthenticated={isAuthenticated} path='/profile' component={Profile} />
           <PrivateRoute isAuthenticated={isAuthenticated} path='/upload' component={Upload} />
           <PrivateRoute isAuthenticated={isAuthenticated} path='/video' component={Video} />
           <Route exact path='/cognito/callback' component={CognitoCallback} />
         </Switch>
-        {isVisible && <PresentationView isAuthenticated={isAuthenticated} />}
+        {isVisible && <PresentationView />}
       </main>
     </div>
   );

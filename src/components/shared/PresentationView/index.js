@@ -12,7 +12,7 @@ import { Text, Title } from '@ui-kit/Text';
 import { ReactComponent as CloseIcon } from '@svgs/x.svg';
 import './styles.less';
 
-export const PresentationView = ({ isAuthenticated }) => {
+export const PresentationView = () => {
   const { user } = useLoggedInUser();
   const { isVisible, videoInfo, setVideoInfo } = usePresentation();
   const hide = useCallback(() => setVideoInfo({}), [setVideoInfo]);
@@ -74,13 +74,9 @@ export const PresentationView = ({ isAuthenticated }) => {
                   </Col>
                   <Col span={24}>
                     <Title level='20' color='primary' inline>
-                      {isAuthenticated ? (
-                        <Link to={`/profile/${videoInfo.userId}`} onClick={hide}>
-                          {videoInfo.name}
-                        </Link>
-                      ) : (
-                        videoInfo.name
-                      )}
+                      <Link to={`/profile/${videoInfo.userId}`} onClick={hide}>
+                        {videoInfo.name}
+                      </Link>
                     </Title>
                   </Col>
                 </Row>
@@ -114,13 +110,11 @@ export const PresentationView = ({ isAuthenticated }) => {
                   </Text>
                 </Col>
                 <Col>
-                  {isAuthenticated && (
-                    <Link to={`/profile/${videoInfo.userId}`} onClick={hide}>
-                      <Text level='20' color='primary'>
-                        View profile
-                      </Text>
-                    </Link>
-                  )}
+                  <Link to={`/profile/${videoInfo.userId}`} onClick={hide}>
+                    <Text level='20' color='primary'>
+                      View profile
+                    </Text>
+                  </Link>
                 </Col>
               </Row>
               <Row gutter={[22, 22]} justify='center' align='middle'>

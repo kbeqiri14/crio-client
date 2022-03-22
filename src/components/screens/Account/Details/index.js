@@ -31,6 +31,7 @@ const Details = ({
   isProfile,
   isCreator,
   isFollow,
+  isAuthenticated,
   loadingIsFollowing,
   loadingFollowings,
   followings,
@@ -119,7 +120,7 @@ const Details = ({
             <Followings followings={followings} loadingFollowings={loadingFollowings} />
           )}
         </TabPane>
-        {(isCreator || isProfile) && user && (
+        {isAuthenticated && (isCreator || isProfile) && user && (
           <TabPane key={tabs.PERKS} tab='PERKS'>
             <Perks
               vouchers={user.vouchers}
@@ -131,7 +132,9 @@ const Details = ({
           </TabPane>
         )}
       </Tabs>
-      {!isCreator && isProfile && !isSubscribed && <Subscription className='subscription-icon' />}
+      {isAuthenticated && !isCreator && isProfile && !isSubscribed && (
+        <Subscription className='subscription-icon' />
+      )}
       {!!selectedTier && (
         <SendEmailModal
           onCancel={() => setSelectedTier(undefined)}

@@ -1,19 +1,14 @@
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
-import { Fragment, memo, useEffect, useCallback, useState } from 'react';
+import { Fragment, memo, useEffect } from 'react';
 import { useLazyQuery } from '@apollo/client';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { getFollowings, getFollowersCount } from '@app/graphql/queries/users.query';
 import PersonalInfo from './__partials__/PersonalInfo';
-import EditProfile from './__partials__/EditProfile';
 import Details from './Details';
 
 export const MyAccount = () => {
-  const [visible, setVisible] = useState(false);
   const { user } = useLoggedInUser();
-
-  const editProfile = useCallback(() => setVisible(true), []);
-  const closeModal = useCallback(() => setVisible(false), []);
 
   const [requestFollowings, { data: followings, loading: loadingFollowings }] = useLazyQuery(
     getFollowings,
@@ -39,11 +34,11 @@ export const MyAccount = () => {
       <PersonalInfo
         user={user}
         followersCount={followersCount?.getFollowersCount}
-        onClick={editProfile}
-        isCreator={user.isCreator}
+        isCreator={user?.isCreator}
+        isAuthenticated={user?.id}
       />
-      {visible && <EditProfile user={user} visible={visible} closeModal={closeModal} />}
       <Details
+        isAuthenticated={user?.id}
         isCreator={user.isCreator}
         followings={followings?.getFollowings}
         loadingFollowings={loadingFollowings}
