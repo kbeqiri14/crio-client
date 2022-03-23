@@ -70,6 +70,7 @@
     "terser": "^5.9.0"
   },
   "scripts": {
+    "prepare": "husky install",
     "preinstall": "npm i --package-lock-only --ignore-scripts --no-audit && npx npm-force-resolutions",
     "generate-config": "node generateCdkConfig.js",
     "deploy": "chmod +x ./deploy.sh && ./deploy.sh",
