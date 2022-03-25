@@ -57,6 +57,15 @@ const EditProfile = ({ user, visible, closeModal }) => {
         </Col>
         <Col span={24}>
           <Row gutter={[50, 50]}>
+            <FormRow control={control}>
+              <FormItem
+                size={43}
+                name='username'
+                label='Username *'
+                control={control}
+                defaultValue={user?.username}
+              />
+            </FormRow>
             <FormRow
               name='nameVisible'
               control={control}
@@ -75,15 +84,6 @@ const EditProfile = ({ user, visible, closeModal }) => {
                 label='Last name'
                 control={control}
                 defaultValue={user?.lastName}
-              />
-            </FormRow>
-            <FormRow control={control}>
-              <FormItem
-                size={43}
-                name='username'
-                label='Username *'
-                control={control}
-                defaultValue={user?.username}
               />
             </FormRow>
             <FormRow
