@@ -25,7 +25,6 @@ const tabs = {
 };
 
 const Details = ({
-  id,
   name,
   artworksCount,
   isProfile,
@@ -71,13 +70,13 @@ const Details = ({
         variables: {
           mailInfo: {
             tier: selectedTier.toString(),
-            creatorId: +id,
+            creatorUsername: name,
             message,
           },
         },
       });
     },
-    [id, selectedTier, sendEmail],
+    [name, selectedTier, sendEmail],
   );
 
   const isSubscribed = useMemo(() => user.subscribePeriodIsValid && user.isSubscribed, [user]);
@@ -94,12 +93,14 @@ const Details = ({
   );
   const onTabClick = useCallback(
     (key) => {
-      const followingId = id ? `/${id}` : '';
+      const followingUsername = name ? `/${name}` : '';
       return history.push(
-        `${id ? '/profile' : '/account'}${key === tabs.PERKS ? '/perks' : ''}${followingId}`,
+        `${name ? '/profile' : '/account'}${
+          key === tabs.PERKS ? '/perks' : ''
+        }${followingUsername}`,
       );
     },
-    [id],
+    [name],
   );
 
   return (

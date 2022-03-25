@@ -1,18 +1,5 @@
 import { gql } from '@apollo/client';
 
-export const artwork_fragment = gql`
-  fragment ArtworkAttributes on Artwork {
-    id
-    userId
-    videoUri
-    thumbnailUri
-    title
-    description
-    status
-    pictures_uri
-  }
-`;
-
 export const work_fragment = gql`
   fragment WorkDetailAttributes on WorkDetail {
     id
@@ -50,18 +37,9 @@ export const getUploadImageLink = gql`
   }
 `;
 
-export const getArtwork = gql`
-  query getArtwork($artworkId: ID!) {
-    getArtwork(artworkId: $artworkId) {
-      ...ArtworkAttributes
-    }
-  }
-  ${artwork_fragment}
-`;
-
 export const getUserArtworks = gql`
-  query getUserArtworks($id: ID) {
-    getUserArtworks(id: $id) {
+  query getUserArtworks($username: String) {
+    getUserArtworks(username: $username) {
       ...WorkDetailAttributes
     }
   }

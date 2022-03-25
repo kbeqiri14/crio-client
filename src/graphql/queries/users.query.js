@@ -41,8 +41,8 @@ export const me = gql`
 `;
 
 export const getUser = gql`
-  query getUser($id: ID!) {
-    getUser(id: $id) {
+  query getUser($username: String!) {
+    getUser(username: $username) {
       ...Me
     }
   }
@@ -87,8 +87,8 @@ export const getFollowersCount = gql`
 `;
 
 export const isFollowing = gql`
-  query isFollowing($followingId: ID!) {
-    isFollowing(followingId: $followingId)
+  query isFollowing($followingUsername: String!) {
+    isFollowing(followingUsername: $followingUsername)
   }
 `;
 

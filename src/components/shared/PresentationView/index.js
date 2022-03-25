@@ -74,7 +74,7 @@ export const PresentationView = () => {
                   </Col>
                   <Col span={24}>
                     <Title level='20' color='primary' inline>
-                      <Link to={`/profile/${videoInfo.userId}`} onClick={hide}>
+                      <Link to={`/profile/${videoInfo.name}`} onClick={hide}>
                         {videoInfo.name}
                       </Link>
                     </Title>
@@ -110,7 +110,7 @@ export const PresentationView = () => {
                   </Text>
                 </Col>
                 <Col>
-                  <Link to={`/profile/${videoInfo.userId}`} onClick={hide}>
+                  <Link to={`/profile/${videoInfo.name}`} onClick={hide}>
                     <Text level='20' color='primary'>
                       View profile
                     </Text>

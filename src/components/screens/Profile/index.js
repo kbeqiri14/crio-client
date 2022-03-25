@@ -12,11 +12,11 @@ export const Profile = () => {
   const { pathname } = useLocation();
   const { user } = useLoggedInUser();
   const [isFollow, setIsFollow] = useState(false);
-  const id = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
+  const username = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
 
-  const { data: userData, loading: loadingUser } = useQuery(getUser, { variables: { id } });
+  const { data: userData, loading: loadingUser } = useQuery(getUser, { variables: { username } });
   const { loading: loadingIsFollowing } = useQuery(isFollowing, {
-    variables: { followingId: id },
+    variables: { followingUsername: username },
     fetchPolicy: 'no-cache',
     onCompleted: (data) => {
       if (data?.isFollowing) {
@@ -46,7 +46,6 @@ export const Profile = () => {
       />
       <Details
         isProfile
-        id={id}
         name={name}
         artworksCount={userData?.getUser?.artworksCount}
         isAuthenticated={user?.id}

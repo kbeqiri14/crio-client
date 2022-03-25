@@ -10,17 +10,8 @@ import { ReactComponent as MailIcon } from '@svgs/mail.svg';
 import './styles.less';
 
 const ProfileInfo = ({ user, followersCount, isCreator, isProfile, isFollowing }) => {
-  const {
-    userId,
-    providerType,
-    providerUserId,
-    firstName,
-    lastName,
-    username,
-    email,
-    avatar,
-    visibility,
-  } = user || {};
+  const { providerType, providerUserId, firstName, lastName, username, email, avatar, visibility } =
+    user || {};
   const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
 
   const myAccount = useMemo(() => !isProfile && !isFollowing, [isProfile, isFollowing]);
@@ -35,8 +26,8 @@ const ProfileInfo = ({ user, followersCount, isCreator, isProfile, isFollowing }
   );
 
   const visitProfile = useCallback(
-    () => isFollowing && history.push(`/profile/${userId}`),
-    [isFollowing, userId],
+    () => isFollowing && history.push(`/profile/${username}`),
+    [isFollowing, username],
   );
 
   return (

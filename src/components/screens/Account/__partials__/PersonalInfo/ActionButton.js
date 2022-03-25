@@ -17,7 +17,7 @@ const ActionButton = ({ isProfile, isFollow, setIsFollow }) => {
   const { user } = useLoggedInUser();
   const [visible, setVisible] = useState(false);
 
-  const id = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
+  const username = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
 
   const buttonLabel = useMemo(
     () => (isProfile ? `${isFollow ? 'UN' : ''}FOLLOW` : 'EDIT PROFILE'),
@@ -34,13 +34,13 @@ const ActionButton = ({ isProfile, isFollow, setIsFollow }) => {
   const closeModal = useCallback(() => setVisible(false), []);
 
   const [follow, { loading }] = useMutation(createFollowing, {
-    variables: { followingId: id },
+    variables: { followingUsername: username },
     update: (cache, mutationResult) => {
       if (mutationResult.data.createFollowing) {
-        const existingData = cache.readQuery({ query: getUser, variables: { id } });
+        const existingData = cache.readQuery({ query: getUser, variables: { username } });
         cache.writeQuery({
           query: getUser,
-          variables: { id },
+          variables: { username },
           data: {
             getUser: {
               ...existingData?.getUser,
@@ -57,8 +57,6 @@ const ActionButton = ({ isProfile, isFollow, setIsFollow }) => {
     },
   });
 
-  const handleClick = useCallback(() => follow({ variables: { followingId: id } }), [follow, id]);
-
   return (
     <Fragment>
       <SecondaryButton
@@ -67,7 +65,7 @@ const ActionButton = ({ isProfile, isFollow, setIsFollow }) => {
         borderColor={isProfile ? undefined : 'white'}
         icon={buttonIcon}
         loading={loading}
-        onClick={isProfile ? handleClick : editProfile}
+        onClick={isProfile ? follow : editProfile}
       >
         {buttonLabel}
       </SecondaryButton>
