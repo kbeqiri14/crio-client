@@ -24,13 +24,6 @@ export const Profile = () => {
       }
     },
   });
-  const name = useMemo(() => {
-    const { visibility, ...user } = userData?.getUser || {};
-    if (visibility?.includes('name')) {
-      return `${user?.firstName} ${user?.lastName}`;
-    }
-    return user?.username;
-  }, [userData?.getUser]);
 
   return (
     <Fragment>
@@ -46,7 +39,7 @@ export const Profile = () => {
       />
       <Details
         isProfile
-        name={name}
+        name={userData?.getUser?.username}
         artworksCount={userData?.getUser?.artworksCount}
         isAuthenticated={user?.id}
         isCreator={user?.isCreator}
