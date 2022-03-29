@@ -1,7 +1,9 @@
-import cc from 'classcat';
 import { memo } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Col, Row, Tooltip } from 'antd';
+import cc from 'classcat';
 
+import history from '@app/configs/history';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { CustomTooltip } from '@ui-kit/Tooltip';
@@ -32,6 +34,7 @@ export const PosterCard = memo(
     onClick,
     ...props
   }) => {
+    const { pathname } = useLocation();
     const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
     const { setVideoInfo } = usePresentation();
 
@@ -39,17 +42,23 @@ export const PosterCard = memo(
 
     const handleClick = () => {
       if (!isLock) {
-        setVideoInfo({
-          title,
-          description,
-          id: videoUri?.substring(videoUri?.lastIndexOf('/') + 1),
-          artworkId,
-          userId,
-          providerType,
-          providerUserId,
-          name,
-          avatar: avatarUrl,
-        });
+        const id = videoUri?.substring(videoUri?.lastIndexOf('/') + 1);
+        if (pathname.includes('/artwork/')) {
+          history.push(`/artwork/${artworkId}`);
+        } else {
+          window.history.replaceState('', '', `/artwork/${artworkId}`);
+          setVideoInfo({
+            title,
+            description,
+            id,
+            artworkId,
+            userId,
+            providerType,
+            providerUserId,
+            name,
+            avatar: avatarUrl,
+          });
+        }
       }
     };
 

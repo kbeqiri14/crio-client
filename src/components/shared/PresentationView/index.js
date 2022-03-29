@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Col, Modal, Row } from 'antd';
 import { useLazyQuery } from '@apollo/client';
 
@@ -13,9 +13,13 @@ import { ReactComponent as CloseIcon } from '@svgs/x.svg';
 import './styles.less';
 
 export const PresentationView = () => {
+  const { pathname } = useLocation();
   const { user } = useLoggedInUser();
   const { isVisible, videoInfo, setVideoInfo } = usePresentation();
-  const hide = useCallback(() => setVideoInfo({}), [setVideoInfo]);
+  const hide = useCallback(() => {
+    setVideoInfo({});
+    window.history.replaceState('', '', pathname);
+  }, [pathname, setVideoInfo]);
 
   const [requestMoreArtworks, { data }] = useLazyQuery(getRandomArtworks, {
     variables: { params: { userId: videoInfo.userId, artworkId: videoInfo.artworkId, limit: 3 } },
