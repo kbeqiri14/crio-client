@@ -53,8 +53,8 @@ const perksListPro = [
 export const PricingPlans = () => {
   const { pathname } = useLocation();
   const { user } = useLoggedInUser();
-  const id = +pathname.split('/').slice(-1)[0];
-  const goBack = useCallback(() => history.push(`/profile/perks/${id}`), [id]);
+  const username = +pathname.split('/').slice(-1)[0];
+  const goBack = useCallback(() => history.push(`/profile/perks/${username}`), [username]);
 
   const handleClick = useCallback(() => {
     if (user?.id) {
@@ -75,7 +75,7 @@ export const PricingPlans = () => {
       ) : (
         <div className='cr-pricing'>
           <Meta title='Pricing Plans' description='Crio - Pricing Plans' />
-          {!!user?.id && !!id && (
+          {!!user?.id && !!username && (
             <div className='cr-pricing__header'>
               <BackIcon onClick={goBack} />
               <Title inline level={20} color='white'>

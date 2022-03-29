@@ -1,23 +1,22 @@
-import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
-import { Fragment, memo, useCallback, useMemo, useState } from 'react';
+import { Fragment, memo, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { isFollowing, getUser } from '@app/graphql/queries/users.query';
-import { createFollowing } from '@app/graphql/mutations/user.mutation';
 import PersonalInfo from '@screens/Account/__partials__/PersonalInfo';
 import Details from '@screens/Account/Details';
+import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 
 export const Profile = () => {
   const { pathname } = useLocation();
   const { user } = useLoggedInUser();
   const [isFollow, setIsFollow] = useState(false);
-  const id = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
+  const username = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
 
-  const { data: userData, loading: loadingUser } = useQuery(getUser, { variables: { id } });
+  const { data: userData, loading: loadingUser } = useQuery(getUser, { variables: { username } });
   const { loading: loadingIsFollowing } = useQuery(isFollowing, {
-    variables: { followingId: id },
+    variables: { followingUsername: username },
     fetchPolicy: 'no-cache',
     onCompleted: (data) => {
       if (data?.isFollowing) {
@@ -25,42 +24,6 @@ export const Profile = () => {
       }
     },
   });
-  const [follow, { loading: loadingFollowing }] = useMutation(createFollowing, {
-    variables: { followingId: id },
-    update: (cache, mutationResult) => {
-      if (mutationResult.data.createFollowing) {
-        const existingData = cache.readQuery({ query: getUser, variables: { id } });
-        cache.writeQuery({
-          query: getUser,
-          variables: { id },
-          data: {
-            getUser: {
-              ...existingData?.getUser,
-              followersCount: existingData?.getUser?.followersCount + (isFollow ? -1 : 1),
-            },
-          },
-        });
-      }
-    },
-    onCompleted: (data) => {
-      if (data?.createFollowing) {
-        setIsFollow(!isFollow);
-      }
-    },
-  });
-
-  const name = useMemo(() => {
-    const { visibility, ...user } = userData?.getUser || {};
-    if (visibility?.includes('name')) {
-      return `${user?.firstName} ${user?.lastName}`;
-    }
-    if (visibility?.includes('username')) {
-      return user?.username;
-    }
-    return user?.email;
-  }, [userData?.getUser]);
-
-  const handleClick = useCallback(() => follow({ variables: { followingId: id } }), [follow, id]);
 
   return (
     <Fragment>
@@ -70,16 +33,15 @@ export const Profile = () => {
         user={userData?.getUser}
         followersCount={userData?.getUser?.followersCount}
         isFollow={isFollow}
+        setIsFollow={setIsFollow}
         isCreator={user?.isCreator}
-        isCurrentUser={id === user.id}
-        loading={loadingFollowing}
-        onClick={handleClick}
+        isAuthenticated={user?.id}
       />
       <Details
         isProfile
-        id={id}
-        name={name}
+        name={userData?.getUser?.username}
         artworksCount={userData?.getUser?.artworksCount}
+        isAuthenticated={user?.id}
         isCreator={user?.isCreator}
         isFollow={isFollow}
         loadingIsFollowing={loadingIsFollowing}

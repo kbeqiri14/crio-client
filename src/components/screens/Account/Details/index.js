@@ -25,12 +25,12 @@ const tabs = {
 };
 
 const Details = ({
-  id,
   name,
   artworksCount,
   isProfile,
   isCreator,
   isFollow,
+  isAuthenticated,
   loadingIsFollowing,
   loadingFollowings,
   followings,
@@ -70,13 +70,13 @@ const Details = ({
         variables: {
           mailInfo: {
             tier: selectedTier.toString(),
-            creatorId: +id,
+            creatorUsername: name,
             message,
           },
         },
       });
     },
-    [id, selectedTier, sendEmail],
+    [name, selectedTier, sendEmail],
   );
 
   const isSubscribed = useMemo(() => user.subscribePeriodIsValid && user.isSubscribed, [user]);
@@ -93,12 +93,14 @@ const Details = ({
   );
   const onTabClick = useCallback(
     (key) => {
-      const followingId = id ? `/${id}` : '';
+      const followingUsername = name ? `/${name}` : '';
       return history.push(
-        `${id ? '/profile' : '/account'}${key === tabs.PERKS ? '/perks' : ''}${followingId}`,
+        `${name ? '/profile' : '/account'}${
+          key === tabs.PERKS ? '/perks' : ''
+        }${followingUsername}`,
       );
     },
-    [id],
+    [name],
   );
 
   return (
@@ -119,7 +121,7 @@ const Details = ({
             <Followings followings={followings} loadingFollowings={loadingFollowings} />
           )}
         </TabPane>
-        {(isCreator || isProfile) && user && (
+        {isAuthenticated && (isCreator || isProfile) && user && (
           <TabPane key={tabs.PERKS} tab='PERKS'>
             <Perks
               vouchers={user.vouchers}
@@ -131,7 +133,9 @@ const Details = ({
           </TabPane>
         )}
       </Tabs>
-      {!isCreator && isProfile && !isSubscribed && <Subscription className='subscription-icon' />}
+      {isAuthenticated && !isCreator && isProfile && !isSubscribed && (
+        <Subscription className='subscription-icon' />
+      )}
       {!!selectedTier && (
         <SendEmailModal
           onCancel={() => setSelectedTier(undefined)}

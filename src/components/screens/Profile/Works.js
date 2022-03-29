@@ -15,7 +15,7 @@ const Works = ({ isProfile, name, isLock }) => {
   const [works, setWorks] = useState([]);
 
   const { loading } = useQuery(getUserArtworks, {
-    variables: { id: +pathname.split('/').slice(-1)[0] || undefined },
+    variables: { username: pathname.split('/').slice(-1)[0] || undefined },
     onCompleted: ({ getUserArtworks }) => {
       setInitialPolling(false);
       setWorks(getUserArtworks);

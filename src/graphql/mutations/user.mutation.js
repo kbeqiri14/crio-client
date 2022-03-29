@@ -30,8 +30,8 @@ export const updateUser = gql`
 `;
 
 export const createFollowing = gql`
-  mutation createFollowing($followingId: ID!) {
-    createFollowing(followingId: $followingId)
+  mutation createFollowing($followingUsername: String!) {
+    createFollowing(followingUsername: $followingUsername)
   }
 `;
 

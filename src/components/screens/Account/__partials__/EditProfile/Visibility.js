@@ -2,7 +2,6 @@ import { memo, useCallback, useState } from 'react';
 import { Select } from 'antd';
 import { Controller } from 'react-hook-form';
 
-import { keys } from '@constants/visibility';
 import { Title } from '@ui-kit/Text';
 import { ReactComponent as ArrowBottomIcon } from '@svgs/arrow-down.svg';
 
@@ -17,16 +16,15 @@ const Item = ({ label, icon }) => (
   </>
 );
 
-const Visibility = ({ options, name, control, defaultValue, setTooltipVisible }) => {
+const Visibility = ({ options, name, control, defaultValue }) => {
   const [selectedValue, setSelectedValue] = useState(
     options.find(({ value }) => value === defaultValue) || options[0],
   );
   const handleMenuItemClick = useCallback(
     (option) => {
       setSelectedValue(options.find(({ value }) => value === option));
-      setTooltipVisible(option === keys.PRIVATE ? name : undefined);
     },
-    [name, options, setTooltipVisible],
+    [options],
   );
 
   return (

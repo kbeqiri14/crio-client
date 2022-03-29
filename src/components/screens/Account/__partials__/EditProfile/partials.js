@@ -3,7 +3,6 @@ import { Col, Row } from 'antd';
 import { Controller } from 'react-hook-form';
 
 import { keys } from '@constants/visibility';
-import { CustomTooltip } from '@ui-kit/Tooltip';
 import { Title } from '@ui-kit/Text';
 import { Input } from '@ui-kit/Input';
 import { ReactComponent as PublicIcon } from '@svgs/public.svg';
@@ -43,29 +42,15 @@ export const FormItem = memo(({ size, name, label, control, disabled, defaultVal
   </Col>
 ));
 
-export const FormRow = memo(
-  ({ children, name, control, defaultValue, tooltipVisible, setTooltipVisible }) => (
-    <Col span={24}>
-      <Row align='bottom' gutter={[10, 20]}>
-        {children}
-        <Col>
-          <CustomTooltip
-            visible={tooltipVisible}
-            placement='right'
-            className='default-overlay'
-            title='Warning'
-            description='You can’t hide all information from profile.'
-          >
-            <Visibility
-              options={options}
-              name={name}
-              control={control}
-              defaultValue={defaultValue}
-              setTooltipVisible={setTooltipVisible}
-            />
-          </CustomTooltip>
-        </Col>
-      </Row>
-    </Col>
-  ),
-);
+export const FormRow = memo(({ children, name, control, defaultValue }) => (
+  <Col span={24}>
+    <Row align='bottom' gutter={[10, 20]}>
+      {children}
+      <Col>
+        {name && (
+          <Visibility options={options} name={name} control={control} defaultValue={defaultValue} />
+        )}
+      </Col>
+    </Row>
+  </Col>
+));

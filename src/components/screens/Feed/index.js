@@ -42,7 +42,7 @@ const RandomAuthorArtworks = memo(({ blockPosters }) => (
     <div className='cr-artworks-section__author'>
       <Title level='10' color='white' inline>
         © Artwork by &nbsp;
-        <Link to={`/profile/${blockPosters.authorPosters?.[0]?.userId}`}>
+        <Link to={`/profile/${blockPosters.authorPosters?.[0]?.name}`}>
           {blockPosters.authorPosters?.[0]?.name}
         </Link>
       </Title>
@@ -139,7 +139,7 @@ export const Feed = () => {
                     <Text level='30' color='dark'>
                       © Artwork by &nbsp;
                     </Text>
-                    <Link to={`/profile/${currentPoster?.userId}`}>
+                    <Link to={`/profile/${currentPoster?.name}`}>
                       <Text level='30' color='secondary' inline ellipsis>
                         {currentPoster?.name}
                       </Text>

@@ -1,4 +1,4 @@
-import { memo, useMemo, useState } from 'react';
+import { memo, useMemo } from 'react';
 import { Col, Row } from 'antd';
 import { useForm } from 'react-hook-form';
 
@@ -10,13 +10,11 @@ import Footer from './Footer';
 import './styles.less';
 
 const EditProfile = ({ user, visible, closeModal }) => {
-  const [tooltipVisible, setTooltipVisible] = useState();
   const { control, watch, handleSubmit } = useForm();
   const firstName = watch('firstName');
   const lastName = watch('lastName');
   const username = watch('username');
   const nameVisible = watch('nameVisible');
-  const usernameVisible = watch('usernameVisible');
   const emailVisible = watch('emailVisible');
 
   const visibility = useMemo(() => {
@@ -24,7 +22,6 @@ const EditProfile = ({ user, visible, closeModal }) => {
     const exclude = [];
     Object.entries({
       name: nameVisible,
-      username: usernameVisible,
       email: emailVisible,
     }).forEach(([key, value]) => {
       if (value) {
@@ -38,7 +35,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
     return [...new Set([...user?.visibility, ...include])].filter(
       (item) => !exclude.includes(item),
     );
-  }, [nameVisible, usernameVisible, emailVisible, user?.visibility]);
+  }, [nameVisible, emailVisible, user?.visibility]);
 
   const updatedData = useMemo(
     () => ({
@@ -60,12 +57,19 @@ const EditProfile = ({ user, visible, closeModal }) => {
         </Col>
         <Col span={24}>
           <Row gutter={[50, 50]}>
+            <FormRow control={control}>
+              <FormItem
+                size={43}
+                name='username'
+                label='Username *'
+                control={control}
+                defaultValue={user?.username}
+              />
+            </FormRow>
             <FormRow
               name='nameVisible'
               control={control}
               defaultValue={user?.visibility?.includes(fields.NAME) ? keys.PUBLIC : keys.PRIVATE}
-              tooltipVisible={tooltipVisible === 'nameVisible' && !visibility?.length}
-              setTooltipVisible={setTooltipVisible}
             >
               <FormItem
                 size={14}
@@ -83,28 +87,9 @@ const EditProfile = ({ user, visible, closeModal }) => {
               />
             </FormRow>
             <FormRow
-              name='usernameVisible'
-              control={control}
-              defaultValue={
-                user?.visibility?.includes(fields.USERNAME) ? keys.PUBLIC : keys.PRIVATE
-              }
-              tooltipVisible={tooltipVisible === 'usernameVisible' && !visibility?.length}
-              setTooltipVisible={setTooltipVisible}
-            >
-              <FormItem
-                size={43}
-                name='username'
-                label='Username *'
-                control={control}
-                defaultValue={user?.username}
-              />
-            </FormRow>
-            <FormRow
               name='emailVisible'
               control={control}
               defaultValue={user?.visibility?.includes(fields.EMAIL) ? keys.PUBLIC : keys.PRIVATE}
-              tooltipVisible={tooltipVisible === 'emailVisible' && !visibility?.length}
-              setTooltipVisible={setTooltipVisible}
             >
               <FormItem
                 size={49}

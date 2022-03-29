@@ -1,6 +1,5 @@
 export const fields = {
   NAME: 'name',
-  USERNAME: 'username',
   EMAIL: 'email',
 };
 

@@ -6,7 +6,7 @@ import { me } from '@app/graphql/queries/users.query';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { updateUser } from '@app/graphql/mutations/user.mutation';
 import ActionButtons from '@shared/ActionButtons';
-import { successToast } from '@ui-kit/Notification';
+import { errorToast, successToast } from '@ui-kit/Notification';
 
 const Footer = ({ updatedData, closeModal, handleSubmit }) => {
   const { user, dispatchUser } = useLoggedInUser();
@@ -39,6 +39,13 @@ const Footer = ({ updatedData, closeModal, handleSubmit }) => {
       dispatchUser({ ...user, ...data.updateUser });
       closeModal();
       successToast('Your profile has been updated.');
+    },
+    onError: (data) => {
+      let message = data?.message;
+      if (message === 'Validation error') {
+        message = 'The username has already been taken';
+      }
+      errorToast(message);
     },
   });
 

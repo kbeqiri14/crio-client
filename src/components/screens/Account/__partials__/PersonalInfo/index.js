@@ -1,59 +1,34 @@
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import { Col, Row } from 'antd';
 
-import { SecondaryButton } from '@ui-kit/Button';
-import { ReactComponent as PencilIcon } from '@svgs/pencil.svg';
-import { ReactComponent as UnFollowIcon } from '@svgs/unfollow.svg';
-import { ReactComponent as FollowIcon } from '@svgs/follow.svg';
 import ProfileInfo from '@shared/ProfileInfo';
+import ActionButton from './ActionButton.js';
 import './styles.less';
 
 const PersonalInfo = ({
   user,
   followersCount,
+  isFollow,
+  setIsFollow,
   isCreator,
   isProfile,
-  isFollow,
-  loading,
-  onClick,
-}) => {
-  const buttonLabel = useMemo(
-    () => (isProfile ? `${isFollow ? 'UN' : ''}FOLLOW` : 'EDIT PROFILE'),
-    [isProfile, isFollow],
-  );
-  const buttonIcon = useMemo(() => {
-    if (isProfile) {
-      return isFollow ? <UnFollowIcon /> : <FollowIcon />;
-    }
-    return <PencilIcon />;
-  }, [isProfile, isFollow]);
-
-  return (
-    <Row justify='space-between' align='middle' className='personal-info' gutter={[0, 10]}>
-      <Col>
-        <ProfileInfo
-          user={user}
-          followersCount={followersCount}
-          isCreator={isCreator}
-          isProfile={isProfile}
-        />
+  isAuthenticated,
+}) => (
+  <Row justify='space-between' align='middle' className='personal-info' gutter={[0, 10]}>
+    <Col>
+      <ProfileInfo
+        user={user}
+        followersCount={followersCount}
+        isCreator={isCreator}
+        isProfile={isProfile}
+      />
+    </Col>
+    {isAuthenticated && !(isCreator && isProfile) && (
+      <Col className='right'>
+        <ActionButton isProfile={isProfile} isFollow={isFollow} setIsFollow={setIsFollow} />
       </Col>
-      {!(isCreator && isProfile) && (
-        <Col className='right'>
-          <SecondaryButton
-            size='large'
-            textColor={isProfile ? undefined : 'white'}
-            borderColor={isProfile ? undefined : 'white'}
-            icon={buttonIcon}
-            loading={loading}
-            onClick={onClick}
-          >
-            {buttonLabel}
-          </SecondaryButton>
-        </Col>
-      )}
-    </Row>
-  );
-};
+    )}
+  </Row>
+);
 
 export default memo(PersonalInfo);
