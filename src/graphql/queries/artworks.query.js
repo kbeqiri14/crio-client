@@ -37,6 +37,15 @@ export const getUploadImageLink = gql`
   }
 `;
 
+export const getArtwork = gql`
+  query getArtwork($artworkId: ID!) {
+    getArtwork(artworkId: $artworkId) {
+      ...WorkDetailAttributes
+    }
+  }
+  ${work_fragment}
+`;
+
 export const getUserArtworks = gql`
   query getUserArtworks($username: String) {
     getUserArtworks(username: $username) {
