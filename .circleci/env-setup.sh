@@ -38,7 +38,7 @@ elif [ "${CIRCLE_BRANCH}" == "master" ]
 then
   {
     echo "export REACT_APP_GQL_ROOT=https://api.crio.live/graphql/"
-    echo "export SUBDOMAIN_NAME=app"
+    echo "export SUBDOMAIN_NAME=www"
     echo "export STACK_REGION=us-east-1"
     echo "export APP_NAME=crio-in-production"
     echo "export REACT_APP_COGNITO_REGION=us-east-1"
