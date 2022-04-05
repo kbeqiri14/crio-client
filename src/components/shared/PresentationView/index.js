@@ -21,7 +21,7 @@ export const PresentationView = () => {
     variables: { params: { userId: videoInfo.userId, artworkId: videoInfo.artworkId, limit: 3 } },
   });
   const [requestIsFollowing] = useLazyQuery(isFollowing, {
-    variables: { followingId: videoInfo.userId },
+    variables: { followingUsername: videoInfo.name },
     fetchPolicy: 'no-cache',
     onCompleted: (data) => {
       if (data?.isFollowing) {
