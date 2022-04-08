@@ -6,12 +6,14 @@ import { useMutation } from '@apollo/client';
 
 import { updateMetadata } from '@app/graphql/mutations/artwork.mutation';
 import ActionButtons from '@shared/ActionButtons';
+import { Radio, Text } from '@ui-kit';
 import { Input } from '@ui-kit/Input';
 
 const VideoInfo = ({ artworkId, file, types, dispatch }) => {
   const { control, watch, handleSubmit } = useForm();
   const title = watch('title');
   const desc = watch('desc');
+  const accessibility = watch('accessibility');
 
   const disabled = useMemo(() => !title?.trim() || !desc?.trim(), [desc, title]);
   const url = useMemo(() => URL.createObjectURL(file), [file]);
@@ -21,7 +23,7 @@ const VideoInfo = ({ artworkId, file, types, dispatch }) => {
     [types.CONFIRMATION_VISIBLE, dispatch],
   );
   const [updateArtwork, { loading: updatingArtwork }] = useMutation(updateMetadata, {
-    variables: { params: { artworkId, title, description: desc } },
+    variables: { params: { artworkId, title, description: desc, accessibility } },
     onCompleted: () => dispatch({ type: types.UPLOAD_COVER_IMAGE }),
   });
 
@@ -54,6 +56,19 @@ const VideoInfo = ({ artworkId, file, types, dispatch }) => {
             />
           )}
         />
+        <Col span={24}>
+          <Text level={3}>Accessibility</Text>
+          <Controller
+            name='accessibility'
+            control={control}
+            render={({ field }) => (
+              <Radio.Group defaultValue='subscribed' {...field}>
+                <Radio value='subscribed'>Subscribed</Radio>
+                <Radio value='everyone'>Everyone</Radio>
+              </Radio.Group>
+            )}
+          />
+        </Col>
       </Col>
       <Col span={24} className='player'>
         <ReactPlayer url={url} controls={true} width='inherit' height={520} />
