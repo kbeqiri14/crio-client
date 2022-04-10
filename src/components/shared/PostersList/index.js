@@ -26,10 +26,10 @@ export const PosterCard = memo(
     avatar,
     title,
     description,
+    accessibility,
     status,
     videoUri,
     thumbnailUri,
-    isLock,
     showActions,
     onClick,
     ...props
@@ -39,6 +39,7 @@ export const PosterCard = memo(
     const { setVideoInfo } = usePresentation();
 
     const unavailable = status && status !== 'available';
+    const isLock = accessibility === 'subscriber_only';
 
     const handleClick = () => {
       if (!isLock) {
@@ -78,6 +79,7 @@ export const PosterCard = memo(
               videoUri={videoUri}
               title={title}
               description={description}
+              accessibility={accessibility}
             />
           )}
           <img
@@ -130,12 +132,12 @@ const LargeVideoPoster = memo(({ poster }) => (
   </Col>
 ));
 
-const VideoPostersBlock = memo(({ posters, isLock, nonLock }) => (
+const VideoPostersBlock = memo(({ posters }) => (
   <Col xs={24} lg={24} xl={12} span={12}>
     <Row justify='start' align='top' gutter={[22, 35]}>
       {posters.map((poster, index) => (
         <Col key={index} xs={12} lg={12} xl={12} span={12} className='video-grid__item'>
-          <PosterCard {...poster} isLock={poster.id === nonLock ? false : isLock} />
+          <PosterCard {...poster} />
         </Col>
       ))}
     </Row>
@@ -157,11 +159,11 @@ const getRandomIndices = (arrLength, indicesCount) => {
   return indices;
 };
 
-export const renderPosters = (videoPosters = [], largePostersCount, isLock) => {
+export const renderPosters = (videoPosters = [], largePostersCount) => {
   const largePosters = getRandomIndices(videoPosters.length, largePostersCount);
   const posterLinks = videoPosters.filter((_, idx) => !largePosters.has(idx));
   const regularPosterElements = arrayChunk(posterLinks, 4).map((vp) => (
-    <VideoPostersBlock isLock={isLock} nonLock={posterLinks[0]?.id} key={uuid()} posters={vp} />
+    <VideoPostersBlock key={uuid()} posters={vp} />
   ));
   const largePosterElements = videoPosters
     .filter((_, idx) => largePosters.has(idx))

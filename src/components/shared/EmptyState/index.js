@@ -2,8 +2,8 @@ import { memo, useCallback } from 'react';
 import { Col, Row } from 'antd';
 
 import history from '@app/configs/history';
+import { Button } from '@ui-kit';
 import { Text } from '@ui-kit/Text';
-import { SecondaryButton } from '@ui-kit/Button';
 import './styles.less';
 
 const EmptyState = ({ Icon, text, showButton, showMail }) => {
@@ -29,9 +29,9 @@ const EmptyState = ({ Icon, text, showButton, showMail }) => {
       )}
       {showButton && (
         <Col>
-          <SecondaryButton filled textColor='white' onClick={upload}>
+          <Button type='primary' onClick={upload}>
             UPLOAD
-          </SecondaryButton>
+          </Button>
         </Col>
       )}
     </Row>

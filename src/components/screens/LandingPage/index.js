@@ -9,8 +9,8 @@ import GetStarted from '@shared/GetStarted';
 import { renderPosters } from '@shared/PostersList';
 import { Footer } from '@shared/Footer';
 import { Meta } from '@shared/Meta';
+import { Button } from '@ui-kit';
 import { Text, Title } from '@ui-kit/Text';
-import { SecondaryButton } from '@ui-kit/Button';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import aboutPerks from '@images/about-perks.png';
 import './styles.less';
@@ -48,9 +48,9 @@ export const LandingPage = () => {
         </Row>
         <Row className={cc(['cr-landing__video-grid__see-all', { 'list-loaded': isEnd }])}>
           {!isEnd && offset && (
-            <SecondaryButton loading={loading} onClick={loadMore}>
+            <Button loading={loading} onClick={loadMore}>
               SEE MORE
-            </SecondaryButton>
+            </Button>
           )}
         </Row>
       </section>

@@ -35,6 +35,7 @@ export const Profile = () => {
         followersCount={userData?.getUser?.followersCount}
         isFollow={isFollow}
         setIsFollow={setIsFollow}
+        isSubscribed={user?.isSubscribed}
         isCreator={user?.isCreator}
         isAuthenticated={user?.id}
       />

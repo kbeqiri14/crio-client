@@ -8,8 +8,8 @@ import { STRIPE_PAYMENT_URL } from '@configs/environment';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { Meta } from '@shared/Meta';
 import { Footer } from '@shared/Footer';
+import { Button } from '@ui-kit';
 import { Text, Title } from '@ui-kit/Text';
-import { SecondaryButton } from '@ui-kit/Button';
 import { CustomTooltip } from '@ui-kit/Tooltip';
 import { warningToast } from '@ui-kit/Notification';
 import { ReactComponent as CheckMark } from '@svgs/green-check.svg';
@@ -114,16 +114,9 @@ export const PricingPlans = () => {
                   description='Please, use the email address attached to your profile'
                 >
                   <div className='cr-pricing__card--action'>
-                    <SecondaryButton
-                      size='large'
-                      textColor='white'
-                      filled
-                      fillColor='tertiary'
-                      isBlock
-                      onClick={handleClick}
-                    >
+                    <Button block type='primary' fillColor='green' onClick={handleClick}>
                       GET STARTED
-                    </SecondaryButton>
+                    </Button>
                   </div>
                 </CustomTooltip>
               </div>

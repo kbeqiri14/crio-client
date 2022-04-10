@@ -9,6 +9,7 @@ const PersonalInfo = ({
   user,
   loadingUser,
   followersCount,
+  isSubscribed,
   isFollow,
   setIsFollow,
   isCreator,
@@ -36,7 +37,12 @@ const PersonalInfo = ({
     </Col>
     {isAuthenticated && !(isCreator && isProfile) && (
       <Col className='right'>
-        <ActionButton isProfile={isProfile} isFollow={isFollow} setIsFollow={setIsFollow} />
+        <ActionButton
+          isProfile={isProfile}
+          isSubscribed={isSubscribed}
+          isFollow={isFollow}
+          setIsFollow={setIsFollow}
+        />
       </Col>
     )}
   </Row>
