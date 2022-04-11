@@ -31,7 +31,7 @@ export const PosterCard = memo(
     videoUri,
     thumbnailUri,
     showActions,
-    isLock,
+    isLock: lock,
     onClick,
     ...props
   }) => {
@@ -40,6 +40,7 @@ export const PosterCard = memo(
     const { setVideoInfo } = usePresentation();
 
     const unavailable = status && status !== 'available';
+    const isLock = lock && accessibility === 'subscriber_only';
 
     const handleClick = () => {
       if (!isLock) {
