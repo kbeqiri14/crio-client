@@ -4,6 +4,7 @@ import { Col, Row, Tooltip } from 'antd';
 import cc from 'classcat';
 
 import history from '@app/configs/history';
+import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { CustomTooltip } from '@ui-kit/Tooltip';
@@ -35,11 +36,12 @@ export const PosterCard = memo(
     ...props
   }) => {
     const { pathname } = useLocation();
+    const { user } = useLoggedInUser();
     const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
     const { setVideoInfo } = usePresentation();
 
     const unavailable = status && status !== 'available';
-    const isLock = !showActions && accessibility === 'subscriber_only';
+    const isLock = !user?.isSubscribed && !showActions && accessibility === 'subscriber_only';
 
     const handleClick = () => {
       if (!isLock) {
