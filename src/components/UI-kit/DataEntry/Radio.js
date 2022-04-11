@@ -5,9 +5,9 @@ const Radio = styled(antRadio)`
   &.ant-radio-wrapper {
     align-items: center;
     color: ${(props) => props.theme.colors.white};
-    font-size: ${(props) => props.theme.text[4].size}px;
-    font-weight: ${(props) => props.theme.text[4].weight};
-    font-style: ${(props) => props.theme.text[4].style || 'normal'};
+    font-size: ${(props) => props.theme.text[3].size}px;
+    font-weight: ${(props) => props.theme.text[3].weight};
+    font-style: ${(props) => props.theme.text[3].style || 'normal'};
   }
   .ant-radio-checked {
     .ant-radio-inner {

@@ -39,7 +39,7 @@ export const PosterCard = memo(
     const { setVideoInfo } = usePresentation();
 
     const unavailable = status && status !== 'available';
-    const isLock = accessibility === 'subscriber_only';
+    const isLock = !showActions && accessibility === 'subscriber_only';
 
     const handleClick = () => {
       if (!isLock) {
