@@ -6,6 +6,7 @@ import { useLazyQuery } from '@apollo/client';
 import { isFollowing } from '@app/graphql/queries/users.query';
 import { getRandomArtworks } from '@app/graphql/queries/artworks.query';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
+import { urlify } from '@utils/helpers';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { PosterCard } from '@shared/PostersList';
 import { Text, Title } from '@ui-kit/Text';
@@ -100,7 +101,7 @@ export const PresentationView = () => {
           </Col>
           <Col span={18} offset={3}>
             <Text level='10' color='white'>
-              {videoInfo.description}
+              <div dangerouslySetInnerHTML={{ __html: urlify(videoInfo.description) }} />
             </Text>
           </Col>
         </Row>
