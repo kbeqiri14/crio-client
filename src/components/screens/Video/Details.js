@@ -108,8 +108,8 @@ const VideoInfo = ({ artworkId, file, state, onCancel, onCompleted }) => {
             name='accessibility'
             control={control}
             render={({ field }) => (
-              <Radio.Group defaultValue={state?.accessibility} {...field}>
-                <Radio value='subscriber_only'>Subscribed</Radio>
+              <Radio.Group defaultValue={state?.accessibility || 'subscriber_only'} {...field}>
+                <Radio value='subscriber_only'>Subscriber Only</Radio>
                 <Radio value='everyone'>Everyone</Radio>
               </Radio.Group>
             )}

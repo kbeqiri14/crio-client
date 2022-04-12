@@ -21,17 +21,16 @@ const ActionButton = ({ isProfile, isSubscribed, isFollow, setIsFollow }) => {
 
   const username = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
 
-  const buttonLabel = useMemo(
-    () => (isProfile ? `${isFollow ? 'UN' : ''}FOLLOW` : 'EDIT PROFILE'),
-    [isProfile, isFollow],
-  );
+  const buttonLabel = useMemo(() => {
+    if (isProfile) {
+      return `${isSubscribed && isFollow ? 'UN' : ''}FOLLOW`;
+    }
+    return 'EDIT PROFILE';
+  }, [isProfile, isSubscribed, isFollow]);
   const buttonIcon = useMemo(() => {
     if (isProfile) {
       if (isSubscribed) {
-        return <FollowIcon />;
-      }
-      if (isFollow) {
-        return <UnFollowIcon />;
+        return isFollow ? <UnFollowIcon /> : <FollowIcon />;
       }
       return <LockIcon />;
     }
