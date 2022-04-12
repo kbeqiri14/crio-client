@@ -4,6 +4,7 @@ import { Col, Row, Skeleton } from 'antd';
 import { useLazyQuery, useQuery } from '@apollo/client';
 
 import { getArtwork, getRandomArtworks } from '@app/graphql/queries/artworks.query';
+import { urlify } from '@utils/helpers';
 import { PosterCard } from '@shared/PostersList';
 import { Text } from '@ui-kit/Text';
 import Header from './Header';
@@ -66,7 +67,7 @@ export const Artwork = () => {
           <Skeleton round active title={false} paragraph={{ rows: 2 }} loading={loadingArtwork} />
           {!loadingArtwork && (
             <Text level='10' color='white'>
-              {artwork.description}
+              <div dangerouslySetInnerHTML={{ __html: urlify(artwork.description) }} />
             </Text>
           )}
         </Col>
