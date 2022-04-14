@@ -114,7 +114,7 @@ const Details = ({
               <Works
                 name={name}
                 isProfile={isProfile}
-                isLock={!isCreator && isProfile && !isFollow}
+                isLock={!(!isProfile || isCreator || isFollow)}
               />
             )
           ) : (

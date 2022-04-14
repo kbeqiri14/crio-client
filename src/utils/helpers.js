@@ -19,3 +19,12 @@ export function arrayChunk(array, chunkSize) {
     array.slice(i * chunkSize, i * chunkSize + chunkSize),
   );
 }
+
+/**
+ * @desc Detecting URLs in a set of strings
+ * @param {string} text
+ */
+export function urlify(text) {
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  return text.replace(urlRegex, '<a href="$1" target="_blank">$1</a>');
+}

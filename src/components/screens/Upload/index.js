@@ -6,7 +6,7 @@ import Confirmation from '@shared/Confirmation';
 import { deleteArtwork } from '@app/graphql/mutations/artwork.mutation';
 import DragAndDrop from './DragAndDrop';
 import Uploading from './Uploading';
-import VideoInfo from './VideoInfo';
+import VideoDetails from '../Video/Details';
 import CoverImage from './CoverImage';
 import './styles.less';
 
@@ -60,6 +60,9 @@ const Upload = () => {
     onCompleted: () => history.push('/account'),
   });
 
+  const onCancel = useCallback(() => dispatch({ type: types.CONFIRMATION_VISIBLE }), [dispatch]);
+  const onCompleted = useCallback(() => dispatch({ type: types.UPLOAD_COVER_IMAGE }), [dispatch]);
+
   return (
     <Fragment>
       {!state.uploadedVideoVisible && (
@@ -72,11 +75,11 @@ const Upload = () => {
       )}
       {state.uploadingVisible && <Uploading state={state} types={types} dispatch={dispatch} />}
       {state.uploadedVideoVisible && (
-        <VideoInfo
+        <VideoDetails
           artworkId={state.artworkId}
           file={state.file}
-          types={types}
-          dispatch={dispatch}
+          onCancel={onCancel}
+          onCompleted={onCompleted}
         />
       )}
       {state.coverImageVisible && (

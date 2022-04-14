@@ -30,10 +30,12 @@ export const Profile = () => {
       {loadingUser && loadingIsFollowing && <GlobalSpinner />}
       <PersonalInfo
         isProfile
+        loadingUser={loadingUser}
         user={userData?.getUser}
         followersCount={userData?.getUser?.followersCount}
         isFollow={isFollow}
         setIsFollow={setIsFollow}
+        isSubscribed={user?.isSubscribed}
         isCreator={user?.isCreator}
         isAuthenticated={user?.id}
       />

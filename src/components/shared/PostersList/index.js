@@ -1,7 +1,9 @@
-import cc from 'classcat';
 import { memo } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Col, Row, Tooltip } from 'antd';
+import cc from 'classcat';
 
+import history from '@app/configs/history';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { CustomTooltip } from '@ui-kit/Tooltip';
@@ -24,32 +26,41 @@ export const PosterCard = memo(
     avatar,
     title,
     description,
+    accessibility,
     status,
     videoUri,
     thumbnailUri,
-    isLock,
     showActions,
+    isLock: lock,
     onClick,
     ...props
   }) => {
+    const { pathname } = useLocation();
     const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
     const { setVideoInfo } = usePresentation();
 
     const unavailable = status && status !== 'available';
+    const isLock = lock && accessibility === 'subscriber_only';
 
     const handleClick = () => {
       if (!isLock) {
-        setVideoInfo({
-          title,
-          description,
-          id: videoUri?.substring(videoUri?.lastIndexOf('/') + 1),
-          artworkId,
-          userId,
-          providerType,
-          providerUserId,
-          name,
-          avatar: avatarUrl,
-        });
+        const id = videoUri?.substring(videoUri?.lastIndexOf('/') + 1);
+        if (pathname.includes('/artwork/')) {
+          history.push(`/artwork/${artworkId}`);
+        } else {
+          window.history.replaceState('', '', `/artwork/${artworkId}`);
+          setVideoInfo({
+            title,
+            description,
+            id,
+            artworkId,
+            userId,
+            providerType,
+            providerUserId,
+            name,
+            avatar: avatarUrl,
+          });
+        }
       }
     };
 
@@ -69,6 +80,7 @@ export const PosterCard = memo(
               videoUri={videoUri}
               title={title}
               description={description}
+              accessibility={accessibility}
             />
           )}
           <img
@@ -121,12 +133,12 @@ const LargeVideoPoster = memo(({ poster }) => (
   </Col>
 ));
 
-const VideoPostersBlock = memo(({ posters, isLock, nonLock }) => (
+const VideoPostersBlock = memo(({ posters }) => (
   <Col xs={24} lg={24} xl={12} span={12}>
     <Row justify='start' align='top' gutter={[22, 35]}>
       {posters.map((poster, index) => (
         <Col key={index} xs={12} lg={12} xl={12} span={12} className='video-grid__item'>
-          <PosterCard {...poster} isLock={poster.id === nonLock ? false : isLock} />
+          <PosterCard {...poster} />
         </Col>
       ))}
     </Row>
@@ -148,11 +160,11 @@ const getRandomIndices = (arrLength, indicesCount) => {
   return indices;
 };
 
-export const renderPosters = (videoPosters = [], largePostersCount, isLock) => {
+export const renderPosters = (videoPosters = [], largePostersCount) => {
   const largePosters = getRandomIndices(videoPosters.length, largePostersCount);
   const posterLinks = videoPosters.filter((_, idx) => !largePosters.has(idx));
   const regularPosterElements = arrayChunk(posterLinks, 4).map((vp) => (
-    <VideoPostersBlock isLock={isLock} nonLock={posterLinks[0]?.id} key={uuid()} posters={vp} />
+    <VideoPostersBlock key={uuid()} posters={vp} />
   ));
   const largePosterElements = videoPosters
     .filter((_, idx) => largePosters.has(idx))

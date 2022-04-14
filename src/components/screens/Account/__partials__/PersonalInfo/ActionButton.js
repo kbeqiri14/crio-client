@@ -5,30 +5,37 @@ import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { getUser } from '@app/graphql/queries/users.query';
 import { createFollowing } from '@app/graphql/mutations/user.mutation';
 
+import history from '@app/configs/history';
 import { SecondaryButton } from '@ui-kit/Button';
 import { ReactComponent as PencilIcon } from '@svgs/pencil.svg';
 import { ReactComponent as UnFollowIcon } from '@svgs/unfollow.svg';
 import { ReactComponent as FollowIcon } from '@svgs/follow.svg';
+import { ReactComponent as LockIcon } from '@svgs/lock.svg';
 
 import EditProfile from '@screens/Account/__partials__/EditProfile';
 
-const ActionButton = ({ isProfile, isFollow, setIsFollow }) => {
+const ActionButton = ({ isProfile, isSubscribed, isFollow, setIsFollow }) => {
   const { pathname } = useLocation();
   const { user } = useLoggedInUser();
   const [visible, setVisible] = useState(false);
 
   const username = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
 
-  const buttonLabel = useMemo(
-    () => (isProfile ? `${isFollow ? 'UN' : ''}FOLLOW` : 'EDIT PROFILE'),
-    [isProfile, isFollow],
-  );
+  const buttonLabel = useMemo(() => {
+    if (isProfile) {
+      return `${isSubscribed && isFollow ? 'UN' : ''}FOLLOW`;
+    }
+    return 'EDIT PROFILE';
+  }, [isProfile, isSubscribed, isFollow]);
   const buttonIcon = useMemo(() => {
     if (isProfile) {
-      return isFollow ? <UnFollowIcon /> : <FollowIcon />;
+      if (isSubscribed) {
+        return isFollow ? <UnFollowIcon /> : <FollowIcon />;
+      }
+      return <LockIcon />;
     }
     return <PencilIcon />;
-  }, [isProfile, isFollow]);
+  }, [isProfile, isSubscribed, isFollow]);
 
   const editProfile = useCallback(() => setVisible(true), []);
   const closeModal = useCallback(() => setVisible(false), []);
@@ -57,6 +64,18 @@ const ActionButton = ({ isProfile, isFollow, setIsFollow }) => {
     },
   });
 
+  const onClick = useCallback(() => {
+    if (isProfile) {
+      if (isSubscribed) {
+        follow();
+      } else {
+        history.push('/pricing');
+      }
+      return;
+    }
+    editProfile();
+  }, [isProfile, isSubscribed, editProfile, follow]);
+
   return (
     <Fragment>
       <SecondaryButton
@@ -65,7 +84,7 @@ const ActionButton = ({ isProfile, isFollow, setIsFollow }) => {
         borderColor={isProfile ? undefined : 'white'}
         icon={buttonIcon}
         loading={loading}
-        onClick={isProfile ? follow : editProfile}
+        onClick={onClick}
       >
         {buttonLabel}
       </SecondaryButton>

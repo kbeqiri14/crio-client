@@ -13,6 +13,7 @@ export const work_fragment = gql`
     thumbnailUri
     title
     description
+    accessibility
     status
   }
 `;
@@ -35,6 +36,15 @@ export const getUploadImageLink = gql`
       link
     }
   }
+`;
+
+export const getArtwork = gql`
+  query getArtwork($artworkId: ID!) {
+    getArtwork(artworkId: $artworkId) {
+      ...WorkDetailAttributes
+    }
+  }
+  ${work_fragment}
 `;
 
 export const getUserArtworks = gql`

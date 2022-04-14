@@ -6,7 +6,8 @@ import { UploadOutlined } from '@ant-design/icons';
 import history from '@app/configs/history';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import GetStarted from '@shared/GetStarted';
-import { SecondaryButton, TabButton } from '@ui-kit/Button';
+import { Button } from '@ui-kit';
+import { TabButton } from '@ui-kit/Button';
 import logo from '@images/crio-logo.svg';
 import { ProfileMenu } from './__partials__/ProfileMenu';
 
@@ -55,9 +56,9 @@ export const Header = ({ isAuthenticated }) => {
       <Col>
         {isAuthenticated && user ? <ProfileMenu user={user} /> : <GetStarted />}
         {user?.isCreator && (
-          <SecondaryButton filled textColor='white' onClick={upload}>
+          <Button type='primary' onClick={upload}>
             UPLOAD
-          </SecondaryButton>
+          </Button>
         )}
         {user?.isCreator && <UploadOutlined className='upload-icon' onClick={upload} />}
       </Col>

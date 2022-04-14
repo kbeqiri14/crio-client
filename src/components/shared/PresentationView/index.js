@@ -1,11 +1,12 @@
 import { useCallback, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Col, Modal, Row } from 'antd';
 import { useLazyQuery } from '@apollo/client';
 
 import { isFollowing } from '@app/graphql/queries/users.query';
 import { getRandomArtworks } from '@app/graphql/queries/artworks.query';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
+import { urlify } from '@utils/helpers';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { PosterCard } from '@shared/PostersList';
 import { Text, Title } from '@ui-kit/Text';
@@ -13,9 +14,13 @@ import { ReactComponent as CloseIcon } from '@svgs/x.svg';
 import './styles.less';
 
 export const PresentationView = () => {
+  const { pathname } = useLocation();
   const { user } = useLoggedInUser();
   const { isVisible, videoInfo, setVideoInfo } = usePresentation();
-  const hide = useCallback(() => setVideoInfo({}), [setVideoInfo]);
+  const hide = useCallback(() => {
+    setVideoInfo({});
+    window.history.replaceState('', '', pathname);
+  }, [pathname, setVideoInfo]);
 
   const [requestMoreArtworks, { data }] = useLazyQuery(getRandomArtworks, {
     variables: { params: { userId: videoInfo.userId, artworkId: videoInfo.artworkId, limit: 3 } },
@@ -96,7 +101,7 @@ export const PresentationView = () => {
           </Col>
           <Col span={18} offset={3}>
             <Text level='10' color='white'>
-              {videoInfo.description}
+              <div dangerouslySetInnerHTML={{ __html: urlify(videoInfo.description) }} />
             </Text>
           </Col>
         </Row>

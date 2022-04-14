@@ -9,10 +9,10 @@ import { useFeedRandomArtworks } from '@app/hooks/useFeedRandomArtworks';
 import { PosterCard, renderPosters } from '@shared/PostersList';
 import { Footer } from '@shared/Footer';
 import { Meta } from '@shared/Meta';
+import { Button } from '@ui-kit';
 import { Slider } from '@ui-kit/Slider';
 import { Spinner } from '@ui-kit/Spinner';
 import { Text, Title } from '@ui-kit/Text';
-import { SecondaryButton } from '@ui-kit/Button';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import { ReactComponent as Icon } from '@svgs/feed-empty.svg';
 import EmptyState from '@shared/EmptyState';
@@ -169,9 +169,9 @@ export const Feed = () => {
               ))}
               {!isEnd && offset && (
                 <Row className='cr-landing__video-grid__see-all'>
-                  <SecondaryButton loading={loading} onClick={loadMore}>
+                  <Button loading={loading} onClick={loadMore}>
                     LOAD MORE
-                  </SecondaryButton>
+                  </Button>
                 </Row>
               )}
             </div>
