@@ -9,9 +9,10 @@ import { Col, Row, Text, Title } from '@ui-kit';
 import { ReactComponent as CreatorIcon } from '@svgs/verified.svg';
 import EmptyState from '@shared/EmptyStateFan';
 
-const StyledRow = styled(Row)`
-  width: 387px;
-  padding: 20px 10px;
+const StyledCard = styled('div')`
+  width: 372px;
+  margin-top: 40px;
+  padding: 20px;
   background: ${(props) => props.theme.colors.dark100};
   border: 1px solid ${(props) => props.theme.colors.white};
   border-radius: 30px;
@@ -27,9 +28,6 @@ const StyledRow = styled(Row)`
     width: 12px;
     height: 12px;
   }
-  .ant-row {
-    width: 247px;
-  }
 `;
 const FollowingCard = ({ user }) => {
   const { providerType, providerUserId, firstName, lastName, username, avatar } = user || {};
@@ -38,26 +36,28 @@ const FollowingCard = ({ user }) => {
   const goToProfile = useCallback(() => history.push(`/profile/${username}`), [username]);
 
   return (
-    <StyledRow align='middle' gutter={20} onClick={goToProfile}>
-      <Col>
-        <img alt='profile' src={avatarUrl} />
-        <CreatorIcon />
-      </Col>
-      <Col>
-        <Row gutter={[0, 8]}>
-          <Col span={24}>
-            <Title level={2} color='white' ellipsis>
-              @{username}
-            </Title>
-          </Col>
-          <Col span={24}>
-            <Text level={3} color='white' ellipsis>
-              {name}
-            </Text>
-          </Col>
-        </Row>
-      </Col>
-    </StyledRow>
+    <StyledCard>
+      <Row align='middle' gutter={20} onClick={goToProfile}>
+        <Col>
+          <img alt='profile' src={avatarUrl} />
+          <CreatorIcon />
+        </Col>
+        <Col>
+          <Row gutter={[0, 8]}>
+            <Col span={24}>
+              <Title level={2} color='white' ellipsis>
+                @{username}
+              </Title>
+            </Col>
+            <Col span={24}>
+              <Text level={3} color='white' ellipsis>
+                {name}
+              </Text>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+    </StyledCard>
   );
 };
 

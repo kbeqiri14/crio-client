@@ -1,6 +1,6 @@
 import { memo, useMemo } from 'react';
-import { Tabs } from 'antd';
 
+import { Tabs } from '@ui-kit';
 import Followings from './Followings';
 import Works from './Works';
 
@@ -14,8 +14,8 @@ const Details = ({ user, isProfile }) => {
   const tab = useMemo(
     () =>
       user?.isCreator
-        ? `WORKS ${user?.artworksCount || ''}`
-        : `FOLLOWING ${user?.followingsCount || ''}`,
+        ? `Portfolio ${user?.artworksCount || ''}`
+        : `Following ${user?.followingsCount || ''}`,
     [user?.isCreator, user?.artworksCount, user?.followingsCount],
   );
 

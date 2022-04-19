@@ -18,6 +18,11 @@ export { default as Text } from './General/Typography/Text';
 export { default as Title } from './General/Typography/Title';
 
 /*
+  Data Display
+*/
+export { default as Tabs } from './DataDisplay/Tabs';
+
+/*
   Data Entry
 */
 export { default as Input } from './DataEntry/Input';

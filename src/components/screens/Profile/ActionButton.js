@@ -18,7 +18,6 @@ const ActionButton = ({ isProfile, isSubscribed, isFollow }) => {
   const { pathname } = useLocation();
   const { user } = useLoggedInUser();
   const [visible, setVisible] = useState(false);
-  console.log(isProfile, isSubscribed, isFollow, 'isProfile, isSubscribed, isFollow');
   const username = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
 
   const buttonLabel = useMemo(() => {
