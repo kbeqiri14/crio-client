@@ -38,6 +38,12 @@ const Row = styled(antRow)`
     css`
       flex-direction: ${props.direction};
     `}
+
+  ${(props) =>
+    props?.onClick &&
+    css`
+      cursor: pointer;
+    `}
 `;
 
 export default Row;

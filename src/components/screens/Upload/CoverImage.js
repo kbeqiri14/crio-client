@@ -37,7 +37,7 @@ const CoverImage = ({ visible, artworkId }) => {
   };
 
   const [updateArtwork] = useMutation(updateMetadata, {
-    onCompleted: () => history.push('/account'),
+    onCompleted: () => history.push('/profile'),
   });
   const [requestUploadUrl] = useLazyQuery(getUploadImageLink, {
     fetchPolicy: 'no-cache',

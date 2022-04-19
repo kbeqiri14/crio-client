@@ -13,8 +13,8 @@ export const ProfileMenu = ({ user }) => {
   const hide = useCallback(() => setVisible(false), []);
   const goAccount = useCallback(() => {
     hide();
-    history.push('/account');
-  }, [hide]);
+    history.push(`/profile/${user?.username}`);
+  }, [user?.username, hide]);
 
   useEffect(() => {
     const listener = (event) => {

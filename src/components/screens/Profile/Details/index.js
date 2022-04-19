@@ -4,7 +4,7 @@ import { useLazyQuery, useMutation } from '@apollo/client';
 import { isFuture } from 'date-fns';
 import { Tabs } from 'antd';
 
-import { SendEmailModal } from '@screens/Account/__partials__/SendEmailModal';
+import { SendEmailModal } from '@root/src/components/screens/Profile/SendEmailModal';
 import { me } from '@app/graphql/queries/users.query';
 import { contactCreator } from '@app/graphql/mutations/user.mutation';
 import { ReactComponent as Subscription } from '@svgs/subscription.svg';
@@ -12,9 +12,9 @@ import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import history from '@app/configs/history';
 import { Spinner } from '@ui-kit/Spinner';
 import { errorToast, successToast } from '@ui-kit/Notification';
-import Followings from '../../Profile/Followings';
-import Works from '../../Profile/Works';
-import Perks from '../../Profile/Perks';
+import Followings from '../Followings';
+import Works from '../Works';
+import Perks from '../Perks';
 import './styles.less';
 
 const { TabPane } = Tabs;
@@ -25,6 +25,7 @@ const tabs = {
 };
 
 const Details = ({
+  user,
   name,
   artworksCount,
   isProfile,
@@ -36,7 +37,7 @@ const Details = ({
   followings,
 }) => {
   const [selectedTier, setSelectedTier] = useState(undefined);
-  const { user, dispatchUser } = useLoggedInUser();
+  const { dispatchUser } = useLoggedInUser();
   const { pathname } = useLocation();
 
   const [getLoggedInUser] = useLazyQuery(me, {
@@ -79,7 +80,7 @@ const Details = ({
     [name, selectedTier, sendEmail],
   );
 
-  const isSubscribed = useMemo(() => user.subscribePeriodIsValid && user.isSubscribed, [user]);
+  const isSubscribed = useMemo(() => user?.subscribePeriodIsValid && user?.isSubscribed, [user]);
   const activeKey = useMemo(
     () => (pathname.split('/').includes('perks') ? tabs.PERKS : tabs.WORKS),
     [pathname],
@@ -87,18 +88,14 @@ const Details = ({
   const tab = useMemo(
     () =>
       isCreator || isProfile
-        ? `WORKS ${(isProfile ? artworksCount : user.artworksCount) || ''}`
+        ? `WORKS ${(isProfile ? artworksCount : user?.artworksCount) || ''}`
         : `FOLLOWING ${followings?.length || ''}`,
-    [isCreator, isProfile, user.artworksCount, artworksCount, followings?.length],
+    [isCreator, isProfile, user?.artworksCount, artworksCount, followings?.length],
   );
   const onTabClick = useCallback(
     (key) => {
       const followingUsername = name ? `/${name}` : '';
-      return history.push(
-        `${name ? '/profile' : '/account'}${
-          key === tabs.PERKS ? '/perks' : ''
-        }${followingUsername}`,
-      );
+      return history.push(`/profile${key === tabs.PERKS ? '/perks' : ''}${followingUsername}`);
     },
     [name],
   );
@@ -118,7 +115,11 @@ const Details = ({
               />
             )
           ) : (
-            <Followings followings={followings} loadingFollowings={loadingFollowings} />
+            <Followings
+              user={user}
+              followings={followings?.getFollowings}
+              loadingFollowings={loadingFollowings}
+            />
           )}
         </TabPane>
         {isAuthenticated && (isCreator || isProfile) && user && (

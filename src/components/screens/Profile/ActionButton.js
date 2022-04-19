@@ -12,7 +12,7 @@ import { ReactComponent as UnFollowIcon } from '@svgs/unfollow.svg';
 import { ReactComponent as FollowIcon } from '@svgs/follow.svg';
 import { ReactComponent as LockIcon } from '@svgs/lock.svg';
 
-import EditProfile from '@screens/Account/__partials__/EditProfile';
+import EditProfile from '@root/src/components/screens/Profile/EditProfile';
 
 const ActionButton = ({ isProfile, isSubscribed, isFollow, setIsFollow }) => {
   const { pathname } = useLocation();

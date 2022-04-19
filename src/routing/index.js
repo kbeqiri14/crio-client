@@ -19,7 +19,7 @@ import LandingPage from '@screens/LandingPage';
 import { PricingPlans } from '@screens/PricingPlans';
 import { Feed } from '@screens/Feed';
 import CognitoCallback from '@screens/CognitoCallback';
-import CreatorProfile from '@screens/Profile/CreatorProfile';
+import Profile from '@screens/Profile';
 import Artwork from '@screens/Artwork';
 import Upload from '@screens/Upload';
 import Video from '@screens/Video';
@@ -80,8 +80,8 @@ export const AppRoutes = () => {
     if (
       crioUser &&
       crioUser.isFan &&
-      (!crioUser.isSubscribed ||
-        !crioUser.subscribePeriodIsValid ||
+      (!crioUser?.isSubscribed ||
+        !crioUser?.subscribePeriodIsValid ||
         crioUser?.payment?.subscriptionCancel)
     ) {
       if (timeout) {
@@ -121,8 +121,8 @@ export const AppRoutes = () => {
             <TermsOfUse />
           </Route>
           <Route exact path='/pricing/:id?' component={PricingPlans} />
-          <Route exact path='/profile/:username' component={CreatorProfile} />
-          <Route exact path='/profile/perks/:username' component={CreatorProfile} />
+          <Route exact path='/profile/:username' component={Profile} />
+          <Route exact path='/profile/perks/:username' component={Profile} />
           <Route exact path='/artwork/:artworkId' component={Artwork} />
           {!loading && !user && <Redirect to='/' />}
           {/* PRIVATE ROUTES */}
