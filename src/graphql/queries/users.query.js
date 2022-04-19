@@ -12,11 +12,6 @@ export const me_fragment = gql`
     lastName
     avatar
     isCreator
-    vouchers {
-      tier1
-      tier2
-      tier3
-    }
     payment {
       customerEmail
       periodStart

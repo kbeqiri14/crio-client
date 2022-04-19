@@ -122,7 +122,6 @@ export const AppRoutes = () => {
           </Route>
           <Route exact path='/pricing/:id?' component={PricingPlans} />
           <Route exact path='/profile/:username' component={Profile} />
-          <Route exact path='/profile/perks/:username' component={Profile} />
           <Route exact path='/artwork/:artworkId' component={Artwork} />
           {!loading && !user && <Redirect to='/' />}
           {/* PRIVATE ROUTES */}

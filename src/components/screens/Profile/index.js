@@ -18,10 +18,9 @@ export const CreatorProfile = () => {
   const { user: loggedInUser } = useLoggedInUser();
   const username = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
 
-  const [requestFollowings, { data: followings, loading: loadingFollowings }] = useLazyQuery(
-    getFollowings,
-    { fetchPolicy: 'cache-and-network' },
-  );
+  const [requestFollowings, { data: followings }] = useLazyQuery(getFollowings, {
+    fetchPolicy: 'cache-and-network',
+  });
   const [requestUser, { data: userData }] = useLazyQuery(getUser, { variables: { username } });
   const user = useMemo(
     () => (username === loggedInUser.username ? loggedInUser : userData?.getUser),
