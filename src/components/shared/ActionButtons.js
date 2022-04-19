@@ -15,7 +15,7 @@ const ActionButtons = ({
 }) => (
   <Row justify='center' gutter={[37, 10]}>
     <Col>
-      <Button white loading={cancelLoading} disabled={cancelDisabled} onClick={onCancel}>
+      <Button white='true' loading={cancelLoading} disabled={cancelDisabled} onClick={onCancel}>
         {cancelText}
       </Button>
     </Col>

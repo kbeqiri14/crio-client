@@ -1,8 +1,8 @@
-import profile from '@images/profile.png';
+import defaultAvatar from '@images/avatar.png';
 
 const useAvatarUrl = (providerType, providerUserId, avatar) => {
   if (!providerUserId) {
-    return profile;
+    return defaultAvatar;
   }
   if (providerType === 'Google') {
     return `https://lh3.googleusercontent.com/${avatar}s350`;
@@ -10,7 +10,7 @@ const useAvatarUrl = (providerType, providerUserId, avatar) => {
   if (providerType === 'Facebook') {
     return `https://graph.facebook.com/${providerUserId}/picture?height=350&width=350`;
   }
-  return profile;
+  return defaultAvatar;
 };
 
 export default useAvatarUrl;

@@ -11,7 +11,6 @@ export const me_fragment = gql`
     firstName
     lastName
     avatar
-    visibility
     isCreator
     vouchers {
       tier1
@@ -61,7 +60,6 @@ export const following_info_fragment = gql`
     firstName
     lastName
     avatar
-    visibility
     artworks {
       artworkId
       videoUri

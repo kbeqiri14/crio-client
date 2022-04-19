@@ -2,25 +2,8 @@ import { memo } from 'react';
 import { Col, Row } from 'antd';
 import { Controller } from 'react-hook-form';
 
-import { keys } from '@constants/visibility';
 import { Title } from '@ui-kit/Text';
 import { Input } from '@ui-kit/Input';
-import { ReactComponent as PublicIcon } from '@svgs/public.svg';
-import { ReactComponent as PrivateIcon } from '@svgs/private.svg';
-import Visibility from './Visibility';
-
-const options = [
-  {
-    label: 'Public',
-    value: keys.PUBLIC,
-    icon: <PublicIcon />,
-  },
-  {
-    label: 'Only me',
-    value: keys.PRIVATE,
-    icon: <PrivateIcon />,
-  },
-];
 
 export const FormItem = memo(({ size, name, label, control, disabled, defaultValue }) => (
   <Col>
@@ -42,15 +25,10 @@ export const FormItem = memo(({ size, name, label, control, disabled, defaultVal
   </Col>
 ));
 
-export const FormRow = memo(({ children, name, control, defaultValue }) => (
+export const FormRow = memo(({ children }) => (
   <Col span={24}>
     <Row align='bottom' gutter={[10, 20]}>
       {children}
-      <Col>
-        {name && (
-          <Visibility options={options} name={name} control={control} defaultValue={defaultValue} />
-        )}
-      </Col>
     </Row>
   </Col>
 ));

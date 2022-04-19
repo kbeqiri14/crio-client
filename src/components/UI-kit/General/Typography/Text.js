@@ -28,13 +28,6 @@ const Text = styled(Typography.Text)`
     css`
       cursor: pointer;
     `}
-
-  ${(props) =>
-    props?.align &&
-    css`
-      display: inline-block;
-      text-align: ${props.align};
-    `}
 `;
 
 export default Text;

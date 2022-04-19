@@ -1,5 +1,4 @@
 import { memo, useCallback, useMemo } from 'react';
-import { isEqual } from 'lodash';
 import { useMutation } from '@apollo/client';
 
 import { me } from '@app/graphql/queries/users.query';
@@ -12,18 +11,16 @@ const Footer = ({ updatedData, closeModal, handleSubmit }) => {
   const { user, dispatchUser } = useLoggedInUser();
 
   const disabled = useMemo(() => {
-    const { firstName, lastName, username, visibility } = updatedData;
+    const { firstName, lastName, username } = updatedData;
     return !(
-      visibility.length &&
       username !== '' &&
       ((firstName && user?.firstName !== firstName) ||
         (firstName === '' && !!user?.firstName) ||
         (lastName && user?.lastName !== lastName) ||
         (lastName === '' && !!user?.lastName) ||
-        (username && user?.username !== username) ||
-        !isEqual(visibility, user.visibility))
+        (username && user?.username !== username))
     );
-  }, [updatedData, user?.firstName, user?.lastName, user?.username, user?.visibility]);
+  }, [updatedData, user?.firstName, user?.lastName, user?.username]);
 
   const [updateUserInfo, { loading }] = useMutation(updateUser, {
     update: (cache, mutationResult) => {
