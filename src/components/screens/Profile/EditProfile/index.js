@@ -1,9 +1,8 @@
 import { memo, useMemo } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 
-import { Col, Row, Title } from '@ui-kit';
+import { Col, Input, Row, Text, Title } from '@ui-kit';
 import { BlurredModal } from '@ui-kit/Modal';
-import { FormRow, FormItem } from './partials';
 import Footer from './Footer';
 
 const EditProfile = ({ user, visible, closeModal }) => {
@@ -22,51 +21,84 @@ const EditProfile = ({ user, visible, closeModal }) => {
   );
 
   return (
-    <BlurredModal width={708} visible={visible} onCancel={closeModal} className='edit-profile'>
-      <Row justify='center' gutter={[0, 40]}>
-        <Col span={24}>
+    <BlurredModal width={708} visible={visible} onCancel={closeModal}>
+      <Row justify='center' gutter={[0, 8]}>
+        <Col span={24} padding_bottom={32}>
           <Title level={1} color='white'>
             Edit Profile
           </Title>
         </Col>
         <Col span={24}>
-          <Row gutter={[50, 50]}>
-            <FormRow>
-              <FormItem
-                size={43}
-                name='username'
-                label='Username *'
-                control={control}
-                defaultValue={user.username}
+          <Text level={3} color='white'>
+            Username *
+          </Text>
+        </Col>
+        <Col span={24} padding_bottom={32}>
+          <Controller
+            name='username'
+            control={control}
+            defaultValue={user.username}
+            render={({ field }) => <Input {...field} />}
+          />
+        </Col>
+        <Col span={11}>
+          <Text level={3} color='white'>
+            First Name
+          </Text>
+        </Col>
+        <Col offset={2} span={11}>
+          <Text level={3} color='white'>
+            Last Name
+          </Text>
+        </Col>
+        <Col span={11} padding_bottom={32}>
+          <Controller
+            name='firstName'
+            control={control}
+            defaultValue={user.firstName}
+            render={({ field }) => <Input {...field} />}
+          />
+        </Col>
+        <Col offset={2} span={11} padding_bottom={32}>
+          <Controller
+            name='lastName'
+            control={control}
+            defaultValue={user.lastName}
+            render={({ field }) => <Input {...field} />}
+          />
+        </Col>
+        <Col span={24}>
+          <Text level={3} color='white'>
+            Email
+          </Text>
+        </Col>
+        <Col span={24} padding_bottom={32}>
+          <Controller
+            name='email'
+            control={control}
+            defaultValue={user.email}
+            render={({ field }) => <Input {...field} disabled />}
+          />
+        </Col>
+        <Col span={24}>
+          <Text level={3} color='white'>
+            About me
+          </Text>
+        </Col>
+        <Col span={24} padding_bottom={32}>
+          <Controller
+            name='about'
+            control={control}
+            defaultValue={user.about}
+            render={({ field }) => (
+              <Input.TextArea
+                {...field}
+                level={3}
+                maxLength={500}
+                autoSize={{ minRows: 3, maxRows: 3 }}
               />
-            </FormRow>
-            <FormRow>
-              <FormItem
-                size={14}
-                name='firstName'
-                label='First name'
-                control={control}
-                defaultValue={user.firstName}
-              />
-              <FormItem
-                size={14}
-                name='lastName'
-                label='Last name'
-                control={control}
-                defaultValue={user.lastName}
-              />
-            </FormRow>
-            <FormRow>
-              <FormItem
-                size={49}
-                name='email'
-                label='Email'
-                control={control}
-                defaultValue={user.email}
-                disabled
-              />
-            </FormRow>
-          </Row>
+            )}
+          />
         </Col>
         <Col span={24}>
           <Footer updatedData={updatedData} closeModal={closeModal} handleSubmit={handleSubmit} />

@@ -14,11 +14,11 @@ import { ReactComponent as LockIcon } from '@svgs/lock.svg';
 
 import EditProfile from '@root/src/components/screens/Profile/EditProfile';
 
-const ActionButton = ({ isProfile, isSubscribed, isFollow, setIsFollow }) => {
+const ActionButton = ({ isProfile, isSubscribed, isFollow }) => {
   const { pathname } = useLocation();
   const { user } = useLoggedInUser();
   const [visible, setVisible] = useState(false);
-
+  console.log(isProfile, isSubscribed, isFollow, 'isProfile, isSubscribed, isFollow');
   const username = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
 
   const buttonLabel = useMemo(() => {
@@ -52,14 +52,10 @@ const ActionButton = ({ isProfile, isSubscribed, isFollow, setIsFollow }) => {
             getUser: {
               ...existingData?.getUser,
               followersCount: existingData?.getUser?.followersCount + (isFollow ? -1 : 1),
+              isFollowing: !isFollow,
             },
           },
         });
-      }
-    },
-    onCompleted: (data) => {
-      if (data?.createFollowing) {
-        setIsFollow(!isFollow);
       }
     },
   });

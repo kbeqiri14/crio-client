@@ -22,6 +22,8 @@ export const me_fragment = gql`
     }
     artworksCount
     followersCount
+    followingsCount
+    isFollowing
   }
 `;
 

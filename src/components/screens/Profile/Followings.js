@@ -1,8 +1,10 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
+import { useLazyQuery } from '@apollo/client';
 
 import history from '@app/configs/history';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
+import { getFollowings } from '@app/graphql/queries/users.query';
 import { Col, Row, Text, Title } from '@ui-kit';
 import { ReactComponent as CreatorIcon } from '@svgs/verified.svg';
 import EmptyState from '@shared/EmptyStateFan';
@@ -49,7 +51,7 @@ const FollowingCard = ({ user }) => {
             </Title>
           </Col>
           <Col span={24}>
-            <Text level={3} color='white'>
+            <Text level={3} color='white' ellipsis>
               {name}
             </Text>
           </Col>
@@ -59,10 +61,20 @@ const FollowingCard = ({ user }) => {
   );
 };
 
-const Followings = ({ user, followings }) => {
-  return followings?.length ? (
+const Followings = ({ user, isProfile }) => {
+  const [requestFollowings, { data: followings }] = useLazyQuery(getFollowings, {
+    fetchPolicy: 'cache-and-network',
+  });
+
+  useEffect(() => {
+    if (!isProfile && !user?.isCreator) {
+      requestFollowings();
+    }
+  }, [isProfile, user?.isCreator, requestFollowings]);
+
+  return followings?.getFollowings?.length ? (
     <Row gutter={[20, 20]}>
-      {followings?.map((following) => (
+      {followings?.getFollowings?.map((following) => (
         <Col>
           <FollowingCard key={following.id} user={following} />
         </Col>
