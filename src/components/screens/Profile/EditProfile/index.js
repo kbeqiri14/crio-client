@@ -68,7 +68,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
           />
         </Col>
         <Col span={24}>
-          <Text level={3} color='white'>
+          <Text level={3} color='white' disabled>
             Email
           </Text>
         </Col>

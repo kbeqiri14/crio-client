@@ -2,6 +2,9 @@ import { Typography } from 'antd';
 import styled, { css } from 'styled-components';
 
 const Text = styled(Typography.Text)`
+  &.ant-typography-disabled {
+    color: ${(props) => props.theme.colors.dark50};
+  }
   ${(props) =>
     props?.level &&
     css`

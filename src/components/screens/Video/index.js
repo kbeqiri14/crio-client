@@ -8,7 +8,7 @@ import VideoDetails from './Details';
 const Video = () => {
   const { state } = useLocation();
 
-  const onCancel = useCallback(() => history.push('/account'), []);
+  const onCancel = useCallback(() => history.push(`/profile${state.username}`), [state.username]);
   const onCompleted = () => {
     onCancel();
     successToast('The video info is successfully updated.');
@@ -16,7 +16,7 @@ const Video = () => {
 
   useEffect(() => {
     if (!state) {
-      history.push('/account');
+      history.push(`/profile${state.username}`);
     }
   }, [state]);
 
