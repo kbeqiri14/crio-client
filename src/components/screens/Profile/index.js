@@ -45,6 +45,9 @@ export const CreatorProfile = () => {
             user={user}
             isProfile={username !== loggedInUser.username}
             isSubscribed={loggedInUser.isSubscribed}
+            isLock={
+              !(username === loggedInUser.username || loggedInUser.isCreator || user?.isFollowing)
+            }
           />
         </Content>
       </Layout>
