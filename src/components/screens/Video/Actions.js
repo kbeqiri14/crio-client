@@ -19,7 +19,7 @@ const Actions = memo((props) => {
     onCompleted: () => {
       hideConfirmation();
       successToast('The video is successfully deleted.');
-      window.location.href = `/profile${props.username}`;
+      window.location.href = `/profile/${props.username}`;
     },
   });
 

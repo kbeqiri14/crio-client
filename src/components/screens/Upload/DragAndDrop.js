@@ -2,7 +2,6 @@ import { memo, useCallback, useMemo } from 'react';
 import { Col, Row, Upload } from 'antd';
 import { useLazyQuery, useMutation } from '@apollo/client';
 
-import history from '@app/configs/history';
 import { getUploadUrl } from '@app/graphql/queries/artworks.query';
 import { deleteArtwork } from '@app/graphql/mutations/artwork.mutation';
 import ActionButtons from '@shared/ActionButtons';

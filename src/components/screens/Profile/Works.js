@@ -9,7 +9,7 @@ import { Spinner } from '@ui-kit/Spinner';
 import { ReactComponent as Icon } from '@svgs/artworks-empty.svg';
 import EmptyState from '@shared/EmptyState';
 
-const Works = ({ name, isLock }) => {
+const Works = ({ isProfile, isLock }) => {
   const { pathname } = useLocation();
   const [initialPolling, setInitialPolling] = useState(true);
   const [works, setWorks] = useState([]);
@@ -42,7 +42,7 @@ const Works = ({ name, isLock }) => {
           >
             {works.map((poster, index) => (
               <Col key={index} xl={6} lg={8} md={12} sm={24} xs={24} className='video-grid__item'>
-                <PosterCard {...poster} isLock={isLock} showActions={false} />
+                <PosterCard {...poster} isLock={isLock} showActions={!isProfile} />
               </Col>
             ))}
           </Row>

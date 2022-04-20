@@ -23,7 +23,7 @@ const Details = ({ user, isProfile, isSubscribed }) => {
     <Tabs>
       <TabPane key={tabs.WORKS} tab={tab}>
         {user?.isCreator ? (
-          <Works name={user.username} isLock={!user.isCreator} />
+          <Works isProfile={isProfile} isLock={!(!isProfile || user?.isFollowing)} />
         ) : (
           <Followings user={user} isProfile={isProfile} isSubscribed={isSubscribed} />
         )}
