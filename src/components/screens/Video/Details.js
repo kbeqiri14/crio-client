@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { updateMetadata } from '@app/graphql/mutations/artwork.mutation';
 import ActionButtons from '@shared/ActionButtons';
 import { Input, Radio, Text } from '@ui-kit';
+import { errorToast } from '@ui-kit/Notification';
 
 const StyledVideoDetails = styled('div')`
   padding: 40px 10px;
@@ -68,6 +69,7 @@ const VideoInfo = ({ artworkId, file, state, onCancel, onCompleted }) => {
       params: { artworkId: artworkId || state?.artworkId, title, description: desc, accessibility },
     },
     onCompleted,
+    onError: (data) => errorToast(data?.message),
   });
 
   return (
