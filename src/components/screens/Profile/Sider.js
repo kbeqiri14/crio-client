@@ -39,7 +39,7 @@ export const ProfileSider = ({ user, isProfile, isSubscribed, hideButton }) => {
       {user?.username && (
         <>
           <Col>
-            <ProfileInfo user={user} />
+            <ProfileInfo user={user} isProfile={isProfile} />
           </Col>
           {!hideButton && (
             <Col>
