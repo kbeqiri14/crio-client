@@ -34,6 +34,9 @@ export const CreatorProfile = () => {
           user={user}
           isProfile={username !== loggedInUser.username}
           isSubscribed={loggedInUser.isSubscribed}
+          hideButton={
+            !loggedInUser.username || (username !== loggedInUser.username && loggedInUser.isCreator)
+          }
         />
       </Sider>
       <Layout>
