@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Col, Row, Upload } from 'antd';
 import { useLazyQuery, useMutation } from '@apollo/client';
 
-import history from '@app/configs/history';
 import { getUploadImageLink } from '@app/graphql/queries/artworks.query';
 import { updateMetadata } from '@app/graphql/mutations/artwork.mutation';
 import ActionButtons from '@shared/ActionButtons';
@@ -37,7 +36,7 @@ const CoverImage = ({ visible, artworkId, goToProfile }) => {
   };
 
   const [updateArtwork] = useMutation(updateMetadata, {
-    onCompleted: () => history.push('/profile'),
+    onCompleted: goToProfile,
   });
   const [requestUploadUrl] = useLazyQuery(getUploadImageLink, {
     fetchPolicy: 'no-cache',
