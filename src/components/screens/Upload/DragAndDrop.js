@@ -28,7 +28,7 @@ const validateVideo = (file) =>
     };
   });
 
-const DragAndDrop = ({ videoUri, file, types, dispatch }) => {
+const DragAndDrop = ({ videoUri, file, types, dispatch, goToProfile }) => {
   const [requestUploadUrl, { data, loading }] = useLazyQuery(getUploadUrl, {
     fetchPolicy: 'no-cache',
     onCompleted: ({ getUploadUrl }) =>
@@ -48,8 +48,8 @@ const DragAndDrop = ({ videoUri, file, types, dispatch }) => {
     [data?.getUploadUrl?.uri, file?.name, loading],
   );
   const onCancel = useCallback(
-    () => (videoUri ? dispatch({ type: types.CONFIRMATION_VISIBLE }) : history.push('/account')),
-    [videoUri, dispatch, types.CONFIRMATION_VISIBLE],
+    () => (videoUri ? dispatch({ type: types.CONFIRMATION_VISIBLE }) : goToProfile()),
+    [videoUri, goToProfile, dispatch, types.CONFIRMATION_VISIBLE],
   );
   const onContinue = useCallback(
     () => dispatch({ type: types.UPLOADING }),

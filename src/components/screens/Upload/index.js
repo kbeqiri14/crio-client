@@ -2,6 +2,7 @@ import { Fragment, memo, useCallback, useReducer } from 'react';
 import { useMutation } from '@apollo/client';
 
 import history from '@app/configs/history';
+import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import Confirmation from '@shared/Confirmation';
 import { deleteArtwork } from '@app/graphql/mutations/artwork.mutation';
 import DragAndDrop from './DragAndDrop';
@@ -42,6 +43,7 @@ const setState = (payload) => ({
 const reducer = (state, { type, ...payload }) => ({ ...state, ...setState(payload)[type] });
 
 const Upload = () => {
+  const { user } = useLoggedInUser();
   const [state, dispatch] = useReducer(reducer, {
     percent: 0,
     remainingTime: 0,
@@ -55,9 +57,14 @@ const Upload = () => {
     () => dispatch({ type: types.CONFIRMATION_HIDE }),
     [dispatch],
   );
+  const goToProfile = useCallback(
+    () => history.push(`/profile/${user?.username}`),
+    [user?.username],
+  );
+
   const [removeArtwork, { loading: removingArtwork }] = useMutation(deleteArtwork, {
     variables: { params: { artworkId: state.artworkId, videoUri: state.videoUri } },
-    onCompleted: () => history.push('/account'),
+    onCompleted: goToProfile,
   });
 
   const onCancel = useCallback(() => dispatch({ type: types.CONFIRMATION_VISIBLE }), [dispatch]);
@@ -71,6 +78,7 @@ const Upload = () => {
           file={state.file}
           types={types}
           dispatch={dispatch}
+          goToProfile={goToProfile}
         />
       )}
       {state.uploadingVisible && <Uploading state={state} types={types} dispatch={dispatch} />}
@@ -83,7 +91,11 @@ const Upload = () => {
         />
       )}
       {state.coverImageVisible && (
-        <CoverImage visible={state.coverImageVisible} artworkId={state.artworkId} />
+        <CoverImage
+          visible={state.coverImageVisible}
+          artworkId={state.artworkId}
+          goToProfile={goToProfile}
+        />
       )}
       {state.confirmationVisible && (
         <Confirmation

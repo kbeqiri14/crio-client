@@ -9,7 +9,7 @@ import { Spinner } from '@ui-kit/Spinner';
 import { ReactComponent as Icon } from '@svgs/artworks-empty.svg';
 import EmptyState from '@shared/EmptyState';
 
-const Works = ({ isProfile, name, isLock }) => {
+const Works = ({ name, isLock }) => {
   const { pathname } = useLocation();
   const [initialPolling, setInitialPolling] = useState(true);
   const [works, setWorks] = useState([]);
@@ -30,8 +30,7 @@ const Works = ({ isProfile, name, isLock }) => {
       {(!loading || !initialPolling) && !works?.length ? (
         <EmptyState
           Icon={Icon}
-          showButton={!isProfile}
-          text={isProfile ? `${name} hasn’t added an artwork yet` : 'Upload your first artwork'}
+          // text={isProfile ? `${name} hasn’t added an artwork yet` : 'Upload your first artwork'}
         />
       ) : (
         <div className='cr-feed__posters-list cr-landing__video-grid profile-artworks-list'>
@@ -43,7 +42,7 @@ const Works = ({ isProfile, name, isLock }) => {
           >
             {works.map((poster, index) => (
               <Col key={index} xl={6} lg={8} md={12} sm={24} xs={24} className='video-grid__item'>
-                <PosterCard {...poster} isLock={isLock} showActions={!isProfile} />
+                <PosterCard {...poster} isLock={isLock} showActions={false} />
               </Col>
             ))}
           </Row>

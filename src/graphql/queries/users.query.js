@@ -11,13 +11,7 @@ export const me_fragment = gql`
     firstName
     lastName
     avatar
-    visibility
     isCreator
-    vouchers {
-      tier1
-      tier2
-      tier3
-    }
     payment {
       customerEmail
       periodStart
@@ -28,6 +22,8 @@ export const me_fragment = gql`
     }
     artworksCount
     followersCount
+    followingsCount
+    isFollowing
   }
 `;
 
@@ -61,7 +57,6 @@ export const following_info_fragment = gql`
     firstName
     lastName
     avatar
-    visibility
     artworks {
       artworkId
       videoUri

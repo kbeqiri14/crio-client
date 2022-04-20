@@ -1,55 +1,52 @@
-import { Fragment, memo, useMemo, useState } from 'react';
+import { memo, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
-import { isFollowing, getUser } from '@app/graphql/queries/users.query';
-import PersonalInfo from '@screens/Account/__partials__/PersonalInfo';
-import Details from '@screens/Account/Details';
-import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
+import { getUser } from '@app/graphql/queries/users.query';
+import { Layout } from '@ui-kit';
+import ProfileSider from '@root/src/components/screens/Profile/Sider';
+import ProfileContent from '@root/src/components/screens/Profile/Content';
 
-export const Profile = () => {
+const { Sider, Content } = Layout;
+
+export const CreatorProfile = () => {
   const { pathname } = useLocation();
-  const { user } = useLoggedInUser();
-  const [isFollow, setIsFollow] = useState(false);
+  const { user: loggedInUser } = useLoggedInUser();
   const username = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
 
-  const { data: userData, loading: loadingUser } = useQuery(getUser, { variables: { username } });
-  const { loading: loadingIsFollowing } = useQuery(isFollowing, {
-    variables: { followingUsername: username },
-    fetchPolicy: 'no-cache',
-    onCompleted: (data) => {
-      if (data?.isFollowing) {
-        setIsFollow(true);
-      }
-    },
-  });
+  const [requestUser, { data: userData }] = useLazyQuery(getUser, { variables: { username } });
+  const user = useMemo(
+    () => (username === loggedInUser.username ? loggedInUser : userData?.getUser),
+    [loggedInUser, userData?.getUser, username],
+  );
+
+  useEffect(() => {
+    if (username !== loggedInUser.username) {
+      requestUser();
+    }
+  }, [username, loggedInUser.username, requestUser]);
 
   return (
-    <Fragment>
-      {loadingUser && loadingIsFollowing && <GlobalSpinner />}
-      <PersonalInfo
-        isProfile
-        loadingUser={loadingUser}
-        user={userData?.getUser}
-        followersCount={userData?.getUser?.followersCount}
-        isFollow={isFollow}
-        setIsFollow={setIsFollow}
-        isSubscribed={user?.isSubscribed}
-        isCreator={user?.isCreator}
-        isAuthenticated={user?.id}
-      />
-      <Details
-        isProfile
-        name={userData?.getUser?.username}
-        artworksCount={userData?.getUser?.artworksCount}
-        isAuthenticated={user?.id}
-        isCreator={user?.isCreator}
-        isFollow={isFollow}
-        loadingIsFollowing={loadingIsFollowing}
-      />
-    </Fragment>
+    <Layout>
+      <Sider>
+        <ProfileSider
+          user={user}
+          isProfile={username !== loggedInUser.username}
+          isSubscribed={loggedInUser.isSubscribed}
+        />
+      </Sider>
+      <Layout>
+        <Content>
+          <ProfileContent
+            user={user}
+            isProfile={username !== loggedInUser.username}
+            isSubscribed={loggedInUser.isSubscribed}
+          />
+        </Content>
+      </Layout>
+    </Layout>
   );
 };
 
-export default memo(Profile);
+export default memo(CreatorProfile);

@@ -19,9 +19,7 @@ import LandingPage from '@screens/LandingPage';
 import { PricingPlans } from '@screens/PricingPlans';
 import { Feed } from '@screens/Feed';
 import CognitoCallback from '@screens/CognitoCallback';
-import Account from '@screens/Account';
 import Profile from '@screens/Profile';
-import Perks from '@screens/Profile';
 import Artwork from '@screens/Artwork';
 import Upload from '@screens/Upload';
 import Video from '@screens/Video';
@@ -82,8 +80,8 @@ export const AppRoutes = () => {
     if (
       crioUser &&
       crioUser.isFan &&
-      (!crioUser.isSubscribed ||
-        !crioUser.subscribePeriodIsValid ||
+      (!crioUser?.isSubscribed ||
+        !crioUser?.subscribePeriodIsValid ||
         crioUser?.payment?.subscriptionCancel)
     ) {
       if (timeout) {
@@ -124,11 +122,9 @@ export const AppRoutes = () => {
           </Route>
           <Route exact path='/pricing/:id?' component={PricingPlans} />
           <Route exact path='/profile/:username' component={Profile} />
-          <Route exact path='/profile/perks/:username' component={Perks} />
           <Route exact path='/artwork/:artworkId' component={Artwork} />
           {!loading && !user && <Redirect to='/' />}
           {/* PRIVATE ROUTES */}
-          <PrivateRoute isAuthenticated={isAuthenticated} path='/account' component={Account} />
           <PrivateRoute isAuthenticated={isAuthenticated} path='/upload' component={Upload} />
           <PrivateRoute isAuthenticated={isAuthenticated} path='/video' component={Video} />
           <Route exact path='/cognito/callback' component={CognitoCallback} />

@@ -76,6 +76,7 @@ export const PosterCard = memo(
         >
           {showActions && (
             <Actions
+              username={name}
               artworkId={artworkId}
               videoUri={videoUri}
               title={title}

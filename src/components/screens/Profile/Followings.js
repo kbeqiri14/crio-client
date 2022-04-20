@@ -1,68 +1,88 @@
-import { memo } from 'react';
-import { Col, Row } from 'antd';
+import { memo, useCallback, useEffect, useMemo } from 'react';
+import styled from 'styled-components';
+import { useLazyQuery } from '@apollo/client';
 
-import { PosterCard } from '@shared/PostersList';
-import ProfileInfo from '@shared/ProfileInfo';
-import { Slider } from '@ui-kit/Slider';
-import { Spinner } from '@ui-kit/Spinner';
-import { ReactComponent as Icon } from '@svgs/followings-empty.svg';
-import EmptyState from '@shared/EmptyState';
+import history from '@app/configs/history';
+import useAvatarUrl from '@app/hooks/useAvatarUrl';
+import { getFollowings } from '@app/graphql/queries/users.query';
+import { Col, Row, Text, Title } from '@ui-kit';
+import { ReactComponent as CreatorIcon } from '@svgs/verified.svg';
+import EmptyState from '@shared/EmptyStateFan';
 
-const SliderBreakPoints = {
-  864: {
-    slidesPerView: 4,
-    slidesPerGroup: 4,
-  },
-  656: {
-    slidesPerView: 3,
-    slidesPerGroup: 3,
-  },
-  620: {
-    slidesPerView: 2,
-    slidesPerGroup: 2,
-  },
-  240: {
-    slidesPerView: 1,
-    slidesPerGroup: 1,
-  },
+const StyledCard = styled('div')`
+  width: 372px;
+  margin-top: 40px;
+  padding: 20px;
+  background: ${(props) => props.theme.colors.dark100};
+  border: 1px solid ${(props) => props.theme.colors.white};
+  border-radius: 30px;
+  img {
+    border-radius: 100%;
+    width: 45px;
+    height: 45px;
+  }
+  svg {
+    position: absolute;
+    bottom: 0;
+    left: 45px;
+    width: 12px;
+    height: 12px;
+  }
+`;
+const FollowingCard = ({ user }) => {
+  const { providerType, providerUserId, firstName, lastName, username, avatar } = user || {};
+  const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
+  const name = useMemo(() => `${firstName || ''} ${lastName || ''}`, [firstName, lastName]);
+  const goToProfile = useCallback(() => history.push(`/profile/${username}`), [username]);
+
+  return (
+    <StyledCard>
+      <Row align='middle' gutter={20} onClick={goToProfile}>
+        <Col>
+          <img alt='profile' src={avatarUrl} />
+          <CreatorIcon />
+        </Col>
+        <Col>
+          <Row gutter={[0, 8]}>
+            <Col span={24}>
+              <Title level={2} color='white' ellipsis>
+                @{username}
+              </Title>
+            </Col>
+            <Col span={24}>
+              <Text level={3} color='white' ellipsis>
+                {name}
+              </Text>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+    </StyledCard>
+  );
 };
 
-const FollowingRow = ({ user, artworks }) => (
-  <Row justify='center' gutter={[0, 20]}>
-    <Col className='following-info'>
-      <ProfileInfo user={user} isFollowing />
-    </Col>
-    <Col className='following-works'>
-      <div className='cr-artworks-section'>
-        <div className='cr-feed__poster-scroll'>
-          <Slider withScroll breakpoints={SliderBreakPoints} breakpointsBase='container'>
-            {artworks?.map((poster, idx) => (
-              <PosterCard
-                key={idx}
-                name={user.name}
-                providerType={user.providerType}
-                providerUserId={user.providerUserId}
-                avatar={user.avatar}
-                {...poster}
-              />
-            ))}
-          </Slider>
-        </div>
-      </div>
-    </Col>
-  </Row>
-);
+const Followings = ({ user, isProfile, isSubscribed }) => {
+  const [requestFollowings, { data: followings }] = useLazyQuery(getFollowings, {
+    fetchPolicy: 'cache-and-network',
+  });
 
-const Followings = ({ loadingFollowings, followings }) => (
-  <Spinner spinning={loadingFollowings} color='white'>
-    {!loadingFollowings && !followings?.length ? (
-      <EmptyState Icon={Icon} />
-    ) : (
-      followings?.map(({ artworks, ...user }, idx) => (
-        <FollowingRow key={user.id + idx} user={user} artworks={artworks} />
-      ))
-    )}
-  </Spinner>
-);
+  useEffect(() => {
+    if (!isProfile && !user?.isCreator) {
+      requestFollowings();
+    }
+  }, [isProfile, user?.isCreator, requestFollowings]);
+
+  return followings?.getFollowings?.length ? (
+    <Row gutter={[20, 20]}>
+      {followings?.getFollowings?.map((following) => (
+        <Col key={following.id}>
+          <FollowingCard user={following} />
+        </Col>
+      ))}
+    </Row>
+  ) : user ? (
+    <EmptyState isSubscribed={isSubscribed} />
+  ) : null;
+};
 
 export default memo(Followings);
