@@ -100,7 +100,7 @@ export const PricingPlans = () => {
                   description='Please, use the email address attached to your profile'
                 >
                   <div className='cr-pricing__card--action'>
-                    <Button block type='primary' fillColor='green' onClick={handleClick}>
+                    <Button block type='primary' fill_color='green' onClick={handleClick}>
                       GET STARTED
                     </Button>
                   </div>

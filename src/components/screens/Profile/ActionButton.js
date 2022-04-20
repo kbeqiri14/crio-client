@@ -2,7 +2,7 @@ import { Fragment, memo, useCallback, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
-import { getUser } from '@app/graphql/queries/users.query';
+import { getUser, me } from '@app/graphql/queries/users.query';
 import { createFollowing } from '@app/graphql/mutations/user.mutation';
 
 import history from '@app/configs/history';
@@ -43,15 +43,25 @@ const ActionButton = ({ isProfile, isSubscribed, isFollow }) => {
     variables: { followingUsername: username },
     update: (cache, mutationResult) => {
       if (mutationResult.data.createFollowing) {
-        const existingData = cache.readQuery({ query: getUser, variables: { username } });
+        const existingUser = cache.readQuery({ query: getUser, variables: { username } });
+        const existingLoggedInUser = cache.readQuery({ query: me });
         cache.writeQuery({
           query: getUser,
           variables: { username },
           data: {
             getUser: {
-              ...existingData?.getUser,
-              followersCount: existingData?.getUser?.followersCount + (isFollow ? -1 : 1),
+              ...existingUser?.getUser,
+              followersCount: existingUser?.getUser?.followersCount + (isFollow ? -1 : 1),
               isFollowing: !isFollow,
+            },
+          },
+        });
+        cache.writeQuery({
+          query: me,
+          data: {
+            me: {
+              ...existingLoggedInUser?.me,
+              followingsCount: existingLoggedInUser?.me?.followingsCount + (isFollow ? -1 : 1),
             },
           },
         });

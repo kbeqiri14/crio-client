@@ -61,7 +61,7 @@ const FollowingCard = ({ user }) => {
   );
 };
 
-const Followings = ({ user, isProfile }) => {
+const Followings = ({ user, isProfile, isSubscribed }) => {
   const [requestFollowings, { data: followings }] = useLazyQuery(getFollowings, {
     fetchPolicy: 'cache-and-network',
   });
@@ -75,13 +75,13 @@ const Followings = ({ user, isProfile }) => {
   return followings?.getFollowings?.length ? (
     <Row gutter={[20, 20]}>
       {followings?.getFollowings?.map((following) => (
-        <Col>
-          <FollowingCard key={following.id} user={following} />
+        <Col key={following.id}>
+          <FollowingCard user={following} />
         </Col>
       ))}
     </Row>
   ) : user ? (
-    <EmptyState isSubscribed={user.isSubscribed} />
+    <EmptyState isSubscribed={isSubscribed} />
   ) : null;
 };
 

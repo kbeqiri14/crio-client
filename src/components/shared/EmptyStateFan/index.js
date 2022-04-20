@@ -27,7 +27,7 @@ const EmptyState = ({ isSubscribed }) => {
       </Col>
       {!isSubscribed && (
         <Col>
-          <Button type='primary' fillColor='green' onClick={goToPricing}>
+          <Button type='primary' fill_color='green' onClick={goToPricing}>
             SUBSCRIBE
           </Button>
         </Col>

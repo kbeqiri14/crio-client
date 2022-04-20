@@ -6,7 +6,7 @@ import ProfileInfo from './ProfileInfo';
 import ActionButton from '@root/src/components/screens/Profile/ActionButton';
 import CreatorInfo from './CreatorInfo';
 
-export const ProfileSider = ({ user, isProfile }) => {
+export const ProfileSider = ({ user, isProfile, isSubscribed }) => {
   return (
     <Row
       justify='center'
@@ -44,7 +44,7 @@ export const ProfileSider = ({ user, isProfile }) => {
           <Col>
             <ActionButton
               isProfile={isProfile}
-              isSubscribed={user.isSubscribed}
+              isSubscribed={isSubscribed}
               isFollow={user.isFollowing}
             />
           </Col>

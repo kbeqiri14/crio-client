@@ -31,15 +31,17 @@ export const CreatorProfile = () => {
     <Layout>
       <Sider>
         <ProfileSider
-          user={{ ...user, isSubscribed: user?.payment?.subscriptionStatus === 'active' }}
+          user={user}
           isProfile={username !== loggedInUser.username}
+          isSubscribed={loggedInUser.isSubscribed}
         />
       </Sider>
       <Layout>
         <Content>
           <ProfileContent
-            user={{ ...user, isSubscribed: user?.payment?.subscriptionStatus === 'active' }}
+            user={user}
             isProfile={username !== loggedInUser.username}
+            isSubscribed={loggedInUser.isSubscribed}
           />
         </Content>
       </Layout>

@@ -10,7 +10,7 @@ const tabs = {
   WORKS: '1',
 };
 
-const Details = ({ user, isProfile }) => {
+const Details = ({ user, isProfile, isSubscribed }) => {
   const tab = useMemo(
     () =>
       user?.isCreator
@@ -25,7 +25,7 @@ const Details = ({ user, isProfile }) => {
         {user?.isCreator ? (
           <Works name={user.username} isLock={!user.isCreator} />
         ) : (
-          <Followings user={user} isProfile={isProfile} />
+          <Followings user={user} isProfile={isProfile} isSubscribed={isSubscribed} />
         )}
       </TabPane>
     </Tabs>
