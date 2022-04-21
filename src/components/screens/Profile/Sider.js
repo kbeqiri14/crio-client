@@ -6,11 +6,11 @@ import ProfileInfo from './ProfileInfo';
 import ActionButton from '@root/src/components/screens/Profile/ActionButton';
 import CreatorInfo from './CreatorInfo';
 
-export const ProfileSider = ({ user, isProfile, isSubscribed, hideButton }) => {
+export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton }) => {
   return (
     <Row
       justify='center'
-      padding_top={80}
+      padding_top={40}
       padding_horizontal={28}
       padding_bottom={20}
       gutter={[0, 40]}
@@ -24,19 +24,19 @@ export const ProfileSider = ({ user, isProfile, isSubscribed, hideButton }) => {
               avatar={{ size: 122 }}
               title={false}
               paragraph={false}
-              loading={!user?.username}
+              loading={!user.username}
             />
             <Skeleton
               round
               active
               title={{ width: '100%' }}
               paragraph={{ rows: 5, width: '100%' }}
-              loading={!user?.username}
+              loading={!user.username}
             />
           </Col>
         </Row>
       </Col>
-      {user?.username && (
+      {user.username && (
         <>
           <Col>
             <ProfileInfo user={user} isProfile={isProfile} />
@@ -50,9 +50,12 @@ export const ProfileSider = ({ user, isProfile, isSubscribed, hideButton }) => {
               />
             </Col>
           )}
-          {user?.isCreator && (
+          {user.isCreator && (
             <Col>
-              <CreatorInfo user={user} />
+              <CreatorInfo
+                followersCount={user.followersCount}
+                artworksCount={user.artworksCount}
+              />
             </Col>
           )}
         </>

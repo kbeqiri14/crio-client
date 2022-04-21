@@ -10,15 +10,28 @@ import ProfileContent from '@root/src/components/screens/Profile/Content';
 
 const { Sider, Content } = Layout;
 
-export const CreatorProfile = () => {
+export const Profile = () => {
   const { pathname } = useLocation();
   const { user: loggedInUser } = useLoggedInUser();
   const username = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
 
   const [requestUser, { data: userData }] = useLazyQuery(getUser, { variables: { username } });
+
   const user = useMemo(
     () => (username === loggedInUser.username ? loggedInUser : userData?.getUser),
     [loggedInUser, userData?.getUser, username],
+  );
+  const isProfile = useMemo(
+    () => username !== loggedInUser.username,
+    [loggedInUser.username, username],
+  );
+  const hideButton = useMemo(
+    () => !loggedInUser.username || (isProfile && loggedInUser.isCreator),
+    [isProfile, loggedInUser.isCreator, loggedInUser.username],
+  );
+  const isLock = useMemo(
+    () => !(!isProfile || loggedInUser.isCreator || user?.isFollowing),
+    [isProfile, loggedInUser.isCreator, user?.isFollowing],
   );
 
   useEffect(() => {
@@ -32,22 +45,21 @@ export const CreatorProfile = () => {
       <Sider>
         <ProfileSider
           user={user}
-          isProfile={username !== loggedInUser.username}
+          isProfile={isProfile}
           isSubscribed={loggedInUser.isSubscribed}
-          hideButton={
-            !loggedInUser.username || (username !== loggedInUser.username && loggedInUser.isCreator)
-          }
+          hideButton={hideButton}
         />
       </Sider>
       <Layout>
         <Content>
           <ProfileContent
-            user={user}
-            isProfile={username !== loggedInUser.username}
+            username={user?.username}
+            artworksCount={user?.artworksCount}
+            followingsCount={user?.followingsCount}
+            isCreator={user?.isCreator}
+            isProfile={isProfile}
             isSubscribed={loggedInUser.isSubscribed}
-            isLock={
-              !(username === loggedInUser.username || loggedInUser.isCreator || user?.isFollowing)
-            }
+            isLock={isLock}
           />
         </Content>
       </Layout>
@@ -55,4 +67,4 @@ export const CreatorProfile = () => {
   );
 };
 
-export default memo(CreatorProfile);
+export default memo(Profile);

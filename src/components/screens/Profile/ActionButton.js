@@ -45,13 +45,15 @@ const ActionButton = ({ isProfile, isSubscribed, isFollow }) => {
       if (mutationResult.data.createFollowing) {
         const existingUser = cache.readQuery({ query: getUser, variables: { username } });
         const existingLoggedInUser = cache.readQuery({ query: me });
+        const count = isFollow ? -1 : 1;
         cache.writeQuery({
           query: getUser,
           variables: { username },
           data: {
             getUser: {
               ...existingUser?.getUser,
-              followersCount: existingUser?.getUser?.followersCount + (isFollow ? -1 : 1),
+              followersCount: existingUser?.getUser?.followersCount + count,
+              followingsCount: existingUser?.getUser?.followingsCount + count,
               isFollowing: !isFollow,
             },
           },
@@ -61,7 +63,8 @@ const ActionButton = ({ isProfile, isSubscribed, isFollow }) => {
           data: {
             me: {
               ...existingLoggedInUser?.me,
-              followingsCount: existingLoggedInUser?.me?.followingsCount + (isFollow ? -1 : 1),
+              followersCount: existingLoggedInUser?.me?.followersCount + count,
+              followingsCount: existingLoggedInUser?.me?.followingsCount + count,
             },
           },
         });

@@ -10,26 +10,35 @@ const tabs = {
   WORKS: '1',
 };
 
-const Details = ({ user, isProfile, isSubscribed, isLock }) => {
+const ProfileContent = ({
+  username,
+  artworksCount,
+  followingsCount,
+  isCreator,
+  isProfile,
+  isSubscribed,
+  isLock,
+}) => {
   const tab = useMemo(
-    () =>
-      user?.isCreator
-        ? `Portfolio ${user?.artworksCount || ''}`
-        : `Following ${user?.followingsCount || ''}`,
-    [user?.isCreator, user?.artworksCount, user?.followingsCount],
+    () => (isCreator ? `Artwork ${artworksCount || ''}` : `Following ${followingsCount || ''}`),
+    [isCreator, artworksCount, followingsCount],
   );
 
   return (
     <Tabs>
       <TabPane key={tabs.WORKS} tab={tab}>
-        {user?.isCreator ? (
+        {isCreator ? (
           <Works isProfile={isProfile} isLock={isLock} />
         ) : (
-          <Followings user={user} isProfile={isProfile} isSubscribed={isSubscribed} />
+          <Followings
+            showEmptyState={username && !followingsCount}
+            isProfile={isProfile}
+            isSubscribed={isSubscribed}
+          />
         )}
       </TabPane>
     </Tabs>
   );
 };
 
-export default memo(Details);
+export default memo(ProfileContent);

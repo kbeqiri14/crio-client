@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Col, Divider, Row, Text } from '@ui-kit';
 
-export const CreatorProfile = ({ user = {} }) => {
+export const CreatorProfile = ({ followersCount = 0, artworksCount = 0 }) => {
   return (
     <Row justify='center' gutter={[0, 40]}>
       <Col>
@@ -10,7 +10,7 @@ export const CreatorProfile = ({ user = {} }) => {
             <Text level={3} color='white'>
               Subscribers
               <br />
-              {user.followersCount || 0}
+              {followersCount}
             </Text>
           </Col>
           <Col margin_left={15} margin_right={15}>
@@ -20,7 +20,7 @@ export const CreatorProfile = ({ user = {} }) => {
             <Text level={3} color='white'>
               Artworks
               <br />
-              {user?.artworksCount || 0}
+              {artworksCount}
             </Text>
           </Col>
         </Row>

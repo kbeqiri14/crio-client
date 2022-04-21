@@ -8,6 +8,7 @@ const Sider = styled(Layout.Sider)`
   flex: 0 0 355px !important;
   width: 355px !important;
   max-width: 355px !important;
+  min-height: 100vh;
 `;
 
 const Content = styled(Layout.Content)`
