@@ -24,6 +24,7 @@ export const updateUser = gql`
       username
       firstName
       lastName
+      about
     }
   }
 `;

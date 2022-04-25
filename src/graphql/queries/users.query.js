@@ -11,6 +11,7 @@ export const me_fragment = gql`
     firstName
     lastName
     avatar
+    about
     isCreator
     payment {
       customerEmail

@@ -1,4 +1,5 @@
 import { memo, useMemo } from 'react';
+import { Badge } from 'antd';
 import { ReactComponent as CreatorIcon } from '@svgs/verified.svg';
 import { ReactComponent as MailIcon } from '@svgs/mail.svg';
 
@@ -13,10 +14,25 @@ const ProfileInfo = ({ user, isProfile }) => {
   return (
     <Row justify='center' direction='column'>
       <Col align='center' margin_bottom={20}>
-        <div className='avatar'>
-          <img alt='profile' width={122} height={122} src={avatarUrl} />
-          {user.isCreator && <CreatorIcon />}
-        </div>
+        {user.isCreator ? (
+          <Badge count={<CreatorIcon />} offset={[-12, 105]}>
+            <img
+              alt='profile'
+              width={122}
+              height={122}
+              src={avatarUrl}
+              className='border-radius-100'
+            />
+          </Badge>
+        ) : (
+          <img
+            alt='profile'
+            width={122}
+            height={122}
+            src={avatarUrl}
+            className='border-radius-100'
+          />
+        )}
       </Col>
       <Col align='center' margin_bottom={8}>
         <Title level={2} color='white'>
@@ -33,7 +49,6 @@ const ProfileInfo = ({ user, isProfile }) => {
           <MailIcon /> {isProfile ? <a href={`mailto:${email}`}>{email}</a> : email}
         </Text>
       </Col>
-      <Col margin_bottom={40}></Col>
     </Row>
   );
 };

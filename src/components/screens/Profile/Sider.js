@@ -1,10 +1,9 @@
 import { memo } from 'react';
 import { Skeleton } from 'antd';
 
-import { Col, Row } from '@ui-kit';
+import { Col, Divider, Row, Text } from '@ui-kit';
 import ProfileInfo from './ProfileInfo';
 import ActionButton from '@root/src/components/screens/Profile/ActionButton';
-import CreatorInfo from './CreatorInfo';
 
 export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton }) => {
   return (
@@ -52,10 +51,41 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
           )}
           {user.isCreator && (
             <Col>
-              <CreatorInfo
-                followersCount={user.followersCount}
-                artworksCount={user.artworksCount}
-              />
+              <Row>
+                <Col align='center'>
+                  <Text level={3} color='white'>
+                    Subscribers
+                    <br />
+                    {user.followersCount}
+                  </Text>
+                </Col>
+                <Col margin_left={15} margin_right={15}>
+                  <Divider type='vertical' />
+                </Col>
+                <Col align='center'>
+                  <Text level={3} color='white'>
+                    Artworks
+                    <br />
+                    {user.artworksCount}
+                  </Text>
+                </Col>
+              </Row>
+            </Col>
+          )}
+          {user.about && (
+            <Col span={24}>
+              <Row justify='center' direction='column'>
+                <Col align='center' margin_bottom={12}>
+                  <Text level={2} color='dark25'>
+                    About me
+                  </Text>
+                </Col>
+                <Col align='center'>
+                  <Text level={3} color='white'>
+                    {user.about}
+                  </Text>
+                </Col>
+              </Row>
             </Col>
           )}
         </>

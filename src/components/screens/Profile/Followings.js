@@ -1,4 +1,5 @@
 import { memo, useCallback, useEffect, useMemo } from 'react';
+import { Badge } from 'antd';
 import styled from 'styled-components';
 import { useLazyQuery } from '@apollo/client';
 
@@ -16,18 +17,6 @@ const StyledCard = styled('div')`
   background: ${(props) => props.theme.colors.dark100};
   border: 1px solid ${(props) => props.theme.colors.white};
   border-radius: 30px;
-  img {
-    border-radius: 100%;
-    width: 45px;
-    height: 45px;
-  }
-  svg {
-    position: absolute;
-    bottom: 0;
-    left: 45px;
-    width: 12px;
-    height: 12px;
-  }
 `;
 const FollowingCard = ({ user }) => {
   const { providerType, providerUserId, firstName, lastName, username, avatar } = user || {};
@@ -39,8 +28,15 @@ const FollowingCard = ({ user }) => {
     <StyledCard>
       <Row align='middle' gutter={20} onClick={goToProfile}>
         <Col>
-          <img alt='profile' src={avatarUrl} />
-          <CreatorIcon />
+          <Badge count={<CreatorIcon width={12} height={12} />} offset={[-5, 39]}>
+            <img
+              alt='profile'
+              width={45}
+              height={45}
+              src={avatarUrl}
+              className='border-radius-100'
+            />
+          </Badge>
         </Col>
         <Col>
           <Row gutter={[0, 8]}>

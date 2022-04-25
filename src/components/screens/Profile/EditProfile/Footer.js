@@ -11,16 +11,18 @@ const Footer = ({ updatedData, closeModal, handleSubmit }) => {
   const { user, dispatchUser } = useLoggedInUser();
 
   const disabled = useMemo(() => {
-    const { firstName, lastName, username } = updatedData;
+    const { firstName, lastName, username, about } = updatedData;
     return !(
       username !== '' &&
       ((firstName && user?.firstName !== firstName) ||
         (firstName === '' && !!user?.firstName) ||
         (lastName && user?.lastName !== lastName) ||
         (lastName === '' && !!user?.lastName) ||
-        (username && user?.username !== username))
+        (username && user?.username !== username) ||
+        (about && user?.about !== about) ||
+        (about === '' && !!user?.about))
     );
-  }, [updatedData, user?.firstName, user?.lastName, user?.username]);
+  }, [updatedData, user?.firstName, user?.lastName, user?.username, user?.about]);
 
   const [updateUserInfo, { loading }] = useMutation(updateUser, {
     update: (cache, mutationResult) => {

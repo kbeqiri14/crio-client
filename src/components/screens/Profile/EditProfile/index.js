@@ -10,14 +10,16 @@ const EditProfile = ({ user, visible, closeModal }) => {
   const firstName = watch('firstName');
   const lastName = watch('lastName');
   const username = watch('username');
+  const about = watch('about');
 
   const updatedData = useMemo(
     () => ({
       firstName: firstName?.trim(),
       lastName: lastName?.trim(),
       username: username?.trim(),
+      about: about?.trim(),
     }),
-    [firstName, lastName, username],
+    [firstName, lastName, username, about],
   );
 
   return (
