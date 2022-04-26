@@ -5,7 +5,7 @@ import { ReactComponent as ArtworksEmptyIcon } from '@svgs/artworks-empty.svg';
 import { ReactComponent as FallowingEmptyIcon } from '@svgs/fallowing-empty.svg';
 import { Col, Button, Row, Text } from '@ui-kit';
 
-const EmptyState = ({ username, isCreator, isProfile, isSubscribed, showButton }) => {
+const EmptyState = ({ username, isCreator, isProfile, isSubscribed }) => {
   const text = useMemo(() => {
     if (isProfile) {
       return `${username} ${
