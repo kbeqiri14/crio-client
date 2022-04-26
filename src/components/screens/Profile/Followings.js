@@ -8,7 +8,7 @@ import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { getFollowings } from '@app/graphql/queries/users.query';
 import { Col, Row, Text, Title } from '@ui-kit';
 import { ReactComponent as CreatorIcon } from '@svgs/verified.svg';
-import EmptyState from '@shared/EmptyStateFan';
+import EmptyState from '@root/src/components/shared/EmptyState';
 
 const StyledCard = styled('div')`
   width: 372px;
