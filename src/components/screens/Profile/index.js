@@ -4,7 +4,8 @@ import { useLazyQuery } from '@apollo/client';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { getUser } from '@app/graphql/queries/users.query';
-import { Layout } from '@ui-kit';
+import { Col, Layout, Row, Text } from '@ui-kit';
+import { ReactComponent as NotFoundUser } from '@svgs/fallowing-empty.svg';
 import ProfileSider from '@root/src/components/screens/Profile/Sider';
 import ProfileContent from '@root/src/components/screens/Profile/Content';
 
@@ -15,7 +16,9 @@ export const Profile = () => {
   const { user: loggedInUser } = useLoggedInUser();
   const username = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
 
-  const [requestUser, { data: userData }] = useLazyQuery(getUser, { variables: { username } });
+  const [requestUser, { data: userData, loading }] = useLazyQuery(getUser, {
+    variables: { username },
+  });
 
   const user = useMemo(
     () => (username === loggedInUser.username ? loggedInUser : userData?.getUser),
@@ -40,6 +43,24 @@ export const Profile = () => {
     }
   }, [username, loggedInUser.username, requestUser]);
 
+  if (!loading && !user) {
+    return (
+      <Row justify='center' align='middle' className='full-height'>
+        <Col>
+          <Row justify='center'>
+            <Col>
+              <NotFoundUser />
+            </Col>
+            <Col span={24} align='center'>
+              <Text level={3} color='white'>
+                No result
+              </Text>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+    );
+  }
   return (
     <Layout>
       <Sider>
