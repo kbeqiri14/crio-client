@@ -21,12 +21,13 @@ const Footer = ({ disabled, updatedData, onCancel, closeModal, handleSubmit }) =
       }
     },
     onCompleted: (data) => {
+      successToast('Your profile has been updated.');
       if (user?.username !== updatedData.username) {
         window.location.href = `/profile/${updatedData.username}`;
+      } else {
+        dispatchUser({ ...user, ...data.updateUser });
+        closeModal();
       }
-      dispatchUser({ ...user, ...data.updateUser });
-      closeModal();
-      successToast('Your profile has been updated.');
     },
     onError: (data) => {
       let message = data?.message;
