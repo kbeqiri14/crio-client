@@ -69,8 +69,8 @@ export const following_info_fragment = gql`
 `;
 
 export const getFollowings = gql`
-  query {
-    getFollowings {
+  query getFollowings($username: String) {
+    getFollowings(username: $username) {
       ...FollowingInfoAttributes
     }
   }

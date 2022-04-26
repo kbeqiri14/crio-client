@@ -23,8 +23,8 @@ const ProfileContent = ({
     () =>
       isCreator
         ? `Artwork ${artworksCount || ''}`
-        : `Following ${(isSubscribed && followingsCount) || ''}`,
-    [isCreator, isSubscribed, artworksCount, followingsCount],
+        : `Following ${(isProfile ? followingsCount : isSubscribed && followingsCount) || ''}`,
+    [isCreator, isProfile, isSubscribed, artworksCount, followingsCount],
   );
 
   return (

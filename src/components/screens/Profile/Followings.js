@@ -1,7 +1,7 @@
-import { memo, useCallback, useEffect, useMemo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { Badge } from 'antd';
 import styled from 'styled-components';
-import { useLazyQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 
 import history from '@app/configs/history';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
@@ -58,17 +58,17 @@ const FollowingCard = ({ user }) => {
 };
 
 const Followings = ({ username, isProfile, isSubscribed }) => {
-  const [requestFollowings, { data: followings }] = useLazyQuery(getFollowings, {
+  const { data: followings } = useQuery(getFollowings, {
     fetchPolicy: 'cache-and-network',
+    ...(isProfile ? { variables: { username } } : {}),
   });
+  console.log(isProfile, followings?.getFollowings?.length, 'isProfile');
 
-  useEffect(() => {
-    if (!isProfile) {
-      requestFollowings();
-    }
-  }, [isProfile, requestFollowings]);
-
-  if (username && (!isSubscribed || !followings?.getFollowings?.length)) {
+  if (
+    username &&
+    ((!isProfile && (!isSubscribed || !followings?.getFollowings?.length)) ||
+      (isProfile && !followings?.getFollowings?.length))
+  ) {
     return <EmptyState username={username} isProfile={isProfile} isSubscribed={isSubscribed} />;
   }
 
