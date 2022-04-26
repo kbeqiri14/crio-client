@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Fragment, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Carousel, Col, Row } from 'antd';
+import { Carousel } from 'antd';
 import { Img } from 'react-image';
 
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
@@ -9,7 +9,7 @@ import { useFeedRandomArtworks } from '@app/hooks/useFeedRandomArtworks';
 import { PosterCard, renderPosters } from '@shared/PostersList';
 import { Footer } from '@shared/Footer';
 import { Meta } from '@shared/Meta';
-import { Button } from '@ui-kit';
+import { Button, Col, Row } from '@ui-kit';
 import { Slider } from '@ui-kit/Slider';
 import { Spinner } from '@ui-kit/Spinner';
 import { Text, Title } from '@ui-kit/Text';
@@ -169,9 +169,11 @@ export const Feed = () => {
               ))}
               {!isEnd && offset && (
                 <Row className='cr-landing__video-grid__see-all'>
-                  <Button loading={loading} onClick={loadMore}>
-                    LOAD MORE
-                  </Button>
+                  <Col min_width={168}>
+                    <Button block loading={loading} onClick={loadMore}>
+                      LOAD MORE
+                    </Button>
+                  </Col>
                 </Row>
               )}
             </div>

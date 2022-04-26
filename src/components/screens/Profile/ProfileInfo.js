@@ -45,7 +45,7 @@ const ProfileInfo = ({ user, isProfile }) => {
         </Text>
       </Col>
       <Col align='center' className='mail-icon'>
-        <Text level={3} color='dark25'>
+        <Text level={3} color='dark25' ellipsis={{ tooltip: email }}>
           <MailIcon /> {isProfile ? <a href={`mailto:${email}`}>{email}</a> : email}
         </Text>
       </Col>

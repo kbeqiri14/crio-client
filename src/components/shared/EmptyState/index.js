@@ -24,7 +24,10 @@ const EmptyState = ({ username, isCreator, isProfile, isSubscribed }) => {
     () => !isProfile && (isCreator || !isSubscribed),
     [isCreator, isProfile, isSubscribed],
   );
-  const label = useMemo(() => (isCreator ? 'UPLOAD' : 'SUBSCRIBE'), [isCreator]);
+  const [label, color] = useMemo(
+    () => (isCreator ? ['UPLOAD', 'blue'] : ['SUBSCRIBE', 'green']),
+    [isCreator],
+  );
   const onClick = useCallback(
     () => history.push(`/${isCreator ? 'upload' : 'pricing'}`),
     [isCreator],
@@ -42,7 +45,7 @@ const EmptyState = ({ username, isCreator, isProfile, isSubscribed }) => {
       </Col>
       {visible && (
         <Col span={24} align='center'>
-          <Button type='primary' fill_color='green' onClick={onClick}>
+          <Button type='primary' fill_color={color} onClick={onClick}>
             {label}
           </Button>
         </Col>
