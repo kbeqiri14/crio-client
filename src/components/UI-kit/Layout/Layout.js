@@ -12,7 +12,12 @@ const Sider = styled(Layout.Sider)`
   top: 0;
   bottom: 0;
   position: fixed;
-  overflow-y: scroll;
+  overflow: hidden;
+  .ant-layout-sider-children {
+    overflow-y: scroll;
+    padding-right: 17px;
+    box-sizing: content-box;
+  }
 `;
 
 const Content = styled(Layout.Content)`

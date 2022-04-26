@@ -45,6 +45,12 @@ const Col = styled(antCol)`
     `}
 
     ${(props) =>
+    props?.min_width &&
+    css`
+      min-width: ${props.min_width}px;
+    `}
+
+    ${(props) =>
     props?.max_width &&
     css`
       max-width: ${props.max_width}px;
