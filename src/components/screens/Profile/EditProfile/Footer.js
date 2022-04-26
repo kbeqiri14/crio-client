@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback } from 'react';
 import { useMutation } from '@apollo/client';
 
 import { me } from '@app/graphql/queries/users.query';
@@ -7,22 +7,8 @@ import { updateUser } from '@app/graphql/mutations/user.mutation';
 import ActionButtons from '@shared/ActionButtons';
 import { errorToast, successToast } from '@ui-kit/Notification';
 
-const Footer = ({ updatedData, closeModal, handleSubmit }) => {
+const Footer = ({ disabled, updatedData, onCancel, closeModal, handleSubmit }) => {
   const { user, dispatchUser } = useLoggedInUser();
-
-  const disabled = useMemo(() => {
-    const { firstName, lastName, username, about } = updatedData;
-    return !(
-      username !== '' &&
-      ((firstName && user?.firstName !== firstName) ||
-        (firstName === '' && !!user?.firstName) ||
-        (lastName && user?.lastName !== lastName) ||
-        (lastName === '' && !!user?.lastName) ||
-        (username && user?.username !== username) ||
-        (about && user?.about !== about) ||
-        (about === '' && !!user?.about))
-    );
-  }, [updatedData, user?.firstName, user?.lastName, user?.username, user?.about]);
 
   const [updateUserInfo, { loading }] = useMutation(updateUser, {
     update: (cache, mutationResult) => {
@@ -60,7 +46,7 @@ const Footer = ({ updatedData, closeModal, handleSubmit }) => {
     <ActionButtons
       loading={loading}
       disabled={disabled}
-      onCancel={closeModal}
+      onCancel={onCancel}
       onSave={handleSubmit(onSubmit)}
     />
   );

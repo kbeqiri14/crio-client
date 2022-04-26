@@ -1,11 +1,13 @@
-import { memo, useMemo } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
+import Confirmation from '@shared/Confirmation';
 import { Col, Input, Row, Text, Title } from '@ui-kit';
 import { BlurredModal } from '@ui-kit/Modal';
 import Footer from './Footer';
 
 const EditProfile = ({ user, visible, closeModal }) => {
+  const [confirmationVisible, setConfirmationVisible] = useState();
   const { control, watch, handleSubmit } = useForm();
   const firstName = watch('firstName');
   const lastName = watch('lastName');
@@ -21,9 +23,32 @@ const EditProfile = ({ user, visible, closeModal }) => {
     }),
     [firstName, lastName, username, about],
   );
+  const disabled = useMemo(() => {
+    const { firstName, lastName, username, about } = updatedData;
+    return !(
+      username !== '' &&
+      ((firstName && user?.firstName !== firstName) ||
+        (firstName === '' && !!user?.firstName) ||
+        (lastName && user?.lastName !== lastName) ||
+        (lastName === '' && !!user?.lastName) ||
+        (username && user?.username !== username) ||
+        (about && user?.about !== about) ||
+        (about === '' && !!user?.about))
+    );
+  }, [updatedData, user?.firstName, user?.lastName, user?.username, user?.about]);
+
+  const hideModal = useCallback(() => {
+    setConfirmationVisible(false);
+    closeModal();
+  }, [closeModal]);
+  const hideConfirmation = useCallback(() => setConfirmationVisible(false), []);
+  const onCancel = useCallback(
+    () => (disabled ? closeModal() : setConfirmationVisible(true)),
+    [closeModal, disabled],
+  );
 
   return (
-    <BlurredModal width={708} visible={visible} onCancel={closeModal}>
+    <BlurredModal width={708} visible={visible} onCancel={onCancel}>
       <Row justify='center' gutter={[0, 8]}>
         <Col span={24} padding_bottom={32}>
           <Title level={1} color='white'>
@@ -103,9 +128,23 @@ const EditProfile = ({ user, visible, closeModal }) => {
           />
         </Col>
         <Col span={24}>
-          <Footer updatedData={updatedData} closeModal={closeModal} handleSubmit={handleSubmit} />
+          <Footer
+            disabled={disabled}
+            updatedData={updatedData}
+            onCancel={onCancel}
+            closeModal={hideModal}
+            handleSubmit={handleSubmit}
+          />
         </Col>
       </Row>
+      {confirmationVisible && (
+        <Confirmation
+          visible={confirmationVisible}
+          title='Do you still want to close the changes?'
+          onConfirm={hideModal}
+          onCancel={hideConfirmation}
+        />
+      )}
     </BlurredModal>
   );
 };
