@@ -20,8 +20,11 @@ const ProfileContent = ({
   isLock,
 }) => {
   const tab = useMemo(
-    () => (isCreator ? `Artwork ${artworksCount || ''}` : `Following ${followingsCount || ''}`),
-    [isCreator, artworksCount, followingsCount],
+    () =>
+      isCreator
+        ? `Artwork ${artworksCount || ''}`
+        : `Following ${(isSubscribed && followingsCount) || ''}`,
+    [isCreator, isSubscribed, artworksCount, followingsCount],
   );
 
   return (
@@ -30,11 +33,7 @@ const ProfileContent = ({
         {isCreator ? (
           <Works isProfile={isProfile} isLock={isLock} />
         ) : (
-          <Followings
-            showEmptyState={username && !followingsCount}
-            isProfile={isProfile}
-            isSubscribed={isSubscribed}
-          />
+          <Followings username={username} isProfile={isProfile} isSubscribed={isSubscribed} />
         )}
       </TabPane>
     </Tabs>

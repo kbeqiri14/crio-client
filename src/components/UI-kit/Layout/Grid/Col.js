@@ -38,10 +38,16 @@ const Col = styled(antCol)`
       padding-bottom: ${props.padding_bottom}px;
     `}
 
-  ${(props) =>
+    ${(props) =>
     props?.align &&
     css`
       text-align: ${props.align};
+    `}
+
+    ${(props) =>
+    props?.max_width &&
+    css`
+      max-width: ${props.max_width}px;
     `}
 `;
 
