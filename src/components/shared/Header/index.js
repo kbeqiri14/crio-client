@@ -56,7 +56,7 @@ export const Header = ({ isAuthenticated }) => {
       <Col>
         {isAuthenticated && user ? <ProfileMenu user={user} /> : <GetStarted />}
         {user?.isCreator && (
-          <Button type='primary' onClick={upload}>
+          <Button type='primary' onClick={upload} className='vertical-middle'>
             UPLOAD
           </Button>
         )}
