@@ -1,54 +1,90 @@
-import { Fragment, memo, useMemo, useState } from 'react';
+import { memo, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
-import { isFollowing, getUser } from '@app/graphql/queries/users.query';
-import PersonalInfo from '@screens/Account/__partials__/PersonalInfo';
-import Details from '@screens/Account/Details';
-import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
+import { getUser } from '@app/graphql/queries/users.query';
+import { Col, Layout, Row, Text } from '@ui-kit';
+import { ReactComponent as NotFoundUser } from '@svgs/fallowing-empty.svg';
+import ProfileSider from '@root/src/components/screens/Profile/Sider';
+import ProfileContent from '@root/src/components/screens/Profile/Content';
+
+const { Sider, Content } = Layout;
 
 export const Profile = () => {
   const { pathname } = useLocation();
-  const { user } = useLoggedInUser();
-  const [isFollow, setIsFollow] = useState(false);
+  const { user: loggedInUser } = useLoggedInUser();
   const username = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
 
-  const { data: userData, loading: loadingUser } = useQuery(getUser, { variables: { username } });
-  const { loading: loadingIsFollowing } = useQuery(isFollowing, {
-    variables: { followingUsername: username },
-    fetchPolicy: 'no-cache',
-    onCompleted: (data) => {
-      if (data?.isFollowing) {
-        setIsFollow(true);
-      }
-    },
+  const [requestUser, { data: userData, loading }] = useLazyQuery(getUser, {
+    variables: { username },
   });
 
+  const user = useMemo(
+    () => (username === loggedInUser.username ? loggedInUser : userData?.getUser),
+    [loggedInUser, userData?.getUser, username],
+  );
+  const isProfile = useMemo(
+    () => username !== loggedInUser.username,
+    [loggedInUser.username, username],
+  );
+  const hideButton = useMemo(
+    () => !loggedInUser.username || (isProfile && loggedInUser.isCreator),
+    [isProfile, loggedInUser.isCreator, loggedInUser.username],
+  );
+  const isLock = useMemo(
+    () => !(!isProfile || loggedInUser.isCreator || user?.isFollowing),
+    [isProfile, loggedInUser.isCreator, user?.isFollowing],
+  );
+
+  useEffect(() => {
+    if (username !== loggedInUser.username) {
+      requestUser();
+    }
+  }, [username, loggedInUser.username, requestUser]);
+
+  if (!loading && !user) {
+    return (
+      <Row justify='center' align='middle' className='full-height'>
+        <Col>
+          <Row justify='center'>
+            <Col>
+              <NotFoundUser />
+            </Col>
+            <Col span={24} align='center'>
+              <Text level={3} color='white'>
+                No result
+              </Text>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+    );
+  }
   return (
-    <Fragment>
-      {loadingUser && loadingIsFollowing && <GlobalSpinner />}
-      <PersonalInfo
-        isProfile
-        loadingUser={loadingUser}
-        user={userData?.getUser}
-        followersCount={userData?.getUser?.followersCount}
-        isFollow={isFollow}
-        setIsFollow={setIsFollow}
-        isSubscribed={user?.isSubscribed}
-        isCreator={user?.isCreator}
-        isAuthenticated={user?.id}
-      />
-      <Details
-        isProfile
-        name={userData?.getUser?.username}
-        artworksCount={userData?.getUser?.artworksCount}
-        isAuthenticated={user?.id}
-        isCreator={user?.isCreator}
-        isFollow={isFollow}
-        loadingIsFollowing={loadingIsFollowing}
-      />
-    </Fragment>
+    <Layout>
+      <Sider>
+        <ProfileSider
+          user={user}
+          isProfile={isProfile}
+          isSubscribed={loggedInUser.isSubscribed}
+          hideButton={hideButton}
+        />
+      </Sider>
+      <Layout>
+        <Content>
+          <ProfileContent
+            username={user?.username}
+            artworksCount={user?.artworksCount}
+            followingsCount={user?.followingsCount}
+            isCreator={user?.isCreator}
+            isProfile={isProfile}
+            isSubscribed={loggedInUser.isSubscribed}
+            isLock={isLock}
+          />
+        </Content>
+      </Layout>
+    </Layout>
   );
 };
 

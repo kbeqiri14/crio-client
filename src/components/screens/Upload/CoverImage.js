@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Col, Row, Upload } from 'antd';
 import { useLazyQuery, useMutation } from '@apollo/client';
 
-import history from '@app/configs/history';
 import { getUploadImageLink } from '@app/graphql/queries/artworks.query';
 import { updateMetadata } from '@app/graphql/mutations/artwork.mutation';
 import ActionButtons from '@shared/ActionButtons';
@@ -14,7 +13,7 @@ import coverImage from '@images/cover-image.png';
 
 const { Dragger } = Upload;
 
-const CoverImage = ({ visible, artworkId }) => {
+const CoverImage = ({ visible, artworkId, goToProfile }) => {
   const [image, setImage] = useState({});
   const [loading, setLoading] = useState(false);
   const props = {
@@ -37,7 +36,7 @@ const CoverImage = ({ visible, artworkId }) => {
   };
 
   const [updateArtwork] = useMutation(updateMetadata, {
-    onCompleted: () => history.push('/account'),
+    onCompleted: goToProfile,
   });
   const [requestUploadUrl] = useLazyQuery(getUploadImageLink, {
     fetchPolicy: 'no-cache',
@@ -59,14 +58,13 @@ const CoverImage = ({ visible, artworkId }) => {
     },
   });
 
-  const onCancel = useCallback(() => history.push('/account'), []);
   const onSave = useCallback(() => {
     setLoading(true);
     requestUploadUrl();
   }, [requestUploadUrl]);
 
   return (
-    <BlurredModal blurred maskClosable={false} visible={visible} width={686} onCancel={onCancel}>
+    <BlurredModal blurred maskClosable={false} visible={visible} width={686} onCancel={goToProfile}>
       <Row justify='center' gutter={[0, 40]} className='cover-image'>
         <Col span={24}>
           <Title inline level='10' color='white'>
@@ -103,7 +101,7 @@ const CoverImage = ({ visible, artworkId }) => {
             saveText='PUBLISH'
             loading={loading}
             disabled={!image.file}
-            onCancel={onCancel}
+            onCancel={goToProfile}
             onSave={onSave}
           />
         </Col>

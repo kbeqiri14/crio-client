@@ -6,10 +6,9 @@ import { useQuery } from '@apollo/client';
 import { getUserArtworks } from '@app/graphql/queries/artworks.query';
 import { PosterCard } from '@shared/PostersList';
 import { Spinner } from '@ui-kit/Spinner';
-import { ReactComponent as Icon } from '@svgs/artworks-empty.svg';
 import EmptyState from '@shared/EmptyState';
 
-const Works = ({ isProfile, name, isLock }) => {
+const Works = ({ username, isProfile, isLock }) => {
   const { pathname } = useLocation();
   const [initialPolling, setInitialPolling] = useState(true);
   const [works, setWorks] = useState([]);
@@ -28,11 +27,7 @@ const Works = ({ isProfile, name, isLock }) => {
   return (
     <Spinner spinning={initialPolling && loading && !works?.length} color='white'>
       {(!loading || !initialPolling) && !works?.length ? (
-        <EmptyState
-          Icon={Icon}
-          showButton={!isProfile}
-          text={isProfile ? `${name} hasn’t added an artwork yet` : 'Upload your first artwork'}
-        />
+        <EmptyState username={username} isCreator={true} isProfile={isProfile} />
       ) : (
         <div className='cr-feed__posters-list cr-landing__video-grid profile-artworks-list'>
           <Row

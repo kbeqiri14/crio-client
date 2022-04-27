@@ -1,9 +1,7 @@
 import { Fragment, useCallback, useMemo } from 'react';
-import { useLocation } from 'react-router-dom';
 import { Col, Row } from 'antd';
 import cc from 'classcat';
 
-import history from '@app/configs/history';
 import { STRIPE_PAYMENT_URL } from '@configs/environment';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { Meta } from '@shared/Meta';
@@ -13,7 +11,6 @@ import { Text, Title } from '@ui-kit/Text';
 import { CustomTooltip } from '@ui-kit/Tooltip';
 import { warningToast } from '@ui-kit/Notification';
 import { ReactComponent as CheckMark } from '@svgs/green-check.svg';
-import { ReactComponent as BackIcon } from '@svgs/back.svg';
 import { ReactComponent as RecommendIcon } from '@svgs/recommend.svg';
 import CancelSubscription from './CancelSubscription';
 import './styles.less';
@@ -51,10 +48,7 @@ const perksListPro = [
 ];
 
 export const PricingPlans = () => {
-  const { pathname } = useLocation();
   const { user } = useLoggedInUser();
-  const username = +pathname.split('/').slice(-1)[0];
-  const goBack = useCallback(() => history.push(`/profile/perks/${username}`), [username]);
 
   const handleClick = useCallback(() => {
     if (user?.id) {
@@ -70,19 +64,11 @@ export const PricingPlans = () => {
 
   return (
     <Fragment>
+      <Meta title='Pricing Plans' description='Crio - Pricing Plans' />
       {showCancelSubscription ? (
         <CancelSubscription />
       ) : (
         <div className='cr-pricing'>
-          <Meta title='Pricing Plans' description='Crio - Pricing Plans' />
-          {!!user?.id && !!username && (
-            <div className='cr-pricing__header'>
-              <BackIcon onClick={goBack} />
-              <Title inline level={20} color='white'>
-                Subscribe To Get Access
-              </Title>
-            </div>
-          )}
           <Row justify='center' align='stretch' gutter={[8, 8]}>
             <Col>
               <div className='cr-pricing__card'>
@@ -114,7 +100,7 @@ export const PricingPlans = () => {
                   description='Please, use the email address attached to your profile'
                 >
                   <div className='cr-pricing__card--action'>
-                    <Button block type='primary' fillColor='green' onClick={handleClick}>
+                    <Button block type='primary' fill_color='green' onClick={handleClick}>
                       GET STARTED
                     </Button>
                   </div>

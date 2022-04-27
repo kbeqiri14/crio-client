@@ -1,36 +1,52 @@
-import { memo, useCallback } from 'react';
-import { Col, Row } from 'antd';
+import { memo, useCallback, useMemo } from 'react';
 
 import history from '@app/configs/history';
-import { Button } from '@ui-kit';
-import { Text } from '@ui-kit/Text';
-import './styles.less';
+import { ReactComponent as ArtworksEmptyIcon } from '@svgs/artworks-empty.svg';
+import { ReactComponent as FallowingEmptyIcon } from '@svgs/fallowing-empty.svg';
+import { Col, Button, Row, Text } from '@ui-kit';
 
-const EmptyState = ({ Icon, text, showButton, showMail }) => {
-  const upload = useCallback(() => history.push('/upload'), []);
+const EmptyState = ({ username, isCreator, isProfile, isSubscribed }) => {
+  const text = useMemo(() => {
+    if (isProfile) {
+      return `${username} ${
+        isCreator ? 'hasn’t added an artwork yet' : 'is not following anyone yet'
+      }`;
+    }
+    if (isCreator) {
+      return 'Upload your first artwork';
+    }
+    return isSubscribed
+      ? 'You don’t follow anyone'
+      : 'Subscribe to follow creators and gain access to free digital products across Crio';
+  }, [username, isCreator, isProfile, isSubscribed]);
+
+  const visible = useMemo(
+    () => !isProfile && (isCreator || !isSubscribed),
+    [isCreator, isProfile, isSubscribed],
+  );
+  const [label, color] = useMemo(
+    () => (isCreator ? ['UPLOAD', 'blue'] : ['SUBSCRIBE', 'green']),
+    [isCreator],
+  );
+  const onClick = useCallback(
+    () => history.push(`/${isCreator ? 'upload' : 'pricing'}`),
+    [isCreator],
+  );
 
   return (
-    <Row justify='center' gutter={[0, 30]} className='empty-state'>
-      <Col span={24}>
-        <Icon />
+    <Row justify='center' gutter={[0, 30]}>
+      <Col span={24} align='center'>
+        {isCreator ? <ArtworksEmptyIcon /> : <FallowingEmptyIcon />}
       </Col>
-      {text && (
-        <Col span={24}>
-          <Text level={20} color='white'>
-            {text}
-          </Text>
-          {showMail && (
-            <Text level='20' color='white'>
-              Please, contact <a href='mailto:info@criointeractive.com'>info@criointeractive.com</a>{' '}
-              for more help.
-            </Text>
-          )}
-        </Col>
-      )}
-      {showButton && (
-        <Col>
-          <Button type='primary' onClick={upload}>
-            UPLOAD
+      <Col span={24} align='center' max_width={260}>
+        <Text level={3} color='white'>
+          {text}
+        </Text>
+      </Col>
+      {visible && (
+        <Col span={24} align='center'>
+          <Button type='primary' fill_color={color} onClick={onClick}>
+            {label}
           </Button>
         </Col>
       )}

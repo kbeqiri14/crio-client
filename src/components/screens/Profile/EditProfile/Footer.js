@@ -1,5 +1,4 @@
-import { memo, useCallback, useMemo } from 'react';
-import { isEqual } from 'lodash';
+import { memo, useCallback } from 'react';
 import { useMutation } from '@apollo/client';
 
 import { me } from '@app/graphql/queries/users.query';
@@ -8,22 +7,8 @@ import { updateUser } from '@app/graphql/mutations/user.mutation';
 import ActionButtons from '@shared/ActionButtons';
 import { errorToast, successToast } from '@ui-kit/Notification';
 
-const Footer = ({ updatedData, closeModal, handleSubmit }) => {
+const Footer = ({ disabled, updatedData, onCancel, closeModal, handleSubmit }) => {
   const { user, dispatchUser } = useLoggedInUser();
-
-  const disabled = useMemo(() => {
-    const { firstName, lastName, username, visibility } = updatedData;
-    return !(
-      visibility.length &&
-      username !== '' &&
-      ((firstName && user?.firstName !== firstName) ||
-        (firstName === '' && !!user?.firstName) ||
-        (lastName && user?.lastName !== lastName) ||
-        (lastName === '' && !!user?.lastName) ||
-        (username && user?.username !== username) ||
-        !isEqual(visibility, user.visibility))
-    );
-  }, [updatedData, user?.firstName, user?.lastName, user?.username, user?.visibility]);
 
   const [updateUserInfo, { loading }] = useMutation(updateUser, {
     update: (cache, mutationResult) => {
@@ -36,9 +21,13 @@ const Footer = ({ updatedData, closeModal, handleSubmit }) => {
       }
     },
     onCompleted: (data) => {
-      dispatchUser({ ...user, ...data.updateUser });
-      closeModal();
       successToast('Your profile has been updated.');
+      if (user?.username !== updatedData.username) {
+        window.location.href = `/profile/${updatedData.username}`;
+      } else {
+        dispatchUser({ ...user, ...data.updateUser });
+        closeModal();
+      }
     },
     onError: (data) => {
       let message = data?.message;
@@ -61,7 +50,7 @@ const Footer = ({ updatedData, closeModal, handleSubmit }) => {
     <ActionButtons
       loading={loading}
       disabled={disabled}
-      onCancel={closeModal}
+      onCancel={onCancel}
       onSave={handleSubmit(onSubmit)}
     />
   );

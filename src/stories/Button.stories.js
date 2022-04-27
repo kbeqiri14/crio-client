@@ -14,7 +14,7 @@ export default {
         defaultValue: { summary: 'default' },
       },
     },
-    fillColor: {
+    fill_color: {
       description:
         'Can be set to <code>green</code>&nbsp;&nbsp;&nbsp;<code>blue</code>&nbsp;&nbsp;&nbsp;<code>pink</code> only for <code>primary</code> type',
       control: { type: 'radio', options: ['green', 'blue', 'pink'] },
@@ -60,21 +60,21 @@ export const PrimaryGreen = Template.bind({});
 PrimaryGreen.args = {
   children: 'Green',
   type: 'primary',
-  fillColor: 'green',
+  fill_color: 'green',
 };
 
 export const PrimaryBlue = Template.bind({});
 PrimaryBlue.args = {
   children: 'Blue',
   type: 'primary',
-  fillColor: 'blue',
+  fill_color: 'blue',
 };
 
 export const PrimaryPink = Template.bind({});
 PrimaryPink.args = {
   children: 'Pink',
   type: 'primary',
-  fillColor: 'pink',
+  fill_color: 'pink',
 };
 
 export const WithIcon = Template.bind({});

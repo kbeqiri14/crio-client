@@ -14,6 +14,7 @@ const Button = styled(antButton)`
   background: none;
   border: 1px solid ${(props) => props.theme.colors.primary};
   color: ${(props) => props.theme.colors.primary};
+  box-shadow: 0px 4px 5px rgba(12, 17, 36, 0.4);
 
   :hover {
     background: #202020; // Narine dark25
@@ -48,13 +49,13 @@ const Button = styled(antButton)`
     border: none !important;
     color: ${(props) => props.theme.colors.white} !important;
     background: ${(props) =>
-      props.theme.colors[`gradient_${props?.fillColor || 'blue'}`]} !important;
+      props.theme.colors[`gradient_${props?.fill_color || 'blue'}`]} !important;
   }
 
   &.ant-btn-primary:hover {
     box-shadow: 0px 4px 5px rgba(12, 17, 36, 0.4);
     background: ${(props) =>
-      props.theme.colors[`gradient_${props?.fillColor || 'blue'}`]} !important;
+      props.theme.colors[`gradient_${props?.fill_color || 'blue'}`]} !important;
   }
 
   &.ant-btn-primary[disabled],

@@ -2,7 +2,6 @@ import { memo, useCallback, useMemo } from 'react';
 import { Col, Row, Upload } from 'antd';
 import { useLazyQuery, useMutation } from '@apollo/client';
 
-import history from '@app/configs/history';
 import { getUploadUrl } from '@app/graphql/queries/artworks.query';
 import { deleteArtwork } from '@app/graphql/mutations/artwork.mutation';
 import ActionButtons from '@shared/ActionButtons';
@@ -28,7 +27,7 @@ const validateVideo = (file) =>
     };
   });
 
-const DragAndDrop = ({ videoUri, file, types, dispatch }) => {
+const DragAndDrop = ({ videoUri, file, types, dispatch, goToProfile }) => {
   const [requestUploadUrl, { data, loading }] = useLazyQuery(getUploadUrl, {
     fetchPolicy: 'no-cache',
     onCompleted: ({ getUploadUrl }) =>
@@ -48,8 +47,8 @@ const DragAndDrop = ({ videoUri, file, types, dispatch }) => {
     [data?.getUploadUrl?.uri, file?.name, loading],
   );
   const onCancel = useCallback(
-    () => (videoUri ? dispatch({ type: types.CONFIRMATION_VISIBLE }) : history.push('/account')),
-    [videoUri, dispatch, types.CONFIRMATION_VISIBLE],
+    () => (videoUri ? dispatch({ type: types.CONFIRMATION_VISIBLE }) : goToProfile()),
+    [videoUri, goToProfile, dispatch, types.CONFIRMATION_VISIBLE],
   );
   const onContinue = useCallback(
     () => dispatch({ type: types.UPLOADING }),

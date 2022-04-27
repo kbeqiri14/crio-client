@@ -2,7 +2,7 @@ import { Fragment, memo, useCallback, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
-import { getUser } from '@app/graphql/queries/users.query';
+import { getUser, me } from '@app/graphql/queries/users.query';
 import { createFollowing } from '@app/graphql/mutations/user.mutation';
 
 import history from '@app/configs/history';
@@ -12,13 +12,12 @@ import { ReactComponent as UnFollowIcon } from '@svgs/unfollow.svg';
 import { ReactComponent as FollowIcon } from '@svgs/follow.svg';
 import { ReactComponent as LockIcon } from '@svgs/lock.svg';
 
-import EditProfile from '@screens/Account/__partials__/EditProfile';
+import EditProfile from '@root/src/components/screens/Profile/EditProfile';
 
-const ActionButton = ({ isProfile, isSubscribed, isFollow, setIsFollow }) => {
+const ActionButton = ({ isProfile, isSubscribed, isFollow }) => {
   const { pathname } = useLocation();
   const { user } = useLoggedInUser();
   const [visible, setVisible] = useState(false);
-
   const username = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
 
   const buttonLabel = useMemo(() => {
@@ -44,22 +43,31 @@ const ActionButton = ({ isProfile, isSubscribed, isFollow, setIsFollow }) => {
     variables: { followingUsername: username },
     update: (cache, mutationResult) => {
       if (mutationResult.data.createFollowing) {
-        const existingData = cache.readQuery({ query: getUser, variables: { username } });
+        const existingUser = cache.readQuery({ query: getUser, variables: { username } });
+        const existingLoggedInUser = cache.readQuery({ query: me });
+        const count = isFollow ? -1 : 1;
         cache.writeQuery({
           query: getUser,
           variables: { username },
           data: {
             getUser: {
-              ...existingData?.getUser,
-              followersCount: existingData?.getUser?.followersCount + (isFollow ? -1 : 1),
+              ...existingUser?.getUser,
+              followersCount: existingUser?.getUser?.followersCount + count,
+              followingsCount: existingUser?.getUser?.followingsCount + count,
+              isFollowing: !isFollow,
             },
           },
         });
-      }
-    },
-    onCompleted: (data) => {
-      if (data?.createFollowing) {
-        setIsFollow(!isFollow);
+        cache.writeQuery({
+          query: me,
+          data: {
+            me: {
+              ...existingLoggedInUser?.me,
+              followersCount: existingLoggedInUser?.me?.followersCount + count,
+              followingsCount: existingLoggedInUser?.me?.followingsCount + count,
+            },
+          },
+        });
       }
     },
   });

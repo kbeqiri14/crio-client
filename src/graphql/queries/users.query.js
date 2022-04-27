@@ -11,13 +11,8 @@ export const me_fragment = gql`
     firstName
     lastName
     avatar
-    visibility
+    about
     isCreator
-    vouchers {
-      tier1
-      tier2
-      tier3
-    }
     payment {
       customerEmail
       periodStart
@@ -28,6 +23,8 @@ export const me_fragment = gql`
     }
     artworksCount
     followersCount
+    followingsCount
+    isFollowing
   }
 `;
 
@@ -61,7 +58,6 @@ export const following_info_fragment = gql`
     firstName
     lastName
     avatar
-    visibility
     artworks {
       artworkId
       videoUri
@@ -73,18 +69,12 @@ export const following_info_fragment = gql`
 `;
 
 export const getFollowings = gql`
-  query {
-    getFollowings {
+  query getFollowings($username: String) {
+    getFollowings(username: $username) {
       ...FollowingInfoAttributes
     }
   }
   ${following_info_fragment}
-`;
-
-export const getFollowersCount = gql`
-  query {
-    getFollowersCount
-  }
 `;
 
 export const isFollowing = gql`

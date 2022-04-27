@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Row } from 'antd';
 import cc from 'classcat';
 import { useReactiveVar } from '@apollo/client';
 
@@ -9,7 +8,7 @@ import GetStarted from '@shared/GetStarted';
 import { renderPosters } from '@shared/PostersList';
 import { Footer } from '@shared/Footer';
 import { Meta } from '@shared/Meta';
-import { Button } from '@ui-kit';
+import { Button, Col, Row } from '@ui-kit';
 import { Text, Title } from '@ui-kit/Text';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import aboutPerks from '@images/about-perks.png';
@@ -47,11 +46,13 @@ export const LandingPage = () => {
           {postersList}
         </Row>
         <Row className={cc(['cr-landing__video-grid__see-all', { 'list-loaded': isEnd }])}>
-          {!isEnd && offset && (
-            <Button loading={loading} onClick={loadMore}>
-              SEE MORE
-            </Button>
-          )}
+          <Col min_width={155}>
+            {!isEnd && offset && (
+              <Button block loading={loading} onClick={loadMore}>
+                SEE MORE
+              </Button>
+            )}
+          </Col>
         </Row>
       </section>
       <section className='cr-landing__about-perks'>
