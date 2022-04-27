@@ -24,6 +24,11 @@ const Button = styled(antButton)`
     opacity: 0;
   }
 
+  &.ant-btn:active,
+  &.ant-btn:focus {
+    background: none !important;
+  }
+
   &.ant-btn[disabled],
   .ant-btn[disabled]:hover {
     background: none !important;
@@ -48,6 +53,12 @@ const Button = styled(antButton)`
   &.ant-btn-primary {
     border: none !important;
     color: ${(props) => props.theme.colors.white} !important;
+    background: ${(props) =>
+      props.theme.colors[`gradient_${props?.fill_color || 'blue'}`]} !important;
+  }
+
+  &.ant-btn-primary:active,
+  &.ant-btn-primary:focus {
     background: ${(props) =>
       props.theme.colors[`gradient_${props?.fill_color || 'blue'}`]} !important;
   }
