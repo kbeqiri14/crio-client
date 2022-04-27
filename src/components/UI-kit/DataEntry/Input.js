@@ -33,6 +33,14 @@ const TextArea = styled(Input.TextArea)`
   border-radius: 8px;
   border: 1px solid #202020;
   color: ${(props) => props.theme.colors.white};
+  overflow-y: scroll;
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 
   :hover,
   :focus {
