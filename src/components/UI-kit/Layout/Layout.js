@@ -12,16 +12,19 @@ const Sider = styled(Layout.Sider)`
   top: 0;
   bottom: 0;
   position: fixed;
-  overflow: hidden;
   .ant-layout-sider-children {
     overflow-y: scroll;
-    padding-right: 17px;
-    box-sizing: content-box;
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    /* Hide scrollbar for IE, Edge and Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
 `;
 
 const Content = styled(Layout.Content)`
-  height: 100% !important;
   padding: 40px 25px;
   background: #202020;
   margin-top: 0 !important;
