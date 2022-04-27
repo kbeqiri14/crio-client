@@ -63,7 +63,7 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
               </Title>
             </Col>
             <Col span={24}>
-              <Text level={3} color='white' ellipsis={{ tooltip: name }}>
+              <Text level={3} ellipsis={{ tooltip: name }}>
                 {name}
               </Text>
             </Col>
@@ -92,7 +92,7 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
           <Col>
             <Row>
               <Col>
-                <Text level={3} color='white'>
+                <Text level={3}>
                   Followers
                   <br />
                   {user.followersCount}
@@ -102,7 +102,7 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
                 <Divider type='vertical' />
               </Col>
               <Col>
-                <Text level={3} color='white'>
+                <Text level={3}>
                   Artworks
                   <br />
                   {user.artworksCount}
@@ -112,9 +112,7 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
           </Col>
         )}
         <Col span={24}>
-          <Text level={3} color='white'>
-            {user.about}
-          </Text>
+          <Text level={3}>{user.about}</Text>
         </Col>
       </Row>
       {visible && <EditProfile user={user} visible={visible} closeModal={closeModal} />}

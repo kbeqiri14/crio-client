@@ -43,9 +43,7 @@ const EmptyState = ({ username, isCreator, isProfile, isSubscribed }) => {
         )}
       </Col>
       <Col span={24} align='center' max_width={260}>
-        <Text level={3} color='white'>
-          {text}
-        </Text>
+        <Text level={3}>{text}</Text>
       </Col>
       {visible && (
         <Col span={24} align='center'>

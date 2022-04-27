@@ -14,7 +14,7 @@ const StyledCard = styled('div')`
   width: 332px;
   padding: 20px;
   background: ${(props) => props.theme.colors.dark100};
-  border-radius: 30px;
+  border-radius: 15px;
 `;
 const FollowingCard = ({ user }) => {
   const { providerType, providerUserId, firstName, lastName, username, avatar } = user || {};
@@ -44,7 +44,7 @@ const FollowingCard = ({ user }) => {
               </Title>
             </Col>
             <Col span={24}>
-              <Text level={3} color='white' ellipsis={{ tooltip: name }}>
+              <Text level={3} ellipsis={{ tooltip: name }}>
                 {name}
               </Text>
             </Col>

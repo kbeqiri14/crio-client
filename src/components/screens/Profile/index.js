@@ -59,15 +59,16 @@ export const Profile = () => {
       </Sider>
       <Layout>
         <Content>
-          <ProfileContent
-            username={user?.username}
-            artworksCount={user?.artworksCount}
-            followingsCount={user?.followingsCount}
-            isCreator={user?.isCreator}
-            isProfile={isProfile}
-            isSubscribed={loggedInUser.isSubscribed}
-            isLock={isLock}
-          />
+          {user?.username && (
+            <ProfileContent
+              username={user?.username}
+              followingsCount={user?.followingsCount}
+              isCreator={user?.isCreator}
+              isProfile={isProfile}
+              isSubscribed={loggedInUser.isSubscribed}
+              isLock={isLock}
+            />
+          )}
         </Content>
       </Layout>
     </Layout>

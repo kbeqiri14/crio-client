@@ -102,9 +102,7 @@ const VideoInfo = ({ artworkId, file, state, onCancel, onCompleted }) => {
           />
         </Col>
         <Col span={24}>
-          <Text level={3} color='white'>
-            Accessibility
-          </Text>
+          <Text level={3}>Accessibility</Text>
           <br />
           <Controller
             name='accessibility'

@@ -56,9 +56,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
           </Title>
         </Col>
         <Col span={24}>
-          <Text level={3} color='white'>
-            Username *
-          </Text>
+          <Text level={3}>Username *</Text>
         </Col>
         <Col span={24} padding_bottom={32}>
           <Controller
@@ -69,14 +67,10 @@ const EditProfile = ({ user, visible, closeModal }) => {
           />
         </Col>
         <Col span={11}>
-          <Text level={3} color='white'>
-            First Name
-          </Text>
+          <Text level={3}>First Name</Text>
         </Col>
         <Col offset={2} span={11}>
-          <Text level={3} color='white'>
-            Last Name
-          </Text>
+          <Text level={3}>Last Name</Text>
         </Col>
         <Col span={11} padding_bottom={32}>
           <Controller
@@ -95,7 +89,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
           />
         </Col>
         <Col span={24}>
-          <Text level={3} color='white' disabled>
+          <Text level={3} disabled>
             Email
           </Text>
         </Col>
@@ -108,9 +102,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
           />
         </Col>
         <Col span={24}>
-          <Text level={3} color='white'>
-            About me
-          </Text>
+          <Text level={3}>About me</Text>
         </Col>
         <Col span={24} padding_bottom={32}>
           <Controller

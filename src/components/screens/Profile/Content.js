@@ -12,20 +12,19 @@ const tabs = {
 
 const ProfileContent = ({
   username,
-  artworksCount,
   followingsCount,
   isCreator,
   isProfile,
   isSubscribed,
   isLock,
 }) => {
-  const tab = useMemo(
-    () =>
-      isCreator
-        ? `Artwork ${artworksCount || ''}`
-        : `Following ${(isProfile ? followingsCount : isSubscribed && followingsCount) || ''}`,
-    [isCreator, isProfile, isSubscribed, artworksCount, followingsCount],
-  );
+  const tab = useMemo(() => {
+    if (isCreator) {
+      return 'Artwork';
+    }
+    const count = (isProfile ? followingsCount : isSubscribed && followingsCount) || '';
+    return count ? `Following: ${count}` : 'Following';
+  }, [isCreator, isProfile, isSubscribed, followingsCount]);
 
   return (
     <Tabs>

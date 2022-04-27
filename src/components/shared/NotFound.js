@@ -8,9 +8,7 @@ const NotFound = ({ text, icon }) => (
       <Row justify='center' gutter={[0, 40]}>
         <Col>{icon}</Col>
         <Col span={24} align='center'>
-          <Text level={3} color='white'>
-            {text}
-          </Text>
+          <Text level={3}>{text}</Text>
         </Col>
       </Row>
     </Col>

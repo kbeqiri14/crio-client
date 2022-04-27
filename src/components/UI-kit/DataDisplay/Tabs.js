@@ -19,6 +19,9 @@ const Tabs = styled(antTabs)`
   .ant-tabs-nav::before {
     display: none;
   }
+  .ant-tabs-tab-active {
+    padding: 4px 0;
+  }
   .ant-tabs-tab-active > div {
     color: ${(props) => props.theme.colors.white} !important;
   }
