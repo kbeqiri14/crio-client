@@ -74,6 +74,7 @@ const Button = styled(antButton)`
     font-size: ${(props) => props.theme.text[3].size}px;
     font-weight: ${(props) => props.theme.text[3].weight};
     font-style: ${(props) => props.theme.text[3].style || 'normal'};
+    box-shadow: none;
   }
 
   &.ant-btn-link[disabled],
@@ -81,6 +82,20 @@ const Button = styled(antButton)`
     border: none !important;
     color: ${(props) => props.theme.colors.dark50} !important;
   }
+
+  ///************** WITH ICON BUTTON **************///
+
+  ${(props) =>
+    props?.icon &&
+    css`
+      svg {
+        vertical-align: middle;
+        margin-right: 8px;
+      }
+      span {
+        vertical-align: middle;
+      }
+    `}
 `;
 
 export default Button;

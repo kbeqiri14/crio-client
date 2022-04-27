@@ -127,7 +127,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
             )}
           />
         </Col>
-        <Col span={24}>
+        <Col span={24} padding_bottom={16}>
           <Footer
             disabled={disabled}
             updatedData={updatedData}
