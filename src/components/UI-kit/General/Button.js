@@ -24,6 +24,11 @@ const Button = styled(antButton)`
     opacity: 0;
   }
 
+  &.ant-btn:active,
+  &.ant-btn:focus {
+    background: none !important;
+  }
+
   &.ant-btn[disabled],
   .ant-btn[disabled]:hover {
     background: none !important;
@@ -52,6 +57,12 @@ const Button = styled(antButton)`
       props.theme.colors[`gradient_${props?.fill_color || 'blue'}`]} !important;
   }
 
+  &.ant-btn-primary:active,
+  &.ant-btn-primary:focus {
+    background: ${(props) =>
+      props.theme.colors[`gradient_${props?.fill_color || 'blue'}`]} !important;
+  }
+
   &.ant-btn-primary:hover {
     box-shadow: 0px 4px 5px rgba(12, 17, 36, 0.4);
     background: ${(props) =>
@@ -74,6 +85,7 @@ const Button = styled(antButton)`
     font-size: ${(props) => props.theme.text[3].size}px;
     font-weight: ${(props) => props.theme.text[3].weight};
     font-style: ${(props) => props.theme.text[3].style || 'normal'};
+    box-shadow: none;
   }
 
   &.ant-btn-link[disabled],
@@ -81,6 +93,20 @@ const Button = styled(antButton)`
     border: none !important;
     color: ${(props) => props.theme.colors.dark50} !important;
   }
+
+  ///************** WITH ICON BUTTON **************///
+
+  ${(props) =>
+    props?.icon &&
+    css`
+      svg {
+        vertical-align: middle;
+        margin-right: 8px;
+      }
+      span {
+        vertical-align: middle;
+      }
+    `}
 `;
 
 export default Button;

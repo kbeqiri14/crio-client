@@ -5,7 +5,9 @@ import { useLazyQuery, useQuery } from '@apollo/client';
 
 import { getArtwork, getRandomArtworks } from '@app/graphql/queries/artworks.query';
 import { urlify } from '@utils/helpers';
+import NotFound from '@shared/NotFound';
 import { PosterCard } from '@shared/PostersList';
+import { ReactComponent as NotFoundUser } from '@svgs/not-found.svg';
 import { Text } from '@ui-kit/Text';
 import Header from './Header';
 
@@ -30,18 +32,40 @@ export const Artwork = () => {
     [artwork.videoUri],
   );
 
+  if (loadingArtwork) {
+    return (
+      <div className='video-view-container'>
+        <Row className='video-view-column'>
+          <Col span={18} offset={3} className='video-view-author'>
+            <Skeleton
+              round
+              active
+              avatar={{ size: 83 }}
+              title={{ width: '100%' }}
+              paragraph={{ rows: 1 }}
+              loading={loadingArtwork}
+            />
+          </Col>
+          <Col span={24} align='center'>
+            <Skeleton
+              active
+              avatar={{ shape: 'square', size: 800 }}
+              title={false}
+              paragraph={false}
+              loading={loadingArtwork}
+            />
+          </Col>
+        </Row>
+      </div>
+    );
+  }
+  if (!Object.keys(artwork).length) {
+    return <NotFound text='Artwork is not found' icon={<NotFoundUser />} />;
+  }
   return (
     <div className='video-view-container'>
       <Row className='video-view-column'>
         <Col span={18} offset={3} className='video-view-author'>
-          <Skeleton
-            round
-            active
-            avatar={{ size: 83 }}
-            title={{ width: '100%' }}
-            paragraph={{ rows: 1 }}
-            loading={loadingArtwork}
-          />
           {!loadingArtwork && (
             <Header
               providerType={artwork.providerType}

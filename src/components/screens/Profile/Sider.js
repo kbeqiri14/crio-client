@@ -1,25 +1,86 @@
-import { memo } from 'react';
-import { Skeleton } from 'antd';
+import { memo, useCallback, useMemo, useState } from 'react';
+import { Badge, Skeleton } from 'antd';
 
-import { Col, Divider, Row, Text } from '@ui-kit';
-import ProfileInfo from './ProfileInfo';
+import { ReactComponent as CreatorIcon } from '@svgs/verified.svg';
+import { ReactComponent as MailIcon } from '@svgs/mail.svg';
+import { ReactComponent as EditIcon } from '@svgs/edit.svg';
+
+import useAvatarUrl from '@app/hooks/useAvatarUrl';
+import { Col, Divider, Row, Text, Title } from '@ui-kit';
 import ActionButton from '@root/src/components/screens/Profile/ActionButton';
+import EditProfile from '@root/src/components/screens/Profile/EditProfile';
 
 export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton }) => {
-  return user.username ? (
-    <Row
-      justify='center'
-      padding_top={40}
-      padding_horizontal={28}
-      padding_bottom={20}
-      gutter={[0, 40]}
-    >
-      <>
-        <Col>
-          <ProfileInfo user={user} isProfile={isProfile} />
+  const [visible, setVisible] = useState(false);
+  const { providerType, providerUserId, firstName, lastName, username, email, avatar } = user || {};
+  const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
+  const name = useMemo(() => `${firstName || ''} ${lastName || ''}`, [firstName, lastName]);
+  const editProfile = useCallback(() => setVisible(true), []);
+  const closeModal = useCallback(() => setVisible(false), []);
+
+  if (!user.username) {
+    return (
+      <Row gutter={[0, 40]} padding_top={40} padding_horizontal={28} padding_bottom={20}>
+        <Col span={24}>
+          <Skeleton round active avatar={{ size: 122 }} title={false} paragraph={false} />
         </Col>
+        <Col span={24}>
+          <Skeleton round active title={{ width: '100%' }} paragraph={{ rows: 5, width: '100%' }} />
+        </Col>
+      </Row>
+    );
+  }
+
+  return (
+    <>
+      <Row gutter={[0, 30]} padding_top={40} padding_horizontal={28} padding_bottom={20}>
+        <Col span={24} margin_bottom={20}>
+          {user.isCreator ? (
+            <Badge count={<CreatorIcon />} offset={[-12, 105]}>
+              <img
+                alt='profile'
+                width={122}
+                height={122}
+                src={avatarUrl}
+                className='border-radius-100'
+              />
+            </Badge>
+          ) : (
+            <img
+              alt='profile'
+              width={122}
+              height={122}
+              src={avatarUrl}
+              className='border-radius-100'
+            />
+          )}
+        </Col>
+        <Col span={isProfile ? 24 : 20}>
+          <Row gutter={[0, 4]}>
+            <Col span={24}>
+              <Title level={2} color='white' ellipsis={{ tooltip: username }}>
+                @{username}
+              </Title>
+            </Col>
+            <Col span={24}>
+              <Text level={3} ellipsis={{ tooltip: name }}>
+                {name}
+              </Text>
+            </Col>
+            <Col span={24} className='mail-icon'>
+              <Text level={3} color='dark25' ellipsis={{ tooltip: email }}>
+                <MailIcon /> {isProfile ? <a href={`mailto:${email}`}>{email}</a> : email}
+              </Text>
+            </Col>
+          </Row>
+        </Col>
+        {!isProfile && (
+          <Col span={3} offset={1} onClick={editProfile}>
+            <EditIcon className='pointer' />
+          </Col>
+        )}
         {!hideButton && (
-          <Col>
+          <Col span={24}>
             <ActionButton
               isProfile={isProfile}
               isSubscribed={isSubscribed}
@@ -30,9 +91,9 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
         {user.isCreator && (
           <Col>
             <Row>
-              <Col align='center'>
-                <Text level={3} color='white'>
-                  Subscribers
+              <Col>
+                <Text level={3}>
+                  Followers
                   <br />
                   {user.followersCount}
                 </Text>
@@ -40,8 +101,8 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
               <Col margin_left={15} margin_right={15}>
                 <Divider type='vertical' />
               </Col>
-              <Col align='center'>
-                <Text level={3} color='white'>
+              <Col>
+                <Text level={3}>
                   Artworks
                   <br />
                   {user.artworksCount}
@@ -50,31 +111,12 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
             </Row>
           </Col>
         )}
-        {user.about && (
-          <Col span={24}>
-            <Row justify='center' direction='column'>
-              <Col align='center' margin_bottom={12}>
-                <Text level={2} color='dark25'>
-                  About me
-                </Text>
-              </Col>
-              <Col align='center'>
-                <Text level={3} color='white'>
-                  {user.about}
-                </Text>
-              </Col>
-            </Row>
-          </Col>
-        )}
-      </>
-    </Row>
-  ) : (
-    <Row justify='center' padding_top={40} padding_horizontal={28} padding_bottom={20}>
-      <Col span={24} align='center'>
-        <Skeleton round active avatar={{ size: 122 }} title={false} paragraph={false} />
-        <Skeleton round active title={{ width: '100%' }} paragraph={{ rows: 5, width: '100%' }} />
-      </Col>
-    </Row>
+        <Col span={24}>
+          <Text level={3}>{user.about}</Text>
+        </Col>
+      </Row>
+      {visible && <EditProfile user={user} visible={visible} closeModal={closeModal} />}
+    </>
   );
 };
 

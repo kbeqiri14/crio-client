@@ -11,12 +11,10 @@ import { ReactComponent as CreatorIcon } from '@svgs/verified.svg';
 import EmptyState from '@root/src/components/shared/EmptyState';
 
 const StyledCard = styled('div')`
-  width: 372px;
-  margin-top: 40px;
+  width: 332px;
   padding: 20px;
   background: ${(props) => props.theme.colors.dark100};
-  border: 1px solid ${(props) => props.theme.colors.white};
-  border-radius: 30px;
+  border-radius: 15px;
 `;
 const FollowingCard = ({ user }) => {
   const { providerType, providerUserId, firstName, lastName, username, avatar } = user || {};
@@ -38,15 +36,15 @@ const FollowingCard = ({ user }) => {
             />
           </Badge>
         </Col>
-        <Col>
+        <Col max_width={245}>
           <Row gutter={[0, 8]}>
             <Col span={24}>
-              <Title level={2} color='white' ellipsis>
+              <Title level={2} color='white' ellipsis={{ tooltip: username }}>
                 @{username}
               </Title>
             </Col>
             <Col span={24}>
-              <Text level={3} color='white' ellipsis>
+              <Text level={3} ellipsis={{ tooltip: name }}>
                 {name}
               </Text>
             </Col>

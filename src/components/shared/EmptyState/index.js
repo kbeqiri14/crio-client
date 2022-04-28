@@ -1,7 +1,7 @@
 import { memo, useCallback, useMemo } from 'react';
 
 import history from '@app/configs/history';
-import { ReactComponent as ArtworksEmptyIcon } from '@svgs/artworks-empty.svg';
+import { ReactComponent as UploadIcon } from '@svgs/upload.svg';
 import { ReactComponent as FallowingEmptyIcon } from '@svgs/fallowing-empty.svg';
 import { Col, Button, Row, Text } from '@ui-kit';
 
@@ -34,14 +34,16 @@ const EmptyState = ({ username, isCreator, isProfile, isSubscribed }) => {
   );
 
   return (
-    <Row justify='center' gutter={[0, 30]}>
-      <Col span={24} align='center'>
-        {isCreator ? <ArtworksEmptyIcon /> : <FallowingEmptyIcon />}
+    <Row justify='center' align='middle' gutter={[0, 20]}>
+      <Col span={24} align='center' padding_bottom={20}>
+        {isCreator ? (
+          <UploadIcon width={210} height={151} />
+        ) : (
+          <FallowingEmptyIcon width={210} height={151} />
+        )}
       </Col>
       <Col span={24} align='center' max_width={260}>
-        <Text level={3} color='white'>
-          {text}
-        </Text>
+        <Text level={3}>{text}</Text>
       </Col>
       {visible && (
         <Col span={24} align='center'>
