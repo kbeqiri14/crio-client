@@ -65,65 +65,65 @@ export const PosterCard = memo(
     };
 
     return (
-      <CustomTooltip
-        trigger={unavailable && !isLock ? ['hover'] : []}
-        className='overlay-process'
-        description='Your video is being processed. It can take a while. Please wait.'
+      <div
+        className={cc(['video-grid__item-container', { processing: unavailable, lock: isLock }])}
+        {...props}
       >
-        <div
-          className={cc(['video-grid__item-container', { processing: unavailable, lock: isLock }])}
-          {...props}
-        >
-          {showActions && (
-            <Actions
-              username={name}
-              artworkId={artworkId}
-              videoUri={videoUri}
-              title={title}
-              description={description}
-              accessibility={accessibility}
-            />
-          )}
-          <img
-            alt='Crio artworks poster'
-            src={thumbnailUri}
-            className={cc([{ lock: isLock || unavailable }])}
-            onClick={handleClick}
+        {showActions && (
+          <Actions
+            username={name}
+            artworkId={artworkId}
+            videoUri={videoUri}
+            title={title}
+            description={description}
+            accessibility={accessibility}
           />
-          {(index || index === 0) && <div className='poster-number'>{index}</div>}
-          {!isLock && !unavailable && (
-            <Row
-              justify='space-between'
-              align='bottom'
-              wrap={false}
-              className='video-grid__item-panel'
-              onClick={handleClick}
+        )}
+        <img
+          alt='Crio artworks poster'
+          src={thumbnailUri}
+          className={cc([{ lock: isLock || unavailable }])}
+          onClick={handleClick}
+        />
+        {(index || index === 0) && <div className='poster-number'>{index}</div>}
+        {!isLock && !unavailable && (
+          <Row
+            justify='space-between'
+            align='bottom'
+            wrap={false}
+            className='video-grid__item-panel'
+            onClick={handleClick}
+          >
+            <Col span={22}>
+              <Text level='60'>{name}</Text>
+              <Tooltip title={title}>
+                <Text level={'50'} ellipsis>
+                  {title}
+                </Text>
+              </Tooltip>
+            </Col>
+            <Col span={1}>
+              <PlayIcon />
+            </Col>
+          </Row>
+        )}
+        {isLock && (
+          <div className='video-grid__item-lock'>
+            <img alt='lock' src={lockImage} />
+          </div>
+        )}
+        {!isLock && unavailable && (
+          <div className='video-grid__item-lock'>
+            <CustomTooltip
+              trigger={unavailable && !isLock ? ['hover'] : []}
+              className='overlay-process'
+              description='Your video is being processed. It can take a while. Please wait.'
             >
-              <Col span={22}>
-                <Text level='60'>{name}</Text>
-                <Tooltip title={title}>
-                  <Text level={'50'} ellipsis>
-                    {title}
-                  </Text>
-                </Tooltip>
-              </Col>
-              <Col span={1}>
-                <PlayIcon />
-              </Col>
-            </Row>
-          )}
-          {isLock && (
-            <div className='video-grid__item-lock'>
-              <img alt='lock' src={lockImage} />
-            </div>
-          )}
-          {!isLock && unavailable && (
-            <div className='video-grid__item-lock'>
               <img alt='lock' src={loadingVideo} />
-            </div>
-          )}
-        </div>
-      </CustomTooltip>
+            </CustomTooltip>
+          </div>
+        )}
+      </div>
     );
   },
 );
