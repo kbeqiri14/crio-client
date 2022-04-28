@@ -30,8 +30,11 @@ export const Profile = () => {
     [loggedInUser.username, username],
   );
   const hideButton = useMemo(
-    () => !loggedInUser.username || !isProfile || (isProfile && loggedInUser.isCreator),
-    [isProfile, loggedInUser.isCreator, loggedInUser.username],
+    () =>
+      !loggedInUser.username ||
+      !isProfile ||
+      (isProfile && (loggedInUser.isCreator || !user?.isCreator)),
+    [isProfile, loggedInUser.username, loggedInUser.isCreator, user?.isCreator],
   );
   const isLock = useMemo(
     () => !(!isProfile || loggedInUser.isCreator || user?.isFollowing),
