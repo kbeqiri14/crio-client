@@ -122,10 +122,11 @@ export const PresentationView = () => {
                   </Link>
                 </Col>
               </Row>
-              <Row gutter={[22, 22]} justify='center' align='middle'>
+            </Col>
+            <Col>
+              <Row justify='center' gutter={[24, 24]}>
                 {data?.getRandomArtworks?.map((item, idx) => (
-                  <Col xl={8} md={12} sm={24} xs={24} key={idx}>
-                    {/* <PosterCard {...poster} /> */}
+                  <Col key={idx}>
                     <Poster
                       providerType={item?.providerType}
                       providerUserId={item?.providerUserId}
