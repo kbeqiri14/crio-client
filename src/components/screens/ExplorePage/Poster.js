@@ -83,7 +83,7 @@ const Poster = ({
   return (
     <div>
       <PosterWrapper style={isLock ? { pointerEvents: 'none' } : { cursor: 'pointer' }}>
-        <div className='info'>
+        <div className='info' onClick={() => !isLock && showArtwork()}>
           <Text level={4}>{title}</Text>
         </div>
         {isLock && (
