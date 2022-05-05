@@ -151,8 +151,8 @@ const Poster = ({
               className='border-radius-100'
             />
           </Col>
-          <Col>
-            <Text level={3} color='white'>
+          <Col max_width={309}>
+            <Text level={3} color='white' ellipsis={{ tooltip: username }}>
               {username}
             </Text>
           </Col>
