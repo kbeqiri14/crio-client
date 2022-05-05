@@ -25,6 +25,9 @@ const Tabs = styled(antTabs)`
   .ant-tabs-tab-active > div {
     color: ${(props) => props.theme.colors.white} !important;
   }
+  .ant-tabs-content-holder {
+    padding-bottom: 40px;
+  }
 `;
 
 export default Tabs;

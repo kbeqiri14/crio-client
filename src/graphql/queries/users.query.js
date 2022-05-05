@@ -25,6 +25,7 @@ export const me_fragment = gql`
     followersCount
     followingsCount
     isFollowing
+    followings
   }
 `;
 

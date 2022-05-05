@@ -69,6 +69,7 @@ export const Profile = () => {
               isCreator={user?.isCreator}
               isProfile={isProfile}
               isSubscribed={loggedInUser.isSubscribed}
+              isFollowing={user?.isFollowing}
               isLock={isLock}
             />
           )}

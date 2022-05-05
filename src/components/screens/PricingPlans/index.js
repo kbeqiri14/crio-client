@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useMemo } from 'react';
+import { Fragment, memo, useCallback, useMemo } from 'react';
 import { Col, Row } from 'antd';
 import cc from 'classcat';
 
@@ -47,7 +47,7 @@ const perksListPro = [
   '5 Vouchers / month to redeem for various perks from any of your favorite creators (e.g., personal video edits, downloadable content, tutorials, merchandise, and much more!)',
 ];
 
-export const PricingPlans = () => {
+const PricingPlans = () => {
   const { user } = useLoggedInUser();
 
   const handleClick = useCallback(() => {
@@ -114,3 +114,5 @@ export const PricingPlans = () => {
     </Fragment>
   );
 };
+
+export default memo(PricingPlans);

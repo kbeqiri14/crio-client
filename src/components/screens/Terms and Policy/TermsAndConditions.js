@@ -1,7 +1,7 @@
 import { Col, Row } from 'antd';
 import { Text, Title } from '@ui-kit/Text';
 
-export const TermsAndConditions = () => {
+const TermsAndConditions = () => {
   return (
     <section className='cr-privacy-policy'>
       <div className='pp--wrapper'>

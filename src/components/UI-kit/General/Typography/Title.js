@@ -23,6 +23,12 @@ const Title = styled(Typography.Title)`
     css`
       display: inline-block;
     `}
+
+  ${(props) =>
+    props?.max_width &&
+    css`
+      max-width: ${props.max_width}px;
+    `}
 `;
 
 export default Title;

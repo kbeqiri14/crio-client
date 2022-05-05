@@ -6,10 +6,10 @@ import { useLazyQuery, useQuery } from '@apollo/client';
 import { getArtwork, getRandomArtworks } from '@app/graphql/queries/artworks.query';
 import { urlify } from '@utils/helpers';
 import NotFound from '@shared/NotFound';
-import { PosterCard } from '@shared/PostersList';
 import { ReactComponent as NotFoundUser } from '@svgs/not-found.svg';
 import { Text } from '@ui-kit/Text';
 import Header from './Header';
+import Poster from '@app/components/screens/ExplorePage/Poster';
 
 export const Artwork = () => {
   const { pathname } = useLocation();
@@ -114,9 +114,21 @@ export const Artwork = () => {
               </Col>
             </Row>
             <Row gutter={[22, 22]} justify='center' align='middle'>
-              {artworks?.getRandomArtworks?.map((poster, idx) => (
+              {artworks?.getRandomArtworks?.map((item, idx) => (
                 <Col xl={8} md={12} sm={24} xs={24} key={idx}>
-                  <PosterCard {...poster} />
+                  {/* <PosterCard {...poster} /> */}
+                  <Poster
+                    providerType={item?.providerType}
+                    providerUserId={item?.providerUserId}
+                    avatar={item?.avatar}
+                    src={item?.thumbnailUri}
+                    userId={item?.userId}
+                    username={item?.name}
+                    artworkId={item?.artworkId}
+                    title={item?.title}
+                    description={item?.description}
+                    videoUri={item?.videoUri}
+                  />
                 </Col>
               ))}
             </Row>

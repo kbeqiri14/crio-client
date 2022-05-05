@@ -8,9 +8,9 @@ import { getRandomArtworks } from '@app/graphql/queries/artworks.query';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { urlify } from '@utils/helpers';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
-import { PosterCard } from '@shared/PostersList';
 import { Text, Title } from '@ui-kit/Text';
 import { ReactComponent as CloseIcon } from '@svgs/x.svg';
+import Poster from '@app/components/screens/ExplorePage/Poster';
 import './styles.less';
 
 export const PresentationView = () => {
@@ -123,9 +123,21 @@ export const PresentationView = () => {
                 </Col>
               </Row>
               <Row gutter={[22, 22]} justify='center' align='middle'>
-                {data?.getRandomArtworks?.map((poster, idx) => (
+                {data?.getRandomArtworks?.map((item, idx) => (
                   <Col xl={8} md={12} sm={24} xs={24} key={idx}>
-                    <PosterCard {...poster} />
+                    {/* <PosterCard {...poster} /> */}
+                    <Poster
+                      providerType={item?.providerType}
+                      providerUserId={item?.providerUserId}
+                      avatar={item?.avatar}
+                      src={item?.thumbnailUri}
+                      userId={item?.userId}
+                      username={item?.name}
+                      artworkId={item?.artworkId}
+                      title={item?.title}
+                      description={item?.description}
+                      videoUri={item?.videoUri}
+                    />
                   </Col>
                 ))}
               </Row>

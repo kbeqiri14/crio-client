@@ -60,7 +60,6 @@ const Followings = ({ username, isProfile, isSubscribed }) => {
     fetchPolicy: 'cache-and-network',
     ...(isProfile ? { variables: { username } } : {}),
   });
-  console.log(isProfile, followings?.getFollowings?.length, 'isProfile');
 
   if (
     username &&

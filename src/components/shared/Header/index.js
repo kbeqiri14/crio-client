@@ -14,8 +14,8 @@ import { ProfileMenu } from './__partials__/ProfileMenu';
 const getTabItems = (showPricing) => {
   const items = [
     {
-      id: 'home',
-      title: 'Home',
+      id: 'explore',
+      title: 'Explore',
       path: '/',
     },
   ];
@@ -37,7 +37,7 @@ export const Header = ({ isAuthenticated }) => {
 
   const menuItems = useMemo(() => getTabItems(!user.id || user?.isFan), [user?.id, user?.isFan]);
   const activeItem = useMemo(
-    () => location.pathname?.replace('/', '') || 'home',
+    () => location.pathname?.replace('/', '') || 'explore',
     [location.pathname],
   );
 

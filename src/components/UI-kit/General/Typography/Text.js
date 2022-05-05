@@ -32,6 +32,13 @@ const Text = styled(Typography.Text)`
     css`
       cursor: pointer;
     `}
+
+  ${(props) =>
+    props?.max_width &&
+    css`
+      display: inline-block;
+      max-width: ${props.max_width}px;
+    `}
 `;
 
 export default Text;

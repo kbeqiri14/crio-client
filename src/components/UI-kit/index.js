@@ -21,6 +21,7 @@ export { default as Title } from './General/Typography/Title';
   Data Display
 */
 export { default as Tabs } from './DataDisplay/Tabs';
+export { default as Carousel } from './DataDisplay/Carousel';
 
 /*
   Data Entry
