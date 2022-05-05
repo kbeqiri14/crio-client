@@ -55,11 +55,7 @@ export const ExplorePage = () => {
     <>
       <Carousel autoplay>
         {carouselPosters.map((item) => (
-          <TopPoster
-            key={carouselPosters?.[0].id}
-            username={carouselPosters?.[0]?.name}
-            thumbnail={carouselPosters?.[0]?.thumbnailUri}
-          />
+          <TopPoster key={item.id} username={item.name} thumbnail={item.thumbnailUri} />
         ))}
       </Carousel>
       <ExplorePageWrapper>
