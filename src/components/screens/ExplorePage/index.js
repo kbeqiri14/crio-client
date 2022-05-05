@@ -38,14 +38,13 @@ export const ExplorePage = () => {
   );
 
   const isLock = useCallback(
-    (userId, accessibility, name) => {
-      if (accessibility === 'everyone') {
+    (userId, accessibility) => {
+      if (user.isCreator || accessibility === 'everyone') {
         return true;
       }
-      console.log(user.followings, userId, name, user.followings?.includes(userId));
       return user.isSubscribed ? user.followings?.includes(userId) : false;
     },
-    [user.followings, user.isSubscribed],
+    [user.isCreator, user.followings, user.isSubscribed],
   );
 
   if (loading && !offset) {
@@ -56,7 +55,11 @@ export const ExplorePage = () => {
     <>
       <Carousel autoplay>
         {carouselPosters.map((item) => (
-          <TopPoster key={item.id} username={item?.name} thumbnail={item?.thumbnailUri} />
+          <TopPoster
+            key={carouselPosters?.[0].id}
+            username={carouselPosters?.[0]?.name}
+            thumbnail={carouselPosters?.[0]?.thumbnailUri}
+          />
         ))}
       </Carousel>
       <ExplorePageWrapper>
@@ -76,7 +79,7 @@ export const ExplorePage = () => {
                     title={item?.title}
                     description={item?.description}
                     videoUri={item?.videoUri}
-                    isLock={!isLock(item.userId, item.accessibility, item?.name)}
+                    isLock={!isLock(item.userId, item.accessibility)}
                   />
                 </Col>
               ))}

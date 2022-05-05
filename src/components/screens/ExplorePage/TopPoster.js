@@ -14,7 +14,7 @@ const TopPoster = ({ username, thumbnail }) => {
           width: '100%',
           height: '100%',
           position: 'absolute',
-          backgroundImage: 'red',
+          backgroundImage: 'linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 103.09%)',
         }}
       />
       <Row
@@ -44,24 +44,26 @@ const TopPoster = ({ username, thumbnail }) => {
             </Button>
           </Link>
         </Col>
+        <Col spam={24} style={{ width: '100%' }}>
+          <div
+            style={{
+              position: 'absolute',
+              bottom: -50,
+              right: -90,
+            }}
+          >
+            <Text level={3} color='white'>
+              Artwork by{' '}
+            </Text>
+            <Link to={`/profile/${username}`}>
+              <Text level={3} color='white' underline>
+                {username}
+              </Text>
+            </Link>
+          </div>
+        </Col>
       </Row>
       <img alt='artwork' height={380} width='100%' style={{ objectFit: 'cover' }} src={thumbnail} />
-      <div
-        style={{
-          position: 'absolute',
-          bottom: 20,
-          // right: 20,
-        }}
-      >
-        <Text level={3} color='white'>
-          Artwork by{' '}
-        </Text>
-        <Link to={`/profile/${username}`}>
-          <Text level={3} color='white' underline>
-            {username}
-          </Text>
-        </Link>
-      </div>
     </TopPosterWrapper>
   );
 };
