@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Col, Modal, Row } from 'antd';
 import { useLazyQuery } from '@apollo/client';
 
+import PostersList from '@app/components/screens/ExplorePage/PostersList';
 import { isFollowing } from '@app/graphql/queries/users.query';
 import { getRandomArtworks } from '@app/graphql/queries/artworks.query';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
@@ -10,7 +11,6 @@ import { urlify } from '@utils/helpers';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { Text, Title } from '@ui-kit/Text';
 import { ReactComponent as CloseIcon } from '@svgs/x.svg';
-import Poster from '@app/components/screens/ExplorePage/Poster';
 import './styles.less';
 
 export const PresentationView = () => {
@@ -124,24 +124,7 @@ export const PresentationView = () => {
               </Row>
             </Col>
             <Col>
-              <Row justify='center' gutter={[24, 24]}>
-                {data?.getRandomArtworks?.map((item, idx) => (
-                  <Col key={idx}>
-                    <Poster
-                      providerType={item?.providerType}
-                      providerUserId={item?.providerUserId}
-                      avatar={item?.avatar}
-                      src={item?.thumbnailUri}
-                      userId={item?.userId}
-                      username={item?.name}
-                      artworkId={item?.artworkId}
-                      title={item?.title}
-                      description={item?.description}
-                      videoUri={item?.videoUri}
-                    />
-                  </Col>
-                ))}
-              </Row>
+              <PostersList postersList={data?.getRandomArtworks} />
             </Col>
           </Row>
         )}

@@ -29,20 +29,6 @@ const Works = ({ username, isProfile, isFollowing, isLock }) => {
       {(!loading || !initialPolling) && !works?.length ? (
         <EmptyState username={username} isCreator={true} isProfile={isProfile} />
       ) : (
-        // <div className='cr-feed__posters-list cr-landing__video-grid profile-artworks-list'>
-        //   <Row
-        //     style={{ width: '100%' }}
-        //     gutter={[22, 35]}
-        //     justify='start'
-        //     className='cr-landing__video-grid__container'
-        //   >
-        //     {works.map((poster, index) => (
-        //       <Col key={index} xl={6} lg={8} md={12} sm={24} xs={24} className='video-grid__item'>
-        //         <PosterCard {...poster} isLock={isLock} showActions={!isProfile} />
-        //       </Col>
-        //     ))}
-        //   </Row>
-        // </div>
         <Row justify='center' gutter={[24, 24]}>
           {works.map((item) => (
             <Col>

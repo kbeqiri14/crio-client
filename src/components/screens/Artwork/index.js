@@ -3,13 +3,13 @@ import { Link, useLocation } from 'react-router-dom';
 import { Col, Row, Skeleton } from 'antd';
 import { useLazyQuery, useQuery } from '@apollo/client';
 
+import PostersList from '@app/components/screens/ExplorePage/PostersList';
 import { getArtwork, getRandomArtworks } from '@app/graphql/queries/artworks.query';
 import { urlify } from '@utils/helpers';
 import NotFound from '@shared/NotFound';
 import { ReactComponent as NotFoundUser } from '@svgs/not-found.svg';
 import { Text } from '@ui-kit/Text';
 import Header from './Header';
-import Poster from '@app/components/screens/ExplorePage/Poster';
 
 export const Artwork = () => {
   const { pathname } = useLocation();
@@ -113,24 +113,7 @@ export const Artwork = () => {
                 </Link>
               </Col>
             </Row>
-            <Row justify='center' gutter={[24, 24]}>
-              {artworks?.getRandomArtworks?.map((item, idx) => (
-                <Col key={idx}>
-                  <Poster
-                    providerType={item?.providerType}
-                    providerUserId={item?.providerUserId}
-                    avatar={item?.avatar}
-                    src={item?.thumbnailUri}
-                    userId={item?.userId}
-                    username={item?.name}
-                    artworkId={item?.artworkId}
-                    title={item?.title}
-                    description={item?.description}
-                    videoUri={item?.videoUri}
-                  />
-                </Col>
-              ))}
-            </Row>
+            <PostersList postersList={artworks?.getRandomArtworks} />
           </Col>
         </Row>
       )}

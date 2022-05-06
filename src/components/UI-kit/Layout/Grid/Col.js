@@ -38,6 +38,12 @@ const Col = styled(antCol)`
       padding-bottom: ${props.padding_bottom}px;
     `}
 
+  ${(props) =>
+    props.padding_right &&
+    css`
+      padding-right: ${props.padding_right}px;
+    `}
+
     ${(props) =>
     props?.align &&
     css`
