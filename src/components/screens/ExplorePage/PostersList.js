@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { Col, Row } from '@ui-kit';
@@ -7,6 +7,13 @@ import Poster from './Poster';
 export const PostersList = ({ postersList, showActions }) => {
   const { user } = useLoggedInUser();
 
+  const tooltip = useMemo(
+    () =>
+      user.isSubscribed
+        ? 'Follow Creator to Gain Access'
+        : 'Subscribe and then Follow Creator to Gain Access',
+    [user.isSubscribed],
+  );
   const isLock = useCallback(
     (userId, accessibility) => {
       if (user.isCreator || accessibility === 'everyone') {
@@ -35,6 +42,7 @@ export const PostersList = ({ postersList, showActions }) => {
             videoUri={item?.videoUri}
             isLock={!isLock(item.userId, item.accessibility)}
             showActions={showActions}
+            tooltip={tooltip}
           />
         </Col>
       ))}

@@ -19,7 +19,7 @@ const Sider = styled(Layout.Sider)`
 
 const Content = styled(Layout.Content)`
   height: 100% !important;
-  padding: 40px 25px;
+  padding: 40px 10px;
   background: #202020;
   margin-top: 0 !important;
   margin-left: 355px;

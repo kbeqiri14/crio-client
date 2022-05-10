@@ -67,10 +67,11 @@ const Poster = ({
   src,
   isLock,
   showActions,
+  tooltip,
 }) => {
   const { pathname } = useLocation();
-  const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
   const { setVideoInfo } = usePresentation();
+  const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
   const unavailable = useMemo(() => status && status !== 'available', [status]);
 
   const showArtwork = () => {
@@ -100,10 +101,7 @@ const Poster = ({
         </div>
         {isLock && (
           <div className='lock'>
-            <CustomTooltip
-              className='overlay-process'
-              description='Subscribe and then Follow Creator to Gain Access'
-            >
+            <CustomTooltip className='overlay-process' description={tooltip}>
               <img alt='lock' src={lockImage} />
             </CustomTooltip>
           </div>
