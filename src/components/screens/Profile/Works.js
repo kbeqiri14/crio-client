@@ -33,6 +33,5 @@ const Works = ({ username, isProfile, isFollowing, isLock }) => {
     </Spinner>
   );
 };
-// isLock={isLock && item?.accessibility === 'subscriber_only'}
 
 export default memo(Works);
