@@ -2,6 +2,7 @@ import { Typography } from 'antd';
 import styled, { css } from 'styled-components';
 
 const Title = styled(Typography.Title)`
+  color: ${(props) => props.theme.colors.white} !important;
   margin-bottom: ${(props) => (props && props.marginbottom) || 0}px !important;
 
   ${(props) =>

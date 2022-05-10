@@ -64,7 +64,7 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
         <Col span={isProfile ? 24 : 20}>
           <Row gutter={[0, 4]} style={isProfile ? {} : { marginLeft: 50 }}>
             <Col span={24} align='center'>
-              <Title level={2} color='white' ellipsis={{ tooltip: username }}>
+              <Title level={2} ellipsis={{ tooltip: username }}>
                 @{username}
               </Title>
             </Col>

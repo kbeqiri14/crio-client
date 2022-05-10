@@ -51,9 +51,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
     <BlurredModal width={708} visible={visible} onCancel={onCancel}>
       <Row justify='center' gutter={[0, 8]}>
         <Col span={24} padding_bottom={32}>
-          <Title level={1} color='white'>
-            Edit Profile
-          </Title>
+          <Title level={1}>Edit Profile</Title>
         </Col>
         <Col span={24}>
           <Text level={3}>Username *</Text>
