@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { Col, Row, Input } from 'antd';
 import ActionButtons from '@shared/ActionButtons';
 import { BlurredModal } from '@ui-kit/Modal';
@@ -49,4 +49,4 @@ export const SendEmailModal = ({ handleSendEmail, onCancel, loading }) => {
   );
 };
 
-export default SendEmailModal;
+export default memo(SendEmailModal);

@@ -8,7 +8,7 @@ import Confirmation from '@shared/Confirmation';
 import { Title, Text } from '@ui-kit/Text';
 import { errorToast, successToast } from '@ui-kit/Notification';
 
-export const CancelSubscription = memo(() => {
+export const CancelSubscription = () => {
   const [visible, setVisible] = useState(false);
   const show = useCallback(() => setVisible(true), []);
   const hide = useCallback(() => setVisible(false), []);
@@ -81,6 +81,6 @@ export const CancelSubscription = memo(() => {
       )}
     </div>
   );
-});
+};
 
-export default CancelSubscription;
+export default memo(CancelSubscription);

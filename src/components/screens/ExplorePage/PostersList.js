@@ -4,7 +4,7 @@ import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { Col, Row } from '@ui-kit';
 import Poster from './Poster';
 
-export const PostersList = ({ postersList }) => {
+export const PostersList = ({ postersList, showActions }) => {
   const { user } = useLoggedInUser();
 
   const isLock = useCallback(
@@ -31,8 +31,10 @@ export const PostersList = ({ postersList }) => {
             artworkId={item?.artworkId}
             title={item?.title}
             description={item?.description}
+            status={item?.status}
             videoUri={item?.videoUri}
             isLock={!isLock(item.userId, item.accessibility)}
+            showActions={showActions}
           />
         </Col>
       ))}

@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -9,6 +9,7 @@ import { Col, Row, Text } from '@ui-kit';
 import { CustomTooltip } from '@ui-kit/Tooltip';
 import Actions from '@screens/Video/Actions';
 import lockImage from '@images/lock.png';
+import loadingVideo from '@images/loading-video.png';
 
 const PosterWrapper = styled('div')`
   border: 1px solid ${(props) => props.theme.colors.dark50};
@@ -70,6 +71,7 @@ const Poster = ({
   const { pathname } = useLocation();
   const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
   const { setVideoInfo } = usePresentation();
+  const unavailable = useMemo(() => status && status !== 'available', [status]);
 
   const showArtwork = () => {
     const id = videoUri?.substring(videoUri?.lastIndexOf('/') + 1);
@@ -106,17 +108,16 @@ const Poster = ({
             </CustomTooltip>
           </div>
         )}
-        {/* {!isLock && unavailable && (
-            <div className='video-grid__item-lock'>
-              <CustomTooltip
-                trigger={unavailable && !isLock ? ['hover'] : []}
-                className='overlay-process'
-                description='Your video is being processed. It can take a while. Please wait.'
-              >
-                <img alt='lock' src={loadingVideo} />
-              </CustomTooltip>
-            </div>
-          )} */}
+        {unavailable && (
+          <div className='lock'>
+            <CustomTooltip
+              className='overlay-process'
+              description='Your video is being processed. It can take a while. Please wait.'
+            >
+              <img alt='lock' src={loadingVideo} />
+            </CustomTooltip>
+          </div>
+        )}
         {showActions && (
           <Actions
             username={username}

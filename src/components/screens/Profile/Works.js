@@ -1,12 +1,11 @@
 import { memo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Col, Row } from 'antd';
 import { useQuery } from '@apollo/client';
 
 import { getUserArtworks } from '@app/graphql/queries/artworks.query';
 import { Spinner } from '@ui-kit/Spinner';
 import EmptyState from '@shared/EmptyState';
-import Poster from '@app/components/screens/ExplorePage/Poster';
+import PostersList from '@app/components/screens/ExplorePage/PostersList';
 
 const Works = ({ username, isProfile, isFollowing, isLock }) => {
   const { pathname } = useLocation();
@@ -29,30 +28,11 @@ const Works = ({ username, isProfile, isFollowing, isLock }) => {
       {(!loading || !initialPolling) && !works?.length ? (
         <EmptyState username={username} isCreator={true} isProfile={isProfile} />
       ) : (
-        <Row justify='center' gutter={[24, 24]}>
-          {works.map((item) => (
-            <Col>
-              <Poster
-                providerType={item?.providerType}
-                providerUserId={item?.providerUserId}
-                avatar={item?.avatar}
-                src={item?.thumbnailUri}
-                userId={item?.userId}
-                username={item?.name}
-                artworkId={item?.artworkId}
-                title={item?.title}
-                description={item?.description}
-                videoUri={item?.videoUri}
-                accessibility={item?.accessibility}
-                isLock={isLock && item?.accessibility === 'subscriber_only'}
-                showActions={!isProfile}
-              />
-            </Col>
-          ))}
-        </Row>
+        <PostersList postersList={works} showActions={!isProfile} />
       )}
     </Spinner>
   );
 };
+// isLock={isLock && item?.accessibility === 'subscriber_only'}
 
 export default memo(Works);

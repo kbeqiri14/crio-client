@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import history from '@app/configs/history';
 import { signOut } from '@app/auth';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
@@ -50,4 +50,4 @@ export const ProfileMenu = ({ user }) => {
   );
 };
 
-export default ProfileMenu;
+export default memo(ProfileMenu);

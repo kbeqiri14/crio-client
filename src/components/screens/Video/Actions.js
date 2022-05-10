@@ -8,7 +8,7 @@ import { Text } from '@ui-kit/Text';
 import { successToast } from '@ui-kit/Notification';
 import './styles.less';
 
-const Actions = memo((props) => {
+const Actions = (props) => {
   const [visible, setVisible] = useState(false);
   const showConfirmation = useCallback(() => setVisible(true), []);
   const hideConfirmation = useCallback(() => setVisible(false), []);
@@ -53,6 +53,6 @@ const Actions = memo((props) => {
       )}
     </Fragment>
   );
-});
+};
 
-export default Actions;
+export default memo(Actions);

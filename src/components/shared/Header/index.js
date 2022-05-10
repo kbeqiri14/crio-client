@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Row, Col } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
@@ -66,4 +66,4 @@ export const Header = ({ isAuthenticated }) => {
   );
 };
 
-export default Header;
+export default memo(Header);
