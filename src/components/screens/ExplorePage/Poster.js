@@ -74,14 +74,12 @@ const Poster = ({
   const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
   const unavailable = useMemo(() => status && status !== 'available', [status]);
 
+  const goToPricing = useCallback(() => {
+    setVideoInfo({});
+    history.push('/pricing');
+  }, [setVideoInfo]);
+
   const showArtwork = useCallback(() => {
-    if (unavailable) {
-      return;
-    }
-    if (isLock) {
-      history.push('/pricing');
-      return;
-    }
     if (pathname.includes('/artwork/')) {
       history.push(`/artwork/${artworkId}`);
       return;
@@ -107,8 +105,6 @@ const Poster = ({
     title,
     description,
     videoUri,
-    isLock,
-    unavailable,
     avatarUrl,
     pathname,
     setVideoInfo,
@@ -121,7 +117,7 @@ const Poster = ({
           <Text level={4}>{title}</Text>
         </div>
         {isLock && (
-          <div className='lock'>
+          <div className='lock' onClick={goToPricing}>
             <CustomTooltip className='overlay-process' description={tooltip}>
               <img alt='lock' src={lockImage} />
             </CustomTooltip>
