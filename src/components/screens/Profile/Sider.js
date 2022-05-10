@@ -20,7 +20,7 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
 
   if (!user.username) {
     return (
-      <Row gutter={[0, 40]} padding_top={40} padding_horizontal={28} padding_bottom={20}>
+      <Row gutter={[0, 40]} padding_top={40} padding_horizontal={20} padding_bottom={20}>
         <Col span={24} align='center'>
           <Skeleton round active avatar={{ size: 122 }} title={false} paragraph={false} />
         </Col>
@@ -37,7 +37,7 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
         gutter={[0, 30]}
         justify='center'
         padding_top={40}
-        padding_horizontal={28}
+        padding_horizontal={20}
         padding_bottom={20}
       >
         <Col span={24} align='center' margin_bottom={20}>
