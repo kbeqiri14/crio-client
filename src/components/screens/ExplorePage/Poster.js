@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -16,7 +16,7 @@ const PosterWrapper = styled('div')`
   box-sizing: border-box;
   border-radius: 30px;
   margin-bottom: 8px;
-  cursor: 'pointer';
+  cursor: pointer;
   img {
     border-radius: 30px;
     object-fit: cover;
@@ -74,8 +74,14 @@ const Poster = ({
   const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
   const unavailable = useMemo(() => status && status !== 'available', [status]);
 
-  const showArtwork = () => {
-    const id = videoUri?.substring(videoUri?.lastIndexOf('/') + 1);
+  const showArtwork = useCallback(() => {
+    if (unavailable) {
+      return;
+    }
+    if (isLock) {
+      history.push('/pricing');
+      return;
+    }
     if (pathname.includes('/artwork/')) {
       history.push(`/artwork/${artworkId}`);
     } else {
@@ -83,7 +89,7 @@ const Poster = ({
       setVideoInfo({
         title,
         description,
-        id,
+        id: videoUri?.substring(videoUri?.lastIndexOf('/') + 1),
         artworkId,
         userId,
         providerType,
@@ -92,7 +98,22 @@ const Poster = ({
         avatar: avatarUrl,
       });
     }
-  };
+  }, [
+    providerType,
+    providerUserId,
+    userId,
+    username,
+    artworkId,
+    title,
+    description,
+    videoUri,
+    isLock,
+    unavailable,
+    avatarUrl,
+    pathname,
+    setVideoInfo,
+  ]);
+
   return (
     <>
       <PosterWrapper onClick={showArtwork}>
