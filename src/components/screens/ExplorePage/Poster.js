@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import history from '@app/configs/history';
+import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { Col, Row, Text } from '@ui-kit';
@@ -43,7 +44,7 @@ const PosterWrapper = styled('div')`
     width: 332px;
     height: 332px;
   }
-  &:hover:not(.isLock) {
+  &:hover:not(.is-locked) {
     .actions,
     .info {
       opacity: 1;
@@ -65,14 +66,30 @@ const Poster = ({
   accessibility,
   status,
   src,
-  isLock,
-  showActions,
-  tooltip,
 }) => {
+  const { user } = useLoggedInUser();
   const { pathname } = useLocation();
   const { setVideoInfo } = usePresentation();
   const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
+
+  const showActions = useMemo(() => {
+    const username = pathname.split('/').slice(-1)[0];
+    return username === user.username;
+  }, [user.username, pathname]);
   const unavailable = useMemo(() => status && status !== 'available', [status]);
+  const tooltip = useMemo(
+    () =>
+      user.isSubscribed
+        ? 'Follow Creator to Gain Access'
+        : 'Subscribe and then Follow Creator to Gain Access',
+    [user.isSubscribed],
+  );
+  const isLocked = useMemo(() => {
+    if (user.isCreator || accessibility === 'everyone') {
+      return false;
+    }
+    return user.isSubscribed ? !user.followings?.includes(userId) : true;
+  }, [user.isCreator, user.isSubscribed, user.followings, accessibility, userId]);
 
   const goToPricing = useCallback(() => {
     setVideoInfo({});
@@ -112,11 +129,11 @@ const Poster = ({
 
   return (
     <>
-      <PosterWrapper className={isLock ? 'isLock' : ''}>
+      <PosterWrapper className={isLocked ? 'is-locked' : ''}>
         <div className='info' onClick={showArtwork}>
           <Text level={4}>{title}</Text>
         </div>
-        {isLock && (
+        {isLocked && (
           <div className='lock' onClick={goToPricing}>
             <CustomTooltip className='overlay-process' description={tooltip}>
               <img alt='lock' src={lockImage} />

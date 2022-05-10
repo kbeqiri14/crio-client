@@ -28,7 +28,7 @@ const Works = ({ username, isProfile, isFollowing, isLock }) => {
       {(!loading || !initialPolling) && !works?.length ? (
         <EmptyState username={username} isCreator={true} isProfile={isProfile} />
       ) : (
-        <PostersList postersList={works} showActions={!isProfile} />
+        <PostersList postersList={works} />
       )}
     </Spinner>
   );
