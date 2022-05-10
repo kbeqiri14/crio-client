@@ -84,20 +84,20 @@ const Poster = ({
     }
     if (pathname.includes('/artwork/')) {
       history.push(`/artwork/${artworkId}`);
-    } else {
-      window.history.replaceState('', '', `/artwork/${artworkId}`);
-      setVideoInfo({
-        title,
-        description,
-        id: videoUri?.substring(videoUri?.lastIndexOf('/') + 1),
-        artworkId,
-        userId,
-        providerType,
-        providerUserId,
-        name: username,
-        avatar: avatarUrl,
-      });
+      return;
     }
+    window.history.replaceState('', '', `/artwork/${artworkId}`);
+    setVideoInfo({
+      title,
+      description,
+      id: videoUri?.substring(videoUri?.lastIndexOf('/') + 1),
+      artworkId,
+      userId,
+      providerType,
+      providerUserId,
+      name: username,
+      avatar: avatarUrl,
+    });
   }, [
     providerType,
     providerUserId,
@@ -116,8 +116,8 @@ const Poster = ({
 
   return (
     <>
-      <PosterWrapper onClick={showArtwork}>
-        <div className='info'>
+      <PosterWrapper>
+        <div className='info' onClick={showArtwork}>
           <Text level={4}>{title}</Text>
         </div>
         {isLock && (
@@ -147,7 +147,7 @@ const Poster = ({
             accessibility={accessibility}
           />
         )}
-        <img src={src} alt='artwork' width={332} height={332} />
+        <img src={src} alt='artwork' width={332} height={332} onClick={showArtwork} />
       </PosterWrapper>
       <Link to={`/profile/${username}`}>
         <Row gutter={12} align='middle'>
