@@ -2,6 +2,9 @@ import { Carousel as antCarousel } from 'antd';
 import styled from 'styled-components';
 
 const Carousel = styled(antCarousel)`
+  .slick-dots li {
+    width: 16px !important;
+  }
   .slick-dots li button {
     width: 9px;
     height: 9px;

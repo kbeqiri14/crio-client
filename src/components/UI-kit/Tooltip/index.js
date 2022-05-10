@@ -18,7 +18,7 @@ export const CustomTooltip = ({
     overlayClassName={className}
     visible={trigger ? undefined : visible}
     trigger={trigger}
-    color='#707280'
+    color='#202020'
     title={
       <Fragment>
         {title && (

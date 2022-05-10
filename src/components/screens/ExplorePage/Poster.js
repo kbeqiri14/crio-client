@@ -27,7 +27,7 @@ const PosterWrapper = styled('div')`
     background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 103.09%);
     bottom: 39px;
     padding: 26px 20px;
-    width: 332px;
+    width: 330px;
     border-bottom-left-radius: 30px;
     border-bottom-right-radius: 30px;
     opacity: 0;
@@ -41,8 +41,8 @@ const PosterWrapper = styled('div')`
     position: absolute;
     backdrop-filter: blur(8px);
     border-radius: 30px;
-    width: 332px;
-    height: 332px;
+    width: 330px;
+    height: 330px;
   }
   &:hover:not(.is-locked) {
     .actions,
@@ -162,7 +162,7 @@ const Poster = ({
             accessibility={accessibility}
           />
         )}
-        <img src={src} alt='artwork' width={332} height={332} onClick={showArtwork} />
+        <img src={src} alt='artwork' width={330} height={330} onClick={showArtwork} />
       </PosterWrapper>
       <Link to={`/profile/${username}`}>
         <Row gutter={12} align='middle'>
