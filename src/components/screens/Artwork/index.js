@@ -1,17 +1,18 @@
 import { memo, useMemo } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Col, Row, Skeleton } from 'antd';
+import { useLocation } from 'react-router-dom';
+import { Skeleton } from 'antd';
 import { useLazyQuery, useQuery } from '@apollo/client';
 
-import PostersList from '@app/components/screens/ExplorePage/PostersList';
+import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { getArtwork, getRandomArtworks } from '@app/graphql/queries/artworks.query';
-import { urlify } from '@utils/helpers';
 import NotFound from '@shared/NotFound';
 import { ReactComponent as NotFoundUser } from '@svgs/not-found.svg';
-import { Text } from '@ui-kit/Text';
-import Header from './Header';
+import { Col, Row } from '@ui-kit';
+import Content from './Content';
+import MoreBySection from './MoreBySection';
 
 export const Artwork = () => {
+  const { user } = useLoggedInUser();
   const { pathname } = useLocation();
   const artworkId = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
 
@@ -31,19 +32,25 @@ export const Artwork = () => {
     () => artwork.videoUri?.substring(artwork.videoUri?.lastIndexOf('/') + 1),
     [artwork.videoUri],
   );
+  const isLocked = useMemo(() => {
+    if (user.isCreator || artwork.accessibility === 'everyone') {
+      return false;
+    }
+    return user.isSubscribed ? !user.followings?.includes(artwork.userId) : true;
+  }, [user.isCreator, user.isSubscribed, user.followings, artwork.accessibility, artwork.userId]);
 
   if (loadingArtwork) {
     return (
       <div className='video-view-container'>
-        <Row className='video-view-column'>
-          <Col span={18} offset={3} className='video-view-author'>
+        <Row className='full-width'>
+          <Col span={18} offset={3} padding_bottom={30}>
+            <Skeleton round active title={{ width: '100%' }} paragraph={null} />
             <Skeleton
               round
               active
-              avatar={{ size: 83 }}
+              avatar={{ shape: 'circle', size: 33 }}
               title={{ width: '100%' }}
-              paragraph={{ rows: 1 }}
-              loading={loadingArtwork}
+              paragraph={null}
             />
           </Col>
           <Col span={24} align='center'>
@@ -52,7 +59,6 @@ export const Artwork = () => {
               avatar={{ shape: 'square', size: 800 }}
               title={false}
               paragraph={false}
-              loading={loadingArtwork}
             />
           </Col>
         </Row>
@@ -63,61 +69,12 @@ export const Artwork = () => {
     return <NotFound text='Artwork is not found' icon={<NotFoundUser />} />;
   }
   return (
-    <div className='video-view-container'>
-      <Row className='video-view-column'>
-        <Col span={18} offset={3} className='video-view-author'>
-          {!loadingArtwork && (
-            <Header
-              providerType={artwork.providerType}
-              providerUserId={artwork.providerUserId}
-              avatar={artwork.avatar}
-              title={artwork.title}
-              name={artwork.name}
-            />
-          )}
-        </Col>
-        <Col span={18} offset={3}>
-          <div className='video-view__player embed-responsive aspect-ratio-16/9'>
-            <iframe
-              title={artwork.title || 'Crio video player'}
-              src={`https://player.vimeo.com/video/${videoUri}?h=dc77330a55&color=ffffff&title=0&byline=0&portrait=0`}
-              frameBorder='0'
-              allow='autoplay; fullscreen; picture-in-picture'
-              allowFullScreen
-            />
-          </div>
-        </Col>
-        <Col span={18} offset={3}>
-          <Skeleton round active title={false} paragraph={{ rows: 2 }} loading={loadingArtwork} />
-          {!loadingArtwork && (
-            <Text level='10' color='white'>
-              <div dangerouslySetInnerHTML={{ __html: urlify(artwork.description) }} />
-            </Text>
-          )}
-        </Col>
-      </Row>
+    <>
+      <Content videoInfo={artwork} videoUri={videoUri} />
       {artworks?.getRandomArtworks?.length >= 3 && (
-        <Row justify='start' className='video-player-more'>
-          <Col span={18} className='column'>
-            <Row justify='space-between' align='middle'>
-              <Col>
-                <Text level='40' color='white'>
-                  More by {artwork.name}
-                </Text>
-              </Col>
-              <Col>
-                <Link to={`/profile/${artwork.name}`}>
-                  <Text level='20' color='primary'>
-                    View profile
-                  </Text>
-                </Link>
-              </Col>
-            </Row>
-            <PostersList postersList={artworks?.getRandomArtworks} />
-          </Col>
-        </Row>
+        <MoreBySection videoInfo={artwork} postersList={artworks?.getRandomArtworks} />
       )}
-    </div>
+    </>
   );
 };
 
