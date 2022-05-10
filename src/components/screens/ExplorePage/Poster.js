@@ -92,9 +92,11 @@ const Poster = ({
   }, [user.isCreator, user.isSubscribed, user.followings, accessibility, userId]);
 
   const goToPricing = useCallback(() => {
-    setVideoInfo({});
-    history.push('/pricing');
-  }, [setVideoInfo]);
+    if (!user.isSubscribed) {
+      setVideoInfo({});
+      history.push('/pricing');
+    }
+  }, [setVideoInfo, user.isSubscribed]);
 
   const showArtwork = useCallback(() => {
     if (pathname.includes('/artwork/')) {
