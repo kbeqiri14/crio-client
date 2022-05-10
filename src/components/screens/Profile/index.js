@@ -52,7 +52,7 @@ export const Profile = () => {
   }
   return (
     <Layout>
-      <Sider>
+      <Sider width={355} breakpoint='lg' collapsedWidth={0}>
         <ProfileSider
           user={user}
           isProfile={isProfile}
