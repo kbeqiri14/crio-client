@@ -5,7 +5,7 @@ const Layout = styled(antLayout)``;
 
 const Sider = styled(Layout.Sider)`
   background-color: ${(props) => props.theme.colors.dark100};
-  padding-top: 80px;
+  padding-top: 40px;
 `;
 
 const Content = styled(Layout.Content)`

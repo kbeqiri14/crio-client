@@ -43,7 +43,7 @@ const PosterWrapper = styled('div')`
     width: 332px;
     height: 332px;
   }
-  &:hover {
+  &:hover:not(.isLock) {
     .actions,
     .info {
       opacity: 1;
@@ -112,7 +112,7 @@ const Poster = ({
 
   return (
     <>
-      <PosterWrapper>
+      <PosterWrapper className={isLock ? 'isLock' : ''}>
         <div className='info' onClick={showArtwork}>
           <Text level={4}>{title}</Text>
         </div>

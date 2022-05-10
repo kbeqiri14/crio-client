@@ -25,7 +25,7 @@ export const PostersList = ({ postersList, showActions }) => {
   );
 
   return (
-    <Row justify='center' gutter={[24, 24]}>
+    <Row justify='center' gutter={[22, 20]}>
       {postersList.map((item) => (
         <Col key={item.id}>
           <Poster
