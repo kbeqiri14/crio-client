@@ -70,7 +70,7 @@ export const Artwork = () => {
   }
   return (
     <>
-      <Content videoInfo={artwork} videoUri={videoUri} />
+      <Content videoInfo={artwork} videoUri={videoUri} isLocked={isLocked} />
       {artworks?.getRandomArtworks?.length >= 3 && (
         <MoreBySection videoInfo={artwork} postersList={artworks?.getRandomArtworks} />
       )}

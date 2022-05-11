@@ -7,16 +7,15 @@ import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { Col, Row, Text } from '@ui-kit';
-import { CustomTooltip } from '@ui-kit/Tooltip';
 import Actions from '@screens/Video/Actions';
-import lockImage from '@images/lock.png';
-import loadingVideo from '@images/loading-video.png';
+import LockState from './LockState';
 
 const PosterWrapper = styled('div')`
+  width: 332px;
+  height: 332px;
   border: 1px solid ${(props) => props.theme.colors.dark50};
   box-sizing: border-box;
   border-radius: 30px;
-  margin-bottom: 8px;
   cursor: pointer;
   img {
     border-radius: 30px;
@@ -33,16 +32,6 @@ const PosterWrapper = styled('div')`
     opacity: 0;
     visibility: hidden;
     transition: visibility 0s, opacity 0.4s linear;
-  }
-  .lock {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    backdrop-filter: blur(8px);
-    border-radius: 30px;
-    width: 330px;
-    height: 330px;
   }
   &:hover:not(.is-locked) {
     .actions,
@@ -76,27 +65,13 @@ const Poster = ({
     const username = pathname.split('/').slice(-1)[0];
     return username === user.username;
   }, [user.username, pathname]);
-  const unavailable = useMemo(() => status && status !== 'available', [status]);
-  const tooltip = useMemo(
-    () =>
-      user.isSubscribed
-        ? 'Follow Creator to Gain Access'
-        : 'Subscribe and then Follow Creator to Gain Access',
-    [user.isSubscribed],
-  );
+
   const isLocked = useMemo(() => {
     if (user.isCreator || accessibility === 'everyone') {
       return false;
     }
     return user.isSubscribed ? !user.followings?.includes(userId) : true;
   }, [user.isCreator, user.isSubscribed, user.followings, accessibility, userId]);
-
-  const goToPricing = useCallback(() => {
-    if (!user.isSubscribed) {
-      setVideoInfo({});
-      history.push('/pricing');
-    }
-  }, [setVideoInfo, user.isSubscribed]);
 
   const showArtwork = useCallback(() => {
     if (pathname.includes('/artwork/')) {
@@ -135,23 +110,7 @@ const Poster = ({
         <div className='info' onClick={showArtwork}>
           <Text level={4}>{title}</Text>
         </div>
-        {isLocked && (
-          <div className='lock' onClick={goToPricing}>
-            <CustomTooltip className='overlay-process' description={tooltip}>
-              <img alt='lock' src={lockImage} />
-            </CustomTooltip>
-          </div>
-        )}
-        {unavailable && (
-          <div className='lock'>
-            <CustomTooltip
-              className='overlay-process'
-              description='Your video is being processed. It can take a while. Please wait.'
-            >
-              <img alt='lock' src={loadingVideo} />
-            </CustomTooltip>
-          </div>
-        )}
+        <LockState userId={userId} accessibility={accessibility} status={status} />
         {showActions && (
           <Actions
             username={username}
@@ -165,7 +124,7 @@ const Poster = ({
         <img src={src} alt='artwork' width={330} height={330} onClick={showArtwork} />
       </PosterWrapper>
       <Link to={`/profile/${username}`}>
-        <Row gutter={12} align='middle'>
+        <Row gutter={12} align='middle' padding_top={8}>
           <Col>
             <img
               src={avatarUrl}
