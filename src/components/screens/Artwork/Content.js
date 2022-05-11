@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { urlify } from '@utils/helpers';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
-import { Button, Col, Row, Text, Title } from '@ui-kit';
+import { Col, Row, Text, Title } from '@ui-kit';
 import LockState from '@screens/ExplorePage/LockState';
 
 const Wrapper = styled('div')`

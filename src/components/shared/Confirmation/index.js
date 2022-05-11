@@ -1,7 +1,7 @@
 import { memo } from 'react';
 
 import ActionButtons from '@shared/ActionButtons';
-import { Title } from '@ui-kit/Text';
+import { Title } from '@ui-kit';
 import { BlurredModal } from '@ui-kit/Modal';
 
 const Confirmation = ({
@@ -20,7 +20,7 @@ const Confirmation = ({
     onCancel={onCancel}
     className='confirmation'
   >
-    <Title level={10} color='white'>
+    <Title level={1} margin_bottom={40} align='center'>
       {title}
     </Title>
     <ActionButtons

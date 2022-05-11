@@ -6,7 +6,7 @@ import { useLazyQuery, useMutation } from '@apollo/client';
 import { getUploadImageLink } from '@app/graphql/queries/artworks.query';
 import { updateMetadata } from '@app/graphql/mutations/artwork.mutation';
 import ActionButtons from '@shared/ActionButtons';
-import { Text, Title } from '@ui-kit/Text';
+import { Text, Title } from '@ui-kit';
 import { BlurredModal } from '@ui-kit/Modal';
 import { errorToast } from '@ui-kit/Notification';
 import coverImage from '@images/cover-image.png';
@@ -67,14 +67,10 @@ const CoverImage = ({ visible, artworkId, goToProfile }) => {
     <BlurredModal blurred maskClosable={false} visible={visible} width={686} onCancel={goToProfile}>
       <Row justify='center' gutter={[0, 40]} className='cover-image'>
         <Col span={24}>
-          <Title inline level='10' color='white'>
-            Upload cover image
-          </Title>
+          <Title level={1}>Upload cover image</Title>
         </Col>
         <Col span={24} className='desc'>
-          <Text inline level='10' color='white'>
-            If skipped we will generate a cover image from video.
-          </Text>
+          <Text level={4}>If skipped we will generate a cover image from video.</Text>
         </Col>
         <Col span={24}>
           {image.src ? (
@@ -86,7 +82,7 @@ const CoverImage = ({ visible, artworkId, goToProfile }) => {
                   <img alt='cover' src={coverImage} />
                 </Col>
                 <Col span={24}>
-                  <Text inline level='10' color='white'>
+                  <Text level={4}>
                     {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                     Drag and drop an image, or <a>Upload</a>
                   </Text>
