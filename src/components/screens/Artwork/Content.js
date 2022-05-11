@@ -11,7 +11,7 @@ import LockState from '@screens/ExplorePage/LockState';
 const Wrapper = styled('div')`
   display: flex;
   justify-content: center;
-  padding: 40px 10px;
+  padding: 40px 10px 52px;
   > div {
     min-width: 1040px;
     max-width: 1040px;
@@ -30,7 +30,7 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
 
   return (
     <Wrapper>
-      <Row justify='center' padding_bottom={52}>
+      <Row justify='center'>
         <Col span={24}>
           <Row gutter={[0, 12]} padding_bottom={30}>
             <Col span={24}>

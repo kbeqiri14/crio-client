@@ -1,59 +1,62 @@
-import { Text, Title } from '@ui-kit/Text';
-import { Col, Row } from 'antd';
+import { Col, Row, Text, Title } from '@ui-kit';
 
 const TermsOfUse = () => {
   return (
     <section className='cr-privacy-policy'>
       <div className='pp--wrapper'>
         <Row justify='center'>
-          <Title level='10' color='white'>
+          <Title level={1} margin_bottom={30}>
             TERMS OF USE
           </Title>
         </Row>
-        <Row>
+        <Row gutter={[0, 20]}>
           <Col span={24}>
-            <Text color='white' level='20'>
-              Version 1.0
-            </Text>
-            <Text color='white' level='20'>
+            <Text level={3}>Version 1.0</Text>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
               The Crio Interactive website located at{' '}
               <a href='https://criointeractive.com'>https://criointeractive.com</a> is a copyrighted
               work belonging to Crio Interactive. Certain features of the Site may be subject to
               additional guidelines, terms, or rules, which will be posted on the Site in connection
               with such features.
             </Text>
-            <Text color='white' level='20'>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
               All such additional terms, guidelines, and rules are incorporated by reference into
               these Terms.
             </Text>
-            <Text color='white' level='20'>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
               These Terms of Use described the legally binding terms and conditions that oversee
               your use of the Site. BY LOGGING INTO THE SITE, YOU ARE BEING COMPLIANT THAT THESE
               TERMS and you represent that you have the authority and capacity to enter into these
               Terms. YOU SHOULD BE AT LEAST 18 YEARS OF AGE TO ACCESS THE SITE. IF YOU DISAGREE WITH
               ALL OF THE PROVISION OF THESE TERMS, DO NOT LOG INTO AND/OR USE THE SITE.
             </Text>
-            <Text color='white' level='20'>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
               These terms require the use of arbitration Section 10.2 on an individual basis to
               resolve disputes and also limit the remedies available to you in the event of a
               dispute.
             </Text>
           </Col>
           <Col span={24}>
-            <Title level='20' color='white'>
-              Access to the Site
-            </Title>
-            <Text color='white' level='20'>
-              <Title color='white' inline level='30'>
-                Subject to these Terms.&nbsp;
-              </Title>
+            <Title level={2}>Access to the Site</Title>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
+              <Text level={4}>Subject to these Terms.&nbsp;</Text>
               Company grants you a non-transferable, non-exclusive, revocable, limited license to
               access the Site solely for your own personal, noncommercial use.
             </Text>
-            <Text color='white' level='20'>
-              <Title color='white' inline level='30'>
-                Certain Restrictions.&nbsp;
-              </Title>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
+              <Text level={4}>Certain Restrictions.&nbsp;</Text>
               The rights approved to you in these Terms are subject to the following restrictions:
               (a) you shall not sell, rent, lease, transfer, assign, distribute, host, or otherwise
               commercially exploit the Site; (b) you shall not change, make derivative works of,
@@ -65,19 +68,17 @@ const TermsOfUse = () => {
               to functionality of the Site shall be subject to these Terms. All copyright and other
               proprietary notices on the Site must be retained on all copies thereof.
             </Text>
-            <Text color='white' level='20'>
+            <Text level={3}>
               Company reserves the right to change, suspend, or cease the Site with or without
               notice to you. You approved that Company will not be held liable to you or any
               third-party for any change, interruption, or termination of the Site or any part.
             </Text>
-            <Text color='white' level='20'>
-              <Title color='white' inline level='30'>
-                No Support or Maintenance.&nbsp;
-              </Title>
+            <Text level={3}>
+              <Text level={4}>No Support or Maintenance.&nbsp;</Text>
               You agree that Company will have no obligation to provide you with any support in
               connection with the Site.
             </Text>
-            <Text color='white' level='20'>
+            <Text level={3}>
               Excluding any User Content that you may provide, you are aware that all the
               intellectual property rights, including copyrights, patents, trademarks, and trade
               secrets, in the Site and its content are owned by Company or Company’s suppliers. Note
@@ -88,13 +89,11 @@ const TermsOfUse = () => {
             </Text>
           </Col>
           <Col span={24}>
-            <Title level='20' color='white'>
-              User Content
-            </Title>
-            <Text color='white' level='20'>
-              <Title color='white' inline level='30'>
-                User Content.&nbsp;
-              </Title>
+            <Title level={2}>User Content</Title>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
+              <Text level={4}>User Content.&nbsp;</Text>
               "User Content" means any and all information and content that a user submits to the
               Site. You are exclusively responsible for your User Content. You bear all risks
               associated with use of your User Content. You hereby certify that your User Content
@@ -105,7 +104,9 @@ const TermsOfUse = () => {
               User Content may be deleted at any time without prior notice to you. You are solely
               responsible for making your own backup copies of your User Content if you desire.
             </Text>
-            <Text color='white' level='20'>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
               You hereby grant to Company an irreversible, nonexclusive, royalty-free and fully
               paid, worldwide license to reproduce, distribute, publicly display and perform,
               prepare derivative works of, incorporate into other works, and otherwise use and
@@ -114,10 +115,10 @@ const TermsOfUse = () => {
               waive any claims and assertions of moral rights or attribution with respect to your
               User Content.
             </Text>
-            <Text color='white' level='20'>
-              <Title color='white' inline level='30'>
-                Acceptable Use Policy. &nbsp;
-              </Title>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
+              <Text level={4}>Acceptable Use Policy. &nbsp;</Text>
               The following terms constitute our "Acceptable Use Policy": You agree not to use the
               Site to collect, upload, transmit, display, or distribute any User Content (i) that
               violates any third-party right or any intellectual property or proprietary right; (ii)
@@ -128,7 +129,9 @@ const TermsOfUse = () => {
               minors in any way; or (iv) that is in violation of any law, regulation, or obligations
               or restrictions imposed by any third party.
             </Text>
-            <Text color='white' level='20'>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
               In addition, you agree not to: (i) upload, transmit, or distribute to or through the
               Site any software intended to damage or alter a computer system or data; (ii) send
               through the Site unsolicited or unauthorized advertising, promotional materials, junk
@@ -142,7 +145,9 @@ const TermsOfUse = () => {
               use software or automated agents or scripts to produce multiple accounts on the Site,
               or to generate automated searches, requests, or queries to the Site.
             </Text>
-            <Text color='white' level='20'>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
               We reserve the right to review any User Content, and to investigate and/or take
               appropriate action against you in our sole discretion if you violate the Acceptable
               Use Policy or any other provision of these Terms or otherwise create liability for us
@@ -150,14 +155,18 @@ const TermsOfUse = () => {
               terminating your Account in accordance with Section 8, and/or reporting you to law
               enforcement authorities.
             </Text>
-            <Text color='white' level='20'>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
               If you provide Company with any feedback or suggestions regarding the Site, you hereby
               assign to Company all rights in such Feedback and agree that Company shall have the
               right to use and fully exploit such Feedback and related information in any manner it
               believes appropriate. Company will treat any Feedback you provide to Company as
               non-confidential and non-proprietary.
             </Text>
-            <Text color='white' level='20'>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
               You agree to indemnify and hold Company and its officers, employees, and agents
               harmless, including costs and attorneys’ fees, from any claim or demand made by any
               third-party due to or arising out of (a) your use of the Site, (b) your violation of
@@ -170,13 +179,11 @@ const TermsOfUse = () => {
             </Text>
           </Col>
           <Col span={24}>
-            <Title level='20' color='white'>
-              Third-Party Links & Ads; Other Users
-            </Title>
-            <Text color='white' level='20'>
-              <Title color='white' inline level='30'>
-                Third-Party Links & Ads. &nbsp;
-              </Title>
+            <Title level={2}>Third-Party Links & Ads; Other Users</Title>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
+              <Text level={4}>Third-Party Links & Ads. &nbsp;</Text>
               The Site may contain links to third-party websites and services, and/or display
               advertisements for third-parties. Such Third-Party Links & Ads are not under the
               control of Company, and Company is not responsible for any Third-Party Links & Ads.
@@ -188,10 +195,10 @@ const TermsOfUse = () => {
               terms and policies apply, including the third party’s privacy and data gathering
               practices.
             </Text>
-            <Text color='white' level='20'>
-              <Title color='white' inline level='30'>
-                Other Users. &nbsp;
-              </Title>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
+              <Text level={4}>Other Users. &nbsp;</Text>
               Each Site user is solely responsible for any and all of its own User Content. Because
               we do not control User Content, you acknowledge and agree that we are not responsible
               for any User Content, whether provided by you or by others. You agree that Company
@@ -199,7 +206,9 @@ const TermsOfUse = () => {
               interactions. If there is a dispute between you and any Site user, we are under no
               obligation to become involved.
             </Text>
-            <Text color='white' level='20'>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
               You hereby release and forever discharge the Company and our officers, employees,
               agents, successors, and assigns from, and hereby waive and relinquish, each and every
               past, present and future dispute, claim, controversy, demand, right, obligation,
@@ -211,10 +220,10 @@ const TermsOfUse = () => {
               favor at the time of executing the release, which if known by him or her must have
               materially affected his or her settlement with the debtor."
             </Text>
-            <Text color='white' level='20'>
-              <Title color='white' inline level='30'>
-                Cookies and Web Beacons. &nbsp;
-              </Title>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
+              <Text level={4}>Cookies and Web Beacons. &nbsp;</Text>
               Like any other website, Crio Interactive uses ‘cookies’. These cookies are used to
               store information including visitors’ preferences, and the pages on the website that
               the visitor accessed or visited. The information is used to optimize the users’
@@ -223,10 +232,10 @@ const TermsOfUse = () => {
             </Text>
           </Col>
           <Col span={24}>
-            <Title level='20' color='white'>
-              Disclaimers
-            </Title>
-            <Text color='white' level='20'>
+            <Title level={2}>Disclaimers</Title>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
               The site is provided on an "as-is" and "as available" basis, and company and our
               suppliers expressly disclaim any and all warranties and conditions of any kind,
               whether express, implied, or statutory, including all warranties or conditions of
@@ -238,17 +247,19 @@ const TermsOfUse = () => {
               to the site, all such warranties are limited in duration to ninety (90) days from the
               date of first use.
             </Text>
-            <Text color='white' level='20'>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
               Some jurisdictions do not allow the exclusion of implied warranties, so the above
               exclusion may not apply to you. Some jurisdictions do not allow limitations on how
               long an implied warranty lasts, so the above limitation may not apply to you.
             </Text>
           </Col>
           <Col span={24}>
-            <Title level='20' color='white'>
-              Limitation on Liability
-            </Title>
-            <Text color='white' level='20'>
+            <Title level={2}>Limitation on Liability</Title>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
               To the maximum extent permitted by law, in no event shall company or our suppliers be
               liable to you or any third-party for any lost profits, lost data, costs of procurement
               of substitute products, or any indirect, consequential, exemplary, incidental, special
@@ -258,7 +269,9 @@ const TermsOfUse = () => {
               you will be solely responsible for any damage to your device or computer system, or
               loss of data resulting therefrom.
             </Text>
-            <Text color='white' level='20'>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
               To the maximum extent permitted by law, notwithstanding anything to the contrary
               contained herein, our liability to you for any damages arising from or related to this
               agreement, will at all times be limited to a maximum of fifty U.S. dollars (u.s. $50).
@@ -266,15 +279,17 @@ const TermsOfUse = () => {
               suppliers will have no liability of any kind arising from or relating to this
               agreement.
             </Text>
-            <Text color='white' level='20'>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
               Some jurisdictions do not allow the limitation or exclusion of liability for
               incidental or consequential damages, so the above limitation or exclusion may not
               apply to you.
             </Text>
-            <Text color='white' level='20'>
-              <Title color='white' inline level='30'>
-                Term and Termination.&nbsp;
-              </Title>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
+              <Text level={4}>Term and Termination.&nbsp;</Text>
               Subject to this Section, these Terms will remain in full force and effect while you
               use the Site. We may suspend or terminate your rights to use the Site at any time for
               any reason at our sole discretion, including for any use of the Site in violation of
@@ -288,10 +303,10 @@ const TermsOfUse = () => {
             </Text>
           </Col>
           <Col span={24}>
-            <Title level='20' color='white'>
-              Copyright Policy.
-            </Title>
-            <Text color='white' level='20'>
+            <Title level={2}>Copyright Policy.</Title>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
               Company respects the intellectual property of others and asks that users of our Site
               do the same. In connection with our Site, we have adopted and implemented a policy
               respecting copyright law that provides for the removal of any infringing materials and
@@ -304,40 +319,34 @@ const TermsOfUse = () => {
             </Text>
             <ul style={{ color: 'white' }}>
               <li>
-                <Text color='white' level='20'>
-                  your physical or electronic signature;
-                </Text>
+                <Text level={3}>your physical or electronic signature;</Text>
               </li>
               <li>
-                <Text color='white' level='20'>
+                <Text level={3}>
                   identification of the copyrighted work(s) that you claim to have been infringed;
                 </Text>
               </li>
               <li>
-                <Text color='white' level='20'>
+                <Text level={3}>
                   identification of the material on our services that you claim is infringing and
                   that you request us to remove;
                 </Text>
               </li>
               <li>
-                <Text color='white' level='20'>
-                  sufficient information to permit us to locate such material;
-                </Text>
+                <Text level={3}>sufficient information to permit us to locate such material;</Text>
               </li>
               <li>
-                <Text color='white' level='20'>
-                  your address, telephone number, and e-mail address;
-                </Text>
+                <Text level={3}>your address, telephone number, and e-mail address;</Text>
               </li>
               <li>
-                <Text color='white' level='20'>
+                <Text level={3}>
                   a statement that you have a good faith belief that use of the objectionable
                   material is not authorized by the copyright owner, its agent, or under the law;
                   and
                 </Text>
               </li>
               <li>
-                <Text color='white' level='20'>
+                <Text level={3}>
                   a statement that the information in the notification is accurate, and under
                   penalty of perjury, that you are either the owner of the copyright that has
                   allegedly been infringed or that you are authorized to act on behalf of the
@@ -345,7 +354,7 @@ const TermsOfUse = () => {
                 </Text>
               </li>
             </ul>
-            <Text color='white' level='20'>
+            <Text level={3}>
               Please note that, pursuant to 17 U.S.C. § 512(f), any misrepresentation of material
               fact in a written notification automatically subjects the complaining party to
               liability for any damages, costs and attorney’s fees incurred by us in connection with
@@ -353,10 +362,10 @@ const TermsOfUse = () => {
             </Text>
           </Col>
           <Col span={24}>
-            <Title level='20' color='white'>
-              General
-            </Title>
-            <Text color='white' level='20'>
+            <Title level={2}>General</Title>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
               These Terms are subject to occasional revision, and if we make any substantial
               changes, we may notify you by sending you an e-mail to the last e-mail address you
               provided to us and/or by prominently posting notice of the changes on our Site. You
@@ -373,10 +382,10 @@ const TermsOfUse = () => {
               your contract with Company and affects your rights. It contains procedures for
               MANDATORY BINDING ARBITRATION AND A CLASS ACTION WAIVER.
             </Text>
-            <Text color='white' level='20'>
-              <Title level='20' color='white' inline>
-                Applicability of Arbitration Agreement.&nbsp;
-              </Title>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
+              <Title level={2}>Applicability of Arbitration Agreement.&nbsp;</Title>
               All claims and disputes in connection with the Terms or the use of any product or
               service provided by the Company that cannot be resolved informally or in small claims
               court shall be resolved by binding arbitration on an individual basis under the terms
@@ -386,10 +395,10 @@ const TermsOfUse = () => {
               successors, and assigns, as well as all authorized or unauthorized users or
               beneficiaries of services or goods provided under the Terms.
             </Text>
-            <Text color='white' level='20'>
-              <Title level='20' color='white' inline>
-                Notice Requirement and Informal Dispute Resolution.&nbsp;
-              </Title>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
+              <Title level={2}>Notice Requirement and Informal Dispute Resolution.&nbsp;</Title>
               Before either party may seek arbitration, the party must first send to the other party
               a written Notice of Dispute describing the nature and basis of the claim or dispute,
               and the requested relief. A Notice to the Company should be sent to: 120 West 97th
@@ -400,10 +409,10 @@ const TermsOfUse = () => {
               made by any party may not be disclosed to the arbitrator until after the arbitrator
               has determined the amount of the award to which either party is entitled.
             </Text>
-            <Text color='white' level='20'>
-              <Title level='20' color='white' inline>
-                Arbitration Rules.&nbsp;
-              </Title>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
+              <Title level={2}>Arbitration Rules.&nbsp;</Title>
               Arbitration shall be initiated through the American Arbitration Association, an
               established alternative dispute resolution provider that offers arbitration as set
               forth in this section. If AAA is not available to arbitrate, the parties shall agree
@@ -427,28 +436,28 @@ const TermsOfUse = () => {
               $2,500.00. Each party shall bear its own costs and disbursements arising out of the
               arbitration and shall pay an equal share of the fees and costs of the ADR Provider.
             </Text>
-            <Text color='white' level='20'>
-              <Title level='20' color='white' inline>
-                Additional Rules for Non-Appearance Based Arbitration.&nbsp;
-              </Title>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
+              <Title level={2}>Additional Rules for Non-Appearance Based Arbitration.&nbsp;</Title>
               If non-appearance based arbitration is elected, the arbitration shall be conducted by
               telephone, online and/or based solely on written submissions; the specific manner
               shall be chosen by the party initiating the arbitration. The arbitration shall not
               involve any personal appearance by the parties or witnesses unless otherwise agreed by
               the parties.
             </Text>
-            <Text color='white' level='20'>
-              <Title level='20' color='white' inline>
-                Time Limits.&nbsp;
-              </Title>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
+              <Title level={2}>Time Limits.&nbsp;</Title>
               If you or the Company pursues arbitration, the arbitration action must be initiated
               and/or demanded within the statute of limitations and within any deadline imposed
               under the AAA Rules for the pertinent claim.
             </Text>
-            <Text color='white' level='20'>
-              <Title level='20' color='white' inline>
-                Authority of Arbitrator.&nbsp;
-              </Title>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
+              <Title level={2}>Authority of Arbitrator.&nbsp;</Title>
               If arbitration is initiated, the arbitrator will decide the rights and liabilities of
               you and the Company, and the dispute will not be consolidated with any other matters
               or joined with any other cases or parties. The arbitrator shall have the authority to
@@ -460,10 +469,10 @@ const TermsOfUse = () => {
               same authority to award relief on an individual basis that a judge in a court of law
               would have. The award of the arbitrator is final and binding upon you and the Company.
             </Text>
-            <Text color='white' level='20'>
-              <Title level='20' color='white' inline>
-                Waiver of Jury Trial.&nbsp;
-              </Title>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
+              <Title level={2}>Waiver of Jury Trial.&nbsp;</Title>
               THE PARTIES HEREBY WAIVE THEIR CONSTITUTIONAL AND STATUTORY RIGHTS TO GO TO COURT AND
               HAVE A TRIAL IN FRONT OF A JUDGE OR A JURY, instead electing that all claims and
               disputes shall be resolved by arbitration under this Arbitration Agreement.
@@ -474,96 +483,102 @@ const TermsOfUse = () => {
               AND THE COMPANY WAIVE ALL RIGHTS TO A JURY TRIAL, instead electing that the dispute be
               resolved by a judge.
             </Text>
-            <Text color='white' level='20'>
-              <Title level='20' color='white' inline>
-                Waiver of Class or Consolidated Actions.&nbsp;
-              </Title>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
+              <Title level={2}>Waiver of Class or Consolidated Actions.&nbsp;</Title>
               All claims and disputes within the scope of this arbitration agreement must be
               arbitrated or litigated on an individual basis and not on a class basis, and claims of
               more than one customer or user cannot be arbitrated or litigated jointly or
               consolidated with those of any other customer or user.
             </Text>
-            <Text color='white' level='20'>
-              <Title level='20' color='white' inline>
-                Confidentiality.&nbsp;
-              </Title>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
+              <Title level={2}>Confidentiality.&nbsp;</Title>
               All aspects of the arbitration proceeding shall be strictly confidential. The parties
               agree to maintain confidentiality unless otherwise required by law. This paragraph
               shall not prevent a party from submitting to a court of law any information necessary
               to enforce this Agreement, to enforce an arbitration award, or to seek injunctive or
               equitable relief.
             </Text>
-            <Text color='white' level='20'>
-              <Title level='20' color='white' inline>
-                Severability.&nbsp;
-              </Title>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
+              <Title level={2}>Severability.&nbsp;</Title>
               If any part or parts of this Arbitration Agreement are found under the law to be
               invalid or unenforceable by a court of competent jurisdiction, then such specific part
               or parts shall be of no force and effect and shall be severed and the remainder of the
               Agreement shall continue in full force and effect.
             </Text>
-            <Text color='white' level='20'>
-              <Title level='20' color='white' inline>
-                Right to Waive.&nbsp;
-              </Title>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
+              <Title level={2}>Right to Waive.&nbsp;</Title>
               Any or all of the rights and limitations set forth in this Arbitration Agreement may
               be waived by the party against whom the claim is asserted. Such waiver shall not waive
               or affect any other portion of this Arbitration Agreement.
             </Text>
-            <Text color='white' level='20'>
-              <Title level='20' color='white' inline>
-                Survival of Agreement.&nbsp;
-              </Title>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
+              <Title level={2}>Survival of Agreement.&nbsp;</Title>
               This Arbitration Agreement will survive the termination of your relationship with
               Company.
             </Text>
-            <Text color='white' level='20'>
-              <Title level='20' color='white' inline>
-                Small Claims Court.&nbsp;
-              </Title>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
+              <Title level={2}>Small Claims Court.&nbsp;</Title>
               Nonetheless the foregoing, either you or the Company may bring an individual action in
               small claims court.
             </Text>
-            <Text color='white' level='20'>
-              <Title level='20' color='white' inline>
-                Emergency Equitable Relief.&nbsp;
-              </Title>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
+              <Title level={2}>Emergency Equitable Relief.&nbsp;</Title>
               Anyhow the foregoing, either party may seek emergency equitable relief before a state
               or federal court in order to maintain the status quo pending arbitration. A request
               for interim measures shall not be deemed a waiver of any other rights or obligations
               under this Arbitration Agreement.
             </Text>
-            <Text color='white' level='20'>
-              <Title level='20' color='white' inline>
-                Claims Not Subject to Arbitration.&nbsp;
-              </Title>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
+              <Title level={2}>Claims Not Subject to Arbitration.&nbsp;</Title>
               Notwithstanding the foregoing, claims of defamation, violation of the Computer Fraud
               and Abuse Act, and infringement or misappropriation of the other party’s patent,
               copyright, trademark or trade secrets shall not be subject to this Arbitration
               Agreement.
             </Text>
-            <Text color='white' level='20'>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
               In any circumstances where the foregoing Arbitration Agreement permits the parties to
               litigate in court, the parties hereby agree to submit to the personal jurisdiction of
               the courts located within Netherlands County, California, for such purposes.
             </Text>
-            <Text color='white' level='20'>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
               The Site may be subject to U.S. export control laws and may be subject to export or
               import regulations in other countries. You agree not to export, re-export, or
               transfer, directly or indirectly, any U.S. technical data acquired from Company, or
               any products utilizing such data, in violation of the United States export laws or
               regulations.
             </Text>
-            <Text color='white' level='20'>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
               Company is located at the address in Section 10.8. If you are a California resident,
               you may report complaints to the Complaint Assistance Unit of the Division of Consumer
               Product of the California Department of Consumer Affairs by contacting them in writing
               at 400 R Street, Sacramento, CA 95814, or by telephone at (800) 952-5210.
             </Text>
-            <Text color='white' level='20'>
-              <Title level='20' color='white' inline>
-                Electronic Communications.&nbsp;
-              </Title>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
+              <Title level={2}>Electronic Communications.&nbsp;</Title>
               The communications between you and Company use electronic means, whether you use the
               Site or send us emails, or whether Company posts notices on the Site or communicates
               with you via email. For contractual purposes, you (a) consent to receive
@@ -572,10 +587,10 @@ const TermsOfUse = () => {
               provides to you electronically satisfy any legal obligation that such communications
               would satisfy if it were be in a hard copy writing.
             </Text>
-            <Text color='white' level='20'>
-              <Title level='20' color='white' inline>
-                Entire Terms.&nbsp;
-              </Title>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
+              <Title level={2}>Entire Terms.&nbsp;</Title>
               These Terms constitute the entire agreement between you and us regarding the use of
               the Site. Our failure to exercise or enforce any right or provision of these Terms
               shall not operate as a waiver of such right or provision. The section titles in these
@@ -592,16 +607,16 @@ const TermsOfUse = () => {
               assign these Terms. The terms and conditions set forth in these Terms shall be binding
               upon assignees.
             </Text>
-            <Text color='white' level='20'>
-              <Title level='20' color='white' inline>
-                Your Privacy.&nbsp;
-              </Title>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
+              <Title level={2}>Your Privacy.&nbsp;</Title>
               Please read our Privacy Policy.
             </Text>
-            <Text color='white' level='20'>
-              <Title level='20' color='white' inline>
-                Copyright/Trademark Information.&nbsp;
-              </Title>
+          </Col>
+          <Col span={24}>
+            <Text level={3}>
+              <Title level={2}>Copyright/Trademark Information.&nbsp;</Title>
               Copyright ©. All rights reserved. All trademarks, logos and service marks displayed on
               the Site are our property or the property of other third-parties. You are not
               permitted to use these Marks without our prior written consent or the consent of such
@@ -609,17 +624,15 @@ const TermsOfUse = () => {
             </Text>
           </Col>
           <Col span={24}>
-            <Title level='20' color='white'>
+            <Title level={2} margin_bottom={10}>
               Contact Information
             </Title>
             <Row gutter={30}>
               <Col>
-                <Text color='white' level='20'>
-                  Name: Klodian Beqiri
-                </Text>
+                <Text level={3}>Name: Klodian Beqiri</Text>
               </Col>
               <Col>
-                <Text color='white' level='20'>
+                <Text level={3}>
                   Email: <a href={`mailto:info@criointeractive.com`}>info@criointeractive.com</a>
                 </Text>
               </Col>

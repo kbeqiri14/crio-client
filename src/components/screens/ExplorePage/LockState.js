@@ -29,7 +29,7 @@ const LockState = ({ userId, accessibility, status, size = 'normal' }) => {
             { width: 330, height: 330 },
           ]
         : [
-            { width: '206', height: '190' },
+            { width: '120', height: '120' },
             { width: '100%', height: '100%' },
           ],
     [size],

@@ -88,18 +88,18 @@ const Poster = ({
       providerType,
       providerUserId,
       name: username,
-      avatar: avatarUrl,
+      avatar,
     });
   }, [
     providerType,
     providerUserId,
+    avatar,
     userId,
     username,
     artworkId,
     title,
     description,
     videoUri,
-    avatarUrl,
     pathname,
     setVideoInfo,
   ]);
