@@ -1,10 +1,11 @@
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { urlify } from '@utils/helpers';
-import { Col, Row, Text, Title } from '@ui-kit';
+import { usePresentation } from '@shared/PresentationView/PresentationContext';
+import { Button, Col, Row, Text, Title } from '@ui-kit';
 import LockState from '@screens/ExplorePage/LockState';
 
 const Wrapper = styled('div')`
@@ -23,6 +24,9 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
     videoInfo.providerUserId,
     videoInfo.avatar,
   );
+  const { setVideoInfo } = usePresentation();
+
+  const hide = useCallback(() => setVideoInfo({}), [setVideoInfo]);
 
   return (
     <Wrapper>
@@ -46,7 +50,7 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
                   )}
                 </Col>
                 <Col margin_left={20}>
-                  <Text level={4} color='primary' inline>
+                  <Text level={4} color='primary' onClick={hide}>
                     <Link to={`/profile/${videoInfo.name}`}>{videoInfo.name}</Link>
                   </Text>
                 </Col>
