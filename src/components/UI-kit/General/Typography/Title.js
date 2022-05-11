@@ -2,7 +2,8 @@ import { Typography } from 'antd';
 import styled, { css } from 'styled-components';
 
 const Title = styled(Typography.Title)`
-  margin-bottom: ${(props) => (props && props.marginbottom) || 0}px !important;
+  color: ${(props) => props.theme.colors.white} !important;
+  margin-bottom: ${(props) => (props && props.margin_bottom) || 0}px !important;
 
   ${(props) =>
     props?.level !== undefined &&
@@ -22,6 +23,18 @@ const Title = styled(Typography.Title)`
     props?.display === 'inline' &&
     css`
       display: inline-block;
+    `}
+
+  ${(props) =>
+    props?.max_width &&
+    css`
+      max-width: ${props.max_width}px;
+    `}
+
+  ${(props) =>
+    props?.align &&
+    css`
+      text-align: ${props.align};
     `}
 `;
 

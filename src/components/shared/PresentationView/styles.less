@@ -1,6 +1,10 @@
 @import 'variables';
 
 .video-view-modal__wrapper {
+  .ant-modal-content {
+    background-color: @dark !important;
+    padding-top: 95px;
+  }
   .video-view-modal {
     max-width: unset;
     margin: unset;
@@ -39,24 +43,6 @@
   align-items: center;
 }
 
-.video-view-column {
-  width: 100%;
-  padding-bottom: 70px;
-}
-
-.video-view-author {
-  margin-bottom: 30px;
-  img {
-    width: 83px;
-    height: 83px;
-    border-radius: 50%;
-    background-color: white;
-  }
-  .author-avatar {
-    margin-right: 14px;
-  }
-}
-
 .video-view__player {
   border-radius: 16px;
   overflow: hidden;
@@ -64,20 +50,4 @@
   height: auto;
   background-color: black;
   margin-bottom: 40px;
-}
-
-.video-player-more {
-  width: 100%;
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 85px 0 62px;
-  background-color: @black_25;
-  .column {
-    width: 100%;
-    & > div:first-child {
-      margin-bottom: 32px;
-    }
-  }
 }

@@ -4,11 +4,11 @@ import { useMutation } from '@apollo/client';
 
 import { deleteArtwork } from '@app/graphql/mutations/artwork.mutation';
 import Confirmation from '@shared/Confirmation';
-import { Text } from '@ui-kit/Text';
+import { Text } from '@ui-kit';
 import { successToast } from '@ui-kit/Notification';
 import './styles.less';
 
-const Actions = memo((props) => {
+const Actions = (props) => {
   const [visible, setVisible] = useState(false);
   const showConfirmation = useCallback(() => setVisible(true), []);
   const hideConfirmation = useCallback(() => setVisible(false), []);
@@ -32,10 +32,10 @@ const Actions = memo((props) => {
           <div className='dot' />
         </div>
         <div className='action-content'>
-          <Text inline level='20' onClick={handleEdit}>
+          <Text inline level={3} onClick={handleEdit}>
             Edit
           </Text>
-          <Text inline level='20' onClick={showConfirmation}>
+          <Text inline level={3} onClick={showConfirmation}>
             Delete
           </Text>
         </div>
@@ -53,6 +53,6 @@ const Actions = memo((props) => {
       )}
     </Fragment>
   );
-});
+};
 
-export default Actions;
+export default memo(Actions);

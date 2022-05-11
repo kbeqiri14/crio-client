@@ -36,6 +36,12 @@ const Button = styled(antButton)`
     border: 1px solid ${(props) => props.theme.colors.dark50} !important;
   }
 
+  ${(props) =>
+    props?.width &&
+    css`
+      width: ${props.width}px;
+    `}
+
   ///************** WHITE BUTTON **************///
 
   ${(props) =>

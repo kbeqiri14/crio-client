@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useMemo } from 'react';
+import { Fragment, memo, useCallback, useMemo } from 'react';
 import { Col, Row } from 'antd';
 import cc from 'classcat';
 
@@ -7,7 +7,7 @@ import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { Meta } from '@shared/Meta';
 import { Footer } from '@shared/Footer';
 import { Button } from '@ui-kit';
-import { Text, Title } from '@ui-kit/Text';
+import { Text, Title } from '@ui-kit';
 import { CustomTooltip } from '@ui-kit/Tooltip';
 import { warningToast } from '@ui-kit/Notification';
 import { ReactComponent as CheckMark } from '@svgs/green-check.svg';
@@ -19,7 +19,7 @@ const PerksListItem = ({ listIcon, content, isFree }) => {
   return (
     <li className={cc(['cr-pricing__perks-list-item', { 'is-pro': !isFree }])}>
       <span className='cr-pricing__perks-list-item__icon'>{listIcon}</span>
-      <Text color='white_75' level='20' inline>
+      <Text level={3} inline>
         {content}
       </Text>
     </li>
@@ -47,7 +47,7 @@ const perksListPro = [
   '5 Vouchers / month to redeem for various perks from any of your favorite creators (e.g., personal video edits, downloadable content, tutorials, merchandise, and much more!)',
 ];
 
-export const PricingPlans = () => {
+const PricingPlans = () => {
   const { user } = useLoggedInUser();
 
   const handleClick = useCallback(() => {
@@ -72,7 +72,7 @@ export const PricingPlans = () => {
           <Row justify='center' align='stretch' gutter={[8, 8]}>
             <Col>
               <div className='cr-pricing__card'>
-                <Title color='white' level='10'>
+                <Title level={1} align='center' margin_bottom={65}>
                   Free
                 </Title>
                 <PerksList isFree listItems={perksListFree} />
@@ -81,16 +81,12 @@ export const PricingPlans = () => {
             <Col>
               <div className='cr-pricing__card is-paid'>
                 <RecommendIcon className='recommended-marker' />
-                <Title level='10' color='white'>
+                <Title level={1} align='center' margin_bottom={16}>
                   Pro
                 </Title>
                 <div className='cr-pricing__card--price'>
-                  <Title level='10' color='white' inline>
-                    $5
-                  </Title>
-                  <Text level='30' color='white_75' inline>
-                    / month
-                  </Text>
+                  <Title level={1}>$5</Title>
+                  <Text level={2}>/ month</Text>
                 </div>
                 <PerksList isFree={false} listItems={perksListPro} />
                 <CustomTooltip
@@ -114,3 +110,5 @@ export const PricingPlans = () => {
     </Fragment>
   );
 };
+
+export default memo(PricingPlans);

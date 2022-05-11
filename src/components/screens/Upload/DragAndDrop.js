@@ -5,7 +5,7 @@ import { useLazyQuery, useMutation } from '@apollo/client';
 import { getUploadUrl } from '@app/graphql/queries/artworks.query';
 import { deleteArtwork } from '@app/graphql/mutations/artwork.mutation';
 import ActionButtons from '@shared/ActionButtons';
-import { Text, Title } from '@ui-kit/Text';
+import { Text, Title } from '@ui-kit';
 import { Spinner } from '@ui-kit/Spinner';
 import { errorToast, warningToast } from '@ui-kit/Notification';
 import dragAndDropImage from '@images/drag-and-drop.png';
@@ -80,9 +80,7 @@ const DragAndDrop = ({ videoUri, file, types, dispatch, goToProfile }) => {
   return (
     <Row justify='center' gutter={[0, 50]} className='upload'>
       <Col span={24}>
-        <Title inline level='10' color='white'>
-          Upload your artwork
-        </Title>
+        <Title level={1}>Upload your artwork</Title>
       </Col>
       <Col span={12}>
         <Dragger {...props}>
@@ -92,15 +90,11 @@ const DragAndDrop = ({ videoUri, file, types, dispatch, goToProfile }) => {
                 <img alt='drag-and-drop' src={dragAndDropImage} />
               </Col>
               <Col span={24}>
-                <Text inline level='10' color='white'>
-                  Drag and drop a video
-                </Text>
+                <Text level={4}>Drag and drop a video</Text>
               </Col>
               {file?.name && (
                 <Col span={24}>
-                  <Text inline level='10' color='white'>
-                    {file.name}
-                  </Text>
+                  <Text level={4}>{file.name}</Text>
                 </Col>
               )}
             </Row>

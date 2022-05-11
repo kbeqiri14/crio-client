@@ -15,9 +15,8 @@ import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import PrivacyPolicy from '@screens/Terms and Policy/PrivacyPolicy';
 import TermsAndConditions from '@screens/Terms and Policy/TermsAndConditions';
 import TermsOfUse from '@screens/Terms and Policy/TermsOfUse';
-import LandingPage from '@screens/LandingPage';
-import { PricingPlans } from '@screens/PricingPlans';
-import { Feed } from '@screens/Feed';
+import ExplorePage from '@screens/ExplorePage';
+import PricingPlans from '@screens/PricingPlans';
 import CognitoCallback from '@screens/CognitoCallback';
 import Profile from '@screens/Profile';
 import Artwork from '@screens/Artwork';
@@ -108,26 +107,18 @@ export const AppRoutes = () => {
       <main>
         <Switch>
           {/* PUBLIC ROUTES */}
-          <Route exact path='/'>
-            {isAuthenticated ? <Feed /> : <LandingPage />}
-          </Route>
-          <Route exact path='/privacy-policy'>
-            <PrivacyPolicy />
-          </Route>
-          <Route exact path='/terms-and-conditions'>
-            <TermsAndConditions />
-          </Route>
-          <Route exact path='/terms-of-use'>
-            <TermsOfUse />
-          </Route>
+          <Route exact path='/' component={ExplorePage} />
+          <Route exact path='/privacy-policy' component={PrivacyPolicy} />
+          <Route exact path='/terms-and-conditions' component={TermsAndConditions} />
+          <Route exact path='/terms-of-use' component={TermsOfUse} />
           <Route exact path='/pricing/:id?' component={PricingPlans} />
           <Route exact path='/profile/:username' component={Profile} />
           <Route exact path='/artwork/:artworkId' component={Artwork} />
+          <Route exact path='/cognito/callback' component={CognitoCallback} />
           {!loading && !user && <Redirect to='/' />}
           {/* PRIVATE ROUTES */}
           <PrivateRoute isAuthenticated={isAuthenticated} path='/upload' component={Upload} />
           <PrivateRoute isAuthenticated={isAuthenticated} path='/video' component={Video} />
-          <Route exact path='/cognito/callback' component={CognitoCallback} />
         </Switch>
         {isVisible && <PresentationView />}
       </main>

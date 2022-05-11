@@ -20,8 +20,8 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
 
   if (!user.username) {
     return (
-      <Row gutter={[0, 40]} padding_top={40} padding_horizontal={28} padding_bottom={20}>
-        <Col span={24}>
+      <Row gutter={[0, 40]} padding_top={40} padding_horizontal={20} padding_bottom={20}>
+        <Col span={24} align='center'>
           <Skeleton round active avatar={{ size: 122 }} title={false} paragraph={false} />
         </Col>
         <Col span={24}>
@@ -33,8 +33,14 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
 
   return (
     <>
-      <Row gutter={[0, 30]} padding_top={40} padding_horizontal={28} padding_bottom={20}>
-        <Col span={24} margin_bottom={20}>
+      <Row
+        gutter={[0, 30]}
+        justify='center'
+        padding_top={40}
+        padding_horizontal={20}
+        padding_bottom={20}
+      >
+        <Col span={24} align='center' margin_bottom={20}>
           {user.isCreator ? (
             <Badge count={<CreatorIcon />} offset={[-12, 105]}>
               <img
@@ -56,18 +62,18 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
           )}
         </Col>
         <Col span={isProfile ? 24 : 20}>
-          <Row gutter={[0, 4]}>
-            <Col span={24}>
-              <Title level={2} color='white' ellipsis={{ tooltip: username }}>
+          <Row gutter={[0, 4]} style={isProfile ? {} : { marginLeft: 50 }}>
+            <Col span={24} align='center'>
+              <Title level={2} ellipsis={{ tooltip: username }}>
                 @{username}
               </Title>
             </Col>
-            <Col span={24}>
+            <Col span={24} align='center'>
               <Text level={3} ellipsis={{ tooltip: name }}>
                 {name}
               </Text>
             </Col>
-            <Col span={24} className='mail-icon'>
+            <Col span={24} className='mail-icon' align='center'>
               <Text level={3} color='dark25' ellipsis={{ tooltip: email }}>
                 <MailIcon /> {isProfile ? <a href={`mailto:${email}`}>{email}</a> : email}
               </Text>
@@ -91,7 +97,7 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
         {user.isCreator && (
           <Col>
             <Row>
-              <Col>
+              <Col align='center'>
                 <Text level={3}>
                   Followers
                   <br />
@@ -101,7 +107,7 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
               <Col margin_left={15} margin_right={15}>
                 <Divider type='vertical' />
               </Col>
-              <Col>
+              <Col align='center'>
                 <Text level={3}>
                   Artworks
                   <br />

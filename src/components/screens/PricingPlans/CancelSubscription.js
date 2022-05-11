@@ -5,10 +5,10 @@ import { useMutation } from '@apollo/client';
 import { cancelSubscription } from '@app/graphql/mutations/user.mutation';
 import { me } from '@app/graphql/queries/users.query';
 import Confirmation from '@shared/Confirmation';
-import { Title, Text } from '@ui-kit/Text';
+import { Title, Text } from '@ui-kit';
 import { errorToast, successToast } from '@ui-kit/Notification';
 
-export const CancelSubscription = memo(() => {
+export const CancelSubscription = () => {
   const [visible, setVisible] = useState(false);
   const show = useCallback(() => setVisible(true), []);
   const hide = useCallback(() => setVisible(false), []);
@@ -52,19 +52,19 @@ export const CancelSubscription = memo(() => {
         <Col span={24}>
           <Row justify='center' align='center' gutter={[0, 19]} className='info'>
             <Col span={24}>
-              <Title level={10} color='white'>
+              <Title level={1} color='white'>
                 Pro account
               </Title>
             </Col>
             <Col span={24}>
-              <Text level={10} color='white_75' className='desc'>
+              <Text level={4} className='desc' max_width={309}>
                 Your payment will be automatically renewed each month.
               </Text>
             </Col>
           </Row>
         </Col>
         <Col span={24}>
-          <Text level={10} color='white_75'>
+          <Text level={4}>
             Need to {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <a onClick={show}>cancel</a> your subscription?
           </Text>
@@ -81,6 +81,6 @@ export const CancelSubscription = memo(() => {
       )}
     </div>
   );
-});
+};
 
-export default CancelSubscription;
+export default memo(CancelSubscription);

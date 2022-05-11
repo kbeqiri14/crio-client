@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Row, Col } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
@@ -14,8 +14,8 @@ import { ProfileMenu } from './__partials__/ProfileMenu';
 const getTabItems = (showPricing) => {
   const items = [
     {
-      id: 'home',
-      title: 'Home',
+      id: 'explore',
+      title: 'Explore',
       path: '/',
     },
   ];
@@ -37,7 +37,7 @@ export const Header = ({ isAuthenticated }) => {
 
   const menuItems = useMemo(() => getTabItems(!user.id || user?.isFan), [user?.id, user?.isFan]);
   const activeItem = useMemo(
-    () => location.pathname?.replace('/', '') || 'home',
+    () => location.pathname?.replace('/', '') || 'explore',
     [location.pathname],
   );
 
@@ -66,4 +66,4 @@ export const Header = ({ isAuthenticated }) => {
   );
 };
 
-export default Header;
+export default memo(Header);

@@ -39,7 +39,7 @@ const FollowingCard = ({ user }) => {
         <Col max_width={245}>
           <Row gutter={[0, 8]}>
             <Col span={24}>
-              <Title level={2} color='white' ellipsis={{ tooltip: username }}>
+              <Title level={2} ellipsis={{ tooltip: username }}>
                 @{username}
               </Title>
             </Col>
@@ -60,7 +60,6 @@ const Followings = ({ username, isProfile, isSubscribed }) => {
     fetchPolicy: 'cache-and-network',
     ...(isProfile ? { variables: { username } } : {}),
   });
-  console.log(isProfile, followings?.getFollowings?.length, 'isProfile');
 
   if (
     username &&

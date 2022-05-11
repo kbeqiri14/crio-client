@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import history from '@app/configs/history';
 import { signOut } from '@app/auth';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
-import { Text } from '@ui-kit/Text';
+import { Text } from '@ui-kit';
 import './styles.less';
 
 export const ProfileMenu = ({ user }) => {
@@ -39,10 +39,10 @@ export const ProfileMenu = ({ user }) => {
         <i className='arrow-down' />
       </div>
       <div className='dropdown-content'>
-        <Text inline level='20' onClick={goAccount}>
+        <Text level={3} onClick={goAccount}>
           My Profile
         </Text>
-        <Text inline level='20' onClick={signOut}>
+        <Text level={3} onClick={signOut}>
           Log Out
         </Text>
       </div>
@@ -50,4 +50,4 @@ export const ProfileMenu = ({ user }) => {
   );
 };
 
-export default ProfileMenu;
+export default memo(ProfileMenu);

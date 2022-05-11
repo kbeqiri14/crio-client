@@ -15,6 +15,7 @@ const ProfileContent = ({
   followingsCount,
   isCreator,
   isProfile,
+  isFollowing,
   isSubscribed,
   isLock,
 }) => {
@@ -30,7 +31,12 @@ const ProfileContent = ({
     <Tabs>
       <TabPane key={tabs.WORKS} tab={tab}>
         {isCreator ? (
-          <Works username={username} isProfile={isProfile} isLock={isLock} />
+          <Works
+            username={username}
+            isProfile={isProfile}
+            isFollowing={isFollowing}
+            isLock={isLock}
+          />
         ) : (
           <Followings username={username} isProfile={isProfile} isSubscribed={isSubscribed} />
         )}
