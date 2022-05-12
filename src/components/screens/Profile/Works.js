@@ -7,7 +7,7 @@ import { Spinner } from '@ui-kit/Spinner';
 import EmptyState from '@shared/EmptyState';
 import PostersList from '@app/components/screens/ExplorePage/PostersList';
 
-const Works = ({ username, isProfile, isFollowing, isLock }) => {
+const Works = ({ username, isProfile }) => {
   const { pathname } = useLocation();
   const [initialPolling, setInitialPolling] = useState(true);
   const [works, setWorks] = useState([]);

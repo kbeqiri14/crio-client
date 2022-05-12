@@ -11,6 +11,7 @@ const TopPosterWrapper = styled('div')`
     left: 140px;
     top: 50%;
     transform: translateY(-50%);
+    margin-top: 30px;
   }
   .darken-background {
     width: 100%;
@@ -42,7 +43,7 @@ const TopPoster = ({ username, thumbnail }) => (
           </Button>
         </Link>
       </Col>
-      <Col span={24} margin_top={24} padding_right={40}>
+      <Col span={24} margin_top={-40} padding_right={40}>
         <Row justify='end'>
           <Col>
             <Text level={3}>Artwork by {username}</Text>
