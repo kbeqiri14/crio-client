@@ -2,6 +2,7 @@ import { memo, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Skeleton } from 'antd';
 import { useLazyQuery, useQuery } from '@apollo/client';
+import { Meta } from '@shared/Meta';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { getArtwork, getRandomArtworks } from '@app/graphql/queries/artworks.query';
@@ -42,6 +43,11 @@ export const Artwork = () => {
   if (loadingArtwork) {
     return (
       <div className='video-view-container'>
+        <Meta
+          title={artwork.title}
+          description={artwork.description}
+          imageUrl={artwork.thumbnailUri}
+        />
         <Row className='full-width'>
           <Col span={18} offset={3} padding_bottom={30}>
             <Skeleton round active title={{ width: '100%' }} paragraph={null} />

@@ -3,10 +3,12 @@ import { useLocation } from 'react-router-dom';
 import { useLazyQuery } from '@apollo/client';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
+import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { getUser } from '@app/graphql/queries/users.query';
 import NotFound from '@shared/NotFound';
 import { Layout } from '@ui-kit';
 import { ReactComponent as NotFoundUser } from '@svgs/fallowing-empty.svg';
+import { Meta } from '@shared/Meta';
 import ProfileSider from '@root/src/components/screens/Profile/Sider';
 import ProfileContent from '@root/src/components/screens/Profile/Content';
 
@@ -40,6 +42,7 @@ export const Profile = () => {
     () => !(!isProfile || loggedInUser.isCreator || user?.isFollowing),
     [isProfile, loggedInUser.isCreator, user?.isFollowing],
   );
+  const avatarUrl = useAvatarUrl(user?.providerType, user?.providerUserId, user?.avatar);
 
   useEffect(() => {
     if (username !== loggedInUser.username) {
@@ -52,6 +55,7 @@ export const Profile = () => {
   }
   return (
     <Layout>
+      <Meta title={username} url={`https://criointeractive.com/${username}`} imageUrl={avatarUrl} />
       <Sider width={355} breakpoint='lg' collapsedWidth={0}>
         <ProfileSider
           user={user}
