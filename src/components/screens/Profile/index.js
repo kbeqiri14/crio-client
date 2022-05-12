@@ -38,10 +38,6 @@ export const Profile = () => {
       (isProfile && (loggedInUser.isCreator || !user?.isCreator)),
     [isProfile, loggedInUser.username, loggedInUser.isCreator, user?.isCreator],
   );
-  const isLock = useMemo(
-    () => !(!isProfile || loggedInUser.isCreator || user?.isFollowing),
-    [isProfile, loggedInUser.isCreator, user?.isFollowing],
-  );
   const avatarUrl = useAvatarUrl(user?.providerType, user?.providerUserId, user?.avatar);
 
   useEffect(() => {
@@ -73,8 +69,6 @@ export const Profile = () => {
               isCreator={user?.isCreator}
               isProfile={isProfile}
               isSubscribed={loggedInUser.isSubscribed}
-              isFollowing={user?.isFollowing}
-              isLock={isLock}
             />
           )}
         </Content>

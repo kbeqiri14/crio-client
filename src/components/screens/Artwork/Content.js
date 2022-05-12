@@ -69,7 +69,7 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
               src={videoInfo.thumbnailUri}
               alt='artwork'
               className='border-radius-30 fit-cover'
-              width={1043}
+              width='100%'
               height={638}
             />
           </Col>
