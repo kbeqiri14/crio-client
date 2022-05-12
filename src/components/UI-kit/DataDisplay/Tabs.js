@@ -2,9 +2,18 @@ import { Tabs as antTabs } from 'antd';
 import styled from 'styled-components';
 
 const Tabs = styled(antTabs)`
-  max-width: 1440px;
+  max-width: 1394px;
+  @media (max-width: 1393px) {
+    max-width: 1040px;
+  }
+  @media (max-width: 1039px) {
+    max-width: 686px;
+  }
+  @media (max-width: 685px) {
+    max-width: 332px;
+  }
   margin: auto;
-  margin-top: 40px;
+  padding: 40px 0;
   .ant-tabs-tab-btn {
     font-size: ${(props) => props.theme.title[2].size}px;
     font-weight: ${(props) => props.theme.title[2].weight};
@@ -17,7 +26,7 @@ const Tabs = styled(antTabs)`
     background: ${(props) => props.theme.colors.white} !important;
   }
   .ant-tabs-nav {
-    margin: 0 0 40px 30px;
+    margin-bottom: 40px;
   }
   .ant-tabs-nav::before {
     display: none;
@@ -27,9 +36,6 @@ const Tabs = styled(antTabs)`
   }
   .ant-tabs-tab-active > div {
     color: ${(props) => props.theme.colors.white} !important;
-  }
-  .ant-tabs-content-holder {
-    padding-bottom: 40px;
   }
 `;
 

@@ -4,7 +4,7 @@ import { Col, Row } from '@ui-kit';
 import Poster from './Poster';
 
 export const PostersList = ({ postersList }) => (
-  <Row justify='center' gutter={[22, 20]}>
+  <Row gutter={[22, 20]}>
     {postersList.map((item) => (
       <Col key={item.id}>
         <Poster

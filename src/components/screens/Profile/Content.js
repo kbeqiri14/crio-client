@@ -10,15 +10,7 @@ const tabs = {
   WORKS: '1',
 };
 
-const ProfileContent = ({
-  username,
-  followingsCount,
-  isCreator,
-  isProfile,
-  isFollowing,
-  isSubscribed,
-  isLock,
-}) => {
+const ProfileContent = ({ username, followingsCount, isCreator, isProfile, isSubscribed }) => {
   const tab = useMemo(() => {
     if (isCreator) {
       return 'Artwork';
@@ -31,12 +23,7 @@ const ProfileContent = ({
     <Tabs>
       <TabPane key={tabs.WORKS} tab={tab}>
         {isCreator ? (
-          <Works
-            username={username}
-            isProfile={isProfile}
-            isFollowing={isFollowing}
-            isLock={isLock}
-          />
+          <Works username={username} isProfile={isProfile} />
         ) : (
           <Followings username={username} isProfile={isProfile} isSubscribed={isSubscribed} />
         )}
