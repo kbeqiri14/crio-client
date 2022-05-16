@@ -22,12 +22,17 @@ const ProfileContent = ({ username, followingsCount, isCreator, isProfile, isSub
   }, [isProfile, isSubscribed, followingsCount]);
 
   const { pathname } = useLocation();
+  // const [initialPolling, setInitialPolling] = useState(true);
 
   const [requestArtworks, { data }] = useLazyQuery(getUserArtworks, {
     variables: { username: pathname.split('/').slice(-1)[0] || undefined },
     fetchPolicy: 'no-cache',
     notifyOnNetworkStatusChange: true,
     pollInterval: 30000,
+    // onCompleted: ({ getUserArtworks }) => {
+    //   setInitialPolling(false);
+    //   setWorks(getUserArtworks);
+    // },
   });
 
   useEffect(() => {

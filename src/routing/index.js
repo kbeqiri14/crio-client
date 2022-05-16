@@ -109,11 +109,13 @@ export const AppRoutes = () => {
         <Switch>
           {/* PUBLIC ROUTES */}
           <Route exact path='/' component={ExplorePage} />
+          <Route exact path='/artworks' component={ExplorePage} />
           <Route exact path='/privacy-policy' component={PrivacyPolicy} />
           <Route exact path='/terms-and-conditions' component={TermsAndConditions} />
           <Route exact path='/terms-of-use' component={TermsOfUse} />
           <Route exact path='/pricing/:id?' component={PricingPlans} />
           <Route exact path='/profile/:username' component={Profile} />
+          <Route exact path='/profile/artworks/:username' component={Profile} />
           <Route exact path='/artwork/:artworkId' component={Artwork} />
           <Route exact path='/product/:productId' component={Product} />
           <Route exact path='/cognito/callback' component={CognitoCallback} />

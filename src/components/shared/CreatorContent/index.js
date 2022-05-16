@@ -1,6 +1,8 @@
-import { memo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
+import history from '@app/configs/history';
 import { Tabs } from '@ui-kit';
 import LoadMoreButton from './LoadMoreButton';
 import PostersList from './PostersList';
@@ -29,9 +31,29 @@ const tabs = {
 };
 
 export const Content = ({ visibleLoadMore, loading, loadMore, productsList, postersList }) => {
+  const { pathname } = useLocation();
+  const username = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
+  const isProfile = useMemo(() => pathname.includes('/profile'), [pathname]);
+  const activeKey = useMemo(
+    () => (pathname.includes('/artworks') ? tabs.ARTWORK : tabs.MARKETPLACE),
+    [pathname],
+  );
+  const onTabClick = useCallback(
+    (key) => {
+      if (key === tabs.MARKETPLACE) {
+        return history.push(isProfile ? `/profile/${username}` : '/');
+      }
+      return history.push(isProfile ? `/profile/artworks/${username}` : `/artworks`);
+    },
+    [username, isProfile],
+  );
+
+  // if ((!loading || !initialPolling) && !works?.length) {
+  //   return <EmptyState username={username} isCreator={true} isProfile={isProfile} />;
+  // }
   return (
     <Wrapper>
-      <Tabs>
+      <Tabs activeKey={activeKey} onTabClick={onTabClick}>
         <TabPane key={tabs.MARKETPLACE} tab={tabs.MARKETPLACE}>
           <ProductsList productsList={productsList} />
           <LoadMoreButton visible={visibleLoadMore} loading={loading} onClick={loadMore} />
