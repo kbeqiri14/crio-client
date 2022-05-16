@@ -3,7 +3,7 @@ import { memo } from 'react';
 import { Col, Row } from '@ui-kit';
 import Poster from './Poster';
 
-export const PostersList = ({ postersList }) => (
+export const PostersList = ({ postersList = [] }) => (
   <Row gutter={[22, 20]}>
     {postersList.map((item) => (
       <Col key={item.id}>

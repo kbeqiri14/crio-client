@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import styled from 'styled-components';
 
-import ProductsList from '@app/components/screens/ExplorePage/ProductsList';
+import ProductsList from '@shared/CreatorContent/ProductsList';
 import { Col, Row, Text } from '@ui-kit';
 
 const Wrapper = styled('div')`

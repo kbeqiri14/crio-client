@@ -2,7 +2,7 @@ import { memo, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
-import ProductsList from '@app/components/screens/ExplorePage/ProductsList';
+import ProductsList from '@shared/CreatorContent/ProductsList';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { Col, Row, Text } from '@ui-kit';
 

@@ -6,7 +6,7 @@ import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { urlify } from '@utils/helpers';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { Col, Row, Text, Title } from '@ui-kit';
-import LockState from '@screens/ExplorePage/LockState';
+import LockState from '@shared/CreatorContent/LockState';
 
 const Wrapper = styled('div')`
   display: flex;
@@ -75,7 +75,7 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
           </Col>
         ) : (
           <Col span={24} margin_bottom={40}>
-            {console.log(videoInfo, 'videoInfo.isProduct') || videoInfo.isProduct ? (
+            {videoInfo.isProduct ? (
               <img
                 src={videoInfo.thumbnailUri}
                 alt='artwork'

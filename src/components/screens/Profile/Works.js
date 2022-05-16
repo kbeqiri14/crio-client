@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/client';
 import { getUserArtworks } from '@app/graphql/queries/artworks.query';
 import { Spinner } from '@ui-kit/Spinner';
 import EmptyState from '@shared/EmptyState';
-import PostersList from '@app/components/screens/ExplorePage/PostersList';
+import PostersList from '@root/src/components/shared/CreatorContent/PostersList';
 
 const Works = ({ username, isProfile }) => {
   const { pathname } = useLocation();
