@@ -9,7 +9,6 @@ import { getUser } from '@app/graphql/queries/users.query';
 import NotFound from '@shared/NotFound';
 import { Layout } from '@ui-kit';
 import { ReactComponent as NotFoundUser } from '@svgs/fallowing-empty.svg';
-import { Meta } from '@shared/Meta';
 import ProfileSider from '@root/src/components/screens/Profile/Sider';
 import ProfileContent from '@root/src/components/screens/Profile/Content';
 

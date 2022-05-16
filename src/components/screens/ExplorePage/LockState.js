@@ -14,10 +14,9 @@ const Wrapper = styled('div')`
   align-items: center;
   position: absolute;
   backdrop-filter: blur(8px);
-  border-radius: 30px;
 `;
 
-const LockState = ({ userId, accessibility, status, size = 'normal' }) => {
+const LockState = ({ userId, accessibility, status, size = 'normal', isProduct }) => {
   const { user } = useLoggedInUser();
   const { setVideoInfo } = usePresentation();
 
@@ -25,14 +24,28 @@ const LockState = ({ userId, accessibility, status, size = 'normal' }) => {
     () =>
       size === 'normal'
         ? [
-            { width: '102', height: '102' },
-            { width: 330, height: 330 },
+            { width: 102, height: 102 },
+            {
+              width: 330,
+              height: isProduct ? 245 : 330,
+              borderTopLeftRadius: 30,
+              borderTopRightRadius: 30,
+              borderBottomLeftRadius: isProduct ? 0 : 30,
+              borderBottomRightRadius: isProduct ? 0 : 30,
+            },
           ]
         : [
-            { width: '120', height: '120' },
-            { width: '100%', height: '100%' },
+            { width: 120, height: 120 },
+            {
+              width: '100%',
+              height: '100%',
+              borderTopLeftRadius: 30,
+              borderTopRightRadius: 30,
+              borderBottomLeftRadius: isProduct ? 0 : 30,
+              borderBottomRightRadius: isProduct ? 0 : 30,
+            },
           ],
-    [size],
+    [size, isProduct],
   );
 
   const unavailable = useMemo(() => status && status !== 'available', [status]);

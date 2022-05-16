@@ -19,9 +19,7 @@ const PerksListItem = ({ listIcon, content, isFree }) => {
   return (
     <li className={cc(['cr-pricing__perks-list-item', { 'is-pro': !isFree }])}>
       <span className='cr-pricing__perks-list-item__icon'>{listIcon}</span>
-      <Text level={3} inline>
-        {content}
-      </Text>
+      <Text level={3}>{content}</Text>
     </li>
   );
 };

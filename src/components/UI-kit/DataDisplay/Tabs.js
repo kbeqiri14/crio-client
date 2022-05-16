@@ -14,6 +14,9 @@ const Tabs = styled(antTabs)`
   }
   margin: auto;
   padding: 40px 0;
+  .ant-tabs-tab {
+    margin-right: 20px;
+  }
   .ant-tabs-tab-btn {
     font-size: ${(props) => props.theme.title[2].size}px;
     font-weight: ${(props) => props.theme.title[2].weight};

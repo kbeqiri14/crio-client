@@ -2,7 +2,7 @@ import { memo, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
-import ProductsList from '@app/components/screens/ExplorePage/ProductsList';
+import PostersList from '@app/components/screens/ExplorePage/PostersList';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { Col, Row, Text } from '@ui-kit';
 
@@ -31,7 +31,7 @@ export const MoreBySection = ({ videoInfo, postersList }) => {
         <Col span={24}>
           <Row justify='space-between' align='middle'>
             <Col>
-              <Text level={2}>More products by {videoInfo.name}</Text>
+              <Text level={2}>More by {videoInfo.name}</Text>
             </Col>
             <Col>
               <Link to={`/profile/${videoInfo.name}`} onClick={hide}>
@@ -43,7 +43,7 @@ export const MoreBySection = ({ videoInfo, postersList }) => {
           </Row>
         </Col>
         <Col>
-          <ProductsList productsList={postersList} />
+          <PostersList postersList={postersList} />
         </Col>
       </Row>
     </Wrapper>

@@ -8,6 +8,7 @@ import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { ReactComponent as CloseIcon } from '@svgs/x.svg';
 import Content from '../../screens/Artwork/Content';
 import MoreBySection from '../../screens/Artwork/MoreBySection';
+import MarketplaceSection from '../../screens/Artwork/MarketplaceSection';
 import './styles.less';
 
 export const PresentationView = () => {
@@ -46,6 +47,7 @@ export const PresentationView = () => {
       {data?.getRandomArtworks?.length >= 3 && (
         <MoreBySection videoInfo={videoInfo} postersList={data?.getRandomArtworks} />
       )}
+      <MarketplaceSection videoInfo={videoInfo} productsList={data?.getRandomArtworks} />
     </Modal>
   );
 };

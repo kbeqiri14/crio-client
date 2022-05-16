@@ -7,6 +7,7 @@ import { Button, Carousel, Col, Row, Tabs } from '@ui-kit';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import TopPoster from './TopPoster';
 import PostersList from './PostersList';
+import ProductsList from './ProductsList';
 
 const ShadowWrapper = styled('div')`
   &:after {
@@ -26,6 +27,7 @@ const ShadowWrapper = styled('div')`
 const { TabPane } = Tabs;
 
 const tabs = {
+  MARKETPLACE: 'Marketplace',
   ARTWORK: 'Artwork',
 };
 
@@ -53,6 +55,22 @@ export const ExplorePage = () => {
         ))}
       </Carousel>
       <Tabs>
+        <TabPane key={tabs.MARKETPLACE} tab={tabs.MARKETPLACE}>
+          <Row justify='center' gutter={[0, 40]}>
+            <Col span={24}>
+              <ProductsList productsList={postersList} />
+            </Col>
+            {!isEnd && offset && (
+              <Col span={24} align='center'>
+                <ShadowWrapper>
+                  <Button white='true' loading={loading} onClick={loadMore} width={168}>
+                    LOAD MORE
+                  </Button>
+                </ShadowWrapper>
+              </Col>
+            )}
+          </Row>
+        </TabPane>
         <TabPane key={tabs.ARTWORK} tab={tabs.ARTWORK}>
           <Row justify='center' gutter={[0, 40]}>
             <Col span={24}>

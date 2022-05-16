@@ -20,6 +20,7 @@ import PricingPlans from '@screens/PricingPlans';
 import CognitoCallback from '@screens/CognitoCallback';
 import Profile from '@screens/Profile';
 import Artwork from '@screens/Artwork';
+import Product from '@screens/Product';
 import Upload from '@screens/Upload';
 import Video from '@screens/Video';
 
@@ -114,6 +115,7 @@ export const AppRoutes = () => {
           <Route exact path='/pricing/:id?' component={PricingPlans} />
           <Route exact path='/profile/:username' component={Profile} />
           <Route exact path='/artwork/:artworkId' component={Artwork} />
+          <Route exact path='/product/:productId' component={Product} />
           <Route exact path='/cognito/callback' component={CognitoCallback} />
           {!loading && !user && <Redirect to='/' />}
           {/* PRIVATE ROUTES */}

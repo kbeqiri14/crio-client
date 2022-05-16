@@ -74,26 +74,16 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
             />
           </Col>
         ) : (
-          <Col span={24} margin_bottom={40}>
-            {console.log(videoInfo, 'videoInfo.isProduct') || videoInfo.isProduct ? (
-              <img
-                src={videoInfo.thumbnailUri}
-                alt='artwork'
-                className='border-radius-30 fit-cover'
-                width='100%'
-                height={638}
+          <Col span={24}>
+            <div className='video-view__player embed-responsive aspect-ratio-16/9'>
+              <iframe
+                title={videoInfo.title || 'Crio video player'}
+                src={`https://player.vimeo.com/video/${videoUri}?h=dc77330a55&color=ffffff&title=0&byline=0&portrait=0`}
+                frameBorder='0'
+                allow='autoplay; fullscreen; picture-in-picture'
+                allowFullScreen
               />
-            ) : (
-              <div className='video-view__player embed-responsive aspect-ratio-16/9'>
-                <iframe
-                  title={videoInfo.title || 'Crio video player'}
-                  src={`https://player.vimeo.com/video/${videoUri}?h=dc77330a55&color=ffffff&title=0&byline=0&portrait=0`}
-                  frameBorder='0'
-                  allow='autoplay; fullscreen; picture-in-picture'
-                  allowFullScreen
-                />
-              </div>
-            )}
+            </div>
           </Col>
         )}
         <Col span={24}>

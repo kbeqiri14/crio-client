@@ -32,10 +32,10 @@ const Actions = (props) => {
           <div className='dot' />
         </div>
         <div className='action-content'>
-          <Text inline level={3} onClick={handleEdit}>
+          <Text level={3} onClick={handleEdit}>
             Edit
           </Text>
-          <Text inline level={3} onClick={showConfirmation}>
+          <Text level={3} onClick={showConfirmation}>
             Delete
           </Text>
         </div>
