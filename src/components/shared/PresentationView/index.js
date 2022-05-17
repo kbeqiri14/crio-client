@@ -8,7 +8,6 @@ import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { ReactComponent as CloseIcon } from '@svgs/x.svg';
 import Content from '../../screens/Artwork/Content';
 import MoreBySection from '@screens/Product/MoreBySection';
-import MarketplaceSection from '../../screens/Artwork/MarketplaceSection';
 import './styles.less';
 
 export const PresentationView = () => {

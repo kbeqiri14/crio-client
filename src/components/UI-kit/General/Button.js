@@ -54,6 +54,32 @@ const Button = styled(antButton)`
       }
     `}
 
+  ///************** TAB BUTTON **************///
+
+  &.ant-btn-tab {
+    padding: 10px;
+    border: none !important;
+    border-radius: 10px;
+    box-shadow: none;
+    line-height: 24px;
+    color: ${(props) => props.theme.colors.dark25} !important;
+    border: 1px solid transparent !important;
+    &:hover {
+      border: 1px solid ${(props) => props.theme.colors.dark50} !important;
+      background-color: transparent !important;
+    }
+    ${(props) =>
+      props?.active &&
+      css`
+        color: ${(props) => props.theme.colors.white} !important;
+        background-color: ${(props) => props.theme.colors.dark50} !important;
+        &:hover {
+          color: ${(props) => props.theme.colors.white} !important;
+          background-color: ${(props) => props.theme.colors.dark50} !important;
+        }
+      `}
+  }
+
   ///************** PRIMARY BUTTON **************///
 
   &.ant-btn-primary {
