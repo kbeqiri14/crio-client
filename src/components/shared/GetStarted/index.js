@@ -2,7 +2,7 @@ import { memo, useCallback, useState } from 'react';
 import { Col, Row } from 'antd';
 
 import { signIn } from '@app/auth';
-import { SecondaryButton } from '@ui-kit/Button';
+import { Button } from '@ui-kit';
 import { BlurredModal } from '@ui-kit/Modal';
 import { ReactComponent as GoogleIcon } from '@svgs/google-sign-in.svg';
 import { ReactComponent as FbIcon } from '@svgs/fb-sign-in.svg';
@@ -24,48 +24,27 @@ const GetStarted = ({ size }) => {
   const facebookSignIn = useCallback(() => socialSignIn('Facebook'), [socialSignIn]);
 
   return (
-    <div className='get-started'>
-      <SecondaryButton
-        filled
-        fillColor='secondary'
-        textColor='white'
-        size={size}
-        className='get-started__button'
-        onClick={show}
-      >
+    <>
+      <Button type='primary' width={171} onClick={show}>
         Get Started
-      </SecondaryButton>
+      </Button>
       {visible && (
         <BlurredModal width={509} visible={visible} onCancel={hide} className='get-started__modal'>
-          <Row gutter={[0, 26]} justify='center'>
-            <Col id='googleLogin' className='cr-landing__connect google'>
-              <GoogleIcon />
-              <SecondaryButton
-                onClick={googleSignIn}
-                filled
-                fillColor='fifth'
-                textColor='dark'
-                size='large'
-              >
-                Connect with Google
-              </SecondaryButton>
+          <Row justify='center' gutter={[0, 26]}>
+            <Col id='googleLogin'>
+              <Button type='google' icon={<GoogleIcon />} width={302} onClick={googleSignIn}>
+                SIGN UP WITH GOOGLE
+              </Button>
             </Col>
-            <Col className='cr-landing__connect'>
-              <FbIcon />
-              <SecondaryButton
-                onClick={facebookSignIn}
-                filled
-                fillColor='secondary'
-                textColor='white'
-                size='large'
-              >
-                Connect with Facebook
-              </SecondaryButton>
+            <Col>
+              <Button type='facebook' icon={<FbIcon />} width={302} onClick={facebookSignIn}>
+                SIGN UP WITH FACEBOOK
+              </Button>
             </Col>
           </Row>
         </BlurredModal>
       )}
-    </div>
+    </>
   );
 };
 

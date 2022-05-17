@@ -61,18 +61,16 @@ const Button = styled(antButton)`
     color: ${(props) => props.theme.colors.white} !important;
     background: ${(props) =>
       props.theme.colors[`gradient_${props?.fill_color || 'blue'}`]} !important;
-  }
-
-  &.ant-btn-primary:active,
-  &.ant-btn-primary:focus {
-    background: ${(props) =>
-      props.theme.colors[`gradient_${props?.fill_color || 'blue'}`]} !important;
-  }
-
-  &.ant-btn-primary:hover {
-    box-shadow: 0px 4px 5px rgba(12, 17, 36, 0.4);
-    background: ${(props) =>
-      props.theme.colors[`gradient_${props?.fill_color || 'blue'}`]} !important;
+    &:active,
+    &:focus {
+      background: ${(props) =>
+        props.theme.colors[`gradient_${props?.fill_color || 'blue'}`]} !important;
+    }
+    &:hover {
+      box-shadow: 0px 4px 5px rgba(12, 17, 36, 0.4);
+      background: ${(props) =>
+        props.theme.colors[`gradient_${props?.fill_color || 'blue'}`]} !important;
+    }
   }
 
   &.ant-btn-primary[disabled],
@@ -113,6 +111,45 @@ const Button = styled(antButton)`
         vertical-align: middle;
       }
     `}
+
+  ///************** GOOGLE BUTTON **************///
+
+  &.ant-btn-google {
+    border: none;
+    background-color: ${(props) => props.theme.colors.white};
+    color: ${(props) => props.theme.colors.dark100};
+    svg {
+      margin-left: -36px;
+      margin-right: 20px;
+    }
+    &:active,
+    &:focus {
+      background: ${(props) => props.theme.colors.white} !important;
+    }
+    &:hover {
+      background-color: ${(props) => props.theme.colors.white};
+    }
+  }
+
+  ///************** FACEBOOK BUTTON **************///
+
+  &.ant-btn-facebook {
+    border: none;
+    color: ${(props) => props.theme.colors.white};
+    background: ${(props) => props.theme.colors[`gradient_blue`]};
+    svg {
+      margin-left: -30px;
+      margin-right: 10px;
+    }
+    &:active,
+    &:focus {
+      background: ${(props) => props.theme.colors[`gradient_blue`]} !important;
+    }
+    &:hover {
+      background-color: ${(props) => props.theme.colors.white};
+      border-color: ${(props) => props.theme.colors.white};
+    }
+  }
 `;
 
 export default Button;

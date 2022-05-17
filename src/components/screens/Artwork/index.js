@@ -10,7 +10,7 @@ import NotFound from '@shared/NotFound';
 import { ReactComponent as NotFoundUser } from '@svgs/not-found.svg';
 import { Col, Row } from '@ui-kit';
 import Content from './Content';
-import MoreBySection from './MoreBySection';
+import MoreBySection from '@screens/Product/MoreBySection';
 
 export const Artwork = () => {
   const { user } = useLoggedInUser();

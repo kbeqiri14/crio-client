@@ -1,9 +1,8 @@
 @import 'variables';
 
 .cr-tab-button {
-  padding: 9px 10px 11px;
+  padding: 9px 10px;
   width: auto;
-  height: 40px;
   background-color: transparent;
   border: 1px solid transparent;
   margin-right: 15px;
@@ -17,15 +16,12 @@
 
   &:hover,
   &.active {
-    border-radius: 6px;
+    border-radius: 8px;
     border: 1px solid @white_25;
   }
 
   &.active {
     background-color: @white_25;
-    .cr-tab-button__text {
-      color: @white;
-    }
   }
 }
 
