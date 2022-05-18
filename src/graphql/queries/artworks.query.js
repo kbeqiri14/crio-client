@@ -77,20 +77,3 @@ export const getRandomArtworks = gql`
   }
   ${work_fragment}
 `;
-
-export const getRandomArtworksForFeed = gql`
-  query getRandomArtworksForFeed($params: paginationParams!) {
-    getRandomArtworksForFeed(params: $params) {
-      topArtworks {
-        ...WorkDetailAttributes
-      }
-      userArtworks {
-        ...WorkDetailAttributes
-      }
-      artworks {
-        ...WorkDetailAttributes
-      }
-    }
-  }
-  ${work_fragment}
-`;

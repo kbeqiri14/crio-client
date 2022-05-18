@@ -1,4 +1,4 @@
-import { Fragment, memo, useCallback, useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import history from '@app/configs/history';
 import { useMutation } from '@apollo/client';
 
@@ -12,19 +12,29 @@ const Actions = (props) => {
   const [visible, setVisible] = useState(false);
   const showConfirmation = useCallback(() => setVisible(true), []);
   const hideConfirmation = useCallback(() => setVisible(false), []);
-  const handleEdit = useCallback(() => history.push('/video', props), [props]);
+  const name = useMemo(() => (props.isProduct ? 'product' : 'artwork'), [props.isProduct]);
+  const handleEdit = useCallback(() => history.push(`/edit-${name}`, props), [name, props]);
 
   const [removeArtwork, { loading: removingArtwork }] = useMutation(deleteArtwork, {
     variables: { params: { artworkId: props.artworkId } },
     onCompleted: () => {
       hideConfirmation();
-      successToast('The video is successfully deleted.');
+      successToast('The video is successfully deleted');
       window.location.href = `/profile/${props.username}`;
     },
   });
+  const removeProduct = useCallback(() => 'The product is successfully deleted', []);
+  const removing = useMemo(
+    () => (props.isProduct ? removingArtwork : false),
+    [props.isProduct, removingArtwork],
+  );
+  const handleRemove = useMemo(
+    () => (props.isProduct ? removeProduct : removeArtwork),
+    [props.isProduct, removeArtwork, removeProduct],
+  );
 
   return (
-    <Fragment>
+    <>
       <div className='actions'>
         <div className='action-button'>
           <div className='dot' />
@@ -43,15 +53,15 @@ const Actions = (props) => {
       {visible && (
         <Confirmation
           visible={visible}
-          title='Delete the video?'
+          title={`Delete the ${name}?`}
           cancelText='CANCEL'
           confirmText='DELETE'
-          loading={removingArtwork}
-          onConfirm={removeArtwork}
+          loading={removing}
+          onConfirm={handleRemove}
           onCancel={hideConfirmation}
         />
       )}
-    </Fragment>
+    </>
   );
 };
 

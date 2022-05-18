@@ -12,6 +12,12 @@ export { default as Col } from './Layout/Grid/Col';
 export { default as Row } from './Layout/Grid/Row';
 
 /*
+  Navigation
+*/
+export { default as Dropdown } from './Navigation/Dropdown';
+export { default as Menu } from './Navigation/Menu';
+
+/*
   Typography
 */
 export { default as Text } from './General/Typography/Text';
@@ -28,6 +34,7 @@ export { default as Carousel } from './DataDisplay/Carousel';
 */
 export { default as Input } from './DataEntry/Input';
 export { default as Radio } from './DataEntry/Radio';
+export { default as Switch } from './DataEntry/Switch';
 
 /*
   Theme Provider

@@ -1,11 +1,10 @@
 import { memo, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { UploadOutlined } from '@ant-design/icons';
-
 import history from '@app/configs/history';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import GetStarted from '@shared/GetStarted';
-import { Button, Col, Row } from '@ui-kit';
+import { Button, Col, Dropdown, Menu, Row } from '@ui-kit';
 import logo from '@images/crio-logo.svg';
 import { ProfileMenu } from './__partials__/ProfileMenu';
 
@@ -59,9 +58,22 @@ export const Header = ({ isAuthenticated }) => {
       <Col>
         {isAuthenticated && user ? <ProfileMenu user={user} /> : <GetStarted />}
         {user?.isCreator && (
-          <Button type='primary' onClick={goTo('/Upload')} className='vertical-middle'>
-            UPLOAD
-          </Button>
+          <Dropdown
+            overlay={
+              <Menu>
+                <Menu.Item key='marketplace' onClick={goTo('/upload')}>
+                  Marketplace
+                </Menu.Item>
+                <Menu.Item key='artwork' onClick={goTo('/upload/artwork')}>
+                  Artwork
+                </Menu.Item>
+              </Menu>
+            }
+          >
+            <Button type='primary' className='vertical-middle'>
+              UPLOAD
+            </Button>
+          </Dropdown>
         )}
         {user?.isCreator && <UploadOutlined className='upload-icon' onClick={goTo('/Upload')} />}
       </Col>

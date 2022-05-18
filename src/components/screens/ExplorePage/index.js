@@ -1,7 +1,8 @@
 import { memo, useState } from 'react';
 
 import { Footer } from '@shared/Footer';
-import { useRandomArtworks } from '@root/src/hooks/useRandomArtwork';
+import { useRandomArtworks } from '@root/src/hooks/useRandomArtworks';
+import { useRandomProducts } from '@root/src/hooks/useRandomProducts';
 import { Carousel } from '@ui-kit';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import TopPoster from './TopPoster';
@@ -10,16 +11,28 @@ import Content from '../../shared/CreatorContent';
 export const ExplorePage = () => {
   const [offset, setOffset] = useState(0);
   const [postersList, setPostersList] = useState([]);
+  const [productsList, setProductsList] = useState([]);
 
-  const { carouselPosters, isEnd, loading, loadMore } = useRandomArtworks(
-    ({ getRandomArtworks }) => {
-      setPostersList([...postersList, ...getRandomArtworks]);
-      setOffset(offset + 16);
-    },
-    offset,
-  );
+  const {
+    carouselPosters,
+    isEnd: isArtworkEnd,
+    loading: loadingArtworks,
+    loadMore: loadMoreArtworks,
+  } = useRandomArtworks(({ getRandomArtworks }) => {
+    setPostersList([...postersList, ...getRandomArtworks]);
+    setOffset(offset + 16);
+  }, offset);
 
-  if (loading && !offset) {
+  const {
+    isEnd: isProductEnd,
+    loading: loadingProducts,
+    loadMore: loadMoreProducts,
+  } = useRandomProducts(({ getRandomProducts }) => {
+    setProductsList([...productsList, ...getRandomProducts]);
+    setOffset(offset + 16);
+  }, offset);
+
+  if (loadMoreProducts && !offset) {
     return <GlobalSpinner />;
   }
 
@@ -31,11 +44,14 @@ export const ExplorePage = () => {
         ))}
       </Carousel>
       <Content
-        visibleLoadMore={!isEnd && offset}
-        loading={loading}
-        loadMore={loadMore}
-        productsList={postersList}
+        visibleLoadMoreArtworks={!isArtworkEnd && offset}
+        loadingArtworks={loadingArtworks}
+        loadMoreArtworks={loadMoreArtworks}
         postersList={postersList}
+        visibleLoadMoreProducts={!isProductEnd && offset}
+        loadingProducts={loadingProducts}
+        loadMoreProducts={loadMoreProducts}
+        productsList={productsList}
       />
       <Footer />
     </>

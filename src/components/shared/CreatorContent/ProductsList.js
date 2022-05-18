@@ -11,16 +11,16 @@ export const ProductsList = ({ productsList = [] }) => (
           providerType={item?.providerType}
           providerUserId={item?.providerUserId}
           avatar={item?.avatar}
-          src={item?.thumbnailUri}
           userId={item?.userId}
           username={item?.name}
-          artworkId={item?.artworkId}
+          productId={item?.productId}
+          type={item?.type}
           title={item?.title}
           description={item?.description}
-          status={item?.status}
+          price={item?.price}
+          limit={item?.limit}
           accessibility={item?.accessibility}
-          videoUri={item?.videoUri}
-          thumbnailUri={item?.thumbnailUri}
+          thumbnail={item?.thumbnail}
         />
       </Col>
     ))}

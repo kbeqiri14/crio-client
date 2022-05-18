@@ -9,6 +9,7 @@ import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { Button, Col, Divider, Row, Text } from '@ui-kit';
 import Actions from '@screens/Video/Actions';
 import { ReactComponent as LockIcon } from '@svgs/lock-buy.svg';
+import product from '@svgs/product.svg';
 import LockState from './LockState';
 
 const ProductWrapper = styled('div')`
@@ -46,14 +47,14 @@ const Product = ({
   avatar,
   userId,
   username,
-  artworkId,
+  productId,
+  type,
   title,
   description,
-  videoUri,
-  thumbnailUri,
+  price,
+  limit,
   accessibility,
-  status,
-  src,
+  thumbnail,
 }) => {
   const { user } = useLoggedInUser();
   const { pathname } = useLocation();
@@ -71,62 +72,72 @@ const Product = ({
     }
     return user.isSubscribed ? !user.followings?.includes(userId) : true;
   }, [user.isCreator, user.isSubscribed, user.followings, accessibility, userId]);
+  const src = useMemo(() => (thumbnail ? thumbnail : product), [thumbnail]);
 
-  const showArtwork = useCallback(() => {
+  const showProduct = useCallback(() => {
     if (pathname.includes('/product/')) {
-      history.push(`/product/${artworkId}`);
+      history.push(`/product/${productId}`);
       return;
     }
-    window.history.replaceState('', '', `/product/${artworkId}`);
+    window.history.replaceState('', '', `/product/${productId}`);
     setVideoInfo({
-      title,
-      description,
-      id: videoUri?.substring(videoUri?.lastIndexOf('/') + 1),
-      thumbnailUri,
-      artworkId,
       userId,
       providerType,
       providerUserId,
       name: username,
       avatar,
+      productId,
+      type,
+      title,
+      description,
+      price,
+      limit,
+      accessibility,
+      thumbnail,
       isProduct: true,
     });
   }, [
+    userId,
     providerType,
     providerUserId,
-    avatar,
-    userId,
     username,
-    artworkId,
+    avatar,
+    type,
     title,
     description,
-    videoUri,
-    thumbnailUri,
+    price,
+    limit,
+    accessibility,
+    thumbnail,
     pathname,
+    productId,
     setVideoInfo,
   ]);
 
   return (
     <>
       <ProductWrapper className={isLocked ? 'is-locked' : ''}>
-        <LockState userId={userId} accessibility={accessibility} status={status} isProduct={true} />
+        <LockState userId={userId} accessibility={accessibility} isProduct={true} />
         {showActions && (
           <Actions
             username={username}
-            artworkId={artworkId}
-            videoUri={videoUri}
+            productId={productId}
             title={title}
             description={description}
+            price={price}
+            limit={limit}
             accessibility={accessibility}
+            thumbnail={thumbnail}
+            isProduct={true}
           />
         )}
-        <img src={src} alt='artwork' width={330} height={245} onClick={showArtwork} />
+        <img src={src} alt='product' width={330} height={245} onClick={showProduct} />
         <Row
           justify='space-between'
           align='middle'
           padding_horizontal={20}
           padding_top={12}
-          onClick={showArtwork}
+          onClick={showProduct}
         >
           <Col className='width'>
             <Row align='middle' gutter={[0, 8]}>

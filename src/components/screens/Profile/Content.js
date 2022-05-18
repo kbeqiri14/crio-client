@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { useLazyQuery } from '@apollo/client';
 
 import { getUserArtworks } from '@app/graphql/queries/artworks.query';
+import { getUserProducts } from '@app/graphql/queries/products.query';
 import { Tabs } from '@ui-kit';
 import Followings from './Followings';
 import Content from '@root/src/components/shared/CreatorContent';
@@ -24,7 +25,18 @@ const ProfileContent = ({ username, followingsCount, isCreator, isProfile, isSub
   const { pathname } = useLocation();
   // const [initialPolling, setInitialPolling] = useState(true);
 
-  const [requestArtworks, { data }] = useLazyQuery(getUserArtworks, {
+  const [requestArtworks, { data: Artworks }] = useLazyQuery(getUserArtworks, {
+    variables: { username: pathname.split('/').slice(-1)[0] || undefined },
+    fetchPolicy: 'no-cache',
+    notifyOnNetworkStatusChange: true,
+    pollInterval: 30000,
+    // onCompleted: ({ getUserArtworks }) => {
+    //   setInitialPolling(false);
+    //   setWorks(getUserArtworks);
+    // },
+  });
+
+  const [requestProducts, { data: Products }] = useLazyQuery(getUserProducts, {
     variables: { username: pathname.split('/').slice(-1)[0] || undefined },
     fetchPolicy: 'no-cache',
     notifyOnNetworkStatusChange: true,
@@ -38,11 +50,14 @@ const ProfileContent = ({ username, followingsCount, isCreator, isProfile, isSub
   useEffect(() => {
     if (isCreator) {
       requestArtworks();
+      requestProducts();
     }
-  }, [isCreator, requestArtworks]);
+  }, [isCreator, requestArtworks, requestProducts]);
 
   if (isCreator) {
-    return <Content productsList={data?.getUserArtworks} postersList={data?.getUserArtworks} />;
+    return (
+      <Content productsList={Products?.getUserProducts} postersList={Artworks?.getUserArtworks} />
+    );
   }
   return (
     <Tabs>

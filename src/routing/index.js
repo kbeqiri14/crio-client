@@ -21,8 +21,10 @@ import CognitoCallback from '@screens/CognitoCallback';
 import Profile from '@screens/Profile';
 import Artwork from '@screens/Artwork';
 import Product from '@screens/Product';
+import UploadProduct from '@screens/UploadProduct';
 import Upload from '@screens/Upload';
-import Video from '@screens/Video';
+import EditArtwork from '@screens/Video';
+import EditProduct from '@screens/EditProduct';
 
 export const AppRoutes = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
@@ -121,8 +123,30 @@ export const AppRoutes = () => {
           <Route exact path='/cognito/callback' component={CognitoCallback} />
           {!loading && !user && <Redirect to='/' />}
           {/* PRIVATE ROUTES */}
-          <PrivateRoute isAuthenticated={isAuthenticated} path='/upload' component={Upload} />
-          <PrivateRoute isAuthenticated={isAuthenticated} path='/video' component={Video} />
+          <PrivateRoute
+            exact
+            isAuthenticated={isAuthenticated}
+            path='/upload'
+            component={UploadProduct}
+          />
+          <PrivateRoute
+            exact
+            isAuthenticated={isAuthenticated}
+            path='/upload/artwork'
+            component={Upload}
+          />
+          <PrivateRoute
+            exact
+            isAuthenticated={isAuthenticated}
+            path='/edit-artwork'
+            component={EditArtwork}
+          />
+          <PrivateRoute
+            exact
+            isAuthenticated={isAuthenticated}
+            path='/edit-product'
+            component={EditProduct}
+          />
         </Switch>
         {isVisible && <PresentationView />}
       </main>
