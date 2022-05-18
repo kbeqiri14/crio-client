@@ -56,3 +56,17 @@ export const getRandomProducts = gql`
   }
   ${product_fragment}
 `;
+
+export const getMoreProducts = gql`
+  query getMoreProducts($params: paginationParams!) {
+    getMoreProducts(params: $params) {
+      userProducts {
+        ...ProductDetailAttributes
+      }
+      products {
+        ...ProductDetailAttributes
+      }
+    }
+  }
+  ${product_fragment}
+`;

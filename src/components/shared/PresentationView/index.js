@@ -1,13 +1,11 @@
 import { useCallback, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Modal } from 'antd';
-import { useQuery } from '@apollo/client';
 
-import { getRandomArtworks } from '@app/graphql/queries/artworks.query';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { ReactComponent as CloseIcon } from '@svgs/x.svg';
 import Content from '../../screens/Artwork/Content';
-import MoreBySection from '@screens/Product/MoreBySection';
+import MoreProductsSection from '@root/src/components/screens/Product/MoreProductsSection';
 import './styles.less';
 
 export const PresentationView = () => {
@@ -17,10 +15,6 @@ export const PresentationView = () => {
     setVideoInfo({});
     window.history.replaceState('', '', pathname);
   }, [pathname, setVideoInfo]);
-
-  const { data } = useQuery(getRandomArtworks, {
-    variables: { params: { userId: videoInfo.userId, artworkId: videoInfo.artworkId, limit: 3 } },
-  });
 
   useEffect(() => {
     document.querySelector('.video-view-modal__wrapper')?.scrollTo({
@@ -43,10 +37,7 @@ export const PresentationView = () => {
       className='video-view-modal'
     >
       <Content videoInfo={videoInfo} videoUri={videoInfo.id} />
-      {data?.getRandomArtworks?.length >= 3 && (
-        <MoreBySection videoInfo={videoInfo} postersList={data?.getRandomArtworks} />
-      )}
-      <MoreBySection videoInfo={videoInfo} productsList={data?.getRandomArtworks} />
+      <MoreProductsSection videoInfo={videoInfo} />
     </Modal>
   );
 };

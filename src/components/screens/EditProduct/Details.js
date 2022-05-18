@@ -1,12 +1,13 @@
 import { memo, useCallback, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Upload } from 'antd';
-// import { useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 
+import useAsyncFn from '@app/hooks/useAsyncFn';
 import useRedirectToProfile from '@app/hooks/useRedirectToProfile';
-// import { createProduct, updateProduct } from '@app/graphql/mutations/product.mutation';
+import { createProduct, updateProduct } from '@app/graphql/mutations/product.mutation';
 import ActionButtons from '@shared/ActionButtons';
-// import { errorToast, successToast } from '@ui-kit/Notification';
+import { errorToast, successToast } from '@ui-kit/Notification';
 import { Col, Input, Radio, Row, Switch, Text, Title } from '@ui-kit';
 import { formItemContent } from '@utils/upload.helper';
 
@@ -73,54 +74,57 @@ const ProductDetail = ({ state }) => {
     setValue('limit', undefined);
   }, [limitVisible, setValue]);
 
-  // const [create, { loading: creating }] = useMutation(createProduct, {
-  //   onError: () => errorToast('Something went wrong!', 'Please, try again later!'),
-  // });
-  // const [update, { loading: updating }] = useMutation(updateProduct, {
-  //   onCompleted: () => {
-  //     redirect();
-  //     successToast('The product info is successfully updated.');
-  //   },
-  //   onError: () => errorToast('Something went wrong!', 'Please, try again later!'),
-  // });
-
-  const onPublish = useCallback(
-    async (attributes) => {
-      // state?.productId
-      //   ? update({
-      //       variables: {
-      //         attributes: {
-      //           id: state.productId,
-      //           type: 'service',
-      //           title: attributes.title,
-      //           description: attributes.desc,
-      //           price: +attributes.price,
-      //           limit: +attributes.limit || undefined,
-      //           accessibility: attributes.accessibility,
-      //         },
-      //       },
-      //     })
-      //   : create({
-      //       variables: {
-      //         attributes: {
-      //           type: 'service',
-      //           title: attributes.title,
-      //           description: attributes.desc,
-      //           price: +attributes.price,
-      //           limit: +attributes.limit,
-      //           accessibility: attributes.accessibility,
-      //         },
-      //       },
-      //     });
-
-      if (attributes.image.file) {
-        const content = await formItemContent({ userId, image: attributes.image.file });
-
-        console.log('content', content, content?.split('/')?.slice(-1)[0]);
-      }
+  const [create, { loading: creating }] = useMutation(createProduct, {
+    onCompleted: () => {
+      redirect();
+      successToast('The product is successfully created');
     },
-    [userId],
-  );
+    onError: () => errorToast('Something went wrong!', 'Please, try again later!'),
+  });
+  const [update, { loading: updating }] = useMutation(updateProduct, {
+    onCompleted: () => {
+      redirect();
+      successToast('The product info is successfully updated');
+    },
+    onError: () => errorToast('Something went wrong!', 'Please, try again later!'),
+  });
+
+  const onPublish = useAsyncFn(async (attributes) => {
+    let thumbnail;
+    if (attributes.image?.file) {
+      const content = await formItemContent({ userId, image: attributes.image.file });
+      thumbnail = content?.image?.split('/')?.slice(-1)[0].slice('thumbnail-'.length);
+    }
+
+    state?.productId
+      ? update({
+          variables: {
+            attributes: {
+              id: state.productId,
+              type: 'service',
+              title: attributes.title,
+              description: attributes.desc,
+              price: +attributes.price,
+              limit: +attributes.limit || undefined,
+              accessibility: attributes.accessibility,
+              thumbnail,
+            },
+          },
+        })
+      : create({
+          variables: {
+            attributes: {
+              type: 'service',
+              title: attributes.title,
+              description: attributes.desc,
+              price: +attributes.price,
+              limit: +attributes.limit,
+              accessibility: attributes.accessibility,
+              thumbnail,
+            },
+          },
+        });
+  });
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -256,10 +260,10 @@ const ProductDetail = ({ state }) => {
         <Col span={24}>
           <ActionButtons
             saveText={buttonLabel}
-            // loading={creating || updating}
+            loading={onPublish.loading || creating || updating}
             // disabled={disabled}
             onCancel={redirect}
-            onSave={handleSubmit(onPublish)}
+            onSave={handleSubmit(onPublish.call)}
           />
         </Col>
       </Row>

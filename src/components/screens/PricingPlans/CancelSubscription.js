@@ -33,7 +33,7 @@ export const CancelSubscription = () => {
     },
     onCompleted: () => {
       hide();
-      successToast('Your cancellation request is successfully sent.');
+      successToast('Your cancellation request is successfully sent');
     },
     onError: () => {
       hide();

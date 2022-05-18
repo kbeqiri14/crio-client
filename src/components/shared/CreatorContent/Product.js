@@ -72,7 +72,13 @@ const Product = ({
     }
     return user.isSubscribed ? !user.followings?.includes(userId) : true;
   }, [user.isCreator, user.isSubscribed, user.followings, accessibility, userId]);
-  const src = useMemo(() => (thumbnail ? thumbnail : product), [thumbnail]);
+  const src = useMemo(
+    () =>
+      thumbnail
+        ? `https://crio-in-staging-bucket.s3.us-west-2.amazonaws.com/43/products/thumbnail-${thumbnail}`
+        : product,
+    [thumbnail],
+  );
 
   const showProduct = useCallback(() => {
     if (pathname.includes('/product/')) {
@@ -93,7 +99,7 @@ const Product = ({
       price,
       limit,
       accessibility,
-      thumbnail,
+      thumbnail: src,
       isProduct: true,
     });
   }, [
@@ -108,7 +114,7 @@ const Product = ({
     price,
     limit,
     accessibility,
-    thumbnail,
+    src,
     pathname,
     productId,
     setVideoInfo,
@@ -127,7 +133,7 @@ const Product = ({
             price={price}
             limit={limit}
             accessibility={accessibility}
-            thumbnail={thumbnail}
+            thumbnail={src}
             isProduct={true}
           />
         )}

@@ -11,7 +11,7 @@ const Video = () => {
   const onCancel = useCallback(() => history.push(`/profile/${state.username}`), [state.username]);
   const onCompleted = () => {
     onCancel();
-    successToast('The video info is successfully updated.');
+    successToast('The video info is successfully updated');
   };
 
   useEffect(() => {
