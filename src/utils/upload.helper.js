@@ -1,56 +1,42 @@
 import uploader from '@app/configs/uploader';
 
-const FOLDER_NAME = 'crio';
+const FOLDER_NAME = 'products';
 
 export const IMAGE_CONTENT_TYPE = 'image';
 
 export const FILE_TYPES = [IMAGE_CONTENT_TYPE];
 
-export const getFolderNameByType = (type) => {
+export const getContentNameByType = (type) => {
   switch (type) {
-    case 'image':
-      return 'images';
+    case IMAGE_CONTENT_TYPE:
+      return 'thumbnail';
     default:
       return 'general';
   }
 };
 
-const getContentName = (type) => {
-  switch (type) {
-    case IMAGE_CONTENT_TYPE:
-      return 'image';
-    default:
-      return null;
-  }
-};
-
-export const uploadContent = async (file, typeId) => {
-  const folder = FOLDER_NAME;
-  if (!FILE_TYPES.includes(typeId) || !file) {
+export const uploadContent = async (userId, file, type) => {
+  if (!userId || !file || !FILE_TYPES.includes(type)) {
     return null;
   }
-  const contentName = getContentName(typeId);
-  const name = `${contentName}-content-${Date.now()}`;
-  const filename = `${folder ? `${folder}/` : ''}${getFolderNameByType(contentName)}/${name}`;
+  const contentName = getContentNameByType(type);
+  const name = `${contentName}-${Date.now()}`;
+  const filename = `${userId}/${FOLDER_NAME}/${name}`;
 
   return uploader.signAndUpload(filename, file.type, file);
 };
 
-export const uploadItemContent = async (content, type) => {
-  let newValue = content;
-  // if (FILE_TYPES.includes(type) && content?.originFileObj) {
-  newValue = await uploadContent(content, type);
-  // }
-  return newValue;
+export const uploadItemContent = async (userId, content, type) => {
+  return uploadContent(userId, content, type);
 };
 
-export const formItemContent = async ({ image }) => {
+export const formItemContent = async ({ userId, image }) => {
   const content = {
     image,
   };
 
   if (image) {
-    const newImage = await uploadItemContent(image, IMAGE_CONTENT_TYPE);
+    const newImage = await uploadItemContent(userId, image, IMAGE_CONTENT_TYPE);
     if (newImage) {
       content.image = newImage;
     }

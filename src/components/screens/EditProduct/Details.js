@@ -1,14 +1,14 @@
 import { memo, useCallback, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Upload } from 'antd';
-import { useMutation } from '@apollo/client';
+// import { useMutation } from '@apollo/client';
 
-import useAsyncFn from '@app/hooks/useAsyncFn';
-import { createProduct, updateProduct } from '@app/graphql/mutations/product.mutation';
+import useRedirectToProfile from '@app/hooks/useRedirectToProfile';
+// import { createProduct, updateProduct } from '@app/graphql/mutations/product.mutation';
 import ActionButtons from '@shared/ActionButtons';
-import { errorToast } from '@ui-kit/Notification';
+// import { errorToast, successToast } from '@ui-kit/Notification';
 import { Col, Input, Radio, Row, Switch, Text, Title } from '@ui-kit';
-// import { formItemContent } from '@utils/upload.helper';
+import { formItemContent } from '@utils/upload.helper';
 
 const { Dragger } = Upload;
 
@@ -16,9 +16,13 @@ const ProductDetail = ({ state }) => {
   const [limitVisible, setLimitVisible] = useState(false);
   const [image, setImage] = useState(state?.thumbnail ? { src: state.thumbnail } : {});
 
-  const { control, watch, setValue, handleSubmit } = useForm();
-  const title = watch('title');
-  const price = watch('price');
+  const { userId, redirect } = useRedirectToProfile();
+  const { control, setValue, handleSubmit } = useForm();
+  // const title = watch('title');
+  // const description = watch('desc');
+  // const price = watch('price');
+  // const limit = watch('limit');
+  // const accessibility = watch('accessibility');
 
   const props = {
     name: 'file',
@@ -38,63 +42,92 @@ const ProductDetail = ({ state }) => {
       return false;
     },
   };
-  const disabled = useMemo(() => !title?.trim() || !price?.trim(), [title, price]);
-  const buttonLabel = useMemo(() => (state ? 'UPDATE' : 'PUBLISH'), [state]);
+  // const disabled = useMemo(() => {
+  //   return !title?.trim()
+  //   || !price
+  //   || title !== state?.title
+  //   // || description !== state?.description
+  //   || price !== state?.price
+  //   // || limit !== state?.limit
+  //   || accessibility !== state.accessibility
+  //   || (description && description !== state.description)
+  //   || (description === '' && !!state?.description)
+  //   || (limit && limit !== state.limit)
+  //   || (limit === '' && !!state?.limit)
+  // }, [
+  //   title,
+  //   description,
+  //   price,
+  //   limit,
+  //   accessibility,
+  //   state?.title,
+  //   state?.description,
+  //   state?.price,
+  //   state?.limit,
+  //   state?.accessibility,
+  // ]);
+  const buttonLabel = useMemo(() => (state?.productId ? 'UPDATE' : 'PUBLISH'), [state?.productId]);
 
   const setLimitation = useCallback(() => {
     setLimitVisible(!limitVisible);
     setValue('limit', undefined);
   }, [limitVisible, setValue]);
 
-  const [create] = useMutation(createProduct, {
-    onError: () => errorToast('Something went wrong!', 'Please, try again later!'),
-  });
+  // const [create, { loading: creating }] = useMutation(createProduct, {
+  //   onError: () => errorToast('Something went wrong!', 'Please, try again later!'),
+  // });
+  // const [update, { loading: updating }] = useMutation(updateProduct, {
+  //   onCompleted: () => {
+  //     redirect();
+  //     successToast('The product info is successfully updated.');
+  //   },
+  //   onError: () => errorToast('Something went wrong!', 'Please, try again later!'),
+  // });
 
-  const [update] = useMutation(updateProduct, {
-    onError: () => errorToast('Something went wrong!', 'Please, try again later!'),
-  });
+  const onPublish = useCallback(
+    async (attributes) => {
+      // state?.productId
+      //   ? update({
+      //       variables: {
+      //         attributes: {
+      //           id: state.productId,
+      //           type: 'service',
+      //           title: attributes.title,
+      //           description: attributes.desc,
+      //           price: +attributes.price,
+      //           limit: +attributes.limit || undefined,
+      //           accessibility: attributes.accessibility,
+      //         },
+      //       },
+      //     })
+      //   : create({
+      //       variables: {
+      //         attributes: {
+      //           type: 'service',
+      //           title: attributes.title,
+      //           description: attributes.desc,
+      //           price: +attributes.price,
+      //           limit: +attributes.limit,
+      //           accessibility: attributes.accessibility,
+      //         },
+      //       },
+      //     });
 
-  const onPublish = useAsyncFn(async (attributes) => {
-    state
-      ? update({
-          variables: {
-            attributes: {
-              id: state.id,
-              type: 'service',
-              title: attributes.title,
-              description: attributes.desc,
-              price: +attributes.price,
-              limit: +attributes.limit,
-              accessibility: attributes.accessibility,
-            },
-          },
-        })
-      : create({
-          variables: {
-            attributes: {
-              type: 'service',
-              title: attributes.title,
-              description: attributes.desc,
-              price: +attributes.price,
-              limit: +attributes.limit,
-              accessibility: attributes.accessibility,
-            },
-          },
-        });
-    // if (attributes.image.file) {
+      if (attributes.image.file) {
+        const content = await formItemContent({ userId, image: attributes.image.file });
 
-    // }
-    // const content = await formItemContent({ image: attributes.image.file });
-
-    // console.log('content', content?.split('/')?.slice(-1)[0])
-  });
+        console.log('content', content, content?.split('/')?.slice(-1)[0]);
+      }
+    },
+    [userId],
+  );
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }}>
       <Row gutter={[0, 8]} className='upload' style={{ maxWidth: 568 }}>
         <Col span={24} padding_bottom={32}>
           <Title level={1} align='center'>
-            {state ? 'Update Service' : 'Add new Service'}
+            {state?.productId ? 'Update Service' : 'Add new Service'}
           </Title>
         </Col>
         <Col span={24} align='start'>
@@ -188,6 +221,7 @@ const ProductDetail = ({ state }) => {
           <Controller
             name='accessibility'
             control={control}
+            defaultValue={state?.accessibility || 'subscriber_only'}
             render={({ field }) => (
               <Radio.Group defaultValue={state?.accessibility || 'subscriber_only'} {...field}>
                 <Radio value='subscriber_only'>Subscriber Only</Radio>
@@ -222,10 +256,10 @@ const ProductDetail = ({ state }) => {
         <Col span={24}>
           <ActionButtons
             saveText={buttonLabel}
-            loading={onPublish.loading}
-            disabled={disabled}
-            // onCancel={onCancel}
-            onSave={handleSubmit(onPublish.call)}
+            // loading={creating || updating}
+            // disabled={disabled}
+            onCancel={redirect}
+            onSave={handleSubmit(onPublish)}
           />
         </Col>
       </Row>
