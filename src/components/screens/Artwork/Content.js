@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { urlify } from '@utils/helpers';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
-import { Col, Row, Text, Title } from '@ui-kit';
+import { Button, Col, Row, Text, Title } from '@ui-kit';
 import LockState from '@shared/CreatorContent/LockState';
 
 const Wrapper = styled('div')`
@@ -77,7 +77,7 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
           <Col span={24} margin_bottom={40}>
             {videoInfo.isProduct ? (
               <img
-                src={videoInfo.thumbnailUri}
+                src={videoInfo.thumbnail}
                 alt='artwork'
                 className='border-radius-30 fit-cover'
                 width='100%'
@@ -96,11 +96,39 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
             )}
           </Col>
         )}
-        <Col span={24}>
+        <Col span={videoInfo.isProduct ? 12 : 24}>
           <Title level={2}>
             <div dangerouslySetInnerHTML={{ __html: urlify(videoInfo.description) }} />
           </Title>
         </Col>
+        {videoInfo.isProduct && (
+          <Col span={12}>
+            <Row
+              gutter={[0, 8]}
+              style={{
+                float: 'right',
+                width: 268,
+                height: 162,
+                padding: 20,
+                backgroundColor: '#202020',
+                borderRadius: 16,
+                marginRight: 20,
+              }}
+            >
+              <Col>
+                <Text level={2}>Price: ${videoInfo.price?.toFixed(2) || '5'}</Text>
+              </Col>
+              <Col>
+                <Text level={2}>Availability: {videoInfo.limit || 'Unlimited'}</Text>
+              </Col>
+              <Col span={24} padding_top={6}>
+                <Button block type='primary'>
+                  Buy
+                </Button>
+              </Col>
+            </Row>
+          </Col>
+        )}
       </Row>
     </Wrapper>
   );
