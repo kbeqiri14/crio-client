@@ -15,6 +15,13 @@ import LockState from './LockState';
 const ProductWrapper = styled('div')`
   width: 332px;
   height: 332px;
+  &.large {
+    width: 686px;
+    height: 723px;
+    .width {
+      max-width: 340px;
+    }
+  }
   border: 1px solid ${(props) => props.theme.colors.dark50};
   box-sizing: border-box;
   border-radius: 30px;
@@ -55,6 +62,7 @@ const Product = ({
   limit,
   accessibility,
   thumbnail,
+  large = false,
 }) => {
   const { user } = useLoggedInUser();
   const { pathname } = useLocation();
@@ -75,10 +83,21 @@ const Product = ({
   const src = useMemo(
     () =>
       thumbnail
-        ? `https://crio-in-staging-bucket.s3.us-west-2.amazonaws.com/43/products/thumbnail-${thumbnail}`
+        ? `https://crio-in-staging-bucket.s3.us-west-2.amazonaws.com/${userId}/products/thumbnail-${thumbnail}`
         : product,
-    [thumbnail],
+    [userId, thumbnail],
   );
+
+  const classes = useMemo(() => {
+    let name;
+    if (isLocked) {
+      name = 'is-locked';
+    }
+    if (large) {
+      return `${name} large`;
+    }
+    return name;
+  }, [isLocked, large]);
 
   const showProduct = useCallback(() => {
     if (pathname.includes('/product/')) {
@@ -122,8 +141,8 @@ const Product = ({
 
   return (
     <>
-      <ProductWrapper className={isLocked ? 'is-locked' : ''}>
-        <LockState userId={userId} accessibility={accessibility} isProduct={true} />
+      <ProductWrapper className={classes}>
+        <LockState userId={userId} accessibility={accessibility} large={large} isProduct={true} />
         {showActions && (
           <Actions
             username={username}
@@ -137,7 +156,13 @@ const Product = ({
             isProduct={true}
           />
         )}
-        <img src={src} alt='product' width={330} height={245} onClick={showProduct} />
+        <img
+          src={src}
+          alt='product'
+          width={large ? 684 : 330}
+          height={large ? 636 : 245}
+          onClick={showProduct}
+        />
         <Row
           justify='space-between'
           align='middle'
@@ -161,7 +186,11 @@ const Product = ({
           </Col>
           <Col className='info'>
             <Divider type='vertical' height={31} />
-            <Button type='primary' width={126} icon={isLocked ? <LockIcon /> : undefined}>
+            <Button
+              type='primary'
+              width={large ? 301 : 126}
+              icon={isLocked ? <LockIcon /> : undefined}
+            >
               Buy
             </Button>
           </Col>

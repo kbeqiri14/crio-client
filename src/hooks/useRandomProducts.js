@@ -4,7 +4,7 @@ import { useLazyQuery, useQuery, useReactiveVar } from '@apollo/client';
 import { randomNumberVar } from '@configs/client-cache';
 import { getRandomProducts, getRandomProductsInfo } from '@app/graphql/queries/products.query';
 
-const LIMIT = 16;
+const LIMIT = 15;
 
 export const useRandomProducts = (onCompleted, offset = 0, limit = LIMIT) => {
   const [loading, setLoading] = useState(true);

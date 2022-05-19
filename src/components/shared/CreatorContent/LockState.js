@@ -16,7 +16,7 @@ const Wrapper = styled('div')`
   backdrop-filter: blur(8px);
 `;
 
-const LockState = ({ userId, accessibility, status, size = 'normal', isProduct }) => {
+const LockState = ({ userId, accessibility, status, size = 'normal', large, isProduct }) => {
   const { user } = useLoggedInUser();
   const { setVideoInfo } = usePresentation();
 
@@ -26,8 +26,8 @@ const LockState = ({ userId, accessibility, status, size = 'normal', isProduct }
         ? [
             { width: 102, height: 102 },
             {
-              width: 330,
-              height: isProduct ? 245 : 330,
+              width: large ? 684 : 330,
+              height: isProduct ? (large ? 636 : 245) : 330,
               borderTopLeftRadius: 30,
               borderTopRightRadius: 30,
               borderBottomLeftRadius: isProduct ? 0 : 30,
@@ -45,7 +45,7 @@ const LockState = ({ userId, accessibility, status, size = 'normal', isProduct }
               borderBottomRightRadius: isProduct ? 0 : 30,
             },
           ],
-    [size, isProduct],
+    [size, large, isProduct],
   );
 
   const unavailable = useMemo(() => status && status !== 'available', [status]);

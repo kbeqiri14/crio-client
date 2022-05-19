@@ -9,7 +9,8 @@ import TopPoster from './TopPoster';
 import Content from '../../shared/CreatorContent';
 
 export const ExplorePage = () => {
-  const [offset, setOffset] = useState(0);
+  const [artworksOffset, setArtworksOffset] = useState(0);
+  const [productsOffset, setProductsOffset] = useState(0);
   const [postersList, setPostersList] = useState([]);
   const [productsList, setProductsList] = useState([]);
 
@@ -20,8 +21,8 @@ export const ExplorePage = () => {
     loadMore: loadMoreArtworks,
   } = useRandomArtworks(({ getRandomArtworks }) => {
     setPostersList([...postersList, ...getRandomArtworks]);
-    setOffset(offset + 16);
-  }, offset);
+    setArtworksOffset(artworksOffset + 16);
+  }, artworksOffset);
 
   const {
     isEnd: isProductEnd,
@@ -29,10 +30,10 @@ export const ExplorePage = () => {
     loadMore: loadMoreProducts,
   } = useRandomProducts(({ getRandomProducts }) => {
     setProductsList([...productsList, ...getRandomProducts]);
-    setOffset(offset + 16);
-  }, offset);
+    setProductsOffset(productsOffset + 15);
+  }, productsOffset);
 
-  if (loadMoreProducts && !offset) {
+  if (loadMoreProducts && !productsOffset) {
     return <GlobalSpinner />;
   }
 
@@ -44,11 +45,11 @@ export const ExplorePage = () => {
         ))}
       </Carousel>
       <Content
-        visibleLoadMoreArtworks={!isArtworkEnd && offset}
+        visibleLoadMoreArtworks={!isArtworkEnd && artworksOffset}
         loadingArtworks={loadingArtworks}
         loadMoreArtworks={loadMoreArtworks}
         postersList={postersList}
-        visibleLoadMoreProducts={!isProductEnd && offset}
+        visibleLoadMoreProducts={!isProductEnd && productsOffset}
         loadingProducts={loadingProducts}
         loadMoreProducts={loadMoreProducts}
         productsList={productsList}
