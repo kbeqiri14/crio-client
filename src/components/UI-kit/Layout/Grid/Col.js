@@ -39,6 +39,12 @@ const Col = styled(antCol)`
     `}
 
   ${(props) =>
+    props.padding_left &&
+    css`
+      padding-left: ${props.padding_left}px;
+    `}
+
+  ${(props) =>
     props.padding_right &&
     css`
       padding-right: ${props.padding_right}px;

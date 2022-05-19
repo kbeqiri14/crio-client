@@ -1,5 +1,4 @@
 import { Fragment, memo, useCallback, useMemo } from 'react';
-import { Col, Row } from 'antd';
 import cc from 'classcat';
 
 import { STRIPE_PAYMENT_URL } from '@configs/environment';
@@ -7,7 +6,7 @@ import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { Meta } from '@shared/Meta';
 import { Footer } from '@shared/Footer';
 import { Button } from '@ui-kit';
-import { Text, Title } from '@ui-kit';
+import { Col, Divider, Row, Text, Title } from '@ui-kit';
 import { CustomTooltip } from '@ui-kit/Tooltip';
 import { warningToast } from '@ui-kit/Notification';
 import { ReactComponent as CheckMark } from '@svgs/green-check.svg';
@@ -35,14 +34,13 @@ const PerksList = ({ listItems, isFree }) => {
 };
 
 const perksListFree = [
-  'View all publicly available content across the entire platform from your favorite creators',
-  'Behind the scenes footage',
+  'Buy publicly available products',
+  'Watch, comment, like publicly available content',
 ];
 const perksListPro = [
-  'View all content across the entire platform from all your favorite creators',
-  'Behind the scenes footage',
-  'Access to never-before seen exclusive content',
-  '5 Vouchers / month to redeem for various perks from any of your favorite creators (e.g., personal video edits, downloadable content, tutorials, merchandise, and much more!)',
+  'Ability to follow any creator',
+  'Access to all free products from creators you follow',
+  'Watch any exclusive content from creators you follow',
 ];
 
 const PricingPlans = () => {
@@ -83,10 +81,21 @@ const PricingPlans = () => {
                   Pro
                 </Title>
                 <div className='cr-pricing__card--price'>
-                  <Title level={1}>$5</Title>
-                  <Text level={2}>/ month</Text>
+                  <Title level={1}>$7</Title>
+                  <Text level={2}> / month</Text>
                 </div>
                 <PerksList isFree={false} listItems={perksListPro} />
+                <Row gutter={[0, 20]} padding_top={10} padding_horizontal={35}>
+                  <Col span={24}>
+                    <Divider />
+                  </Col>
+                  <Col align='center' padding_bottom={20}>
+                    <Text level={1} color='dark25'>
+                      Crio shares a portion of your subscription fee with all creators you follow to
+                      support their work and efforts!
+                    </Text>
+                  </Col>
+                </Row>
                 <CustomTooltip
                   placement='right'
                   className='default-overlay'

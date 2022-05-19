@@ -7,11 +7,17 @@ import { Button, Col, Row, Text, Title } from '@ui-kit';
 const TopPosterWrapper = styled('div')`
   .absolute-center {
     position: absolute;
-    height: 100%;
     left: 140px;
     top: 50%;
     transform: translateY(-50%);
-    margin-top: 30px;
+    @media (max-width: 767.98px) {
+      left: 10px;
+    }
+  }
+  .absolute-bottom {
+    position: absolute;
+    bottom: 20px;
+    right: 40px;
   }
   .darken-background {
     width: 100%;
@@ -26,14 +32,12 @@ const TopPoster = ({ username, thumbnail }) => (
     <div className='darken-background' />
     <Row gutter={[0, 12]} className='absolute-center'>
       <Col span={24}>
-        <Title level={3} max_width={725}>
-          Discover the Best Visual Content from Your Favorite Creators
-        </Title>
+        <Title level={3}>Crio: The Creative Marketplace</Title>
       </Col>
       <Col span={24}>
         <Text level={4} max_width={555}>
-          Crio is a leading community platform for creatives to showcase their work and interact
-          with fans across the globe
+          Shop thousands of products and see the best artwork from the entire community of creators
+          on Crio
         </Text>
       </Col>
       <Col span={24}>
@@ -43,14 +47,10 @@ const TopPoster = ({ username, thumbnail }) => (
           </Button>
         </Link>
       </Col>
-      <Col span={24} margin_top={-40} padding_right={40}>
-        <Row justify='end'>
-          <Col>
-            <Text level={3}>Artwork by {username}</Text>
-          </Col>
-        </Row>
-      </Col>
     </Row>
+    <Text level={3} className='absolute-bottom'>
+      Artwork by {username}
+    </Text>
     <img alt='artwork' height={380} width='100%' className='fit-cover' src={thumbnail} />
   </TopPosterWrapper>
 );
