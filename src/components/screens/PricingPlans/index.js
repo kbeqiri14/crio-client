@@ -89,7 +89,7 @@ const PricingPlans = () => {
                   <Col span={24}>
                     <Divider />
                   </Col>
-                  <Col align='center' padding_bottom={20}>
+                  <Col align='center' padding_bottom={35}>
                     <Text level={1} color='dark25'>
                       Crio shares a portion of your subscription fee with all creators you follow to
                       support their work and efforts!
