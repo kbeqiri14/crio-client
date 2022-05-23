@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Button } from '@ui-kit';
 
 const Wrapper = styled('div')`
+  position: relative;
   display: flex;
   justify-content: center;
   padding-top: 40px;
@@ -15,7 +16,7 @@ const Wrapper = styled('div')`
     left: 0;
     right: 0;
     transform: translateY(-100%);
-    height: 294px;
+    height: 370px;
     width: 100%;
     background-image: linear-gradient(180deg, rgba(43, 43, 43, 0) 0%, #2b2b2b 78.12%);
   }
