@@ -11,6 +11,8 @@ import ActionButtons from '@shared/ActionButtons';
 import { errorToast, successToast } from '@ui-kit/Notification';
 import { Col, Input, Radio, Row, Switch, Text, Title } from '@ui-kit';
 import { formItemContent } from '@utils/upload.helper';
+import { ReactComponent as NewUpload } from '@svgs/new-upload.svg';
+import { ReactComponent as Delete } from '@svgs/delete.svg';
 
 const Wrapper = styled('div')`
   display: flex;
@@ -25,6 +27,23 @@ const Wrapper = styled('div')`
     }
     &.ant-upload-drag {
       border-radius: 8px;
+    }
+  }
+  .cover:hover {
+    .actions {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  .actions {
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s, opacity 0.4s linear;
+    position: absolute;
+    right: 8px;
+    top: 12px;
+    svg {
+      cursor: pointer;
     }
   }
 `;
@@ -218,13 +237,23 @@ const ProductDetail = ({ state }) => {
         </Col>
         <Col span={24} padding_bottom={32}>
           {image.src ? (
-            <img
-              alt='uploaded file'
-              src={image.src}
-              width={568}
-              height={232}
-              className='border-radius-8 fit-cover'
-            />
+            <div className='cover'>
+              <img
+                alt='uploaded file'
+                src={image.src}
+                width={568}
+                height={232}
+                className='border-radius-8 fit-cover'
+              />
+              <Row gutter={12} className='actions'>
+                <Col>
+                  <NewUpload className='new-upload' />
+                </Col>
+                <Col>
+                  <Delete className='delete' />
+                </Col>
+              </Row>
+            </div>
           ) : (
             <Controller
               name='image'
