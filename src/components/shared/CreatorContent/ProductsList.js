@@ -25,7 +25,7 @@ const Item = ({ item, large }) => (
 const Block = ({ block, padding_top = 0 }) => (
   <Row gutter={[22, 20]} padding_top={padding_top}>
     {block.map((item) => (
-      <Col key={item.id}>
+      <Col key={item.productId}>
         <Item item={item} />
       </Col>
     ))}

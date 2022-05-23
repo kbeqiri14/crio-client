@@ -1,13 +1,13 @@
 import { memo } from 'react';
 
 import { Col, Row } from '@ui-kit';
-import Poster from './Poster';
+import Artwork from './Artwork';
 
-export const PostersList = ({ postersList = [] }) => (
+export const ArtworksList = ({ artworksList = [] }) => (
   <Row gutter={[22, 20]}>
-    {postersList.map((item) => (
-      <Col key={item.id}>
-        <Poster
+    {artworksList.map((item) => (
+      <Col key={item.artworkId}>
+        <Artwork
           providerType={item?.providerType}
           providerUserId={item?.providerUserId}
           avatar={item?.avatar}
@@ -26,4 +26,4 @@ export const PostersList = ({ postersList = [] }) => (
   </Row>
 );
 
-export default memo(PostersList);
+export default memo(ArtworksList);

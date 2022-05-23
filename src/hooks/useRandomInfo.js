@@ -72,7 +72,7 @@ const useRandomInfo = ({
   }, [count, artworksOffset, artworksLimit, requestRandomArtworks]);
 
   return {
-    carouselPosters: productsInfo?.getRandomInfo?.artworks || [],
+    carouselArtworks: productsInfo?.getRandomInfo?.artworks || [],
     isProductsEnd,
     isArtworksEnd,
     loading,

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import history from '@app/configs/history';
 import { Tabs } from '@ui-kit';
 import LoadMoreButton from './LoadMoreButton';
-import PostersList from './PostersList';
+import ArtworksList from './ArtworksList';
 import ProductsList from './ProductsList';
 
 const Wrapper = styled('div')`
@@ -71,7 +71,7 @@ export const Content = ({
           />
         </TabPane>
         <TabPane key={tabs.ARTWORK} tab={tabs.ARTWORK}>
-          <PostersList postersList={artworksList} />
+          <ArtworksList artworksList={artworksList} />
           <LoadMoreButton
             visible={visibleLoadMoreArtworks}
             loading={loading}

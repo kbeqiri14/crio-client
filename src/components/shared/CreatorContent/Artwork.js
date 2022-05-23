@@ -10,7 +10,7 @@ import { Col, Row, Text } from '@ui-kit';
 import Actions from '@screens/Video/Actions';
 import LockState from './LockState';
 
-const PosterWrapper = styled('div')`
+const Wrapper = styled('div')`
   width: 332px;
   height: 332px;
   border: 1px solid ${(props) => props.theme.colors.dark50};
@@ -42,7 +42,7 @@ const PosterWrapper = styled('div')`
   }
 `;
 
-const Poster = ({
+const Artwork = ({
   providerType,
   providerUserId,
   avatar,
@@ -106,7 +106,7 @@ const Poster = ({
 
   return (
     <>
-      <PosterWrapper className={isLocked ? 'is-locked' : ''}>
+      <Wrapper className={isLocked ? 'is-locked' : ''}>
         <div className='info' onClick={showArtwork}>
           <Text level={4}>{title}</Text>
         </div>
@@ -122,7 +122,7 @@ const Poster = ({
           />
         )}
         <img src={src} alt='artwork' width={330} height={330} onClick={showArtwork} />
-      </PosterWrapper>
+      </Wrapper>
       <Link to={`/profile/${username}`}>
         <Row gutter={12} align='middle' padding_top={8}>
           <Col>
@@ -145,4 +145,4 @@ const Poster = ({
   );
 };
 
-export default memo(Poster);
+export default memo(Artwork);

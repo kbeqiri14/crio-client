@@ -4,7 +4,7 @@ import { Footer } from '@shared/Footer';
 import useRandomInfo from '@root/src/hooks/useRandomInfo';
 import { Carousel } from '@ui-kit';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
-import TopPoster from './TopPoster';
+import TopArtwork from './TopArtwork';
 import Content from '../../shared/CreatorContent';
 
 const PRODUCTS_LIMIT = 15;
@@ -17,7 +17,7 @@ export const ExplorePage = () => {
   const [artworksList, setArtworksList] = useState([]);
 
   const {
-    carouselPosters,
+    carouselArtworks,
     isProductsEnd,
     isArtworksEnd,
     loading,
@@ -45,8 +45,8 @@ export const ExplorePage = () => {
   return (
     <>
       <Carousel autoplay effect='fade'>
-        {carouselPosters.map((item) => (
-          <TopPoster key={item.id} username={item.username} thumbnail={item.thumbnailUri} />
+        {carouselArtworks.map((item) => (
+          <TopArtwork key={item.id} username={item.username} thumbnail={item.thumbnailUri} />
         ))}
       </Carousel>
       <Content

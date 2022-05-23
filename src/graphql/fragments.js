@@ -20,7 +20,6 @@ export const productFragment = gql`
 
 export const artworkFragment = gql`
   fragment ArtworkDetailAttributes on WorkDetail {
-    id
     artworkId
     userId
     username

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { Button, Col, Row, Text, Title } from '@ui-kit';
 
-const TopPosterWrapper = styled('div')`
+const Wrapper = styled('div')`
   .absolute-center {
     position: absolute;
     left: 140px;
@@ -27,8 +27,8 @@ const TopPosterWrapper = styled('div')`
   }
 `;
 
-const TopPoster = ({ username, thumbnail }) => (
-  <TopPosterWrapper>
+const TopArtwork = ({ username, thumbnail }) => (
+  <Wrapper>
     <div className='darken-background' />
     <Row gutter={[0, 12]} className='absolute-center'>
       <Col span={24}>
@@ -52,7 +52,7 @@ const TopPoster = ({ username, thumbnail }) => (
       Artwork by {username}
     </Text>
     <img alt='artwork' height={380} width='100%' className='fit-cover' src={thumbnail} />
-  </TopPosterWrapper>
+  </Wrapper>
 );
 
-export default memo(TopPoster);
+export default memo(TopArtwork);

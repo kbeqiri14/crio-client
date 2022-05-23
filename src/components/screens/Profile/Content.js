@@ -56,7 +56,7 @@ const ProfileContent = ({ username, followingsCount, isCreator, isProfile, isSub
 
   if (isCreator) {
     return (
-      <Content productsList={Products?.getUserProducts} postersList={Artworks?.getUserArtworks} />
+      <Content productsList={Products?.getUserProducts} artworksList={Artworks?.getUserArtworks} />
     );
   }
   return (
