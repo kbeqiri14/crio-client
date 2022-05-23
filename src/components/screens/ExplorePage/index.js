@@ -1,37 +1,42 @@
 import { memo, useState } from 'react';
 
 import { Footer } from '@shared/Footer';
-import { useRandomArtworks } from '@root/src/hooks/useRandomArtworks';
-import { useRandomProducts } from '@root/src/hooks/useRandomProducts';
+import useRandomInfo from '@root/src/hooks/useRandomInfo';
 import { Carousel } from '@ui-kit';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import TopPoster from './TopPoster';
 import Content from '../../shared/CreatorContent';
 
+const PRODUCTS_LIMIT = 15;
+const ARTWORKS_LIMIT = 16;
+
 export const ExplorePage = () => {
-  const [artworksOffset, setArtworksOffset] = useState(0);
   const [productsOffset, setProductsOffset] = useState(0);
-  const [postersList, setPostersList] = useState([]);
+  const [artworksOffset, setArtworksOffset] = useState(0);
   const [productsList, setProductsList] = useState([]);
+  const [artworksList, setArtworksList] = useState([]);
 
   const {
     carouselPosters,
-    isEnd: isArtworkEnd,
-    loading: loadingArtworks,
-    loadMore: loadMoreArtworks,
-  } = useRandomArtworks(({ getRandomArtworks }) => {
-    setPostersList([...postersList, ...getRandomArtworks]);
-    setArtworksOffset(artworksOffset + 16);
-  }, artworksOffset);
-
-  const {
-    isEnd: isProductEnd,
-    loading: loadingProducts,
-    loadMore: loadMoreProducts,
-  } = useRandomProducts(({ getRandomProducts }) => {
-    setProductsList([...productsList, ...getRandomProducts]);
-    setProductsOffset(productsOffset + 15);
-  }, productsOffset);
+    isProductsEnd,
+    isArtworksEnd,
+    loading,
+    loadMoreArtworks,
+    loadMoreProducts,
+  } = useRandomInfo({
+    productsOffset,
+    artworksOffset,
+    productsLimit: PRODUCTS_LIMIT,
+    artworksLimit: ARTWORKS_LIMIT,
+    getRandomProductsCompleted: ({ getRandomProducts }) => {
+      setProductsList([...productsList, ...getRandomProducts]);
+      setProductsOffset(productsOffset + PRODUCTS_LIMIT);
+    },
+    getRandomArtworksCompleted: ({ getRandomArtworks }) => {
+      setArtworksList([...artworksList, ...getRandomArtworks]);
+      setArtworksOffset(artworksOffset + ARTWORKS_LIMIT);
+    },
+  });
 
   if (loadMoreProducts && !productsOffset) {
     return <GlobalSpinner />;
@@ -45,14 +50,13 @@ export const ExplorePage = () => {
         ))}
       </Carousel>
       <Content
-        visibleLoadMoreArtworks={!isArtworkEnd && artworksOffset}
-        loadingArtworks={loadingArtworks}
-        loadMoreArtworks={loadMoreArtworks}
-        postersList={postersList}
-        visibleLoadMoreProducts={!isProductEnd && productsOffset}
-        loadingProducts={loadingProducts}
-        loadMoreProducts={loadMoreProducts}
+        visibleLoadMoreProducts={!isProductsEnd && productsOffset}
+        visibleLoadMoreArtworks={!isArtworksEnd && artworksOffset}
         productsList={productsList}
+        artworksList={artworksList}
+        loading={loading}
+        loadMoreProducts={loadMoreProducts}
+        loadMoreArtworks={loadMoreArtworks}
       />
       <Footer />
     </>

@@ -39,23 +39,23 @@ export const getUserArtworks = gql`
   ${artworkFragment}
 `;
 
-export const getRandomArtworksInfo = gql`
-  query {
-    getRandomArtworksInfo {
-      count
-      creatorIds
-      artworks {
-        ...ArtworkDetailAttributes
-      }
+export const getRandomArtworks = gql`
+  query getRandomArtworks($params: paginationParams!) {
+    getRandomArtworks(params: $params) {
+      ...ArtworkDetailAttributes
     }
   }
   ${artworkFragment}
 `;
 
-export const getRandomArtworks = gql`
-  query getRandomArtworks($params: paginationParams!) {
-    getRandomArtworks(params: $params) {
-      ...ArtworkDetailAttributes
+export const getRandomInfo = gql`
+  query {
+    getRandomInfo {
+      productsCount
+      artworksCount
+      artworks {
+        ...ArtworkDetailAttributes
+      }
     }
   }
   ${artworkFragment}

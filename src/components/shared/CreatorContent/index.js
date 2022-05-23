@@ -30,7 +30,15 @@ const tabs = {
   ARTWORK: 'Artwork',
 };
 
-export const Content = ({ visibleLoadMore, loading, loadMore, productsList, postersList }) => {
+export const Content = ({
+  visibleLoadMoreProducts,
+  visibleLoadMoreArtworks,
+  productsList,
+  artworksList,
+  loading,
+  loadMoreProducts,
+  loadMoreArtworks,
+}) => {
   const { pathname } = useLocation();
   const username = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
   const isProfile = useMemo(() => pathname.includes('/profile'), [pathname]);
@@ -56,11 +64,19 @@ export const Content = ({ visibleLoadMore, loading, loadMore, productsList, post
       <Tabs activeKey={activeKey} onTabClick={onTabClick}>
         <TabPane key={tabs.MARKETPLACE} tab={tabs.MARKETPLACE}>
           <ProductsList productsList={productsList} />
-          <LoadMoreButton visible={visibleLoadMore} loading={loading} onClick={loadMore} />
+          <LoadMoreButton
+            visible={visibleLoadMoreProducts}
+            loading={loading}
+            onClick={loadMoreProducts}
+          />
         </TabPane>
         <TabPane key={tabs.ARTWORK} tab={tabs.ARTWORK}>
-          <PostersList postersList={postersList} />
-          <LoadMoreButton visible={visibleLoadMore} loading={loading} onClick={loadMore} />
+          <PostersList postersList={artworksList} />
+          <LoadMoreButton
+            visible={visibleLoadMoreArtworks}
+            loading={loading}
+            onClick={loadMoreArtworks}
+          />
         </TabPane>
       </Tabs>
     </Wrapper>
