@@ -1,22 +1,5 @@
 import { gql } from '@apollo/client';
-
-export const work_fragment = gql`
-  fragment WorkDetailAttributes on WorkDetail {
-    id
-    artworkId
-    userId
-    providerType
-    providerUserId
-    avatar
-    name
-    videoUri
-    thumbnailUri
-    title
-    description
-    accessibility
-    status
-  }
-`;
+import { artworkFragment } from '../fragments';
 
 export const getUploadUrl = gql`
   query getUploadUrl($size: Int!) {
@@ -41,19 +24,19 @@ export const getUploadImageLink = gql`
 export const getArtwork = gql`
   query getArtwork($artworkId: ID!) {
     getArtwork(artworkId: $artworkId) {
-      ...WorkDetailAttributes
+      ...ArtworkDetailAttributes
     }
   }
-  ${work_fragment}
+  ${artworkFragment}
 `;
 
 export const getUserArtworks = gql`
   query getUserArtworks($username: String) {
     getUserArtworks(username: $username) {
-      ...WorkDetailAttributes
+      ...ArtworkDetailAttributes
     }
   }
-  ${work_fragment}
+  ${artworkFragment}
 `;
 
 export const getRandomArtworksInfo = gql`
@@ -62,18 +45,18 @@ export const getRandomArtworksInfo = gql`
       count
       creatorIds
       artworks {
-        ...WorkDetailAttributes
+        ...ArtworkDetailAttributes
       }
     }
   }
-  ${work_fragment}
+  ${artworkFragment}
 `;
 
 export const getRandomArtworks = gql`
   query getRandomArtworks($params: paginationParams!) {
     getRandomArtworks(params: $params) {
-      ...WorkDetailAttributes
+      ...ArtworkDetailAttributes
     }
   }
-  ${work_fragment}
+  ${artworkFragment}
 `;

@@ -33,10 +33,7 @@ const PerksList = ({ listItems, isFree }) => {
   );
 };
 
-const perksListFree = [
-  'Buy publicly available products',
-  'Watch, comment, like publicly available content',
-];
+const perksListFree = ['Buy publicly available products', 'Watch publicly available content'];
 const perksListPro = [
   'Ability to follow any creator',
   'Access to all free products from creators you follow',

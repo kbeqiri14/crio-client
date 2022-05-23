@@ -87,7 +87,7 @@ const Poster = ({
       userId,
       providerType,
       providerUserId,
-      name: username,
+      username,
       avatar,
     });
   }, [

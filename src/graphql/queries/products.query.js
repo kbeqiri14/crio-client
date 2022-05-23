@@ -1,22 +1,5 @@
 import { gql } from '@apollo/client';
-
-export const product_fragment = gql`
-  fragment ProductDetailAttributes on ProductDetail {
-    productId
-    userId
-    providerType
-    providerUserId
-    avatar
-    name
-    type
-    title
-    description
-    price
-    limit
-    accessibility
-    thumbnail
-  }
-`;
+import { productFragment } from '../fragments';
 
 export const getProduct = gql`
   query getProduct($productId: ID!) {
@@ -24,7 +7,7 @@ export const getProduct = gql`
       ...ProductDetailAttributes
     }
   }
-  ${product_fragment}
+  ${productFragment}
 `;
 
 export const getUserProducts = gql`
@@ -33,7 +16,7 @@ export const getUserProducts = gql`
       ...ProductDetailAttributes
     }
   }
-  ${product_fragment}
+  ${productFragment}
 `;
 
 export const getRandomProductsInfo = gql`
@@ -45,7 +28,7 @@ export const getRandomProductsInfo = gql`
       }
     }
   }
-  ${product_fragment}
+  ${productFragment}
 `;
 
 export const getRandomProducts = gql`
@@ -54,7 +37,7 @@ export const getRandomProducts = gql`
       ...ProductDetailAttributes
     }
   }
-  ${product_fragment}
+  ${productFragment}
 `;
 
 export const getMoreProducts = gql`
@@ -68,5 +51,5 @@ export const getMoreProducts = gql`
       }
     }
   }
-  ${product_fragment}
+  ${productFragment}
 `;

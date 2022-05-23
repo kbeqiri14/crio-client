@@ -41,7 +41,7 @@ export const ExplorePage = () => {
     <>
       <Carousel autoplay effect='fade'>
         {carouselPosters.map((item) => (
-          <TopPoster key={item.id} username={item.name} thumbnail={item.thumbnailUri} />
+          <TopPoster key={item.id} username={item.username} thumbnail={item.thumbnailUri} />
         ))}
       </Carousel>
       <Content

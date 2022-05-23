@@ -13,7 +13,7 @@ export const PostersList = ({ postersList = [] }) => (
           avatar={item?.avatar}
           src={item?.thumbnailUri}
           userId={item?.userId}
-          username={item?.name}
+          username={item?.username}
           artworkId={item?.artworkId}
           title={item?.title}
           description={item?.description}

@@ -58,10 +58,10 @@ export const MoreProductsSection = ({ videoInfo }) => {
             <Col span={24}>
               <Row justify='space-between' align='middle'>
                 <Col>
-                  <Text level={2}>More by {videoInfo.name}</Text>
+                  <Text level={2}>More by {videoInfo.username}</Text>
                 </Col>
                 <Col>
-                  <Link to={`/profile/${videoInfo.name}`} onClick={hide}>
+                  <Link to={`/profile/${videoInfo.username}`} onClick={hide}>
                     <Text level={2} color='primary'>
                       View profile
                     </Text>

@@ -33,12 +33,12 @@ const GetStarted = ({ size }) => {
           <Row justify='center' gutter={[0, 26]}>
             <Col id='googleLogin'>
               <Button type='google' icon={<GoogleIcon />} width={302} onClick={googleSignIn}>
-                SIGN UP WITH GOOGLE
+                Connect with Google
               </Button>
             </Col>
             <Col>
               <Button type='facebook' icon={<FbIcon />} width={302} onClick={facebookSignIn}>
-                SIGN UP WITH FACEBOOK
+                Connect with Facebook
               </Button>
             </Col>
           </Row>

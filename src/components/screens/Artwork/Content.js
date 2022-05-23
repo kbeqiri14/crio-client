@@ -51,7 +51,7 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
                 </Col>
                 <Col margin_left={20}>
                   <Text level={4} color='primary' onClick={hide}>
-                    <Link to={`/profile/${videoInfo.name}`}>{videoInfo.name}</Link>
+                    <Link to={`/profile/${videoInfo.username}`}>{videoInfo.username}</Link>
                   </Text>
                 </Col>
               </Row>

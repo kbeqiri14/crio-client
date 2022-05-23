@@ -109,7 +109,7 @@ const Product = ({
       userId,
       providerType,
       providerUserId,
-      name: username,
+      username,
       avatar,
       productId,
       type,
