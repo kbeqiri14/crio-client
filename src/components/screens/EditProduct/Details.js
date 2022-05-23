@@ -1,6 +1,7 @@
 import { memo, useCallback, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Upload } from 'antd';
+import styled from 'styled-components';
+import { Upload, Checkbox } from 'antd';
 import { useMutation } from '@apollo/client';
 
 import useAsyncFn from '@app/hooks/useAsyncFn';
@@ -11,19 +12,36 @@ import { errorToast, successToast } from '@ui-kit/Notification';
 import { Col, Input, Radio, Row, Switch, Text, Title } from '@ui-kit';
 import { formItemContent } from '@utils/upload.helper';
 
+const Wrapper = styled('div')`
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+  > div {
+    max-width: 568px;
+  }
+  .ant-upload {
+    .ant-upload-btn {
+      padding: 78px 0;
+    }
+    &.ant-upload-drag {
+      border-radius: 8px;
+    }
+  }
+`;
+
 const { Dragger } = Upload;
 
 const ProductDetail = ({ state }) => {
-  const [limitVisible, setLimitVisible] = useState(false);
+  const [limitVisible, setLimitVisible] = useState(state?.limit);
   const [image, setImage] = useState(state?.thumbnail ? { src: state.thumbnail } : {});
 
   const { userId, redirect } = useRedirectToProfile();
-  const { control, setValue, handleSubmit } = useForm();
-  // const title = watch('title');
-  // const description = watch('desc');
-  // const price = watch('price');
-  // const limit = watch('limit');
-  // const accessibility = watch('accessibility');
+  const { control, watch, setValue, handleSubmit } = useForm();
+  const title = watch('title');
+  const description = watch('desc');
+  const price = watch('price');
+  const limit = watch('limit');
+  const accessibility = watch('accessibility');
 
   const props = {
     name: 'file',
@@ -43,36 +61,38 @@ const ProductDetail = ({ state }) => {
       return false;
     },
   };
-  // const disabled = useMemo(() => {
-  //   return !title?.trim()
-  //   || !price
-  //   || title !== state?.title
-  //   // || description !== state?.description
-  //   || price !== state?.price
-  //   // || limit !== state?.limit
-  //   || accessibility !== state.accessibility
-  //   || (description && description !== state.description)
-  //   || (description === '' && !!state?.description)
-  //   || (limit && limit !== state.limit)
-  //   || (limit === '' && !!state?.limit)
-  // }, [
-  //   title,
-  //   description,
-  //   price,
-  //   limit,
-  //   accessibility,
-  //   state?.title,
-  //   state?.description,
-  //   state?.price,
-  //   state?.limit,
-  //   state?.accessibility,
-  // ]);
+  const disabled = useMemo(() => {
+    return !(
+      title?.trim() !== '' &&
+      !!price &&
+      ((title?.trim() && title?.trim() !== state?.title) ||
+        (description?.trim() && description?.trim() !== state?.description) ||
+        (description?.trim() === '' && !!state?.description) ||
+        (price && +price !== state?.price) ||
+        accessibility !== state?.accessibility ||
+        (limitVisible && limit && +limit !== state?.limit))
+    );
+  }, [
+    title,
+    description,
+    price,
+    limit,
+    accessibility,
+    limitVisible,
+    state?.title,
+    state?.description,
+    state?.price,
+    state?.limit,
+    state?.accessibility,
+  ]);
   const buttonLabel = useMemo(() => (state?.productId ? 'UPDATE' : 'PUBLISH'), [state?.productId]);
 
   const setLimitation = useCallback(() => {
     setLimitVisible(!limitVisible);
     setValue('limit', undefined);
   }, [limitVisible, setValue]);
+
+  const setFree = useCallback(() => setValue('price', undefined), [setValue]);
 
   const [create, { loading: creating }] = useMutation(createProduct, {
     onCompleted: () => {
@@ -127,8 +147,8 @@ const ProductDetail = ({ state }) => {
   });
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
-      <Row gutter={[0, 8]} className='upload' style={{ maxWidth: 568 }}>
+    <Wrapper>
+      <Row align='center' gutter={[0, 8]}>
         <Col span={24} padding_bottom={32}>
           <Title level={1} align='center'>
             {state?.productId ? 'Update Service' : 'Add new Service'}
@@ -162,7 +182,7 @@ const ProductDetail = ({ state }) => {
                 {...field}
                 level={3}
                 maxLength={500}
-                autoSize={{ maxRows: 5 }}
+                autoSize={{ minRows: 3, maxRows: 3 }}
                 placeholder='Write here'
               />
             )}
@@ -171,13 +191,25 @@ const ProductDetail = ({ state }) => {
         <Col span={24} align='start'>
           <Text level={3}>Price*</Text>
         </Col>
-        <Col span={24} padding_bottom={32}>
+        <Col span={20} padding_bottom={32}>
           <Controller
             name='price'
             control={control}
             defaultValue={state?.price}
             render={({ field }) => (
               <Input {...field} level={4} pattern='[0-9]*' maxLength={50} placeholder='$' />
+            )}
+          />
+        </Col>
+        <Col offset={1} span={3} padding_bottom={32} className='self-center'>
+          <Controller
+            name='isFree'
+            control={control}
+            defaultValue={!!state?.price}
+            render={({ field }) => (
+              <Checkbox {...field} onChange={setFree}>
+                <Text level={3}>Free</Text>
+              </Checkbox>
             )}
           />
         </Col>
@@ -189,12 +221,9 @@ const ProductDetail = ({ state }) => {
             <img
               alt='uploaded file'
               src={image.src}
-              style={{
-                margin: 'auto',
-                maxWidth: 568,
-                maxHeight: 259,
-                borderRadius: 43,
-              }}
+              width={568}
+              height={232}
+              className='border-radius-8 fit-cover'
             />
           ) : (
             <Controller
@@ -202,7 +231,7 @@ const ProductDetail = ({ state }) => {
               control={control}
               render={({ field }) => (
                 <Dragger {...props} {...field}>
-                  <Row justify='center' align='center' gutter={[0, 11]} className='drag-and-drop'>
+                  <Row justify='center' align='center' gutter={[0, 20]}>
                     <Col span={24}>
                       <Text level={4}>
                         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
@@ -238,7 +267,7 @@ const ProductDetail = ({ state }) => {
           <Text level={3}>Limit your sales?</Text>
         </Col>
         <Col span={24} padding_bottom={32} align='start'>
-          <Switch onChange={setLimitation} />
+          <Switch checked={limitVisible} onChange={setLimitation} />
         </Col>
         {limitVisible && (
           <>
@@ -261,13 +290,13 @@ const ProductDetail = ({ state }) => {
           <ActionButtons
             saveText={buttonLabel}
             loading={onPublish.loading || creating || updating}
-            // disabled={disabled}
+            disabled={disabled}
             onCancel={redirect}
             onSave={handleSubmit(onPublish.call)}
           />
         </Col>
       </Row>
-    </div>
+    </Wrapper>
   );
 };
 
