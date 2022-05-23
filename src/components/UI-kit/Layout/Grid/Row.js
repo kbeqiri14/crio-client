@@ -34,6 +34,13 @@ const Row = styled(antRow)`
     `}
 
   ${(props) =>
+    props?.padding_vertical &&
+    css`
+      padding-top: ${props.padding_vertical}px;
+      padding-bottom: ${props.padding_vertical}px;
+    `}
+
+  ${(props) =>
     props?.direction &&
     css`
       flex-direction: ${props.direction};

@@ -1,34 +1,43 @@
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
-import { Col, Row } from 'antd';
 
-import { Text, Title } from '@ui-kit';
+import { Col, Row, Text } from '@ui-kit';
 import logo from '@images/crio-logo.svg';
 
+const links = [
+  { to: '/terms-of-use', label: 'Terms of Usage' },
+  { to: '/terms-and-conditions', label: 'Terms and Conditions' },
+  { to: '/privacy-policy', label: 'Privacy Policy' },
+];
+
 export const Footer = memo(() => (
-  <footer className='crio-footer'>
-    <Row justify='center' gutter={[150, 10]}>
-      <Col className='pointer'>
-        <Link to='/'>
-          <img alt='Crio logo' src={logo} width={48} height={28} />
-        </Link>
+  <footer className='black-background'>
+    <Row justify='space-around' gutter={[20]} padding_vertical={20}>
+      <Col>
+        <Row gutter={[20]}>
+          <Col>
+            <img alt='Crio logo' src={logo} width={48} height={28} />
+          </Col>
+          <Col>
+            <Text level={3}>Crio ©2021. All right reserved</Text>
+          </Col>
+        </Row>
       </Col>
       <Col>
-        <Text level={3}>Crio ©2021. All right reserved</Text>
-      </Col>
-      <Col className='crio-footer--links'>
-        <a href={`mailto:info@criointeractive.com`}>
-          <Title level={2}>Contact Us</Title>
-        </a>
-        <Link to='/terms-of-use'>
-          <Text level={3}>Terms of Usage</Text>
-        </Link>
-        <Link to='/terms-and-conditions'>
-          <Text level={3}>Terms and Conditions</Text>
-        </Link>
-        <Link to='/privacy-policy'>
-          <Text level={3}>Privacy Policy</Text>
-        </Link>
+        <Row justify='center' gutter={[20]}>
+          <Col>
+            <a href={`mailto:info@criointeractive.com`}>
+              <Text level={3}>Contact Us</Text>
+            </a>
+          </Col>
+          {links.map(({ to, label }) => (
+            <Col>
+              <Link to={to}>
+                <Text level={3}>{label}</Text>
+              </Link>
+            </Col>
+          ))}
+        </Row>
       </Col>
     </Row>
   </footer>
