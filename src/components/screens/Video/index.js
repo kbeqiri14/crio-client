@@ -8,17 +8,20 @@ import VideoDetails from './Details';
 const Video = () => {
   const { state } = useLocation();
 
-  const onCancel = useCallback(() => history.push(`/profile/${state.username}`), [state.username]);
+  useEffect(() => {
+    if (!state) {
+      history.push('/artworks');
+    }
+  }, [state]);
+
+  const onCancel = useCallback(
+    () => history.push(`/profile/artworks/${state?.username}`),
+    [state?.username],
+  );
   const onCompleted = () => {
     onCancel();
     successToast('The video info is successfully updated');
   };
-
-  useEffect(() => {
-    if (!state) {
-      history.push(`/profile/${state.username}`);
-    }
-  }, [state]);
 
   return <VideoDetails state={state} onCancel={onCancel} onCompleted={onCompleted} />;
 };

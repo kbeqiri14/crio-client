@@ -48,8 +48,12 @@ const Wrapper = styled('div')`
 const { Dragger } = Upload;
 
 const ProductDetail = ({ state }) => {
-  const [limitVisible, setLimitVisible] = useState(state?.limit);
-  const [image, setImage] = useState(state?.thumbnail ? { src: state.thumbnail } : {});
+  const [limitVisible, setLimitVisible] = useState(state?.limit >= 0);
+  const [image, setImage] = useState(
+    state?.thumbnail && !state?.thumbnail?.startsWith('/static/media/product')
+      ? { src: state.thumbnail }
+      : {},
+  );
 
   const { userId, redirect } = useRedirectToProfile();
   const { control, watch, setValue, handleSubmit } = useForm();
@@ -85,9 +89,11 @@ const ProductDetail = ({ state }) => {
         (description?.trim() && description?.trim() !== state?.description) ||
         (description?.trim() === '' && !!state?.description) ||
         (price && +price !== state?.price) ||
-        (limitVisible && limit && +limit !== state?.limit) ||
+        (limitVisible && +limit !== state?.limit && limit?.trim()) ||
+        !!limitVisible !== !!state?.limit ||
         accessibility !== state?.accessibility ||
-        image.src !== state.thumbnail)
+        image?.file ||
+        (image.src !== state?.thumbnail && !state?.thumbnail?.startsWith('/static/media/product')))
     );
   }, [
     title,
@@ -96,13 +102,14 @@ const ProductDetail = ({ state }) => {
     limit,
     accessibility,
     limitVisible,
+    image?.file,
     image.src,
     state?.title,
     state?.description,
     state?.price,
     state?.limit,
     state?.accessibility,
-    state.thumbnail,
+    state?.thumbnail,
   ]);
   const buttonLabel = useMemo(() => (state?.productId ? 'UPDATE' : 'PUBLISH'), [state?.productId]);
 
@@ -129,7 +136,7 @@ const ProductDetail = ({ state }) => {
   });
 
   const onPublish = useAsyncFn(async (attributes) => {
-    let thumbnail;
+    let thumbnail = state?.thumbnail && !image.src ? 'remove-thumbnail' : undefined;
     if (attributes.image?.file) {
       const content = await formItemContent({ userId, image: attributes.image.file });
       thumbnail = content?.image?.split('/')?.slice(-1)[0].slice('thumbnail-'.length);
@@ -144,7 +151,7 @@ const ProductDetail = ({ state }) => {
               title: attributes.title,
               description: attributes.desc,
               price: +attributes.price,
-              limit: +attributes.limit || undefined,
+              limit: +attributes.limit,
               accessibility: attributes.accessibility,
               thumbnail,
             },
@@ -160,7 +167,6 @@ const ProductDetail = ({ state }) => {
               limit: +attributes.limit,
               accessibility: attributes.accessibility,
               thumbnail,
-              removeThumbnail: state?.thumbnail && !image.src,
             },
           },
         });
