@@ -97,9 +97,9 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
           </Col>
         )}
         <Col span={videoInfo.isProduct ? 12 : 24}>
-          <Title level={2}>
+          <Text level={4}>
             <div dangerouslySetInnerHTML={{ __html: urlify(videoInfo.description) }} />
-          </Title>
+          </Text>
         </Col>
         {videoInfo.isProduct && (
           <Col span={12}>

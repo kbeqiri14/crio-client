@@ -8,7 +8,7 @@ import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { Col, Row, Text } from '@ui-kit';
 import Actions from '@screens/Video/Actions';
-import LockState from './LockState';
+import LockState from '../LockState';
 
 const Wrapper = styled('div')`
   width: 332px;

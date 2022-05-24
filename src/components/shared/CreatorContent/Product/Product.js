@@ -10,7 +10,7 @@ import { Button, Col, Divider, Row, Text } from '@ui-kit';
 import Actions from '@screens/Video/Actions';
 import { ReactComponent as LockIcon } from '@svgs/lock-buy.svg';
 import product from '@svgs/product.svg';
-import LockState from './LockState';
+import LockState from '../LockState';
 
 const ProductWrapper = styled('div')`
   width: 332px;
@@ -80,6 +80,7 @@ const Product = ({
     }
     return user.isSubscribed ? !user.followings?.includes(userId) : true;
   }, [user.isCreator, user.isSubscribed, user.followings, accessibility, userId]);
+
   const src = useMemo(
     () =>
       thumbnail
@@ -139,6 +140,13 @@ const Product = ({
     setVideoInfo,
   ]);
 
+  const handleClick = useCallback(() => {
+    if (price) {
+      showProduct();
+    } else {
+    }
+  }, [price, showProduct]);
+
   return (
     <>
       <ProductWrapper className={classes}>
@@ -178,9 +186,7 @@ const Product = ({
                 </Text>
               </Col>
               <Col span={24}>
-                <Text level={4} ellipsis={{ tooltip: description }}>
-                  {description}
-                </Text>
+                <Text level={4}>${price}</Text>
               </Col>
             </Row>
           </Col>
@@ -188,10 +194,12 @@ const Product = ({
             <Divider type='vertical' height={31} />
             <Button
               type='primary'
+              fill_color={price ? 'blue' : 'green'}
               width={large ? 301 : 126}
               icon={isLocked ? <LockIcon /> : undefined}
+              onClick={handleClick}
             >
-              Buy
+              {price ? 'Buy' : 'Email'}
             </Button>
           </Col>
         </Row>

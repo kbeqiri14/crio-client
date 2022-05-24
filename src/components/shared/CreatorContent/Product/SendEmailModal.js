@@ -1,9 +1,8 @@
 import { memo, useState } from 'react';
-import { Col, Row, Input } from 'antd';
+
 import ActionButtons from '@shared/ActionButtons';
 import { BlurredModal } from '@ui-kit/Modal';
-import { Title } from '@ui-kit';
-import './styles.less';
+import { Col, Row, Input, Title } from '@ui-kit';
 
 const Footer = ({ loading = false, onCancel, onSave, disabled }) => {
   return (
@@ -21,7 +20,7 @@ export const SendEmailModal = ({ handleSendEmail, onCancel, loading }) => {
   const [message, setMessage] = useState('');
 
   return (
-    <BlurredModal width={828} visible onCancel={onCancel} className='cr-send-email'>
+    <BlurredModal width={828} onCancel={onCancel} className='cr-send-email'>
       <Row justify='center' align='top'>
         <Col span={24} style={{ marginBottom: 20 }}>
           <Title level={2}>Email Message</Title>

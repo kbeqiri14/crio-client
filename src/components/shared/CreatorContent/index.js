@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import history from '@app/configs/history';
 import { Tabs } from '@ui-kit';
 import LoadMoreButton from './LoadMoreButton';
-import ArtworksList from './ArtworksList';
-import ProductsList from './ProductsList';
+import ArtworksList from './Artwork/ArtworksList';
+import ProductsList from './Product/ProductsList';
 
 const Wrapper = styled('div')`
   max-width: 1438px;
