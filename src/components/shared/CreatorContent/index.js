@@ -9,18 +9,18 @@ import ArtworksList from './ArtworksList';
 import ProductsList from './ProductsList';
 
 const Wrapper = styled('div')`
-  max-width: 1394px;
-  @media (max-width: 1393px) {
-    max-width: 1040px;
+  max-width: 1438px;
+  @media (max-width: 1437px) {
+    max-width: 1084px;
   }
-  @media (max-width: 1039px) {
-    max-width: 686px;
+  @media (max-width: 1083px) {
+    max-width: 730px;
   }
-  @media (max-width: 685px) {
-    max-width: 332px;
+  @media (max-width: 729px) {
+    max-width: 376px;
   }
   margin: auto;
-  padding: 40px 0;
+  padding: 28px 22px;
 `;
 
 const { TabPane } = Tabs;

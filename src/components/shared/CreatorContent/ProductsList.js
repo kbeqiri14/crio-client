@@ -1,4 +1,5 @@
 import { memo, useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import { Col, Row } from '@ui-kit';
 import Product from './Product';
@@ -53,7 +54,7 @@ const BlockLarge = ({ block, right = false }) => {
   );
 };
 
-const ProductsList = ({ productsList = [] }) => {
+const Blocks = ({ productsList }) => {
   const blocks = useMemo(
     () => new Array(3).fill('').map((_, i) => productsList.slice(i * 5, (i + 1) * 5)),
     [productsList],
@@ -66,6 +67,13 @@ const ProductsList = ({ productsList = [] }) => {
       <Block key={i} block={block} padding_top={20} />
     ),
   );
+};
+
+const ProductsList = ({ productsList = [] }) => {
+  const { pathname } = useLocation();
+  const isProfile = useMemo(() => pathname.includes('/profile'), [pathname]);
+
+  return isProfile ? <Block block={productsList} /> : <Blocks productsList={productsList} />;
 };
 
 export default memo(ProductsList);
