@@ -4,7 +4,6 @@ import styled, { css } from 'styled-components';
 const Divider = styled(antDivider)`
   border-color: ${(props) => props.theme.colors.dark50};
   height: 50%;
-  padding: 0 10px;
   margin: 0;
 
   ${(props) =>
@@ -17,6 +16,12 @@ const Divider = styled(antDivider)`
     props?.top &&
     css`
       top: ${props.top}px;
+    `}
+
+  ${(props) =>
+    props?.padding_left &&
+    css`
+      padding-left: ${props.padding_left}px;
     `}
 `;
 

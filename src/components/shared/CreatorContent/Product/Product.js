@@ -191,7 +191,7 @@ const Product = ({
             </Row>
           </Col>
           <Col className='info'>
-            <Divider type='vertical' height={31} />
+            <Divider type='vertical' height={31} padding_left={20} />
             <Button
               type='primary'
               fill_color={price ? 'blue' : 'green'}
