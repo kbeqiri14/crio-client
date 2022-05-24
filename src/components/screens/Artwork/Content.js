@@ -2,6 +2,7 @@ import { memo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { useSendEmail } from '@root/src/components/shared/SendEmailModal/Context';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { urlify } from '@utils/helpers';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
@@ -25,6 +26,7 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
     videoInfo.avatar,
   );
   const { setVideoInfo } = usePresentation();
+  const { setSendEmailInfo } = useSendEmail();
 
   const hide = useCallback(() => setVideoInfo({}), [setVideoInfo]);
 
@@ -122,8 +124,13 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
                 <Text level={2}>Availability: {videoInfo.limit || 'Unlimited'}</Text>
               </Col>
               <Col span={24} padding_top={6}>
-                <Button block type='primary'>
-                  Buy
+                <Button
+                  block
+                  type='primary'
+                  fill_color={videoInfo.price ? 'blue' : 'green'}
+                  onClick={() => setSendEmailInfo({ productId: videoInfo.productId })}
+                >
+                  {videoInfo.price ? 'Buy' : 'Email'}
                 </Button>
               </Col>
             </Row>

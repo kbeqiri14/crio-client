@@ -2,6 +2,7 @@ import { memo, useCallback, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { useSendEmail } from '@root/src/components/shared/SendEmailModal/Context';
 import history from '@app/configs/history';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
@@ -68,6 +69,7 @@ const Product = ({
   const { pathname } = useLocation();
   const { setVideoInfo } = usePresentation();
   const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
+  const { setSendEmailInfo } = useSendEmail();
 
   const showActions = useMemo(() => {
     const username = pathname.split('/').slice(-1)[0];
@@ -144,8 +146,9 @@ const Product = ({
     if (price) {
       showProduct();
     } else {
+      setSendEmailInfo({ productId });
     }
-  }, [price, showProduct]);
+  }, [price, productId, setSendEmailInfo, showProduct]);
 
   return (
     <>
@@ -186,7 +189,7 @@ const Product = ({
                 </Text>
               </Col>
               <Col span={24}>
-                <Text level={4}>{price ? `$${price}` : 'Free'}</Text>
+                <Text level={4}>{price ? `$${price.toFixed(2)}` : 'Free'}</Text>
               </Col>
             </Row>
           </Col>
