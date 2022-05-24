@@ -32,6 +32,7 @@ const tabs = {
 };
 
 export const Content = ({
+  isProfile,
   visibleLoadMoreProducts,
   visibleLoadMoreArtworks,
   productsCount,
@@ -44,7 +45,7 @@ export const Content = ({
 }) => {
   const { pathname } = useLocation();
   const username = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
-  const isProfile = useMemo(() => pathname.includes('/profile'), [pathname]);
+  const isProfilePage = useMemo(() => pathname.includes('/profile'), [pathname]);
   const activeKey = useMemo(
     () => (pathname.includes('/artworks') ? tabs.ARTWORK : tabs.MARKETPLACE),
     [pathname],
@@ -52,11 +53,11 @@ export const Content = ({
   const onTabClick = useCallback(
     (key) => {
       if (key === tabs.MARKETPLACE) {
-        return history.push(isProfile ? `/profile/${username}` : '/');
+        return history.push(isProfilePage ? `/profile/${username}` : '/');
       }
-      return history.push(isProfile ? `/profile/artworks/${username}` : `/artworks`);
+      return history.push(isProfilePage ? `/profile/artworks/${username}` : `/artworks`);
     },
-    [username, isProfile],
+    [username, isProfilePage],
   );
 
   // if ((!loading || !initialPolling) && !works?.length) {
@@ -66,7 +67,7 @@ export const Content = ({
     <Wrapper>
       <Tabs activeKey={activeKey} onTabClick={onTabClick}>
         <TabPane key={tabs.MARKETPLACE} tab={tabs.MARKETPLACE}>
-          {isProfile && !productsCount && (
+          {isProfilePage && !productsCount && (
             <EmptyState
               username={username}
               isCreator={true}
@@ -82,7 +83,7 @@ export const Content = ({
           />
         </TabPane>
         <TabPane key={tabs.ARTWORK} tab={tabs.ARTWORK}>
-          {isProfile && !artworksCount && (
+          {isProfilePage && !artworksCount && (
             <EmptyState username={username} isCreator={true} isProfile={isProfile} />
           )}
           <ArtworksList artworksList={artworksList} />

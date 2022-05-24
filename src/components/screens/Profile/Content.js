@@ -65,6 +65,7 @@ const ProfileContent = ({
   if (isCreator) {
     return (
       <Content
+        isProfile={isProfile}
         productsCount={productsCount}
         artworksCount={artworksCount}
         productsList={Products?.getUserProducts}

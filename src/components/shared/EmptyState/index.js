@@ -34,8 +34,8 @@ const EmptyState = ({ username, isCreator, isProfile, isSubscribed, isMarketPlac
     [isCreator],
   );
   const onClick = useCallback(
-    () => history.push(`/${isCreator ? 'upload' : 'pricing'}`),
-    [isCreator],
+    () => history.push(`/${isCreator ? (isMarketPlace ? 'upload' : 'upload/artwork') : 'pricing'}`),
+    [isCreator, isMarketPlace],
   );
 
   return (
