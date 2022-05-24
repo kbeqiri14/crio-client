@@ -2,6 +2,7 @@ import { memo, useCallback, useMemo, useState } from 'react';
 import history from '@app/configs/history';
 import { useMutation } from '@apollo/client';
 
+import { deleteProduct } from '@app/graphql/mutations/product.mutation';
 import { deleteArtwork } from '@app/graphql/mutations/artwork.mutation';
 import Confirmation from '@shared/Confirmation';
 import { Text } from '@ui-kit';
@@ -15,22 +16,31 @@ const Actions = (props) => {
   const name = useMemo(() => (props.isProduct ? 'product' : 'artwork'), [props.isProduct]);
   const handleEdit = useCallback(() => history.push(`/edit-${name}`, props), [name, props]);
 
+  const [removeProduct, { loading: removingProduct }] = useMutation(deleteProduct, {
+    variables: { productId: props.productId },
+    onCompleted: () => {
+      hideConfirmation();
+      successToast('The product is successfully deleted');
+      window.location.href = `/profile/${props.username}`;
+    },
+  });
+
   const [removeArtwork, { loading: removingArtwork }] = useMutation(deleteArtwork, {
     variables: { params: { artworkId: props.artworkId } },
     onCompleted: () => {
       hideConfirmation();
       successToast('The video is successfully deleted');
-      window.location.href = `/profile/${props.username}`;
+      window.location.href = `/profile/artworks/${props.username}`;
     },
   });
-  const removeProduct = useCallback(() => 'The product is successfully deleted', []);
+
   const removing = useMemo(
-    () => (props.isProduct ? removingArtwork : false),
-    [props.isProduct, removingArtwork],
+    () => removingProduct || removingArtwork,
+    [removingProduct, removingArtwork],
   );
   const handleRemove = useMemo(
     () => (props.isProduct ? removeProduct : removeArtwork),
-    [props.isProduct, removeArtwork, removeProduct],
+    [props.isProduct, removeProduct, removeArtwork],
   );
 
   return (

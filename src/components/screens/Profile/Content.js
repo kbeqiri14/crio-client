@@ -16,7 +16,15 @@ const tabs = {
   FOLLOWING: 'Following',
 };
 
-const ProfileContent = ({ username, followingsCount, isCreator, isProfile, isSubscribed }) => {
+const ProfileContent = ({
+  username,
+  followingsCount,
+  productsCount,
+  artworksCount,
+  isCreator,
+  isProfile,
+  isSubscribed,
+}) => {
   const tab = useMemo(() => {
     const count = (isProfile ? followingsCount : isSubscribed && followingsCount) || '';
     return count ? `${tabs.FOLLOWING}: ${count}` : tabs.FOLLOWING;
@@ -56,7 +64,12 @@ const ProfileContent = ({ username, followingsCount, isCreator, isProfile, isSub
 
   if (isCreator) {
     return (
-      <Content productsList={Products?.getUserProducts} artworksList={Artworks?.getUserArtworks} />
+      <Content
+        productsCount={productsCount}
+        artworksCount={artworksCount}
+        productsList={Products?.getUserProducts}
+        artworksList={Artworks?.getUserArtworks}
+      />
     );
   }
   return (

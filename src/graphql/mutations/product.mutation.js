@@ -13,7 +13,7 @@ export const updateProduct = gql`
 `;
 
 export const deleteProduct = gql`
-  mutation deleteProduct($params: DeletingParams!) {
-    deleteProduct(params: $params)
+  mutation deleteProduct($productId: ID!) {
+    deleteProduct(productId: $productId)
   }
 `;

@@ -73,6 +73,8 @@ export const Profile = () => {
               <ProfileContent
                 username={user?.username}
                 followingsCount={user?.followingsCount}
+                productsCount={user?.productsCount}
+                artworksCount={user?.artworksCount}
                 isCreator={user?.isCreator}
                 isProfile={isProfile}
                 isSubscribed={loggedInUser.isSubscribed}

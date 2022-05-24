@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import history from '@app/configs/history';
 import { Tabs } from '@ui-kit';
 import LoadMoreButton from './LoadMoreButton';
+import EmptyState from '@shared/EmptyState';
 import ArtworksList from './Artwork/ArtworksList';
 import ProductsList from './Product/ProductsList';
 
@@ -33,6 +34,8 @@ const tabs = {
 export const Content = ({
   visibleLoadMoreProducts,
   visibleLoadMoreArtworks,
+  productsCount,
+  artworksCount,
   productsList,
   artworksList,
   loading,
@@ -63,6 +66,14 @@ export const Content = ({
     <Wrapper>
       <Tabs activeKey={activeKey} onTabClick={onTabClick}>
         <TabPane key={tabs.MARKETPLACE} tab={tabs.MARKETPLACE}>
+          {isProfile && !productsCount && (
+            <EmptyState
+              username={username}
+              isCreator={true}
+              isProfile={isProfile}
+              isMarketPlace={true}
+            />
+          )}
           <ProductsList productsList={productsList} />
           <LoadMoreButton
             visible={visibleLoadMoreProducts}
@@ -71,6 +82,9 @@ export const Content = ({
           />
         </TabPane>
         <TabPane key={tabs.ARTWORK} tab={tabs.ARTWORK}>
+          {isProfile && !artworksCount && (
+            <EmptyState username={username} isCreator={true} isProfile={isProfile} />
+          )}
           <ArtworksList artworksList={artworksList} />
           <LoadMoreButton
             visible={visibleLoadMoreArtworks}
