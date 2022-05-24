@@ -186,7 +186,7 @@ const Product = ({
                 </Text>
               </Col>
               <Col span={24}>
-                <Text level={4}>${price}</Text>
+                <Text level={4}>{price ? `$${price}` : 'Free'}</Text>
               </Col>
             </Row>
           </Col>

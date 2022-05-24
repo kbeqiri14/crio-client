@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { Upload, Checkbox } from 'antd';
@@ -60,8 +60,11 @@ const ProductDetail = ({ state }) => {
   const title = watch('title');
   const description = watch('desc');
   const price = watch('price');
+  const isFree = watch('isFree');
   const limit = watch('limit');
   const accessibility = watch('accessibility');
+
+  useEffect(() => setValue('isFree', !state?.price), [state?.price, setValue]);
 
   const props = {
     name: 'file',
@@ -83,13 +86,15 @@ const ProductDetail = ({ state }) => {
   };
   const disabled = useMemo(() => {
     return !(
-      title?.trim() !== '' &&
-      !!price &&
+      title?.trim() &&
+      (+price > 0 || isFree) &&
+      (!limitVisible || (limitVisible && +limit > 0)) &&
       ((title?.trim() && title?.trim() !== state?.title) ||
         (description?.trim() && description?.trim() !== state?.description) ||
         (description?.trim() === '' && !!state?.description) ||
         (price && +price !== state?.price) ||
-        (limitVisible && +limit !== state?.limit && limit?.trim()) ||
+        (!price && isFree && state?.price > 0) ||
+        (limitVisible && limit && +limit !== state?.limit) ||
         !!limitVisible !== !!state?.limit ||
         accessibility !== state?.accessibility ||
         image?.file ||
@@ -99,6 +104,7 @@ const ProductDetail = ({ state }) => {
     title,
     description,
     price,
+    isFree,
     limit,
     accessibility,
     limitVisible,
@@ -118,7 +124,13 @@ const ProductDetail = ({ state }) => {
     setValue('limit', undefined);
   }, [limitVisible, setValue]);
 
-  const setFree = useCallback(() => setValue('price', undefined), [setValue]);
+  const setFree = useCallback(
+    (e) => {
+      setValue('price', undefined);
+      setValue('isFree', e.target.checked);
+    },
+    [setValue],
+  );
 
   const [create, { loading: creating }] = useMutation(createProduct, {
     onCompleted: () => {
@@ -150,8 +162,8 @@ const ProductDetail = ({ state }) => {
               type: 'service',
               title: attributes.title,
               description: attributes.desc,
-              price: +attributes.price,
-              limit: +attributes.limit,
+              price: +attributes.price || undefined,
+              limit: +attributes.limit || undefined,
               accessibility: attributes.accessibility,
               thumbnail,
             },
@@ -163,8 +175,8 @@ const ProductDetail = ({ state }) => {
               type: 'service',
               title: attributes.title,
               description: attributes.desc,
-              price: +attributes.price,
-              limit: +attributes.limit,
+              price: +attributes.price || undefined,
+              limit: +attributes.limit || undefined,
               accessibility: attributes.accessibility,
               thumbnail,
             },
@@ -215,7 +227,9 @@ const ProductDetail = ({ state }) => {
           />
         </Col>
         <Col span={24} align='start'>
-          <Text level={3}>Price*</Text>
+          <Text level={3} disabled={isFree}>
+            Price*
+          </Text>
         </Col>
         <Col span={20} padding_bottom={32}>
           <Controller
@@ -223,7 +237,14 @@ const ProductDetail = ({ state }) => {
             control={control}
             defaultValue={state?.price}
             render={({ field }) => (
-              <Input {...field} level={4} pattern='[0-9]*' maxLength={50} placeholder='$' />
+              <Input
+                {...field}
+                level={4}
+                pattern='[0-9]*'
+                maxLength={50}
+                placeholder='$'
+                disabled={isFree}
+              />
             )}
           />
         </Col>
@@ -231,9 +252,9 @@ const ProductDetail = ({ state }) => {
           <Controller
             name='isFree'
             control={control}
-            defaultValue={!!state?.price}
+            defaultValue={isFree}
             render={({ field }) => (
-              <Checkbox {...field} onChange={setFree}>
+              <Checkbox {...field} checked={isFree} onChange={setFree}>
                 <Text level={3}>Free</Text>
               </Checkbox>
             )}
