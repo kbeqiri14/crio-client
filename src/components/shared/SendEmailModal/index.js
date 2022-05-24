@@ -14,7 +14,7 @@ const SendEmailModal = () => {
   const hide = useCallback(() => setSendEmailInfo({}), [setSendEmailInfo]);
 
   const [sendEmail, { loading }] = useMutation(contactCreator, {
-    variables: { mailInfo: { message, productId: sendEmailInfo.productId } },
+    variables: { mailInfo: { message: message?.trim(), productId: sendEmailInfo.productId } },
     onCompleted: () => {
       hide();
       successToast('The message is successfully sent');
@@ -30,13 +30,20 @@ const SendEmailModal = () => {
         </Col>
         <Col span={24}>
           <Input.TextArea
+            maxLength={500}
             autoSize={{ minRows: 4, maxRows: 4 }}
             placeholder='Write message here...'
             onChange={(e) => setMessage(e.target.value)}
           />
         </Col>
         <Col>
-          <ActionButtons loading={loading} saveText='SEND' onCancel={hide} onSave={sendEmail} />
+          <ActionButtons
+            disabled={!message?.trim()}
+            loading={loading}
+            saveText='SEND'
+            onCancel={hide}
+            onSave={sendEmail}
+          />
         </Col>
       </Row>
     </BlurredModal>
