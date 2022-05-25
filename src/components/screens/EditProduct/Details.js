@@ -49,7 +49,7 @@ const Wrapper = styled('div')`
 const { Dragger } = Upload;
 
 const ProductDetail = ({ state }) => {
-  const [limitVisible, setLimitVisible] = useState(state?.limit >= 0);
+  const [limitVisible, setLimitVisible] = useState(state?.limit && state?.limit >= 0);
   const [image, setImage] = useState(
     state?.thumbnail && !state?.thumbnail?.startsWith('/static/media/product')
       ? { src: state.thumbnail }
@@ -88,6 +88,13 @@ const ProductDetail = ({ state }) => {
       return false;
     },
   };
+  console.log(
+    title?.trim(),
+    +price > 0 || isFree,
+    limitVisible || (limitVisible && +limit > 0),
+    title?.trim() && (+price > 0 || isFree) && (!limitVisible || (limitVisible && +limit > 0)),
+    price && +price !== +state?.price,
+  );
   const disabled = useMemo(
     () =>
       !(
@@ -97,7 +104,7 @@ const ProductDetail = ({ state }) => {
         ((title?.trim() && title?.trim() !== state?.title) ||
           (description?.trim() && description?.trim() !== state?.description) ||
           (description?.trim() === '' && !!state?.description) ||
-          (price && +price !== state?.price) ||
+          (price && +price !== +state?.price) ||
           (!price && isFree && state?.price > 0) ||
           (limitVisible && limit && +limit !== state?.limit) ||
           !!limitVisible !== !!state?.limit ||
