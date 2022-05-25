@@ -6,8 +6,9 @@ import { useSendEmail } from '@root/src/components/shared/SendEmailModal/Context
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { urlify } from '@utils/helpers';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
-import { Button, Col, Row, Text, Title } from '@ui-kit';
+import { Col, Row, Text, Title } from '@ui-kit';
 import LockState from '@shared/CreatorContent/LockState';
+import BuyWidget from '../Product/BuyWidget';
 
 const Wrapper = styled('div')`
   display: flex;
@@ -105,35 +106,11 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
         </Col>
         {videoInfo.isProduct && (
           <Col span={12}>
-            <Row
-              gutter={[0, 8]}
-              style={{
-                float: 'right',
-                width: 268,
-                height: 162,
-                padding: 20,
-                backgroundColor: '#202020',
-                borderRadius: 16,
-                marginRight: 20,
-              }}
-            >
-              <Col>
-                <Text level={2}>Price: ${videoInfo.price?.toFixed(2) || '5'}</Text>
-              </Col>
-              <Col>
-                <Text level={2}>Availability: {videoInfo.limit || 'Unlimited'}</Text>
-              </Col>
-              <Col span={24} padding_top={6}>
-                <Button
-                  block
-                  type='primary'
-                  fill_color={videoInfo.price ? 'blue' : 'green'}
-                  onClick={() => setSendEmailInfo({ productId: videoInfo.productId })}
-                >
-                  {videoInfo.price ? 'Buy' : 'Email'}
-                </Button>
-              </Col>
-            </Row>
+            <BuyWidget
+              price={videoInfo.price}
+              limit={videoInfo.limit}
+              onClick={() => setSendEmailInfo({ productId: videoInfo.productId })}
+            />
           </Col>
         )}
       </Row>

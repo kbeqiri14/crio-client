@@ -58,7 +58,7 @@ const Upload = () => {
     [dispatch],
   );
   const goToProfile = useCallback(
-    () => history.push(`/profile/${user?.username}`),
+    () => history.push(`/profile/artworks/${user?.username}`),
     [user?.username],
   );
 

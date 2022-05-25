@@ -6,6 +6,7 @@ import { useMutation } from '@apollo/client';
 
 import useAsyncFn from '@app/hooks/useAsyncFn';
 import useRedirectToProfile from '@app/hooks/useRedirectToProfile';
+import { me } from '@app/graphql/queries/users.query';
 import { createProduct, updateProduct } from '@app/graphql/mutations/product.mutation';
 import ActionButtons from '@shared/ActionButtons';
 import { errorToast, successToast } from '@ui-kit/Notification';
@@ -140,6 +141,20 @@ const ProductDetail = ({ state }) => {
   );
 
   const [create, { loading: creating }] = useMutation(createProduct, {
+    update: (cache, mutationResult) => {
+      if (mutationResult.data.createProduct) {
+        const existingLoggedInUser = cache.readQuery({ query: me });
+        cache.writeQuery({
+          query: me,
+          data: {
+            me: {
+              ...existingLoggedInUser?.me,
+              productsCount: existingLoggedInUser?.me?.productsCount + 1,
+            },
+          },
+        });
+      }
+    },
     onCompleted: () => {
       redirect();
       successToast('The product is successfully created');

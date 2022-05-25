@@ -43,7 +43,9 @@ export const Content = ({
   loadMoreArtworks,
 }) => {
   const { pathname } = useLocation(tabs.MARKETPLACE);
-  const [activeKey, setActiveKey] = useState();
+  const [activeKey, setActiveKey] = useState(
+    pathname.includes('/artworks') ? tabs.ARTWORK : tabs.MARKETPLACE,
+  );
   const username = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
   const isProfilePage = useMemo(() => pathname.includes('/profile'), [pathname]);
 
