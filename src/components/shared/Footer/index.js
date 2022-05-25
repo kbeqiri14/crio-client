@@ -31,7 +31,7 @@ export const Footer = memo(() => (
             </a>
           </Col>
           {links.map(({ to, label }) => (
-            <Col>
+            <Col key={label}>
               <Link to={to}>
                 <Text level={3}>{label}</Text>
               </Link>

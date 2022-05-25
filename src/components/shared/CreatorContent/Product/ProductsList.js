@@ -72,10 +72,10 @@ const Blocks = ({ productsList }) => {
 };
 
 const ProductsList = ({ productsList = [] }) => {
-  const { pathname } = useLocation();
-  const isProfile = useMemo(() => pathname.includes('/profile'), [pathname]);
+  // const { pathname } = useLocation();
+  // const isProfile = useMemo(() => pathname.includes('/profile'), [pathname]);
 
-  return isProfile ? <Block block={productsList} /> : <Blocks productsList={productsList} />;
+  return <Block block={productsList} />; // isProfile ? <Block block={productsList} /> : <Blocks productsList={productsList} />;
 };
 
 export default memo(ProductsList);

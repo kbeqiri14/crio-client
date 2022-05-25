@@ -46,7 +46,7 @@ export const ExplorePage = () => {
     <>
       <Carousel autoplay effect='fade'>
         {carouselArtworks.map((item) => (
-          <TopArtwork key={item.id} username={item.username} thumbnail={item.thumbnailUri} />
+          <TopArtwork key={item.artworkId} username={item.username} thumbnail={item.thumbnailUri} />
         ))}
       </Carousel>
       <Content
