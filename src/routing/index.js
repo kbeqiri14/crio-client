@@ -58,15 +58,10 @@ export const AppRoutes = () => {
     fetchPolicy: 'cache-and-network',
   });
 
-  useEffect(() => {
-    document.body.scrollTop = 0;
-    document.querySelector('.crio-container')?.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'auto',
-    });
-    window.scrollTo(0, 0);
-  }, [pathname]);
+  useEffect(
+    () => document.querySelector('.main')?.scrollIntoView({ behavior: 'auto' }, 500),
+    [pathname],
+  );
 
   useEffect(() => {
     if (!loading) {
@@ -111,48 +106,50 @@ export const AppRoutes = () => {
         <Header isAuthenticated={isAuthenticated} />
       </header>
       <main>
-        <Switch>
-          {/* PUBLIC ROUTES */}
-          <Route exact path='/' component={ExplorePage} />
-          <Route exact path='/artworks' component={ExplorePage} />
-          <Route exact path='/privacy-policy' component={PrivacyPolicy} />
-          <Route exact path='/terms-and-conditions' component={TermsAndConditions} />
-          <Route exact path='/terms-of-use' component={TermsOfUse} />
-          <Route exact path='/pricing/:id?' component={PricingPlans} />
-          <Route exact path='/profile/:username' component={Profile} />
-          <Route exact path='/profile/artworks/:username' component={Profile} />
-          <Route exact path='/artwork/:artworkId' component={Artwork} />
-          <Route exact path='/product/:productId' component={Product} />
-          <Route exact path='/cognito/callback' component={CognitoCallback} />
-          {!loading && !user && <Redirect to='/' />}
-          {/* PRIVATE ROUTES */}
-          <PrivateRoute
-            exact
-            isAuthenticated={isAuthenticated}
-            path='/upload'
-            component={UploadProduct}
-          />
-          <PrivateRoute
-            exact
-            isAuthenticated={isAuthenticated}
-            path='/upload/artwork'
-            component={Upload}
-          />
-          <PrivateRoute
-            exact
-            isAuthenticated={isAuthenticated}
-            path='/edit-artwork'
-            component={EditArtwork}
-          />
-          <PrivateRoute
-            exact
-            isAuthenticated={isAuthenticated}
-            path='/edit-product'
-            component={EditProduct}
-          />
-        </Switch>
-        {isVisible && <PresentationView />}
-        {visible && <SendEmailModal />}
+        <div className='main'>
+          <Switch>
+            {/* PUBLIC ROUTES */}
+            <Route exact path='/' component={ExplorePage} />
+            <Route exact path='/artworks' component={ExplorePage} />
+            <Route exact path='/privacy-policy' component={PrivacyPolicy} />
+            <Route exact path='/terms-and-conditions' component={TermsAndConditions} />
+            <Route exact path='/terms-of-use' component={TermsOfUse} />
+            <Route exact path='/pricing/:id?' component={PricingPlans} />
+            <Route exact path='/profile/:username' component={Profile} />
+            <Route exact path='/profile/artworks/:username' component={Profile} />
+            <Route exact path='/artwork/:artworkId' component={Artwork} />
+            <Route exact path='/product/:productId' component={Product} />
+            <Route exact path='/cognito/callback' component={CognitoCallback} />
+            {!loading && !user && <Redirect to='/' />}
+            {/* PRIVATE ROUTES */}
+            <PrivateRoute
+              exact
+              isAuthenticated={isAuthenticated}
+              path='/upload'
+              component={UploadProduct}
+            />
+            <PrivateRoute
+              exact
+              isAuthenticated={isAuthenticated}
+              path='/upload/artwork'
+              component={Upload}
+            />
+            <PrivateRoute
+              exact
+              isAuthenticated={isAuthenticated}
+              path='/edit-artwork'
+              component={EditArtwork}
+            />
+            <PrivateRoute
+              exact
+              isAuthenticated={isAuthenticated}
+              path='/edit-product'
+              component={EditProduct}
+            />
+          </Switch>
+          {isVisible && <PresentationView />}
+          {visible && <SendEmailModal />}
+        </div>
       </main>
     </div>
   );
