@@ -1,8 +1,7 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
-import history from '@app/configs/history';
 import { Tabs } from '@ui-kit';
 import LoadMoreButton from './LoadMoreButton';
 import EmptyState from '@shared/EmptyState';
@@ -43,21 +42,26 @@ export const Content = ({
   loadMoreProducts,
   loadMoreArtworks,
 }) => {
-  const { pathname } = useLocation();
+  const { pathname } = useLocation(tabs.MARKETPLACE);
+  const [activeKey, setActiveKey] = useState();
   const username = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
   const isProfilePage = useMemo(() => pathname.includes('/profile'), [pathname]);
-  const activeKey = useMemo(
-    () => (pathname.includes('/artworks') ? tabs.ARTWORK : tabs.MARKETPLACE),
-    [pathname],
-  );
+
   const onTabClick = useCallback(
     (key) => {
       if (key === tabs.MARKETPLACE) {
-        return history.push(isProfilePage ? `/profile/${username}` : '/');
+        setActiveKey(tabs.MARKETPLACE);
+        window.history.replaceState('', '', isProfilePage ? `/profile/${username}` : '/');
+      } else {
+        setActiveKey(tabs.ARTWORK);
+        window.history.replaceState(
+          '',
+          '',
+          isProfilePage ? `/profile/artworks/${username}` : `/artworks`,
+        );
       }
-      return history.push(isProfilePage ? `/profile/artworks/${username}` : `/artworks`);
     },
-    [username, isProfilePage],
+    [isProfilePage, username],
   );
 
   // if ((!loading || !initialPolling) && !works?.length) {

@@ -189,7 +189,12 @@ const Product = ({
                 </Text>
               </Col>
               <Col span={24}>
-                <Text level={4}>{price ? `$${price.toFixed(2)}` : 'Free'}</Text>
+                <Text
+                  level={4}
+                  ellipsis={{ tooltip: price ? `$${price.toFixed(2)}` : 'Free for Subscribers' }}
+                >
+                  {price ? `$${price.toFixed(2)}` : 'Free for Subscribers'}
+                </Text>
               </Col>
             </Row>
           </Col>

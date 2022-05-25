@@ -54,15 +54,17 @@ const BlockLarge = ({ block, right = false }) => {
   );
 };
 
-const Blocks = ({ productsList }) => {
-  const blocks = useMemo(
-    () => new Array(3).fill('').map((_, i) => productsList.slice(i * 5, (i + 1) * 5)),
-    [productsList],
+const chunk = (arr, size) =>
+  Array.from({ length: Math.ceil(arr.length / size) }, (_, i) =>
+    arr.slice(i * size, i * size + size),
   );
+
+const Blocks = ({ productsList }) => {
+  const blocks = useMemo(() => chunk(productsList, 5), [productsList]);
 
   return blocks.map((block, i) =>
     block.length > 4 ? (
-      <BlockLarge key={i} block={block} right={i === 1} />
+      <BlockLarge key={i} block={block} right={i % 2 === 1} />
     ) : (
       <Block key={i} block={block} padding_top={20} />
     ),

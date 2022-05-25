@@ -64,7 +64,10 @@ const ProductDetail = ({ state }) => {
   const limit = watch('limit');
   const accessibility = watch('accessibility');
 
-  useEffect(() => setValue('isFree', !state?.price), [state?.price, setValue]);
+  useEffect(
+    () => setValue('isFree', state?.productId && !state?.price),
+    [state?.productId, state?.price, setValue],
+  );
 
   const props = {
     name: 'file',
@@ -84,39 +87,42 @@ const ProductDetail = ({ state }) => {
       return false;
     },
   };
-  const disabled = useMemo(() => {
-    return !(
-      title?.trim() &&
-      (+price > 0 || isFree) &&
-      (!limitVisible || (limitVisible && +limit > 0)) &&
-      ((title?.trim() && title?.trim() !== state?.title) ||
-        (description?.trim() && description?.trim() !== state?.description) ||
-        (description?.trim() === '' && !!state?.description) ||
-        (price && +price !== state?.price) ||
-        (!price && isFree && state?.price > 0) ||
-        (limitVisible && limit && +limit !== state?.limit) ||
-        !!limitVisible !== !!state?.limit ||
-        accessibility !== state?.accessibility ||
-        image?.file ||
-        (image.src !== state?.thumbnail && !state?.thumbnail?.startsWith('/static/media/product')))
-    );
-  }, [
-    title,
-    description,
-    price,
-    isFree,
-    limit,
-    accessibility,
-    limitVisible,
-    image?.file,
-    image.src,
-    state?.title,
-    state?.description,
-    state?.price,
-    state?.limit,
-    state?.accessibility,
-    state?.thumbnail,
-  ]);
+  const disabled = useMemo(
+    () =>
+      !(
+        title?.trim() &&
+        (+price > 0 || isFree) &&
+        (!limitVisible || (limitVisible && +limit > 0)) &&
+        ((title?.trim() && title?.trim() !== state?.title) ||
+          (description?.trim() && description?.trim() !== state?.description) ||
+          (description?.trim() === '' && !!state?.description) ||
+          (price && +price !== state?.price) ||
+          (!price && isFree && state?.price > 0) ||
+          (limitVisible && limit && +limit !== state?.limit) ||
+          !!limitVisible !== !!state?.limit ||
+          accessibility !== state?.accessibility ||
+          image?.file ||
+          (image.src !== state?.thumbnail &&
+            !state?.thumbnail?.startsWith('/static/media/product')))
+      ),
+    [
+      title,
+      description,
+      price,
+      isFree,
+      limit,
+      accessibility,
+      limitVisible,
+      image?.file,
+      image.src,
+      state?.title,
+      state?.description,
+      state?.price,
+      state?.limit,
+      state?.accessibility,
+      state?.thumbnail,
+    ],
+  );
   const buttonLabel = useMemo(() => (state?.productId ? 'UPDATE' : 'PUBLISH'), [state?.productId]);
 
   const setLimitation = useCallback(() => {
@@ -127,6 +133,7 @@ const ProductDetail = ({ state }) => {
   const setFree = useCallback(
     (e) => {
       setValue('price', undefined);
+      setValue('accessibility', 'subscriber_only');
       setValue('isFree', e.target.checked);
     },
     [setValue],
@@ -298,7 +305,9 @@ const ProductDetail = ({ state }) => {
           )}
         </Col>
         <Col span={24} align='start'>
-          <Text level={3}>Who can see this?</Text>
+          <Text level={3} disabled={isFree}>
+            Who can see this?
+          </Text>
         </Col>
         <Col span={24} padding_bottom={32} align='start'>
           <Controller
@@ -306,7 +315,11 @@ const ProductDetail = ({ state }) => {
             control={control}
             defaultValue={state?.accessibility || 'subscriber_only'}
             render={({ field }) => (
-              <Radio.Group defaultValue={state?.accessibility || 'subscriber_only'} {...field}>
+              <Radio.Group
+                value={isFree ? 'subscriber_only' : state?.accessibility || 'subscriber_only'}
+                {...field}
+                disabled={isFree}
+              >
                 <Radio value='subscriber_only'>Subscriber Only</Radio>
                 <Radio value='everyone'>Everyone</Radio>
               </Radio.Group>
