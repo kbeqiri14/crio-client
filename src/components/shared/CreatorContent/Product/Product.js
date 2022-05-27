@@ -10,7 +10,7 @@ import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { Button, Col, Divider, Row, Text } from '@ui-kit';
 import Actions from '@screens/Video/Actions';
 import { ReactComponent as LockIcon } from '@svgs/lock-buy.svg';
-import product from '@svgs/product.svg';
+import product from '@svgs/product.png';
 import LockState from '../LockState';
 
 const ProductWrapper = styled('div')`
@@ -168,7 +168,7 @@ const Product = ({
           />
         )}
         <img
-          src={src}
+          src={product}
           alt='product'
           width={large ? 684 : 330}
           height={large ? 636 : 245}
