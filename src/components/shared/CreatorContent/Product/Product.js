@@ -10,7 +10,7 @@ import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { Button, Col, Divider, Row, Text } from '@ui-kit';
 import Actions from '@screens/Video/Actions';
 import { ReactComponent as LockIcon } from '@svgs/lock-buy.svg';
-import product from '@svgs/product.png';
+import product from '@svgs/produc.png';
 import LockState from '../LockState';
 
 const ProductWrapper = styled('div')`
@@ -20,7 +20,7 @@ const ProductWrapper = styled('div')`
     width: 686px;
     height: 723px;
     .width {
-      max-width: 340px;
+      max-width: 322px;
     }
   }
   border: 1px solid ${(props) => props.theme.colors.dark50};
@@ -46,6 +46,26 @@ const ProductWrapper = styled('div')`
   }
   .width {
     max-width: 140px;
+  }
+`;
+
+const ImageWrapper = styled('div')`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 330px;
+  height: 245px;
+  img {
+    width: 246px;
+    height: 186px;
+  }
+  &.large {
+    width: 684px;
+    height: 636px;
+    img {
+      width: 451px;
+      height: 341px;
+    }
   }
 `;
 
@@ -167,13 +187,9 @@ const Product = ({
             isProduct={true}
           />
         )}
-        <img
-          src={product}
-          alt='product'
-          width={large ? 684 : 330}
-          height={large ? 636 : 245}
-          onClick={showProduct}
-        />
+        <ImageWrapper className={large ? 'large' : ''}>
+          <img src={src} alt='product' onClick={showProduct} />
+        </ImageWrapper>
         <Row
           justify='space-between'
           align='middle'
