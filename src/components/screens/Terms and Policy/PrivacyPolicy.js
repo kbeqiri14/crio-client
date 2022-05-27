@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import { Col, Row, Text, Title } from '@ui-kit';
 import './styles.less';
 
@@ -283,4 +285,4 @@ const PrivacyPolicy = () => {
   );
 };
 
-export default PrivacyPolicy;
+export default memo(PrivacyPolicy);

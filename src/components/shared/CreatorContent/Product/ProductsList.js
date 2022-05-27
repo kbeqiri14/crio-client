@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { Col, Row } from '@ui-kit';
 import Product from './Product';
 
-const Item = ({ item, large }) => (
+const Item = memo(({ item, large }) => (
   <Product
     providerType={item?.providerType}
     providerUserId={item?.providerUserId}
@@ -21,9 +21,9 @@ const Item = ({ item, large }) => (
     thumbnail={item?.thumbnail}
     large={large}
   />
-);
+));
 
-const Block = ({ block, padding_top = 0 }) => (
+const Block = memo(({ block, padding_top = 0 }) => (
   <Row gutter={[22, 20]} padding_top={padding_top}>
     {block.map((item) => (
       <Col key={item.productId}>
@@ -31,9 +31,9 @@ const Block = ({ block, padding_top = 0 }) => (
       </Col>
     ))}
   </Row>
-);
+));
 
-const BlockLarge = ({ block, right = false }) => {
+const BlockLarge = memo(({ block, right = false }) => {
   const item = block.shift();
   return (
     <Row gutter={[22, 20]} padding_top={20}>
@@ -52,14 +52,14 @@ const BlockLarge = ({ block, right = false }) => {
       )}
     </Row>
   );
-};
+});
 
 const chunk = (arr, size) =>
   Array.from({ length: Math.ceil(arr.length / size) }, (_, i) =>
     arr.slice(i * size, i * size + size),
   );
 
-const Blocks = ({ productsList }) => {
+const Blocks = memo(({ productsList }) => {
   const blocks = useMemo(() => chunk(productsList, 5), [productsList]);
 
   return blocks.map((block, i) =>
@@ -69,13 +69,13 @@ const Blocks = ({ productsList }) => {
       <Block key={i} block={block} padding_top={20} />
     ),
   );
-};
+});
 
 const ProductsList = ({ productsList = [] }) => {
-  // const { pathname } = useLocation();
-  // const isProfile = useMemo(() => pathname.includes('/profile'), [pathname]);
+  const { pathname } = useLocation();
+  const isProfile = useMemo(() => pathname.includes('/profile'), [pathname]);
 
-  return <Block block={productsList} />; // isProfile ? <Block block={productsList} /> : <Blocks productsList={productsList} />;
+  return isProfile ? <Block block={productsList} /> : <Blocks productsList={productsList} />;
 };
 
 export default memo(ProductsList);

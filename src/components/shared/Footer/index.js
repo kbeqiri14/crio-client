@@ -12,9 +12,9 @@ const links = [
 
 export const Footer = memo(() => (
   <footer className='black-background'>
-    <Row justify='space-around' gutter={[20]} padding_vertical={20}>
+    <Row justify='space-around' gutter={[20]} padding_vertical={20} className='items-center'>
       <Col>
-        <Row gutter={[20]}>
+        <Row justify='center' align='center' gutter={[20]} className='items-center'>
           <Col>
             <img alt='Crio logo' src={logo} width={48} height={28} />
           </Col>

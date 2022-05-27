@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import { isFuture } from 'date-fns';
 import { useLazyQuery, useReactiveVar } from '@apollo/client';
@@ -155,4 +155,4 @@ export const AppRoutes = () => {
   );
 };
 
-export default AppRoutes;
+export default memo(AppRoutes);
