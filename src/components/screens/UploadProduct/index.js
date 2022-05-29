@@ -1,6 +1,6 @@
 import { memo } from 'react';
 
-import ProductDetails from '@screens/EditProduct/Details';
+import ProductDetails from '@root/src/components/screens/EditProduct/ProductForm';
 
 const UploadProduct = () => {
   return <ProductDetails />;

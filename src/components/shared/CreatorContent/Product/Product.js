@@ -56,15 +56,15 @@ const ImageWrapper = styled('div')`
   width: 330px;
   height: 245px;
   img {
-    width: 246px;
-    height: 186px;
+    width: inherit;
+    height: inherit;
   }
   &.large {
     width: 684px;
     height: 636px;
     img {
-      width: 451px;
-      height: 341px;
+      width: inherit;
+      height: inherit;
     }
   }
 `;

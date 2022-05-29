@@ -2,7 +2,7 @@ import { memo, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import history from '@app/configs/history';
-import ProductDetails from './Details';
+import ProductDetails from './ProductForm';
 
 const EditProduct = () => {
   const { state } = useLocation();

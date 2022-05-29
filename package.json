@@ -25,6 +25,7 @@
     "aws-amplify-react": "^5.1.1",
     "aws-sdk": "^2.996.0",
     "axios": "^0.24.0",
+    "browser-image-compression": "^2.0.0",
     "classcat": "^5.0.3",
     "date-fns": "^2.26.0",
     "graphql": "^15.6.0",
