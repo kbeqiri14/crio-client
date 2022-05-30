@@ -37,6 +37,12 @@ const Button = styled(antButton)`
   }
 
   ${(props) =>
+    props?.min_width &&
+    css`
+      min-width: ${props.min_width}px;
+    `}
+
+  ${(props) =>
     props?.width &&
     css`
       width: ${props.width}px;

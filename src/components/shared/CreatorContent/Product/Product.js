@@ -2,16 +2,15 @@ import { memo, useCallback, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { useSendEmail } from '@root/src/components/shared/SendEmailModal/Context';
 import history from '@app/configs/history';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
-import { Button, Col, Divider, Row, Text } from '@ui-kit';
+import { Col, Row, Text } from '@ui-kit';
 import Actions from '@screens/Video/Actions';
-import { ReactComponent as LockIcon } from '@svgs/lock-buy.svg';
 import product from '@svgs/produc.png';
 import LockState from '../LockState';
+import BuyButton from './BuyButton';
 
 const ProductWrapper = styled('div')`
   width: 332px;
@@ -59,12 +58,24 @@ const ImageWrapper = styled('div')`
     width: inherit;
     height: inherit;
   }
+  &.no-thumbnail {
+    img {
+      width: 256px;
+      height: 186px;
+    }
+  }
   &.large {
     width: 684px;
     height: 636px;
     img {
       width: inherit;
       height: inherit;
+    }
+    &.no-thumbnail {
+      img {
+        width: 451px;
+        height: 341px;
+      }
     }
   }
 `;
@@ -89,7 +100,6 @@ const Product = ({
   const { pathname } = useLocation();
   const { setVideoInfo } = usePresentation();
   const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
-  const { setSendEmailInfo } = useSendEmail();
 
   const showActions = useMemo(() => {
     const username = pathname.split('/').slice(-1)[0];
@@ -121,6 +131,22 @@ const Product = ({
     }
     return name;
   }, [isLocked, large]);
+
+  const imageClasses = useMemo(() => {
+    let name;
+    if (!thumbnail) {
+      name = 'no-thumbnail';
+    }
+    if (large) {
+      return `${name} large`;
+    }
+    return name;
+  }, [thumbnail, large]);
+
+  const buttonVisible = useMemo(
+    () => !(user.isCreator && accessibility === 'subscriber_only'),
+    [accessibility, user.isCreator],
+  );
 
   const showProduct = useCallback(() => {
     if (pathname.includes('/product/')) {
@@ -162,14 +188,6 @@ const Product = ({
     setVideoInfo,
   ]);
 
-  const handleClick = useCallback(() => {
-    if (price) {
-      showProduct();
-    } else {
-      setSendEmailInfo({ productId });
-    }
-  }, [price, productId, setSendEmailInfo, showProduct]);
-
   return (
     <>
       <ProductWrapper className={classes}>
@@ -187,16 +205,10 @@ const Product = ({
             isProduct={true}
           />
         )}
-        <ImageWrapper className={large ? 'large' : ''}>
+        <ImageWrapper className={imageClasses}>
           <img src={src} alt='product' onClick={showProduct} />
         </ImageWrapper>
-        <Row
-          justify='space-between'
-          align='middle'
-          padding_horizontal={20}
-          padding_top={12}
-          onClick={showProduct}
-        >
+        <Row justify='space-between' align='middle' padding_horizontal={20} padding_top={12}>
           <Col className='width'>
             <Row align='middle' gutter={[0, 8]}>
               <Col span={24}>
@@ -214,18 +226,17 @@ const Product = ({
               </Col>
             </Row>
           </Col>
-          <Col className='info'>
-            <Divider type='vertical' height={31} padding_left={20} />
-            <Button
-              type='primary'
-              fill_color={price ? 'blue' : 'green'}
-              width={large ? 301 : 126}
-              icon={isLocked ? <LockIcon /> : undefined}
-              onClick={handleClick}
-            >
-              {price ? 'Buy' : 'Email'}
-            </Button>
-          </Col>
+          {buttonVisible && (
+            <Col className='info'>
+              <BuyButton
+                userId={userId}
+                username={username}
+                productId={productId}
+                price={price}
+                accessibility={accessibility}
+              />
+            </Col>
+          )}
         </Row>
       </ProductWrapper>
       <Link to={`/profile/${username}`}>
