@@ -6,7 +6,7 @@ import history from '@app/configs/history';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
-import { Col, Row, Text } from '@ui-kit';
+import { Col, Divider, Row, Text } from '@ui-kit';
 import Actions from '@screens/Video/Actions';
 import product from '@svgs/produc.png';
 import LockState from '../LockState';
@@ -143,10 +143,7 @@ const Product = ({
     return name;
   }, [thumbnail, large]);
 
-  const buttonVisible = useMemo(
-    () => !(user.isCreator && accessibility === 'subscriber_only'),
-    [accessibility, user.isCreator],
-  );
+  const hide = useCallback(() => setVideoInfo({}), [setVideoInfo]);
 
   const showProduct = useCallback(() => {
     if (pathname.includes('/product/')) {
@@ -226,8 +223,9 @@ const Product = ({
               </Col>
             </Row>
           </Col>
-          {buttonVisible && (
+          {!user.isCreator && (
             <Col className='info'>
+              <Divider type='vertical' height={31} padding_left={20} />
               <BuyButton
                 userId={userId}
                 username={username}
@@ -239,7 +237,7 @@ const Product = ({
           )}
         </Row>
       </ProductWrapper>
-      <Link to={`/profile/${username}`}>
+      <Link to={`/profile/${username}`} onClick={hide}>
         <Row gutter={12} align='middle' padding_top={8}>
           <Col>
             <img

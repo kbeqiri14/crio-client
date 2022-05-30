@@ -2,7 +2,6 @@ import { memo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { useSendEmail } from '@root/src/components/shared/SendEmailModal/Context';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { urlify } from '@utils/helpers';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
@@ -27,7 +26,6 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
     videoInfo.avatar,
   );
   const { setVideoInfo } = usePresentation();
-  const { setSendEmailInfo } = useSendEmail();
 
   const hide = useCallback(() => setVideoInfo({}), [setVideoInfo]);
 
@@ -69,7 +67,7 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
               size='lg'
             />
             <img
-              src={videoInfo.thumbnailUri}
+              src={videoInfo.isProduct ? videoInfo.thumbnail : videoInfo.thumbnailUri}
               alt='artwork'
               className='border-radius-30 fit-cover'
               width='100%'
@@ -107,9 +105,12 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
         {videoInfo.isProduct && (
           <Col span={12}>
             <BuyWidget
+              userId={videoInfo.userId}
+              username={videoInfo.username}
+              productId={videoInfo.productId}
               price={videoInfo.price}
               limit={videoInfo.limit}
-              onClick={() => setSendEmailInfo({ productId: videoInfo.productId })}
+              accessibility={videoInfo.accessibility}
             />
           </Col>
         )}

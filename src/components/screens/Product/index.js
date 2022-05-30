@@ -34,10 +34,6 @@ export const Product = () => {
         : {},
     [data?.getProduct],
   );
-  const videoUri = useMemo(
-    () => product.videoUri?.substring(product.videoUri?.lastIndexOf('/') + 1),
-    [product.videoUri],
-  );
   const isLocked = useMemo(() => {
     if (user.isCreator || product.accessibility === 'everyone') {
       return false;
@@ -81,7 +77,7 @@ export const Product = () => {
   }
   return (
     <>
-      <Content videoInfo={product} videoUri={videoUri} isLocked={isLocked} />
+      <Content videoInfo={product} isLocked={isLocked} />
       <MoreProductsSection videoInfo={product} />
     </>
   );

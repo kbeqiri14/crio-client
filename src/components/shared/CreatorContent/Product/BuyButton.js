@@ -4,10 +4,10 @@ import { STRIPE_PAYMENT_URL } from '@configs/environment';
 import { useSendEmail } from '@root/src/components/shared/SendEmailModal/Context';
 import history from '@app/configs/history';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
-import { Button, Divider } from '@ui-kit';
+import { Button } from '@ui-kit';
 import { ReactComponent as LockIcon } from '@svgs/lock-buy.svg';
 
-const BuyButton = ({ userId, username, productId, price, accessibility }) => {
+const BuyButton = ({ userId, username, productId, price, accessibility, block }) => {
   const { user } = useLoggedInUser();
   const { setSendEmailInfo } = useSendEmail();
 
@@ -41,8 +41,14 @@ const BuyButton = ({ userId, username, productId, price, accessibility }) => {
 
   return (
     <>
-      <Divider type='vertical' height={31} padding_left={20} />
-      <Button type='primary' fill_color={color} min_width={126} icon={icon} onClick={onClick}>
+      <Button
+        block={block}
+        type='primary'
+        fill_color={color}
+        min_width={126}
+        icon={icon}
+        onClick={onClick}
+      >
         {label}
       </Button>
     </>

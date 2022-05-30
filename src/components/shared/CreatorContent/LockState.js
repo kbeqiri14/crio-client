@@ -74,11 +74,11 @@ const LockState = ({ userId, accessibility, status, size = 'normal', large, isPr
   }, [unavailable, user.isSubscribed, setVideoInfo]);
 
   return unavailable || isLocked ? (
-    <Wrapper style={wrapper} onClick={onClick}>
-      <CustomTooltip className='overlay-process' description={tooltip}>
+    <CustomTooltip className='overlay-process' description={tooltip}>
+      <Wrapper style={wrapper} onClick={onClick}>
         <img alt='locked' src={icon} {...image} />
-      </CustomTooltip>
-    </Wrapper>
+      </Wrapper>
+    </CustomTooltip>
   ) : null;
 };
 
