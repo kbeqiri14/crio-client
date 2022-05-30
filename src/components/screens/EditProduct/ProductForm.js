@@ -22,21 +22,6 @@ const Wrapper = styled('div')`
       border-radius: 8px;
     }
   }
-  .cover:hover {
-    .remove {
-      opacity: 1;
-      visibility: visible;
-    }
-  }
-  .remove {
-    opacity: 0;
-    visibility: hidden;
-    transition: visibility 0s, opacity 0.4s linear;
-    position: absolute;
-    right: 8px;
-    top: 12px;
-    cursor: pointer;
-  }
 `;
 
 const ProductForm = ({ state }) => {
@@ -47,7 +32,7 @@ const ProductForm = ({ state }) => {
       : {},
   );
 
-  const { control, watch, setValue } = useForm();
+  const { control, watch, setValue, handleSubmit } = useForm();
   const isFree = watch('isFree');
 
   useEffect(
@@ -197,7 +182,13 @@ const ProductForm = ({ state }) => {
           </>
         )}
         <Col span={24}>
-          <ActionButtons state={state} image={image} limitVisible={limitVisible} watch={watch} />
+          <ActionButtons
+            state={state}
+            image={image}
+            limitVisible={limitVisible}
+            watch={watch}
+            handleSubmit={handleSubmit}
+          />
         </Col>
       </Row>
     </Wrapper>

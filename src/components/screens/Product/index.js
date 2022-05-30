@@ -5,40 +5,53 @@ import { useQuery } from '@apollo/client';
 import { Meta } from '@shared/Meta';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
-import { getArtwork } from '@app/graphql/queries/artworks.query';
+import { getProduct } from '@app/graphql/queries/products.query';
 import NotFound from '@shared/NotFound';
 import { ReactComponent as NotFoundUser } from '@svgs/not-found.svg';
-import { Col, Row, Text } from '@ui-kit';
-import Content from './Content';
+import { Col, Row } from '@ui-kit';
+import defaultCover from '@svgs/produc.png';
+import Content from '../Artwork/Content';
 import MoreProductsSection from './MoreProductsSection';
 
-export const Artwork = () => {
+export const Product = () => {
   const { user } = useLoggedInUser();
   const { pathname } = useLocation();
-  const artworkId = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
+  const productId = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
 
-  const { data, loading: loadingArtwork } = useQuery(getArtwork, {
-    variables: { artworkId },
+  const { data, loading } = useQuery(getProduct, {
+    variables: { productId },
   });
-  const artwork = useMemo(() => data?.getArtwork || {}, [data?.getArtwork]);
+  const product = useMemo(
+    () =>
+      data?.getProduct
+        ? {
+            ...data.getProduct,
+            isProduct: true,
+            thumbnail: data.getProduct.thumbnail
+              ? `https://crio-in-staging-bucket.s3.us-west-2.amazonaws.com/${data.getProduct.userId}/products/thumbnail-${data.getProduct.thumbnail}`
+              : defaultCover,
+          }
+        : {},
+    [data?.getProduct],
+  );
   const videoUri = useMemo(
-    () => artwork.videoUri?.substring(artwork.videoUri?.lastIndexOf('/') + 1),
-    [artwork.videoUri],
+    () => product.videoUri?.substring(product.videoUri?.lastIndexOf('/') + 1),
+    [product.videoUri],
   );
   const isLocked = useMemo(() => {
-    if (user.isCreator || artwork.accessibility === 'everyone') {
+    if (user.isCreator || product.accessibility === 'everyone') {
       return false;
     }
-    return user.isSubscribed ? !user.followings?.includes(artwork.userId) : true;
-  }, [user.isCreator, user.isSubscribed, user.followings, artwork.accessibility, artwork.userId]);
+    return user.isSubscribed ? !user.followings?.includes(product.userId) : true;
+  }, [user.isCreator, user.isSubscribed, user.followings, product.accessibility, product.userId]);
 
-  if (loadingArtwork) {
+  if (loading) {
     return (
       <div className='video-view-container'>
         <Meta
-          title={artwork.title}
-          description={artwork.description}
-          imageUrl={artwork.thumbnailUri}
+          title={product.title}
+          description={product.description}
+          imageUrl={product.thumbnailUri}
         />
         <Row className='full-width'>
           <Col span={18} offset={3} padding_bottom={30}>
@@ -63,16 +76,15 @@ export const Artwork = () => {
       </div>
     );
   }
-  if (!Object.keys(artwork).length) {
-    return <NotFound text='Artwork is not found' icon={<NotFoundUser />} />;
+  if (!Object.keys(product).length) {
+    return <NotFound text='Product is not found' icon={<NotFoundUser />} />;
   }
   return (
     <>
-      <Text>NARINE KOSYAN</Text>
-      <Content videoInfo={artwork} videoUri={videoUri} isLocked={isLocked} />
-      <MoreProductsSection videoInfo={artwork} />
+      <Content videoInfo={product} videoUri={videoUri} isLocked={isLocked} />
+      <MoreProductsSection videoInfo={product} />
     </>
   );
 };
 
-export default memo(Artwork);
+export default memo(Product);
