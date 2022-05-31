@@ -54,7 +54,7 @@ export const MoreProductsSection = ({ videoInfo }) => {
     <>
       {data?.getMoreProducts?.userProducts?.length && (
         <UserMoreProductsWrapper>
-          <Row gutter={[0, 20]}>
+          <Row>
             <Col span={24}>
               <Row justify='space-between' align='middle'>
                 <Col>
@@ -77,7 +77,7 @@ export const MoreProductsSection = ({ videoInfo }) => {
       )}
       {data?.getMoreProducts?.products?.length && (
         <MoreProductsWrapper>
-          <Row gutter={[0, 20]}>
+          <Row>
             <Col span={24}>
               <Text level={2}>Other marketplace products</Text>
             </Col>

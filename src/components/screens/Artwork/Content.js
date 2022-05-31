@@ -60,7 +60,7 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
           </Row>
         </Col>
         {isLocked ? (
-          <Col span={24} margin_bottom={40}>
+          <Col span={24} margin_bottom={40} padding_top={28}>
             <LockState
               userId={videoInfo.userId}
               accessibility={videoInfo.accessibility}
@@ -69,18 +69,18 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
             <img
               src={videoInfo.isProduct ? videoInfo.thumbnail : videoInfo.thumbnailUri}
               alt='artwork'
-              className='border-radius-30 fit-cover'
+              className='border-radius-16 fit-cover'
               width='100%'
               height={638}
             />
           </Col>
         ) : (
-          <Col span={24} margin_bottom={40}>
+          <Col span={24} margin_bottom={40} padding_top={28}>
             {videoInfo.isProduct ? (
               <img
                 src={videoInfo.thumbnail}
                 alt='artwork'
-                className='border-radius-30 fit-cover'
+                className='border-radius-16 fit-cover'
                 width='100%'
                 height={638}
               />
@@ -98,7 +98,7 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
           </Col>
         )}
         <Col span={videoInfo.isProduct ? 12 : 24}>
-          <Text level={4}>
+          <Text level={4} color='dark25'>
             <div dangerouslySetInnerHTML={{ __html: urlify(videoInfo.description) }} />
           </Text>
         </Col>
