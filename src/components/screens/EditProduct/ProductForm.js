@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { Checkbox } from 'antd';
@@ -33,7 +33,50 @@ const ProductForm = ({ state }) => {
   );
 
   const { control, watch, setValue, handleSubmit } = useForm();
+  const title = watch('title');
+  const description = watch('desc');
+  const price = watch('price');
   const isFree = watch('isFree');
+  const limit = watch('limit');
+  const accessibility = watch('accessibility');
+
+  const disabled = useMemo(
+    () =>
+      console.log(title?.trim(), price, +price > 0, isFree, limitVisible, limit) ||
+      !(
+        title?.trim() &&
+        (+price > 0 || isFree) &&
+        (!limitVisible || (limitVisible && +limit > 0)) &&
+        ((title?.trim() && title?.trim() !== state?.title) ||
+          (description?.trim() && description?.trim() !== state?.description) ||
+          (description?.trim() === '' && !!state?.description) ||
+          (price && +price !== +state?.price) ||
+          (!price && isFree && state?.price > 0) ||
+          (limitVisible && limit && +limit !== state?.limit) ||
+          !!limitVisible !== !!state?.limit ||
+          accessibility !== state?.accessibility ||
+          image?.file ||
+          (image.src !== state?.thumbnail &&
+            !state?.thumbnail?.startsWith('/static/media/product')))
+      ),
+    [
+      title,
+      description,
+      price,
+      isFree,
+      limit,
+      accessibility,
+      limitVisible,
+      image?.file,
+      image.src,
+      state?.title,
+      state?.description,
+      state?.price,
+      state?.limit,
+      state?.accessibility,
+      state?.thumbnail,
+    ],
+  );
 
   useEffect(
     () => setValue('isFree', state?.productId && !state?.price),
@@ -185,8 +228,7 @@ const ProductForm = ({ state }) => {
           <ActionButtons
             state={state}
             image={image}
-            limitVisible={limitVisible}
-            watch={watch}
+            disabled={disabled}
             handleSubmit={handleSubmit}
           />
         </Col>

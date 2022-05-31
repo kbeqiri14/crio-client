@@ -9,53 +9,9 @@ import ActionButtons from '@shared/ActionButtons';
 import { errorToast, successToast } from '@ui-kit/Notification';
 import { formItemContent } from '@utils/upload.helper';
 
-const ProductActionButtons = ({ state, image, limitVisible, watch, handleSubmit }) => {
+const ProductActionButtons = ({ state, image, disabled, handleSubmit }) => {
   const buttonLabel = useMemo(() => (state?.productId ? 'UPDATE' : 'PUBLISH'), [state?.productId]);
   const { userId, redirect } = useRedirectToProfile();
-
-  const title = watch('title');
-  const description = watch('desc');
-  const price = watch('price');
-  const isFree = watch('isFree');
-  const limit = watch('limit');
-  const accessibility = watch('accessibility');
-
-  const disabled = useMemo(
-    () =>
-      !(
-        title?.trim() &&
-        (+price > 0 || isFree) &&
-        (!limitVisible || (limitVisible && +limit > 0)) &&
-        ((title?.trim() && title?.trim() !== state?.title) ||
-          (description?.trim() && description?.trim() !== state?.description) ||
-          (description?.trim() === '' && !!state?.description) ||
-          (price && +price !== +state?.price) ||
-          (!price && isFree && state?.price > 0) ||
-          (limitVisible && limit && +limit !== state?.limit) ||
-          !!limitVisible !== !!state?.limit ||
-          accessibility !== state?.accessibility ||
-          image?.file ||
-          (image.src !== state?.thumbnail &&
-            !state?.thumbnail?.startsWith('/static/media/product')))
-      ),
-    [
-      title,
-      description,
-      price,
-      isFree,
-      limit,
-      accessibility,
-      limitVisible,
-      image?.file,
-      image.src,
-      state?.title,
-      state?.description,
-      state?.price,
-      state?.limit,
-      state?.accessibility,
-      state?.thumbnail,
-    ],
-  );
 
   const [create, { loading: creating }] = useMutation(createProduct, {
     update: (cache, mutationResult) => {
