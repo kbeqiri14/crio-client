@@ -69,16 +69,17 @@ export const Content = ({
   // if ((!loading || !initialPolling) && !works?.length) {
   //   return <EmptyState username={username} isCreator={true} isProfile={isProfile} />;
   // }
+
   return (
     <Wrapper>
       <Tabs activeKey={activeKey} onTabClick={onTabClick}>
         <TabPane key={tabs.MARKETPLACE} tab={tabs.MARKETPLACE}>
-          {isProfilePage && !productsCount && (
+          {isProfilePage && !productsCount && !productsList?.length && (
             <EmptyState
               username={username}
               isCreator={true}
               isProfile={isProfile}
-              isMarketPlace={true}
+              isMarketplace={true}
             />
           )}
           <ProductsList productsList={productsList} />
@@ -89,7 +90,7 @@ export const Content = ({
           />
         </TabPane>
         <TabPane key={tabs.ARTWORK} tab={tabs.ARTWORK}>
-          {isProfilePage && !artworksCount && (
+          {isProfilePage && !artworksCount && !artworksList?.length && (
             <EmptyState username={username} isCreator={true} isProfile={isProfile} />
           )}
           <ArtworksList artworksList={artworksList} />

@@ -6,24 +6,24 @@ import { ReactComponent as UploadArtworkIcon } from '@svgs/fallowing-empty.svg';
 import { ReactComponent as FallowingEmptyIcon } from '@svgs/fallowing-empty.svg';
 import { Col, Button, Row, Text } from '@ui-kit';
 
-const EmptyState = ({ username, isCreator, isProfile, isSubscribed, isMarketPlace }) => {
+const EmptyState = ({ username, isCreator, isProfile, isSubscribed, isMarketplace }) => {
   const text = useMemo(() => {
     if (isProfile) {
       let text = 'is not following anyone yet';
       if (isCreator) {
-        text = isMarketPlace
+        text = isMarketplace
           ? 'hasn’t added a products and services yet'
           : 'hasn’t added an artwork yet';
       }
       return `${username} ${text}`;
     }
     if (isCreator) {
-      return isMarketPlace ? 'Upload your first product or service' : 'Upload your first artwork';
+      return isMarketplace ? 'Upload your first product or service' : 'Upload your first artwork';
     }
     return isSubscribed
       ? 'You don’t follow anyone'
       : 'Subscribe to follow creators and gain access to free digital products across Crio';
-  }, [username, isCreator, isProfile, isSubscribed, isMarketPlace]);
+  }, [username, isCreator, isProfile, isSubscribed, isMarketplace]);
 
   const visible = useMemo(
     () => !isProfile && (isCreator || !isSubscribed),
@@ -34,15 +34,15 @@ const EmptyState = ({ username, isCreator, isProfile, isSubscribed, isMarketPlac
     [isCreator],
   );
   const onClick = useCallback(
-    () => history.push(`/${isCreator ? (isMarketPlace ? 'upload' : 'upload/artwork') : 'pricing'}`),
-    [isCreator, isMarketPlace],
+    () => history.push(`/${isCreator ? (isMarketplace ? 'upload' : 'upload/artwork') : 'pricing'}`),
+    [isCreator, isMarketplace],
   );
 
   return (
     <Row justify='center' align='middle' gutter={[0, 20]}>
       <Col span={24} align='center' padding_bottom={20}>
         {isCreator ? (
-          isMarketPlace ? (
+          isMarketplace ? (
             <UploadProductIcon width={210} height={151} />
           ) : (
             <UploadArtworkIcon width={210} height={151} />
