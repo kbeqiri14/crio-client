@@ -27,7 +27,12 @@ const BuyButton = ({ userId, username, productId, price, accessibility, block })
       'Buy',
       'blue',
       async () => {
-        const { data } = await axios.post('http://localhost:5050/create-checkout-session');
+        const { data } = await axios.post(
+          `${process.env.REACT_APP_GQL_ROOT.substring(
+            0,
+            process.env.REACT_APP_GQL_ROOT.length - 8,
+          )}stripe/create-checkout-session`,
+        );
         window.open(data?.url, '_blank');
       },
     ];
