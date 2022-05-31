@@ -8,7 +8,7 @@ import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { Col, Divider, Row, Text } from '@ui-kit';
 import Actions from '@screens/Video/Actions';
-import product from '@svgs/produc.png';
+import product from '@images/product.png';
 import LockState from '../LockState';
 import BuyButton from './BuyButton';
 

@@ -9,7 +9,7 @@ import { getProduct } from '@app/graphql/queries/products.query';
 import NotFound from '@shared/NotFound';
 import { ReactComponent as NotFoundUser } from '@svgs/not-found.svg';
 import { Col, Row } from '@ui-kit';
-import defaultCover from '@svgs/produc.png';
+import defaultCover from '@images/product.png';
 import Content from '../Artwork/Content';
 import MoreProductsSection from './MoreProductsSection';
 
