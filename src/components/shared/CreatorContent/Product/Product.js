@@ -78,6 +78,7 @@ const ImageWrapper = styled('div')`
       }
     }
   }
+  border-bottom: 1px solid ${(props) => props.theme.colors.dark50};
 `;
 
 const Product = ({

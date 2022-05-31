@@ -13,13 +13,16 @@ const Wrapper = styled('div')`
   background-color: #202020;
   border-radius: 16px;
   margin-right: 20px;
+  &.small {
+    height: 96px;
+  }
 `;
 
 export const BuyWidget = ({ userId, username, productId, price, limit, accessibility }) => {
   const { user } = useLoggedInUser();
 
   return (
-    <Wrapper>
+    <Wrapper className={user.isCreator ? 'small' : ''}>
       <Row gutter={[0, 8]}>
         <Col span={24}>
           <Row justify='space-between'>

@@ -1,6 +1,6 @@
 import { memo, useMemo } from 'react';
+import axios from 'axios';
 
-import { STRIPE_PAYMENT_URL } from '@configs/environment';
 import { useSendEmail } from '@root/src/components/shared/SendEmailModal/Context';
 import history from '@app/configs/history';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
@@ -26,7 +26,10 @@ const BuyButton = ({ userId, username, productId, price, accessibility, block })
     return [
       'Buy',
       'blue',
-      () => window.open(STRIPE_PAYMENT_URL, '_blank', 'noopener,noreferrer,nofollow'),
+      async () => {
+        const { data } = await axios.post('http://localhost:5050/create-checkout-session');
+        window.open(data?.url, '_blank');
+      },
     ];
   }, [
     userId,
