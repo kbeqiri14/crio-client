@@ -1,8 +1,10 @@
 import { memo, useMemo } from 'react';
 import axios from 'axios';
 
+import { STRIPE_ROOT } from '@app/configs/environment';
 import { useSendEmail } from '@root/src/components/shared/SendEmailModal/Context';
 import history from '@app/configs/history';
+import useAsyncFn from '@app/hooks/useAsyncFn';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { Button } from '@ui-kit';
 import { ReactComponent as LockIcon } from '@svgs/lock-buy.svg';
@@ -10,6 +12,7 @@ import { ReactComponent as LockIcon } from '@svgs/lock-buy.svg';
 const BuyButton = ({ userId, username, productId, price, accessibility, block }) => {
   const { user } = useLoggedInUser();
   const { setSendEmailInfo } = useSendEmail();
+  const { call, loading } = useAsyncFn(async () => await axios.post(STRIPE_ROOT));
 
   const [label, color, onClick, icon] = useMemo(() => {
     if (accessibility === 'subscriber_only') {
@@ -27,13 +30,8 @@ const BuyButton = ({ userId, username, productId, price, accessibility, block })
       'Buy',
       'blue',
       async () => {
-        const { data } = await axios.post(
-          `${process.env.REACT_APP_GQL_ROOT.substring(
-            0,
-            process.env.REACT_APP_GQL_ROOT.length - 8,
-          )}stripe/create-checkout-session`,
-        );
-        window.open(data?.url, '_blank');
+        const { data } = await call();
+        window.location.href = data?.url;
       },
     ];
   }, [
@@ -45,6 +43,7 @@ const BuyButton = ({ userId, username, productId, price, accessibility, block })
     price,
     accessibility,
     setSendEmailInfo,
+    call,
   ]);
 
   return (
@@ -55,6 +54,7 @@ const BuyButton = ({ userId, username, productId, price, accessibility, block })
         fill_color={color}
         min_width={126}
         icon={icon}
+        loading={loading}
         onClick={onClick}
       >
         {label}

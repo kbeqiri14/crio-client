@@ -2,6 +2,7 @@ export const env = process.env.REACT_APP_ENV;
 export const isOnProduction = env === 'production';
 export const SENTRY_DSN = process.env.REACT_APP_SENTRY_DSN;
 export const GRAPHQL_ROOT = process.env.REACT_APP_GQL_ROOT;
+export const STRIPE_ROOT = process.env.REACT_APP_STRIPE_ROOT;
 export const STRIPE_PAYMENT_URL = process.env.REACT_APP_STRIPE_PAYMENT_URL;
 
 // cognito
