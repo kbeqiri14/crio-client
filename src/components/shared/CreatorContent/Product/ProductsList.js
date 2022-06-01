@@ -1,6 +1,7 @@
 import { memo, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 
+import useClientWidth from '@app/hooks/useClientWidth';
 import { Col, Row } from '@ui-kit';
 import Product from './Product';
 
@@ -74,18 +75,20 @@ const Blocks = memo(({ productsList }) => {
 const ProductsList = ({ productsList = [] }) => {
   const { pathname } = useLocation();
   const isProfile = useMemo(() => pathname.includes('/profile'), [pathname]);
+  const width = useClientWidth();
+  if (width < 1438) {
+    return (
+      <Row gutter={[22, 20]}>
+        {productsList.map((item) => (
+          <Col key={item.productId}>
+            <Item item={item} />
+          </Col>
+        ))}
+      </Row>
+    );
+  }
 
   return isProfile ? <Block block={productsList} /> : <Blocks productsList={productsList} />;
-
-  // return (
-  //   <Row gutter={[22, 20]}>
-  //     {productsList.map((item) => (
-  //       <Col key={item.productId}>
-  //         <Item item={item} />
-  //       </Col>
-  //     ))}
-  //   </Row>
-  // );
 };
 
 export default memo(ProductsList);
