@@ -12,7 +12,9 @@ import { ReactComponent as LockIcon } from '@svgs/lock-buy.svg';
 const BuyButton = ({ userId, username, productId, price, accessibility, block }) => {
   const { user } = useLoggedInUser();
   const { setSendEmailInfo } = useSendEmail();
-  const { call, loading } = useAsyncFn(async () => await axios.post(STRIPE_ROOT, { productId }));
+  const { call, loading } = useAsyncFn(
+    async () => await axios.post(`${STRIPE_ROOT}create-checkout-session`, { productId }),
+  );
 
   const [label, color, onClick, icon] = useMemo(() => {
     if (accessibility === 'subscriber_only') {
