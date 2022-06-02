@@ -38,6 +38,12 @@ const ProductWrapper = styled('div')`
     transition: visibility 0s, opacity 0.2s linear;
   }
   &:hover {
+    .info {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  &:hover:not(.is-locked) {
     .info,
     .actions {
       opacity: 1;
