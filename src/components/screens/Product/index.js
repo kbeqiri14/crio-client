@@ -2,7 +2,7 @@ import { memo, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Skeleton } from 'antd';
 import { useQuery } from '@apollo/client';
-import { Meta } from '@shared/Meta';
+import styled from 'styled-components';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { getProduct } from '@app/graphql/queries/products.query';
@@ -12,6 +12,16 @@ import { Col, Row } from '@ui-kit';
 import defaultCover from '@images/product.png';
 import Content from '../Artwork/Content';
 import MoreProductsSection from './MoreProductsSection';
+
+const Wrapper = styled('div')`
+  display: flex;
+  justify-content: center;
+  padding: 40px 10px;
+  > div {
+    min-width: 1040px;
+    max-width: 1040px;
+  }
+`;
 
 export const Product = () => {
   const { user } = useLoggedInUser();
@@ -43,14 +53,9 @@ export const Product = () => {
 
   if (loading) {
     return (
-      <div className='video-view-container'>
-        <Meta
-          title={product.title}
-          description={product.description}
-          imageUrl={product.thumbnailUri}
-        />
-        <Row className='full-width'>
-          <Col span={18} offset={3} padding_bottom={30}>
+      <Wrapper>
+        <Row gutter={[0, 40]}>
+          <Col span={24}>
             <Skeleton round active title={{ width: '100%' }} paragraph={null} />
             <Skeleton
               round
@@ -69,7 +74,7 @@ export const Product = () => {
             />
           </Col>
         </Row>
-      </div>
+      </Wrapper>
     );
   }
   if (!Object.keys(product).length) {

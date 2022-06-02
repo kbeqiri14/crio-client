@@ -12,7 +12,7 @@ import BuyWidget from '../Product/BuyWidget';
 const Wrapper = styled('div')`
   display: flex;
   justify-content: center;
-  padding: 40px 10px 52px;
+  padding: 40px 10px;
   > div {
     min-width: 1040px;
     max-width: 1040px;
@@ -31,9 +31,9 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
 
   return (
     <Wrapper>
-      <Row justify='center'>
+      <Row justify='center' gutter={[0, 40]}>
         <Col span={24}>
-          <Row gutter={[0, 12]} padding_bottom={30}>
+          <Row gutter={[0, 12]}>
             <Col span={24}>
               <Title level={1}>{videoInfo.title}</Title>
             </Col>
@@ -60,7 +60,7 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
           </Row>
         </Col>
         {isLocked ? (
-          <Col span={24} margin_bottom={40} padding_top={28}>
+          <Col span={24}>
             <LockState
               userId={videoInfo.userId}
               accessibility={videoInfo.accessibility}
@@ -75,7 +75,7 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
             />
           </Col>
         ) : (
-          <Col span={24} margin_bottom={40} padding_top={28}>
+          <Col span={24}>
             {videoInfo.isProduct ? (
               <img
                 src={videoInfo.thumbnail}

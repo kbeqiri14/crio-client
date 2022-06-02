@@ -2,7 +2,7 @@ import { memo, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Skeleton } from 'antd';
 import { useQuery } from '@apollo/client';
-import { Meta } from '@shared/Meta';
+import styled from 'styled-components';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { getArtwork } from '@app/graphql/queries/artworks.query';
@@ -11,6 +11,16 @@ import { ReactComponent as NotFoundUser } from '@svgs/not-found.svg';
 import { Col, Row } from '@ui-kit';
 import Content from './Content';
 import MoreProductsSection from '@root/src/components/screens/Product/MoreProductsSection';
+
+const Wrapper = styled('div')`
+  display: flex;
+  justify-content: center;
+  padding: 40px 10px;
+  > div {
+    min-width: 1040px;
+    max-width: 1040px;
+  }
+`;
 
 export const Artwork = () => {
   const { user } = useLoggedInUser();
@@ -32,14 +42,9 @@ export const Artwork = () => {
 
   if (loadingArtwork) {
     return (
-      <div className='video-view-container'>
-        <Meta
-          title={artwork.title}
-          description={artwork.description}
-          imageUrl={artwork.thumbnailUri}
-        />
-        <Row className='full-width'>
-          <Col span={18} offset={3} padding_bottom={30}>
+      <Wrapper>
+        <Row gutter={[0, 40]}>
+          <Col span={24}>
             <Skeleton round active title={{ width: '100%' }} paragraph={null} />
             <Skeleton
               round
@@ -58,7 +63,7 @@ export const Artwork = () => {
             />
           </Col>
         </Row>
-      </div>
+      </Wrapper>
     );
   }
   if (!Object.keys(artwork).length) {

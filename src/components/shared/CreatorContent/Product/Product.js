@@ -19,7 +19,7 @@ const ProductWrapper = styled('div')`
     width: 686px;
     height: 723px;
     .width {
-      max-width: 322px;
+      max-width: 500px;
     }
   }
   border: 1px solid ${(props) => props.theme.colors.dark50};
@@ -210,7 +210,7 @@ const Product = ({
         <LockState userId={userId} accessibility={accessibility} large={large} isProduct={true} />
         <ImageWrapper className={imageClasses}>
           <img src={src} alt='product' onClick={showProduct} />
-          <div className='actions'>
+          <div className='actions' onClick={() => !showActions && showProduct()}>
             {showActions && (
               <Actions
                 username={username}
@@ -246,7 +246,7 @@ const Product = ({
           </Col>
           {!user.isCreator && (
             <Col className='info'>
-              <Divider type='vertical' height={31} padding_left={20} />
+              {!large && <Divider type='vertical' height={31} padding_left={20} />}
               <BuyButton
                 userId={userId}
                 username={username}
