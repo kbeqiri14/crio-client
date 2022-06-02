@@ -12,7 +12,6 @@ const Wrapper = styled('div')`
   padding: 20px;
   background-color: #202020;
   border-radius: 16px;
-  margin-right: 20px;
   &.small {
     height: 96px;
   }
