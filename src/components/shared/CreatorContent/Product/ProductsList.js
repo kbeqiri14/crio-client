@@ -37,7 +37,7 @@ const Block = memo(({ block, padding_top = 0 }) => (
 const BlockLarge = memo(({ block, right = false }) => {
   const item = block.shift();
   return (
-    <Row gutter={[22, 20]}>
+    <Row gutter={[22, 20]} padding_top={20}>
       {right && (
         <Col span={12}>
           <Block block={block} />
@@ -67,7 +67,7 @@ const Blocks = memo(({ productsList }) => {
     block.length > 4 ? (
       <BlockLarge key={i} block={block} right={i % 2 === 1} />
     ) : (
-      <Block key={i} block={block} />
+      <Block key={i} block={block} padding_top={20} />
     ),
   );
 });
