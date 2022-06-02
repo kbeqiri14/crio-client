@@ -55,10 +55,10 @@ export const MoreProductsSection = ({ videoInfo }) => {
       {data?.getMoreProducts?.userProducts?.length && (
         <UserMoreProductsWrapper>
           <Row>
-            <Col span={24}>
+            <Col span={24} padding_bottom={20}>
               <Row justify='space-between' align='middle'>
                 <Col>
-                  <Text level={2}>More by {videoInfo.username}</Text>
+                  <Text level={2}>More products by {videoInfo.username}</Text>
                 </Col>
                 <Col>
                   <Link to={`/profile/${videoInfo.username}`} onClick={hide}>
@@ -78,7 +78,7 @@ export const MoreProductsSection = ({ videoInfo }) => {
       {data?.getMoreProducts?.products?.length && (
         <MoreProductsWrapper>
           <Row>
-            <Col span={24}>
+            <Col span={24} padding_bottom={20}>
               <Text level={2}>Other marketplace products</Text>
             </Col>
             <Col>

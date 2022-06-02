@@ -9,7 +9,7 @@ import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { Button } from '@ui-kit';
 import { ReactComponent as LockIcon } from '@svgs/lock-buy.svg';
 
-const BuyButton = ({ userId, username, productId, price, accessibility, block }) => {
+const BuyButton = ({ userId, username, productId, price, limit, accessibility, block }) => {
   const { user } = useLoggedInUser();
   const { setSendEmailInfo } = useSendEmail();
   const { call, loading } = useAsyncFn(
@@ -32,8 +32,10 @@ const BuyButton = ({ userId, username, productId, price, accessibility, block })
       'Buy',
       'blue',
       async () => {
-        const { data } = await call();
-        window.location.href = data?.url;
+        if (limit) {
+          const { data } = await call();
+          window.location.href = data?.url;
+        }
       },
     ];
   }, [
@@ -43,6 +45,7 @@ const BuyButton = ({ userId, username, productId, price, accessibility, block })
     user.followings,
     productId,
     price,
+    limit,
     accessibility,
     setSendEmailInfo,
     call,
@@ -56,6 +59,7 @@ const BuyButton = ({ userId, username, productId, price, accessibility, block })
         fill_color={color}
         min_width={126}
         icon={icon}
+        disabled={limit === 0}
         loading={loading}
         onClick={onClick}
       >

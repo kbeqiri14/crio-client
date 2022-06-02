@@ -232,6 +232,7 @@ const Product = ({
                 username={username}
                 productId={productId}
                 price={price}
+                limit={limit}
                 accessibility={accessibility}
               />
             </Col>

@@ -40,7 +40,7 @@ export const BuyWidget = ({ userId, username, productId, price, limit, accessibi
               <Text level={2}>Availability:</Text>
             </Col>
             <Col>
-              <Text level={2}>{limit || 'Unlimited'}</Text>
+              <Text level={2}>{limit >= 0 ? limit : 'Unlimited'}</Text>
             </Col>
           </Row>
         </Col>
@@ -52,6 +52,7 @@ export const BuyWidget = ({ userId, username, productId, price, limit, accessibi
               username={username}
               productId={productId}
               price={price}
+              limit={limit}
               accessibility={accessibility}
             />
           </Col>
