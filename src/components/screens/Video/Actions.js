@@ -5,9 +5,9 @@ import { useMutation } from '@apollo/client';
 import { deleteProduct } from '@app/graphql/mutations/product.mutation';
 import { deleteArtwork } from '@app/graphql/mutations/artwork.mutation';
 import Confirmation from '@shared/Confirmation';
-import { Text } from '@ui-kit';
+import { Dropdown, Menu } from '@ui-kit';
 import { successToast } from '@ui-kit/Notification';
-import './styles.less';
+import { ReactComponent as SettingsIcon } from '@svgs/settings.svg';
 
 const Actions = (props) => {
   const [visible, setVisible] = useState(false);
@@ -45,21 +45,20 @@ const Actions = (props) => {
 
   return (
     <>
-      <div className='actions'>
-        <div className='action-button'>
-          <div className='dot' />
-          <div className='dot' />
-          <div className='dot' />
-        </div>
-        <div className='action-content'>
-          <Text level={3} onClick={handleEdit}>
-            Edit
-          </Text>
-          <Text level={3} onClick={showConfirmation}>
-            Delete
-          </Text>
-        </div>
-      </div>
+      <Dropdown
+        overlay={
+          <Menu>
+            <Menu.Item key='edit' onClick={handleEdit}>
+              Edit
+            </Menu.Item>
+            <Menu.Item key='delete' onClick={showConfirmation}>
+              Delete
+            </Menu.Item>
+          </Menu>
+        }
+      >
+        <SettingsIcon />
+      </Dropdown>
       {visible && (
         <Confirmation
           visible={visible}

@@ -31,7 +31,8 @@ const ProductWrapper = styled('div')`
     border-top-right-radius: 30px;
     object-fit: cover;
   }
-  .info {
+  .info,
+  .actions {
     opacity: 0;
     visibility: hidden;
     transition: visibility 0s, opacity 0.4s linear;
@@ -58,6 +59,19 @@ const ImageWrapper = styled('div')`
     width: inherit;
     height: inherit;
   }
+  .actions {
+    width: 330px;
+    height: 145px;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 103.09%);
+    border-bottom: 1px solid ${(props) => props.theme.colors.dark50};
+    position: absolute;
+    top: 101px;
+    svg {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+    }
+  }
   &.no-thumbnail {
     img {
       width: 256px;
@@ -76,6 +90,10 @@ const ImageWrapper = styled('div')`
         width: 451px;
         height: 341px;
       }
+    }
+    .actions {
+      width: 684px;
+      top: 492px;
     }
   }
   border-bottom: 1px solid ${(props) => props.theme.colors.dark50};
@@ -190,21 +208,23 @@ const Product = ({
     <>
       <ProductWrapper className={classes}>
         <LockState userId={userId} accessibility={accessibility} large={large} isProduct={true} />
-        {showActions && (
-          <Actions
-            username={username}
-            productId={productId}
-            title={title}
-            description={description}
-            price={price}
-            limit={limit}
-            accessibility={accessibility}
-            thumbnail={src}
-            isProduct={true}
-          />
-        )}
         <ImageWrapper className={imageClasses}>
           <img src={src} alt='product' onClick={showProduct} />
+          <div className='actions'>
+            {showActions && (
+              <Actions
+                username={username}
+                productId={productId}
+                title={title}
+                description={description}
+                price={price}
+                limit={limit}
+                accessibility={accessibility}
+                thumbnail={src}
+                isProduct={true}
+              />
+            )}
+          </div>
         </ImageWrapper>
         <Row justify='space-between' align='middle' padding_horizontal={20} padding_top={12}>
           <Col className='width'>
