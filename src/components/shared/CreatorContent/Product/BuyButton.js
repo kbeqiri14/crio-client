@@ -52,20 +52,18 @@ const BuyButton = ({ userId, username, productId, price, limit, accessibility, b
   ]);
 
   return (
-    <>
-      <Button
-        block={block}
-        type='primary'
-        fill_color={color}
-        min_width={126}
-        icon={icon}
-        disabled={limit === 0}
-        loading={loading}
-        onClick={onClick}
-      >
-        {label}
-      </Button>
-    </>
+    <Button
+      block={block}
+      type='primary'
+      fill_color={color}
+      min_width={126}
+      icon={icon}
+      disabled={limit === 0}
+      loading={loading}
+      onClick={onClick}
+    >
+      {label}
+    </Button>
   );
 };
 
