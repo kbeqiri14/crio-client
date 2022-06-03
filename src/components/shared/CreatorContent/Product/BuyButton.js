@@ -1,20 +1,22 @@
 import { memo, useMemo } from 'react';
-import axios from 'axios';
+import { useLazyQuery } from '@apollo/client';
 
-import { STRIPE_ROOT } from '@app/configs/environment';
 import { useSendEmail } from '@root/src/components/shared/SendEmailModal/Context';
 import history from '@app/configs/history';
-import useAsyncFn from '@app/hooks/useAsyncFn';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
+import { getStripeCheckoutSession } from '@app/graphql/queries/products.query';
 import { Button } from '@ui-kit';
 import { ReactComponent as LockIcon } from '@svgs/lock-buy.svg';
 
 const BuyButton = ({ userId, username, productId, price, limit, accessibility, block }) => {
   const { user } = useLoggedInUser();
   const { setSendEmailInfo } = useSendEmail();
-  const { call, loading } = useAsyncFn(
-    async () => await axios.post(`${STRIPE_ROOT}create-checkout-session`, { productId }),
-  );
+  const [getCheckoutSession, { loading }] = useLazyQuery(getStripeCheckoutSession, {
+    fetchPolicy: 'no-cache',
+    variables: { productId },
+    onCompleted: ({ getStripeCheckoutSession }) =>
+      (window.location.href = getStripeCheckoutSession.url),
+  });
 
   const [label, color, onClick, icon] = useMemo(() => {
     if (accessibility === 'subscriber_only') {
@@ -28,13 +30,15 @@ const BuyButton = ({ userId, username, productId, price, limit, accessibility, b
         return ['Email', 'green', () => setSendEmailInfo({ productId })];
       }
     }
+    if (user.boughtProducts?.includes(productId)) {
+      return ['Email', 'green', () => setSendEmailInfo({ productId })];
+    }
     return [
       'Buy',
       'blue',
       async () => {
         if (limit) {
-          const { data } = await call();
-          window.location.href = data?.url;
+          getCheckoutSession();
         }
       },
     ];
@@ -43,12 +47,13 @@ const BuyButton = ({ userId, username, productId, price, limit, accessibility, b
     username,
     user.isSubscribed,
     user.followings,
+    user.boughtProducts,
     productId,
     price,
     limit,
     accessibility,
     setSendEmailInfo,
-    call,
+    getCheckoutSession,
   ]);
 
   return (
@@ -58,7 +63,7 @@ const BuyButton = ({ userId, username, productId, price, limit, accessibility, b
       fill_color={color}
       min_width={126}
       icon={icon}
-      disabled={limit === 0}
+      disabled={limit === 0 && label === 'Buy'}
       loading={loading}
       onClick={onClick}
     >

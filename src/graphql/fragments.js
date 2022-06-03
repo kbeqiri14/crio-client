@@ -27,6 +27,7 @@ export const meFragment = gql`
     followingsCount
     isFollowing
     followings
+    boughtProducts
   }
 `;
 

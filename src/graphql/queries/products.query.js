@@ -53,3 +53,11 @@ export const getMoreProducts = gql`
   }
   ${productFragment}
 `;
+
+export const getStripeCheckoutSession = gql`
+  query getStripeCheckoutSession($productId: ID!) {
+    getStripeCheckoutSession(productId: $productId) {
+      url
+    }
+  }
+`;
