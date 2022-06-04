@@ -37,9 +37,9 @@ const BuyButton = ({ userId, username, productId, price, limit, accessibility, b
       'Buy',
       'blue',
       async () => {
-        if (limit) {
-          getCheckoutSession();
-        }
+        // if (limit) {
+        getCheckoutSession();
+        // }
       },
     ];
   }, [
@@ -50,7 +50,7 @@ const BuyButton = ({ userId, username, productId, price, limit, accessibility, b
     user.boughtProducts,
     productId,
     price,
-    limit,
+    // limit,
     accessibility,
     setSendEmailInfo,
     getCheckoutSession,
