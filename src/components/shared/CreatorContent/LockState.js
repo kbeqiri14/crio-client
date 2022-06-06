@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import history from '@app/configs/history';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
-import { CustomTooltip } from '@ui-kit/Tooltip';
+import { Text } from '@ui-kit';
 import lockImage from '@images/lock.png';
 import loadingVideo from '@images/loading-video.png';
 
@@ -14,6 +14,19 @@ const Wrapper = styled('div')`
   align-items: center;
   position: absolute;
   backdrop-filter: blur(8px);
+`;
+
+const Tooltip = styled('div')`
+  background-color: #202020;
+  max-width: 180px;
+  border-radius: 8px;
+  padding: 10px;
+  position: absolute;
+  top: 47px;
+  text-align: center;
+  &.product {
+    top: 5px;
+  }
 `;
 
 const LockState = ({ userId, accessibility, status, size = 'normal', large, isProduct }) => {
@@ -64,7 +77,7 @@ const LockState = ({ userId, accessibility, status, size = 'normal', large, isPr
       return ['Follow Creator to Gain Access', lockImage];
     }
     return [
-      'Subscribe and then Follow Creator to Gain Access',
+      'Subscribe and Follow Creator to Gain Access',
       lockImage,
       () => {
         setVideoInfo({});
@@ -74,11 +87,12 @@ const LockState = ({ userId, accessibility, status, size = 'normal', large, isPr
   }, [unavailable, user.isSubscribed, setVideoInfo]);
 
   return unavailable || isLocked ? (
-    <CustomTooltip className='overlay-process' description={tooltip}>
-      <Wrapper style={wrapper} onClick={onClick}>
-        <img alt='locked' src={icon} {...image} />
-      </Wrapper>
-    </CustomTooltip>
+    <Wrapper style={wrapper} onClick={onClick}>
+      <Tooltip className={`tooltip ${isProduct ? 'product' : ''}`}>
+        <Text level={1}>{tooltip}</Text>
+      </Tooltip>
+      <img alt='locked' src={icon} {...image} />
+    </Wrapper>
   ) : null;
 };
 

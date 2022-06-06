@@ -21,6 +21,9 @@ const ProductWrapper = styled('div')`
     .width {
       max-width: 500px;
     }
+    .tooltip {
+      top: 200px;
+    }
   }
   border: 1px solid ${(props) => props.theme.colors.dark50};
   box-sizing: border-box;
@@ -32,13 +35,15 @@ const ProductWrapper = styled('div')`
     object-fit: cover;
   }
   .info,
+  .tooltip,
   .actions {
     opacity: 0;
     visibility: hidden;
     transition: visibility 0s, opacity 0.2s linear;
   }
   &:hover {
-    .info {
+    .info,
+    .tooltip {
       opacity: 1;
       visibility: visible;
     }
