@@ -6,9 +6,10 @@ import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { Dropdown, Menu } from '@ui-kit';
 import { ReactComponent as ArrowIcon } from '@svgs/arrow.svg';
 
-const ProfileMenu = ({ user }) => {
-  const avatarUrl = useAvatarUrl(user?.providerType, user?.providerUserId, user?.avatar);
-  const goAccount = useCallback(() => history.push(`/profile/${user?.username}`), [user?.username]);
+const ProfileMenu = ({ user = {} }) => {
+  const avatarUrl = useAvatarUrl(user.providerType, user.providerUserId, user.avatar);
+  const goAccount = useCallback(() => history.push(`/profile/${user.username}`), [user.username]);
+  const goPayment = useCallback(() => history.push('/payment'), []);
 
   return (
     <Dropdown
@@ -17,6 +18,11 @@ const ProfileMenu = ({ user }) => {
           <Menu.Item key='marketplace' onClick={goAccount}>
             My Profile
           </Menu.Item>
+          {user.isCreator && (
+            <Menu.Item key='marketplace' onClick={goPayment}>
+              Payment
+            </Menu.Item>
+          )}
           <Menu.Item key='artwork' onClick={signOut}>
             Log Out
           </Menu.Item>

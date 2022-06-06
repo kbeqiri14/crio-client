@@ -1,9 +1,8 @@
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import { Checkbox } from 'antd';
 
-import { Col, Input, Radio, Row, Switch, Text, Title } from '@ui-kit';
+import { Checkbox, Col, Input, Radio, Row, Switch, Text, Title } from '@ui-kit';
 import CoverDragger from './CoverDragger';
 import ActionButtons from './ActionButtons';
 
@@ -42,7 +41,6 @@ const ProductForm = ({ state }) => {
 
   const disabled = useMemo(
     () =>
-      console.log(title?.trim(), price, +price > 0, isFree, limitVisible, limit) ||
       !(
         title?.trim() &&
         (+price > 0 || isFree) &&
@@ -102,7 +100,9 @@ const ProductForm = ({ state }) => {
       <Row align='center' gutter={[0, 8]}>
         <Col span={24} padding_bottom={32}>
           <Title level={1} align='center'>
-            {state?.productId ? 'Update Service' : 'Add new Service'}
+            {state?.productId
+              ? 'Update Digital Product or Service'
+              : 'Add New Digital Product or Service'}
           </Title>
         </Col>
         <Col span={24} align='start'>
@@ -116,7 +116,7 @@ const ProductForm = ({ state }) => {
             control={control}
             defaultValue={state?.title}
             render={({ field }) => (
-              <Input {...field} level={4} maxLength={50} placeholder='Write here' />
+              <Input {...field} level={4} maxLength={100} placeholder='Write here' />
             )}
           />
         </Col>

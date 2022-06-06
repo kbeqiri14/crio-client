@@ -33,6 +33,7 @@ export { default as Carousel } from './DataDisplay/Carousel';
   Data Entry
 */
 export { default as Input } from './DataEntry/Input';
+export { default as Checkbox } from './DataEntry/Checkbox';
 export { default as Radio } from './DataEntry/Radio';
 export { default as Switch } from './DataEntry/Switch';
 

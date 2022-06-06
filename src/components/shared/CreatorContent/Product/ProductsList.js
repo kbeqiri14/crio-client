@@ -74,7 +74,6 @@ const Blocks = memo(({ productsList }) => {
 
 const ProductsList = ({ productsList = [] }) => {
   const { pathname } = useLocation();
-  console.log(pathname);
   const isProfile = useMemo(() => pathname.includes('/profile'), [pathname]);
   const width = useClientWidth();
   if (width < 1438) {

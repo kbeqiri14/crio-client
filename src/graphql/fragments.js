@@ -87,3 +87,19 @@ export const artworkFragment = gql`
     status
   }
 `;
+
+export const paymentMethodFragment = gql`
+  fragment PaymentMethodAttributes on PaymentMethod {
+    id
+    firstName
+    lastName
+    email
+    dob
+    city
+    state
+    postalCode
+    address
+    bankAccount
+    bankRouting
+  }
+`;

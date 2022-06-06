@@ -27,6 +27,7 @@ import UploadProduct from '@screens/UploadProduct';
 import Upload from '@screens/Upload';
 import EditArtwork from '@screens/Video';
 import EditProduct from '@screens/EditProduct';
+import Payment from '@screens/Payment';
 
 export const AppRoutes = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
@@ -145,6 +146,12 @@ export const AppRoutes = () => {
               isAuthenticated={isAuthenticated}
               path='/edit-product'
               component={EditProduct}
+            />
+            <PrivateRoute
+              exact
+              isAuthenticated={isAuthenticated}
+              path='/payment'
+              component={Payment}
             />
           </Switch>
           {isVisible && <PresentationView />}
