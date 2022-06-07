@@ -28,6 +28,7 @@ export const meFragment = gql`
     isFollowing
     followings
     boughtProducts
+    hasStripeAccount
   }
 `;
 
@@ -85,21 +86,5 @@ export const artworkFragment = gql`
     description
     accessibility
     status
-  }
-`;
-
-export const paymentMethodFragment = gql`
-  fragment PaymentMethodAttributes on PaymentMethod {
-    id
-    firstName
-    lastName
-    email
-    dob
-    city
-    state
-    postalCode
-    address
-    bankAccount
-    bankRouting
   }
 `;

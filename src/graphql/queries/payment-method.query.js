@@ -1,11 +1,26 @@
 import { gql } from '@apollo/client';
-import { paymentMethodFragment } from '../fragments';
 
-export const getPaymentMethod = gql`
+export const getConnectAccount = gql`
   query {
-    getPaymentMethod {
-      ...PaymentMethodAttributes
+    getConnectAccount {
+      charges_enabled
+      details_submitted
     }
   }
-  ${paymentMethodFragment}
+`;
+
+export const getConnectOnboardingLink = gql`
+  query {
+    getConnectOnboardingLink {
+      url
+    }
+  }
+`;
+
+export const getConnectLoginLink = gql`
+  query {
+    getConnectLoginLink {
+      url
+    }
+  }
 `;

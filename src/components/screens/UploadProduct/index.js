@@ -8,10 +8,16 @@ const UploadProduct = () => {
   const { user } = useLoggedInUser();
 
   useEffect(() => {
-    if (!user.isCreator) {
-      history.push('/');
+    if (user.id) {
+      if (!user.isCreator) {
+        history.push('/');
+        return;
+      }
+      if (!user.hasStripeAccount) {
+        history.push('/payment');
+      }
     }
-  }, [user.isCreator]);
+  }, [user.id, user.isCreator, user.hasStripeAccount]);
 
   return <ProductDetails />;
 };
