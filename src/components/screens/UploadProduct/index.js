@@ -13,9 +13,9 @@ const UploadProduct = () => {
         history.push('/');
         return;
       }
-      if (!user.hasStripeAccount) {
-        history.push('/payment');
-      }
+      // if (!user.hasStripeAccount) {
+      //   history.push('/payment');
+      // }
     }
   }, [user.id, user.isCreator, user.hasStripeAccount]);
 
