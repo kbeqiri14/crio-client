@@ -28,7 +28,6 @@ export const meFragment = gql`
     isFollowing
     followings
     boughtProducts
-    hasStripeAccount
   }
 `;
 

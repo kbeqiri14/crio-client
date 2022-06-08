@@ -13,11 +13,8 @@ const UploadProduct = () => {
         history.push('/');
         return;
       }
-      // if (!user.hasStripeAccount) {
-      //   history.push('/payment');
-      // }
     }
-  }, [user.id, user.isCreator, user.hasStripeAccount]);
+  }, [user.id, user.isCreator]);
 
   return <ProductDetails />;
 };
