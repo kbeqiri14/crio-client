@@ -9,6 +9,7 @@ import {
   getConnectAccount,
   getConnectLoginLink,
   getConnectOnboardingLink,
+  deleteStripeAccount,
 } from '@app/graphql/queries/payment-method.query';
 import { Button, Col, Row, Title } from '@ui-kit';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
@@ -23,6 +24,7 @@ const Wrapper = styled('div')`
 const Payment = () => {
   const { user } = useLoggedInUser();
   const { refreshUrl } = useQueryParams();
+  const [requestDelete] = useLazyQuery(deleteStripeAccount);
   const { data: connectAccount, loading: gettingConnectAccount } = useQuery(getConnectAccount);
   const [requestConnectOnboardingLink, { loading: gettingConnectOnboardingLink }] = useLazyQuery(
     getConnectOnboardingLink,
@@ -66,7 +68,7 @@ const Payment = () => {
 
   return (
     <Wrapper>
-      <Row gutter={[0, 40]} justify='center'>
+      <Row gutter={[0, 40]}>
         {!connectAccount?.getConnectAccount?.charges_enabled && (
           <Col span={24}>
             <Title level={1}>
@@ -74,7 +76,7 @@ const Payment = () => {
             </Title>
           </Col>
         )}
-        <Col>
+        <Col span={24}>
           {connectAccount?.getConnectAccount?.details_submitted ? (
             <Button onClick={requestConnectLoginLink} loading={gettingConnectLoginLink}>
               Login Stripe
@@ -84,6 +86,11 @@ const Payment = () => {
               Onboarding your Stripe account
             </Button>
           )}
+        </Col>
+        <Col span={24}>
+          <Button onClick={requestDelete} loading={gettingConnectLoginLink}>
+            Retry
+          </Button>
         </Col>
       </Row>
     </Wrapper>

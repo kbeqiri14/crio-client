@@ -24,3 +24,9 @@ export const getConnectLoginLink = gql`
     }
   }
 `;
+
+export const deleteStripeAccount = gql`
+  query {
+    deleteStripeAccount
+  }
+`;
