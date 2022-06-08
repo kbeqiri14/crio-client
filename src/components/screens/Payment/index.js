@@ -10,7 +10,7 @@ import {
   getConnectLoginLink,
   getConnectOnboardingLink,
 } from '@app/graphql/queries/payment-method.query';
-import { Button, Text } from '@ui-kit';
+import { Button, Col, Row, Title } from '@ui-kit';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import { errorToast } from '@ui-kit/Notification';
 
@@ -66,18 +66,26 @@ const Payment = () => {
 
   return (
     <Wrapper>
-      {!connectAccount?.getConnectAccount?.charges_enabled && (
-        <Text>Your payouts are paused To resume payouts, update your payment details.</Text>
-      )}
-      {connectAccount?.getConnectAccount?.details_submitted ? (
-        <Button onClick={requestConnectLoginLink} loading={gettingConnectLoginLink}>
-          Login Stripe
-        </Button>
-      ) : (
-        <Button onClick={requestConnectOnboardingLink} loading={gettingConnectOnboardingLink}>
-          Onboarding your Stripe account
-        </Button>
-      )}
+      <Row gutter={[0, 40]} justify='center'>
+        {!connectAccount?.getConnectAccount?.charges_enabled && (
+          <Col span={24}>
+            <Title level={1}>
+              Your payouts are paused. To resume payouts, update your payment details.
+            </Title>
+          </Col>
+        )}
+        <Col>
+          {connectAccount?.getConnectAccount?.details_submitted ? (
+            <Button onClick={requestConnectLoginLink} loading={gettingConnectLoginLink}>
+              Login Stripe
+            </Button>
+          ) : (
+            <Button onClick={requestConnectOnboardingLink} loading={gettingConnectOnboardingLink}>
+              Onboarding your Stripe account
+            </Button>
+          )}
+        </Col>
+      </Row>
     </Wrapper>
   );
 };
