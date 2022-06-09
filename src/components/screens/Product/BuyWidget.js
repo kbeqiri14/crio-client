@@ -39,7 +39,7 @@ export const BuyWidget = ({ userId, username, productId, price, limit, accessibi
               <Text level={2}>Availability:</Text>
             </Col>
             <Col>
-              <Text level={2}>{limit && limit >= 0 ? limit : 'Unlimited'}</Text>
+              <Text level={2}>{limit != null && limit >= 0 ? limit : 'Unlimited'}</Text>
             </Col>
           </Row>
         </Col>

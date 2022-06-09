@@ -21,6 +21,18 @@ const Wrapper = styled('div')`
     border-radius: 30px;
     object-fit: cover;
   }
+  .actions {
+    width: 332px;
+    position: absolute;
+    svg {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s, opacity 0.4s linear;
+  }
   .info {
     position: absolute;
     background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 103.09%);
@@ -119,20 +131,22 @@ const Artwork = ({
   return (
     <>
       <Wrapper className={isLocked ? 'is-locked' : ''}>
+        <div className='actions' onClick={() => !showActions && showArtwork()}>
+          {showActions && (
+            <Actions
+              username={username}
+              artworkId={artworkId}
+              videoUri={videoUri}
+              title={title}
+              description={description}
+              accessibility={accessibility}
+            />
+          )}
+        </div>
         <div className='info' onClick={showArtwork}>
           <Text level={4}>{title}</Text>
         </div>
         <LockState userId={userId} accessibility={accessibility} status={status} />
-        {showActions && (
-          <Actions
-            username={username}
-            artworkId={artworkId}
-            videoUri={videoUri}
-            title={title}
-            description={description}
-            accessibility={accessibility}
-          />
-        )}
         <img src={src} alt='artwork' width={330} height={330} onClick={showArtwork} />
       </Wrapper>
       <Link to={`/profile/${username}`}>
