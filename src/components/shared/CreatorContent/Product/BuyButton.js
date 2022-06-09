@@ -6,6 +6,7 @@ import history from '@app/configs/history';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { getStripeCheckoutSession } from '@app/graphql/queries/products.query';
 import { Button } from '@ui-kit';
+import { errorToast } from '@ui-kit/Notification';
 import { ReactComponent as LockIcon } from '@svgs/lock-buy.svg';
 
 const BuyButton = ({ userId, username, productId, price, limit, accessibility, block }) => {
@@ -16,6 +17,7 @@ const BuyButton = ({ userId, username, productId, price, limit, accessibility, b
     variables: { productId },
     onCompleted: ({ getStripeCheckoutSession }) =>
       (window.location.href = getStripeCheckoutSession.url),
+    onError: (e) => errorToast(e?.message),
   });
 
   const [label, color, onClick, icon] = useMemo(() => {

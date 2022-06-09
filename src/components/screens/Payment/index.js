@@ -24,7 +24,9 @@ const Wrapper = styled('div')`
 const Payment = () => {
   const { user } = useLoggedInUser();
   const { refreshUrl } = useQueryParams();
-  const [requestDelete] = useLazyQuery(deleteStripeAccount);
+  const [requestDelete, { loading }] = useLazyQuery(deleteStripeAccount, {
+    onCompleted: () => (window.location.href = '/payment'),
+  });
   const { data: connectAccount, loading: gettingConnectAccount } = useQuery(getConnectAccount);
   const [requestConnectOnboardingLink, { loading: gettingConnectOnboardingLink }] = useLazyQuery(
     getConnectOnboardingLink,
@@ -88,7 +90,7 @@ const Payment = () => {
           )}
         </Col>
         <Col span={24}>
-          <Button onClick={requestDelete} loading={gettingConnectLoginLink}>
+          <Button onClick={requestDelete} loading={loading}>
             Retry
           </Button>
         </Col>
