@@ -2,7 +2,7 @@ import { memo, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import history from '@app/configs/history';
-import { Button, Col, Row } from '@ui-kit';
+import { Button, Col, Row, Title } from '@ui-kit';
 import logo from '@images/crio-logo.svg';
 
 const getTabItems = (showPricing) => {
@@ -33,14 +33,19 @@ const Menu = ({ user }) => {
   }, [pathname]);
 
   return (
-    <Row gutter={20}>
+    <Row justify='center' gutter={12} className='items-center'>
       <Col>
         <Link to='/'>
-          <img alt='crio app logo' src={logo} width={68} height={40} />
+          <img alt='crio app logo' src={logo} width={68} />
+        </Link>
+      </Col>
+      <Col>
+        <Link to='/'>
+          <Title level={1}>Crio</Title>
         </Link>
       </Col>
       {menuItems.map((menu) => (
-        <Col key={menu.id}>
+        <Col key={menu.id} margin_left={8}>
           <Button type='tab' active={activeItem === menu.id} onClick={goTo(menu.path)}>
             {menu.title}
           </Button>

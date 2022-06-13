@@ -11,14 +11,18 @@ import {
   getConnectOnboardingLink,
   deleteStripeAccount,
 } from '@app/graphql/queries/payment-method.query';
-import { Button, Col, Row, Title } from '@ui-kit';
+import { Button, Col, Row, Text, Title } from '@ui-kit';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import { errorToast } from '@ui-kit/Notification';
+import card from '@images/card.png';
 
 const Wrapper = styled('div')`
   display: flex;
   justify-content: center;
   padding-top: 100px;
+  > div {
+    max-width: 1171px;
+  }
 `;
 
 const Payment = () => {
@@ -70,29 +74,53 @@ const Payment = () => {
 
   return (
     <Wrapper>
-      <Row gutter={[0, 40]}>
-        {!connectAccount?.getConnectAccount?.charges_enabled && (
-          <Col span={24}>
-            <Title level={1}>
-              Your payouts are paused. To resume payouts, update your payment details.
-            </Title>
-          </Col>
-        )}
-        <Col span={24}>
-          {connectAccount?.getConnectAccount?.details_submitted ? (
-            <Button onClick={requestConnectLoginLink} loading={gettingConnectLoginLink}>
-              Login Stripe
-            </Button>
-          ) : (
-            <Button onClick={requestConnectOnboardingLink} loading={gettingConnectOnboardingLink}>
-              Onboarding your Stripe account
-            </Button>
-          )}
+      <Row>
+        <Col span={12}>
+          <Row gutter={[0, 40]}>
+            <Col>
+              <Title level={4}>Invite New Creators and Start Earning More with Crio</Title>
+            </Col>
+            <Col>
+              <Text level={4}>
+                For every creator that signs-up, you will get a payout equal to 5% of each of their
+                earnings for as long as they are Creators on Crio!{' '}
+              </Text>
+            </Col>
+            {!connectAccount?.getConnectAccount?.charges_enabled && (
+              <Col span={24}>
+                <Title level={1}>
+                  Your payouts are paused. To resume payouts, update your payment details.
+                </Title>
+              </Col>
+            )}
+            <Col span={24}>
+              {connectAccount?.getConnectAccount?.details_submitted ? (
+                <Button
+                  type='primary'
+                  onClick={requestConnectLoginLink}
+                  loading={gettingConnectLoginLink}
+                >
+                  LOGIN STRIPE
+                </Button>
+              ) : (
+                <Button
+                  type='primary'
+                  onClick={requestConnectOnboardingLink}
+                  loading={gettingConnectOnboardingLink}
+                >
+                  ONBOARDING YOUR STRIPE ACCOUNT
+                </Button>
+              )}
+            </Col>
+            <Col span={24}>
+              <Button onClick={requestDelete} loading={loading}>
+                RETRY
+              </Button>
+            </Col>
+          </Row>
         </Col>
-        <Col span={24}>
-          <Button onClick={requestDelete} loading={loading}>
-            Retry
-          </Button>
+        <Col span={10} offset={2}>
+          <img alt='locked' src={card} />
         </Col>
       </Row>
     </Wrapper>

@@ -14,7 +14,6 @@ const Button = styled(antButton)`
   background: none;
   border: 1px solid ${(props) => props.theme.colors.primary};
   color: ${(props) => props.theme.colors.primary};
-  box-shadow: 0px 4px 5px rgba(12, 17, 36, 0.4);
 
   :hover {
     background: #202020; // Narine dark25
