@@ -78,21 +78,14 @@ const Payment = () => {
         <Col span={12}>
           <Row gutter={[0, 40]}>
             <Col>
-              <Title level={4}>Invite New Creators and Start Earning More with Crio</Title>
+              <Title level={4}>Access a complete payments platform with simple</Title>
             </Col>
-            <Col>
+            <Col span={24}>
               <Text level={4}>
-                For every creator that signs-up, you will get a payout equal to 5% of each of their
-                earnings for as long as they are Creators on Crio!{' '}
+                We are using STRIPE online payment processing. You can access your earnings when you
+                need them most and get paid, all from the Dashboard.
               </Text>
             </Col>
-            {!connectAccount?.getConnectAccount?.charges_enabled && (
-              <Col span={24}>
-                <Title level={1}>
-                  Your payouts are paused. To resume payouts, update your payment details.
-                </Title>
-              </Col>
-            )}
             <Col span={24}>
               {connectAccount?.getConnectAccount?.details_submitted ? (
                 <Button
