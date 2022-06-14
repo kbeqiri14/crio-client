@@ -113,23 +113,27 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
             )}
           </Col>
         )}
-        <Col span={videoInfo.isProduct ? 17 : 24}>
-          <Text level={4} color='dark25'>
-            <div dangerouslySetInnerHTML={{ __html: urlify(videoInfo.description) }} />
-          </Text>
+        <Col span={24}>
+          <Row justify='space-between'>
+            <Col max_width={videoInfo.isProduct ? 722 : undefined}>
+              <Text level={4} color='dark25'>
+                <div dangerouslySetInnerHTML={{ __html: urlify(videoInfo.description) }} />
+              </Text>
+            </Col>
+            {videoInfo.isProduct && (
+              <Col>
+                <BuyWidget
+                  userId={videoInfo.userId}
+                  username={videoInfo.username}
+                  productId={videoInfo.productId}
+                  price={videoInfo.price}
+                  limit={videoInfo.limit}
+                  accessibility={videoInfo.accessibility}
+                />
+              </Col>
+            )}
+          </Row>
         </Col>
-        {videoInfo.isProduct && (
-          <Col offset={1} span={6}>
-            <BuyWidget
-              userId={videoInfo.userId}
-              username={videoInfo.username}
-              productId={videoInfo.productId}
-              price={videoInfo.price}
-              limit={videoInfo.limit}
-              accessibility={videoInfo.accessibility}
-            />
-          </Col>
-        )}
       </Row>
     </Wrapper>
   );
