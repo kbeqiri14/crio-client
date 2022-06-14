@@ -9,7 +9,7 @@ import ActionButtons from '@shared/ActionButtons';
 import { errorToast, successToast } from '@ui-kit/Notification';
 import { formItemContent } from '@utils/upload.helper';
 
-const ProductActionButtons = ({ state, image, disabled, handleSubmit }) => {
+const ProductActionButtons = ({ state, image, disabled, handleSubmit, fillColor = 'blue' }) => {
   const buttonLabel = useMemo(() => (state?.productId ? 'UPDATE' : 'PUBLISH'), [state?.productId]);
   const { userId, redirect } = useRedirectToProfile();
 
@@ -81,6 +81,7 @@ const ProductActionButtons = ({ state, image, disabled, handleSubmit }) => {
 
   return (
     <ActionButtons
+      fillColor={fillColor}
       saveText={buttonLabel}
       loading={onPublish.loading || creating || updating}
       disabled={disabled}

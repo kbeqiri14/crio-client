@@ -24,6 +24,7 @@ const Confirmation = ({
       {title}
     </Title>
     <ActionButtons
+      fillColor='pink'
       cancelText={cancelText}
       saveText={confirmText}
       loading={loading}

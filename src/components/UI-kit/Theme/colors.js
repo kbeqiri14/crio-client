@@ -15,9 +15,9 @@ const error = {
 };
 
 const gradient = {
-  gradient_green: 'linear-gradient(180deg, #11CD5C 0%, #14995A 100%)',
+  gradient_green: 'linear-gradient(180deg, #0FBE6B 0%, #069852 100%)',
   gradient_blue: 'linear-gradient(151.27deg, #0369FF 13.55%, #0B47FD 80.64%)',
-  gradient_pink: 'linear-gradient(183.71deg, #F99585 2.59%, #F24B77 96.5%)',
+  gradient_pink: 'linear-gradient(183.71deg, #F37899 2.59%, #F24B77 96.5%)',
 };
 
 const colors = {
