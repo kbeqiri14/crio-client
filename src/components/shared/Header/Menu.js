@@ -2,7 +2,7 @@ import { memo, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import history from '@app/configs/history';
-import { Button, Col, Row, Title } from '@ui-kit';
+import { Button, Col, Row } from '@ui-kit';
 import logo from '@images/crio-logo.svg';
 
 const getTabItems = (showPricing, isSubscribed) => {
@@ -43,8 +43,8 @@ const Menu = ({ user }) => {
         </Link>
       </Col>
       <Col>
-        <Link to='/'>
-          <Title level={1}>Crio</Title>
+        <Link to='/' className='logo-name'>
+          Crio
         </Link>
       </Col>
       {menuItems.map((menu) => (

@@ -17,6 +17,20 @@ const Wrapper = styled('div')`
     min-width: 1040px;
     max-width: 1040px;
   }
+  .lock {
+    .tooltip {
+      opacity: 0;
+      visibility: hidden;
+      transition: visibility 0s, opacity 0.2s linear;
+      top: 190px;
+    }
+    &:hover {
+      .tooltip {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
 `;
 
 export const Content = ({ videoInfo, videoUri, isLocked }) => {
@@ -61,18 +75,20 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
         </Col>
         {isLocked ? (
           <Col span={24}>
-            <LockState
-              userId={videoInfo.userId}
-              accessibility={videoInfo.accessibility}
-              size='lg'
-            />
-            <img
-              src={videoInfo.isProduct ? videoInfo.thumbnail : videoInfo.thumbnailUri}
-              alt='artwork'
-              className='border-radius-16 fit-cover'
-              width='100%'
-              height={638}
-            />
+            <div className='lock'>
+              <LockState
+                userId={videoInfo.userId}
+                accessibility={videoInfo.accessibility}
+                size='lg'
+              />
+              <img
+                src={videoInfo.isProduct ? videoInfo.thumbnail : videoInfo.thumbnailUri}
+                alt='artwork'
+                className='border-radius-16 fit-cover'
+                width='100%'
+                height={638}
+              />
+            </div>
           </Col>
         ) : (
           <Col span={24}>
@@ -97,13 +113,13 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
             )}
           </Col>
         )}
-        <Col span={videoInfo.isProduct ? 12 : 24}>
+        <Col span={videoInfo.isProduct ? 17 : 24}>
           <Text level={4} color='dark25'>
             <div dangerouslySetInnerHTML={{ __html: urlify(videoInfo.description) }} />
           </Text>
         </Col>
         {videoInfo.isProduct && (
-          <Col span={12}>
+          <Col offset={1} span={6}>
             <BuyWidget
               userId={videoInfo.userId}
               username={videoInfo.username}
