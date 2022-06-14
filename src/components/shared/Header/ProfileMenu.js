@@ -1,6 +1,6 @@
 import { memo, useCallback } from 'react';
 
-import history from '@app/configs/history';
+import history from '@configs/history';
 import { signOut } from '@app/auth';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { Dropdown, Menu } from '@ui-kit';

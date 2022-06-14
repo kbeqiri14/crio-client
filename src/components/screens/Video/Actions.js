@@ -1,5 +1,5 @@
 import { memo, useCallback, useMemo, useState } from 'react';
-import history from '@app/configs/history';
+import history from '@configs/history';
 import { useMutation } from '@apollo/client';
 
 import { deleteProduct } from '@app/graphql/mutations/product.mutation';

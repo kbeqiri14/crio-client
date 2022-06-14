@@ -1,6 +1,6 @@
 import { memo, useCallback, useMemo } from 'react';
 
-import history from '@app/configs/history';
+import history from '@configs/history';
 import { ReactComponent as UploadProductIcon } from '@svgs/products-empty.svg';
 import { ReactComponent as UploadArtworkIcon } from '@svgs/fallowing-empty.svg';
 import { ReactComponent as FallowingEmptyIcon } from '@svgs/fallowing-empty.svg';

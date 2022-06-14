@@ -1,0 +1,134 @@
+import { memo, useCallback } from 'react';
+import styled from 'styled-components';
+
+import history from '@configs/history';
+import { STRIPE_PAYMENT_URL } from '@configs/environment';
+import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
+import { Button } from '@ui-kit';
+import { Col, Divider, Row, Text, Title } from '@ui-kit';
+import { CustomTooltip } from '@ui-kit/Tooltip';
+import { warningToast } from '@ui-kit/Notification';
+import { ReactComponent as CheckMark } from '@svgs/check.svg';
+import { ReactComponent as RecommendIcon } from '@svgs/recommend.svg';
+
+const Wrapper = styled('div')`
+  height: calc(100vh - 140px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .card {
+    width: 410px;
+    height: 354px;
+    background: #0f0e16;
+    border-radius: 27px;
+    padding: 40px;
+    &.pro {
+      height: 530px;
+    }
+  }
+  .recommend {
+    position: absolute;
+    right: 10px;
+  }
+`;
+
+const perksListFree = ['Buy publicly available products', 'Watch publicly available content'];
+const perksListPro = [
+  'Ability to follow any creator',
+  'Access to all free products from creators you follow',
+  'Access to all premium content from all creators you follow',
+];
+
+const Item = ({ item }) => (
+  <Row gutter={16} className='items-center'>
+    <Col>
+      <CheckMark />
+    </Col>
+    <Col max_width={290}>
+      <Text level={3}>{item}</Text>
+    </Col>
+  </Row>
+);
+
+const Pricing = () => {
+  const { user } = useLoggedInUser();
+
+  const handleExploreMore = useCallback(() => history.push('/'), []);
+  const handleGetStarted = useCallback(() => {
+    if (user?.id) {
+      window.open(STRIPE_PAYMENT_URL, '_blank', 'noopener,noreferrer,nofollow');
+    } else {
+      warningToast('Warning', 'Please sign in to get started.');
+    }
+  }, [user?.id]);
+
+  return (
+    <Wrapper>
+      <Row gutter={20} className='self-center'>
+        <Col className='self-center'>
+          <Row gutter={[0, 16]} className='card'>
+            <Col span={24}>
+              <Title level={1}>Free</Title>
+            </Col>
+            <Col span={24} padding_bottom={10}>
+              <Title level={5}>
+                $0<Text level={3}> / month</Text>
+              </Title>
+            </Col>
+            {perksListFree.map((item, index) => (
+              <Col key={index} span={24} padding_top={4}>
+                <Item item={item} />
+              </Col>
+            ))}
+            <Col span={24}>
+              <Button block type='link' onClick={handleExploreMore}>
+                Explore More
+              </Button>
+            </Col>
+          </Row>
+        </Col>
+        <Col>
+          <RecommendIcon className='recommend' />
+          <Row gutter={[0, 16]} className='card pro'>
+            <Col span={24}>
+              <Title level={1}>Pro</Title>
+            </Col>
+            <Col span={24} padding_bottom={10}>
+              <Title level={5}>
+                $7<Text level={3}> / month</Text>
+              </Title>
+            </Col>
+            {perksListPro.map((item, index) => (
+              <Col key={index} span={24} padding_top={4}>
+                <Item item={item} />
+              </Col>
+            ))}
+            <Col span={24} padding_top={8}>
+              <Divider />
+            </Col>
+            <Col align='center' padding_top={8}>
+              <Text level={1} color='dark25'>
+                Crio shares a portion of your subscription fee with all creators you follow to
+                support their work and efforts!
+              </Text>
+            </Col>
+            <Col span={24} padding_top={8}>
+              <CustomTooltip
+                placement='right'
+                className='default-overlay'
+                title='Warning'
+                description='Please, use the email address attached to your profile'
+              >
+                <Button block type='primary' fill_color='green' onClick={handleGetStarted}>
+                  GET STARTED
+                </Button>
+              </CustomTooltip>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+    </Wrapper>
+  );
+};
+
+export default memo(Pricing);

@@ -1,6 +1,6 @@
 import { memo } from 'react';
 
-import history from '@app/configs/history';
+import history from '@configs/history';
 import { Button, Dropdown, Menu } from '@ui-kit';
 
 const goTo = (path) => () => history.push(path);

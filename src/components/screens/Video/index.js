@@ -1,7 +1,7 @@
 import { memo, useCallback, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import history from '@app/configs/history';
+import history from '@configs/history';
 import { successToast } from '@ui-kit/Notification';
 import VideoDetails from './Details';
 

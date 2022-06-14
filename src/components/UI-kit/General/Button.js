@@ -74,7 +74,7 @@ const Button = styled(antButton)`
       background-color: transparent !important;
     }
     ${(props) =>
-      props?.active &&
+      props?.active === 'true' &&
       css`
         color: ${(props) => props.theme.colors.white} !important;
         background-color: ${(props) => props.theme.colors.dark50} !important;

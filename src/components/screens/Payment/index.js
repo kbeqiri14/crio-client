@@ -2,7 +2,7 @@ import { memo, useEffect } from 'react';
 import styled from 'styled-components';
 import { useQuery, useLazyQuery } from '@apollo/client';
 
-import history from '@app/configs/history';
+import history from '@configs/history';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useQueryParams from '@app/hooks/useQueryParams';
 import {

@@ -1,7 +1,7 @@
 import { memo, useMemo } from 'react';
 import styled from 'styled-components';
 
-import history from '@app/configs/history';
+import history from '@configs/history';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { Text } from '@ui-kit';

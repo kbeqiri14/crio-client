@@ -1,6 +1,7 @@
 import { memo, useCallback, useState } from 'react';
 import { Col, Row } from 'antd';
 import { useMutation } from '@apollo/client';
+import styled from 'styled-components';
 
 import { cancelSubscription } from '@app/graphql/mutations/user.mutation';
 import { me } from '@app/graphql/queries/users.query';
@@ -8,7 +9,22 @@ import Confirmation from '@shared/Confirmation';
 import { Title, Text } from '@ui-kit';
 import { errorToast, successToast } from '@ui-kit/Notification';
 
-export const CancelSubscription = () => {
+const Wrapper = styled('div')`
+  text-align: center;
+  padding: 270px 0;
+  max-width: 477px;
+  margin: auto;
+  .info {
+    padding: 47px 0;
+    background: #0f0e16;
+    border-radius: 27px;
+    .desc {
+      width: 309px;
+    }
+  }
+`;
+
+const CancelSubscription = () => {
   const [visible, setVisible] = useState(false);
   const show = useCallback(() => setVisible(true), []);
   const hide = useCallback(() => setVisible(false), []);
@@ -42,13 +58,8 @@ export const CancelSubscription = () => {
   });
 
   return (
-    <div>
-      <Row
-        justify='center'
-        align='center'
-        gutter={[0, 21]}
-        className='cr-pricing__cancel-subscription'
-      >
+    <Wrapper>
+      <Row justify='center' align='center' gutter={[0, 21]}>
         <Col span={24}>
           <Row justify='center' align='center' gutter={[0, 19]} className='info'>
             <Col span={24}>
@@ -79,7 +90,7 @@ export const CancelSubscription = () => {
           onCancel={hide}
         />
       )}
-    </div>
+    </Wrapper>
   );
 };
 

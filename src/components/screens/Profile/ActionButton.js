@@ -4,7 +4,7 @@ import { useMutation } from '@apollo/client';
 import { getUser, me } from '@app/graphql/queries/users.query';
 import { createFollowing } from '@app/graphql/mutations/user.mutation';
 
-import history from '@app/configs/history';
+import history from '@configs/history';
 import { Button } from '@ui-kit';
 import { ReactComponent as UnFollowIcon } from '@svgs/unfollow.svg';
 import { ReactComponent as FollowIcon } from '@svgs/follow.svg';

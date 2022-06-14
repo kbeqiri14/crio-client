@@ -1,6 +1,6 @@
 import { memo, useEffect } from 'react';
 
-import history from '@app/configs/history';
+import history from '@configs/history';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import ProductDetails from '@root/src/components/screens/EditProduct/ProductForm';
 

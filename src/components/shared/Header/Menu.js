@@ -1,7 +1,7 @@
 import { memo, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-import history from '@app/configs/history';
+import history from '@configs/history';
 import { Button, Col, Row } from '@ui-kit';
 import logo from '@images/crio-logo.svg';
 
@@ -49,7 +49,7 @@ const Menu = ({ user }) => {
       </Col>
       {menuItems.map((menu) => (
         <Col key={menu.id} margin_left={8}>
-          <Button type='tab' active={activeItem === menu.id} onClick={goTo(menu.path)}>
+          <Button type='tab' active={`${activeItem === menu.id}`} onClick={goTo(menu.path)}>
             {menu.title}
           </Button>
         </Col>

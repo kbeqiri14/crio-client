@@ -2,7 +2,7 @@ import { memo, useMemo } from 'react';
 import { useLazyQuery } from '@apollo/client';
 
 import { useSendEmail } from '@root/src/components/shared/SendEmailModal/Context';
-import history from '@app/configs/history';
+import history from '@configs/history';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { getStripeCheckoutSession } from '@app/graphql/queries/products.query';
 import { Button } from '@ui-kit';

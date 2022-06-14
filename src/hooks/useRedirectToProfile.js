@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import history from '@app/configs/history';
+import history from '@configs/history';
 import { useLoggedInUser } from './useLoggedInUser';
 
 const useRedirectToProfile = () => {

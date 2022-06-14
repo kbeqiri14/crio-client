@@ -3,7 +3,7 @@ import { memo, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 
 import { signupErrorVar } from '@configs/client-cache';
-import history from '@app/configs/history';
+import history from '@configs/history';
 import { useCurrentUser } from '@app/auth/hooks';
 import { useQueryParams } from '@app/hooks/useRouter';
 import { signIn } from '@app/graphql/mutations/user.mutation';
