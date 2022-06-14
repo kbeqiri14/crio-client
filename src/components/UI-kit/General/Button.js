@@ -83,6 +83,11 @@ const Button = styled(antButton)`
           background-color: ${(props) => props.theme.colors.dark50} !important;
         }
       `}
+    &.ant-btn:active,
+    &.ant-btn:focus {
+      color: ${(props) => props.theme.colors.white} !important;
+      background-color: ${(props) => props.theme.colors.dark50} !important;
+    }
   }
 
   ///************** PRIMARY BUTTON **************///

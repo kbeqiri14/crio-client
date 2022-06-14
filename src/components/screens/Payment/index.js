@@ -78,12 +78,12 @@ const Payment = () => {
         <Col span={12}>
           <Row gutter={[0, 40]}>
             <Col>
-              <Title level={4}>Access a complete payments platform with simple</Title>
+              <Title level={4}>Start earning instantly using Crio's simple payments platform</Title>
             </Col>
             <Col span={24}>
               <Text level={4}>
-                We are using STRIPE online payment processing. You can access your earnings when you
-                need them most and get paid, all from the Dashboard.
+                We are using STRIPE online paments proccessing. You can access your earnings when
+                you need them most and get paid, all from the Dashboard
               </Text>
             </Col>
             <Col span={24}>
@@ -93,7 +93,7 @@ const Payment = () => {
                   onClick={requestConnectLoginLink}
                   loading={gettingConnectLoginLink}
                 >
-                  LOGIN STRIPE
+                  LOG IN STRIPE
                 </Button>
               ) : (
                 <Button

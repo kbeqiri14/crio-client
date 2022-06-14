@@ -5,7 +5,7 @@ import history from '@app/configs/history';
 import { Button, Col, Row, Title } from '@ui-kit';
 import logo from '@images/crio-logo.svg';
 
-const getTabItems = (showPricing) => {
+const getTabItems = (showPricing, isSubscribed) => {
   const items = [
     {
       id: 'explore',
@@ -16,7 +16,7 @@ const getTabItems = (showPricing) => {
   if (showPricing) {
     items.push({
       id: 'pricing',
-      title: 'Pricing',
+      title: isSubscribed ? 'Pro account' : 'Pricing',
       path: '/pricing',
     });
   }
@@ -26,7 +26,10 @@ const goTo = (path) => () => history.push(path);
 
 const Menu = ({ user }) => {
   const { pathname } = useLocation();
-  const menuItems = useMemo(() => getTabItems(!user.id || user?.isFan), [user?.id, user?.isFan]);
+  const menuItems = useMemo(
+    () => getTabItems(!user.isCreator, user.isSubscribed),
+    [user.isCreator, user.isSubscribed],
+  );
   const activeItem = useMemo(() => {
     const tab = pathname.split('/').slice(-1)[0];
     return tab === '' || tab === 'artworks' ? 'explore' : tab;
