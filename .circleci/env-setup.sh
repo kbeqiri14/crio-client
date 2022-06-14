@@ -17,7 +17,7 @@ then
     echo "export REACT_APP_COGNITO_APP_CLIENT_ID=419fbu51vuhjgjbua2ivpkjkat"
     echo "export REACT_APP_COGNITO_USER_POOL_ID=us-east-1_1IAZmqxze"
     echo "export REACT_APP_COGNITO_DOMAIN=crio-development-transferred-auth.auth.us-east-1.amazoncognito.com"
-    echo "export REACT_APP_STRIPE_PAYMENT_URL=https://buy.stripe.com/test_aEU7w2ek11RycpO144"
+    echo "export REACT_APP_STRIPE_PAYMENT_URL=https://buy.stripe.com/test_6oEcQm1xf0NufC07st"
     echo "export REACT_APP_GTAG=UA-215522581-1"
   } >> "$BASH_ENV"
 elif [ "${CIRCLE_BRANCH}" == "staging" ]
@@ -31,7 +31,7 @@ then
     echo "export REACT_APP_COGNITO_APP_CLIENT_ID=49dblm50ird6105qvaaj8ie9bd"
     echo "export REACT_APP_COGNITO_USER_POOL_ID=us-west-2_rIf40f9kz"
     echo "export REACT_APP_COGNITO_DOMAIN=crio-in-staging-auth.auth.us-west-2.amazoncognito.com"
-    echo "export REACT_APP_STRIPE_PAYMENT_URL=https://buy.stripe.com/test_aEU7w2ek11RycpO144"
+    echo "export REACT_APP_STRIPE_PAYMENT_URL=https://buy.stripe.com/test_6oEcQm1xf0NufC07st"
     echo "export REACT_APP_GTAG=UA-215522581-1"
   } >> "$BASH_ENV"
 elif [ "${CIRCLE_BRANCH}" == "master" ]
