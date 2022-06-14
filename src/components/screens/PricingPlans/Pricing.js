@@ -16,19 +16,24 @@ const Wrapper = styled('div')`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 20px;
   .card {
-    width: 410px;
-    height: 354px;
+    max-width: 410px;
+    min-height: 354px;
     background: #0f0e16;
     border-radius: 27px;
     padding: 40px;
     &.pro {
-      height: 530px;
+      min-height: 530px;
     }
   }
   .recommend {
     position: absolute;
     right: 10px;
+  }
+  @media (max-width: 767.98px) {
+    height: 100%;
+    padding: 80px 20px;
   }
 `;
 
@@ -64,7 +69,7 @@ const Pricing = () => {
 
   return (
     <Wrapper>
-      <Row gutter={20} className='self-center'>
+      <Row justify='center' gutter={[20, 20]} className='self-center'>
         <Col className='self-center'>
           <Row gutter={[0, 16]} className='card'>
             <Col span={24}>
@@ -76,11 +81,11 @@ const Pricing = () => {
               </Title>
             </Col>
             {perksListFree.map((item, index) => (
-              <Col key={index} span={24} padding_top={4}>
+              <Col key={index} span={24} padding_top={1}>
                 <Item item={item} />
               </Col>
             ))}
-            <Col span={24}>
+            <Col span={24} padding_top={46}>
               <Button block type='link' onClick={handleExploreMore}>
                 Explore More
               </Button>
@@ -99,7 +104,7 @@ const Pricing = () => {
               </Title>
             </Col>
             {perksListPro.map((item, index) => (
-              <Col key={index} span={24} padding_top={4}>
+              <Col key={index} span={24} padding_top={1}>
                 <Item item={item} />
               </Col>
             ))}
