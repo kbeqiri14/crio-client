@@ -1,7 +1,10 @@
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import styled from 'styled-components';
+import { useQuery } from '@apollo/client';
 
+import history from '@configs/history';
+import { getConnectAccount } from '@app/graphql/queries/payment-method.query';
 import { Checkbox, Col, Input, Radio, Row, Switch, Text, Title } from '@ui-kit';
 import CoverDragger from './CoverDragger';
 import ActionButtons from './ActionButtons';
@@ -30,6 +33,7 @@ const ProductForm = ({ state }) => {
       ? { src: state.thumbnail }
       : {},
   );
+  const { data: connectAccount, loading: gettingConnectAccount } = useQuery(getConnectAccount);
 
   const { control, watch, setValue, handleSubmit } = useForm();
   const title = watch('title');
@@ -75,6 +79,12 @@ const ProductForm = ({ state }) => {
       state?.thumbnail,
     ],
   );
+
+  useEffect(() => {
+    if (!gettingConnectAccount && !connectAccount?.getConnectAccount?.charges_enabled) {
+      history.push('/payment');
+    }
+  }, [gettingConnectAccount, connectAccount?.getConnectAccount?.charges_enabled]);
 
   useEffect(
     () => setValue('isFree', state?.productId && !state?.price),

@@ -15,15 +15,15 @@ const ProfileMenu = ({ user = {} }) => {
     <Dropdown
       overlay={
         <Menu>
-          <Menu.Item key='marketplace' onClick={goAccount}>
+          <Menu.Item key='my-profile' onClick={goAccount}>
             My Profile
           </Menu.Item>
           {user.isCreator && (
-            <Menu.Item key='marketplace' onClick={goPayment}>
+            <Menu.Item key='payment' onClick={goPayment}>
               Payment
             </Menu.Item>
           )}
-          <Menu.Item key='artwork' onClick={signOut}>
+          <Menu.Item key='log-out' onClick={signOut}>
             Log Out
           </Menu.Item>
         </Menu>
