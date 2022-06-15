@@ -82,7 +82,7 @@ const Payment = () => {
             </Col>
             <Col span={24}>
               <Text level={4}>
-                We are using STRIPE online paments proccessing. You can access your earnings when
+                We are using STRIPE online payments processing. You can access your earnings when
                 you need them most and get paid, all from the Dashboard
               </Text>
             </Col>
