@@ -9,10 +9,10 @@ import { ReactComponent as FbIcon } from '@svgs/fb-sign-in.svg';
 import './styles.less';
 
 const GetStarted = ({ size }) => {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState('');
 
-  const show = useCallback(() => setVisible(true), []);
-  const hide = useCallback(() => setVisible(false), []);
+  const show = useCallback((isSignUp) => setVisible(isSignUp ? 'sign-up' : 'sign-in'), []);
+  const hide = useCallback(() => setVisible(''), []);
   const socialSignIn = useCallback(
     (provider) => {
       hide();
@@ -23,9 +23,15 @@ const GetStarted = ({ size }) => {
   const googleSignIn = useCallback(() => socialSignIn('Google'), [socialSignIn]);
   const facebookSignIn = useCallback(() => socialSignIn('Facebook'), [socialSignIn]);
 
+  const signUp = useCallback(() => show(true), [show]);
+  const logIn = useCallback(() => show(), [show]);
+
   return (
     <>
-      <Button type='primary' width={171} onClick={show}>
+      <Button type='link' white='true' onClick={logIn}>
+        Log in
+      </Button>
+      <Button type='primary' width={171} onClick={signUp}>
         Get Started
       </Button>
       {visible && (
@@ -33,12 +39,12 @@ const GetStarted = ({ size }) => {
           <Row justify='center' gutter={[0, 26]}>
             <Col id='googleLogin'>
               <Button type='google' icon={<GoogleIcon />} width={302} onClick={googleSignIn}>
-                Connect with Google
+                {visible === 'sign-up' ? 'Sign up with Google' : 'Log in with Google'}
               </Button>
             </Col>
             <Col>
               <Button type='facebook' icon={<FbIcon />} width={302} onClick={facebookSignIn}>
-                Connect with Facebook
+                {visible === 'sign-up' ? 'Sign up with Facebook' : 'Log in with Facebook'}
               </Button>
             </Col>
           </Row>
