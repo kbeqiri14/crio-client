@@ -2,6 +2,8 @@
   General
 */
 export { default as Button } from './General/Button';
+export { default as Text } from './General/Typography/Text';
+export { default as Title } from './General/Typography/Title';
 
 /*
   Layout
@@ -18,12 +20,6 @@ export { default as Dropdown } from './Navigation/Dropdown';
 export { default as Menu } from './Navigation/Menu';
 
 /*
-  Typography
-*/
-export { default as Text } from './General/Typography/Text';
-export { default as Title } from './General/Typography/Title';
-
-/*
   Data Display
 */
 export { default as Tabs } from './DataDisplay/Tabs';
@@ -36,6 +32,11 @@ export { default as Input } from './DataEntry/Input';
 export { default as Checkbox } from './DataEntry/Checkbox';
 export { default as Radio } from './DataEntry/Radio';
 export { default as Switch } from './DataEntry/Switch';
+
+/*
+  Feedback
+*/
+export { default as Modal } from './Feedback/Modal';
 
 /*
   Theme Provider

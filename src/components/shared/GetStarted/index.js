@@ -2,11 +2,10 @@ import { memo, useCallback, useState } from 'react';
 import { Col, Row } from 'antd';
 
 import { signIn } from '@app/auth';
-import { Button } from '@ui-kit';
-import { BlurredModal } from '@ui-kit/Modal';
+import { Button, Modal } from '@ui-kit';
+import { ReactComponent as CloseIcon } from '@svgs/close.svg';
 import { ReactComponent as GoogleIcon } from '@svgs/google-sign-in.svg';
 import { ReactComponent as FbIcon } from '@svgs/fb-sign-in.svg';
-import './styles.less';
 
 const GetStarted = ({ size }) => {
   const [visible, setVisible] = useState('');
@@ -35,7 +34,15 @@ const GetStarted = ({ size }) => {
         GET STARTED
       </Button>
       {visible && (
-        <BlurredModal width={509} visible={visible} onCancel={hide} className='get-started__modal'>
+        <Modal
+          centered
+          footer={null}
+          closeIcon={<CloseIcon />}
+          width={509}
+          visible={visible}
+          onCancel={hide}
+          className='get-started'
+        >
           <Row justify='center' gutter={[0, 26]}>
             <Col id='googleLogin'>
               <Button type='google' icon={<GoogleIcon />} width={302} onClick={googleSignIn}>
@@ -48,7 +55,7 @@ const GetStarted = ({ size }) => {
               </Button>
             </Col>
           </Row>
-        </BlurredModal>
+        </Modal>
       )}
     </>
   );

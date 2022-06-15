@@ -2,8 +2,8 @@ import { memo, useCallback, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import Confirmation from '@shared/Confirmation';
-import { Col, Input, Row, Text, Title } from '@ui-kit';
-import { BlurredModal } from '@ui-kit/Modal';
+import { Col, Input, Modal, Row, Text, Title } from '@ui-kit';
+import { ReactComponent as CloseIcon } from '@svgs/close.svg';
 import Footer from './Footer';
 
 const EditProfile = ({ user, visible, closeModal }) => {
@@ -48,7 +48,14 @@ const EditProfile = ({ user, visible, closeModal }) => {
   );
 
   return (
-    <BlurredModal width={708} visible={visible} onCancel={onCancel}>
+    <Modal
+      centered
+      footer={null}
+      closeIcon={<CloseIcon />}
+      width={708}
+      visible={visible}
+      onCancel={onCancel}
+    >
       <Row justify='center' gutter={[0, 8]}>
         <Col span={24} padding_bottom={32}>
           <Title level={1}>Edit Profile</Title>
@@ -135,7 +142,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
           onCancel={hideConfirmation}
         />
       )}
-    </BlurredModal>
+    </Modal>
   );
 };
 

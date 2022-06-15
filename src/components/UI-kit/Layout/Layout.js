@@ -2,11 +2,11 @@ import { Layout as antLayout } from 'antd';
 import styled from 'styled-components';
 
 const Layout = styled(antLayout)`
-  background: #202020;
+  background: transparent;
 `;
 
 const Sider = styled(Layout.Sider)`
-  background-color: ${(props) => props.theme.colors.dark100};
+  background: #202020;
 `;
 
 const Content = styled(Layout.Content)`

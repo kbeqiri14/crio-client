@@ -4,10 +4,10 @@ import { Progress } from 'antd';
 import { useMutation } from '@apollo/client';
 
 import { createArtwork } from '@app/graphql/mutations/artwork.mutation';
-import { Text, Title } from '@ui-kit';
-import { BlurredModal } from '@ui-kit/Modal';
+import { Modal, Text, Title } from '@ui-kit';
 import { Spinner } from '@ui-kit/Spinner';
 import { errorToast } from '@ui-kit/Notification';
+import { ReactComponent as CloseIcon } from '@svgs/close.svg';
 
 const timeStarted = new Date();
 const formatRemainingTime = (time) => {
@@ -75,8 +75,10 @@ const Uploading = ({ state, types, dispatch }) => {
   ]);
 
   return (
-    <BlurredModal
-      blurred
+    <Modal
+      centered
+      footer={null}
+      closeIcon={<CloseIcon />}
       visible={state.uploadingVisible}
       closable={false}
       maskClosable={false}
@@ -91,7 +93,7 @@ const Uploading = ({ state, types, dispatch }) => {
         </Text>
         <Progress percent={state.percent} showInfo={false} />
       </Spinner>
-    </BlurredModal>
+    </Modal>
   );
 };
 

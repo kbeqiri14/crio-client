@@ -6,9 +6,9 @@ import { useLazyQuery, useMutation } from '@apollo/client';
 import { getUploadImageLink } from '@app/graphql/queries/artworks.query';
 import { updateMetadata } from '@app/graphql/mutations/artwork.mutation';
 import ActionButtons from '@shared/ActionButtons';
-import { Text, Title } from '@ui-kit';
-import { BlurredModal } from '@ui-kit/Modal';
+import { Modal, Text, Title } from '@ui-kit';
 import { errorToast } from '@ui-kit/Notification';
+import { ReactComponent as CloseIcon } from '@svgs/close.svg';
 import coverImage from '@images/cover-image.png';
 
 const { Dragger } = Upload;
@@ -64,7 +64,15 @@ const CoverImage = ({ visible, artworkId, goToProfile }) => {
   }, [requestUploadUrl]);
 
   return (
-    <BlurredModal blurred maskClosable={false} visible={visible} width={686} onCancel={goToProfile}>
+    <Modal
+      centered
+      footer={null}
+      closeIcon={<CloseIcon />}
+      maskClosable={false}
+      visible={visible}
+      width={686}
+      onCancel={goToProfile}
+    >
       <Row justify='center' gutter={[0, 40]} className='cover-image'>
         <Col span={24}>
           <Title level={1}>Upload cover image</Title>
@@ -102,7 +110,7 @@ const CoverImage = ({ visible, artworkId, goToProfile }) => {
           />
         </Col>
       </Row>
-    </BlurredModal>
+    </Modal>
   );
 };
 

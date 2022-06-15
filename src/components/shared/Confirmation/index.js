@@ -1,8 +1,8 @@
 import { memo } from 'react';
 
 import ActionButtons from '@shared/ActionButtons';
-import { Title } from '@ui-kit';
-import { BlurredModal } from '@ui-kit/Modal';
+import { Modal, Title } from '@ui-kit';
+import { ReactComponent as CloseIcon } from '@svgs/close.svg';
 
 const Confirmation = ({
   visible,
@@ -13,14 +13,17 @@ const Confirmation = ({
   cancelText = 'NO',
   confirmText = 'YES, CANCEL',
 }) => (
-  <BlurredModal
+  <Modal
+    centered
+    footer={null}
+    closeIcon={<CloseIcon />}
     width={486}
     maskClosable={false}
     visible={visible}
     onCancel={onCancel}
     className='confirmation'
   >
-    <Title level={1} margin_bottom={40} align='center'>
+    <Title level={1} margin_bottom={64} align='center'>
       {title}
     </Title>
     <ActionButtons
@@ -31,7 +34,7 @@ const Confirmation = ({
       onCancel={onCancel}
       onSave={onConfirm}
     />
-  </BlurredModal>
+  </Modal>
 );
 
 export default memo(Confirmation);

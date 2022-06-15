@@ -4,8 +4,8 @@ import { useMutation } from '@apollo/client';
 import { useSendEmail } from '@root/src/components/shared/SendEmailModal/Context';
 import { contactCreator } from '@app/graphql/mutations/user.mutation';
 import ActionButtons from '@shared/ActionButtons';
-import { Col, Row, Input, Title } from '@ui-kit';
-import { BlurredModal } from '@ui-kit/Modal';
+import { Col, Modal, Row, Input, Title } from '@ui-kit';
+import { ReactComponent as CloseIcon } from '@svgs/close.svg';
 import { errorToast, successToast } from '@ui-kit/Notification';
 
 const SendEmailModal = () => {
@@ -23,7 +23,14 @@ const SendEmailModal = () => {
   });
 
   return (
-    <BlurredModal width={600} visible={true} onCancel={hide}>
+    <Modal
+      centered
+      footer={null}
+      closeIcon={<CloseIcon />}
+      width={600}
+      visible={true}
+      onCancel={hide}
+    >
       <Row justify='center' align='top' gutter={[0, 40]}>
         <Col span={24}>
           <Title level={1}>Email Message</Title>
@@ -46,7 +53,7 @@ const SendEmailModal = () => {
           />
         </Col>
       </Row>
-    </BlurredModal>
+    </Modal>
   );
 };
 
