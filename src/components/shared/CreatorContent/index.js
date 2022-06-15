@@ -20,7 +20,7 @@ const Wrapper = styled('div')`
     max-width: 376px;
   }
   margin: auto;
-  padding: 28px 22px;
+  padding: 40px 22px;
 `;
 
 const { TabPane } = Tabs;

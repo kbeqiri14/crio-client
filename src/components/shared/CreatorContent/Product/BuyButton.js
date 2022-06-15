@@ -23,20 +23,20 @@ const BuyButton = ({ userId, username, productId, price, limit, accessibility, b
   const [label, color, onClick, icon] = useMemo(() => {
     if (accessibility === 'subscriber_only') {
       if (!user.isSubscribed) {
-        return ['Buy', 'blue', () => history.push('/pricing'), <LockIcon />];
+        return ['BUY', 'blue', () => history.push('/pricing'), <LockIcon />];
       }
       if (!user.followings?.includes(userId)) {
-        return ['Buy', 'blue', () => history.push(`/profile/${username}`), <LockIcon />];
+        return ['BUY', 'blue', () => history.push(`/profile/${username}`), <LockIcon />];
       }
       if (!price) {
-        return ['Email', 'green', () => setSendEmailInfo({ productId })];
+        return ['EMAIL', 'green', () => setSendEmailInfo({ productId })];
       }
     }
     if (user.boughtProducts?.includes(productId)) {
-      return ['Email', 'green', () => setSendEmailInfo({ productId })];
+      return ['EMAIL', 'green', () => setSendEmailInfo({ productId })];
     }
     return [
-      'Buy',
+      'BUY',
       'blue',
       async () => {
         if (limit >= 0) {
@@ -65,7 +65,7 @@ const BuyButton = ({ userId, username, productId, price, limit, accessibility, b
       fill_color={color}
       min_width={126}
       icon={icon}
-      disabled={limit === 0 && label === 'Buy'}
+      disabled={limit === 0 && label === 'BUY'}
       loading={loading}
       onClick={onClick}
     >

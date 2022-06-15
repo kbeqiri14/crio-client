@@ -32,7 +32,7 @@ const GetStarted = ({ size }) => {
         Log in
       </Button>
       <Button type='primary' width={171} onClick={signUp}>
-        Get Started
+        GET STARTED
       </Button>
       {visible && (
         <BlurredModal width={509} visible={visible} onCancel={hide} className='get-started__modal'>

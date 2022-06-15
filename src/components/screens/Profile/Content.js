@@ -74,7 +74,7 @@ const ProfileContent = ({
     );
   }
   return (
-    <Tabs>
+    <Tabs style={{ paddingTop: 40, paddingBottom: 20 }}>
       <TabPane key='Following' tab={tab}>
         <Followings username={username} isProfile={isProfile} isSubscribed={isSubscribed} />
       </TabPane>
