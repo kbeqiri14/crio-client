@@ -3,7 +3,8 @@ import { Link, useLocation } from 'react-router-dom';
 
 import history from '@configs/history';
 import { Button, Col, Row } from '@ui-kit';
-import logo from '@images/crio-logo.svg';
+import logo from '@images/logo.png';
+import name from '@images/name.png';
 
 const getTabItems = (showPricing, isSubscribed) => {
   const items = [
@@ -39,12 +40,12 @@ const Menu = ({ user }) => {
     <Row justify='center' gutter={12} className='items-center'>
       <Col>
         <Link to='/'>
-          <img alt='crio app logo' src={logo} width={68} />
+          <img alt='crio app logo' src={logo} />
         </Link>
       </Col>
       <Col>
-        <Link to='/' className='logo-name'>
-          Crio
+        <Link to='/'>
+          <img alt='crio app logo' src={name} />
         </Link>
       </Col>
       {menuItems.map((menu) => (
