@@ -24,7 +24,7 @@ const Wrapper = styled('div')`
 `;
 
 const ProductForm = ({ state }) => {
-  const [limitVisible, setLimitVisible] = useState(state?.limit && state?.limit >= 0);
+  const [limitVisible, setLimitVisible] = useState(state?.limit !== null && state?.limit >= 0);
   const [image, setImage] = useState(
     state?.thumbnail && !state?.thumbnail?.startsWith('/static/media/product')
       ? { src: state.thumbnail }

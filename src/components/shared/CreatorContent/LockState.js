@@ -74,10 +74,10 @@ const LockState = ({ userId, accessibility, status, size = 'normal', large, isPr
       return ['Your video is being processed. It can take a while. Please wait.', loadingVideo];
     }
     if (user.isSubscribed) {
-      return ['Follow Creator to Gain Access', lockImage];
+      return ['Follow Creator to gain access', lockImage];
     }
     return [
-      'Subscribe and Follow Creator to Gain Access',
+      'Subscribe and follow Creator to gain access',
       lockImage,
       () => {
         setVideoInfo({});
