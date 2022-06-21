@@ -41,7 +41,7 @@ const perksListFree = ['Buy publicly available products', 'Watch publicly availa
 const perksListPro = [
   'Ability to follow any creator',
   'Access to all free products from creators you follow',
-  'Access to all premium content from all creators you follow',
+  'Watch any exclusive content from creators you follow',
 ];
 
 const Item = ({ item }) => (
