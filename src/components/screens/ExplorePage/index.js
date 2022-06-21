@@ -1,7 +1,9 @@
 import { memo, useState } from 'react';
+import { useReactiveVar } from '@apollo/client';
 
 import { Footer } from '@shared/Footer';
 import useRandomInfo from '@root/src/hooks/useRandomInfo';
+import { searchKeywordVar } from '@configs/client-cache';
 import { Carousel } from '@ui-kit';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import TopArtwork from './TopArtwork';
@@ -15,6 +17,7 @@ export const ExplorePage = () => {
   const [artworksOffset, setArtworksOffset] = useState(0);
   const [productsList, setProductsList] = useState([]);
   const [artworksList, setArtworksList] = useState([]);
+  const keyword = useReactiveVar(searchKeywordVar);
 
   const {
     carouselArtworks,
@@ -24,6 +27,7 @@ export const ExplorePage = () => {
     loadMoreArtworks,
     loadMoreProducts,
   } = useRandomInfo({
+    keyword,
     productsOffset,
     artworksOffset,
     productsLimit: PRODUCTS_LIMIT,

@@ -1,19 +1,55 @@
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
+import styled from 'styled-components';
 
+import history from '@configs/history';
+import { searchKeywordVar } from '@configs/client-cache';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import GetStarted from '@shared/GetStarted';
-import { Col, Row } from '@ui-kit';
+import { Col, Input, Row } from '@ui-kit';
+import { ReactComponent as SearchIcon } from '@svgs/search.svg';
 import Menu from './Menu';
 import ProfileMenu from './ProfileMenu';
 import UploadButton from './UploadButton';
 
-export const Header = ({ isAuthenticated }) => {
+const Wrapper = styled('div')`
+  .ant-input-affix-wrapper {
+    padding: 6px 15px;
+    border-radius: 32px;
+    border: 1px solid ${(props) => props.theme.colors.dark50};
+    :hover,
+    :focus {
+      border: 1px solid ${(props) => props.theme.colors.dark50} !important;
+    }
+  }
+  .ant-input {
+    color: white;
+    font-size: 16px;
+    line-height: 24px;
+    background-color: transparent !important;
+  }
+`;
+export const Header = ({ isAuthenticated, keyword, setKeyword }) => {
   const { user } = useLoggedInUser();
+
+  const onSearch = useCallback(() => {
+    searchKeywordVar(keyword);
+    history.push('/explore');
+  }, [keyword]);
 
   return (
     <Row justify='space-between' align='middle'>
       <Col>
         <Menu user={user} />
+      </Col>
+      <Col style={{ minWidth: 700 }}>
+        <Wrapper>
+          <Input
+            prefix={<SearchIcon />}
+            placeholder='Search'
+            onChange={(e) => setKeyword(e.target.value)}
+            onPressEnter={onSearch}
+          />
+        </Wrapper>
       </Col>
       <Col>
         <Row justify='center' gutter={[20, 20]}>
