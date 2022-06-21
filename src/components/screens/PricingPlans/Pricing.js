@@ -50,7 +50,9 @@ const Item = ({ item }) => (
       <CheckMark />
     </Col>
     <Col max_width={290}>
-      <Text level={3}>{item}</Text>
+      <Text level={3} color='dark25'>
+        {item}
+      </Text>
     </Col>
   </Row>
 );
