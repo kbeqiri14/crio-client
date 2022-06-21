@@ -87,8 +87,8 @@ const Pricing = () => {
                 <Item item={item} />
               </Col>
             ))}
-            <Col span={24} padding_top={46}>
-              <Button block type='link' onClick={handleExploreMore}>
+            <Col span={24} align='center' padding_top={46}>
+              <Button type='link' onClick={handleExploreMore}>
                 Explore More
               </Button>
             </Col>
