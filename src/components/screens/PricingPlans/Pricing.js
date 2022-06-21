@@ -127,7 +127,7 @@ const Pricing = () => {
                 description='Please, use the email address attached to your profile'
               >
                 <Button block type='primary' fill_color='green' onClick={handleGetStarted}>
-                  GET STARTED
+                  SUBSCRIBE
                 </Button>
               </CustomTooltip>
             </Col>
