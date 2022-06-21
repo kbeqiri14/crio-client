@@ -118,6 +118,7 @@ const Button = styled(antButton)`
 
   &.ant-btn-link {
     height: 32px;
+    padding: 4px 8px;
     border: none !important;
     font-size: ${(props) => props.theme.text[3].size}px;
     font-weight: ${(props) => props.theme.text[3].weight};
