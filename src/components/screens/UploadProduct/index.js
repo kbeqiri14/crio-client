@@ -2,21 +2,19 @@ import { memo, useEffect } from 'react';
 
 import history from '@configs/history';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
+import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import ProductDetails from '@root/src/components/screens/EditProduct/ProductForm';
 
 const UploadProduct = () => {
   const { user } = useLoggedInUser();
 
   useEffect(() => {
-    if (user.id) {
-      if (!user.isCreator) {
-        history.push('/');
-        return;
-      }
+    if (user.id && !user.isCreator) {
+      history.push('/');
     }
   }, [user.id, user.isCreator]);
 
-  return <ProductDetails />;
+  return user.id ? <ProductDetails /> : <GlobalSpinner />;
 };
 
 export default memo(UploadProduct);
