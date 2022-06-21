@@ -65,7 +65,6 @@ const Button = styled(antButton)`
     padding: 10px;
     border: none !important;
     border-radius: 10px;
-    box-shadow: none;
     line-height: 24px;
     color: ${(props) => props.theme.colors.dark25} !important;
     border: 1px solid transparent !important;
@@ -103,16 +102,14 @@ const Button = styled(antButton)`
         props.theme.colors[`gradient_${props?.fill_color || 'blue'}`]} !important;
     }
     &:hover {
-      box-shadow: 0px 4px 5px rgba(12, 17, 36, 0.4);
       background: ${(props) =>
-        props.theme.colors[`gradient_${props?.fill_color || 'blue'}`]} !important;
+        props.theme.colors[`gradient_dark_${props?.fill_color || 'blue'}`]} !important;
     }
   }
 
   &.ant-btn-primary[disabled],
   .ant-btn-primary[disabled]:hover {
     color: ${(props) => props.theme.colors.dark100} !important;
-    box-shadow: none;
     background: ${(props) => props.theme.colors.dark50} !important;
     border: none !important;
   }
@@ -125,7 +122,6 @@ const Button = styled(antButton)`
     font-size: ${(props) => props.theme.text[3].size}px;
     font-weight: ${(props) => props.theme.text[3].weight};
     font-style: ${(props) => props.theme.text[3].style || 'normal'};
-    box-shadow: none;
   }
 
   &.ant-btn-link[disabled],

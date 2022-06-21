@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -6,7 +6,7 @@ import history from '@configs/history';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
-import { Col, Divider, Row, Text } from '@ui-kit';
+import { Col, Row, Text } from '@ui-kit';
 import Actions from '@screens/Video/Actions';
 import product from '@images/product.png';
 import LockState from '../LockState';
@@ -15,12 +15,11 @@ import BuyButton from './BuyButton';
 const ProductWrapper = styled('div')`
   width: 332px;
   height: 332px;
+  max-width: 332px;
   &.large {
     width: 686px;
     height: 723px;
-    .width {
-      max-width: 500px;
-    }
+    max-width: 686px;
     .tooltip {
       top: 200px;
     }
@@ -33,6 +32,10 @@ const ProductWrapper = styled('div')`
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
     object-fit: cover;
+  }
+  .info {
+    position: absolute;
+    right: 32px;
   }
   .info,
   .tooltip,
@@ -54,9 +57,6 @@ const ProductWrapper = styled('div')`
       opacity: 1;
       visibility: visible;
     }
-  }
-  .width {
-    max-width: 140px;
   }
 `;
 
@@ -127,10 +127,14 @@ const Product = ({
   thumbnail,
   large = false,
 }) => {
+  const [isHovering, setIsHovering] = useState(false);
   const { user } = useLoggedInUser();
   const { pathname } = useLocation();
   const { setVideoInfo } = usePresentation();
   const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
+
+  const handleMouseOver = useCallback(() => setIsHovering(true), []);
+  const handleMouseOut = useCallback(() => setIsHovering(false), []);
 
   const showActions = useMemo(() => {
     const username = pathname.split('/').slice(-1)[0];
@@ -218,7 +222,7 @@ const Product = ({
 
   return (
     <>
-      <ProductWrapper className={classes}>
+      <ProductWrapper className={classes} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
         <LockState userId={userId} accessibility={accessibility} large={large} isProduct={true} />
         <ImageWrapper className={imageClasses}>
           <img src={src} alt='product' onClick={showProduct} />
@@ -239,26 +243,24 @@ const Product = ({
           </div>
         </ImageWrapper>
         <Row justify='space-between' align='middle' padding_horizontal={20} padding_top={12}>
-          <Col className='width'>
+          <Col>
             <Row align='middle' gutter={[0, 8]}>
               <Col span={24}>
-                <Text level={4} ellipsis={{ tooltip: title }}>
+                <Text
+                  level={4}
+                  style={{ width: price && isHovering ? 140 : 332 }}
+                  ellipsis={{ rows: 1, tooltip: title }}
+                >
                   {title}
                 </Text>
               </Col>
               <Col span={24}>
-                <Text
-                  level={4}
-                  ellipsis={{ tooltip: price ? `$${price.toFixed(2)}` : 'Free for Subscribers' }}
-                >
-                  {price ? `$${price.toFixed(2)}` : 'Free for Subscribers'}
-                </Text>
+                <Text level={4}>{price ? `$${price.toFixed(2)}` : 'Free for Subscribers'}</Text>
               </Col>
             </Row>
           </Col>
-          {!user.isCreator && (
+          {!user.isCreator && price && (
             <Col className='info'>
-              {!large && <Divider type='vertical' height={31} padding_left={20} />}
               <BuyButton
                 userId={userId}
                 username={username}

@@ -8,7 +8,7 @@ import TopArtwork from './TopArtwork';
 import Content from '../../shared/CreatorContent';
 
 const PRODUCTS_LIMIT = 15;
-const ARTWORKS_LIMIT = 16;
+const ARTWORKS_LIMIT = 24;
 
 export const ExplorePage = () => {
   const [productsOffset, setProductsOffset] = useState(0);
