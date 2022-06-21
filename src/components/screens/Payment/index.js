@@ -29,12 +29,14 @@ const Payment = () => {
   const { user } = useLoggedInUser();
   const { refreshUrl } = useQueryParams();
   const [requestDelete, { loading }] = useLazyQuery(deleteStripeAccount, {
+    fetchPolicy: 'no-cache',
     onCompleted: () => (window.location.href = '/payment'),
   });
   const { data: connectAccount, loading: gettingConnectAccount } = useQuery(getConnectAccount);
   const [requestConnectOnboardingLink, { loading: gettingConnectOnboardingLink }] = useLazyQuery(
     getConnectOnboardingLink,
     {
+      fetchPolicy: 'no-cache',
       onCompleted: ({ getConnectOnboardingLink }) =>
         (window.location.href = getConnectOnboardingLink.url),
       onError: (e) => errorToast(`Cannot create onboarding link: ${e?.message}`),
@@ -43,6 +45,7 @@ const Payment = () => {
   const [requestConnectLoginLink, { loading: gettingConnectLoginLink }] = useLazyQuery(
     getConnectLoginLink,
     {
+      fetchPolicy: 'no-cache',
       onCompleted: ({ getConnectLoginLink }) =>
         window.open(getConnectLoginLink.url, '_blank', 'noopener,noreferrer,nofollow'),
     },
