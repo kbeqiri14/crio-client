@@ -1,8 +1,7 @@
 import { memo, useCallback, useState } from 'react';
-import { Col, Row } from 'antd';
 
 import { signIn } from '@app/auth';
-import { Button, Modal } from '@ui-kit';
+import { Button, Col, Modal, Row } from '@ui-kit';
 import { ReactComponent as CloseIcon } from '@svgs/close.svg';
 import { ReactComponent as GoogleIcon } from '@svgs/google-sign-in.svg';
 import { ReactComponent as FbIcon } from '@svgs/fb-sign-in.svg';
@@ -27,12 +26,18 @@ const GetStarted = ({ size }) => {
 
   return (
     <>
-      <Button type='link' white='true' onClick={logIn}>
-        Log in
-      </Button>
-      <Button type='primary' width={171} onClick={signUp}>
-        GET STARTED
-      </Button>
+      <Row className='items-center' gutter={20}>
+        <Col>
+          <Button type='link' white='true' onClick={logIn}>
+            Log in
+          </Button>
+        </Col>
+        <Col>
+          <Button type='primary' width={171} onClick={signUp}>
+            GET STARTED
+          </Button>
+        </Col>
+      </Row>
       {visible && (
         <Modal
           centered
