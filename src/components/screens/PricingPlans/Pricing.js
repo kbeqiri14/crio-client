@@ -79,7 +79,11 @@ const Pricing = () => {
             </Col>
             <Col span={24} padding_bottom={10}>
               <Title level={5}>
-                $0<Text level={3}> / month</Text>
+                $0
+                <Text level={3} color='dark25'>
+                  {' '}
+                  / month
+                </Text>
               </Title>
             </Col>
             {perksListFree.map((item, index) => (
@@ -102,7 +106,11 @@ const Pricing = () => {
             </Col>
             <Col span={24} padding_bottom={10}>
               <Title level={5}>
-                $7<Text level={3}> / month</Text>
+                $7
+                <Text level={3} color='dark25'>
+                  {' '}
+                  / month
+                </Text>
               </Title>
             </Col>
             {perksListPro.map((item, index) => (
