@@ -49,8 +49,8 @@ export const getRandomArtworks = gql`
 `;
 
 export const getRandomInfo = gql`
-  query {
-    getRandomInfo {
+  query getRandomInfo($keyword: String) {
+    getRandomInfo(keyword: $keyword) {
       productsCount
       artworksCount
       artworks {

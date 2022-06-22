@@ -6,6 +6,7 @@ import { getRandomProducts } from '@app/graphql/queries/products.query';
 import { getRandomArtworks, getRandomInfo } from '@app/graphql/queries/artworks.query';
 
 const useRandomInfo = ({
+  keyword,
   productsOffset = 0,
   artworksOffset = 0,
   productsLimit,
@@ -38,10 +39,10 @@ const useRandomInfo = ({
       const n = Math.floor(Math.random() * getRandomInfo.artworksCount + 1);
       randomNumberVar(n);
       requestRandomProducts({
-        variables: { params: { count: n, offset: productsOffset, limit: productsLimit } },
+        variables: { params: { count: n, offset: productsOffset, limit: productsLimit, keyword } },
       });
       requestRandomArtworks({
-        variables: { params: { count: n, offset: artworksOffset, limit: artworksLimit } },
+        variables: { params: { count: n, offset: artworksOffset, limit: artworksLimit, keyword } },
       });
     },
     onError: () => setLoading(false),
@@ -60,16 +61,16 @@ const useRandomInfo = ({
   const loadMoreProducts = useCallback(() => {
     setLoading(true);
     requestRandomProducts({
-      variables: { params: { count, offset: productsOffset, limit: productsLimit } },
+      variables: { params: { count, offset: productsOffset, limit: productsLimit, keyword } },
     });
-  }, [count, productsOffset, productsLimit, requestRandomProducts]);
+  }, [count, productsOffset, productsLimit, keyword, requestRandomProducts]);
 
   const loadMoreArtworks = useCallback(() => {
     setLoading(true);
     requestRandomArtworks({
-      variables: { params: { count, offset: artworksOffset, limit: artworksLimit } },
+      variables: { params: { count, offset: artworksOffset, limit: artworksLimit, keyword } },
     });
-  }, [count, artworksOffset, artworksLimit, requestRandomArtworks]);
+  }, [count, artworksOffset, artworksLimit, keyword, requestRandomArtworks]);
 
   return {
     carouselArtworks: productsInfo?.getRandomInfo?.artworks || [],
