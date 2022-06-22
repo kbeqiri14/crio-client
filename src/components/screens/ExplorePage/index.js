@@ -33,12 +33,22 @@ export const ExplorePage = () => {
     productsLimit: PRODUCTS_LIMIT,
     artworksLimit: ARTWORKS_LIMIT,
     getRandomProductsCompleted: ({ getRandomProducts }) => {
-      setProductsList([...productsList, ...getRandomProducts]);
-      setProductsOffset(productsOffset + PRODUCTS_LIMIT);
+      if (keyword && !productsOffset) {
+        setProductsList(getRandomProducts);
+        setProductsOffset(0 + PRODUCTS_LIMIT);
+      } else {
+        setProductsList([...productsList, ...getRandomProducts]);
+        setProductsOffset(productsOffset + PRODUCTS_LIMIT);
+      }
     },
     getRandomArtworksCompleted: ({ getRandomArtworks }) => {
-      setArtworksList([...artworksList, ...getRandomArtworks]);
-      setArtworksOffset(artworksOffset + ARTWORKS_LIMIT);
+      if (keyword && !artworksOffset) {
+        setArtworksList(getRandomArtworks);
+        setArtworksOffset(0 + ARTWORKS_LIMIT);
+      } else {
+        setArtworksList([...artworksList, ...getRandomArtworks]);
+        setArtworksOffset(artworksOffset + ARTWORKS_LIMIT);
+      }
     },
   });
 

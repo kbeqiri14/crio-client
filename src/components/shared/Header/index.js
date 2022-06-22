@@ -1,4 +1,5 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import history from '@configs/history';
@@ -30,11 +31,13 @@ const Wrapper = styled('div')`
 `;
 export const Header = ({ isAuthenticated, keyword, setKeyword }) => {
   const { user } = useLoggedInUser();
+  const { pathname } = useLocation();
+  const isArtworks = useMemo(() => pathname.includes('/artworks'), [pathname]);
 
   const onSearch = useCallback(() => {
     searchKeywordVar(keyword);
-    history.push('/explore');
-  }, [keyword]);
+    history.push(`/${isArtworks ? 'artworks' : ''}`);
+  }, [keyword, isArtworks]);
 
   return (
     <Row justify='space-between' align='middle'>

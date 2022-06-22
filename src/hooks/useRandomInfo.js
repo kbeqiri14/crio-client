@@ -35,14 +35,19 @@ const useRandomInfo = ({
   });
 
   const { data: productsInfo } = useQuery(getRandomInfo, {
+    variables: { keyword },
     onCompleted: ({ getRandomInfo }) => {
       const n = Math.floor(Math.random() * getRandomInfo.artworksCount + 1);
       randomNumberVar(n);
       requestRandomProducts({
-        variables: { params: { count: n, offset: productsOffset, limit: productsLimit, keyword } },
+        variables: {
+          params: { count: n, offset: keyword ? 0 : productsOffset, limit: productsLimit, keyword },
+        },
       });
       requestRandomArtworks({
-        variables: { params: { count: n, offset: artworksOffset, limit: artworksLimit, keyword } },
+        variables: {
+          params: { count: n, offset: keyword ? 0 : artworksOffset, limit: artworksLimit, keyword },
+        },
       });
     },
     onError: () => setLoading(false),
