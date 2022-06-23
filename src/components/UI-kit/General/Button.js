@@ -70,6 +70,9 @@ const Button = styled(antButton)`
     &:hover {
       color: ${(props) => props.theme.colors.dark25} !important;
     }
+    ::after {
+      display: none;
+    }
     ${(props) =>
       props?.active === 'true' &&
       css`
