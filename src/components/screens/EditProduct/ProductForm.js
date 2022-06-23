@@ -52,8 +52,10 @@ const ProductForm = ({ state }) => {
   );
   const hideBroadcast = useCallback(() => setVisibleBroadcast(false), []);
   useQuery(getConnectAccount, {
-    onCompleted: ({ getConnectAccount }) =>
-      setVisibleBroadcast(!getConnectAccount?.charges_enabled),
+    onCompleted: ({ getConnectAccount }) => {
+      setVisibleBroadcast(!getConnectAccount?.charges_enabled);
+      setValue('isFree', true);
+    },
   });
 
   const { control, watch, setValue, handleSubmit } = useForm();
