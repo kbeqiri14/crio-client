@@ -1,9 +1,13 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import history from '@configs/history';
-import { searchKeywordVar } from '@configs/client-cache';
+import {
+  newSearchArtworkVar,
+  newSearchMarketplaceVar,
+  searchKeywordVar,
+} from '@configs/client-cache';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import GetStarted from '@shared/GetStarted';
 import { Col, Input, Row } from '@ui-kit';
@@ -29,13 +33,16 @@ const Wrapper = styled('div')`
     background-color: transparent !important;
   }
 `;
-export const Header = ({ isAuthenticated, keyword, setKeyword }) => {
+export const Header = ({ isAuthenticated }) => {
+  const [keyword, setKeyword] = useState('');
   const { user } = useLoggedInUser();
   const { pathname } = useLocation();
   const isArtworks = useMemo(() => pathname.includes('/artworks'), [pathname]);
 
   const onSearch = useCallback(() => {
     searchKeywordVar(keyword);
+    newSearchArtworkVar(true);
+    newSearchMarketplaceVar(true);
     history.push(`/${isArtworks ? 'artworks' : ''}`);
   }, [keyword, isArtworks]);
 

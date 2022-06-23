@@ -3,7 +3,11 @@ import { useReactiveVar } from '@apollo/client';
 
 import { Footer } from '@shared/Footer';
 import useRandomInfo from '@root/src/hooks/useRandomInfo';
-import { searchKeywordVar } from '@configs/client-cache';
+import {
+  newSearchArtworkVar,
+  newSearchMarketplaceVar,
+  searchKeywordVar,
+} from '@configs/client-cache';
 import { Carousel } from '@ui-kit';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import TopArtwork from './TopArtwork';
@@ -13,12 +17,13 @@ const PRODUCTS_LIMIT = 15;
 const ARTWORKS_LIMIT = 24;
 
 export const ExplorePage = () => {
-  const [firstSearch, setFirstSearch] = useState({ marketplace: true, artwork: true });
   const [productsOffset, setProductsOffset] = useState(0);
   const [artworksOffset, setArtworksOffset] = useState(0);
   const [productsList, setProductsList] = useState([]);
   const [artworksList, setArtworksList] = useState([]);
   const keyword = useReactiveVar(searchKeywordVar);
+  const newSearchMarketplace = useReactiveVar(newSearchMarketplaceVar);
+  const newSearchArtwork = useReactiveVar(newSearchArtworkVar);
 
   const {
     carouselArtworks,
@@ -34,8 +39,8 @@ export const ExplorePage = () => {
     productsLimit: PRODUCTS_LIMIT,
     artworksLimit: ARTWORKS_LIMIT,
     getRandomProductsCompleted: ({ getRandomProducts }) => {
-      if (keyword && firstSearch.marketplace) {
-        setFirstSearch({ ...firstSearch, marketplace: false });
+      if (keyword && newSearchMarketplace) {
+        newSearchMarketplaceVar(false);
         setProductsList(getRandomProducts);
         setProductsOffset(0 + PRODUCTS_LIMIT);
       } else {
@@ -44,8 +49,8 @@ export const ExplorePage = () => {
       }
     },
     getRandomArtworksCompleted: ({ getRandomArtworks }) => {
-      if (keyword && firstSearch.artwork) {
-        setFirstSearch({ ...firstSearch, artwork: false });
+      if (keyword && newSearchArtwork) {
+        newSearchArtworkVar(false);
         setArtworksList(getRandomArtworks);
         setArtworksOffset(0 + ARTWORKS_LIMIT);
       } else {
