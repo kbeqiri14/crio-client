@@ -6,6 +6,7 @@ import { useQuery } from '@apollo/client';
 
 import { getConnectAccount } from '@app/graphql/queries/payment-method.query';
 import { Checkbox, Col, Input, Radio, Row, Switch, Text, Title } from '@ui-kit';
+import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import { ReactComponent as CloseIcon } from '@svgs/close-small.svg';
 import CoverDragger from './CoverDragger';
 import ActionButtons from './ActionButtons';
@@ -25,6 +26,17 @@ const Wrapper = styled('div')`
       border-radius: 8px;
     }
   }
+  .info {
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s, opacity 0.4s linear;
+  }
+  .price:hover {
+    .info {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
 `;
 
 const BroadcastWrapper = styled('div')`
@@ -42,6 +54,18 @@ const BroadcastWrapper = styled('div')`
   }
 `;
 
+const Tooltip = styled('div')`
+  background-color: #202020;
+  max-width: 232px;
+  border-radius: 8px;
+  padding: 10px;
+  position: absolute;
+  bottom: 50px;
+  right: 27px;
+  text-align: center;
+  z-index: 1;
+`;
+
 const ProductForm = ({ state }) => {
   const [visibleBroadcast, setVisibleBroadcast] = useState(false);
   const [limitVisible, setLimitVisible] = useState(state?.limit !== null && state?.limit >= 0);
@@ -51,10 +75,14 @@ const ProductForm = ({ state }) => {
       : {},
   );
   const hideBroadcast = useCallback(() => setVisibleBroadcast(false), []);
-  useQuery(getConnectAccount, {
+  const { loading } = useQuery(getConnectAccount, {
+    fetchPolicy: 'cache-and-network',
     onCompleted: ({ getConnectAccount }) => {
-      setVisibleBroadcast(!getConnectAccount?.charges_enabled);
-      setValue('isFree', true);
+      const chargesEnabled = getConnectAccount?.charges_enabled;
+      setVisibleBroadcast(!chargesEnabled);
+      if (!chargesEnabled) {
+        setValue('isFree', true);
+      }
     },
   });
 
@@ -122,6 +150,10 @@ const ProductForm = ({ state }) => {
     [setValue],
   );
 
+  if (loading) {
+    return <GlobalSpinner />;
+  }
+
   return (
     <>
       {visibleBroadcast && (
@@ -181,7 +213,16 @@ const ProductForm = ({ state }) => {
               Price*
             </Text>
           </Col>
-          <Col span={20} padding_bottom={32}>
+          <Col span={20} padding_bottom={32} className='price'>
+            {visibleBroadcast && (
+              <Tooltip className='info'>
+                <Link to='/payment'>
+                  <Text level={1} color='dark25'>
+                    Start earning instantly using Crio's simple payments platform.
+                  </Text>
+                </Link>
+              </Tooltip>
+            )}
             <Controller
               name='price'
               control={control}
@@ -204,7 +245,12 @@ const ProductForm = ({ state }) => {
               control={control}
               defaultValue={isFree}
               render={({ field }) => (
-                <Checkbox {...field} checked={isFree} onChange={setFree}>
+                <Checkbox
+                  {...field}
+                  checked={isFree}
+                  disabled={visibleBroadcast}
+                  onChange={setFree}
+                >
                   <Text level={3}>Free</Text>
                 </Checkbox>
               )}
