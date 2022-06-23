@@ -38,7 +38,11 @@ const SearchBar = () => {
   const isArtworks = useMemo(() => pathname.includes('/artworks'), [pathname]);
 
   const onSearch = useCallback(() => {
-    searchKeywordVar(keyword);
+    const text = keyword.trim();
+    if (!text) {
+      return;
+    }
+    searchKeywordVar(text);
     newSearchArtworkVar(true);
     newSearchMarketplaceVar(true);
     history.push(`/${isArtworks ? 'artworks' : ''}`);
