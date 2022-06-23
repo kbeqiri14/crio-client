@@ -85,9 +85,13 @@ const ImageWrapper = styled('div')`
     }
   }
   &.no-thumbnail {
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    background: #182024;
     img {
-      width: 256px;
-      height: 186px;
+      width: 212px;
+      height: 160px;
+      object-fit: contain;
     }
   }
   &.large {
@@ -98,9 +102,13 @@ const ImageWrapper = styled('div')`
       height: inherit;
     }
     &.no-thumbnail {
+      border-top-left-radius: 30px;
+      border-top-right-radius: 30px;
+      background: #182024;
       img {
-        width: 451px;
-        height: 341px;
+        width: 404px;
+        height: 305px;
+        object-fit: contain;
       }
     }
     .actions {

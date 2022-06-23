@@ -33,6 +33,27 @@ const Wrapper = styled('div')`
   }
 `;
 
+const ImageWrapper = styled('div')`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #182024;
+  border-radius: 16px;
+  width: 100%;
+  height: 638px;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+    &.default {
+      width: 409px;
+      height: 309px;
+      object-fit: contain;
+    }
+  }
+`;
+
 export const Content = ({ videoInfo, videoUri, isLocked }) => {
   const avatarUrl = useAvatarUrl(
     videoInfo.providerType,
@@ -42,7 +63,6 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
   const { setVideoInfo } = usePresentation();
 
   const hide = useCallback(() => setVideoInfo({}), [setVideoInfo]);
-
   return (
     <Wrapper>
       <Row justify='center' gutter={[0, 40]}>
@@ -81,25 +101,25 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
                 accessibility={videoInfo.accessibility}
                 size='lg'
               />
-              <img
-                src={videoInfo.isProduct ? videoInfo.thumbnail : videoInfo.thumbnailUri}
-                alt='artwork'
-                className='border-radius-16 fit-cover'
-                width='100%'
-                height={638}
-              />
+              <ImageWrapper>
+                <img
+                  src={videoInfo.isProduct ? videoInfo.thumbnail : videoInfo.thumbnailUri}
+                  alt='artwork'
+                  className={videoInfo.thumbnail.startsWith('/static/media/') ? 'default' : ''}
+                />
+              </ImageWrapper>
             </div>
           </Col>
         ) : (
           <Col span={24}>
             {videoInfo.isProduct ? (
-              <img
-                src={videoInfo.thumbnail}
-                alt='artwork'
-                className='border-radius-16 fit-cover'
-                width='100%'
-                height={638}
-              />
+              <ImageWrapper>
+                <img
+                  src={videoInfo.thumbnail}
+                  alt='product'
+                  className={videoInfo.thumbnail.startsWith('/static/media/') ? 'default' : ''}
+                />
+              </ImageWrapper>
             ) : (
               <div className='video-view__player embed-responsive aspect-ratio-16/9'>
                 <iframe
