@@ -62,31 +62,22 @@ const Button = styled(antButton)`
   ///************** TAB BUTTON **************///
 
   &.ant-btn-tab {
-    padding: 10px;
+    padding: 0;
     border: none !important;
-    border-radius: 10px;
     line-height: 24px;
-    color: ${(props) => props.theme.colors.dark25} !important;
-    border: 1px solid transparent !important;
+    font-weight: 400;
+    color: ${(props) => props.theme.colors.dark50} !important;
     &:hover {
-      border: 1px solid ${(props) => props.theme.colors.dark50} !important;
-      background-color: transparent !important;
+      color: ${(props) => props.theme.colors.dark25} !important;
     }
     ${(props) =>
       props?.active === 'true' &&
       css`
         color: ${(props) => props.theme.colors.white} !important;
-        background-color: ${(props) => props.theme.colors.dark50} !important;
         &:hover {
           color: ${(props) => props.theme.colors.white} !important;
-          background-color: ${(props) => props.theme.colors.dark50} !important;
         }
       `}
-    &.ant-btn:active,
-    &.ant-btn:focus {
-      color: ${(props) => props.theme.colors.white} !important;
-      background-color: ${(props) => props.theme.colors.dark50} !important;
-    }
   }
 
   ///************** PRIMARY BUTTON **************///
