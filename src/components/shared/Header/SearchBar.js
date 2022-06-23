@@ -15,17 +15,18 @@ const Wrapper = styled('div')`
   .ant-input-affix-wrapper {
     padding: 6px 15px;
     border-radius: 32px;
-    border: 1px solid ${(props) => props.theme.colors.dark50};
     :hover,
     :focus {
       border: 1px solid ${(props) => props.theme.colors.dark50} !important;
     }
+    background-color: ${(props) => props.theme.colors.dark100} !important;
   }
   .ant-input {
     color: white;
     font-size: 16px;
     line-height: 24px;
-    background-color: transparent !important;
+    font-weight: 400;
+    background-color: ${(props) => props.theme.colors.dark100} !important;
   }
   width: 244px;
 `;
