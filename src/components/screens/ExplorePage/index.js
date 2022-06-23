@@ -13,6 +13,7 @@ const PRODUCTS_LIMIT = 15;
 const ARTWORKS_LIMIT = 24;
 
 export const ExplorePage = () => {
+  const [firstSearch, setFirstSearch] = useState({ marketplace: true, artwork: true });
   const [productsOffset, setProductsOffset] = useState(0);
   const [artworksOffset, setArtworksOffset] = useState(0);
   const [productsList, setProductsList] = useState([]);
@@ -33,7 +34,8 @@ export const ExplorePage = () => {
     productsLimit: PRODUCTS_LIMIT,
     artworksLimit: ARTWORKS_LIMIT,
     getRandomProductsCompleted: ({ getRandomProducts }) => {
-      if (keyword && !productsOffset) {
+      if (keyword && firstSearch.marketplace) {
+        setFirstSearch({ ...firstSearch, marketplace: false });
         setProductsList(getRandomProducts);
         setProductsOffset(0 + PRODUCTS_LIMIT);
       } else {
@@ -42,7 +44,8 @@ export const ExplorePage = () => {
       }
     },
     getRandomArtworksCompleted: ({ getRandomArtworks }) => {
-      if (keyword && !artworksOffset) {
+      if (keyword && firstSearch.artwork) {
+        setFirstSearch({ ...firstSearch, artwork: false });
         setArtworksList(getRandomArtworks);
         setArtworksOffset(0 + ARTWORKS_LIMIT);
       } else {
