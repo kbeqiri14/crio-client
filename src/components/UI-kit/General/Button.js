@@ -142,12 +142,12 @@ const Button = styled(antButton)`
   ///************** GOOGLE BUTTON **************///
 
   &.ant-btn-google {
+    padding: 4px 20px 4px 14px;
     border: none;
     background-color: ${(props) => props.theme.colors.white};
     color: ${(props) => props.theme.colors.dark100};
     svg {
-      margin-left: -36px;
-      margin-right: 20px;
+      margin-left: -4px;
     }
     &:active,
     &:focus {
