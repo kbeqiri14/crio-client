@@ -12,13 +12,11 @@ import { Input } from '@ui-kit';
 import { ReactComponent as SearchIcon } from '@svgs/search.svg';
 
 const Wrapper = styled('div')`
+  width: 244px;
   .ant-input-affix-wrapper {
-    padding: 6px 15px;
+    padding: 7px 15px;
     border-radius: 32px;
-    :hover,
-    :focus {
-      border: 1px solid ${(props) => props.theme.colors.dark50} !important;
-    }
+    border: none !important;
     background-color: ${(props) => props.theme.colors.dark100} !important;
   }
   .ant-input {
@@ -28,7 +26,9 @@ const Wrapper = styled('div')`
     font-weight: 400;
     background-color: ${(props) => props.theme.colors.dark100} !important;
   }
-  width: 244px;
+  .ant-input-prefix {
+    margin-right: 8px;
+  }
 `;
 
 const SearchBar = () => {
