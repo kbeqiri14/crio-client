@@ -5,6 +5,7 @@ import history from '@configs/history';
 import { Button, Col, Row } from '@ui-kit';
 import logo from '@images/logo.png';
 import name from '@images/name.png';
+import SearchBar from './SearchBar';
 
 const getTabItems = (showPricing, isSubscribed) => {
   const items = [
@@ -37,7 +38,7 @@ const Menu = ({ user }) => {
   }, [pathname]);
 
   return (
-    <Row justify='center' gutter={12} className='items-center'>
+    <Row justify='center' gutter={[12, 12]} className='items-center'>
       <Col>
         <Link to='/'>
           <img alt='crio app logo' src={logo} />
@@ -49,12 +50,15 @@ const Menu = ({ user }) => {
         </Link>
       </Col>
       {menuItems.map((menu) => (
-        <Col key={menu.id} margin_left={8}>
+        <Col key={menu.id} margin_left={28}>
           <Button type='tab' active={`${activeItem === menu.id}`} onClick={goTo(menu.path)}>
             {menu.title}
           </Button>
         </Col>
       ))}
+      <Col margin_left={28}>
+        <SearchBar />
+      </Col>
     </Row>
   );
 };

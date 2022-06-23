@@ -26,7 +26,7 @@ const GetStarted = ({ size }) => {
 
   return (
     <>
-      <Row className='items-center' gutter={20}>
+      <Row className='items-center' gutter={40}>
         <Col>
           <Button type='link' white='true' onClick={logIn}>
             Log in
