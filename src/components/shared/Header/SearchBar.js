@@ -18,6 +18,7 @@ const Wrapper = styled('div')`
     border-radius: 32px;
     border: none !important;
     background-color: ${(props) => props.theme.colors.dark100} !important;
+    box-shadow: none;
   }
   .ant-input {
     color: white;
