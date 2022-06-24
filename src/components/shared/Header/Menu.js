@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import history from '@configs/history';
 import { Button, Col, Row } from '@ui-kit';
 import logo from '@images/logo.png';
+import SearchBar from './SearchBar';
 
 const getTabItems = (showPricing, isSubscribed) => {
   const items = [
@@ -54,6 +55,9 @@ const Menu = ({ user }) => {
           </Button>
         </Col>
       ))}
+      <Col margin_left={28}>
+        <SearchBar />
+      </Col>
     </Row>
   );
 };
