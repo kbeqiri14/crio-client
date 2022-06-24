@@ -67,11 +67,8 @@ export const ExplorePage = () => {
   });
 
   const showLoader = useMemo(
-    () =>
-      (keyword && (searchMarketplace || searchArtwork)) ||
-      searchClearArtworks ||
-      searchClearMarketplace,
-    [keyword, searchMarketplace, searchArtwork, searchClearArtworks, searchClearMarketplace],
+    () => searchMarketplace || searchArtwork || searchClearArtworks || searchClearMarketplace,
+    [searchMarketplace, searchArtwork, searchClearArtworks, searchClearMarketplace],
   );
 
   if (showLoader || (loadMoreProducts && !productsOffset)) {
