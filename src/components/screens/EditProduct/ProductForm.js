@@ -251,7 +251,9 @@ const ProductForm = ({ state }) => {
                   disabled={visibleBroadcast}
                   onChange={setFree}
                 >
-                  <Text level={3}>Free</Text>
+                  <Text level={3} disabled={visibleBroadcast}>
+                    Free
+                  </Text>
                 </Checkbox>
               )}
             />
