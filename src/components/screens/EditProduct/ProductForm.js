@@ -29,7 +29,7 @@ const Wrapper = styled('div')`
   .info {
     opacity: 0;
     visibility: hidden;
-    transition: visibility 0s, opacity 0.4s linear;
+    transition: visibility 0s, opacity 0.2s linear;
   }
   .price:hover {
     .info {
