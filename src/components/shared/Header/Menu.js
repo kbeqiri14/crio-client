@@ -4,7 +4,6 @@ import { Link, useLocation } from 'react-router-dom';
 import history from '@configs/history';
 import { Button, Col, Row } from '@ui-kit';
 import logo from '@images/logo.png';
-import name from '@images/name.png';
 
 const getTabItems = (showPricing, isSubscribed) => {
   const items = [
@@ -44,8 +43,8 @@ const Menu = ({ user }) => {
         </Link>
       </Col>
       <Col>
-        <Link to='/'>
-          <img alt='crio app logo' src={name} />
+        <Link to='/' className='logo-name'>
+          Crio
         </Link>
       </Col>
       {menuItems.map((menu) => (

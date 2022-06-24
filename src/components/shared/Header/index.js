@@ -3,6 +3,7 @@ import { memo } from 'react';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { Col, Row } from '@ui-kit';
 import Menu from './Menu';
+import SearchBar from './SearchBar';
 import GetStarted from './GetStarted';
 import ProfileMenu from './ProfileMenu';
 import UploadButton from './UploadButton';
@@ -16,11 +17,18 @@ export const Header = ({ isAuthenticated }) => {
         <Menu user={user} />
       </Col>
       <Col>
-        <Row justify='center' gutter={[20, 20]}>
+        <Row justify='center' align='middle' gutter={[20, 20]}>
+          <Col>
+            <SearchBar />
+          </Col>
           <Col className='self-center'>
             {isAuthenticated && user ? <ProfileMenu user={user} /> : <GetStarted />}
           </Col>
-          <Col>{user?.isCreator && <UploadButton />}</Col>
+          {user?.isCreator && (
+            <Col>
+              <UploadButton />
+            </Col>
+          )}
         </Row>
       </Col>
     </Row>

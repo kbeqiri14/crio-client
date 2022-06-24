@@ -7,6 +7,7 @@ import {
   newSearchArtworkVar,
   newSearchMarketplaceVar,
   searchKeywordVar,
+  searchClearVar,
 } from '@configs/client-cache';
 import { Input } from '@ui-kit';
 import { ReactComponent as SearchIcon } from '@svgs/search.svg';
@@ -43,6 +44,7 @@ const SearchBar = () => {
       const text = clear ? '' : keyword.trim();
       if (clear) {
         setKeyword('');
+        searchClearVar(true);
       }
       if (!clear && !text) {
         return;

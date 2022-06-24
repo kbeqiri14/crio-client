@@ -3,30 +3,24 @@ import { memo, useCallback } from 'react';
 import { signIn } from '@app/auth';
 import { Button, Col, Row } from '@ui-kit';
 import { ReactComponent as GoogleIcon } from '@svgs/google-sign-in.svg';
-import SearchBar from './SearchBar';
 
 // Temporary hide FB log in / sign up
 const GetStarted = () => {
   const googleSignIn = useCallback(() => signIn('Google'), []);
 
   return (
-    <>
-      <Row className='items-center' gutter={20}>
-        <Col margin_right={20}>
-          <SearchBar />
-        </Col>
-        <Col>
-          <Button type='link' white='true' onClick={googleSignIn}>
-            Sign in
-          </Button>
-        </Col>
-        <Col onClick={googleSignIn}>
-          <Button type='google' icon={<GoogleIcon />} onClick={googleSignIn}>
-            SIGN UP WITH GOOGLE
-          </Button>
-        </Col>
-      </Row>
-    </>
+    <Row className='items-center' gutter={20}>
+      <Col>
+        <Button type='link' white='true' onClick={googleSignIn}>
+          Sign in
+        </Button>
+      </Col>
+      <Col onClick={googleSignIn}>
+        <Button type='google' icon={<GoogleIcon />} onClick={googleSignIn}>
+          SIGN UP WITH GOOGLE
+        </Button>
+      </Col>
+    </Row>
   );
 };
 
