@@ -10,11 +10,12 @@ import {
 } from '@configs/client-cache';
 import { Input } from '@ui-kit';
 import { ReactComponent as SearchIcon } from '@svgs/search.svg';
+import { ReactComponent as CloseIcon } from '@svgs/close-middle.svg';
 
 const Wrapper = styled('div')`
   width: 244px;
   .ant-input-affix-wrapper {
-    padding: 7px 15px;
+    padding: 7px 12px;
     border-radius: 32px;
     border: none !important;
     background-color: ${(props) => props.theme.colors.dark100} !important;
@@ -37,24 +38,33 @@ const SearchBar = () => {
   const { pathname } = useLocation();
   const isArtworks = useMemo(() => pathname.includes('/artworks'), [pathname]);
 
-  const onSearch = useCallback(() => {
-    const text = keyword.trim();
-    if (!text) {
-      return;
-    }
-    searchKeywordVar(text);
-    newSearchArtworkVar(true);
-    newSearchMarketplaceVar(true);
-    history.push(`/${isArtworks ? 'artworks' : ''}`);
-  }, [keyword, isArtworks]);
+  const onSearch = useCallback(
+    (clear) => {
+      const text = clear ? '' : keyword.trim();
+      if (clear) {
+        setKeyword('');
+      }
+      if (!clear && !text) {
+        return;
+      }
+      searchKeywordVar(text);
+      newSearchArtworkVar(true);
+      newSearchMarketplaceVar(true);
+      history.push(`/${isArtworks ? 'artworks' : ''}`);
+    },
+    [keyword, isArtworks],
+  );
+  const onClear = useCallback(() => onSearch(true), [onSearch]);
 
   return (
     <Wrapper>
       <Input
         prefix={<SearchIcon />}
         placeholder='Search'
+        value={keyword}
         onChange={(e) => setKeyword(e.target.value)}
-        onPressEnter={onSearch}
+        onPressEnter={() => onSearch()}
+        suffix={keyword.trim() ? <CloseIcon onClick={onClear} className='pointer' /> : undefined}
       />
     </Wrapper>
   );

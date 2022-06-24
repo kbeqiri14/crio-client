@@ -3,6 +3,7 @@ import { memo, useCallback } from 'react';
 import { signIn } from '@app/auth';
 import { Button, Col, Row } from '@ui-kit';
 import { ReactComponent as GoogleIcon } from '@svgs/google-sign-in.svg';
+import SearchBar from './SearchBar';
 
 // Temporary hide FB log in / sign up
 const GetStarted = () => {
@@ -10,7 +11,10 @@ const GetStarted = () => {
 
   return (
     <>
-      <Row className='items-center' gutter={40}>
+      <Row className='items-center' gutter={20}>
+        <Col margin_right={20}>
+          <SearchBar />
+        </Col>
         <Col>
           <Button type='link' white='true' onClick={googleSignIn}>
             Sign in

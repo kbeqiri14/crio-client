@@ -1,9 +1,9 @@
 import { memo } from 'react';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
-import GetStarted from '@shared/GetStarted';
 import { Col, Row } from '@ui-kit';
 import Menu from './Menu';
+import GetStarted from './GetStarted';
 import ProfileMenu from './ProfileMenu';
 import UploadButton from './UploadButton';
 
