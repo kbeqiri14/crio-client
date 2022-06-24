@@ -1,12 +1,14 @@
-import { memo, useState } from 'react';
+import { memo, useMemo, useState } from 'react';
 import { useReactiveVar } from '@apollo/client';
 
 import { Footer } from '@shared/Footer';
 import useRandomInfo from '@root/src/hooks/useRandomInfo';
 import {
-  newSearchArtworkVar,
-  newSearchMarketplaceVar,
+  searchArtworkVar,
+  searchMarketplaceVar,
   searchKeywordVar,
+  searchClearArtworksVar,
+  searchClearMarketplaceVar,
 } from '@configs/client-cache';
 import { Carousel } from '@ui-kit';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
@@ -22,8 +24,10 @@ export const ExplorePage = () => {
   const [productsList, setProductsList] = useState([]);
   const [artworksList, setArtworksList] = useState([]);
   const keyword = useReactiveVar(searchKeywordVar);
-  const newSearchMarketplace = useReactiveVar(newSearchMarketplaceVar);
-  const newSearchArtwork = useReactiveVar(newSearchArtworkVar);
+  const searchClearArtworks = useReactiveVar(searchClearArtworksVar);
+  const searchClearMarketplace = useReactiveVar(searchClearMarketplaceVar);
+  const searchMarketplace = useReactiveVar(searchMarketplaceVar);
+  const searchArtwork = useReactiveVar(searchArtworkVar);
 
   const {
     carouselArtworks,
@@ -39,8 +43,9 @@ export const ExplorePage = () => {
     productsLimit: PRODUCTS_LIMIT,
     artworksLimit: ARTWORKS_LIMIT,
     getRandomProductsCompleted: ({ getRandomProducts }) => {
-      if (keyword && newSearchMarketplace) {
-        newSearchMarketplaceVar(false);
+      if (searchMarketplace || searchClearMarketplace) {
+        searchMarketplaceVar(false);
+        searchClearMarketplaceVar(false);
         setProductsList(getRandomProducts);
         setProductsOffset(0 + PRODUCTS_LIMIT);
       } else {
@@ -49,8 +54,9 @@ export const ExplorePage = () => {
       }
     },
     getRandomArtworksCompleted: ({ getRandomArtworks }) => {
-      if (keyword && newSearchArtwork) {
-        newSearchArtworkVar(false);
+      if (searchArtwork || searchClearArtworks) {
+        searchArtworkVar(false);
+        searchClearArtworksVar(false);
         setArtworksList(getRandomArtworks);
         setArtworksOffset(0 + ARTWORKS_LIMIT);
       } else {
@@ -60,7 +66,15 @@ export const ExplorePage = () => {
     },
   });
 
-  if (loadMoreProducts && !productsOffset) {
+  const showLoader = useMemo(
+    () =>
+      (keyword && (searchMarketplace || searchArtwork)) ||
+      searchClearArtworks ||
+      searchClearMarketplace,
+    [keyword, searchMarketplace, searchArtwork, searchClearArtworks, searchClearMarketplace],
+  );
+
+  if (showLoader || (loadMoreProducts && !productsOffset)) {
     return <GlobalSpinner />;
   }
 

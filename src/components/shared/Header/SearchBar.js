@@ -4,10 +4,11 @@ import styled from 'styled-components';
 
 import history from '@configs/history';
 import {
-  newSearchArtworkVar,
-  newSearchMarketplaceVar,
+  searchArtworkVar,
+  searchMarketplaceVar,
   searchKeywordVar,
-  searchClearVar,
+  searchClearArtworksVar,
+  searchClearMarketplaceVar,
 } from '@configs/client-cache';
 import { Input } from '@ui-kit';
 import { ReactComponent as SearchIcon } from '@svgs/search.svg';
@@ -44,14 +45,15 @@ const SearchBar = () => {
       const text = clear ? '' : keyword.trim();
       if (clear) {
         setKeyword('');
-        searchClearVar(true);
+        searchClearArtworksVar(true);
+        searchClearMarketplaceVar(true);
       }
       if (!clear && !text) {
         return;
       }
       searchKeywordVar(text);
-      newSearchArtworkVar(true);
-      newSearchMarketplaceVar(true);
+      searchArtworkVar(true);
+      searchMarketplaceVar(true);
       history.push(`/${isArtworks ? 'artworks' : ''}`);
     },
     [keyword, isArtworks],

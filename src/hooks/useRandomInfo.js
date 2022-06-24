@@ -37,6 +37,7 @@ const useRandomInfo = ({
   const { data: productsInfo } = useQuery(getRandomInfo, {
     variables: { keyword },
     onCompleted: ({ getRandomInfo }) => {
+      setLoading(true);
       const n = Math.floor(Math.random() * getRandomInfo.artworksCount + 1);
       randomNumberVar(n);
       requestRandomProducts({
