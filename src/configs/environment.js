@@ -3,6 +3,7 @@ export const isOnProduction = env === 'production';
 export const SENTRY_DSN = process.env.REACT_APP_SENTRY_DSN;
 export const GRAPHQL_ROOT = process.env.REACT_APP_GQL_ROOT;
 export const STRIPE_PAYMENT_URL = process.env.REACT_APP_STRIPE_PAYMENT_URL;
+export const BUCKET_NAME = process.env.REACT_APP_BUCKET_NAME;
 
 // cognito
 export const COGNITO_REGION = process.env.REACT_APP_COGNITO_REGION;
