@@ -40,8 +40,7 @@ const Wrapper = styled('div')`
 `;
 
 const BroadcastWrapper = styled('div')`
-  background: #00a0ff;
-  opacity: 0.5;
+  background: rgba(0, 160, 255, 0.5);
   padding: 13px 36px;
   a {
     color: white;

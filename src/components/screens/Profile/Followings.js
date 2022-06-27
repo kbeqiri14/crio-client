@@ -13,8 +13,12 @@ import EmptyState from '@root/src/components/shared/EmptyState';
 const StyledCard = styled('div')`
   width: 332px;
   padding: 20px;
-  background: ${(props) => props.theme.colors.dark100};
+  background: rgba(32, 32, 32, 0.5);
   border-radius: 15px;
+  border: 1px solid transparent;
+  :hover {
+    border: 1px solid ${(props) => props.theme.colors.dark50};
+  }
 `;
 const FollowingCard = ({ user }) => {
   const { providerType, providerUserId, firstName, lastName, username, avatar } = user || {};
