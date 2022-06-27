@@ -200,7 +200,7 @@ const ProductForm = ({ state }) => {
                 <Input.TextArea
                   {...field}
                   level={3}
-                  maxLength={500}
+                  maxLength={1000}
                   autoSize={{ minRows: 3, maxRows: 3 }}
                   placeholder='Write here'
                 />
