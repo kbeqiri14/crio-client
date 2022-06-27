@@ -2,11 +2,11 @@ import { Layout as antLayout } from 'antd';
 import styled from 'styled-components';
 
 const Layout = styled(antLayout)`
-  background: #202020;
+  background: transparent;
 `;
 
 const Sider = styled(Layout.Sider)`
-  background-color: ${(props) => props.theme.colors.dark100};
+  background: #202020;
 `;
 
 const Content = styled(Layout.Content)`
@@ -15,15 +15,15 @@ const Content = styled(Layout.Content)`
   width: 100%;
   height: 100%;
   min-height: 100vh;
-  max-width: 1394px;
-  @media (max-width: 1768px) {
-    max-width: 1040px;
+  max-width: 1438px;
+  @media (max-width: 1792px) {
+    max-width: 1084px;
   }
-  @media (max-width: 1394px) {
-    max-width: 686px;
+  @media (max-width: 1438px) {
+    max-width: 730px;
   }
-  @media (max-width: 1040px) {
-    max-width: 332px;
+  @media (max-width: 1084px) {
+    max-width: 376px;
   }
 `;
 

@@ -1,33 +1,5 @@
 import { gql } from '@apollo/client';
-
-export const me_fragment = gql`
-  fragment Me on UserInfo {
-    id
-    email
-    userId
-    providerType
-    providerUserId
-    username
-    firstName
-    lastName
-    avatar
-    about
-    isCreator
-    payment {
-      customerEmail
-      periodStart
-      periodEnd
-      subscriptionStatus
-      lastEventSnapshot
-      subscriptionCancel
-    }
-    artworksCount
-    followersCount
-    followingsCount
-    isFollowing
-    followings
-  }
-`;
+import { meFragment, followingInfoFragment } from '../fragments';
 
 export const me = gql`
   query {
@@ -35,7 +7,7 @@ export const me = gql`
       ...Me
     }
   }
-  ${me_fragment}
+  ${meFragment}
 `;
 
 export const getUser = gql`
@@ -44,29 +16,7 @@ export const getUser = gql`
       ...Me
     }
   }
-  ${me_fragment}
-`;
-
-export const following_info_fragment = gql`
-  fragment FollowingInfoAttributes on FollowingInfo {
-    id
-    userId
-    providerType
-    providerUserId
-    name
-    email
-    username
-    firstName
-    lastName
-    avatar
-    artworks {
-      artworkId
-      videoUri
-      thumbnailUri
-      title
-      description
-    }
-  }
+  ${meFragment}
 `;
 
 export const getFollowings = gql`
@@ -75,7 +25,7 @@ export const getFollowings = gql`
       ...FollowingInfoAttributes
     }
   }
-  ${following_info_fragment}
+  ${followingInfoFragment}
 `;
 
 export const isFollowing = gql`

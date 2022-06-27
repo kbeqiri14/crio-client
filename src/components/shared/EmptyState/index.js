@@ -1,24 +1,29 @@
 import { memo, useCallback, useMemo } from 'react';
 
-import history from '@app/configs/history';
-import { ReactComponent as UploadIcon } from '@svgs/upload.svg';
+import history from '@configs/history';
+import { ReactComponent as UploadProductIcon } from '@svgs/products-empty.svg';
+import { ReactComponent as UploadArtworkIcon } from '@svgs/fallowing-empty.svg';
 import { ReactComponent as FallowingEmptyIcon } from '@svgs/fallowing-empty.svg';
 import { Col, Button, Row, Text } from '@ui-kit';
 
-const EmptyState = ({ username, isCreator, isProfile, isSubscribed }) => {
+const EmptyState = ({ username, isCreator, isProfile, isSubscribed, isMarketplace }) => {
   const text = useMemo(() => {
     if (isProfile) {
-      return `${username} ${
-        isCreator ? 'hasn’t added an artwork yet' : 'is not following anyone yet'
-      }`;
+      let text = 'is not following anyone yet';
+      if (isCreator) {
+        text = isMarketplace
+          ? 'hasn’t added a products and services yet'
+          : 'hasn’t added an artwork yet';
+      }
+      return `${username} ${text}`;
     }
     if (isCreator) {
-      return 'Upload your first artwork';
+      return isMarketplace ? 'Upload your first product or service' : 'Upload your first artwork';
     }
     return isSubscribed
       ? 'You don’t follow anyone'
       : 'Subscribe to follow creators and gain access to free digital products across Crio';
-  }, [username, isCreator, isProfile, isSubscribed]);
+  }, [username, isCreator, isProfile, isSubscribed, isMarketplace]);
 
   const visible = useMemo(
     () => !isProfile && (isCreator || !isSubscribed),
@@ -29,15 +34,19 @@ const EmptyState = ({ username, isCreator, isProfile, isSubscribed }) => {
     [isCreator],
   );
   const onClick = useCallback(
-    () => history.push(`/${isCreator ? 'upload' : 'pricing'}`),
-    [isCreator],
+    () => history.push(`/${isCreator ? (isMarketplace ? 'upload' : 'upload/artwork') : 'pricing'}`),
+    [isCreator, isMarketplace],
   );
 
   return (
     <Row justify='center' align='middle' gutter={[0, 20]}>
       <Col span={24} align='center' padding_bottom={20}>
         {isCreator ? (
-          <UploadIcon width={210} height={151} />
+          isMarketplace ? (
+            <UploadProductIcon width={210} height={151} />
+          ) : (
+            <UploadArtworkIcon width={210} height={151} />
+          )
         ) : (
           <FallowingEmptyIcon width={210} height={151} />
         )}

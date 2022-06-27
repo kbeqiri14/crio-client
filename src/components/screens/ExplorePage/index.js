@@ -1,75 +1,96 @@
-import { memo, useState } from 'react';
-import styled from 'styled-components';
+import { memo, useMemo, useState } from 'react';
+import { useReactiveVar } from '@apollo/client';
 
 import { Footer } from '@shared/Footer';
-import { useRandomArtworks } from '@root/src/hooks/useRandomArtwork';
-import { Button, Carousel, Col, Row, Tabs } from '@ui-kit';
+import useRandomInfo from '@root/src/hooks/useRandomInfo';
+import {
+  searchArtworkVar,
+  searchMarketplaceVar,
+  searchKeywordVar,
+  searchClearArtworksVar,
+  searchClearMarketplaceVar,
+} from '@configs/client-cache';
+import { Carousel } from '@ui-kit';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
-import TopPoster from './TopPoster';
-import PostersList from './PostersList';
+import TopArtwork from './TopArtwork';
+import Content from '../../shared/CreatorContent';
 
-const ShadowWrapper = styled('div')`
-  &:after {
-    display: block;
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    transform: translateY(-100%);
-    height: 294px;
-    width: 100%;
-    background-image: linear-gradient(180deg, rgba(43, 43, 43, 0) 0%, #2b2b2b 78.12%);
-  }
-`;
-
-const { TabPane } = Tabs;
-
-const tabs = {
-  ARTWORK: 'Artwork',
-};
+const PRODUCTS_LIMIT = 15;
+const ARTWORKS_LIMIT = 24;
 
 export const ExplorePage = () => {
-  const [offset, setOffset] = useState(0);
-  const [postersList, setPostersList] = useState([]);
+  const [productsOffset, setProductsOffset] = useState(0);
+  const [artworksOffset, setArtworksOffset] = useState(0);
+  const [productsList, setProductsList] = useState([]);
+  const [artworksList, setArtworksList] = useState([]);
+  const keyword = useReactiveVar(searchKeywordVar);
+  const searchClearArtworks = useReactiveVar(searchClearArtworksVar);
+  const searchClearMarketplace = useReactiveVar(searchClearMarketplaceVar);
+  const searchMarketplace = useReactiveVar(searchMarketplaceVar);
+  const searchArtwork = useReactiveVar(searchArtworkVar);
 
-  const { carouselPosters, isEnd, loading, loadMore } = useRandomArtworks(
-    ({ getRandomArtworks }) => {
-      setPostersList([...postersList, ...getRandomArtworks]);
-      setOffset(offset + 16);
+  const {
+    carouselArtworks,
+    isProductsEnd,
+    isArtworksEnd,
+    loading,
+    loadMoreArtworks,
+    loadMoreProducts,
+  } = useRandomInfo({
+    keyword,
+    productsOffset,
+    artworksOffset,
+    productsLimit: PRODUCTS_LIMIT,
+    artworksLimit: ARTWORKS_LIMIT,
+    getRandomProductsCompleted: ({ getRandomProducts }) => {
+      if (searchMarketplace || searchClearMarketplace) {
+        searchMarketplaceVar(false);
+        searchClearMarketplaceVar(false);
+        setProductsList(getRandomProducts);
+        setProductsOffset(0 + PRODUCTS_LIMIT);
+      } else {
+        setProductsList([...productsList, ...getRandomProducts]);
+        setProductsOffset(productsOffset + PRODUCTS_LIMIT);
+      }
     },
-    offset,
+    getRandomArtworksCompleted: ({ getRandomArtworks }) => {
+      if (searchArtwork || searchClearArtworks) {
+        searchArtworkVar(false);
+        searchClearArtworksVar(false);
+        setArtworksList(getRandomArtworks);
+        setArtworksOffset(0 + ARTWORKS_LIMIT);
+      } else {
+        setArtworksList([...artworksList, ...getRandomArtworks]);
+        setArtworksOffset(artworksOffset + ARTWORKS_LIMIT);
+      }
+    },
+  });
+
+  const showLoader = useMemo(
+    () => searchMarketplace || searchArtwork || searchClearArtworks || searchClearMarketplace,
+    [searchMarketplace, searchArtwork, searchClearArtworks, searchClearMarketplace],
   );
 
-  if (loading && !offset) {
+  if (showLoader || (loadMoreProducts && !productsOffset)) {
     return <GlobalSpinner />;
   }
 
   return (
     <>
       <Carousel autoplay effect='fade'>
-        {carouselPosters.map((item) => (
-          <TopPoster key={item.id} username={item.name} thumbnail={item.thumbnailUri} />
+        {carouselArtworks.map((item) => (
+          <TopArtwork key={item.artworkId} username={item.username} thumbnail={item.thumbnailUri} />
         ))}
       </Carousel>
-      <Tabs>
-        <TabPane key={tabs.ARTWORK} tab={tabs.ARTWORK}>
-          <Row justify='center' gutter={[0, 40]}>
-            <Col span={24}>
-              <PostersList postersList={postersList} />
-            </Col>
-            {!isEnd && offset && (
-              <Col span={24} align='center'>
-                <ShadowWrapper>
-                  <Button white='true' loading={loading} onClick={loadMore} width={168}>
-                    LOAD MORE
-                  </Button>
-                </ShadowWrapper>
-              </Col>
-            )}
-          </Row>
-        </TabPane>
-      </Tabs>
+      <Content
+        visibleLoadMoreProducts={!isProductsEnd && productsOffset}
+        visibleLoadMoreArtworks={!isArtworksEnd && artworksOffset}
+        productsList={productsList}
+        artworksList={artworksList}
+        loading={loading}
+        loadMoreProducts={loadMoreProducts}
+        loadMoreArtworks={loadMoreArtworks}
+      />
       <Footer />
     </>
   );

@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Col, Row, Text, Title } from '@ui-kit';
 
 const TermsAndConditions = () => {
@@ -363,4 +364,4 @@ const TermsAndConditions = () => {
   );
 };
 
-export default TermsAndConditions;
+export default memo(TermsAndConditions);

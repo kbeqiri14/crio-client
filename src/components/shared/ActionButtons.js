@@ -3,6 +3,7 @@ import { memo } from 'react';
 import { Button, Col, Row } from '@ui-kit';
 
 const ActionButtons = ({
+  fillColor = 'blue',
   cancelText = 'CANCEL',
   saveText = 'SAVE',
   onCancel,
@@ -25,7 +26,14 @@ const ActionButtons = ({
       </Button>
     </Col>
     <Col min_width={190}>
-      <Button block type='primary' loading={loading} disabled={disabled} onClick={onSave}>
+      <Button
+        block
+        type='primary'
+        fill_color={fillColor}
+        loading={loading}
+        disabled={disabled}
+        onClick={onSave}
+      >
         {saveText}
       </Button>
     </Col>

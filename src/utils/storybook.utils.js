@@ -1,4 +1,4 @@
-import history from '@app/configs/history';
+import history from '@configs/history';
 import { Router } from 'react-router-dom';
 
 export const routerDecorator = (Story) => (

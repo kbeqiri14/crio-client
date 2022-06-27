@@ -1,7 +1,7 @@
 import { Fragment, memo, useCallback, useReducer } from 'react';
 import { useMutation } from '@apollo/client';
 
-import history from '@app/configs/history';
+import history from '@configs/history';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import Confirmation from '@shared/Confirmation';
 import { deleteArtwork } from '@app/graphql/mutations/artwork.mutation';
@@ -58,7 +58,7 @@ const Upload = () => {
     [dispatch],
   );
   const goToProfile = useCallback(
-    () => history.push(`/profile/${user?.username}`),
+    () => history.push(`/profile/artworks/${user?.username}`),
     [user?.username],
   );
 

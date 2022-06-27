@@ -14,7 +14,6 @@ const Button = styled(antButton)`
   background: none;
   border: 1px solid ${(props) => props.theme.colors.primary};
   color: ${(props) => props.theme.colors.primary};
-  box-shadow: 0px 4px 5px rgba(12, 17, 36, 0.4);
 
   :hover {
     background: #202020; // Narine dark25
@@ -37,6 +36,12 @@ const Button = styled(antButton)`
   }
 
   ${(props) =>
+    props?.min_width &&
+    css`
+      min-width: ${props.min_width}px;
+    `}
+
+  ${(props) =>
     props?.width &&
     css`
       width: ${props.width}px;
@@ -54,6 +59,30 @@ const Button = styled(antButton)`
       }
     `}
 
+  ///************** TAB BUTTON **************///
+
+  &.ant-btn-tab {
+    padding: 0;
+    border: none !important;
+    line-height: 24px;
+    font-weight: 400;
+    color: ${(props) => props.theme.colors.dark50} !important;
+    &:hover {
+      color: ${(props) => props.theme.colors.dark25} !important;
+    }
+    ::after {
+      display: none;
+    }
+    ${(props) =>
+      props?.active === 'true' &&
+      css`
+        color: ${(props) => props.theme.colors.white} !important;
+        &:hover {
+          color: ${(props) => props.theme.colors.white} !important;
+        }
+      `}
+  }
+
   ///************** PRIMARY BUTTON **************///
 
   &.ant-btn-primary {
@@ -61,24 +90,20 @@ const Button = styled(antButton)`
     color: ${(props) => props.theme.colors.white} !important;
     background: ${(props) =>
       props.theme.colors[`gradient_${props?.fill_color || 'blue'}`]} !important;
-  }
-
-  &.ant-btn-primary:active,
-  &.ant-btn-primary:focus {
-    background: ${(props) =>
-      props.theme.colors[`gradient_${props?.fill_color || 'blue'}`]} !important;
-  }
-
-  &.ant-btn-primary:hover {
-    box-shadow: 0px 4px 5px rgba(12, 17, 36, 0.4);
-    background: ${(props) =>
-      props.theme.colors[`gradient_${props?.fill_color || 'blue'}`]} !important;
+    &:active,
+    &:focus {
+      background: ${(props) =>
+        props.theme.colors[`gradient_${props?.fill_color || 'blue'}`]} !important;
+    }
+    &:hover {
+      background: ${(props) =>
+        props.theme.colors[`gradient_dark_${props?.fill_color || 'blue'}`]} !important;
+    }
   }
 
   &.ant-btn-primary[disabled],
   .ant-btn-primary[disabled]:hover {
     color: ${(props) => props.theme.colors.dark100} !important;
-    box-shadow: none;
     background: ${(props) => props.theme.colors.dark50} !important;
     border: none !important;
   }
@@ -87,11 +112,11 @@ const Button = styled(antButton)`
 
   &.ant-btn-link {
     height: 32px;
+    padding: 4px 8px;
     border: none !important;
     font-size: ${(props) => props.theme.text[3].size}px;
     font-weight: ${(props) => props.theme.text[3].weight};
     font-style: ${(props) => props.theme.text[3].style || 'normal'};
-    box-shadow: none;
   }
 
   &.ant-btn-link[disabled],
@@ -113,6 +138,45 @@ const Button = styled(antButton)`
         vertical-align: middle;
       }
     `}
+
+  ///************** GOOGLE BUTTON **************///
+
+  &.ant-btn-google {
+    padding: 4px 20px 4px 14px;
+    border: none;
+    background-color: ${(props) => props.theme.colors.white};
+    color: ${(props) => props.theme.colors.dark100};
+    svg {
+      margin-left: -4px;
+    }
+    &:active,
+    &:focus {
+      background: ${(props) => props.theme.colors.white} !important;
+    }
+    &:hover {
+      background-color: ${(props) => props.theme.colors.white};
+    }
+  }
+
+  ///************** FACEBOOK BUTTON **************///
+
+  &.ant-btn-facebook {
+    border: none;
+    color: ${(props) => props.theme.colors.white};
+    background: ${(props) => props.theme.colors[`gradient_blue`]};
+    svg {
+      margin-left: -30px;
+      margin-right: 10px;
+    }
+    &:active,
+    &:focus {
+      background: ${(props) => props.theme.colors[`gradient_blue`]} !important;
+    }
+    &:hover {
+      background-color: ${(props) => props.theme.colors.white};
+      border-color: ${(props) => props.theme.colors.white};
+    }
+  }
 `;
 
 export default Button;

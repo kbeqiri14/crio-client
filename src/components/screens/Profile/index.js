@@ -1,8 +1,10 @@
 import { memo, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useLazyQuery } from '@apollo/client';
+import { Helmet } from 'react-helmet';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
+import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { getUser } from '@app/graphql/queries/users.query';
 import NotFound from '@shared/NotFound';
 import { Layout } from '@ui-kit';
@@ -36,6 +38,7 @@ export const Profile = () => {
       (isProfile && (loggedInUser.isCreator || !user?.isCreator)),
     [isProfile, loggedInUser.username, loggedInUser.isCreator, user?.isCreator],
   );
+  const avatarUrl = useAvatarUrl(user?.providerType, user?.providerUserId, user?.avatar);
 
   useEffect(() => {
     if (username !== loggedInUser.username) {
@@ -47,29 +50,40 @@ export const Profile = () => {
     return <NotFound text='No Result' icon={<NotFoundUser />} />;
   }
   return (
-    <Layout>
-      <Sider width={355} breakpoint='lg' collapsedWidth={0}>
-        <ProfileSider
-          user={user}
-          isProfile={isProfile}
-          isSubscribed={loggedInUser.isSubscribed}
-          hideButton={hideButton}
-        />
-      </Sider>
+    <>
+      <Helmet>
+        <meta name='description' content={'description'} />
+        <meta property='og:url' content={`https://criointeractive.com/${username}`} />
+        <meta property='og:image' content={avatarUrl} />
+        <meta property='twitter:url' content={`https://criointeractive.com/${username}`} />
+        <meta property='twitter:image' content={avatarUrl} />
+      </Helmet>
       <Layout>
-        <Content>
-          {user?.username && (
-            <ProfileContent
-              username={user?.username}
-              followingsCount={user?.followingsCount}
-              isCreator={user?.isCreator}
-              isProfile={isProfile}
-              isSubscribed={loggedInUser.isSubscribed}
-            />
-          )}
-        </Content>
+        <Sider width={355} breakpoint='lg' collapsedWidth={0}>
+          <ProfileSider
+            user={user}
+            isProfile={isProfile}
+            isSubscribed={loggedInUser.isSubscribed}
+            hideButton={hideButton}
+          />
+        </Sider>
+        <Layout>
+          <Content>
+            {user?.username && (
+              <ProfileContent
+                username={user?.username}
+                followingsCount={user?.followingsCount}
+                productsCount={user?.productsCount}
+                artworksCount={user?.artworksCount}
+                isCreator={user?.isCreator}
+                isProfile={isProfile}
+                isSubscribed={loggedInUser.isSubscribed}
+              />
+            )}
+          </Content>
+        </Layout>
       </Layout>
-    </Layout>
+    </>
   );
 };
 

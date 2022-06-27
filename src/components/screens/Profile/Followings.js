@@ -3,7 +3,7 @@ import { Badge } from 'antd';
 import styled from 'styled-components';
 import { useQuery } from '@apollo/client';
 
-import history from '@app/configs/history';
+import history from '@configs/history';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { getFollowings } from '@app/graphql/queries/users.query';
 import { Col, Row, Text, Title } from '@ui-kit';

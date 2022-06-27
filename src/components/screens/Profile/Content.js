@@ -1,32 +1,82 @@
-import { memo, useMemo } from 'react';
+import { memo, useMemo, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useLazyQuery } from '@apollo/client';
 
+import { getUserArtworks } from '@app/graphql/queries/artworks.query';
+import { getUserProducts } from '@app/graphql/queries/products.query';
 import { Tabs } from '@ui-kit';
 import Followings from './Followings';
-import Works from './Works';
+import Content from '@root/src/components/shared/CreatorContent';
 
 const { TabPane } = Tabs;
 
 const tabs = {
-  WORKS: '1',
+  MARKETPLACE: 'Marketplace',
+  ARTWORK: 'Artwork',
+  FOLLOWING: 'Following',
 };
 
-const ProfileContent = ({ username, followingsCount, isCreator, isProfile, isSubscribed }) => {
+const ProfileContent = ({
+  username,
+  followingsCount,
+  productsCount,
+  artworksCount,
+  isCreator,
+  isProfile,
+  isSubscribed,
+}) => {
   const tab = useMemo(() => {
-    if (isCreator) {
-      return 'Artwork';
-    }
     const count = (isProfile ? followingsCount : isSubscribed && followingsCount) || '';
-    return count ? `Following: ${count}` : 'Following';
-  }, [isCreator, isProfile, isSubscribed, followingsCount]);
+    return count ? `${tabs.FOLLOWING}: ${count}` : tabs.FOLLOWING;
+  }, [isProfile, isSubscribed, followingsCount]);
 
+  const { pathname } = useLocation();
+  // const [initialPolling, setInitialPolling] = useState(true);
+
+  const [requestArtworks, { data: Artworks }] = useLazyQuery(getUserArtworks, {
+    variables: { username: pathname.split('/').slice(-1)[0] || undefined },
+    fetchPolicy: 'no-cache',
+    notifyOnNetworkStatusChange: true,
+    pollInterval: 30000,
+    // onCompleted: ({ getUserArtworks }) => {
+    //   setInitialPolling(false);
+    //   setWorks(getUserArtworks);
+    // },
+  });
+
+  const [requestProducts, { data: Products }] = useLazyQuery(getUserProducts, {
+    variables: { username: pathname.split('/').slice(-1)[0] || undefined },
+    fetchPolicy: 'no-cache',
+    notifyOnNetworkStatusChange: true,
+    pollInterval: 30000,
+    // onCompleted: ({ getUserArtworks }) => {
+    //   setInitialPolling(false);
+    //   setWorks(getUserArtworks);
+    // },
+  });
+
+  useEffect(() => {
+    if (isCreator) {
+      requestArtworks();
+      requestProducts();
+    }
+  }, [isCreator, requestArtworks, requestProducts]);
+
+  if (isCreator) {
+    return (
+      <Content
+        isProfile={isProfile}
+        productsCount={productsCount}
+        artworksCount={artworksCount}
+        productsList={Products?.getUserProducts}
+        artworksList={Artworks?.getUserArtworks}
+      />
+    );
+  }
   return (
-    <Tabs>
-      <TabPane key={tabs.WORKS} tab={tab}>
-        {isCreator ? (
-          <Works username={username} isProfile={isProfile} />
-        ) : (
-          <Followings username={username} isProfile={isProfile} isSubscribed={isSubscribed} />
-        )}
+    <Tabs style={{ paddingTop: 40, paddingBottom: 20 }}>
+      <TabPane key='Following' tab={tab}>
+        <Followings username={username} isProfile={isProfile} isSubscribed={isSubscribed} />
       </TabPane>
     </Tabs>
   );

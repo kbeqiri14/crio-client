@@ -1,32 +1,33 @@
 import { memo, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Skeleton } from 'antd';
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+import styled from 'styled-components';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
-import { getArtwork, getRandomArtworks } from '@app/graphql/queries/artworks.query';
+import { getArtwork } from '@app/graphql/queries/artworks.query';
 import NotFound from '@shared/NotFound';
 import { ReactComponent as NotFoundUser } from '@svgs/not-found.svg';
 import { Col, Row } from '@ui-kit';
 import Content from './Content';
-import MoreBySection from './MoreBySection';
+import MoreProductsSection from '@root/src/components/screens/Product/MoreProductsSection';
+
+const Wrapper = styled('div')`
+  display: flex;
+  justify-content: center;
+  padding: 40px 10px;
+  > div {
+    min-width: 1040px;
+    max-width: 1040px;
+  }
+`;
 
 export const Artwork = () => {
   const { user } = useLoggedInUser();
   const { pathname } = useLocation();
   const artworkId = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
 
-  const [requestRandomArtworks, { data: artworks }] = useLazyQuery(getRandomArtworks);
-  const { data, loading: loadingArtwork } = useQuery(getArtwork, {
-    variables: { artworkId },
-    onCompleted: ({ getArtwork }) => {
-      if (getArtwork?.userId) {
-        requestRandomArtworks({
-          variables: { params: { userId: getArtwork?.userId, artworkId, limit: 3 } },
-        });
-      }
-    },
-  });
+  const { data, loading: loadingArtwork } = useQuery(getArtwork, { variables: { artworkId } });
   const artwork = useMemo(() => data?.getArtwork || {}, [data?.getArtwork]);
   const videoUri = useMemo(
     () => artwork.videoUri?.substring(artwork.videoUri?.lastIndexOf('/') + 1),
@@ -41,9 +42,9 @@ export const Artwork = () => {
 
   if (loadingArtwork) {
     return (
-      <div className='video-view-container'>
-        <Row className='full-width'>
-          <Col span={18} offset={3} padding_bottom={30}>
+      <Wrapper>
+        <Row gutter={[0, 40]}>
+          <Col span={24}>
             <Skeleton round active title={{ width: '100%' }} paragraph={null} />
             <Skeleton
               round
@@ -62,7 +63,7 @@ export const Artwork = () => {
             />
           </Col>
         </Row>
-      </div>
+      </Wrapper>
     );
   }
   if (!Object.keys(artwork).length) {
@@ -71,9 +72,7 @@ export const Artwork = () => {
   return (
     <>
       <Content videoInfo={artwork} videoUri={videoUri} isLocked={isLocked} />
-      {artworks?.getRandomArtworks?.length >= 3 && (
-        <MoreBySection videoInfo={artwork} postersList={artworks?.getRandomArtworks} />
-      )}
+      <MoreProductsSection videoInfo={artwork} />
     </>
   );
 };

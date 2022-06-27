@@ -1,4 +1,4 @@
-import defaultAvatar from '@images/avatar.png';
+import defaultAvatar from '@svgs/avatar.svg';
 
 const useAvatarUrl = (providerType, providerUserId, avatar) => {
   if (!providerUserId) {

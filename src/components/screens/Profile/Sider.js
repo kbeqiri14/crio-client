@@ -105,7 +105,17 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
                 </Text>
               </Col>
               <Col margin_left={15} margin_right={15}>
-                <Divider type='vertical' />
+                <Divider type='vertical' top={15} />
+              </Col>
+              <Col align='center'>
+                <Text level={3}>
+                  Products
+                  <br />
+                  {user.productsCount}
+                </Text>
+              </Col>
+              <Col margin_left={15} margin_right={15}>
+                <Divider type='vertical' top={15} />
               </Col>
               <Col align='center'>
                 <Text level={3}>

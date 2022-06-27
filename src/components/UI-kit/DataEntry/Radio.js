@@ -8,6 +8,19 @@ const Radio = styled(antRadio)`
     font-size: ${(props) => props.theme.text[3].size}px;
     font-weight: ${(props) => props.theme.text[3].weight};
     font-style: ${(props) => props.theme.text[3].style || 'normal'};
+    &.ant-radio-wrapper-disabled {
+      .ant-radio-disabled {
+        .ant-radio-inner {
+          border: 2px solid ${(props) => props.theme.colors.dark50} !important;
+        }
+        .ant-radio-inner::after {
+          background-color: ${(props) => props.theme.colors.dark50};
+        }
+      }
+    }
+    &.ant-radio-wrapper-disabled > span {
+      color: ${(props) => props.theme.colors.dark50};
+    }
   }
   .ant-radio-checked {
     .ant-radio-inner {

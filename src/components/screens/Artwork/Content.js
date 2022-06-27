@@ -6,15 +6,51 @@ import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { urlify } from '@utils/helpers';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { Col, Row, Text, Title } from '@ui-kit';
-import LockState from '@screens/ExplorePage/LockState';
+import LockState from '@shared/CreatorContent/LockState';
+import BuyWidget from '../Product/BuyWidget';
 
 const Wrapper = styled('div')`
   display: flex;
   justify-content: center;
-  padding: 40px 10px 52px;
+  padding: 40px 10px;
   > div {
     min-width: 1040px;
     max-width: 1040px;
+  }
+  .lock {
+    .tooltip {
+      opacity: 0;
+      visibility: hidden;
+      transition: visibility 0s, opacity 0.2s linear;
+      top: 190px;
+    }
+    &:hover {
+      .tooltip {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+`;
+
+const ImageWrapper = styled('div')`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #182024;
+  border-radius: 16px;
+  width: 100%;
+  height: 638px;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+    &.default {
+      width: 409px;
+      height: 309px;
+      object-fit: contain;
+    }
   }
 `;
 
@@ -27,12 +63,11 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
   const { setVideoInfo } = usePresentation();
 
   const hide = useCallback(() => setVideoInfo({}), [setVideoInfo]);
-
   return (
     <Wrapper>
-      <Row justify='center'>
+      <Row justify='center' gutter={[0, 40]}>
         <Col span={24}>
-          <Row gutter={[0, 12]} padding_bottom={30}>
+          <Row gutter={[0, 12]}>
             <Col span={24}>
               <Title level={1}>{videoInfo.title}</Title>
             </Col>
@@ -51,7 +86,7 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
                 </Col>
                 <Col margin_left={20}>
                   <Text level={4} color='primary' onClick={hide}>
-                    <Link to={`/profile/${videoInfo.name}`}>{videoInfo.name}</Link>
+                    <Link to={`/profile/${videoInfo.username}`}>{videoInfo.username}</Link>
                   </Text>
                 </Col>
               </Row>
@@ -59,37 +94,65 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
           </Row>
         </Col>
         {isLocked ? (
-          <Col span={24} margin_bottom={40}>
-            <LockState
-              userId={videoInfo.userId}
-              accessibility={videoInfo.accessibility}
-              size='lg'
-            />
-            <img
-              src={videoInfo.thumbnailUri}
-              alt='artwork'
-              className='border-radius-30 fit-cover'
-              width='100%'
-              height={638}
-            />
+          <Col span={24}>
+            <div className='lock'>
+              <LockState
+                userId={videoInfo.userId}
+                accessibility={videoInfo.accessibility}
+                size='lg'
+              />
+              <ImageWrapper>
+                <img
+                  src={videoInfo.isProduct ? videoInfo.thumbnail : videoInfo.thumbnailUri}
+                  alt='artwork'
+                  className={videoInfo.thumbnail.startsWith('/static/media/') ? 'default' : ''}
+                />
+              </ImageWrapper>
+            </div>
           </Col>
         ) : (
           <Col span={24}>
-            <div className='video-view__player embed-responsive aspect-ratio-16/9'>
-              <iframe
-                title={videoInfo.title || 'Crio video player'}
-                src={`https://player.vimeo.com/video/${videoUri}?h=dc77330a55&color=ffffff&title=0&byline=0&portrait=0`}
-                frameBorder='0'
-                allow='autoplay; fullscreen; picture-in-picture'
-                allowFullScreen
-              />
-            </div>
+            {videoInfo.isProduct ? (
+              <ImageWrapper>
+                <img
+                  src={videoInfo.thumbnail}
+                  alt='product'
+                  className={videoInfo.thumbnail.startsWith('/static/media/') ? 'default' : ''}
+                />
+              </ImageWrapper>
+            ) : (
+              <div className='video-view__player embed-responsive aspect-ratio-16/9'>
+                <iframe
+                  title={videoInfo.title || 'Crio video player'}
+                  src={`https://player.vimeo.com/video/${videoUri}?h=dc77330a55&color=ffffff&title=0&byline=0&portrait=0`}
+                  frameBorder='0'
+                  allow='autoplay; fullscreen; picture-in-picture'
+                  allowFullScreen
+                />
+              </div>
+            )}
           </Col>
         )}
         <Col span={24}>
-          <Title level={2}>
-            <div dangerouslySetInnerHTML={{ __html: urlify(videoInfo.description) }} />
-          </Title>
+          <Row justify='space-between'>
+            <Col max_width={videoInfo.isProduct ? 722 : undefined}>
+              <Text level={4} color='dark25'>
+                <div dangerouslySetInnerHTML={{ __html: urlify(videoInfo.description) }} />
+              </Text>
+            </Col>
+            {videoInfo.isProduct && (
+              <Col>
+                <BuyWidget
+                  userId={videoInfo.userId}
+                  username={videoInfo.username}
+                  productId={videoInfo.productId}
+                  price={videoInfo.price}
+                  limit={videoInfo.limit}
+                  accessibility={videoInfo.accessibility}
+                />
+              </Col>
+            )}
+          </Row>
         </Col>
       </Row>
     </Wrapper>

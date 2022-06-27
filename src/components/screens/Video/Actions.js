@@ -1,57 +1,76 @@
-import { Fragment, memo, useCallback, useState } from 'react';
-import history from '@app/configs/history';
+import { memo, useCallback, useMemo, useState } from 'react';
+import history from '@configs/history';
 import { useMutation } from '@apollo/client';
 
+import { deleteProduct } from '@app/graphql/mutations/product.mutation';
 import { deleteArtwork } from '@app/graphql/mutations/artwork.mutation';
 import Confirmation from '@shared/Confirmation';
-import { Text } from '@ui-kit';
+import { Dropdown, Menu } from '@ui-kit';
 import { successToast } from '@ui-kit/Notification';
-import './styles.less';
+import { ReactComponent as SettingsIcon } from '@svgs/settings.svg';
 
 const Actions = (props) => {
   const [visible, setVisible] = useState(false);
   const showConfirmation = useCallback(() => setVisible(true), []);
   const hideConfirmation = useCallback(() => setVisible(false), []);
-  const handleEdit = useCallback(() => history.push('/video', props), [props]);
+  const name = useMemo(() => (props.isProduct ? 'product' : 'artwork'), [props.isProduct]);
+  const handleEdit = useCallback(() => history.push(`/edit-${name}`, props), [name, props]);
+
+  const [removeProduct, { loading: removingProduct }] = useMutation(deleteProduct, {
+    variables: { productId: props.productId },
+    onCompleted: () => {
+      hideConfirmation();
+      successToast('The product is successfully deleted');
+      window.location.href = `/profile/${props.username}`;
+    },
+  });
 
   const [removeArtwork, { loading: removingArtwork }] = useMutation(deleteArtwork, {
     variables: { params: { artworkId: props.artworkId } },
     onCompleted: () => {
       hideConfirmation();
-      successToast('The video is successfully deleted.');
-      window.location.href = `/profile/${props.username}`;
+      successToast('The video is successfully deleted');
+      window.location.href = `/profile/artworks/${props.username}`;
     },
   });
 
+  const removing = useMemo(
+    () => removingProduct || removingArtwork,
+    [removingProduct, removingArtwork],
+  );
+  const handleRemove = useMemo(
+    () => (props.isProduct ? removeProduct : removeArtwork),
+    [props.isProduct, removeProduct, removeArtwork],
+  );
+
   return (
-    <Fragment>
-      <div className='actions'>
-        <div className='action-button'>
-          <div className='dot' />
-          <div className='dot' />
-          <div className='dot' />
-        </div>
-        <div className='action-content'>
-          <Text inline level={3} onClick={handleEdit}>
-            Edit
-          </Text>
-          <Text inline level={3} onClick={showConfirmation}>
-            Delete
-          </Text>
-        </div>
-      </div>
+    <>
+      <Dropdown
+        overlay={
+          <Menu>
+            <Menu.Item key='edit' onClick={handleEdit}>
+              Edit
+            </Menu.Item>
+            <Menu.Item key='delete' onClick={showConfirmation}>
+              Delete
+            </Menu.Item>
+          </Menu>
+        }
+      >
+        <SettingsIcon />
+      </Dropdown>
       {visible && (
         <Confirmation
           visible={visible}
-          title='Delete the video?'
+          title={`Delete the ${name}?`}
           cancelText='CANCEL'
           confirmText='DELETE'
-          loading={removingArtwork}
-          onConfirm={removeArtwork}
+          loading={removing}
+          onConfirm={handleRemove}
           onCancel={hideConfirmation}
         />
       )}
-    </Fragment>
+    </>
   );
 };
 
