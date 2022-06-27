@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import history from '@configs/history';
+import { COGNITO_REGION, isOnProduction } from '@app/configs/environment';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
@@ -159,7 +160,9 @@ const Product = ({
   const src = useMemo(
     () =>
       thumbnail
-        ? `https://crio-in-staging-bucket.s3.us-west-2.amazonaws.com/${userId}/products/thumbnail-${thumbnail}`
+        ? `https://crio-in-${
+            isOnProduction ? 'production' : 'staging'
+          }-bucket.s3.${COGNITO_REGION}.amazonaws.com/${userId}/products/thumbnail-${thumbnail}`
         : product,
     [userId, thumbnail],
   );
