@@ -105,7 +105,7 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
                 <img
                   src={videoInfo.isProduct ? videoInfo.thumbnail : videoInfo.thumbnailUri}
                   alt='artwork'
-                  className={videoInfo.thumbnail.startsWith('/static/media/') ? 'default' : ''}
+                  className={videoInfo.thumbnail?.startsWith('/static/media/') ? 'default' : ''}
                 />
               </ImageWrapper>
             </div>
@@ -117,7 +117,7 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
                 <img
                   src={videoInfo.thumbnail}
                   alt='product'
-                  className={videoInfo.thumbnail.startsWith('/static/media/') ? 'default' : ''}
+                  className={videoInfo.thumbnail?.startsWith('/static/media/') ? 'default' : ''}
                 />
               </ImageWrapper>
             ) : (
