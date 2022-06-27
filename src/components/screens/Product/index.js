@@ -4,6 +4,7 @@ import { Skeleton } from 'antd';
 import { useQuery } from '@apollo/client';
 import styled from 'styled-components';
 
+import { BUCKET_NAME, COGNITO_REGION } from '@app/configs/environment';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { getProduct } from '@app/graphql/queries/products.query';
 import NotFound from '@shared/NotFound';
@@ -38,7 +39,7 @@ export const Product = () => {
             ...data.getProduct,
             isProduct: true,
             thumbnail: data.getProduct.thumbnail
-              ? `https://crio-in-staging-bucket.s3.us-west-2.amazonaws.com/${data.getProduct.userId}/products/thumbnail-${data.getProduct.thumbnail}`
+              ? `https://${BUCKET_NAME}.s3.${COGNITO_REGION}.amazonaws.com/${data.getProduct.userId}/products/thumbnail-${data.getProduct.thumbnail}`
               : defaultCover,
           }
         : {},

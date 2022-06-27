@@ -9,7 +9,6 @@ import {
   getConnectAccount,
   getConnectLoginLink,
   getConnectOnboardingLink,
-  deleteStripeAccount,
 } from '@app/graphql/queries/payment-method.query';
 import { Button, Col, Row, Text, Title } from '@ui-kit';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
@@ -28,10 +27,6 @@ const Wrapper = styled('div')`
 const Payment = () => {
   const { user } = useLoggedInUser();
   const { refreshUrl } = useQueryParams();
-  const [requestDelete, { loading }] = useLazyQuery(deleteStripeAccount, {
-    fetchPolicy: 'no-cache',
-    onCompleted: () => (window.location.href = '/payment'),
-  });
   const { data: connectAccount, loading: gettingConnectAccount } = useQuery(getConnectAccount);
   const [requestConnectOnboardingLink, { loading: gettingConnectOnboardingLink }] = useLazyQuery(
     getConnectOnboardingLink,
@@ -107,11 +102,6 @@ const Payment = () => {
                   ONBOARDING YOUR STRIPE ACCOUNT
                 </Button>
               )}
-            </Col>
-            <Col span={24}>
-              <Button onClick={requestDelete} loading={loading}>
-                RETRY
-              </Button>
             </Col>
           </Row>
         </Col>
