@@ -137,7 +137,10 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
           <Row justify='space-between'>
             <Col max_width={videoInfo.isProduct ? 722 : undefined}>
               <Text level={4} color='dark25'>
-                <div dangerouslySetInnerHTML={{ __html: urlify(videoInfo.description) }} />
+                <div
+                  dangerouslySetInnerHTML={{ __html: urlify(videoInfo.description) }}
+                  style={{ whiteSpace: 'pre-line' }}
+                />
               </Text>
             </Col>
             {videoInfo.isProduct && (
