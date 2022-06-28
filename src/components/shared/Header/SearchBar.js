@@ -1,15 +1,10 @@
 import { memo, useCallback, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import { useReactiveVar } from '@apollo/client';
 
 import history from '@configs/history';
-import {
-  searchArtworkVar,
-  searchMarketplaceVar,
-  searchKeywordVar,
-  searchClearArtworksVar,
-  searchClearMarketplaceVar,
-} from '@configs/client-cache';
+import { searchKeywordVar, refetchArtworkVar, refetchMarketplaceVar } from '@configs/client-cache';
 import { Input } from '@ui-kit';
 import { ReactComponent as SearchIcon } from '@svgs/search.svg';
 import { ReactComponent as CloseIcon } from '@svgs/close-middle.svg';
@@ -38,25 +33,22 @@ const Wrapper = styled('div')`
 const SearchBar = () => {
   const [keyword, setKeyword] = useState('');
   const { pathname } = useLocation();
+  const initialKeyword = useReactiveVar(searchKeywordVar);
   const isArtworks = useMemo(() => pathname.includes('/artworks'), [pathname]);
 
   const onSearch = useCallback(
     (clear) => {
       const text = clear ? '' : keyword.trim();
-      if (clear) {
-        setKeyword('');
-        searchClearArtworksVar(true);
-        searchClearMarketplaceVar(true);
-      }
-      if (!clear && !text) {
+      setKeyword(text);
+      if (initialKeyword === text || (!clear && !text)) {
         return;
       }
       searchKeywordVar(text);
-      searchArtworkVar(true);
-      searchMarketplaceVar(true);
+      refetchArtworkVar(true);
+      refetchMarketplaceVar(true);
       history.push(`/${isArtworks ? 'artworks' : ''}`);
     },
-    [keyword, isArtworks],
+    [initialKeyword, keyword, isArtworks],
   );
   const onClear = useCallback(() => onSearch(true), [onSearch]);
 
