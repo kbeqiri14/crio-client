@@ -66,7 +66,7 @@ export const AppRoutes = () => {
   );
 
   useEffect(() => {
-    if (pathname !== '/') {
+    if (!(pathname === '/' || pathname === '/artworks')) {
       setKeyword('');
     }
   }, [pathname]);

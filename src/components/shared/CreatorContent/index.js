@@ -2,6 +2,7 @@ import { memo, useCallback, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
+import history from '@configs/history';
 import { Tabs } from '@ui-kit';
 import LoadMoreButton from './LoadMoreButton';
 import EmptyState from '@shared/EmptyState';
@@ -53,13 +54,9 @@ export const Content = ({
     (key) => {
       setActiveKey(key);
       if (key === tabs.MARKETPLACE) {
-        window.history.replaceState('', '', isProfilePage ? `/profile/${username}` : '/');
+        history.push(isProfilePage ? `/profile/${username}` : '/');
       } else {
-        window.history.replaceState(
-          '',
-          '',
-          isProfilePage ? `/profile/artworks/${username}` : `/artworks`,
-        );
+        history.push(isProfilePage ? `/profile/artworks/${username}` : `/artworks`);
       }
     },
     [isProfilePage, username],
