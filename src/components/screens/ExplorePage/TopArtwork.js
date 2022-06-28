@@ -25,6 +25,20 @@ const Wrapper = styled('div')`
     position: absolute;
     background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 103.09%);
   }
+
+  @media (max-width: 767.98px) {
+    .absolute-center {
+      padding: 0 15px;
+      top: 40%;
+    }
+    .absolute-bottom {
+      bottom: 50px;
+      left: 30px;
+    }
+    .title {
+      font-size: 35px !important;
+    }
+  }
 `;
 
 const TopArtwork = ({ username, thumbnail }) => (
@@ -32,7 +46,9 @@ const TopArtwork = ({ username, thumbnail }) => (
     <div className='darken-background' />
     <Row gutter={[0, 12]} className='absolute-center'>
       <Col span={24}>
-        <Title level={3}>Crio: The Creative Marketplace</Title>
+        <Title level={3} className='title'>
+          Crio: The Creative Marketplace
+        </Title>
       </Col>
       <Col span={24}>
         <Text level={4} max_width={555}>
