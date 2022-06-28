@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { useReactiveVar } from '@apollo/client';
@@ -30,8 +30,7 @@ const Wrapper = styled('div')`
   }
 `;
 
-const SearchBar = () => {
-  const [keyword, setKeyword] = useState('');
+const SearchBar = ({ keyword, setKeyword }) => {
   const { pathname } = useLocation();
   const initialKeyword = useReactiveVar(searchKeywordVar);
   const isArtworks = useMemo(() => pathname.includes('/artworks'), [pathname]);
@@ -48,7 +47,7 @@ const SearchBar = () => {
       refetchMarketplaceVar(true);
       history.push(`/${isArtworks ? 'artworks' : ''}`);
     },
-    [initialKeyword, keyword, isArtworks],
+    [isArtworks, initialKeyword, keyword, setKeyword],
   );
   const onClear = useCallback(() => onSearch(true), [onSearch]);
 

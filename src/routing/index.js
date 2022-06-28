@@ -30,6 +30,7 @@ import EditProduct from '@screens/EditProduct';
 import Payment from '@screens/Payment';
 
 export const AppRoutes = () => {
+  const [keyword, setKeyword] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const { user, loading } = useCurrentUser();
   const { dispatchUser, user: crioUser } = useLoggedInUser();
@@ -63,6 +64,12 @@ export const AppRoutes = () => {
     () => document.querySelector('.main')?.scrollIntoView({ behavior: 'auto' }, 500),
     [pathname],
   );
+
+  useEffect(() => {
+    if (pathname !== '/') {
+      setKeyword('');
+    }
+  }, [pathname]);
 
   useEffect(() => {
     if (!loading) {
@@ -104,7 +111,7 @@ export const AppRoutes = () => {
   return (
     <div className='crio-container'>
       <header>
-        <Header isAuthenticated={isAuthenticated} />
+        <Header isAuthenticated={isAuthenticated} keyword={keyword} setKeyword={setKeyword} />
       </header>
       <main>
         <div className='main'>
