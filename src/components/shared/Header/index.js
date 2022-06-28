@@ -7,13 +7,13 @@ import GetStarted from './GetStarted';
 import ProfileMenu from './ProfileMenu';
 import UploadButton from './UploadButton';
 
-export const Header = ({ isAuthenticated }) => {
+export const Header = ({ isAuthenticated, keyword, setKeyword }) => {
   const { user } = useLoggedInUser();
 
   return (
     <Row justify='space-between' align='middle' gutter={[0, 20]}>
       <Col>
-        <Menu user={user} />
+        <Menu user={user} keyword={keyword} setKeyword={setKeyword} />
       </Col>
       <Col>
         <Row justify='center' align='middle' gutter={[20, 20]}>

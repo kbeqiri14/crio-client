@@ -72,7 +72,7 @@ export const Profile = () => {
             {user?.username && (
               <ProfileContent
                 username={user?.username}
-                followingsCount={user?.followingsCount}
+                followingsCount={user?.followings?.length}
                 productsCount={user?.productsCount}
                 artworksCount={user?.artworksCount}
                 isCreator={user?.isCreator}
