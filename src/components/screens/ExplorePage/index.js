@@ -1,15 +1,9 @@
-import { memo, useMemo, useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 import { useReactiveVar } from '@apollo/client';
 
 import { Footer } from '@shared/Footer';
 import useRandomInfo from '@root/src/hooks/useRandomInfo';
-import {
-  searchArtworkVar,
-  searchMarketplaceVar,
-  searchKeywordVar,
-  searchClearArtworksVar,
-  searchClearMarketplaceVar,
-} from '@configs/client-cache';
+import { searchKeywordVar, refetchArtworkVar, refetchMarketplaceVar } from '@configs/client-cache';
 import { Carousel } from '@ui-kit';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import TopArtwork from './TopArtwork';
@@ -24,10 +18,8 @@ export const ExplorePage = () => {
   const [productsList, setProductsList] = useState([]);
   const [artworksList, setArtworksList] = useState([]);
   const keyword = useReactiveVar(searchKeywordVar);
-  const searchClearArtworks = useReactiveVar(searchClearArtworksVar);
-  const searchClearMarketplace = useReactiveVar(searchClearMarketplaceVar);
-  const searchMarketplace = useReactiveVar(searchMarketplaceVar);
-  const searchArtwork = useReactiveVar(searchArtworkVar);
+  const refetchArtwork = useReactiveVar(refetchArtworkVar);
+  const refetchMarketplace = useReactiveVar(refetchMarketplaceVar);
 
   const {
     carouselArtworks,
@@ -43,9 +35,8 @@ export const ExplorePage = () => {
     productsLimit: PRODUCTS_LIMIT,
     artworksLimit: ARTWORKS_LIMIT,
     getRandomProductsCompleted: ({ getRandomProducts }) => {
-      if (searchMarketplace || searchClearMarketplace) {
-        searchMarketplaceVar(false);
-        searchClearMarketplaceVar(false);
+      if (refetchMarketplace) {
+        refetchMarketplaceVar(false);
         setProductsList(getRandomProducts);
         setProductsOffset(0 + PRODUCTS_LIMIT);
       } else {
@@ -54,9 +45,8 @@ export const ExplorePage = () => {
       }
     },
     getRandomArtworksCompleted: ({ getRandomArtworks }) => {
-      if (searchArtwork || searchClearArtworks) {
-        searchArtworkVar(false);
-        searchClearArtworksVar(false);
+      if (refetchArtwork) {
+        refetchArtworkVar(false);
         setArtworksList(getRandomArtworks);
         setArtworksOffset(0 + ARTWORKS_LIMIT);
       } else {
@@ -67,8 +57,20 @@ export const ExplorePage = () => {
   });
 
   const showLoader = useMemo(
-    () => searchMarketplace || searchArtwork || searchClearArtworks || searchClearMarketplace,
-    [searchMarketplace, searchArtwork, searchClearArtworks, searchClearMarketplace],
+    () => refetchArtwork || refetchMarketplace,
+    [refetchArtwork, refetchMarketplace],
+  );
+
+  useEffect(
+    () => () => {
+      if (keyword) {
+        refetchArtworkVar(true);
+        refetchMarketplaceVar(true);
+      }
+      searchKeywordVar('');
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
   );
 
   if (showLoader || (loadMoreProducts && !productsOffset)) {
