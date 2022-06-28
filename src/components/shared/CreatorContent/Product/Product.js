@@ -157,12 +157,27 @@ const Product = ({
     return user.isSubscribed ? !user.followings?.includes(userId) : true;
   }, [user.isCreator, user.isSubscribed, user.followings, accessibility, userId]);
 
+  const showBuyButton = useMemo(() => {
+    if (user.isCreator) {
+      return false;
+    }
+    if (price) {
+      return true;
+    }
+    return user.isSubscribed ? user.followings?.includes(userId) : false;
+  }, [user.isCreator, user.isSubscribed, user.followings, price, userId]);
+
   const src = useMemo(
     () =>
       thumbnail
         ? `https://${BUCKET_NAME}.s3.${COGNITO_REGION}.amazonaws.com/${userId}/products/thumbnail-${thumbnail}`
         : product,
     [userId, thumbnail],
+  );
+
+  const priceText = useMemo(
+    () => (price ? `$${price.toFixed(2)}` : 'Free for Subscribers'),
+    [price],
   );
 
   const classes = useMemo(() => {
@@ -257,18 +272,24 @@ const Product = ({
               <Col span={24}>
                 <Text
                   level={4}
-                  style={{ width: price && isHovering ? 140 : 332 }}
+                  style={{ width: showBuyButton && isHovering ? 140 : 332 }}
                   ellipsis={{ rows: 1, tooltip: title }}
                 >
                   {title}
                 </Text>
               </Col>
               <Col span={24}>
-                <Text level={4}>{price ? `$${price.toFixed(2)}` : 'Free for Subscribers'}</Text>
+                <Text
+                  level={4}
+                  style={{ width: showBuyButton && isHovering ? 140 : 332 }}
+                  ellipsis={{ rows: 1, tooltip: priceText }}
+                >
+                  {priceText}
+                </Text>
               </Col>
             </Row>
           </Col>
-          {!user.isCreator && price && (
+          {showBuyButton && (
             <Col className='info'>
               <BuyButton
                 userId={userId}
