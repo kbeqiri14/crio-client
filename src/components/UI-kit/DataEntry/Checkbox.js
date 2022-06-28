@@ -26,7 +26,7 @@ const Checkbox = styled(antCheckbox)`
     .ant-checkbox-inner {
       border: 2px solid ${(props) => props.theme.colors.dark50} !important;
       ::after {
-        border-color: ${(props) => props.theme.colors.white} !important;
+        border-color: rgba(255, 255, 255, 0.5) !important;
       }
     }
   }

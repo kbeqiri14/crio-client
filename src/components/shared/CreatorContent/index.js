@@ -51,11 +51,10 @@ export const Content = ({
 
   const onTabClick = useCallback(
     (key) => {
+      setActiveKey(key);
       if (key === tabs.MARKETPLACE) {
-        setActiveKey(tabs.MARKETPLACE);
         window.history.replaceState('', '', isProfilePage ? `/profile/${username}` : '/');
       } else {
-        setActiveKey(tabs.ARTWORK);
         window.history.replaceState(
           '',
           '',
