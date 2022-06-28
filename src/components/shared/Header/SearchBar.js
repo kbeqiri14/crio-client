@@ -57,7 +57,7 @@ const SearchBar = ({ keyword, setKeyword }) => {
         prefix={<SearchIcon />}
         placeholder='Search'
         value={keyword}
-        onChange={(e) => setKeyword(e.target.value)}
+        onChange={(e) => (e.target.value ? setKeyword(e.target.value) : onClear())}
         onPressEnter={() => onSearch()}
         suffix={keyword.trim() ? <CloseIcon onClick={onClear} className='pointer' /> : undefined}
       />
