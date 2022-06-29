@@ -21,6 +21,11 @@ export const ExplorePage = () => {
   const refetchArtwork = useReactiveVar(refetchArtworkVar);
   const refetchMarketplace = useReactiveVar(refetchMarketplaceVar);
 
+  const showLoader = useMemo(
+    () => refetchArtwork || refetchMarketplace,
+    [refetchArtwork, refetchMarketplace],
+  );
+
   const {
     carouselArtworks,
     isProductsEnd,
@@ -30,8 +35,8 @@ export const ExplorePage = () => {
     loadMoreProducts,
   } = useRandomInfo({
     keyword,
-    productsOffset,
-    artworksOffset,
+    productsOffset: showLoader ? 0 : productsOffset,
+    artworksOffset: showLoader ? 0 : artworksOffset,
     productsLimit: PRODUCTS_LIMIT,
     artworksLimit: ARTWORKS_LIMIT,
     getRandomProductsCompleted: ({ getRandomProducts }) => {
@@ -55,11 +60,6 @@ export const ExplorePage = () => {
       }
     },
   });
-
-  const showLoader = useMemo(
-    () => refetchArtwork || refetchMarketplace,
-    [refetchArtwork, refetchMarketplace],
-  );
 
   useEffect(
     () => () => {
