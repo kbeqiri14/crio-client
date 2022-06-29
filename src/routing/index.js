@@ -3,7 +3,7 @@ import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import { isFuture } from 'date-fns';
 import { useLazyQuery, useReactiveVar } from '@apollo/client';
 
-import { signupErrorVar } from '@configs/client-cache';
+import { loggedInUserLoadingVar, signupErrorVar } from '@configs/client-cache';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { useCurrentUser } from '@app/auth/hooks';
 import { PrivateRoute } from '@app/routing/routes';
@@ -55,8 +55,12 @@ export const AppRoutes = () => {
           subscribePeriodIsValid: periodEnd ? isFuture(new Date(periodEnd)) : false,
         });
       }
+      loggedInUserLoadingVar(false);
     },
-    onError: (data) => console.log(data, 'error'),
+    onError: (data) => {
+      console.log(data, 'error');
+      loggedInUserLoadingVar(false);
+    },
     fetchPolicy: 'cache-and-network',
   });
 
@@ -79,6 +83,7 @@ export const AppRoutes = () => {
 
   useEffect(() => {
     if (authenticated) {
+      loggedInUserLoadingVar(true);
       getLoggedInUser();
     }
   }, [authenticated, getLoggedInUser]);

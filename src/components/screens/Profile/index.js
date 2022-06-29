@@ -1,8 +1,9 @@
 import { memo, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useLazyQuery } from '@apollo/client';
+import { useLazyQuery, useReactiveVar } from '@apollo/client';
 import { Helmet } from 'react-helmet';
 
+import { loggedInUserLoadingVar } from '@configs/client-cache';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { getUser } from '@app/graphql/queries/users.query';
@@ -17,6 +18,7 @@ const { Sider, Content } = Layout;
 export const Profile = () => {
   const { pathname } = useLocation();
   const { user: loggedInUser } = useLoggedInUser();
+  const loggedInUserLoading = useReactiveVar(loggedInUserLoadingVar);
   const username = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
 
   const [requestUser, { data: userData, loading }] = useLazyQuery(getUser, {
@@ -41,12 +43,12 @@ export const Profile = () => {
   const avatarUrl = useAvatarUrl(user?.providerType, user?.providerUserId, user?.avatar);
 
   useEffect(() => {
-    if (username !== loggedInUser.username) {
+    if (loggedInUser.username && username !== loggedInUser.username) {
       requestUser();
     }
   }, [username, loggedInUser.username, requestUser]);
 
-  if (!loading && !user) {
+  if (!loggedInUserLoading && !loading && !user) {
     return <NotFound text='No Result' icon={<NotFoundUser />} />;
   }
   return (

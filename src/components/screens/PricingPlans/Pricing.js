@@ -1,6 +1,8 @@
 import { memo, useCallback } from 'react';
 import styled from 'styled-components';
+import { useReactiveVar } from '@apollo/client';
 
+import { loggedInUserLoadingVar } from '@configs/client-cache';
 import history from '@configs/history';
 import { STRIPE_PAYMENT_URL } from '@configs/environment';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
@@ -8,6 +10,7 @@ import { Button } from '@ui-kit';
 import { Col, Divider, Row, Text, Title } from '@ui-kit';
 import { CustomTooltip } from '@ui-kit/Tooltip';
 import { warningToast } from '@ui-kit/Notification';
+import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import { ReactComponent as CheckMark } from '@svgs/check.svg';
 import { ReactComponent as RecommendIcon } from '@svgs/recommend.svg';
 
@@ -59,6 +62,7 @@ const Item = ({ item }) => (
 
 const Pricing = () => {
   const { user } = useLoggedInUser();
+  const loggedInUserLoading = useReactiveVar(loggedInUserLoadingVar);
 
   const handleExploreMore = useCallback(() => history.push('/'), []);
   const handleGetStarted = useCallback(() => {
@@ -68,6 +72,10 @@ const Pricing = () => {
       warningToast('Warning', 'Please sign in to get started.');
     }
   }, [user?.id]);
+
+  if (loggedInUserLoading) {
+    return <GlobalSpinner />;
+  }
 
   return (
     <Wrapper>
