@@ -18,7 +18,7 @@ import card from '@images/card.png';
 const Wrapper = styled('div')`
   display: flex;
   justify-content: center;
-  padding-top: 100px;
+  padding: 100px 20px;
   > div {
     max-width: 1171px;
   }
@@ -72,8 +72,8 @@ const Payment = () => {
 
   return (
     <Wrapper>
-      <Row>
-        <Col span={12}>
+      <Row gutter={[0, 20]}>
+        <Col md={{ span: 24 }} lg={{ span: 12 }}>
           <Row gutter={[0, 40]}>
             <Col>
               <Title level={4}>Start earning instantly using Crio's simple payments platform</Title>
@@ -105,8 +105,8 @@ const Payment = () => {
             </Col>
           </Row>
         </Col>
-        <Col span={10} offset={2}>
-          <img alt='locked' src={card} />
+        <Col md={{ span: 24 }} lg={{ span: 10, offset: 2 }} align='center'>
+          <img alt='locked' src={card} style={{ maxWidth: ' 100%' }} />
         </Col>
       </Row>
     </Wrapper>
