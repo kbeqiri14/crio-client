@@ -11,12 +11,13 @@ const Wrapper = styled('div')`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 568px;
-  height: 232px;
+  max-width: 568px;
+  max-height: 232px;
   border-radius: 8px;
   img {
-    width: inherit;
-    height: inherit;
+    width: 100%;
+    height: auto;
+    max-height: 232px;
     object-fit: cover;
   }
   .remove {
