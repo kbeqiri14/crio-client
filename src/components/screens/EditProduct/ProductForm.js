@@ -14,7 +14,7 @@ import ActionButtons from './ActionButtons';
 const Wrapper = styled('div')`
   display: flex;
   justify-content: center;
-  padding: 40px 0;
+  padding: 40px 20px;
   > div {
     max-width: 568px;
   }

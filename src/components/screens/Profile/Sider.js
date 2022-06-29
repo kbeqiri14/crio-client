@@ -69,12 +69,12 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
               </Title>
             </Col>
             <Col span={24} align='center'>
-              <Text level={3} ellipsis={{ tooltip: name }}>
+              <Text level={3} ellipsis={{ tooltip: name }} className='full-width'>
                 {name}
               </Text>
             </Col>
             <Col span={24} className='mail-icon' align='center'>
-              <Text level={3} color='dark25' ellipsis={{ tooltip: email }}>
+              <Text level={3} color='dark25' ellipsis={{ tooltip: email }} className='full-width'>
                 <MailIcon /> {isProfile ? <a href={`mailto:${email}`}>{email}</a> : email}
               </Text>
             </Col>
