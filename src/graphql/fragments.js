@@ -34,22 +34,12 @@ export const meFragment = gql`
 export const followingInfoFragment = gql`
   fragment FollowingInfoAttributes on FollowingInfo {
     id
-    userId
     providerType
     providerUserId
-    name
-    email
     username
     firstName
     lastName
     avatar
-    artworks {
-      artworkId
-      videoUri
-      thumbnailUri
-      title
-      description
-    }
   }
 `;
 
