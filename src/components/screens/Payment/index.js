@@ -28,15 +28,13 @@ const Payment = () => {
   const { user } = useLoggedInUser();
   const { refreshUrl } = useQueryParams();
   const { data: connectAccount, loading: gettingConnectAccount } = useQuery(getConnectAccount);
-  const [requestConnectOnboardingLink, { loading: gettingConnectOnboardingLink }] = useLazyQuery(
-    getConnectOnboardingLink,
-    {
-      fetchPolicy: 'no-cache',
-      onCompleted: ({ getConnectOnboardingLink }) =>
-        (window.location.href = getConnectOnboardingLink.url),
-      onError: (e) => errorToast(`Cannot create onboarding link: ${e?.message}`),
-    },
-  );
+  // const [requestConnectOnboardingLink, { loading: gettingConnectOnboardingLink }] = useLazyQuery(
+  const [requestConnectOnboardingLink] = useLazyQuery(getConnectOnboardingLink, {
+    fetchPolicy: 'no-cache',
+    onCompleted: ({ getConnectOnboardingLink }) =>
+      (window.location.href = getConnectOnboardingLink.url),
+    onError: (e) => errorToast(`Cannot create onboarding link: ${e?.message}`),
+  });
   const [requestConnectLoginLink, { loading: gettingConnectLoginLink }] = useLazyQuery(
     getConnectLoginLink,
     {
@@ -93,15 +91,7 @@ const Payment = () => {
                 >
                   LOG IN STRIPE
                 </Button>
-              ) : (
-                <Button
-                  type='primary'
-                  onClick={requestConnectOnboardingLink}
-                  loading={gettingConnectOnboardingLink}
-                >
-                  ONBOARDING YOUR STRIPE ACCOUNT
-                </Button>
-              )}
+              ) : null}
             </Col>
           </Row>
         </Col>
