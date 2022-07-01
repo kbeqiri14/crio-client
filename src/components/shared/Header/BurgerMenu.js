@@ -58,11 +58,13 @@ export const BurgerMenu = ({ user, keyword, setKeyword }) => {
           <Col>
             {visibleMenu ? <CloseIcon onClick={setMenu} /> : <BurgerMenuIcon onClick={setMenu} />}
           </Col>
-          <Col>
-            <Button type='link' white='true' onClick={googleSignIn}>
-              Sign in
-            </Button>
-          </Col>
+          {!user.id && (
+            <Col>
+              <Button type='link' white='true' onClick={googleSignIn}>
+                Sign in
+              </Button>
+            </Col>
+          )}
         </Row>
       </div>
       {visibleMenu && (
@@ -89,81 +91,77 @@ export const BurgerMenu = ({ user, keyword, setKeyword }) => {
               </Text>
             </Link>
           </Col>
-          {user.isCreator && (
-            <Col span={24} padding_left={10} onClick={setOptions}>
-              <Text level={3} color='dark25'>
-                Upload
-              </Text>{' '}
-              {visibleOptions ? (
-                <ArrowUpIcon className='vertical-middle' />
-              ) : (
-                <ArrowDownIcon className='vertical-middle' />
+          {user.id && (
+            <>
+              {user.isCreator && (
+                <Col span={24} padding_left={10} onClick={setOptions}>
+                  <Text level={3} color='dark25'>
+                    Upload
+                  </Text>{' '}
+                  {visibleOptions ? (
+                    <ArrowUpIcon className='vertical-middle' />
+                  ) : (
+                    <ArrowDownIcon className='vertical-middle' />
+                  )}
+                </Col>
               )}
-            </Col>
-          )}
-          {visibleOptions && (
-            <Col span={24} padding_left={10} onClick={closeMenu}>
-              <Link to='/upload'>
-                <Text level={1} color='dark25'>
-                  Product or service
+              {visibleOptions && (
+                <Col span={24} padding_left={10} onClick={closeMenu}>
+                  <Link to='/upload'>
+                    <Text level={1} color='dark25'>
+                      Product or service
+                    </Text>
+                  </Link>
+                </Col>
+              )}
+              {visibleOptions && (
+                <Col span={24} padding_left={10} onClick={closeMenu}>
+                  <Link to='/upload/artwork'>
+                    <Text level={1} color='dark25'>
+                      Artwork
+                    </Text>
+                  </Link>
+                </Col>
+              )}
+              <Col span={24}>
+                <Divider />
+              </Col>
+              <Col>
+                <Space size='middle'>
+                  <img
+                    alt='profile'
+                    src={avatarUrl}
+                    width={40}
+                    height={40}
+                    className='border-radius-100'
+                  />
+                  <Text level={3} color='dark25'>
+                    {user.firstName} {user.lastName}
+                  </Text>
+                </Space>
+              </Col>
+              <Col span={24} padding_left={10} onClick={closeMenu}>
+                <Link to={`/profile/${user.username}`}>
+                  <Text level={3} color='dark25'>
+                    My Profile
+                  </Text>
+                </Link>
+              </Col>
+              {user.isCreator && (
+                <Col span={24} padding_left={10} onClick={closeMenu}>
+                  <Link to='/payment'>
+                    <Text level={3} color='dark25'>
+                      Payment
+                    </Text>
+                  </Link>
+                </Col>
+              )}
+              <Col span={24} padding_left={10} onClick={closeMenu}>
+                <Text level={3} color='dark25' onClick={signOut}>
+                  Sign out
                 </Text>
-              </Link>
-            </Col>
-          )}
-          {visibleOptions && (
-            <Col span={24} padding_left={10} onClick={closeMenu}>
-              <Link to='/upload/artwork'>
-                <Text level={1} color='dark25'>
-                  Artwork
-                </Text>
-              </Link>
-            </Col>
-          )}
-          {user.id && (
-            <Col span={24}>
-              <Divider />
-            </Col>
-          )}
-          {user.id && (
-            <Col>
-              <Space size='middle'>
-                <img
-                  alt='profile'
-                  src={avatarUrl}
-                  width={40}
-                  height={40}
-                  className='border-radius-100'
-                />
-                <Text level={3} color='dark25'>
-                  {user.firstName} {user.lastName}
-                </Text>
-              </Space>
-            </Col>
-          )}
-          {user.id && (
-            <Col span={24} padding_left={10} onClick={closeMenu}>
-              <Link to={`/profile/${user.username}`}>
-                <Text level={3} color='dark25'>
-                  My Profile
-                </Text>
-              </Link>
-            </Col>
-          )}
-          {user.isCreator && (
-            <Col span={24} padding_left={10} onClick={closeMenu}>
-              <Link to='/payment'>
-                <Text level={3} color='dark25'>
-                  Payment
-                </Text>
-              </Link>
-            </Col>
-          )}
-          {user.id && (
-            <Col span={24} padding_left={10} onClick={closeMenu}>
-              <Text level={3} color='dark25' onClick={signOut}>
-                Sign out
-              </Text>
-            </Col>
+              </Col>
+            </>
           )}
         </Row>
       )}
