@@ -21,7 +21,7 @@ export const Header = ({ isAuthenticated, keyword, setKeyword }) => {
           <Menu user={user} keyword={keyword} setKeyword={setKeyword} />
         </Col>
         <Col xs={0} lg={9}>
-          <Row justify='center' align='middle' gutter={[20, 20]}>
+          <Row justify='end' gutter={20}>
             <Col className='self-center'>
               {isAuthenticated && user ? <ProfileMenu user={user} /> : <GetStarted />}
             </Col>
