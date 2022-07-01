@@ -8,7 +8,7 @@ const Layout = styled(antLayout)`
 const Sider = styled(Layout.Sider)`
   background: #202020;
   .ant-layout-sider-zero-width-trigger {
-    top: 10px;
+    top: 0;
   }
 `;
 
