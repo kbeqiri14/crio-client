@@ -13,14 +13,14 @@ export const Header = ({ isAuthenticated, keyword, setKeyword }) => {
 
   return (
     <>
-      <Row justify='space-between' align='middle' gutter={[0, 20]}>
-        <Col md={0} className='full-width'>
+      <Row justify='space-between' align='middle'>
+        <Col lg={0} className='full-width'>
           <BurgerMenu user={user} keyword={keyword} setKeyword={setKeyword} />
         </Col>
-        <Col xs={0} md={18}>
+        <Col xs={0} lg={15}>
           <Menu user={user} keyword={keyword} setKeyword={setKeyword} />
         </Col>
-        <Col xs={0} md={6}>
+        <Col xs={0} lg={9}>
           <Row justify='center' align='middle' gutter={[20, 20]}>
             <Col className='self-center'>
               {isAuthenticated && user ? <ProfileMenu user={user} /> : <GetStarted />}

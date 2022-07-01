@@ -51,7 +51,7 @@ const Menu = ({ user, keyword, setKeyword }) => {
   );
 
   return (
-    <Row gutter={[12, 12]} className='items-center'>
+    <Row gutter={10} className='items-center'>
       <Col onClick={goTo('/')} className='pointer'>
         <img alt='crio app logo' src={logo} />
       </Col>
@@ -59,13 +59,13 @@ const Menu = ({ user, keyword, setKeyword }) => {
         Crio
       </Col>
       {menuItems.map((menu) => (
-        <Col key={menu.id} margin_left={28}>
+        <Col key={menu.id} margin_left={24}>
           <Button type='tab' active={`${activeItem === menu.id}`} onClick={goTo(menu.path)}>
             {menu.title}
           </Button>
         </Col>
       ))}
-      <Col margin_left={28}>
+      <Col margin_left={24}>
         <SearchBar width={244} keyword={keyword} setKeyword={setKeyword} />
       </Col>
     </Row>

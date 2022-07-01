@@ -63,7 +63,7 @@ const TopArtwork = ({ username, thumbnail }) => {
             creators on Crio
           </Text>
         </Col>
-        <Col xs={0} md={24}>
+        <Col xs={0} lg={24}>
           <Link to={`/profile/${username}`}>
             <Button type='primary' size='large'>
               VISIT FEATURED CREATOR
@@ -71,7 +71,7 @@ const TopArtwork = ({ username, thumbnail }) => {
           </Link>
         </Col>
         {user.id && (
-          <Col md={0}>
+          <Col lg={0}>
             <Button type='google' icon={<GoogleIcon />} onClick={googleSignIn}>
               SIGN UP WITH GOOGLE
             </Button>

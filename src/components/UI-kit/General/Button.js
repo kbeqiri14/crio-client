@@ -142,7 +142,8 @@ const Button = styled(antButton)`
   ///************** GOOGLE BUTTON **************///
 
   &.ant-btn-google {
-    padding: 4px 20px 4px 14px;
+    line-height: 0px;
+    padding: 4px 15px;
     border: none;
     background-color: ${(props) => props.theme.colors.white};
     color: ${(props) => props.theme.colors.dark100};
