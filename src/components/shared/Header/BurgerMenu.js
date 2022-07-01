@@ -2,7 +2,7 @@ import { memo, useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Space } from 'antd';
-import { signIn } from '@app/auth';
+import { signIn, signOut } from '@app/auth';
 
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { Button, Col, Divider, Row, Text } from '@ui-kit';
@@ -14,6 +14,7 @@ import { ReactComponent as ArrowUpIcon } from '@svgs/arrow-up.svg';
 import { ReactComponent as ArrowDownIcon } from '@svgs/arrow-down.svg';
 
 const Wrapper = styled('div')`
+  height: 100vh;
   .header {
     padding: 19px 24px;
     box-shadow: 0 2px 10px rgba(8, 17, 44, 0.25);
@@ -119,9 +120,11 @@ export const BurgerMenu = ({ user, keyword, setKeyword }) => {
               </Link>
             </Col>
           )}
-          <Col span={24}>
-            <Divider />
-          </Col>
+          {user.id && (
+            <Col span={24}>
+              <Divider />
+            </Col>
+          )}
           {user.id && (
             <Col>
               <Space size='middle'>
@@ -158,7 +161,7 @@ export const BurgerMenu = ({ user, keyword, setKeyword }) => {
           )}
           {user.id && (
             <Col span={24} padding_left={10} onClick={closeMenu}>
-              <Text level={3} color='dark25' onClick='signOut'>
+              <Text level={3} color='dark25' onClick={signOut}>
                 Sign out
               </Text>
             </Col>
