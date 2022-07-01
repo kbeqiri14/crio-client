@@ -12,7 +12,7 @@ import { ReactComponent as ArrowDownIcon } from '@svgs/arrow-down.svg';
 
 const Wrapper = styled('div')`
   .header {
-    padding: 20px 24px;
+    padding: 9px 24px;
     box-shadow: 0 2px 10px rgba(8, 17, 44, 0.25);
     position: relative;
     .logo {
@@ -95,7 +95,7 @@ export const BurgerMenu = ({ user, keyword, setKeyword }) => {
           )}
           {visibleOptions && (
             <Col span={24} padding_left={10} onClick={closeMenu}>
-              <Link to='/upload'>
+              <Link to='/upload/artwork'>
                 <Text level={1} color='dark25'>
                   Artwork
                 </Text>
