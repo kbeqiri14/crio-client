@@ -51,7 +51,7 @@ const Menu = ({ user, keyword, setKeyword }) => {
   );
 
   return (
-    <Row justify='center' gutter={[12, 12]} className='items-center'>
+    <Row gutter={[12, 12]} className='items-center'>
       <Col onClick={goTo('/')} className='pointer'>
         <img alt='crio app logo' src={logo} />
       </Col>

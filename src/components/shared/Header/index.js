@@ -17,10 +17,10 @@ export const Header = ({ isAuthenticated, keyword, setKeyword }) => {
         <Col md={0} className='full-width'>
           <BurgerMenu user={user} keyword={keyword} setKeyword={setKeyword} />
         </Col>
-        <Col xs={0} md={24}>
+        <Col xs={0} md={18}>
           <Menu user={user} keyword={keyword} setKeyword={setKeyword} />
         </Col>
-        <Col xs={0}>
+        <Col xs={0} md={6}>
           <Row justify='center' align='middle' gutter={[20, 20]}>
             <Col className='self-center'>
               {isAuthenticated && user ? <ProfileMenu user={user} /> : <GetStarted />}
