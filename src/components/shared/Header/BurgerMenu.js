@@ -84,13 +84,15 @@ export const BurgerMenu = ({ user, keyword, setKeyword }) => {
             <Text level={3} color='dark25'>Features</Text>
           </Link>
         </Col> */}
-          <Col span={24} padding_left={10} onClick={closeMenu}>
-            <Link to='/pricing'>
-              <Text level={3} color='dark25'>
-                Pricing
-              </Text>
-            </Link>
-          </Col>
+          {!user.isCreator && (
+            <Col span={24} padding_left={10} onClick={closeMenu}>
+              <Link to='/pricing'>
+                <Text level={3} color='dark25'>
+                  {user.isSubscribed ? 'Pro account' : 'Pricing'}
+                </Text>
+              </Link>
+            </Col>
+          )}
           {user.id && (
             <>
               {user.isCreator && (
