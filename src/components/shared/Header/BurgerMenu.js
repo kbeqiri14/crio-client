@@ -14,7 +14,6 @@ import { ReactComponent as ArrowUpIcon } from '@svgs/arrow-up.svg';
 import { ReactComponent as ArrowDownIcon } from '@svgs/arrow-down.svg';
 
 const Wrapper = styled('div')`
-  height: 100vh;
   .header {
     padding: 19px 24px;
     box-shadow: 0 2px 10px rgba(8, 17, 44, 0.25);
