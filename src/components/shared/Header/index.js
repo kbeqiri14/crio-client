@@ -6,28 +6,34 @@ import Menu from './Menu';
 import GetStarted from './GetStarted';
 import ProfileMenu from './ProfileMenu';
 import UploadButton from './UploadButton';
+import BurgerMenu from './BurgerMenu';
 
 export const Header = ({ isAuthenticated, keyword, setKeyword }) => {
   const { user } = useLoggedInUser();
 
   return (
-    <Row justify='space-between' align='middle' gutter={[0, 20]}>
-      <Col>
-        <Menu user={user} keyword={keyword} setKeyword={setKeyword} />
-      </Col>
-      <Col>
-        <Row justify='center' align='middle' gutter={[20, 20]}>
-          <Col className='self-center'>
-            {isAuthenticated && user ? <ProfileMenu user={user} /> : <GetStarted />}
-          </Col>
-          {user?.isCreator && (
-            <Col>
-              <UploadButton />
+    <>
+      <Row justify='space-between' align='middle' gutter={[0, 20]}>
+        <Col md={0} className='full-width'>
+          <BurgerMenu user={user} keyword={keyword} setKeyword={setKeyword} />
+        </Col>
+        <Col xs={0} md={24}>
+          <Menu user={user} keyword={keyword} setKeyword={setKeyword} />
+        </Col>
+        <Col xs={0}>
+          <Row justify='center' align='middle' gutter={[20, 20]}>
+            <Col className='self-center'>
+              {isAuthenticated && user ? <ProfileMenu user={user} /> : <GetStarted />}
             </Col>
-          )}
-        </Row>
-      </Col>
-    </Row>
+            {user?.isCreator && (
+              <Col>
+                <UploadButton />
+              </Col>
+            )}
+          </Row>
+        </Col>
+      </Row>
+    </>
   );
 };
 

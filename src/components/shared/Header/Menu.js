@@ -66,7 +66,7 @@ const Menu = ({ user, keyword, setKeyword }) => {
         </Col>
       ))}
       <Col margin_left={28}>
-        <SearchBar keyword={keyword} setKeyword={setKeyword} />
+        <SearchBar width={244} keyword={keyword} setKeyword={setKeyword} />
       </Col>
     </Row>
   );
