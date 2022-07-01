@@ -9,7 +9,7 @@ const GetStarted = () => {
   const googleSignIn = useCallback(() => signIn('Google'), []);
 
   return (
-    <Row className='items-center' gutter={20}>
+    <Row className='items-center' gutter={15}>
       <Col>
         <Button type='link' white='true' onClick={googleSignIn}>
           Sign in
