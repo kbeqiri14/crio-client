@@ -70,7 +70,7 @@ const TopArtwork = ({ username, thumbnail }) => {
             </Button>
           </Link>
         </Col>
-        {user.id && (
+        {!user.id && (
           <Col lg={0}>
             <Button type='google' icon={<GoogleIcon />} onClick={googleSignIn}>
               SIGN UP WITH GOOGLE
