@@ -63,7 +63,7 @@ const TopArtwork = ({ username, thumbnail }) => {
             creators on Crio
           </Text>
         </Col>
-        <Col xs={0} lg={24}>
+        <Col xs={user.id ? 24 : 0} lg={24}>
           <Link to={`/profile/${username}`}>
             <Button type='primary' size='large'>
               VISIT FEATURED CREATOR
