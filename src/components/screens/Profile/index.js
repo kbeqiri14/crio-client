@@ -69,7 +69,7 @@ export const Profile = () => {
             hideButton={hideButton}
           />
         </Sider>
-        <Layout>
+        <Layout style={{ overflowY: 'scroll' }}>
           <Content>
             {user?.username && (
               <ProfileContent
