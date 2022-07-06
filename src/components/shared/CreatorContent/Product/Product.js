@@ -85,6 +85,12 @@ const ImageWrapper = styled('div')`
       right: 20px;
     }
   }
+  .ant-dropdown-open {
+    & {
+      visibility: visible;
+    }
+  }
+
   &.no-thumbnail {
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
