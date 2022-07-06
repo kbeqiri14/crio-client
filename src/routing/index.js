@@ -28,6 +28,7 @@ import Upload from '@screens/Upload';
 import EditArtwork from '@screens/Video';
 import EditProduct from '@screens/EditProduct';
 import Payment from '@screens/Payment';
+import FeaturesPage from '@screens/FeaturesPage';
 
 export const AppRoutes = () => {
   const [keyword, setKeyword] = useState('');
@@ -133,6 +134,8 @@ export const AppRoutes = () => {
             <Route exact path='/artwork/:artworkId' component={Artwork} />
             <Route exact path='/product/:productId' component={Product} />
             <Route exact path='/cognito/callback' component={CognitoCallback} />
+            <Route exact path='/features' component={FeaturesPage} />
+
             {!loading && !user && <Redirect to='/' />}
             {/* PRIVATE ROUTES */}
             <PrivateRoute

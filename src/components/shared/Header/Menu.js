@@ -1,10 +1,11 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo, Fragment } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { searchKeywordVar, refetchArtworkVar, refetchMarketplaceVar } from '@configs/client-cache';
 import history from '@configs/history';
 import { Button, Col, Row } from '@ui-kit';
 import logo from '@images/logo.png';
+import star from '@svgs/star.svg';
 import SearchBar from './SearchBar';
 
 const getTabItems = (showPricing, isSubscribed) => {
@@ -13,6 +14,15 @@ const getTabItems = (showPricing, isSubscribed) => {
       id: 'explore',
       title: 'Explore',
       path: '/',
+    },
+    {
+      id: 'features',
+      title: (
+        <Fragment>
+          Features <img src={star} alt='star' />
+        </Fragment>
+      ),
+      path: '/features',
     },
   ];
   if (showPricing) {
