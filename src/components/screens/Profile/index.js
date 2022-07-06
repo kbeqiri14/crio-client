@@ -43,7 +43,7 @@ export const Profile = () => {
   const avatarUrl = useAvatarUrl(user?.providerType, user?.providerUserId, user?.avatar);
 
   useEffect(() => {
-    if (loggedInUser.username && username !== loggedInUser.username) {
+    if (username !== loggedInUser.username) {
       requestUser();
     }
   }, [username, loggedInUser.username, requestUser]);
@@ -69,7 +69,7 @@ export const Profile = () => {
             hideButton={hideButton}
           />
         </Sider>
-        <Layout>
+        <Layout style={{ overflowY: 'scroll' }}>
           <Content>
             {user?.username && (
               <ProfileContent
