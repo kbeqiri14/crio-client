@@ -53,7 +53,7 @@ export const BurgerMenu = ({ user, keyword, setKeyword }) => {
   return (
     <Wrapper>
       <div className='header'>
-        <div class='logo'>
+        <div className='logo'>
           <img alt='crio app logo' src={logo} />
           <span>Crio</span>
         </div>
