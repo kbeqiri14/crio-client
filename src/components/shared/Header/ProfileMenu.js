@@ -24,7 +24,7 @@ const ProfileMenu = ({ user = {} }) => {
             </Menu.Item>
           )}
           <Menu.Item key='log-out' onClick={signOut}>
-            Log Out
+            Sign Out
           </Menu.Item>
         </Menu>
       }

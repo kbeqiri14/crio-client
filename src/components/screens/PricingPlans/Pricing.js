@@ -1,5 +1,6 @@
 import { memo, useCallback } from 'react';
 import styled from 'styled-components';
+import { Space } from 'antd';
 import { useReactiveVar } from '@apollo/client';
 
 import { loggedInUserLoadingVar } from '@configs/client-cache';
@@ -36,7 +37,6 @@ const Wrapper = styled('div')`
   }
   @media (max-width: 767.98px) {
     height: 100%;
-    padding: 80px 20px;
   }
 `;
 
@@ -48,16 +48,12 @@ const perksListPro = [
 ];
 
 const Item = ({ item }) => (
-  <Row gutter={16} className='items-center'>
-    <Col>
-      <CheckMark />
-    </Col>
-    <Col max_width={290}>
-      <Text level={3} color='dark25'>
-        {item}
-      </Text>
-    </Col>
-  </Row>
+  <Space size='middle'>
+    <CheckMark />
+    <Text level={3} color='dark25'>
+      {item}
+    </Text>
+  </Space>
 );
 
 const Pricing = () => {
