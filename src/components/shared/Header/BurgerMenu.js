@@ -87,12 +87,15 @@ export const BurgerMenu = ({ user, keyword, setKeyword }) => {
                 </Text>
               </Link>
             </Col>
-            {/* <Col span={24} padding_left={10} onClick={closeMenu}>
-            <Link to='/features'>
-              <Text level={3} color='dark25'>Features</Text>
-            </Link>
-          </Col> */}
-            {!user.isCreator && (
+            {user.isCreator ? (
+              <Col span={24} padding_left={10} onClick={closeMenu}>
+                <Link to='/features'>
+                  <Text level={3} color='dark25'>
+                    Features
+                  </Text>
+                </Link>
+              </Col>
+            ) : (
               <Col span={24} padding_left={10} onClick={closeMenu}>
                 <Link to='/pricing'>
                   <Text level={3} color='dark25'>

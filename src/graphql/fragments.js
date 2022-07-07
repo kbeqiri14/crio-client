@@ -28,6 +28,8 @@ export const meFragment = gql`
     isFollowing
     followings
     boughtProducts
+    featuresSeen
+    helpSeen
   }
 `;
 

@@ -8,30 +8,27 @@ import logo from '@images/logo.png';
 import star from '@svgs/star.svg';
 import SearchBar from './SearchBar';
 
-const getTabItems = (showPricing, isSubscribed) => {
+const getTabItems = (isCreator, isSubscribed, featuresSeen) => {
   const items = [
     {
       id: 'explore',
       title: 'Explore',
       path: '/',
     },
-    {
-      id: 'features',
-      title: (
-        <Fragment>
-          Features <img src={star} alt='star' />
-        </Fragment>
-      ),
-      path: '/features',
-    },
   ];
-  if (showPricing) {
-    items.push({
-      id: 'pricing',
-      title: isSubscribed ? 'Pro account' : 'Pricing',
-      path: '/pricing',
-    });
-  }
+  items.push(
+    isCreator
+      ? {
+          id: 'features',
+          title: <Fragment>Features {!featuresSeen && <img src={star} alt='star' />}</Fragment>,
+          path: '/features',
+        }
+      : {
+          id: 'pricing',
+          title: isSubscribed ? 'Pro account' : 'Pricing',
+          path: '/pricing',
+        },
+  );
   return items;
 };
 
@@ -39,8 +36,8 @@ const Menu = ({ user, keyword, setKeyword }) => {
   const { pathname } = useLocation();
 
   const menuItems = useMemo(
-    () => getTabItems(!user.isCreator, user.isSubscribed),
-    [user.isCreator, user.isSubscribed],
+    () => getTabItems(user.isCreator, user.isSubscribed, user.featuresSeen),
+    [user.isCreator, user.isSubscribed, user.featuresSeen],
   );
   const activeItem = useMemo(() => {
     const tab = pathname.split('/').slice(-1)[0];
