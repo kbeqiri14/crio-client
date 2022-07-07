@@ -95,12 +95,11 @@ export const FeaturesPage = () => {
       </Row>
       <div className='custom-back'>
         <Row className='subscription container'>
-          <Col md={24} style={{ textAlign: 'center' }}>
+          <Col md={24}>
             <Title className='title'>Community Subscription</Title>
             <Text level={4} color='dark25' className='desc-texts'>
-              {' '}
               Fans can subscribe monthly to Crio and then follow any <br /> creator to support their
-              work and efforts!{' '}
+              work and efforts!
             </Text>
           </Col>
           <Col className='list' md={10} offset={3}>
@@ -185,7 +184,7 @@ export const FeaturesPage = () => {
           </Title>
           <Text level={4} color='dark25' className='info'>
             Check out our{' '}
-            <Link to='/payment' className='faq'>
+            <Link to='/faq' className='faq'>
               FAQ
             </Link>{' '}
             guide or email us at <br /> <span className='email'>info@criointeractive.com</span>{' '}

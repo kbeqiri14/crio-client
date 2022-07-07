@@ -25,6 +25,7 @@ export { default as Menu } from './Navigation/Menu';
 export { default as Carousel } from './DataDisplay/Carousel';
 export { default as Tabs } from './DataDisplay/Tabs';
 export { default as Tooltip } from './DataDisplay/Tooltip';
+export { default as Collapse } from './DataDisplay/Collapse';
 
 /*
   Data Entry

@@ -63,6 +63,7 @@ const FeaturesWrapper = styled('div')`
   .subscription {
     height: 90vh;
     min-height: 950px;
+    text-align: center;
   }
   .formula-text {
     margin: 30px 0;
