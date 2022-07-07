@@ -1,8 +1,12 @@
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import { Divider, Col, Row, Text, Title, List } from '@ui-kit';
 import { Link } from 'react-router-dom';
-import { Footer } from '@shared/Footer';
+import { useMutation } from '@apollo/client';
 
+import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
+import { me } from '@app/graphql/queries/users.query';
+import { updateUser } from '@app/graphql/mutations/user.mutation';
+import { Footer } from '@shared/Footer';
 import bubble from '@images/bubble.png';
 import halfBubble from '@images/half-bubble.png';
 import paperPlane from '@images/paper-plane.png';
@@ -18,7 +22,27 @@ const subData = [
   'Creators can immediately make monthly income everytime they get new followers!',
   'Note: Only subscribers can follow creators on Crio.',
 ];
+
 export const FeaturesPage = () => {
+  const { user } = useLoggedInUser();
+  const [updateUserInfo] = useMutation(updateUser, {
+    variables: { attributes: { featuresSeen: true } },
+    update: (cache, mutationResult) => {
+      if (mutationResult?.data?.updateUser) {
+        const existingData = cache.readQuery({ query: me });
+        cache.writeQuery({
+          query: me,
+          data: { me: { ...existingData?.me, featuresSeen: true } },
+        });
+      }
+    },
+  });
+  useEffect(() => {
+    if (user.id && !user.featuresSeen) {
+      updateUserInfo();
+    }
+  }, [user.id, user.featuresSeen, updateUserInfo]);
+
   return (
     <FeaturesWrapper>
       <div className='custom-back'>
