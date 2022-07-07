@@ -40,7 +40,7 @@ const ProductWrapper = styled('div')`
   }
   .info,
   .tooltip,
-  .actions {
+  .actions:not(.hover) {
     opacity: 0;
     visibility: hidden;
     transition: visibility 0s, opacity 0.2s linear;
@@ -83,11 +83,6 @@ const ImageWrapper = styled('div')`
       position: absolute;
       bottom: 20px;
       right: 20px;
-    }
-  }
-  .ant-dropdown-open {
-    & {
-      visibility: visible;
     }
   }
 
@@ -252,11 +247,18 @@ const Product = ({
 
   return (
     <>
-      <ProductWrapper className={classes} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+      <ProductWrapper
+        className={classes}
+        onMouseOver={handleMouseOver}
+        onMouseLeave={handleMouseOut}
+      >
         <LockState userId={userId} accessibility={accessibility} large={large} isProduct={true} />
         <ImageWrapper className={imageClasses}>
           <img src={src} alt='product' onClick={showProduct} />
-          <div className='actions' onClick={() => !showActions && showProduct()}>
+          <div
+            className={`actions ${isHovering ? 'hover' : ''}`}
+            onClick={() => !showActions && showProduct()}
+          >
             {showActions && (
               <Actions
                 username={username}
