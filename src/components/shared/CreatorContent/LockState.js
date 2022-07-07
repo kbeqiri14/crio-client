@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import history from '@configs/history';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
-import { Text } from '@ui-kit';
+import { Tooltip } from '@ui-kit';
 import lockImage from '@images/lock.png';
 import loadingVideo from '@images/loading-video.png';
 
@@ -16,20 +16,15 @@ const Wrapper = styled('div')`
   backdrop-filter: blur(8px);
 `;
 
-const Tooltip = styled('div')`
-  background-color: #202020;
-  max-width: 180px;
-  border-radius: 8px;
-  padding: 10px;
-  position: absolute;
-  top: 47px;
-  text-align: center;
-  &.product {
-    top: 5px;
-  }
-`;
-
-const LockState = ({ userId, accessibility, status, size = 'normal', large, isProduct }) => {
+const LockState = ({
+  userId,
+  accessibility,
+  status,
+  size = 'normal',
+  large,
+  isProduct,
+  isHovering,
+}) => {
   const { user } = useLoggedInUser();
   const { setVideoInfo } = usePresentation();
 
@@ -88,10 +83,17 @@ const LockState = ({ userId, accessibility, status, size = 'normal', large, isPr
 
   return unavailable || isLocked ? (
     <Wrapper style={wrapper} onClick={onClick}>
-      <Tooltip className={`tooltip ${isProduct ? 'product' : ''}`}>
-        <Text level={1}>{tooltip}</Text>
+      <Tooltip
+        visible={isHovering}
+        getPopupContainer={(triggerNode) =>
+          triggerNode.parentNode.querySelector('.ant-tooltip-open')
+        }
+        title={tooltip}
+      >
+        <div style={{ position: 'relative' }}>
+          <img alt='locked' src={icon} {...image} />
+        </div>
       </Tooltip>
-      <img alt='locked' src={icon} {...image} />
     </Wrapper>
   ) : null;
 };
