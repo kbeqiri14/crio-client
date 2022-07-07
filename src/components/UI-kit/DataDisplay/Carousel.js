@@ -2,6 +2,7 @@ import { Carousel as antCarousel } from 'antd';
 import styled from 'styled-components';
 
 const Carousel = styled(antCarousel)`
+  margin-bottom: 40px;
   .slick-dots li {
     width: 16px !important;
   }
@@ -10,6 +11,10 @@ const Carousel = styled(antCarousel)`
     height: 9px;
     background-color: ${(props) => props.theme.colors.dark25};
     border-radius: 100%;
+  }
+  .ant-carousel,
+  img {
+    width: auto;
   }
 `;
 

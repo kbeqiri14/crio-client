@@ -50,7 +50,7 @@ const FeaturesWrapper = styled('div')`
     margin-top: 20px;
   }
   .title {
-    margin-top: 80px;
+    margin-top: 40px;
     font-size: 30px;
   }
   .creator-desc,
@@ -76,12 +76,17 @@ const FeaturesWrapper = styled('div')`
   .followers {
     margin: 40px 0px 80px;
   }
-  .text-options {
+  .text-options,
+  .eCommerce {
     text-align: left;
   }
   .followers .text-options {
     margin-top: 30px;
   }
+  .eCommerce-info {
+    margin: 20px auto 60px;
+  }
+
   .faq {
     display: inline;
     color: white;
@@ -91,7 +96,7 @@ const FeaturesWrapper = styled('div')`
     color: white !important;
   }
   .final-section {
-    margin-bottom: 80px;
+    margin: 80px 0;
     display: flex;
     flex-direction: column;
     text-align: center;
