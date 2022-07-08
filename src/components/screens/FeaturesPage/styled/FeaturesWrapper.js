@@ -13,11 +13,11 @@ const FeaturesWrapper = styled('div')`
   .bubble {
     position: absolute;
     top: 70px;
-    left: -150px;
+    left: -80px;
   }
   .half-bubble {
     position: absolute;
-    right: -180px;
+    right: -110px;
     top: 480px;
   }
   .banner-title {
@@ -80,7 +80,7 @@ const FeaturesWrapper = styled('div')`
   .eCommerce {
     text-align: left;
   }
-  .followers .text-options {
+  .text-options {
     margin-top: 30px;
   }
   .eCommerce-info {
@@ -102,6 +102,90 @@ const FeaturesWrapper = styled('div')`
   }
   .info {
     padding-top: 20px;
+  }
+  @media (max-width: 1679px) {
+    .container {
+      max-width: 1200px !important;
+    }
+    .bubble {
+      left: -220px;
+    }
+    .half-bubble {
+      right: -220px;
+    }
+  }
+  @media (max-width: 1200px) {
+    .container {
+      max-width: 800px !important;
+    }
+    .banner,
+    .creator-desc,
+    .eCommerce {
+      max-width: 650px !important;
+      .bubble {
+        left: -270px;
+      }
+      .half-bubble {
+        right: -320px;
+      }
+    }
+    .follower-section {
+      max-width: 100% !important;
+    }
+  }
+  @media (max-width: 992px) {
+    .cash-flow {
+      display: none;
+    }
+    .list {
+      margin: 0;
+    }
+    .followers {
+      margin-left: 50px;
+    }
+    .follower-section {
+      max-width: 750px !important;
+    }
+    .follow-img {
+      width: 300px;
+    }
+  }
+  @media (max-width: 750px) {
+    .follower-section {
+      max-width: 100% !important;
+    }
+  }
+  @media (max-width: 575px) {
+    .container {
+      min-height: 800px;
+      max-width: 400px !important;
+      .bubble {
+        left: -280px;
+      }
+      .half-bubble {
+        top: 500px;
+        right: -270px;
+      }
+    }
+    .paper-plane,
+    .follow-img {
+      width: 400px;
+    }
+    .list {
+      margin-top: 20px;
+    }
+    .cash-flow {
+      display: none;
+    }
+    .followers {
+      margin: 0;
+    }
+    .follower-section {
+      max-width: 100% !important;
+    }
+    .circled {
+      margin: 10px;
+    }
   }
 `;
 export default FeaturesWrapper;

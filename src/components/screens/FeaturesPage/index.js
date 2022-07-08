@@ -56,7 +56,13 @@ export const FeaturesPage = () => {
     <FeaturesWrapper>
       <div className='custom-back'>
         <Row className='banner container'>
-          <Col md={12} offset={6} className='desc-content'>
+          <Col
+            xl={{ span: 14, offset: 5 }}
+            lg={{ span: 16, offset: 4 }}
+            md={{ span: 16, offset: 4 }}
+            sm={{ span: 16, offset: 4 }}
+            className='desc-content'
+          >
             <img alt='bubble background' className='bubble' src={bubble} />
             <img alt='half bubble background' className='half-bubble' src={halfBubble} />
             <Title className='banner-title'>
@@ -72,17 +78,25 @@ export const FeaturesPage = () => {
           </Col>
         </Row>
       </div>
-      <Row className='creator-desc container'>
+      <Row className='creator-desc container' justify='center'>
         <Col md={24} className='title-section'>
           <Title className='title'>How to Get Started as a Creator</Title>
           <Text level={4} color='dark25' className='desc-texts'>
             There are two ways to become a creator
           </Text>
         </Col>
-        <Col md={12} offset={1}>
-          <img src={paperPlane} alt='paper plane' />
+        <Col xl={12} lg={8} md={8} sm={{ span: 7, offset: 0 }} xs={24} offset={1}>
+          <img src={paperPlane} alt='paper plane' className='paper-plane' />
         </Col>
-        <Col md={10} offset={1} className='self-center'>
+        <Col
+          xl={10}
+          lg={14}
+          md={14}
+          sm={15}
+          offset={1}
+          xs={{ span: 24, offset: 0 }}
+          className='self-center'
+        >
           <Row align='middle'>
             <div className='circled'>
               <Text level={4}>1</Text>
@@ -103,18 +117,23 @@ export const FeaturesPage = () => {
         </Col>
       </Row>
       <div className='custom-back'>
-        <Row className='subscription container'>
-          <Col md={24}>
+        <Row className='subscription container' justify='center'>
+          <Col md={{ span: 24, offset: 0 }} xs={{ span: 20, offset: 1 }}>
             <Title className='title'>Community Subscription</Title>
             <Text level={4} color='dark25' className='desc-texts'>
               Fans can subscribe monthly to Crio and then follow any <br /> creator to support their
               work and efforts!
             </Text>
           </Col>
-          <Col className='list' md={10} offset={3}>
+          <Col
+            className='list'
+            xl={{ span: 8, offset: 2 }}
+            lg={{ span: 12, offset: 0 }}
+            md={{ span: 20, offset: 2 }}
+          >
             <List
               $type='disc'
-              $listWidth='70%'
+              $listWidth='100%'
               $padding={10}
               items={listData.map((item) => (
                 <Text>{item}</Text>
@@ -132,30 +151,41 @@ export const FeaturesPage = () => {
             </Row>
             <List
               $type='disc'
-              $listWidth='70%'
+              $listWidth='100%'
               $padding={10}
               items={subData.map((item) => (
                 <Text class>{item}</Text>
               ))}
             />
           </Col>
-          <Col md={10}>
-            <img src={cashFlow} alt='cash flow' />
+          <Col xl={12} lg={{ span: 12 }} md={10}>
+            <img src={cashFlow} alt='cash flow' className='cash-flow' />
           </Col>
         </Row>
       </div>
-      <Row className='follower-section container' align='middle'>
-        <Col md={24} className='title-section'>
+      <Row className='follower-section container' align='middle' justify='center'>
+        <Col
+          md={{ span: 24, offset: 0 }}
+          sm={{ span: 24, offset: 0 }}
+          xs={{ span: 22, offset: 1 }}
+          className='title-section'
+        >
           <Title className='title'>How to Get More Followers</Title>
           <Text level={4} color='dark25' className='desc-texts'>
             We have made it easier for anyone to support creators <br /> on Crio with just one
             monthly subscription
           </Text>
         </Col>
-        <Col md={15}>
-          <img src={follow} alt='follow' />
+        <Col xl={10} lg={14} md={{ span: 8, offset: 0 }} sm={24}>
+          <img src={follow} alt='follow' className='follow-img' />
         </Col>
-        <Col md={9} className='self-center followers'>
+        <Col
+          xl={9}
+          lg={{ span: 10 }}
+          md={{ span: 14, offset: 0 }}
+          sm={24}
+          className='self-center followers'
+        >
           <Row align='middle' gutter={[0, 48]}>
             <div className='circled'>
               <Text level={4}>1</Text>
@@ -186,7 +216,7 @@ export const FeaturesPage = () => {
         </Col>
       </Row>
       <div className='custom-back'>
-        <Row className='container text-center' align='middle' justify='center'>
+        <Row className='container text-center eCommerce' align='middle' justify='center'>
           <Col md={24}>
             <Title className='title'>eCommerce</Title>
             <Text level={4} color='dark25' className='desc-texts'>
@@ -199,7 +229,7 @@ export const FeaturesPage = () => {
               $type='disc'
               $listWidth='70%'
               $padding={10}
-              $columns={2}
+              $columns={window.innerWidth >= 576 ? '2' : '1'}
               items={eCommerceData.map((item) => (
                 <Text level={4} color='dark25' className='desc-texts text-left'>
                   {item}{' '}
@@ -207,7 +237,12 @@ export const FeaturesPage = () => {
               ))}
             />
           </Col>
-          <Col md={24} className='text-center'>
+          <Col
+            md={{ span: 24, offset: 0 }}
+            sm={{ span: 16 }}
+            xs={{ span: 20, offset: 1 }}
+            className='text-center'
+          >
             <Carousel>
               <Image preview={false} src={commissions} />
               <Image preview={false} src={guides} />
