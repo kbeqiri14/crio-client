@@ -86,7 +86,6 @@ const FeaturesWrapper = styled('div')`
   .eCommerce-info {
     margin: 20px auto 60px;
   }
-
   .faq {
     display: inline;
     color: white;

@@ -1,5 +1,6 @@
 import { memo, useEffect } from 'react';
-import { Divider, Col, Row, Text, Title, List } from '@ui-kit';
+import { Divider, Col, Row, Text, Title, List, Carousel } from '@ui-kit';
+import { Image } from 'antd';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 
@@ -12,6 +13,10 @@ import halfBubble from '@images/half-bubble.png';
 import paperPlane from '@images/paper-plane.png';
 import cashFlow from '@images/cash-flow.png';
 import follow from '@images/follow.png';
+import commissions from '@images/commissions.png';
+import guides from '@images/guides.png';
+import digitalAssets from '@images/digital-assets.png';
+import psd from '@images/psd.png';
 import FeaturesWrapper from './styled/FeaturesWrapper';
 
 const listData = [
@@ -21,6 +26,10 @@ const listData = [
 const subData = [
   'Creators can immediately make monthly income everytime they get new followers!',
   'Note: Only subscribers can follow creators on Crio.',
+];
+const eCommerceData = [
+  'Creators can sell individual digital products or services to anyone, including free users and subscribers.',
+  'Creators keep 90% of each transaction. 10% is kept by Crio to cover the costs of operations (e.g., transaction fees, paying our employees, server costs).',
 ];
 
 export const FeaturesPage = () => {
@@ -126,7 +135,7 @@ export const FeaturesPage = () => {
               $listWidth='70%'
               $padding={10}
               items={subData.map((item) => (
-                <Text>{item}</Text>
+                <Text class>{item}</Text>
               ))}
             />
           </Col>
@@ -176,6 +185,38 @@ export const FeaturesPage = () => {
           </Row>
         </Col>
       </Row>
+      <div className='custom-back'>
+        <Row className='container text-center' align='middle' justify='center'>
+          <Col md={24}>
+            <Title className='title'>eCommerce</Title>
+            <Text level={4} color='dark25' className='desc-texts'>
+              Crio also gives creators the flexibility to monetize <br /> through a storefront
+            </Text>
+          </Col>
+          <Col md={24}>
+            <List
+              className='eCommerce-info'
+              $type='disc'
+              $listWidth='70%'
+              $padding={10}
+              $columns={2}
+              items={eCommerceData.map((item) => (
+                <Text level={4} color='dark25' className='desc-texts text-left'>
+                  {item}{' '}
+                </Text>
+              ))}
+            />
+          </Col>
+          <Col md={24} className='text-center'>
+            <Carousel>
+              <Image preview={false} src={commissions} />
+              <Image preview={false} src={guides} />
+              <Image preview={false} src={digitalAssets} />
+              <Image preview={false} src={psd} />
+            </Carousel>
+          </Col>
+        </Row>
+      </div>
       <Row justify='center' align='middle'>
         <Col className='final-section'>
           <Title className='banner-title'>
@@ -183,11 +224,12 @@ export const FeaturesPage = () => {
             Let’s build a great community!
           </Title>
           <Text level={4} color='dark25' className='info'>
-            Check out our{' '}
+            Check out our
             <Link to='/faq' className='faq'>
-              FAQ
-            </Link>{' '}
-            guide or email us at <br /> <span className='email'>info@criointeractive.com</span>{' '}
+              {' '}
+              FAQ{' '}
+            </Link>
+            guide or email us at <br /> <span className='email'>info@criointeractive.com</span>
             <br /> and get more about how Crio works
           </Text>
         </Col>
