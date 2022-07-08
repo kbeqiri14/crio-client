@@ -32,8 +32,6 @@ const Radio = styled(antRadio)`
     background-color: transparent;
   }
   .ant-radio-inner::after {
-    top: 2px;
-    left: 2px;
     background-color: ${(props) => props.theme.colors.primary};
   }
 `;

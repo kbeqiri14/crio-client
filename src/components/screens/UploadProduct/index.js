@@ -3,7 +3,7 @@ import { memo, useEffect } from 'react';
 import history from '@configs/history';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
-import ProductDetails from '@root/src/components/screens/EditProduct/ProductForm';
+import ProductForm from '@root/src/components/screens/EditProduct/ProductForm';
 
 const UploadProduct = () => {
   const { user } = useLoggedInUser();
@@ -14,7 +14,7 @@ const UploadProduct = () => {
     }
   }, [user.id, user.isCreator]);
 
-  return user.id ? <ProductDetails /> : <GlobalSpinner />;
+  return user.id ? <ProductForm /> : <GlobalSpinner />;
 };
 
 export default memo(UploadProduct);

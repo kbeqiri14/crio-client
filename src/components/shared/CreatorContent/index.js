@@ -2,9 +2,10 @@ import { memo, useCallback, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
+import history from '@configs/history';
 import { Tabs, Paragraph } from '@ui-kit';
-import LoadMoreButton from './LoadMoreButton';
 import EmptyState from '@shared/EmptyState';
+import LoadMoreButton from './LoadMoreButton';
 import ArtworksList from './Artwork/ArtworksList';
 import ProductsList from './Product/ProductsList';
 import { ReactComponent as EmptyMarketIcon } from '@svgs/marketplace-empty.svg';
@@ -58,16 +59,11 @@ export const Content = ({
 
   const onTabClick = useCallback(
     (key) => {
+      setActiveKey(key);
       if (key === tabs.MARKETPLACE) {
-        setActiveKey(tabs.MARKETPLACE);
-        window.history.replaceState('', '', isProfilePage ? `/profile/${username}` : '/');
+        history.push(isProfilePage ? `/profile/${username}` : '/');
       } else {
-        setActiveKey(tabs.ARTWORK);
-        window.history.replaceState(
-          '',
-          '',
-          isProfilePage ? `/profile/artworks/${username}` : `/artworks`,
-        );
+        history.push(isProfilePage ? `/profile/artworks/${username}` : `/artworks`);
       }
     },
     [isProfilePage, username],

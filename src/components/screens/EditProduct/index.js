@@ -2,7 +2,7 @@ import { memo, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import history from '@configs/history';
-import ProductDetails from './ProductForm';
+import ProductForm from './ProductForm';
 
 const EditProduct = () => {
   const { state } = useLocation();
@@ -13,7 +13,7 @@ const EditProduct = () => {
     }
   }, [state]);
 
-  return <ProductDetails state={state} />;
+  return <ProductForm state={state} />;
 };
 
 export default memo(EditProduct);

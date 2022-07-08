@@ -28,28 +28,20 @@ export const meFragment = gql`
     isFollowing
     followings
     boughtProducts
+    featuresSeen
+    helpSeen
   }
 `;
 
 export const followingInfoFragment = gql`
   fragment FollowingInfoAttributes on FollowingInfo {
     id
-    userId
     providerType
     providerUserId
-    name
-    email
     username
     firstName
     lastName
     avatar
-    artworks {
-      artworkId
-      videoUri
-      thumbnailUri
-      title
-      description
-    }
   }
 `;
 

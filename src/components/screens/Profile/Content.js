@@ -1,5 +1,6 @@
 import { memo, useMemo, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import styled from 'styled-components';
 import { useLazyQuery } from '@apollo/client';
 
 import { getUserArtworks } from '@app/graphql/queries/artworks.query';
@@ -7,6 +8,10 @@ import { getUserProducts } from '@app/graphql/queries/products.query';
 import { Tabs } from '@ui-kit';
 import Followings from './Followings';
 import Content from '@root/src/components/shared/CreatorContent';
+
+const Wrapper = styled('div')`
+  padding: 40px 22px;
+`;
 
 const { TabPane } = Tabs;
 
@@ -74,11 +79,13 @@ const ProfileContent = ({
     );
   }
   return (
-    <Tabs style={{ paddingTop: 40, paddingBottom: 20 }}>
-      <TabPane key='Following' tab={tab}>
-        <Followings username={username} isProfile={isProfile} isSubscribed={isSubscribed} />
-      </TabPane>
-    </Tabs>
+    <Wrapper>
+      <Tabs>
+        <TabPane key='Following' tab={tab}>
+          <Followings username={username} isProfile={isProfile} isSubscribed={isSubscribed} />
+        </TabPane>
+      </Tabs>
+    </Wrapper>
   );
 };
 

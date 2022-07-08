@@ -3,7 +3,7 @@ import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import { isFuture } from 'date-fns';
 import { useLazyQuery, useReactiveVar } from '@apollo/client';
 
-import { signupErrorVar } from '@configs/client-cache';
+import { loggedInUserLoadingVar, signupErrorVar } from '@configs/client-cache';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { useCurrentUser } from '@app/auth/hooks';
 import { PrivateRoute } from '@app/routing/routes';
@@ -30,6 +30,7 @@ import EditProduct from '@screens/EditProduct';
 import Payment from '@screens/Payment';
 
 export const AppRoutes = () => {
+  const [keyword, setKeyword] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const { user, loading } = useCurrentUser();
   const { dispatchUser, user: crioUser } = useLoggedInUser();
@@ -54,8 +55,12 @@ export const AppRoutes = () => {
           subscribePeriodIsValid: periodEnd ? isFuture(new Date(periodEnd)) : false,
         });
       }
+      loggedInUserLoadingVar(false);
     },
-    onError: (data) => console.log(data, 'error'),
+    onError: (data) => {
+      console.log(data, 'error');
+      loggedInUserLoadingVar(false);
+    },
     fetchPolicy: 'cache-and-network',
   });
 
@@ -65,6 +70,12 @@ export const AppRoutes = () => {
   );
 
   useEffect(() => {
+    if (!(pathname === '/' || pathname === '/artworks')) {
+      setKeyword('');
+    }
+  }, [pathname]);
+
+  useEffect(() => {
     if (!loading) {
       setIsAuthenticated(authenticated);
     }
@@ -72,6 +83,7 @@ export const AppRoutes = () => {
 
   useEffect(() => {
     if (authenticated) {
+      loggedInUserLoadingVar(true);
       getLoggedInUser();
     }
   }, [authenticated, getLoggedInUser]);
@@ -104,7 +116,7 @@ export const AppRoutes = () => {
   return (
     <div className='crio-container'>
       <header>
-        <Header isAuthenticated={isAuthenticated} />
+        <Header isAuthenticated={isAuthenticated} keyword={keyword} setKeyword={setKeyword} />
       </header>
       <main>
         <div className='main'>

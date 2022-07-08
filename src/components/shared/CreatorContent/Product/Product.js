@@ -85,7 +85,6 @@ const ImageWrapper = styled('div')`
       right: 20px;
     }
   }
-
   &.no-thumbnail {
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
@@ -252,7 +251,13 @@ const Product = ({
         onMouseOver={handleMouseOver}
         onMouseLeave={handleMouseOut}
       >
-        <LockState userId={userId} accessibility={accessibility} large={large} isProduct={true} />
+        <LockState
+          userId={userId}
+          accessibility={accessibility}
+          large={large}
+          isProduct={true}
+          isHovering={isHovering}
+        />
         <ImageWrapper className={imageClasses}>
           <img src={src} alt='product' onClick={showProduct} />
           <div

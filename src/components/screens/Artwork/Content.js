@@ -12,10 +12,9 @@ import BuyWidget from '../Product/BuyWidget';
 const Wrapper = styled('div')`
   display: flex;
   justify-content: center;
-  padding: 40px 10px;
+  padding: 40px 20px;
   > div {
-    min-width: 1040px;
-    max-width: 1040px;
+    width: 1040px;
   }
   .lock {
     .tooltip {
@@ -39,11 +38,13 @@ const ImageWrapper = styled('div')`
   align-items: center;
   background: #182024;
   border-radius: 16px;
-  width: 100%;
-  height: 638px;
+  max-width: 1040px;
+  max-height: 638px;
+  height: auto;
   img {
     width: 100%;
-    height: 100%;
+    height: auto;
+    max-height: 638px;
     object-fit: cover;
     border-radius: 16px;
     &.default {
@@ -134,7 +135,7 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
           </Col>
         )}
         <Col span={24}>
-          <Row justify='space-between'>
+          <Row justify='space-between' gutter={[0, 30]}>
             <Col max_width={videoInfo.isProduct ? 722 : undefined}>
               <Text level={4} color='dark25'>
                 <div

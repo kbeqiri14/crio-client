@@ -1,13 +1,16 @@
 import { memo, useCallback } from 'react';
 import styled from 'styled-components';
+import { Space } from 'antd';
+import { useReactiveVar } from '@apollo/client';
 
+import { loggedInUserLoadingVar } from '@configs/client-cache';
 import history from '@configs/history';
 import { STRIPE_PAYMENT_URL } from '@configs/environment';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { Button } from '@ui-kit';
-import { Col, Divider, Row, Text, Title } from '@ui-kit';
-import { CustomTooltip } from '@ui-kit/Tooltip';
+import { Col, Divider, Row, Text, Title, Tooltip } from '@ui-kit';
 import { warningToast } from '@ui-kit/Notification';
+import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import { ReactComponent as CheckMark } from '@svgs/check.svg';
 import { ReactComponent as RecommendIcon } from '@svgs/recommend.svg';
 
@@ -33,7 +36,6 @@ const Wrapper = styled('div')`
   }
   @media (max-width: 767.98px) {
     height: 100%;
-    padding: 80px 20px;
   }
 `;
 
@@ -45,20 +47,17 @@ const perksListPro = [
 ];
 
 const Item = ({ item }) => (
-  <Row gutter={16} className='items-center'>
-    <Col>
-      <CheckMark />
-    </Col>
-    <Col max_width={290}>
-      <Text level={3} color='dark25'>
-        {item}
-      </Text>
-    </Col>
-  </Row>
+  <Space size='middle'>
+    <CheckMark />
+    <Text level={3} color='dark25'>
+      {item}
+    </Text>
+  </Space>
 );
 
 const Pricing = () => {
   const { user } = useLoggedInUser();
+  const loggedInUserLoading = useReactiveVar(loggedInUserLoadingVar);
 
   const handleExploreMore = useCallback(() => history.push('/'), []);
   const handleGetStarted = useCallback(() => {
@@ -68,6 +67,10 @@ const Pricing = () => {
       warningToast('Warning', 'Please sign in to get started.');
     }
   }, [user?.id]);
+
+  if (loggedInUserLoading) {
+    return <GlobalSpinner />;
+  }
 
   return (
     <Wrapper>
@@ -128,16 +131,19 @@ const Pricing = () => {
               </Text>
             </Col>
             <Col span={24} padding_top={8}>
-              <CustomTooltip
+              <Tooltip
                 placement='right'
-                className='default-overlay'
-                title='Warning'
-                description='Please, use the email address attached to your profile'
+                getPopupContainer={(triggerNode) =>
+                  triggerNode.parentNode.querySelector('.ant-tooltip-open')
+                }
+                title='Please, use the email address attached to your profile'
               >
-                <Button block type='primary' fill_color='green' onClick={handleGetStarted}>
-                  SUBSCRIBE
-                </Button>
-              </CustomTooltip>
+                <div className='relative'>
+                  <Button block type='primary' fill_color='green' onClick={handleGetStarted}>
+                    SUBSCRIBE
+                  </Button>
+                </div>
+              </Tooltip>
             </Col>
           </Row>
         </Col>

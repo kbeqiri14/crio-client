@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { useReactiveVar } from '@apollo/client';
@@ -10,7 +10,6 @@ import { ReactComponent as SearchIcon } from '@svgs/search.svg';
 import { ReactComponent as CloseIcon } from '@svgs/close-middle.svg';
 
 const Wrapper = styled('div')`
-  width: 244px;
   .ant-input-affix-wrapper {
     padding: 7px 12px;
     border-radius: 32px;
@@ -30,8 +29,7 @@ const Wrapper = styled('div')`
   }
 `;
 
-const SearchBar = () => {
-  const [keyword, setKeyword] = useState('');
+const SearchBar = ({ width, keyword, setKeyword, closeMenu }) => {
   const { pathname } = useLocation();
   const initialKeyword = useReactiveVar(searchKeywordVar);
   const isArtworks = useMemo(() => pathname.includes('/artworks'), [pathname]);
@@ -46,19 +44,20 @@ const SearchBar = () => {
       searchKeywordVar(text);
       refetchArtworkVar(true);
       refetchMarketplaceVar(true);
+      closeMenu && closeMenu();
       history.push(`/${isArtworks ? 'artworks' : ''}`);
     },
-    [initialKeyword, keyword, isArtworks],
+    [isArtworks, initialKeyword, keyword, setKeyword, closeMenu],
   );
   const onClear = useCallback(() => onSearch(true), [onSearch]);
 
   return (
-    <Wrapper>
+    <Wrapper style={{ width }}>
       <Input
         prefix={<SearchIcon />}
         placeholder='Search'
         value={keyword}
-        onChange={(e) => setKeyword(e.target.value)}
+        onChange={(e) => (e.target.value ? setKeyword(e.target.value) : onClear())}
         onPressEnter={() => onSearch()}
         suffix={keyword.trim() ? <CloseIcon onClick={onClear} className='pointer' /> : undefined}
       />
