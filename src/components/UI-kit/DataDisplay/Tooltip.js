@@ -7,7 +7,7 @@ const Tooltip = styled(antTooltip)`
     font-weight: ${(props) => props.theme.text[1].weight};
     line-height: ${(props) => props.theme.text[1].height}px;
     width: ${(props) => props.width || 180}px;
-    padding: 2px 8px;
+    padding: 8px;
     border-radius: 8px;
     text-align: center;
   }

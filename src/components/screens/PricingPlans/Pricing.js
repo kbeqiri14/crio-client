@@ -138,7 +138,7 @@ const Pricing = () => {
                 }
                 title='Please, use the email address attached to your profile'
               >
-                <div style={{ position: 'relative' }}>
+                <div className='relative'>
                   <Button block type='primary' fill_color='green' onClick={handleGetStarted}>
                     SUBSCRIBE
                   </Button>

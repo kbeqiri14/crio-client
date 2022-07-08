@@ -90,7 +90,7 @@ const LockState = ({
         }
         title={tooltip}
       >
-        <div style={{ position: 'relative' }}>
+        <div className='relative'>
           <img alt='locked' src={icon} {...image} />
         </div>
       </Tooltip>

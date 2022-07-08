@@ -7,7 +7,7 @@ import { updateUser } from '@app/graphql/mutations/user.mutation';
 import { Button, Tooltip } from '@ui-kit';
 import { ReactComponent as HelpIcon } from '@svgs/help.svg';
 
-const HelpTooltip = () => {
+const HelpTooltip = ({ placement = 'left' }) => {
   const { user } = useLoggedInUser();
   const [updateUserInfo, { loading }] = useMutation(updateUser, {
     variables: { attributes: { helpSeen: true } },
@@ -28,15 +28,15 @@ const HelpTooltip = () => {
     <>
       <Tooltip
         visible={user.id && !user.helpSeen ? true : undefined}
-        placement='left'
         width={235}
+        placement={placement}
         trigger={['hover']}
         getPopupContainer={(triggerNode) =>
           triggerNode.parentNode.querySelector('.ant-tooltip-open')
         }
         title='After a user makes a purchase, you will receive an automatic email. Please check your email and complete the order'
       >
-        <div style={{ position: 'relative' }}>
+        <div className='relative self-end'>
           <HelpIcon />
         </div>
       </Tooltip>
