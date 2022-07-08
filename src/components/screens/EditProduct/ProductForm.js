@@ -10,6 +10,7 @@ import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import { ReactComponent as CloseIcon } from '@svgs/close-small.svg';
 import CoverDragger from './CoverDragger';
 import ActionButtons from './ActionButtons';
+import HelpTooltip from '@screens/Product/HelpTooltip';
 
 const Wrapper = styled('div')`
   display: flex;
@@ -35,6 +36,14 @@ const Wrapper = styled('div')`
     .info {
       opacity: 1;
       visibility: visible;
+    }
+  }
+  .help {
+    position: absolute;
+    top: 10px;
+    right: 0;
+    .ant-tooltip {
+      top: 0 !important;
     }
   }
 `;
@@ -153,7 +162,7 @@ const ProductForm = ({ state }) => {
         </BroadcastWrapper>
       )}
       <Wrapper>
-        <Tabs>
+        <Tabs className='relative'>
           <Tabs.TabPane key='Service' tab='Service'>
             <Row align='center' gutter={[0, 8]}>
               <Col span={24} align='start'>
@@ -209,7 +218,7 @@ const ProductForm = ({ state }) => {
                           }
                           title='Start earning instantly using Crios simple payments platform.'
                         >
-                          <div style={{ position: 'relative' }}>
+                          <div className='relative'>
                             <Input
                               {...field}
                               level={4}
@@ -321,6 +330,12 @@ const ProductForm = ({ state }) => {
               </Col>
             </Row>
           </Tabs.TabPane>
+          <div className='help'>
+            <HelpTooltip
+              placement='right'
+              title='After a user makes a purchase, you will receive an automatic email. Please check your email and complete the order'
+            />
+          </div>
         </Tabs>
       </Wrapper>
     </>
