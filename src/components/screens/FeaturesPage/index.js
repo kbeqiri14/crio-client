@@ -110,8 +110,9 @@ export const FeaturesPage = () => {
               <Text level={4}>2</Text>
             </div>
             <Text className='text-options'>
-              Email us directly at <br /> <span className='email'>info@criointeractive.com</span>{' '}
-              and we can <br /> upgrade your account to “creator status.”
+              Email us directly at <br />{' '}
+              <a href={`mailto:info@criointeractive.com`}>info@criointeractive.com</a> and we can{' '}
+              <br /> upgrade your account to “creator status.”
             </Text>
           </Row>
         </Col>
@@ -264,7 +265,10 @@ export const FeaturesPage = () => {
               {' '}
               FAQ{' '}
             </Link>
-            guide or email us at <br /> <span className='email'>info@criointeractive.com</span>
+            guide or email us at <br />{' '}
+            <a href={`mailto:info@criointeractive.com`} className='email'>
+              info@criointeractive.com
+            </a>
             <br /> and get more about how Crio works
           </Text>
         </Col>
