@@ -27,7 +27,7 @@ const Wrapper = styled('div')`
     left: -243px !important;
   }
   .got-it-button {
-    margin-top: 50px;
+    margin-top: 37px;
   }
 `;
 

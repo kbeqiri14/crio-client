@@ -39,11 +39,20 @@ const Wrapper = styled('div')`
     }
   }
   .help {
+    display: flex;
+    flex-direction: column;
     position: absolute;
     top: 10px;
     right: 0;
     .ant-tooltip {
       top: 0 !important;
+    }
+    .got-it-button {
+      left: 170px;
+      @media (max-width: 1060px) {
+        left: -115px;
+      }
+      margin-top: 58px;
     }
   }
 `;
