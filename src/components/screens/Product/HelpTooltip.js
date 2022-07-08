@@ -30,7 +30,6 @@ const HelpTooltip = ({ placement = 'left' }) => {
         visible={user.id && !user.helpSeen ? true : undefined}
         width={235}
         placement={placement}
-        trigger={['hover']}
         getPopupContainer={(triggerNode) =>
           triggerNode.parentNode.querySelector('.ant-tooltip-open')
         }

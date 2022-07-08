@@ -21,12 +21,10 @@ const Wrapper = styled('div')`
     }
     margin-bottom: 20px;
   }
-  .ant-tooltip-open {
-    align-self: flex-end;
-    .ant-tooltip {
-      top: 0 !important;
-      left: -243px !important;
-    }
+  .ant-tooltip {
+    top: 0 !important;
+    right 0 !important;
+    left: -243px !important;
   }
   .got-it-button {
     margin-top: 50px;
