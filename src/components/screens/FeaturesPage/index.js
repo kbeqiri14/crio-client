@@ -143,7 +143,7 @@ export const FeaturesPage = () => {
             <Row className='formula-text'>
               <Col md={11}>
                 <Text color='dark25'> # of fans following you </Text>
-                <Divider width={230} />
+                <Divider width={230} margin={12} />
                 <Text color='dark25'> Total # of fans following all creators </Text>
               </Col>
               <Col md={5}>

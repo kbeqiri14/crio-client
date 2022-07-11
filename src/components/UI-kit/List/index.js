@@ -4,14 +4,15 @@ const OrderedList = styled.ol`
   column-gap: 24px;
 
   li {
-    font-size: 16px;
+    font-size: ${(props) => props.theme.text[3].size}px;
+    font-weight: ${(props) => props.theme.text[3].weight};
+    line-height: ${(props) => props.theme.text[3].height}px;
+    color: ${(props) => props.theme.colors.dark25};
     margin-bottom: 8px;
-    color: #bbbcbc;
     text-align: left;
-    line-height: 24px;
   }
   li > span {
-    color: #bbbcbc;
+    color: ${(props) => props.theme.colors.dark25};
   }
   ${(props) =>
     props.$listWidth &&

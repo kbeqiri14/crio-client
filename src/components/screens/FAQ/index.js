@@ -4,16 +4,14 @@ import { Collapse, Col, Row, Title } from '@ui-kit';
 import styled from 'styled-components';
 import { DownOutlined } from '@ant-design/icons';
 import { questions } from './_partials/questions';
+import { Footer } from '@shared/Footer';
+
 const { Panel } = Collapse;
 
 const Wrapper = styled('div')`
   padding-top: 40px;
   color: white;
-  .title {
-    margin-bottom: 40px !important;
-    font-size: 22px;
-    text-align: center;
-  }
+
   .email {
     color: #04a0ff;
     border-bottom: 1px solid #04a0ff;
@@ -26,15 +24,7 @@ const Wrapper = styled('div')`
     transform: translateY(-50%);
     margin: 0;
   }
-  .formula-text {
-    margin: 30px 0;
-    align-items: center;
-    text-align: center;
-  }
-  .formula-text .ant-typography {
-    color: red;
-    font-size: 14px;
-  }
+
   @media (max-width: 420px) {
     .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow {
       left: auto;
@@ -50,7 +40,9 @@ const Wrapper = styled('div')`
 export const FAQ = () => {
   return (
     <Wrapper>
-      <Title className='title'>Frequently asked questions</Title>
+      <Title level={1} align='center'>
+        Frequently asked questions
+      </Title>
       <Row className='faq' justify='center'>
         <Col lg={14} md={16} sm={18} xs={20}>
           <Collapse
@@ -69,6 +61,7 @@ export const FAQ = () => {
           </Collapse>
         </Col>
       </Row>
+      <Footer />
     </Wrapper>
   );
 };

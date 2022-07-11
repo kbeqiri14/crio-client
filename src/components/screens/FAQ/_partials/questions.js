@@ -213,14 +213,21 @@ export const questions = [
       <Fragment>
         <li>Crio puts 80% of all platform subscription revenue from fans into a “Creator Pool”</li>
         <li>Creators are paid from this pool each month based on the below formula</li>
-        <Row className='formula-text'>
-          <Col md={11} xs={12}>
-            <Text> # of fans following you </Text>
+        <Row padding_vertical={30} align='middle'>
+          <Col md={11} xs={12} align='center'>
+            <Text level={1} color='error100'>
+              # of fans following you
+            </Text>
             <Divider />
-            <Text> Total # of fans following all creators </Text>
+            <Text level={1} color='error100'>
+              Total # of fans following all creators
+            </Text>
           </Col>
-          <Col md={6} xs={12}>
-            <Text>&nbsp; &nbsp; &nbsp; x &nbsp; Creator Pool </Text>
+          <Col md={4} xs={12} align='center'>
+            <Text level={1} color='error100'>
+              {' '}
+              x &nbsp; &nbsp; Creator Pool
+            </Text>
           </Col>
         </Row>
         <li>
