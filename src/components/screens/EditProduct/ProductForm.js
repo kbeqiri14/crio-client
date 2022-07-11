@@ -48,7 +48,7 @@ const Wrapper = styled('div')`
       top: 0 !important;
     }
     .got-it-button {
-      left: 170px;
+      left: 160px;
       @media (max-width: 1060px) {
         left: -115px;
       }
