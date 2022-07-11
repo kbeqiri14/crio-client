@@ -21,15 +21,13 @@ const Wrapper = styled('div')`
     }
     margin-bottom: 20px;
   }
-  .ant-tooltip-open {
-    align-self: flex-end;
-    .ant-tooltip {
-      top: 0 !important;
-      left: -243px !important;
-    }
+  .ant-tooltip {
+    top: 0 !important;
+    right 0 !important;
+    left: -243px !important;
   }
   .got-it-button {
-    margin-top: 50px;
+    margin-top: 37px;
   }
 `;
 
@@ -73,7 +71,9 @@ export const BuyWidget = ({ userId, username, productId, price, limit, accessibi
           </Col>
         )}
       </Row>
-      {user.isCreator && userId === user.id && <HelpTooltip />}
+      {!user.isCreator && (
+        <HelpTooltip title='After purchase, please check your email to receive service from Creator' />
+      )}
     </Wrapper>
   );
 };
