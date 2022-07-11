@@ -86,7 +86,7 @@ export const Content = ({
             />
           )}
 
-          {!productsList.length && (
+          {!isProfilePage && !loading && !productsList?.length && (
             <div className='empty'>
               <EmptyMarketIcon />
 
@@ -108,7 +108,7 @@ export const Content = ({
             <EmptyState username={username} isCreator={true} isProfile={isProfile} />
           )}
 
-          {!artworksList.length && (
+          {!isProfilePage && !loading && !artworksList?.length && (
             <div className='empty'>
               <EmptyArtworkIcon />
 
