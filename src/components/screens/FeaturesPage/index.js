@@ -3,11 +3,15 @@ import { Divider, Col, Row, Text, Title, List, Carousel } from '@ui-kit';
 import { Image } from 'antd';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
+import { useReactiveVar } from '@apollo/client';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { me } from '@app/graphql/queries/users.query';
 import { updateUser } from '@app/graphql/mutations/user.mutation';
+import history from '@configs/history';
+import { loggedInUserLoadingVar } from '@configs/client-cache';
 import { Footer } from '@shared/Footer';
+import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import bubble from '@images/bubble.png';
 import halfBubble from '@images/half-bubble.png';
 import paperPlane from '@images/paper-plane.png';
@@ -34,6 +38,7 @@ const eCommerceData = [
 
 export const FeaturesPage = () => {
   const { user } = useLoggedInUser();
+  const loggedInUserLoading = useReactiveVar(loggedInUserLoadingVar);
   const [updateUserInfo] = useMutation(updateUser, {
     variables: { attributes: { featuresSeen: true } },
     update: (cache, mutationResult) => {
@@ -46,11 +51,22 @@ export const FeaturesPage = () => {
       }
     },
   });
+
+  useEffect(() => {
+    if (!loggedInUserLoading && (!user.id || (user.id && !user.isCreator))) {
+      history.push('/');
+    }
+  }, [loggedInUserLoading, user.id, user.isCreator]);
+
   useEffect(() => {
     if (user.id && !user.featuresSeen) {
       updateUserInfo();
     }
   }, [user.id, user.featuresSeen, updateUserInfo]);
+
+  if (loggedInUserLoading) {
+    return <GlobalSpinner />;
+  }
 
   return (
     <FeaturesWrapper>
