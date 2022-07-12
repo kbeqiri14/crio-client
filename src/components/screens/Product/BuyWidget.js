@@ -73,7 +73,7 @@ export const BuyWidget = ({ userId, username, productId, price, limit, accessibi
         )}
       </Row>
       {!user.isCreator && (
-        <HelpTooltip title='After purchase, please check your email to receive service from Creator' />
+        <HelpTooltip title='After purchase, please check your email to receive a service from Creator' />
       )}
     </Wrapper>
   );
