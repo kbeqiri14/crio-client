@@ -192,11 +192,11 @@ export const FeaturesPage = () => {
             monthly subscription
           </Text>
         </Col>
-        <Col xl={10} lg={14} md={{ span: 8, offset: 0 }} sm={24}>
+        <Col xl={12} lg={14} md={{ span: 8, offset: 0 }} sm={24}>
           <img src={follow} alt='follow' className='follow-img' />
         </Col>
         <Col
-          xl={9}
+          xl={8}
           lg={{ span: 10 }}
           md={{ span: 14, offset: 0 }}
           sm={24}
