@@ -4,6 +4,7 @@
 export { default as Button } from './General/Button';
 export { default as Text } from './General/Typography/Text';
 export { default as Title } from './General/Typography/Title';
+export { default as Paragraph } from './General/Typography/Paragraph';
 
 /*
   Layout
@@ -25,6 +26,7 @@ export { default as Menu } from './Navigation/Menu';
 export { default as Carousel } from './DataDisplay/Carousel';
 export { default as Tabs } from './DataDisplay/Tabs';
 export { default as Tooltip } from './DataDisplay/Tooltip';
+export { default as Collapse } from './DataDisplay/Collapse';
 
 /*
   Data Entry
@@ -43,3 +45,5 @@ export { default as Modal } from './Feedback/Modal';
   Theme Provider
 */
 export { default as ThemeProvider } from './ThemeProvider';
+
+export { default as List } from './List';

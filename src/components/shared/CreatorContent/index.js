@@ -3,14 +3,23 @@ import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import history from '@configs/history';
-import { Tabs } from '@ui-kit';
-import LoadMoreButton from './LoadMoreButton';
+import { Tabs, Paragraph } from '@ui-kit';
 import EmptyState from '@shared/EmptyState';
+import LoadMoreButton from './LoadMoreButton';
 import ArtworksList from './Artwork/ArtworksList';
 import ProductsList from './Product/ProductsList';
+import { ReactComponent as EmptyMarketIcon } from '@svgs/marketplace-empty.svg';
+import { ReactComponent as EmptyArtworkIcon } from '@svgs/empty-artwork.svg';
 
 const Wrapper = styled('div')`
   max-width: 1438px;
+  margin: auto;
+  padding: 40px 22px;
+
+  .empty {
+    text-align: center;
+  }
+
   @media (max-width: 1437px) {
     max-width: 1084px;
   }
@@ -20,8 +29,6 @@ const Wrapper = styled('div')`
   @media (max-width: 729px) {
     max-width: 376px;
   }
-  margin: auto;
-  padding: 40px 22px;
 `;
 
 const { TabPane } = Tabs;
@@ -78,6 +85,17 @@ export const Content = ({
               isMarketplace={true}
             />
           )}
+
+          {!isProfilePage && !loading && !productsList?.length && (
+            <div className='empty'>
+              <EmptyMarketIcon />
+
+              <Paragraph level={4} color='dark25'>
+                no result
+              </Paragraph>
+            </div>
+          )}
+
           <ProductsList productsList={productsList} />
           <LoadMoreButton
             visible={visibleLoadMoreProducts}
@@ -89,6 +107,17 @@ export const Content = ({
           {isProfilePage && !artworksCount && !artworksList?.length && (
             <EmptyState username={username} isCreator={true} isProfile={isProfile} />
           )}
+
+          {!isProfilePage && !loading && !artworksList?.length && (
+            <div className='empty'>
+              <EmptyArtworkIcon />
+
+              <Paragraph level={4} color='dark25'>
+                No Data found
+              </Paragraph>
+            </div>
+          )}
+
           <ArtworksList artworksList={artworksList} />
           <LoadMoreButton
             visible={visibleLoadMoreArtworks}

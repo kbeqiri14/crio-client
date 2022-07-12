@@ -38,27 +38,33 @@ const ProfileContent = ({
   const { pathname } = useLocation();
   // const [initialPolling, setInitialPolling] = useState(true);
 
-  const [requestArtworks, { data: Artworks }] = useLazyQuery(getUserArtworks, {
-    variables: { username: pathname.split('/').slice(-1)[0] || undefined },
-    fetchPolicy: 'no-cache',
-    notifyOnNetworkStatusChange: true,
-    pollInterval: 30000,
-    // onCompleted: ({ getUserArtworks }) => {
-    //   setInitialPolling(false);
-    //   setWorks(getUserArtworks);
-    // },
-  });
+  const [requestArtworks, { data: Artworks, loading: artworkLoading }] = useLazyQuery(
+    getUserArtworks,
+    {
+      variables: { username: pathname.split('/').slice(-1)[0] || undefined },
+      fetchPolicy: 'no-cache',
+      notifyOnNetworkStatusChange: true,
+      pollInterval: 30000,
+      // onCompleted: ({ getUserArtworks }) => {
+      //   setInitialPolling(false);
+      //   setWorks(getUserArtworks);
+      // },
+    },
+  );
 
-  const [requestProducts, { data: Products }] = useLazyQuery(getUserProducts, {
-    variables: { username: pathname.split('/').slice(-1)[0] || undefined },
-    fetchPolicy: 'no-cache',
-    notifyOnNetworkStatusChange: true,
-    pollInterval: 30000,
-    // onCompleted: ({ getUserArtworks }) => {
-    //   setInitialPolling(false);
-    //   setWorks(getUserArtworks);
-    // },
-  });
+  const [requestProducts, { data: Products, loading: productLoading }] = useLazyQuery(
+    getUserProducts,
+    {
+      variables: { username: pathname.split('/').slice(-1)[0] || undefined },
+      fetchPolicy: 'no-cache',
+      notifyOnNetworkStatusChange: true,
+      pollInterval: 30000,
+      // onCompleted: ({ getUserArtworks }) => {
+      //   setInitialPolling(false);
+      //   setWorks(getUserArtworks);
+      // },
+    },
+  );
 
   useEffect(() => {
     if (isCreator) {
@@ -75,6 +81,7 @@ const ProfileContent = ({
         artworksCount={artworksCount}
         productsList={Products?.getUserProducts}
         artworksList={Artworks?.getUserArtworks}
+        loading={artworkLoading || productLoading}
       />
     );
   }

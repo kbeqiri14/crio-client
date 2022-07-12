@@ -4,14 +4,17 @@ import styled, { css } from 'styled-components';
 const Divider = styled(antDivider)`
   border-color: ${(props) => props.theme.colors.dark50};
   height: 50%;
-  margin: 0;
 
   ${(props) =>
     props?.height &&
     css`
       height: ${props.height}px;
     `}
-
+  ${(props) =>
+    props?.width &&
+    css`
+      width: ${props.width}px;
+    `}
   ${(props) =>
     props?.top &&
     css`
@@ -22,6 +25,11 @@ const Divider = styled(antDivider)`
     props?.padding_left &&
     css`
       padding-left: ${props.padding_left}px;
+    `}
+  ${(props) =>
+    props?.margin &&
+    css`
+      margin: ${props.margin}px;
     `}
 `;
 
