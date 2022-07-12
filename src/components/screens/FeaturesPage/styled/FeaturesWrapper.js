@@ -30,7 +30,7 @@ const FeaturesWrapper = styled('div')`
     border-radius: 50%;
     width: 50px;
     height: 50px;
-    margin: 20px;
+    /* margin: 0 12px 12px; */
   }
   .email {
     color: #04a0ff;
@@ -48,6 +48,7 @@ const FeaturesWrapper = styled('div')`
   }
   .desc-texts {
     margin-top: 20px;
+    z-index: 100;
   }
   .title {
     margin-top: 40px;
@@ -78,8 +79,11 @@ const FeaturesWrapper = styled('div')`
   .eCommerce {
     text-align: left;
   }
-  .text-options {
-    margin-top: 30px;
+  .followers .text-options {
+    margin-left: 30px;
+  }
+  .creator-desc .text-options {
+    margin-left: 18px;
   }
   .eCommerce-info {
     margin: 20px auto 60px;
@@ -111,6 +115,9 @@ const FeaturesWrapper = styled('div')`
     .half-bubble {
       right: -220px;
     }
+    .follower-section {
+      justify-content: space-between;
+    }
   }
   @media (max-width: 1200px) {
     .container {
@@ -126,9 +133,6 @@ const FeaturesWrapper = styled('div')`
       .half-bubble {
         right: -320px;
       }
-    }
-    .desc-content {
-      overflow: hidden;
     }
     .follower-section {
       max-width: 100% !important;
@@ -154,6 +158,10 @@ const FeaturesWrapper = styled('div')`
   @media (max-width: 750px) {
     .follower-section {
       max-width: 100% !important;
+    }
+    .subscription {
+      min-height: 645px;
+      max-width: 500px !important;
     }
   }
   @media (max-width: 575px) {
@@ -185,7 +193,7 @@ const FeaturesWrapper = styled('div')`
       max-width: 100% !important;
     }
     .circled {
-      margin: 10px;
+      margin: 0 10px 10px;
     }
   }
 `;
