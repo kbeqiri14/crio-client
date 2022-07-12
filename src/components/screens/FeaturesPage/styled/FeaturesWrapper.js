@@ -23,7 +23,7 @@ const FeaturesWrapper = styled('div')`
   .banner-title {
     text-align: center;
     margin: 0 auto;
-    font-size: 45px;
+    font-size: ${(props) => props.theme.title[3].size}px;
   }
   .circled {
     border: 1px solid white;
@@ -51,7 +51,7 @@ const FeaturesWrapper = styled('div')`
   }
   .title {
     margin-top: 40px;
-    font-size: 30px;
+    font-size: ${(props) => props.theme.title[6].size}px;
   }
   .creator-desc,
   .follower-section {
@@ -67,8 +67,6 @@ const FeaturesWrapper = styled('div')`
   }
   .formula-text {
     margin: 30px 0;
-    align-items: center;
-    text-align: center;
   }
   .list {
     margin-top: 100px;
@@ -129,6 +127,9 @@ const FeaturesWrapper = styled('div')`
         right: -320px;
       }
     }
+    .desc-content {
+      overflow: hidden;
+    }
     .follower-section {
       max-width: 100% !important;
     }
@@ -158,7 +159,7 @@ const FeaturesWrapper = styled('div')`
   @media (max-width: 575px) {
     .container {
       min-height: 800px;
-      max-width: 400px !important;
+      max-width: 385px !important;
       .bubble {
         left: -280px;
       }
@@ -169,7 +170,7 @@ const FeaturesWrapper = styled('div')`
     }
     .paper-plane,
     .follow-img {
-      width: 400px;
+      width: 380px;
     }
     .list {
       margin-top: 20px;

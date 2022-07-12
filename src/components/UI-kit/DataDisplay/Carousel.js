@@ -12,10 +12,6 @@ const Carousel = styled(antCarousel)`
     background-color: ${(props) => props.theme.colors.dark25};
     border-radius: 100%;
   }
-  .ant-carousel,
-  img {
-    width: auto;
-  }
 `;
 
 export default Carousel;

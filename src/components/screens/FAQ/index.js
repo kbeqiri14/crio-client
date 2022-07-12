@@ -16,25 +16,14 @@ const Wrapper = styled('div')`
     color: #04a0ff;
     border-bottom: 1px solid #04a0ff;
   }
-  .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow {
+  /* .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow {
     left: auto;
     right: 30px;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     margin: 0;
-  }
-
-  @media (max-width: 420px) {
-    .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow {
-      left: auto;
-      right: 5px;
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      margin: 0;
-    }
-  }
+  } */
 `;
 
 export const FAQ = () => {

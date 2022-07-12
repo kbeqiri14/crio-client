@@ -85,7 +85,14 @@ export const FeaturesPage = () => {
             There are two ways to become a creator
           </Text>
         </Col>
-        <Col xl={12} lg={8} md={8} sm={{ span: 7, offset: 0 }} xs={24} offset={1}>
+        <Col
+          xl={12}
+          lg={8}
+          md={8}
+          sm={{ span: 7, offset: 0 }}
+          xs={{ span: 24, offset: 0 }}
+          offset={1}
+        >
           <img src={paperPlane} alt='paper plane' className='paper-plane' />
         </Col>
         <Col
@@ -141,13 +148,21 @@ export const FeaturesPage = () => {
               ))}
             />
             <Row className='formula-text'>
-              <Col md={11}>
+              <Col xs={16}>
                 <Text color='dark25'> # of fans following you </Text>
-                <Divider width={230} margin={12} />
-                <Text color='dark25'> Total # of fans following all creators </Text>
               </Col>
-              <Col md={5}>
-                <Text color='dark25'>&nbsp; &nbsp; x &nbsp; Creator Pool </Text>
+              <Col xs={24}>
+                <Row>
+                  <Col xs={16}>
+                    <Divider margin={12} />
+                  </Col>
+                  <Col xs={8}>
+                    <Text color='dark25'> &nbsp; x &nbsp; Creator Pool </Text>
+                  </Col>
+                </Row>
+              </Col>
+              <Col xs={16}>
+                <Text color='dark25'> Total # of fans following all creators </Text>
               </Col>
             </Row>
             <List
@@ -155,7 +170,7 @@ export const FeaturesPage = () => {
               $listWidth='100%'
               $padding={10}
               items={subData.map((item) => (
-                <Text class>{item}</Text>
+                <Text>{item}</Text>
               ))}
             />
           </Col>
@@ -187,7 +202,7 @@ export const FeaturesPage = () => {
           sm={24}
           className='self-center followers'
         >
-          <Row align='middle' gutter={[0, 48]}>
+          <Row align='middle'>
             <div className='circled'>
               <Text level={4}>1</Text>
             </div>
@@ -196,7 +211,7 @@ export const FeaturesPage = () => {
               subscribe and follow your profile.
             </Text>
           </Row>
-          <Row align='middle' gutter={[0, 48]}>
+          <Row align='middle'>
             <div className='circled'>
               <Text level={4}>2</Text>
             </div>
@@ -205,7 +220,7 @@ export const FeaturesPage = () => {
               products/perks as “free” or offering <br /> exclusive content.
             </Text>
           </Row>
-          <Row align='middle' gutter={[0, 48]}>
+          <Row align='middle'>
             <div className='circled'>
               <Text level={4}>3</Text>
             </div>

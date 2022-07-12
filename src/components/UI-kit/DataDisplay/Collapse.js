@@ -16,7 +16,7 @@ const Collapse = styled(collapse)`
     margin-bottom: 20px;
   }
   .ant-collapse-header {
-    font-size: 18px;
+    font-size: ${(props) => props.theme.text[4].size}px;
     color: white !important;
   }
   .ant-collapse-content-box {
@@ -30,6 +30,16 @@ const Collapse = styled(collapse)`
     top: 50%;
     transform: translateY(-50%);
     margin: 0;
+  }
+  @media (max-width: 420px) {
+    .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow {
+      left: auto;
+      right: 5px;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      margin: 0;
+    }
   }
 `;
 /** @component */
