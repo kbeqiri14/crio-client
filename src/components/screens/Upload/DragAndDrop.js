@@ -27,8 +27,8 @@ const DragAndDrop = ({ videoUri, file, types, dispatch, goToProfile }) => {
     variables: { params: { videoUri } },
   });
 
-  const isVideo = useMemo(() => file?.type?.split('/')?.[0] === 'video', [file.type]);
-  const isImage = useMemo(() => file?.type?.split('/')?.[0] === 'image', [file.type]);
+  const isVideo = useMemo(() => file?.type?.split('/')?.[0] === 'video', [file?.type]);
+  const isImage = useMemo(() => file?.type?.split('/')?.[0] === 'image', [file?.type]);
 
   const disabled = useMemo(
     () => !(isVideo && !loading && data?.getUploadUrl?.uri) || !isImage,

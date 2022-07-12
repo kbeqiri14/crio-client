@@ -21,6 +21,9 @@ const Input = styled(antInput)`
     border: 1px solid transparent !important;
     background-color: rgba(32, 32, 32, 0.6);
     color: ${(props) => props.theme.colors.dark50};
+    ::placeholder {
+      color: ${(props) => props.theme.colors.dark50};
+    }
   }
 `;
 
