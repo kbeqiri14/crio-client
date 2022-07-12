@@ -5,6 +5,7 @@ import { Col, Row, Text } from '@ui-kit';
 import logo from '@images/crio-logo.svg';
 
 const links = [
+  { to: '/faq', label: 'FAQ' },
   { to: '/terms-of-use', label: 'Terms of Usage' },
   { to: '/terms-and-conditions', label: 'Terms and Conditions' },
   { to: '/privacy-policy', label: 'Privacy Policy' },
