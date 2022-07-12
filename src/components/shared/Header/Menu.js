@@ -1,13 +1,14 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo, Fragment } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { searchKeywordVar, refetchArtworkVar, refetchMarketplaceVar } from '@configs/client-cache';
 import history from '@configs/history';
 import { Button, Col, Row } from '@ui-kit';
 import logo from '@images/logo.png';
+import star from '@svgs/star.svg';
 import SearchBar from './SearchBar';
 
-const getTabItems = (showPricing, isSubscribed) => {
+const getTabItems = (isCreator, isSubscribed, featuresSeen) => {
   const items = [
     {
       id: 'explore',
@@ -15,13 +16,19 @@ const getTabItems = (showPricing, isSubscribed) => {
       path: '/',
     },
   ];
-  if (showPricing) {
-    items.push({
-      id: 'pricing',
-      title: isSubscribed ? 'Pro account' : 'Pricing',
-      path: '/pricing',
-    });
-  }
+  items.push(
+    isCreator
+      ? {
+          id: 'features',
+          title: <Fragment>Features {!featuresSeen && <img src={star} alt='star' />}</Fragment>,
+          path: '/features',
+        }
+      : {
+          id: 'pricing',
+          title: isSubscribed ? 'Pro account' : 'Pricing',
+          path: '/pricing',
+        },
+  );
   return items;
 };
 
@@ -29,8 +36,8 @@ const Menu = ({ user, keyword, setKeyword }) => {
   const { pathname } = useLocation();
 
   const menuItems = useMemo(
-    () => getTabItems(!user.isCreator, user.isSubscribed),
-    [user.isCreator, user.isSubscribed],
+    () => getTabItems(user.isCreator, user.isSubscribed, user.featuresSeen),
+    [user.isCreator, user.isSubscribed, user.featuresSeen],
   );
   const activeItem = useMemo(() => {
     const tab = pathname.split('/').slice(-1)[0];
