@@ -21,7 +21,7 @@ const Actions = (props) => {
     onCompleted: () => {
       hideConfirmation();
       successToast('The product is successfully deleted');
-      window.location.href = `/profile/${props.username}`;
+      setTimeout(() => (window.location.href = `/profile/${props.username}`), 1300);
     },
   });
 
