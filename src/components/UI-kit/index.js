@@ -4,6 +4,7 @@
 export { default as Button } from './General/Button';
 export { default as Text } from './General/Typography/Text';
 export { default as Title } from './General/Typography/Title';
+export { default as Paragraph } from './General/Typography/Paragraph';
 
 /*
   Layout
