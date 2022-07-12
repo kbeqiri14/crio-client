@@ -3,7 +3,7 @@ import { memo, useCallback, useMemo } from 'react';
 import history from '@configs/history';
 import { ReactComponent as UploadProductIcon } from '@svgs/empty-product.svg';
 import { ReactComponent as UploadArtworkIcon } from '@svgs/empty-artwork.svg';
-import { ReactComponent as FallowingEmptyIcon } from '@svgs/fallowing-empty.svg';
+import { ReactComponent as FallowingEmptyIcon } from '@svgs/empty-fallowing.svg';
 import { Col, Button, Row, Text } from '@ui-kit';
 
 const EmptyState = ({ username, isCreator, isProfile, isSubscribed, isMarketplace }) => {

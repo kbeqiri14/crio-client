@@ -9,7 +9,7 @@ import LoadMoreButton from './LoadMoreButton';
 import ArtworksList from './Artwork/ArtworksList';
 import ProductsList from './Product/ProductsList';
 import { ReactComponent as EmptyMarketIcon } from '@svgs/marketplace-empty.svg';
-import { ReactComponent as EmptyArtworkIcon } from '@svgs/artwork-empty.svg';
+import { ReactComponent as EmptyArtworkIcon } from '@svgs/empty-artwork.svg';
 
 const Wrapper = styled('div')`
   max-width: 1438px;
