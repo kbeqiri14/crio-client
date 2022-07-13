@@ -30,7 +30,12 @@ const Wrapper = styled('div')`
     max-width: 376px;
   }
 `;
-
+const EmptyWrapper = styled('div')`
+  padding: 100px 0;
+  svg {
+    margin-bottom: 40px;
+  }
+`;
 const { TabPane } = Tabs;
 
 const tabs = {
@@ -88,11 +93,12 @@ export const Content = ({
 
           {!isProfilePage && !loading && !productsList?.length && (
             <div className='empty'>
-              <EmptyMarketIcon />
-
-              <Paragraph level={4} color='dark25'>
-                no result
-              </Paragraph>
+              <EmptyWrapper>
+                <EmptyMarketIcon />
+                <Paragraph level={4} color='dark25'>
+                  No result
+                </Paragraph>
+              </EmptyWrapper>
             </div>
           )}
 
@@ -109,12 +115,13 @@ export const Content = ({
           )}
 
           {!isProfilePage && !loading && !artworksList?.length && (
-            <div className='empty'>
-              <EmptyArtworkIcon />
-
-              <Paragraph level={4} color='dark25'>
-                No Data found
-              </Paragraph>
+            <div className='empty' padding-top='100px'>
+              <EmptyWrapper>
+                <EmptyArtworkIcon />
+                <Paragraph level={4} color='dark25'>
+                  No data found
+                </Paragraph>
+              </EmptyWrapper>
             </div>
           )}
 
