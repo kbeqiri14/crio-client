@@ -21,7 +21,7 @@ const EmptyState = ({ username, isCreator, isProfile, isSubscribed, isMarketplac
       return isMarketplace ? 'Upload your first product or service' : 'Upload your first artwork';
     }
     return isSubscribed
-      ? 'You don’t follow anyone'
+      ? 'You don’t have any following yet'
       : 'Subscribe to follow creators and gain access to free digital products across Crio';
   }, [username, isCreator, isProfile, isSubscribed, isMarketplace]);
 
@@ -39,7 +39,7 @@ const EmptyState = ({ username, isCreator, isProfile, isSubscribed, isMarketplac
   );
 
   return (
-    <Row justify='center' align='middle' gutter={[0, 20]}>
+    <Row justify='center' align='middle' padding_top={100} gutter={[0, 20]}>
       <Col span={24} align='center' padding_bottom={20}>
         {isCreator ? (
           isMarketplace ? (
