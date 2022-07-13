@@ -59,12 +59,7 @@ export const questions = [
   {
     key: 3,
     question: 'Is Crio free for Creators?',
-    answer: (
-      <li>
-        Crio is a community-driven marketplace where creators can offer digital products, online
-        services, and premium content to their fans.
-      </li>
-    ),
+    answer: <li>Crio is completely free for creators to join and use all the features.</li>,
   },
   {
     key: 4,
@@ -131,15 +126,6 @@ export const questions = [
             </li>
           </ul>
         </li>
-        <li>
-          <b>Discovery Feed </b>
-          <ul>
-            <li>
-              Every digital product & service from all creators gets featured in our Discovery feed,
-              which will make it easier for fans to browse, shop and discover new creators.
-            </li>
-          </ul>
-        </li>
       </Fragment>
     ),
   },
@@ -149,7 +135,8 @@ export const questions = [
     answer: (
       <Fragment>
         <li>
-          We try to stay away from physical products that need to be shipped or in-person services.
+          Once a fan makes a purchase, the Creator will get an automatic e-mail alert connecting
+          them to the fan. Creators can then fulfill the order over e-mail.
         </li>
         <li>
           End of July, we will enable creators to upload files for the digital products they are
@@ -240,7 +227,7 @@ export const questions = [
             </li>
             <li>The “Creator Pool” is therefor $5,600/month (80% * $7,000)</li>
             <li>
-              oLet’s say there are 2 creators on Crio: Creator A has 700 subscribers and Creator B
+              Let’s say there are 2 creators on Crio: Creator A has 700 subscribers and Creator B
               has 300 subscribers following them.
               <ul>
                 <li>
@@ -268,7 +255,7 @@ export const questions = [
     answer: (
       <Fragment>
         <li>
-          Every time a reator sells a product or service, they will automatically get paid for that
+          Every time a creator sells a product or service, they will automatically get paid for that
           transaction.
         </li>
         <li>
@@ -400,7 +387,7 @@ export const questions = [
           account at the end of every month.
         </li>
         <li>
-          <b>Premium Content: </b>
+          <b>Referral Program: </b>
           Creators will be able to make passive income simply by just referring other creators to
           the platform. When you refer another creator, you will get a payout equal to 5% of the
           referred person’s earnings every month for a whole year. For example, if the creator you

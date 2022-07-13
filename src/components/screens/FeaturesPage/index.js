@@ -24,7 +24,7 @@ import psd from '@images/psd.png';
 import FeaturesWrapper from './styled/FeaturesWrapper';
 
 const listData = [
-  'Crio puts [80%] of all subscription revenue from fans into a “Creator Pool.”',
+  'Crio puts 80% of all subscription revenue from fans into a “Creator Pool.”',
   'Creators are paid from the “Creator Pool” each month based on the below formula.',
 ];
 const subData = [
@@ -103,8 +103,8 @@ export const FeaturesPage = () => {
         </Col>
         <Col
           xl={12}
-          lg={8}
-          md={8}
+          lg={6}
+          md={6}
           sm={{ span: 7, offset: 0 }}
           xs={{ span: 24, offset: 0 }}
           offset={1}
@@ -112,37 +112,46 @@ export const FeaturesPage = () => {
           <img src={paperPlane} alt='paper plane' className='paper-plane' />
         </Col>
         <Col
-          xl={10}
-          lg={14}
-          md={14}
-          sm={15}
+          xl={9}
+          lg={18}
+          md={16}
+          sm={16}
           offset={1}
           xs={{ span: 24, offset: 0 }}
           className='self-center'
         >
-          <Row align='middle'>
-            <div className='circled'>
-              <Text level={4}>1</Text>
-            </div>
-            <Text className='text-options'>
-              Ask a current creator on Crio to send <br /> you a special referral link.
-            </Text>
-          </Row>
-          <Row align='middle'>
-            <div className='circled'>
-              <Text level={4}>2</Text>
-            </div>
-            <Text className='text-options'>
-              Email us directly at <br />{' '}
-              <a href={`mailto:info@criointeractive.com`}>info@criointeractive.com</a> and we can{' '}
-              <br /> upgrade your account to “creator status.”
-            </Text>
+          <Row gutter={[0, 24]}>
+            <Col md={3} xs={4}>
+              <div className='circled'>
+                <Text level={4}>1</Text>
+              </div>
+            </Col>
+            <Col md={20} xs={18} className='text-left text-options'>
+              <Text level={3}>
+                Right now, we have an invite-only <br /> program to join as a creator. <br />{' '}
+                Creators can email us directly at <br />{' '}
+                <a href={`mailto:info@criointeractive.com`}>info@criointeractive.com</a> <br /> and
+                we can upgrade their account to “Creator Status.”
+              </Text>
+            </Col>
+            <Col md={3} xs={4}>
+              <div className='circled'>
+                <Text level={4}>2</Text>
+              </div>
+            </Col>
+            <Col md={20} xs={18} className='text-left text-options'>
+              <Text level={3}>
+                Current creators can recommend other <br /> talented creators in their network.
+                <br /> Send us an email with the creator you are referring, <br />
+                and we can upgrade their account.
+              </Text>
+            </Col>
           </Row>
         </Col>
       </Row>
       <div className='custom-back'>
         <Row className='subscription container' justify='center'>
-          <Col md={{ span: 24, offset: 0 }} xs={{ span: 20, offset: 1 }}>
+          <Col md={{ span: 22, offset: 0 }} xs={{ span: 20, offset: 1 }}>
             <Title className='title'>Community Subscription</Title>
             <Text level={4} color='dark25' className='desc-texts'>
               Fans can subscribe monthly to Crio and then follow any <br /> creator to support their
@@ -160,7 +169,7 @@ export const FeaturesPage = () => {
               $listWidth='100%'
               $padding={10}
               items={listData.map((item) => (
-                <Text>{item}</Text>
+                <Text level={3}>{item}</Text>
               ))}
             />
             <Row className='formula-text'>
@@ -168,17 +177,22 @@ export const FeaturesPage = () => {
                 <Text color='dark25'> # of fans following you </Text>
               </Col>
               <Col xs={24}>
-                <Row>
+                <Row gutter={[20, 8]}>
                   <Col xs={16}>
                     <Divider margin={12} />
                   </Col>
                   <Col xs={8}>
-                    <Text color='dark25'> &nbsp; x &nbsp; Creator Pool </Text>
+                    <Text level={3} color='dark25'>
+                      &nbsp; x &nbsp; Creator Pool{' '}
+                    </Text>
                   </Col>
                 </Row>
               </Col>
               <Col xs={16}>
-                <Text color='dark25'> Total # of fans following all creators </Text>
+                <Text level={3} color='dark25'>
+                  {' '}
+                  Total # of fans following all creators{' '}
+                </Text>
               </Col>
             </Row>
             <List
@@ -186,7 +200,7 @@ export const FeaturesPage = () => {
               $listWidth='100%'
               $padding={10}
               items={subData.map((item) => (
-                <Text>{item}</Text>
+                <Text level={3}>{item}</Text>
               ))}
             />
           </Col>
@@ -208,42 +222,50 @@ export const FeaturesPage = () => {
             monthly subscription
           </Text>
         </Col>
-        <Col xl={12} lg={14} md={{ span: 8, offset: 0 }} sm={24}>
+        <Col xl={12} lg={14} md={{ span: 10, offset: 0 }} sm={24}>
           <img src={follow} alt='follow' className='follow-img' />
         </Col>
         <Col
           xl={8}
           lg={{ span: 10 }}
-          md={{ span: 14, offset: 0 }}
+          md={{ span: 12, offset: 0 }}
           sm={24}
           className='self-center followers'
         >
-          <Row align='middle'>
-            <div className='circled'>
-              <Text level={4}>1</Text>
-            </div>
-            <Text level={4} className='text-options'>
-              Ask your current fans to support <br /> you on Crio! All they have to do is <br />{' '}
-              subscribe and follow your profile.
-            </Text>
-          </Row>
-          <Row align='middle'>
-            <div className='circled'>
-              <Text level={4}>2</Text>
-            </div>
-            <Text level={4} className='text-options'>
-              Attract more subscribers to follow <br /> your profile by setting certain <br />{' '}
-              products/perks as “free” or offering <br /> exclusive content.
-            </Text>
-          </Row>
-          <Row align='middle'>
-            <div className='circled'>
-              <Text level={4}>3</Text>
-            </div>
-            <Text level={4} className='text-options'>
-              The more followers you have, the <br /> more subscription revenue you <br /> can make
-              monthly!
-            </Text>
+          <Row justify='center' gutter={[24, 12]}>
+            <Col md={2} xs={2}>
+              <div className='circled'>
+                <Text level={4}>1</Text>
+              </div>
+            </Col>
+            <Col md={20} xs={20} className='text-options'>
+              <Text level={3}>
+                Ask your current fans to support <br /> you on Crio! All they have to do is <br />{' '}
+                subscribe and follow your profile.
+              </Text>
+            </Col>
+            <Col md={2} xs={2}>
+              <div className='circled'>
+                <Text level={4}>2</Text>
+              </div>
+            </Col>
+            <Col md={20} xs={20} className='text-options'>
+              <Text level={3}>
+                Attract more subscribers to follow <br /> your profile by setting certain <br />{' '}
+                products/perks as “free” or offering <br /> exclusive content.
+              </Text>
+            </Col>
+            <Col md={2} xs={2}>
+              <div className='circled'>
+                <Text level={4}>3</Text>
+              </div>
+            </Col>
+            <Col md={20} xs={20} className='text-options'>
+              <Text level={3}>
+                The more followers you have, the <br /> more subscription revenue you <br /> can
+                make monthly!
+              </Text>
+            </Col>
           </Row>
         </Col>
       </Row>
