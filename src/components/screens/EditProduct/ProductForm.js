@@ -300,16 +300,18 @@ const ProductForm = ({ state }) => {
                       {...field}
                       disabled={isFree}
                     >
-                      <Radio value='subscriber_only'>Subscriber Only</Radio>
-                      <Radio value='everyone'>Everyone</Radio>
+                      <Radio value='subscriber_only'>
+                        <Text color={field.value === 'everyone' && 'dark25'}>Subscriber Only</Text>
+                      </Radio>
+                      <Radio value='everyone'>
+                        <Text color={field.value === 'subscriber_only' && 'dark25'}>Everyone</Text>
+                      </Radio>
                     </Radio.Group>
                   )}
                 />
               </Col>
-              <Col span={24} align='start'>
+              <Col span={24} align='start' padding_bottom={32}>
                 <Text level={3}>Limit your sales?</Text>
-              </Col>
-              <Col span={24} padding_bottom={32} align='start'>
                 <Switch checked={limitVisible} onChange={setLimitation} />
               </Col>
               {limitVisible && (
