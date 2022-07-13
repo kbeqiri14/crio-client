@@ -28,11 +28,11 @@ const DragAndDrop = ({ videoUri, file, types, dispatch, goToProfile }) => {
   });
 
   const isVideo = useMemo(() => file?.type?.split('/')?.[0] === 'video', [file?.type]);
-  const isImage = useMemo(() => file?.type?.split('/')?.[0] === 'image', [file?.type]);
+  // const isImage = useMemo(() => file?.type?.split('/')?.[0] === 'image', [file?.type]);
 
   const disabled = useMemo(
-    () => !(isVideo && !loading && data?.getUploadUrl?.uri) || !isImage,
-    [isVideo, isImage, loading, data?.getUploadUrl?.uri],
+    () => !(isVideo && !loading && data?.getUploadUrl?.uri),
+    [isVideo, loading, data?.getUploadUrl?.uri],
   );
   const onCancel = useCallback(
     () => (videoUri ? dispatch({ type: types.CONFIRMATION_VISIBLE }) : goToProfile()),
