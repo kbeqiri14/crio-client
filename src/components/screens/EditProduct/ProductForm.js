@@ -300,12 +300,8 @@ const ProductForm = ({ state }) => {
                       {...field}
                       disabled={isFree}
                     >
-                      <Radio value='subscriber_only'>
-                        <Text color={field.value === 'everyone' && 'dark25'}>Subscriber Only</Text>
-                      </Radio>
-                      <Radio value='everyone'>
-                        <Text color={field.value === 'subscriber_only' && 'dark25'}>Everyone</Text>
-                      </Radio>
+                      <Radio value='subscriber_only'>Subscriber Only</Radio>
+                      <Radio value='everyone'>Everyone</Radio>
                     </Radio.Group>
                   )}
                 />
