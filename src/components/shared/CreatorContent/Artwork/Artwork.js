@@ -156,10 +156,10 @@ const Artwork = ({
           <Text level={4}>{title}</Text>
         </div>
         <LockState userId={userId} accessibility={accessibility} status={status} />
-        <div className='video'>
-          <img src={videoIcon} alt='video' className='video-icon' />
-          <img src={src} alt='artwork' width={330} height={330} onClick={showArtwork} />
-        </div>
+        {/* <div className='video'> */}
+        {/* <img src={videoIcon} alt='video' className='video-icon' /> */}
+        <img src={src} alt='artwork' width={330} height={330} onClick={showArtwork} />
+        {/* </div> */}
       </Wrapper>
       <Link to={`/profile/${username}`}>
         <Row gutter={12} align='middle' padding_top={8}>
