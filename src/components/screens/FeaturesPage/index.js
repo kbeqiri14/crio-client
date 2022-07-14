@@ -284,7 +284,7 @@ export const FeaturesPage = () => {
             xs={{ span: 20, offset: 1 }}
             className='text-center'
           >
-            <Carousel>
+            <Carousel autoplay>
               <Image preview={false} src={commissions} />
               <Image preview={false} src={psd} />
               <Image preview={false} src={digitalAssets} />
