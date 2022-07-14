@@ -9,7 +9,7 @@ import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { getUser } from '@app/graphql/queries/users.query';
 import NotFound from '@shared/NotFound';
 import { Layout } from '@ui-kit';
-import { ReactComponent as NotFoundUser } from '@svgs/fallowing-empty.svg';
+import { ReactComponent as NotFoundUser } from '@svgs/empty-fallowing.svg';
 import ProfileSider from '@root/src/components/screens/Profile/Sider';
 import ProfileContent from '@root/src/components/screens/Profile/Content';
 

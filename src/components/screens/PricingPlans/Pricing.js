@@ -8,8 +8,7 @@ import history from '@configs/history';
 import { STRIPE_PAYMENT_URL } from '@configs/environment';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { Button } from '@ui-kit';
-import { Col, Divider, Row, Text, Title } from '@ui-kit';
-import { CustomTooltip } from '@ui-kit/Tooltip';
+import { Col, Divider, Row, Text, Title, Tooltip } from '@ui-kit';
 import { warningToast } from '@ui-kit/Notification';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import { ReactComponent as CheckMark } from '@svgs/check.svg';
@@ -132,16 +131,19 @@ const Pricing = () => {
               </Text>
             </Col>
             <Col span={24} padding_top={8}>
-              <CustomTooltip
+              <Tooltip
                 placement='right'
-                className='default-overlay'
-                title='Warning'
-                description='Please, use the email address attached to your profile'
+                getPopupContainer={(triggerNode) =>
+                  triggerNode.parentNode.querySelector('.ant-tooltip-open')
+                }
+                title='Please, use the email address attached to your profile'
               >
-                <Button block type='primary' fill_color='green' onClick={handleGetStarted}>
-                  SUBSCRIBE
-                </Button>
-              </CustomTooltip>
+                <div className='relative'>
+                  <Button block type='primary' fill_color='green' onClick={handleGetStarted}>
+                    SUBSCRIBE
+                  </Button>
+                </div>
+              </Tooltip>
             </Col>
           </Row>
         </Col>

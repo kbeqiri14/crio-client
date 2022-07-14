@@ -4,16 +4,31 @@ import styled from 'styled-components';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { Col, Row, Text } from '@ui-kit';
 import BuyButton from '../../shared/CreatorContent/Product/BuyButton';
+import HelpTooltip from './HelpTooltip';
 
 const Wrapper = styled('div')`
-  float: right;
-  width: 268px;
-  height: 162px;
-  padding: 20px;
-  background-color: #202020;
-  border-radius: 16px;
-  &.small {
-    height: 96px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  .widget {
+    width: 268px;
+    height: 162px;
+    padding: 20px;
+    background-color: #202020;
+    border-radius: 16px;
+    &.small {
+      height: 96px;
+    }
+    margin-bottom: 20px;
+  }
+  .ant-tooltip {
+    top: 0 !important;
+    right 0 !important;
+    left: -243px !important;
+  }
+  .got-it-button {
+    margin-top: 37px;
+    left: -16px;
   }
 `;
 
@@ -21,8 +36,8 @@ export const BuyWidget = ({ userId, username, productId, price, limit, accessibi
   const { user } = useLoggedInUser();
 
   return (
-    <Wrapper className={user.isCreator ? 'small' : ''}>
-      <Row gutter={[0, 8]}>
+    <Wrapper>
+      <Row gutter={[0, 8]} className={`widget ${user.isCreator ? 'small' : ''}`}>
         <Col span={24}>
           <Row justify='space-between'>
             <Col>
@@ -57,6 +72,9 @@ export const BuyWidget = ({ userId, username, productId, price, limit, accessibi
           </Col>
         )}
       </Row>
+      {!user.isCreator && (
+        <HelpTooltip title='After purchase, please check your email to receive a service from Creator' />
+      )}
     </Wrapper>
   );
 };
