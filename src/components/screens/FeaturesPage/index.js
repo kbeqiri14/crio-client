@@ -24,18 +24,14 @@ import psd from '@images/psd.png';
 import FeaturesWrapper from './styled/FeaturesWrapper';
 
 const listData = [
-  <Text color='dark25'>
-    Crio puts 80% of all subscription revenue from fans into a “Creator Pool.”
-  </Text>,
-  <Text color='dark25'>
-    Creators are paid from the “Creator Pool” <Text>each month</Text> based on the below formula.”
-  </Text>,
+  <>Crio puts 80% of all subscription revenue from fans into a “Creator Pool.”</>,
+  <>
+    Creators are paid from the “Creator Pool” <Text>each month</Text> based on the below formula.
+  </>,
 ];
 const subData = [
-  <Text color='dark25'>
-    Creators can immediately make monthly income everytime they get new followers!'
-  </Text>,
-  <Text>Note: Only subscribers can follow creators on Crio.'</Text>,
+  <>Creators can immediately make monthly income everytime they get new followers!</>,
+  <Text>Note: Only subscribers can follow creators on Crio.</Text>,
 ];
 const eCommerceData = [
   <Text color='dark25'>
@@ -181,7 +177,9 @@ export const FeaturesPage = () => {
               $listWidth='100%'
               $padding={10}
               items={listData.map((item) => (
-                <Text level={3}>{item}</Text>
+                <Text level={3} color='dark25'>
+                  {item}
+                </Text>
               ))}
             />
             <Row className='formula-text'>
@@ -214,7 +212,9 @@ export const FeaturesPage = () => {
               $listWidth='100%'
               $padding={10}
               items={subData.map((item) => (
-                <Text level={3}>{item}</Text>
+                <Text level={3} color='dark25'>
+                  {item}
+                </Text>
               ))}
             />
           </Col>
@@ -287,7 +287,7 @@ export const FeaturesPage = () => {
         <Row className='container text-center eCommerce' align='middle' justify='center'>
           <Col md={24}>
             <Title className='title'>eCommerce</Title>
-            <Text level={4} color='dark25' className='desc-texts'>
+            <Text level={3} color='dark25' className='desc-texts'>
               Crio also gives creators the flexibility to monetize <br /> through a storefront
             </Text>
           </Col>
