@@ -80,6 +80,7 @@ const ProductActionButtons = ({ state, image, disabled, handleSubmit, fillColor 
           },
         });
   });
+
   return (
     <Fragment>
       <ActionButtons

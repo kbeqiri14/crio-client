@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Collapse, Col, Row, Title } from '@ui-kit';
+import { Col, Collapse, Row, Title } from '@ui-kit';
 
 import styled from 'styled-components';
 import { DownOutlined } from '@ant-design/icons';

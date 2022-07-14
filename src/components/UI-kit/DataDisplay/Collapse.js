@@ -3,7 +3,6 @@ import { Collapse as collapse } from 'antd';
 
 const Collapse = styled(collapse)`
   background: transparent !important;
-
   .ant-collapse-item,
   .ant-collapse-item:last-child {
     background: #0f0e16;

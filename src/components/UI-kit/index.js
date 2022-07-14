@@ -2,9 +2,9 @@
   General
 */
 export { default as Button } from './General/Button';
+export { default as Paragraph } from './General/Typography/Paragraph';
 export { default as Text } from './General/Typography/Text';
 export { default as Title } from './General/Typography/Title';
-export { default as Paragraph } from './General/Typography/Paragraph';
 
 /*
   Layout
@@ -24,9 +24,9 @@ export { default as Menu } from './Navigation/Menu';
   Data Display
 */
 export { default as Carousel } from './DataDisplay/Carousel';
+export { default as Collapse } from './DataDisplay/Collapse';
 export { default as Tabs } from './DataDisplay/Tabs';
 export { default as Tooltip } from './DataDisplay/Tooltip';
-export { default as Collapse } from './DataDisplay/Collapse';
 
 /*
   Data Entry

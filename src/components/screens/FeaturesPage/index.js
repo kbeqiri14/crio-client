@@ -1,9 +1,7 @@
 import { memo, useEffect } from 'react';
-import { Divider, Col, Row, Text, Title, Carousel, List } from '@ui-kit';
-import { Image } from 'antd';
 import { Link } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
-import { useReactiveVar } from '@apollo/client';
+import { Image } from 'antd';
+import { useMutation, useReactiveVar } from '@apollo/client';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { me } from '@app/graphql/queries/users.query';
@@ -11,6 +9,7 @@ import { updateUser } from '@app/graphql/mutations/user.mutation';
 import history from '@configs/history';
 import { loggedInUserLoadingVar } from '@configs/client-cache';
 import { Footer } from '@shared/Footer';
+import { Carousel, Col, Divider, List, Row, Text, Title } from '@ui-kit';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import bubble from '@images/bubble.png';
 import halfBubble from '@images/half-bubble.png';
@@ -306,6 +305,7 @@ export const FeaturesPage = () => {
             sm={{ span: 16 }}
             xs={{ span: 20, offset: 1 }}
             className='text-center'
+            padding_bottom={40}
           >
             <Carousel autoplay>
               <Image preview={false} src={commissions} />

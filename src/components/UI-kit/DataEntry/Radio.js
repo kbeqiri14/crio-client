@@ -25,7 +25,6 @@ const Radio = styled(antRadio)`
       color: ${(props) => props.theme.colors.dark50};
     }
   }
-
   .ant-radio-checked {
     .ant-radio-inner {
       border: 2px solid ${(props) => props.theme.colors.primary};
