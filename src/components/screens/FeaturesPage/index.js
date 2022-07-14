@@ -1,5 +1,5 @@
 import { memo, useEffect } from 'react';
-import { Divider, Col, Row, Text, Title, Carousel } from '@ui-kit';
+import { Divider, Col, Row, Text, Title, Carousel, List } from '@ui-kit';
 import { Image } from 'antd';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
@@ -22,6 +22,31 @@ import guides from '@images/guides.png';
 import digitalAssets from '@images/digital-assets.png';
 import psd from '@images/psd.png';
 import FeaturesWrapper from './styled/FeaturesWrapper';
+
+const listData = [
+  <Text color='dark25'>
+    Crio puts 80% of all subscription revenue from fans into a “Creator Pool.”
+  </Text>,
+  <Text color='dark25'>
+    Creators are paid from the “Creator Pool” <Text>each month</Text> based on the below formula.”
+  </Text>,
+];
+const subData = [
+  <Text color='dark25'>
+    Creators can immediately make monthly income everytime they get new followers!'
+  </Text>,
+  <Text>Note: Only subscribers can follow creators on Crio.'</Text>,
+];
+const eCommerceData = [
+  <Text color='dark25'>
+    Creators <Text>can sell</Text> individual digital products or services to anyone, including free
+    users and subscribers.
+  </Text>,
+  <Text color='dark25'>
+    Creators <Text>keep 90%</Text> of each transaction. 10% is kept by Crio to cover the costs of
+    operations (e.g., transaction fees, paying our employees, server costs).
+  </Text>,
+];
 
 export const FeaturesPage = () => {
   const { user } = useLoggedInUser();
@@ -151,13 +176,14 @@ export const FeaturesPage = () => {
             lg={{ span: 12, offset: 0 }}
             md={{ span: 20, offset: 2 }}
           >
-            <ul>
-              <li>Crio puts 80% of all subscription revenue from fans into a “Creator Pool.”</li>
-              <li>
-                Creators are paid from the “Creator Pool” <Text>each month</Text> based on the below
-                formula.
-              </li>
-            </ul>
+            <List
+              $type='disc'
+              $listWidth='100%'
+              $padding={10}
+              items={listData.map((item) => (
+                <Text level={3}>{item}</Text>
+              ))}
+            />
             <Row className='formula-text'>
               <Col xs={16}>
                 <Text level={3} color='dark25'>
@@ -183,14 +209,14 @@ export const FeaturesPage = () => {
                 </Text>
               </Col>
             </Row>
-            <ul>
-              <li>
-                Creators can immediately make monthly income every time they get new followers!”
-              </li>
-              <li>
-                <Text>Note: Only subscribers can follow creators on Crio.</Text>
-              </li>
-            </ul>
+            <List
+              $type='disc'
+              $listWidth='100%'
+              $padding={10}
+              items={subData.map((item) => (
+                <Text level={3}>{item}</Text>
+              ))}
+            />
           </Col>
           <Col xl={12} lg={{ span: 12 }} md={10}>
             <img src={cashFlow} alt='cash flow' className='cash-flow' />
@@ -265,17 +291,19 @@ export const FeaturesPage = () => {
               Crio also gives creators the flexibility to monetize <br /> through a storefront
             </Text>
           </Col>
-          <Col md={24}>
-            <ul className='eCommerce-info text-left'>
-              <li>
-                Creators <Text>can sell</Text> individual digital products or services to anyone,
-                including free users and subscribers.
-              </li>
-              <li>
-                Creators <Text>keep 90%</Text> of each transaction. 10% is kept by Crio to cover the
-                costs of operations (e.g., transaction fees, paying our employees, server costs).
-              </li>
-            </ul>
+          <Col xl={18} md={24} sm={20}>
+            <List
+              className='eCommerce-info'
+              $type='disc'
+              $listWidth='100%'
+              $padding={10}
+              $columns={window.innerWidth > 650 ? '2' : '1'}
+              items={eCommerceData.map((item) => (
+                <Text level={4} color='dark25' className='desc-texts text-left'>
+                  {item}{' '}
+                </Text>
+              ))}
+            />
           </Col>
           <Col
             md={{ span: 24, offset: 0 }}

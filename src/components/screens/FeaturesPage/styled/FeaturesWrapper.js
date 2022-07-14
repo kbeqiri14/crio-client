@@ -68,15 +68,6 @@ const FeaturesWrapper = styled('div')`
     text-align: center;
     margin: 30px 0;
   }
-  .list {
-    margin-top: 100px;
-    color: ${(props) => props.theme.colors.dark25};
-    text-align: left;
-  }
-  .list ul li {
-    margin-bottom: 40px;
-    font-size: ${(props) => props.theme.text[3].size}px;
-  }
   .followers {
     margin: 40px 0px 80px;
   }
@@ -87,12 +78,6 @@ const FeaturesWrapper = styled('div')`
 
   .eCommerce-info {
     margin: 20px auto 60px;
-    color: ${(props) => props.theme.colors.dark25};
-    font-size: ${(props) => props.theme.text[3].size}px;
-    columns: ${window.innerWidth > 650 ? 2 : 1};
-    -webkit-columns: ${window.innerWidth > 650 ? 2 : 1};
-    -moz-columns: ${window.innerWidth > 650 ? 2 : 1};
-    width: 65%;
   }
   .eCommerce-info li {
     margin-left: 40px;
@@ -130,9 +115,6 @@ const FeaturesWrapper = styled('div')`
     .creator-desc .text-options {
       margin-left: 18px;
     }
-    .eCommerce-info li {
-      margin-left: 20px;
-    }
   }
   @media (max-width: 1200px) {
     .container {
@@ -157,12 +139,6 @@ const FeaturesWrapper = styled('div')`
     }
     .followers .text-options {
       margin-left: 30px;
-    }
-    .eCommerce-info li {
-      margin-left: 40px;
-    }
-    .eCommerce-info {
-      width: 100%;
     }
   }
   @media (max-width: 992px) {
@@ -190,9 +166,6 @@ const FeaturesWrapper = styled('div')`
       min-height: 645px;
       max-width: 500px !important;
     }
-    .eCommerce-info {
-      width: 70%;
-    }
   }
   @media (max-width: 575px) {
     .container {
@@ -209,6 +182,9 @@ const FeaturesWrapper = styled('div')`
     .paper-plane,
     .follow-img {
       width: 380px;
+    }
+    .eCommerce-info li {
+      margin-left: 0;
     }
     .list {
       margin-top: 20px;
