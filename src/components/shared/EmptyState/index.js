@@ -1,8 +1,8 @@
 import { memo, useCallback, useMemo } from 'react';
 
 import history from '@configs/history';
-import { ReactComponent as UploadProductIcon } from '@svgs/empty-product.svg';
-import { ReactComponent as UploadArtworkIcon } from '@svgs/empty-artwork.svg';
+import { ReactComponent as UploadIcon } from '@svgs/upload-icon.svg';
+import { ReactComponent as MarketplaceEmpty } from '@svgs/empty-artwork.svg';
 import { ReactComponent as FallowingEmptyIcon } from '@svgs/empty-fallowing.svg';
 import { Col, Button, Row, Text } from '@ui-kit';
 
@@ -42,10 +42,10 @@ const EmptyState = ({ username, isCreator, isProfile, isSubscribed, isMarketplac
     <Row justify='center' align='middle' padding_top={100} gutter={[0, 20]}>
       <Col span={24} align='center' padding_bottom={20}>
         {isCreator ? (
-          isMarketplace ? (
-            <UploadProductIcon width={210} height={151} />
+          isProfile ? (
+            <MarketplaceEmpty width={210} height={151} />
           ) : (
-            <UploadArtworkIcon width={210} height={151} />
+            <UploadIcon width={210} height={151} />
           )
         ) : (
           <FallowingEmptyIcon width={210} height={151} />
