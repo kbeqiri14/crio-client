@@ -154,8 +154,8 @@ export const FeaturesPage = () => {
             <ul>
               <li>Crio puts 80% of all subscription revenue from fans into a “Creator Pool.”</li>
               <li>
-                Creators are paid from the “Creator Pool” <Text color='white'>each month</Text>{' '}
-                based on the below formula.
+                Creators are paid from the “Creator Pool” <Text>each month</Text> based on the below
+                formula.
               </li>
             </ul>
             <Row className='formula-text'>
@@ -188,7 +188,7 @@ export const FeaturesPage = () => {
                 Creators can immediately make monthly income every time they get new followers!”
               </li>
               <li>
-                <Text color='white'>Note: Only subscribers can follow creators on Crio.</Text>
+                <Text>Note: Only subscribers can follow creators on Crio.</Text>
               </li>
             </ul>
           </Col>
@@ -268,13 +268,12 @@ export const FeaturesPage = () => {
           <Col md={24}>
             <ul className='eCommerce-info text-left'>
               <li>
-                Creators <Text color='white'>can sell</Text> individual digital products or services
-                to anyone, including free users and subscribers.
+                Creators <Text>can sell</Text> individual digital products or services to anyone,
+                including free users and subscribers.
               </li>
               <li>
-                Creators <Text color='white'>keep 90%</Text> of each transaction. 10% is kept by
-                Crio to cover the costs of operations (e.g., transaction fees, paying our employees,
-                server costs).
+                Creators <Text>keep 90%</Text> of each transaction. 10% is kept by Crio to cover the
+                costs of operations (e.g., transaction fees, paying our employees, server costs).
               </li>
             </ul>
           </Col>
