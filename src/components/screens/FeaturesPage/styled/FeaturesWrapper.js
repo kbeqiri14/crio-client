@@ -30,10 +30,8 @@ const FeaturesWrapper = styled('div')`
     border-radius: 50%;
     width: 50px;
     height: 50px;
-    /* margin: 0 12px 12px; */
-  }
-  .email {
-    color: #04a0ff;
+    background: #202020;
+    padding: 16px 18px;
   }
   .desc-content,
   .desc-texts,
@@ -67,10 +65,17 @@ const FeaturesWrapper = styled('div')`
     text-align: center;
   }
   .formula-text {
+    text-align: center;
     margin: 30px 0;
   }
   .list {
     margin-top: 100px;
+    color: ${(props) => props.theme.colors.dark25};
+    text-align: left;
+  }
+  .list ul li {
+    margin-bottom: 40px;
+    font-size: ${(props) => props.theme.text[3].size}px;
   }
   .followers {
     margin: 40px 0px 80px;
@@ -79,14 +84,18 @@ const FeaturesWrapper = styled('div')`
   .eCommerce {
     text-align: left;
   }
-  .followers .text-options {
-    margin-left: 30px;
-  }
-  .creator-desc .text-options {
-    margin-left: 18px;
-  }
+
   .eCommerce-info {
     margin: 20px auto 60px;
+    color: ${(props) => props.theme.colors.dark25};
+    font-size: ${(props) => props.theme.text[3].size}px;
+    columns: ${window.innerWidth > 650 ? 2 : 1};
+    -webkit-columns: ${window.innerWidth > 650 ? 2 : 1};
+    -moz-columns: ${window.innerWidth > 650 ? 2 : 1};
+    width: 65%;
+  }
+  .eCommerce-info li {
+    margin-left: 40px;
   }
   .faq {
     display: inline;
@@ -118,6 +127,12 @@ const FeaturesWrapper = styled('div')`
     .follower-section {
       justify-content: space-between;
     }
+    .creator-desc .text-options {
+      margin-left: 18px;
+    }
+    .eCommerce-info li {
+      margin-left: 20px;
+    }
   }
   @media (max-width: 1200px) {
     .container {
@@ -134,8 +149,20 @@ const FeaturesWrapper = styled('div')`
         right: -320px;
       }
     }
+    .creator-desc-block {
+      margin-top: 85px;
+    }
     .follower-section {
       max-width: 100% !important;
+    }
+    .followers .text-options {
+      margin-left: 30px;
+    }
+    .eCommerce-info li {
+      margin-left: 40px;
+    }
+    .eCommerce-info {
+      width: 100%;
     }
   }
   @media (max-width: 992px) {
@@ -163,6 +190,9 @@ const FeaturesWrapper = styled('div')`
       min-height: 645px;
       max-width: 500px !important;
     }
+    .eCommerce-info {
+      width: 70%;
+    }
   }
   @media (max-width: 575px) {
     .container {
@@ -187,13 +217,16 @@ const FeaturesWrapper = styled('div')`
       display: none;
     }
     .followers {
-      margin: 0;
+      margin: 0 0 40px 0;
     }
     .follower-section {
       max-width: 100% !important;
     }
     .circled {
       margin: 0 10px 10px;
+    }
+    .creator-desc {
+      margin-bottom: 40px;
     }
   }
 `;
