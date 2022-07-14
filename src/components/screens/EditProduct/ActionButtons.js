@@ -87,7 +87,7 @@ const ProductActionButtons = ({ state, image, disabled, handleSubmit, fillColor 
         saveText={buttonLabel}
         loading={onPublish.loading || creating || updating}
         disabled={disabled}
-        onCancel={() => setVisible(true)}
+        onCancel={() => (disabled ? redirect() : setVisible(true))}
         onSave={handleSubmit(onPublish.call)}
       />
       {visible && (
