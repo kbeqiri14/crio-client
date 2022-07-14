@@ -8,7 +8,7 @@ export const questions = [
     answer: (
       <li>
         Crio is a community-driven marketplace where creators can offer digital products, online
-        services, and premium content to their fans.'
+        services, and premium content to their fans.
       </li>
     ),
   },
@@ -50,7 +50,8 @@ export const questions = [
       <Fragment>
         <li>Right now, we have an invite only program to join as a creator.</li>
         <li>
-          Email us directly at <span className='email'> info@criointeractive.com </span>and we can
+          Email us directly at{' '}
+          <a href={`mailto:info@criointeractive.com`}> info@criointeractive.com </a> and we can
           upgrade your account to “Creator” status.
         </li>
       </Fragment>
@@ -314,7 +315,7 @@ export const questions = [
         <li>
           <b>Get Discovered on Crio: </b>
           Creators who are active posting new products and content will get featured on Crio’s
-          Discovery Feed more often. To attract more fans, Creators can also offer premium content
+          Discovery Feed more often. To attract more fans, creators can also offer premium content
           or certain digital products/services as free to only subscribers who follow their channel.
         </li>
         <li>
@@ -355,7 +356,7 @@ export const questions = [
           <b>What are the benefits of a universal subscription system?</b>
           <ul>
             <li>
-              <b>For fans: </b>Paying one monthly subscription makes it easier for fans to
+              <b>For Fans: </b>Paying one monthly subscription makes it easier for fans to
               financially support more creators vs. having to pay each time to support only a few
               (like on Patreon). That means more fans joining our community!
             </li>
