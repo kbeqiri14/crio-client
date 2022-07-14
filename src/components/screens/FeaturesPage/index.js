@@ -1,5 +1,5 @@
 import { memo, useEffect } from 'react';
-import { Divider, Col, Row, Text, Title, List, Carousel } from '@ui-kit';
+import { Divider, Col, Row, Text, Title, Carousel, List } from '@ui-kit';
 import { Image } from 'antd';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
@@ -24,16 +24,24 @@ import psd from '@images/psd.png';
 import FeaturesWrapper from './styled/FeaturesWrapper';
 
 const listData = [
-  'Crio puts 80% of all subscription revenue from fans into a “Creator Pool.”',
-  'Creators are paid from the “Creator Pool” each month based on the below formula.',
+  <>Crio puts 80% of all subscription revenue from fans into a “Creator Pool.”</>,
+  <>
+    Creators are paid from the “Creator Pool” <Text>each month</Text> based on the below formula.
+  </>,
 ];
 const subData = [
-  'Creators can immediately make monthly income everytime they get new followers!',
-  'Note: Only subscribers can follow creators on Crio.',
+  <>Creators can immediately make monthly income everytime they get new followers!</>,
+  <Text>Note: Only subscribers can follow creators on Crio.</Text>,
 ];
 const eCommerceData = [
-  'Creators can sell individual digital products or services to anyone, including free users and subscribers.',
-  'Creators keep 90% of each transaction. 10% is kept by Crio to cover the costs of operations (e.g., transaction fees, paying our employees, server costs).',
+  <Text color='dark25'>
+    Creators <Text>can sell</Text> individual digital products or services to anyone, including free
+    users and subscribers.
+  </Text>,
+  <Text color='dark25'>
+    Creators <Text>keep 90%</Text> of each transaction. 10% is kept by Crio to cover the costs of
+    operations (e.g., transaction fees, paying our employees, server costs).
+  </Text>,
 ];
 
 export const FeaturesPage = () => {
@@ -118,7 +126,7 @@ export const FeaturesPage = () => {
           sm={16}
           offset={1}
           xs={{ span: 24, offset: 0 }}
-          className='self-center'
+          className='self-center creator-desc-block'
         >
           <Row gutter={[0, 24]}>
             <Col md={3} xs={4}>
@@ -127,7 +135,7 @@ export const FeaturesPage = () => {
               </div>
             </Col>
             <Col md={20} xs={18} className='text-left text-options'>
-              <Text level={3}>
+              <Text level={3} color='dark25'>
                 Right now, we have an invite-only <br /> program to join as a creator. <br />{' '}
                 Creators can email us directly at <br />{' '}
                 <a href={`mailto:info@criointeractive.com`}>info@criointeractive.com</a> <br /> and
@@ -140,7 +148,7 @@ export const FeaturesPage = () => {
               </div>
             </Col>
             <Col md={20} xs={18} className='text-left text-options'>
-              <Text level={3}>
+              <Text level={3} color='dark25'>
                 Current creators can recommend other <br /> talented creators in their network.
                 <br /> Send us an email with the creator you are referring, <br />
                 and we can upgrade their account.
@@ -169,29 +177,33 @@ export const FeaturesPage = () => {
               $listWidth='100%'
               $padding={10}
               items={listData.map((item) => (
-                <Text level={3}>{item}</Text>
+                <Text level={3} color='dark25'>
+                  {item}
+                </Text>
               ))}
             />
             <Row className='formula-text'>
               <Col xs={16}>
-                <Text color='dark25'> # of fans following you </Text>
+                <Text level={3} color='dark25'>
+                  {' '}
+                  # of fans following you{' '}
+                </Text>
               </Col>
               <Col xs={24}>
-                <Row gutter={[20, 8]}>
+                <Row gutter={[20, 8]} align='center'>
                   <Col xs={16}>
                     <Divider margin={12} />
                   </Col>
                   <Col xs={8}>
                     <Text level={3} color='dark25'>
-                      &nbsp; x &nbsp; Creator Pool{' '}
+                      x &nbsp; Creator Pool{' '}
                     </Text>
                   </Col>
                 </Row>
               </Col>
               <Col xs={16}>
                 <Text level={3} color='dark25'>
-                  {' '}
-                  Total # of fans following all creators{' '}
+                  Total # of fans following all creators
                 </Text>
               </Col>
             </Row>
@@ -200,7 +212,9 @@ export const FeaturesPage = () => {
               $listWidth='100%'
               $padding={10}
               items={subData.map((item) => (
-                <Text level={3}>{item}</Text>
+                <Text level={3} color='dark25'>
+                  {item}
+                </Text>
               ))}
             />
           </Col>
@@ -233,35 +247,35 @@ export const FeaturesPage = () => {
           className='self-center followers'
         >
           <Row justify='center' gutter={[24, 12]}>
-            <Col md={2} xs={2}>
+            <Col md={4} xs={3}>
               <div className='circled'>
                 <Text level={4}>1</Text>
               </div>
             </Col>
-            <Col md={20} xs={20} className='text-options'>
-              <Text level={3}>
+            <Col md={18} xs={19} className='text-options'>
+              <Text level={3} color='dark25'>
                 Ask your current fans to support <br /> you on Crio! All they have to do is <br />{' '}
                 subscribe and follow your profile.
               </Text>
             </Col>
-            <Col md={2} xs={2}>
+            <Col md={4} xs={3}>
               <div className='circled'>
                 <Text level={4}>2</Text>
               </div>
             </Col>
-            <Col md={20} xs={20} className='text-options'>
-              <Text level={3}>
+            <Col md={18} xs={19} className='text-options'>
+              <Text level={3} color='dark25'>
                 Attract more subscribers to follow <br /> your profile by setting certain <br />{' '}
                 products/perks as “free” or offering <br /> exclusive content.
               </Text>
             </Col>
-            <Col md={2} xs={2}>
+            <Col md={4} xs={3}>
               <div className='circled'>
                 <Text level={4}>3</Text>
               </div>
             </Col>
-            <Col md={20} xs={20} className='text-options'>
-              <Text level={3}>
+            <Col md={18} xs={19} className='text-options'>
+              <Text level={3} color='dark25'>
                 The more followers you have, the <br /> more subscription revenue you <br /> can
                 make monthly!
               </Text>
@@ -273,22 +287,18 @@ export const FeaturesPage = () => {
         <Row className='container text-center eCommerce' align='middle' justify='center'>
           <Col md={24}>
             <Title className='title'>eCommerce</Title>
-            <Text level={4} color='dark25' className='desc-texts'>
+            <Text level={3} color='dark25' className='desc-texts'>
               Crio also gives creators the flexibility to monetize <br /> through a storefront
             </Text>
           </Col>
-          <Col md={24}>
+          <Col xl={18} md={24} sm={20}>
             <List
               className='eCommerce-info'
               $type='disc'
-              $listWidth='70%'
+              $listWidth='100%'
               $padding={10}
-              $columns={window.innerWidth >= 576 ? '2' : '1'}
-              items={eCommerceData.map((item) => (
-                <Text level={4} color='dark25' className='desc-texts text-left'>
-                  {item}{' '}
-                </Text>
-              ))}
+              $columns={window.innerWidth > 650 ? '2' : '1'}
+              items={eCommerceData.map((item) => item)}
             />
           </Col>
           <Col
@@ -297,11 +307,11 @@ export const FeaturesPage = () => {
             xs={{ span: 20, offset: 1 }}
             className='text-center'
           >
-            <Carousel>
+            <Carousel autoplay>
               <Image preview={false} src={commissions} />
-              <Image preview={false} src={guides} />
-              <Image preview={false} src={digitalAssets} />
               <Image preview={false} src={psd} />
+              <Image preview={false} src={digitalAssets} />
+              <Image preview={false} src={guides} />
             </Carousel>
           </Col>
         </Row>
@@ -319,9 +329,7 @@ export const FeaturesPage = () => {
               FAQ{' '}
             </Link>
             guide or email us at <br />{' '}
-            <a href={`mailto:info@criointeractive.com`} className='email'>
-              info@criointeractive.com
-            </a>
+            <a href={`mailto:info@criointeractive.com`}>info@criointeractive.com</a>
             <br /> and get more about how Crio works
           </Text>
         </Col>
