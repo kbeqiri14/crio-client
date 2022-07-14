@@ -298,11 +298,7 @@ export const FeaturesPage = () => {
               $listWidth='100%'
               $padding={10}
               $columns={window.innerWidth > 650 ? '2' : '1'}
-              items={eCommerceData.map((item) => (
-                <Text level={4} color='dark25' className='desc-texts text-left'>
-                  {item}{' '}
-                </Text>
-              ))}
+              items={eCommerceData.map((item) => item)}
             />
           </Col>
           <Col

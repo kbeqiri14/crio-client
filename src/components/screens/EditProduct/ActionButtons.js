@@ -93,7 +93,7 @@ const ProductActionButtons = ({ state, image, disabled, handleSubmit, fillColor 
       {visible && (
         <Confirmation
           visible={visible}
-          title={`Are you sure you want to discard these changes?`}
+          title='Are you sure you want to discard these changes?'
           cancelText='NO'
           confirmText='YES'
           onConfirm={() => {
