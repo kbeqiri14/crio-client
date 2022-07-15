@@ -1,6 +1,7 @@
 import { memo, useCallback, useMemo } from 'react';
 import { Col, Row, Upload } from 'antd';
 import { useLazyQuery, useMutation } from '@apollo/client';
+import styled from 'styled-components';
 
 import { getUploadUrl } from '@app/graphql/queries/artworks.query';
 import { deleteArtwork } from '@app/graphql/mutations/artwork.mutation';
@@ -11,6 +12,9 @@ import { errorToast, warningToast } from '@ui-kit/Notification';
 import dragAndDropImage from '@images/drag-and-drop.png';
 
 const { Dragger } = Upload;
+const Wrapper = styled('div')`
+  max-width: 200px;
+`;
 
 const DragAndDrop = ({ videoUri, file, types, dispatch, goToProfile }) => {
   const [requestUploadUrl, { data, loading }] = useLazyQuery(getUploadUrl, {
@@ -75,25 +79,27 @@ const DragAndDrop = ({ videoUri, file, types, dispatch, goToProfile }) => {
       <Col span={24}>
         <Title level={1}>Upload your artwork</Title>
       </Col>
-      <Col span={12}>
-        <Dragger {...props}>
-          <Spinner spinning={loading} color='white'>
-            <Row justify='center' align='center' gutter={[0, 25]} className='drag-and-drop'>
-              <Col span={24}>
-                <img alt='drag-and-drop' src={dragAndDropImage} />
-              </Col>
-              <Col span={24}>
-                <Text level={4}>Drag and drop a video</Text>
-              </Col>
-              {file?.name && (
+      {/* <Col span={12}> */}
+      <Dragger {...props}>
+        <Spinner spinning={loading} color='white'>
+          <Row justify='center' align='center' gutter={[0, 25]} className='drag-and-drop'>
+            <Col span={24}>
+              <img alt='drag-and-drop' src={dragAndDropImage} />
+            </Col>
+            <Col span={24}>
+              <Text level={4}>Drag and drop a video</Text>
+            </Col>
+            {file?.name && (
+              <Wrapper>
                 <Col span={24}>
                   <Text level={4}>{file.name}</Text>
                 </Col>
-              )}
-            </Row>
-          </Spinner>
-        </Dragger>
-      </Col>
+              </Wrapper>
+            )}
+          </Row>
+        </Spinner>
+      </Dragger>
+      {/* </Col> */}
       <Col span={24}>
         <ActionButtons
           saveText='CONTINUE'
