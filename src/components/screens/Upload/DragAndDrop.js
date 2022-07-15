@@ -79,7 +79,6 @@ const DragAndDrop = ({ videoUri, file, types, dispatch, goToProfile }) => {
       <Col span={24}>
         <Title level={1}>Upload your artwork</Title>
       </Col>
-      {/* <Col span={12}> */}
       <Dragger {...props}>
         <Spinner spinning={loading} color='white'>
           <Row justify='center' align='center' gutter={[0, 25]} className='drag-and-drop'>
@@ -99,7 +98,6 @@ const DragAndDrop = ({ videoUri, file, types, dispatch, goToProfile }) => {
           </Row>
         </Spinner>
       </Dragger>
-      {/* </Col> */}
       <Col span={24}>
         <ActionButtons
           saveText='CONTINUE'
