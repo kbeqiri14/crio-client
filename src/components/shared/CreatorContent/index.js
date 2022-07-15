@@ -118,7 +118,7 @@ export const Content = ({
               <EmptyWrapper>
                 <EmptyIcon />
                 <Paragraph level={4} color='dark25'>
-                  No data found
+                  No result
                 </Paragraph>
               </EmptyWrapper>
             </div>
