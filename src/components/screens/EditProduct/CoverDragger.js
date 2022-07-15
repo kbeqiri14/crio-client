@@ -84,7 +84,9 @@ const EditProduct = ({ control, image, setImage }) => {
                 </Text>
               </Col>
               <Col span={24}>
-                <Text level={4}>HI-Res images (png, jpg, gif)</Text>
+                <Text level={4} color='dark25'>
+                  .HI-Res images (png, jpg, gif)
+                </Text>
               </Col>
             </Row>
           </Dragger>

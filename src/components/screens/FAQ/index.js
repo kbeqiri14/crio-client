@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Collapse, Col, Row, Title } from '@ui-kit';
+import { Col, Collapse, Row, Title } from '@ui-kit';
 
 import styled from 'styled-components';
 import { DownOutlined } from '@ant-design/icons';
@@ -16,14 +16,20 @@ const Wrapper = styled('div')`
     color: #04a0ff;
     border-bottom: 1px solid #04a0ff;
   }
-  /* .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow {
+  .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow {
     left: auto;
     right: 30px;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     margin: 0;
-  } */
+  }
+  @media (max-width: 420px) {
+    .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow {
+      right: 20px !important;
+      position: absolute !important;
+    }
+  }
 `;
 
 export const FAQ = () => {

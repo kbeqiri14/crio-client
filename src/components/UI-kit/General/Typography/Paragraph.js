@@ -6,6 +6,7 @@ const Paragraph = styled(Typography.Paragraph)`
   &.ant-typography-disabled {
     color: ${(props) => props.theme.colors.dark50};
   }
+
   ${(props) =>
     props?.level &&
     css`

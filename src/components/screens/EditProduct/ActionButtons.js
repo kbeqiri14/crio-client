@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react';
+import { memo, useMemo, useState, Fragment } from 'react';
 import { useMutation } from '@apollo/client';
 
 import useAsyncFn from '@app/hooks/useAsyncFn';
@@ -8,10 +8,12 @@ import { createProduct, updateProduct } from '@app/graphql/mutations/product.mut
 import ActionButtons from '@shared/ActionButtons';
 import { errorToast, successToast } from '@ui-kit/Notification';
 import { formItemContent } from '@utils/upload.helper';
+import Confirmation from '@shared/Confirmation';
 
 const ProductActionButtons = ({ state, image, disabled, handleSubmit, fillColor = 'blue' }) => {
   const buttonLabel = useMemo(() => (state?.productId ? 'UPDATE' : 'PUBLISH'), [state?.productId]);
   const { userId, redirect } = useRedirectToProfile();
+  const [visible, setVisible] = useState(false);
 
   const [create, { loading: creating }] = useMutation(createProduct, {
     update: (cache, mutationResult) => {
@@ -80,14 +82,29 @@ const ProductActionButtons = ({ state, image, disabled, handleSubmit, fillColor 
   });
 
   return (
-    <ActionButtons
-      fillColor={fillColor}
-      saveText={buttonLabel}
-      loading={onPublish.loading || creating || updating}
-      disabled={disabled}
-      onCancel={redirect}
-      onSave={handleSubmit(onPublish.call)}
-    />
+    <Fragment>
+      <ActionButtons
+        fillColor={fillColor}
+        saveText={buttonLabel}
+        loading={onPublish.loading || creating || updating}
+        disabled={disabled}
+        onCancel={() => (disabled ? redirect() : setVisible(true))}
+        onSave={handleSubmit(onPublish.call)}
+      />
+      {visible && (
+        <Confirmation
+          visible={visible}
+          title='Are you sure you want to discard these changes?'
+          cancelText='NO'
+          confirmText='YES'
+          onConfirm={() => {
+            setVisible(false);
+            redirect();
+          }}
+          onCancel={() => setVisible(false)}
+        />
+      )}
+    </Fragment>
   );
 };
 

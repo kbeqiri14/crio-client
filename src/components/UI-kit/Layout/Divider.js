@@ -10,11 +10,13 @@ const Divider = styled(antDivider)`
     css`
       height: ${props.height}px;
     `}
+
   ${(props) =>
     props?.width &&
     css`
       width: ${props.width}px;
     `}
+
   ${(props) =>
     props?.top &&
     css`
@@ -26,6 +28,7 @@ const Divider = styled(antDivider)`
     css`
       padding-left: ${props.padding_left}px;
     `}
+
   ${(props) =>
     props?.margin &&
     css`

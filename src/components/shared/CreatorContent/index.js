@@ -8,8 +8,7 @@ import EmptyState from '@shared/EmptyState';
 import LoadMoreButton from './LoadMoreButton';
 import ArtworksList from './Artwork/ArtworksList';
 import ProductsList from './Product/ProductsList';
-import { ReactComponent as EmptyMarketIcon } from '@svgs/marketplace-empty.svg';
-import { ReactComponent as EmptyArtworkIcon } from '@svgs/empty-artwork.svg';
+import { ReactComponent as EmptyIcon } from '@svgs/marketplace-empty.svg';
 
 const Wrapper = styled('div')`
   max-width: 1438px;
@@ -30,7 +29,12 @@ const Wrapper = styled('div')`
     max-width: 376px;
   }
 `;
-
+const EmptyWrapper = styled('div')`
+  padding: 100px 0;
+  svg {
+    margin-bottom: 40px;
+  }
+`;
 const { TabPane } = Tabs;
 
 const tabs = {
@@ -88,11 +92,12 @@ export const Content = ({
 
           {!isProfilePage && !loading && !productsList?.length && (
             <div className='empty'>
-              <EmptyMarketIcon />
-
-              <Paragraph level={4} color='dark25'>
-                no result
-              </Paragraph>
+              <EmptyWrapper>
+                <EmptyIcon />
+                <Paragraph level={4} color='dark25'>
+                  No result
+                </Paragraph>
+              </EmptyWrapper>
             </div>
           )}
 
@@ -109,12 +114,13 @@ export const Content = ({
           )}
 
           {!isProfilePage && !loading && !artworksList?.length && (
-            <div className='empty'>
-              <EmptyArtworkIcon />
-
-              <Paragraph level={4} color='dark25'>
-                No Data found
-              </Paragraph>
+            <div className='empty' padding-top='100px'>
+              <EmptyWrapper>
+                <EmptyIcon />
+                <Paragraph level={4} color='dark25'>
+                  No data found
+                </Paragraph>
+              </EmptyWrapper>
             </div>
           )}
 
