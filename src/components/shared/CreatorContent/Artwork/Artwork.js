@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import history from '@configs/history';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
-import videoIcon from '@images/video-icon.png';
+// import videoIcon from '@images/video-icon.png';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { Col, Row, Text } from '@ui-kit';
 import Actions from '@screens/Video/Actions';
