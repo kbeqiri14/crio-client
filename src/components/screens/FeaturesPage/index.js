@@ -6,7 +6,7 @@ import { useMutation, useReactiveVar } from '@apollo/client';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { me } from '@app/graphql/queries/users.query';
 import { updateUser } from '@app/graphql/mutations/user.mutation';
-import history from '@configs/history';
+// import history from '@configs/history';
 import { loggedInUserLoadingVar } from '@configs/client-cache';
 import { Footer } from '@shared/Footer';
 import { Carousel, Col, Divider, List, Row, Text, Title } from '@ui-kit';
@@ -59,11 +59,11 @@ export const FeaturesPage = () => {
     },
   });
 
-  useEffect(() => {
-    if (!loggedInUserLoading && (!user.id || (user.id && !user.isCreator))) {
-      history.push('/');
-    }
-  }, [loggedInUserLoading, user.id, user.isCreator]);
+  // useEffect(() => {
+  //   if (!loggedInUserLoading && (!user.id || (user.id && !user.isCreator))) {
+  //     history.push('/');
+  //   }
+  // }, [loggedInUserLoading, user.id, user.isCreator]);
 
   useEffect(() => {
     if (user.id && !user.featuresSeen) {

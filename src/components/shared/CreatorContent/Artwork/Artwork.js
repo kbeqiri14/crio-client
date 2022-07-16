@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import history from '@configs/history';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
-import videoIcon from '@images/video-icon.png';
+// import videoIcon from '@images/video-icon.png';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { Col, Row, Text } from '@ui-kit';
 import Actions from '@screens/Video/Actions';
@@ -156,10 +156,10 @@ const Artwork = ({
           <Text level={4}>{title}</Text>
         </div>
         <LockState userId={userId} accessibility={accessibility} status={status} />
-        <div className='video'>
-          <img src={videoIcon} alt='video' className='video-icon' />
-          <img src={src} alt='artwork' width={330} height={330} onClick={showArtwork} />
-        </div>
+        {/* <div className='video'> */}
+        {/* <img src={videoIcon} alt='video' className='video-icon' /> */}
+        <img src={src} alt='artwork' width={330} height={330} onClick={showArtwork} />
+        {/* </div> */}
       </Wrapper>
       <Link to={`/profile/${username}`}>
         <Row gutter={12} align='middle' padding_top={8}>
