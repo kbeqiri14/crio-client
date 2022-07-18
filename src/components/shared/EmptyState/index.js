@@ -1,8 +1,9 @@
 import { memo, useCallback, useMemo } from 'react';
 
 import history from '@configs/history';
-import noData from '@images/no-data.png';
 import noUser from '@images/no-user.png';
+import emptyMarketplace from '@images/empty-marketplace.png';
+import emptyArtwork from '@images/empty-artwork.png';
 import upload from '@images/upload.png';
 import { Col, Button, Row, Text } from '@ui-kit';
 
@@ -26,10 +27,13 @@ const EmptyState = ({ username, isCreator, isProfile, isSubscribed, isMarketplac
   }, [username, isCreator, isProfile, isSubscribed, isMarketplace]);
   const icon = useMemo(() => {
     if (isCreator) {
-      return isProfile ? noData : upload;
+      if (isProfile) {
+        return isMarketplace ? emptyMarketplace : emptyArtwork;
+      }
+      return upload;
     }
     return noUser;
-  }, [isCreator, isProfile]);
+  }, [isCreator, isProfile, isMarketplace]);
   const [label, color] = useMemo(
     () => (isCreator ? ['UPLOAD', 'blue'] : ['SUBSCRIBE', 'green']),
     [isCreator],

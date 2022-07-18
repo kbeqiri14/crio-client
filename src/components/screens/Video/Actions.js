@@ -30,7 +30,7 @@ const Actions = (props) => {
     onCompleted: () => {
       hideConfirmation();
       successToast('The video is successfully deleted');
-      window.location.href = `/profile/artworks/${props.username}`;
+      setTimeout(() => (window.location.href = `/profile/artworks/${props.username}`), 1300);
     },
   });
 
