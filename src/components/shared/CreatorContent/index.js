@@ -8,7 +8,7 @@ import EmptyState from '@shared/EmptyState';
 import LoadMoreButton from './LoadMoreButton';
 import ArtworksList from './Artwork/ArtworksList';
 import ProductsList from './Product/ProductsList';
-import { ReactComponent as EmptyIcon } from '@svgs/marketplace-empty.svg';
+import { ReactComponent as NoResultIcon } from '@svgs/no-result.svg';
 
 const Wrapper = styled('div')`
   max-width: 1438px;
@@ -93,7 +93,7 @@ export const Content = ({
           {!isProfilePage && !loading && !productsList?.length && (
             <div className='empty'>
               <EmptyWrapper>
-                <EmptyIcon />
+                <NoResultIcon />
                 <Paragraph level={4} color='dark25'>
                   No result
                 </Paragraph>
@@ -116,7 +116,7 @@ export const Content = ({
           {!isProfilePage && !loading && !artworksList?.length && (
             <div className='empty' padding-top='100px'>
               <EmptyWrapper>
-                <EmptyIcon />
+                <NoResultIcon />
                 <Paragraph level={4} color='dark25'>
                   No data found
                 </Paragraph>

@@ -9,7 +9,7 @@ import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { getArtwork } from '@app/graphql/queries/artworks.query';
 import { loggedInUserLoadingVar } from '@configs/client-cache';
 import NotFound from '@shared/NotFound';
-import { ReactComponent as NotFoundUser } from '@svgs/not-found.svg';
+import { ReactComponent as NotFoundIcon } from '@svgs/not-found.svg';
 import { Col, Row } from '@ui-kit';
 import Content from './Content';
 import MoreProductsSection from '@root/src/components/screens/Product/MoreProductsSection';
@@ -70,7 +70,7 @@ export const Artwork = () => {
     );
   }
   if (!Object.keys(artwork).length) {
-    return <NotFound text='Artwork is not found' icon={<NotFoundUser />} />;
+    return <NotFound text='Artwork is not found' icon={<NotFoundIcon />} />;
   }
   return (
     <>

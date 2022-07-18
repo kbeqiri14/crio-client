@@ -8,7 +8,7 @@ import { BUCKET_NAME, COGNITO_REGION } from '@app/configs/environment';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { getProduct } from '@app/graphql/queries/products.query';
 import NotFound from '@shared/NotFound';
-import { ReactComponent as NotFoundUser } from '@svgs/not-found.svg';
+import { ReactComponent as NotFoundIcon } from '@svgs/not-found.svg';
 import { Col, Row } from '@ui-kit';
 import defaultCover from '@images/product.png';
 import Content from '../Artwork/Content';
@@ -79,7 +79,7 @@ export const Product = () => {
     );
   }
   if (!Object.keys(product).length) {
-    return <NotFound text='Product is not found' icon={<NotFoundUser />} />;
+    return <NotFound text='Product is not found' icon={<NotFoundIcon />} />;
   }
   return (
     <>
