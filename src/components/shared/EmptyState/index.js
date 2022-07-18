@@ -5,9 +5,10 @@ import noUser from '@images/no-user.png';
 import emptyMarketplace from '@images/empty-marketplace.png';
 import emptyArtwork from '@images/empty-artwork.png';
 import upload from '@images/upload.png';
+import notFound from '@images/not-found.png';
 import { Col, Button, Row, Text } from '@ui-kit';
 
-const EmptyState = ({ username, isCreator, isProfile, isSubscribed, isMarketplace }) => {
+const EmptyState = ({ username, isCreator, isProfile, isEmpty, isSubscribed, isMarketplace }) => {
   const text = useMemo(() => {
     if (isProfile) {
       let text = 'is not following anyone yet';
@@ -21,10 +22,13 @@ const EmptyState = ({ username, isCreator, isProfile, isSubscribed, isMarketplac
     if (isCreator) {
       return isMarketplace ? 'Upload your first product or service' : 'Upload your first artwork';
     }
+    if (isEmpty) {
+      return isMarketplace ? 'Product is not found' : 'Artwork is not found';
+    }
     return isSubscribed
       ? 'You don’t have any following yet'
       : 'Subscribe to follow creators and gain access to free digital products across Crio';
-  }, [username, isCreator, isProfile, isSubscribed, isMarketplace]);
+  }, [username, isCreator, isProfile, isSubscribed, isMarketplace, isEmpty]);
   const icon = useMemo(() => {
     if (isCreator) {
       if (isProfile) {
@@ -32,15 +36,18 @@ const EmptyState = ({ username, isCreator, isProfile, isSubscribed, isMarketplac
       }
       return upload;
     }
+    if (isEmpty) {
+      return notFound;
+    }
     return noUser;
-  }, [isCreator, isProfile, isMarketplace]);
+  }, [isCreator, isProfile, isMarketplace, isEmpty]);
   const [label, color] = useMemo(
     () => (isCreator ? ['UPLOAD', 'blue'] : ['SUBSCRIBE', 'green']),
     [isCreator],
   );
   const visible = useMemo(
-    () => !isProfile && (isCreator || !isSubscribed),
-    [isCreator, isProfile, isSubscribed],
+    () => !isEmpty && !isProfile && (isCreator || !isSubscribed),
+    [isCreator, isProfile, isSubscribed, isEmpty],
   );
   const onClick = useCallback(
     () => history.push(`/${isCreator ? (isMarketplace ? 'upload' : 'upload/artwork') : 'pricing'}`),
