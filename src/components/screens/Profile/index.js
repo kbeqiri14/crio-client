@@ -7,11 +7,11 @@ import { loggedInUserLoadingVar } from '@configs/client-cache';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { getUser } from '@app/graphql/queries/users.query';
-import NotFound from '@shared/NotFound';
 import { Layout } from '@ui-kit';
 import { ReactComponent as NoUserIcon } from '@svgs/no-user.svg';
 import ProfileSider from '@root/src/components/screens/Profile/Sider';
 import ProfileContent from '@root/src/components/screens/Profile/Content';
+import EmptyState from '../../shared/EmptyState';
 
 const { Sider, Content } = Layout;
 
@@ -49,7 +49,7 @@ export const Profile = () => {
   }, [username, loggedInUser.username, requestUser]);
 
   if (!loggedInUserLoading && !loading && !user) {
-    return <NotFound text='No Result' icon={<NoUserIcon />} />;
+    return <EmptyState text='No Result' icon={<NoUserIcon />} />;
   }
   return (
     <>
