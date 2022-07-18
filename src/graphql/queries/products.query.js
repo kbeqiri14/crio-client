@@ -10,6 +10,15 @@ export const getProduct = gql`
   ${productFragment}
 `;
 
+export const getProductTypes = gql`
+  query {
+    getProductTypes {
+      id
+      name
+    }
+  }
+`;
+
 export const getUserProducts = gql`
   query getUserProducts($username: String) {
     getUserProducts(username: $username) {
