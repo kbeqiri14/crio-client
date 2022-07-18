@@ -157,7 +157,7 @@ export const FeaturesPage = () => {
         </Col>
       </Row>
       <div className='custom-back'>
-        <Row className='subscription container' justify='center'>
+        <Row className='subscription container' justify='center' align='middle'>
           <Col md={{ span: 22, offset: 0 }} xs={{ span: 20, offset: 1 }}>
             <Title className='title'>Community Subscription</Title>
             <Text level={4} color='dark25' className='desc-texts'>
