@@ -50,6 +50,9 @@ const StyledVideoDetails = styled('div')`
     }
   }
 `;
+const Wrapper = styled('div')`
+  margin: 0 15px;
+`;
 
 const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
   const { user } = useLoggedInUser();
@@ -133,20 +136,22 @@ const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
             )}
           />
         </Col>
-        <Col span={24}>
-          <Text level={3}>Accessibility</Text>
-          <br />
-          <Controller
-            name='accessibility'
-            control={control}
-            render={({ field }) => (
-              <Radio.Group defaultValue={state?.accessibility || 'subscriber_only'} {...field}>
-                <Radio value='subscriber_only'>Subscriber Only</Radio>
-                <Radio value='everyone'>Everyone</Radio>
-              </Radio.Group>
-            )}
-          />
-        </Col>
+        <Wrapper>
+          <Col span={24}>
+            <Text level={3}>Accessibility</Text>
+            <br />
+            <Controller
+              name='accessibility'
+              control={control}
+              render={({ field }) => (
+                <Radio.Group defaultValue={state?.accessibility || 'subscriber_only'} {...field}>
+                  <Radio value='subscriber_only'>Subscriber Only</Radio>
+                  <Radio value='everyone'>Everyone</Radio>
+                </Radio.Group>
+              )}
+            />
+          </Col>
+        </Wrapper>
       </Row>
       <div className='player'>
         {isImage ? (
