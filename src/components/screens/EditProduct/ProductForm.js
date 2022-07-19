@@ -1,75 +1,14 @@
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Controller, useForm } from 'react-hook-form';
-import styled from 'styled-components';
+import { useForm } from 'react-hook-form';
 import { useQuery } from '@apollo/client';
 
 import { getConnectAccount } from '@app/graphql/queries/payment-method.query';
-import { Checkbox, Col, Input, Radio, Row, Switch, Tabs, Text, Tooltip } from '@ui-kit';
+import { Tabs } from '@ui-kit';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
-import { ReactComponent as CloseIcon } from '@svgs/close-small.svg';
-import CoverDragger from './CoverDragger';
-import ActionButtons from './ActionButtons';
 import HelpTooltip from '@screens/Product/HelpTooltip';
-
-const Wrapper = styled('div')`
-  display: flex;
-  justify-content: center;
-  padding: 40px 20px;
-  > div {
-    max-width: 568px;
-  }
-  .ant-upload {
-    .ant-upload-btn {
-      padding: 78px 0;
-    }
-    &.ant-upload-drag {
-      border-radius: 8px;
-    }
-  }
-  .info {
-    opacity: 0;
-    visibility: hidden;
-    transition: visibility 0s, opacity 0.2s linear;
-  }
-  .price:hover {
-    .info {
-      opacity: 1;
-      visibility: visible;
-    }
-  }
-  .help {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 10px;
-    right: 0;
-    .ant-tooltip {
-      top: 0 !important;
-    }
-    .got-it-button {
-      left: 160px;
-      @media (max-width: 1060px) {
-        left: -115px;
-      }
-      margin-top: 58px;
-    }
-  }
-`;
-
-const BroadcastWrapper = styled('div')`
-  background: rgba(0, 160, 255, 0.5);
-  padding: 13px 36px;
-  a {
-    color: white;
-    text-decoration: underline;
-    :hover {
-      color: white;
-      text-decoration: underline;
-      cursor: pointer;
-    }
-  }
-`;
+import Broadcast from './_partials/Broadcast';
+import FormWrapper from './styled/FormWrapper';
+import Form from './_partials/Form';
 
 const ProductForm = ({ state }) => {
   const [visibleBroadcast, setVisibleBroadcast] = useState(false);
@@ -161,181 +100,40 @@ const ProductForm = ({ state }) => {
 
   return (
     <>
-      {visibleBroadcast && (
-        <BroadcastWrapper>
-          <Text level='2' color='white'>
-            Start earning instantly using Crio's simple payments platform.{' '}
-            <Link to='/payment'>Onboard your Stripe account</Link> now.
-          </Text>
-          <CloseIcon className='vertical-middle float-right' onClick={hideBroadcast} />
-        </BroadcastWrapper>
-      )}
-      <Wrapper>
+      {visibleBroadcast && <Broadcast hideBroadcast={hideBroadcast} />}
+      <FormWrapper>
         <Tabs className='relative'>
-          <Tabs.TabPane key='Service' tab='Service'>
-            <Row align='center' gutter={[0, 8]}>
-              <Col span={24} align='start'>
-                <Text level={3} padding_bottom={8}>
-                  Title*
-                </Text>
-              </Col>
-              <Col span={24} padding_bottom={32}>
-                <Controller
-                  name='title'
-                  control={control}
-                  defaultValue={state?.title}
-                  render={({ field }) => (
-                    <Input {...field} level={4} maxLength={100} placeholder='Write here' />
-                  )}
-                />
-              </Col>
-              <Col span={24} align='start'>
-                <Text level={3}>Description</Text>
-              </Col>
-              <Col span={24} padding_bottom={32}>
-                <Controller
-                  name='desc'
-                  control={control}
-                  defaultValue={state?.description}
-                  render={({ field }) => (
-                    <Input.TextArea
-                      {...field}
-                      level={3}
-                      maxLength={1000}
-                      autoSize={{ minRows: 3, maxRows: 3 }}
-                      placeholder='Write here'
-                    />
-                  )}
-                />
-              </Col>
-              <Col span={24} align='start'>
-                <Text level={3} disabled={isFree}>
-                  Price*
-                </Text>
-              </Col>
-              <Col xs={19} md={20} padding_bottom={32} className='price'>
-                <Controller
-                  name='price'
-                  control={control}
-                  defaultValue={state?.price}
-                  render={({ field }) =>
-                    visibleBroadcast ? (
-                      <Link to='/payment'>
-                        <Tooltip
-                          getPopupContainer={(triggerNode) =>
-                            triggerNode.parentNode.querySelector('.ant-tooltip-open')
-                          }
-                          title='Start earning instantly using Crios simple payments platform.'
-                        >
-                          <div className='relative'>
-                            <Input
-                              {...field}
-                              level={4}
-                              pattern='[0-9]*'
-                              maxLength={50}
-                              placeholder='$'
-                              disabled={isFree}
-                            />
-                          </div>
-                        </Tooltip>
-                      </Link>
-                    ) : (
-                      <Input
-                        {...field}
-                        level={4}
-                        pattern='[0-9]*'
-                        maxLength={50}
-                        placeholder='$'
-                        disabled={isFree}
-                      />
-                    )
-                  }
-                />
-              </Col>
-              <Col
-                xs={{ offset: 1 }}
-                md={{ offset: 0 }}
-                span={4}
-                padding_bottom={32}
-                align='end'
-                className='self-center'
-              >
-                <Controller
-                  name='isFree'
-                  control={control}
-                  defaultValue={isFree}
-                  render={({ field }) => (
-                    <Checkbox
-                      {...field}
-                      checked={isFree}
-                      disabled={visibleBroadcast}
-                      onChange={setFree}
-                    >
-                      <Text level={3} disabled={visibleBroadcast}>
-                        Free
-                      </Text>
-                    </Checkbox>
-                  )}
-                />
-              </Col>
-              <Col span={24} align='start'>
-                <Text level={3}>Thumbnail</Text>
-              </Col>
-              <Col span={24} padding_bottom={32}>
-                <CoverDragger control={control} image={image} setImage={setImage} />
-              </Col>
-              <Col span={24} align='start'>
-                <Text level={3} disabled={isFree}>
-                  Who can see this?
-                </Text>
-              </Col>
-              <Col span={24} padding_bottom={32} align='start'>
-                <Controller
-                  name='accessibility'
-                  control={control}
-                  defaultValue={state?.accessibility || 'subscriber_only'}
-                  render={({ field }) => (
-                    <Radio.Group
-                      value={isFree ? 'subscriber_only' : state?.accessibility || 'subscriber_only'}
-                      {...field}
-                      disabled={isFree}
-                    >
-                      <Radio value='subscriber_only'>Subscriber Only</Radio>
-                      <Radio value='everyone'>Everyone</Radio>
-                    </Radio.Group>
-                  )}
-                />
-              </Col>
-              <Col span={24} align='start' padding_bottom={32}>
-                <Switch checked={limitVisible} onChange={setLimitation} />
-                <Text level={3}> Limit your sales?</Text>
-              </Col>
-              {limitVisible && (
-                <>
-                  <Col span={24} align='start'>
-                    <Text level={3}>Maximum numbers of purchases</Text>
-                  </Col>
-                  <Col span={24} padding_bottom={32}>
-                    <Controller
-                      name='limit'
-                      control={control}
-                      defaultValue={state?.limit}
-                      render={({ field }) => (
-                        <Input {...field} level={4} maxLength={50} placeholder='Unlimited' />
-                      )}
-                    />
-                  </Col>
-                </>
-              )}
-              <Col span={24}>
-                <ActionButtons
-                  state={state}
-                  image={image}
-                  disabled={disabled}
-                  handleSubmit={handleSubmit}
-                />
-              </Col>
-            </Row>
+          <Tabs.TabPane key='product' tab='Product'>
+            <Form
+              isProduct={true}
+              control={control}
+              state={state}
+              isFree={isFree}
+              visibleBroadcast={visibleBroadcast}
+              setFree={setFree}
+              image={image}
+              setImage={setImage}
+              limitVisible={limitVisible}
+              disabled={disabled}
+              setLimitation={setLimitation}
+              handleSubmit={handleSubmit}
+            />
+          </Tabs.TabPane>
+          <Tabs.TabPane key='service' tab='Service'>
+            <Form
+              isProduct={false}
+              control={control}
+              state={state}
+              isFree={isFree}
+              visibleBroadcast={visibleBroadcast}
+              setFree={setFree}
+              image={image}
+              setImage={setImage}
+              limitVisible={limitVisible}
+              disabled={disabled}
+              setLimitation={setLimitation}
+              handleSubmit={handleSubmit}
+            />
           </Tabs.TabPane>
           <div className='help'>
             <HelpTooltip
@@ -344,7 +142,7 @@ const ProductForm = ({ state }) => {
             />
           </div>
         </Tabs>
-      </Wrapper>
+      </FormWrapper>
     </>
   );
 };
