@@ -17,11 +17,15 @@ const Collapse = styled(collapse)`
   .ant-collapse-header {
     font-size: ${(props) => props.theme.text[4].size}px;
     color: white !important;
-    padding: 20px !important;
+    padding: 20px 0px 20px 20px !important;
   }
   .ant-collapse-content-box {
     color: ${(props) => props.theme.colors.dark25};
     font-size: 16px;
+    padding: 0 50px 20px 0 !important;
+  }
+  .ant-collapse-item > .ant-collapse-item-active > .ant-collapse-header {
+    padding: 0 !important;
   }
 `;
 /** @component */
