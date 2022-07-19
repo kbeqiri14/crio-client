@@ -55,7 +55,7 @@ export const MoreProductsSection = ({ videoInfo }) => {
       {data?.getMoreProducts?.userProducts?.length && (
         <UserMoreProductsWrapper>
           <Row>
-            <Col span={24} padding_bottom={20}>
+            <Col span={24} padding_bottom={20} padding_right={15} padding_left={15}>
               <Row justify='space-between' align='middle'>
                 <Col>
                   <Text level={2}>More products by {videoInfo.username}</Text>
@@ -69,7 +69,7 @@ export const MoreProductsSection = ({ videoInfo }) => {
                 </Col>
               </Row>
             </Col>
-            <Col>
+            <Col className='prodList'>
               <ProductsList productsList={data?.getMoreProducts.userProducts} />
             </Col>
           </Row>
