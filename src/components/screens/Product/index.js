@@ -22,13 +22,6 @@ const Wrapper = styled('div')`
     max-width: 1040px;
   }
 `;
-const EmptyWrapper = styled('div')`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: calc(100vh - 70px);
-  padding-bottom: 110px;
-`;
 
 export const Product = () => {
   const { user } = useLoggedInUser();
@@ -85,11 +78,7 @@ export const Product = () => {
     );
   }
   if (!Object.keys(product).length) {
-    return (
-      <EmptyWrapper>
-        <EmptyState isEmpty={true} isMarketplace={true} />;
-      </EmptyWrapper>
-    );
+    return <EmptyState isNotFound={true} isMarketplace={true} />;
   }
   return (
     <>

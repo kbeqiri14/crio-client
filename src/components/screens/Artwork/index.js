@@ -22,13 +22,6 @@ const Wrapper = styled('div')`
     max-width: 1040px;
   }
 `;
-const EmptyWrapper = styled('div')`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: calc(100vh - 70px);
-  padding-bottom: 110px;
-`;
 
 export const Artwork = () => {
   const { user } = useLoggedInUser();
@@ -76,11 +69,7 @@ export const Artwork = () => {
     );
   }
   if (!Object.keys(artwork).length) {
-    return (
-      <EmptyWrapper>
-        <EmptyState isEmpty={true} isMarketplace={false} />
-      </EmptyWrapper>
-    );
+    return <EmptyState isNotFound={true} />;
   }
   return (
     <>
