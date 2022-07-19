@@ -37,6 +37,8 @@ const Wrapper = styled('div')`
   }
   .menu {
     height: 100vh;
+    overflow-y: scroll;
+    padding-bottom: 70px;
   }
 `;
 
@@ -130,7 +132,7 @@ export const BurgerMenu = ({ user, keyword, setKeyword }) => {
                   <Col span={24} padding_left={10} onClick={closeMenu}>
                     <Link to='/upload/artwork'>
                       <Text level={2} color='dark25'>
-                        Artwork
+                        Content
                       </Text>
                     </Link>
                   </Col>
