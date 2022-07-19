@@ -86,7 +86,7 @@ const DragAndDrop = ({ videoUri, file, types, dispatch, goToProfile }) => {
                 <Text level={4}>Drag and drop a video</Text>
               </Col>
               {file?.name && (
-                <Col span={24} className='textCol'>
+                <Col span={24}>
                   <Text level={4}>{file.name}</Text>
                 </Col>
               )}
