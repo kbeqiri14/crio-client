@@ -3,12 +3,11 @@ import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import history from '@configs/history';
-import { Tabs, Paragraph } from '@ui-kit';
+import { Tabs } from '@ui-kit';
 import EmptyState from '@shared/EmptyState';
 import LoadMoreButton from './LoadMoreButton';
 import ArtworksList from './Artwork/ArtworksList';
 import ProductsList from './Product/ProductsList';
-import { ReactComponent as NoResultIcon } from '@svgs/no-result.svg';
 
 const Wrapper = styled('div')`
   max-width: 1438px;
@@ -29,12 +28,7 @@ const Wrapper = styled('div')`
     max-width: 376px;
   }
 `;
-const EmptyWrapper = styled('div')`
-  padding: 100px 0;
-  svg {
-    margin-bottom: 40px;
-  }
-`;
+
 const { TabPane } = Tabs;
 
 const tabs = {
@@ -90,16 +84,7 @@ export const Content = ({
             />
           )}
 
-          {!isProfilePage && !loading && !productsList?.length && (
-            <div className='empty'>
-              <EmptyWrapper>
-                <NoResultIcon />
-                <Paragraph level={4} color='dark25'>
-                  No result
-                </Paragraph>
-              </EmptyWrapper>
-            </div>
-          )}
+          {!isProfilePage && !loading && !productsList?.length && <EmptyState isNoResult={true} />}
 
           <ProductsList productsList={productsList} />
           <LoadMoreButton
@@ -113,16 +98,7 @@ export const Content = ({
             <EmptyState username={username} isCreator={true} isProfile={isProfile} />
           )}
 
-          {!isProfilePage && !loading && !artworksList?.length && (
-            <div className='empty' padding-top='100px'>
-              <EmptyWrapper>
-                <NoResultIcon />
-                <Paragraph level={4} color='dark25'>
-                  No result
-                </Paragraph>
-              </EmptyWrapper>
-            </div>
-          )}
+          {!isProfilePage && !loading && !artworksList?.length && <EmptyState isNoResult={true} />}
 
           <ArtworksList artworksList={artworksList} />
           <LoadMoreButton
