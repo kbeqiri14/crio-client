@@ -2,44 +2,14 @@ import { memo, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { Spin, Upload } from 'antd';
 import imageCompression from 'browser-image-compression';
-import styled from 'styled-components';
 
 import { Col, Row, Text } from '@ui-kit';
 import { ReactComponent as RemoveIcon } from '@svgs/remove.svg';
-
-const Wrapper = styled('div')`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: 568px;
-  max-height: 232px;
-  border-radius: 8px;
-  img {
-    width: 100%;
-    height: auto;
-    max-height: 232px;
-    object-fit: cover;
-  }
-  .remove {
-    opacity: 0;
-    visibility: hidden;
-    transition: visibility 0s, opacity 0.4s linear;
-    position: absolute;
-    right: 8px;
-    top: 12px;
-    cursor: pointer;
-  }
-  :hover {
-    .remove {
-      opacity: 1;
-      visibility: visible;
-    }
-  }
-`;
+import CoverDraggerWrapper from '../styled/CoverDraggerWrapper';
 
 const { Dragger } = Upload;
 
-const EditProduct = ({ control, image, setImage }) => {
+const DraggerImage = ({ control, image, setImage }) => {
   const [compressing, setCompressing] = useState(false);
 
   const props = {
@@ -65,10 +35,10 @@ const EditProduct = ({ control, image, setImage }) => {
   };
 
   return image.src ? (
-    <Wrapper>
+    <CoverDraggerWrapper>
       <img alt='cover' src={image.src} />
       <RemoveIcon className='remove' onClick={() => setImage({})} />
-    </Wrapper>
+    </CoverDraggerWrapper>
   ) : (
     <Controller
       name='image'
@@ -96,4 +66,4 @@ const EditProduct = ({ control, image, setImage }) => {
   );
 };
 
-export default memo(EditProduct);
+export default memo(DraggerImage);
