@@ -39,7 +39,7 @@ const { TabPane } = Tabs;
 
 const tabs = {
   MARKETPLACE: 'Marketplace',
-  ARTWORK: 'Artwork',
+  ARTWORK: 'Content',
 };
 
 export const Content = ({

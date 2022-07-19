@@ -13,7 +13,7 @@ const UploadButton = () => (
           Marketplace
         </Menu.Item>
         <Menu.Item key='artwork' onClick={goTo('/upload/artwork')}>
-          Artwork
+          Content
         </Menu.Item>
       </Menu>
     }
