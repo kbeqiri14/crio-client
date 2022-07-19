@@ -10,7 +10,7 @@ import notFound from '@images/not-found.png';
 import { Col, Button, Row, Text } from '@ui-kit';
 
 const Wrapper = styled('div')`
-  .wrap {
+  &.wrap {
     display: flex;
     align-items: center;
     justify-content: center;
