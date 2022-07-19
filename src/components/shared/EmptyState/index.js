@@ -7,6 +7,7 @@ import emptyMarketplace from '@images/empty-marketplace.png';
 import emptyArtwork from '@images/empty-artwork.png';
 import upload from '@images/upload.png';
 import notFound from '@images/not-found.png';
+import noResult from '@images/no-result.png';
 import { Col, Button, Row, Text } from '@ui-kit';
 
 const Wrapper = styled('div')`
@@ -17,6 +18,9 @@ const Wrapper = styled('div')`
     height: calc(100vh - 70px);
     padding-bottom: 110px;
   }
+  &.wrap2 {
+    padding-bottom: 100px;
+  }
 `;
 
 const EmptyState = ({
@@ -24,12 +28,16 @@ const EmptyState = ({
   isCreator,
   isProfile,
   isNotFound,
+  isNoResult,
   isSubscribed,
   isMarketplace,
 }) => {
   const text = useMemo(() => {
     if (isNotFound) {
       return isMarketplace ? 'Product is not found' : 'Artwork is not found';
+    }
+    if (isNoResult) {
+      return 'No result';
     }
     if (isProfile) {
       let text = 'is not following anyone yet';
@@ -46,10 +54,13 @@ const EmptyState = ({
     return isSubscribed
       ? 'You don’t have any following yet'
       : 'Subscribe to follow creators and gain access to free digital products across Crio';
-  }, [username, isCreator, isProfile, isSubscribed, isMarketplace, isNotFound]);
+  }, [username, isCreator, isProfile, isSubscribed, isMarketplace, isNotFound, isNoResult]);
   const icon = useMemo(() => {
     if (isNotFound) {
       return notFound;
+    }
+    if (isNoResult) {
+      return noResult;
     }
     if (isCreator) {
       if (isProfile) {
@@ -58,14 +69,14 @@ const EmptyState = ({
       return upload;
     }
     return noUser;
-  }, [isCreator, isProfile, isMarketplace, isNotFound]);
+  }, [isCreator, isProfile, isMarketplace, isNotFound, isNoResult]);
   const [label, color] = useMemo(
     () => (isCreator ? ['UPLOAD', 'blue'] : ['SUBSCRIBE', 'green']),
     [isCreator],
   );
   const visible = useMemo(
-    () => !isNotFound && !isProfile && (isCreator || !isSubscribed),
-    [isCreator, isProfile, isSubscribed, isNotFound],
+    () => !isNoResult && !isNotFound && !isProfile && (isCreator || !isSubscribed),
+    [isCreator, isProfile, isSubscribed, isNotFound, isNoResult],
   );
   const onClick = useCallback(
     () => history.push(`/${isCreator ? (isMarketplace ? 'upload' : 'upload/artwork') : 'pricing'}`),
@@ -73,7 +84,7 @@ const EmptyState = ({
   );
 
   return (
-    <Wrapper className={isNotFound ? 'wrap' : ''}>
+    <Wrapper className={isNotFound ? 'wrap' : isNoResult ? 'wrap2' : ''}>
       <Row justify='center' align='middle' padding_top={100} gutter={[0, 20]}>
         <Col span={24} align='center' padding_bottom={20}>
           <img src={icon} alt='empty' />
