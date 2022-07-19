@@ -16,7 +16,7 @@ const Button = styled(antButton)`
   color: ${(props) => props.theme.colors.primary};
 
   :hover {
-    background: #202020; // Narine dark25
+    background: #202020;
   }
 
   &.ant-btn-loading::before {
