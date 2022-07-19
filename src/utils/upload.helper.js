@@ -1,14 +1,14 @@
 import uploader from '@app/configs/uploader';
+import { PRODUCTS, ARTWORKS } from '@configs/constants';
 
-const FOLDER_NAME = 'products';
+export const IMAGE_TYPE = 'image';
+export const VIDEO_TYPE = 'video';
 
-export const IMAGE_CONTENT_TYPE = 'image';
-
-export const FILE_TYPES = [IMAGE_CONTENT_TYPE];
+export const FILE_TYPES = [IMAGE_TYPE, VIDEO_TYPE];
 
 export const getContentNameByType = (type) => {
   switch (type) {
-    case IMAGE_CONTENT_TYPE:
+    case IMAGE_TYPE:
       return 'thumbnail';
     default:
       return 'general';
@@ -16,27 +16,24 @@ export const getContentNameByType = (type) => {
 };
 
 export const uploadContent = async (userId, file, type) => {
-  if (!userId || !file || !FILE_TYPES.includes(type)) {
+  const fileType = file?.type?.split('/')?.[0];
+  if (!userId || ![PRODUCTS, ARTWORKS].includes(type) || !FILE_TYPES.includes(fileType)) {
     return null;
   }
-  const contentName = getContentNameByType(type);
+  const contentName = getContentNameByType(fileType);
   const name = `${contentName}-${Date.now()}`;
-  const filename = `${userId}/${FOLDER_NAME}/${name}`;
+  const filename = `${userId}/${type}/${name}`;
 
   return uploader.signAndUpload(filename, file.type, file);
 };
 
-export const uploadItemContent = async (userId, content, type) => {
-  return uploadContent(userId, content, type);
-};
-
-export const formItemContent = async ({ userId, image }) => {
+export const formItemContent = async ({ userId, image, type }) => {
   const content = {
     image,
   };
 
   if (image) {
-    const newImage = await uploadItemContent(userId, image, IMAGE_CONTENT_TYPE);
+    const newImage = await uploadContent(userId, image, type);
     if (newImage) {
       content.image = newImage;
     }

@@ -33,6 +33,7 @@ const setState = (payload) => ({
     uploadingVisible: false,
     uploadedVideoVisible: true,
     artworkId: payload.artworkId,
+    src: payload.src,
   },
   [types.UPLOAD_COVER_IMAGE]: { coverImageVisible: true },
   [types.SET_FILE]: { file: payload.file },
@@ -67,7 +68,17 @@ const Upload = () => {
     onCompleted: goToProfile,
   });
 
-  const onCancel = useCallback(() => dispatch({ type: types.CONFIRMATION_VISIBLE }), [dispatch]);
+  const onCancel = useCallback(() => {
+    if (state.file?.type?.split('/')?.[0] === 'image') {
+      history.push(`/profile/artworks/${state?.username}`);
+    } else {
+      dispatch({ type: types.CONFIRMATION_VISIBLE });
+    }
+  }, [state?.username, state.file?.type, dispatch]);
+  const onConfirm = useCallback(
+    () => (state.file?.type?.split('/')?.[0] === 'image' ? goToProfile() : removeArtwork()),
+    [state.file?.type, goToProfile, removeArtwork],
+  );
   const onCompleted = useCallback(() => dispatch({ type: types.UPLOAD_COVER_IMAGE }), [dispatch]);
 
   return (
@@ -86,6 +97,7 @@ const Upload = () => {
         <VideoDetails
           artworkId={state.artworkId}
           file={state.file}
+          src={state.src}
           onCancel={onCancel}
           onCompleted={onCompleted}
         />
@@ -102,7 +114,7 @@ const Upload = () => {
           visible={state.confirmationVisible}
           title='Cancel the uploading?'
           loading={removingArtwork}
-          onConfirm={removeArtwork}
+          onConfirm={onConfirm}
           onCancel={hideConfirmation}
         />
       )}
