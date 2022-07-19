@@ -28,20 +28,28 @@ const DragAndDrop = ({ videoUri, file, types, dispatch, goToProfile }) => {
   });
 
   const isVideo = useMemo(() => file?.type?.split('/')?.[0] === 'video', [file?.type]);
-  // const isImage = useMemo(() => file?.type?.split('/')?.[0] === 'image', [file?.type]);
+  const isImage = useMemo(() => file?.type?.split('/')?.[0] === 'image', [file?.type]);
 
   const disabled = useMemo(
-    () => !(isVideo && !loading && data?.getUploadUrl?.uri),
-    [isVideo, loading, data?.getUploadUrl?.uri],
+    () => !((isVideo && !loading && data?.getUploadUrl?.uri) || isImage),
+    [isVideo, isImage, loading, data?.getUploadUrl?.uri],
   );
   const onCancel = useCallback(
     () => (videoUri ? dispatch({ type: types.CONFIRMATION_VISIBLE }) : goToProfile()),
     [videoUri, goToProfile, dispatch, types.CONFIRMATION_VISIBLE],
   );
-  const onContinue = useCallback(
-    () => dispatch({ type: types.UPLOADING }),
-    [types.UPLOADING, dispatch],
-  );
+  const onContinue = useCallback(async () => {
+    if (isImage) {
+      const src = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+      });
+      dispatch({ type: types.UPLOADED_VIDEO_VISIBLE, src });
+    } else {
+      dispatch({ type: types.UPLOADING });
+    }
+  }, [isImage, file, types.UPLOADING, types.UPLOADED_VIDEO_VISIBLE, dispatch]);
 
   const props = {
     name: 'file',

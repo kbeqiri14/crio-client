@@ -5,6 +5,7 @@ import useAsyncFn from '@app/hooks/useAsyncFn';
 import useRedirectToProfile from '@app/hooks/useRedirectToProfile';
 import { me } from '@app/graphql/queries/users.query';
 import { createProduct, updateProduct } from '@app/graphql/mutations/product.mutation';
+import { PRODUCTS } from '@configs/constants';
 import ActionButtons from '@shared/ActionButtons';
 import { errorToast, successToast } from '@ui-kit/Notification';
 import { formItemContent } from '@utils/upload.helper';
@@ -47,7 +48,7 @@ const ProductActionButtons = ({ state, image, disabled, handleSubmit, fillColor 
   const onPublish = useAsyncFn(async (attributes) => {
     let thumbnail = state?.thumbnail && !image.src ? 'remove-thumbnail' : undefined;
     if (attributes.image?.file) {
-      const content = await formItemContent({ userId, image: image.file });
+      const content = await formItemContent({ userId, image: image.file, type: PRODUCTS });
       thumbnail = content?.image?.split('/')?.slice(-1)[0].slice('thumbnail-'.length);
     }
 
