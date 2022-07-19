@@ -75,8 +75,8 @@ const DragAndDrop = ({ videoUri, file, types, dispatch, goToProfile }) => {
       <Col span={24}>
         <Title level={1}>Upload your artwork</Title>
       </Col>
-      <Col span={12}>
-        <Dragger {...props}>
+      <Col span={24} align='center' className='uploadCol'>
+        <Dragger {...props} className='dragger'>
           <Spinner spinning={loading} color='white'>
             <Row justify='center' align='center' gutter={[0, 25]} className='drag-and-drop'>
               <Col span={24}>
@@ -86,7 +86,7 @@ const DragAndDrop = ({ videoUri, file, types, dispatch, goToProfile }) => {
                 <Text level={4}>Drag and drop a video</Text>
               </Col>
               {file?.name && (
-                <Col span={24}>
+                <Col span={24} className='textCol'>
                   <Text level={4}>{file.name}</Text>
                 </Col>
               )}
