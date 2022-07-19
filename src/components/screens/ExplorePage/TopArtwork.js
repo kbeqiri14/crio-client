@@ -59,7 +59,7 @@ const TopArtwork = ({ username, thumbnail }) => {
         </Col>
         <Col span={24}>
           <Text level={4} max_width={555}>
-            Shop thousands of products and see the best artwork from the entire community of
+            Shop thousands of products and see the best content from the entire community of
             creators on Crio
           </Text>
         </Col>
