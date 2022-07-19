@@ -18,7 +18,7 @@ const Wrapper = styled('div')`
     height: calc(100vh - 70px);
     padding-bottom: 110px;
   }
-  &.wrap2 {
+  &.second-wrap {
     padding-bottom: 100px;
   }
 `;
@@ -84,7 +84,7 @@ const EmptyState = ({
   );
 
   return (
-    <Wrapper className={isNotFound ? 'wrap' : isNoResult ? 'wrap2' : ''}>
+    <Wrapper className={isNotFound ? 'wrap' : isNoResult ? 'second-wrap' : ''}>
       <Row justify='center' align='middle' padding_top={100} gutter={[0, 20]}>
         <Col span={24} align='center' padding_bottom={20}>
           <img src={icon} alt='empty' />
