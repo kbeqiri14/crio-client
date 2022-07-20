@@ -69,7 +69,7 @@ export const MoreProductsSection = ({ videoInfo }) => {
                 </Col>
               </Row>
             </Col>
-            <Col className='prodList'>
+            <Col>
               <ProductsList productsList={data?.getMoreProducts.userProducts} />
             </Col>
           </Row>
