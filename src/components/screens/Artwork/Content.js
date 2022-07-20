@@ -30,6 +30,12 @@ const Wrapper = styled('div')`
       }
     }
   }
+
+  @media screen and (max-width: 1030px) {
+    .flex-dir {
+      flex-direction: column-reverse;
+    }
+  }
 `;
 
 const ImageWrapper = styled('div')`
@@ -135,7 +141,7 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
           </Col>
         )}
         <Col span={24}>
-          <Row justify='space-between' gutter={[0, 30]}>
+          <Row className='flex-dir' justify='space-between' gutter={[0, 30]}>
             <Col max_width={videoInfo.isProduct ? 722 : undefined}>
               <Text level={4} color='dark25'>
                 <div
