@@ -11,7 +11,7 @@ import { Col, Row } from '@ui-kit';
 import defaultCover from '@images/product.png';
 import Content from '../Artwork/Content';
 import MoreProductsSection from './MoreProductsSection';
-import EmptyState from '../../shared/EmptyState';
+import EmptyState from '@shared/EmptyState';
 
 const Wrapper = styled('div')`
   display: flex;

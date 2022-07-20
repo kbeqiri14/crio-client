@@ -10,7 +10,7 @@ import { getUser } from '@app/graphql/queries/users.query';
 import { Layout } from '@ui-kit';
 import ProfileSider from '@root/src/components/screens/Profile/Sider';
 import ProfileContent from '@root/src/components/screens/Profile/Content';
-import EmptyState from '../../shared/EmptyState';
+import EmptyState from '@shared/EmptyState';
 
 const { Sider, Content } = Layout;
 
