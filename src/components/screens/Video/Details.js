@@ -49,9 +49,9 @@ const StyledVideoDetails = styled('div')`
       border-radius: 16px;
     }
   }
-`;
-const Wrapper = styled('div')`
-  margin: 0 15px;
+  .access-section {
+    margin: 0 15px;
+  }
 `;
 
 const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
@@ -136,22 +136,20 @@ const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
             )}
           />
         </Col>
-        <Wrapper>
-          <Col span={24}>
-            <Text level={3}>Accessibility</Text>
-            <br />
-            <Controller
-              name='accessibility'
-              control={control}
-              render={({ field }) => (
-                <Radio.Group defaultValue={state?.accessibility || 'subscriber_only'} {...field}>
-                  <Radio value='subscriber_only'>Subscriber Only</Radio>
-                  <Radio value='everyone'>Everyone</Radio>
-                </Radio.Group>
-              )}
-            />
-          </Col>
-        </Wrapper>
+        <Col className='access-section' span={24}>
+          <Text level={3}>Accessibility</Text>
+          <br />
+          <Controller
+            name='accessibility'
+            control={control}
+            render={({ field }) => (
+              <Radio.Group defaultValue={state?.accessibility || 'subscriber_only'} {...field}>
+                <Radio value='subscriber_only'>Subscriber Only</Radio>
+                <Radio value='everyone'>Everyone</Radio>
+              </Radio.Group>
+            )}
+          />
+        </Col>
       </Row>
       <div className='player'>
         {isImage ? (
