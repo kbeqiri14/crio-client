@@ -7,12 +7,11 @@ import styled from 'styled-components';
 import { BUCKET_NAME, COGNITO_REGION } from '@app/configs/environment';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { getProduct } from '@app/graphql/queries/products.query';
-import NotFound from '@shared/NotFound';
-import { ReactComponent as NotFoundIcon } from '@svgs/not-found.svg';
 import { Col, Row } from '@ui-kit';
 import defaultCover from '@images/product.png';
 import Content from '../Artwork/Content';
 import MoreProductsSection from './MoreProductsSection';
+import EmptyState from '@shared/EmptyState';
 
 const Wrapper = styled('div')`
   display: flex;
@@ -79,7 +78,7 @@ export const Product = () => {
     );
   }
   if (!Object.keys(product).length) {
-    return <NotFound text='Product is not found' icon={<NotFoundIcon />} />;
+    return <EmptyState isNotFound={true} isMarketplace={true} />;
   }
   return (
     <>

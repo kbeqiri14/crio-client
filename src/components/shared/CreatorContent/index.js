@@ -3,12 +3,11 @@ import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import history from '@configs/history';
-import { Tabs, Paragraph } from '@ui-kit';
+import { Tabs } from '@ui-kit';
 import EmptyState from '@shared/EmptyState';
 import LoadMoreButton from './LoadMoreButton';
 import ArtworksList from './Artwork/ArtworksList';
 import ProductsList from './Product/ProductsList';
-import { ReactComponent as NoResultIcon } from '@svgs/no-result.svg';
 
 const Wrapper = styled('div')`
   max-width: 1438px;
@@ -29,12 +28,7 @@ const Wrapper = styled('div')`
     max-width: 376px;
   }
 `;
-const EmptyWrapper = styled('div')`
-  padding: 100px 0;
-  svg {
-    margin-bottom: 40px;
-  }
-`;
+
 const { TabPane } = Tabs;
 
 const tabs = {
@@ -76,31 +70,20 @@ export const Content = ({
   // if ((!loading || !initialPolling) && !works?.length) {
   //   return <EmptyState username={username} isCreator={true} isProfile={isProfile} />;
   // }
+  const props = isProfilePage
+    ? {
+        username,
+        isProfile,
+        isCreator: true,
+        isMarketplace: true,
+      }
+    : { isNoResult: true };
 
   return (
     <Wrapper>
       <Tabs activeKey={activeKey} onTabClick={onTabClick}>
         <TabPane key={tabs.MARKETPLACE} tab={tabs.MARKETPLACE}>
-          {isProfilePage && !productsCount && !productsList?.length && (
-            <EmptyState
-              username={username}
-              isCreator={true}
-              isProfile={isProfile}
-              isMarketplace={true}
-            />
-          )}
-
-          {!isProfilePage && !loading && !productsList?.length && (
-            <div className='empty'>
-              <EmptyWrapper>
-                <NoResultIcon />
-                <Paragraph level={4} color='dark25'>
-                  No result
-                </Paragraph>
-              </EmptyWrapper>
-            </div>
-          )}
-
+          {!productsCount && !productsList?.length && <EmptyState {...props} />}
           <ProductsList productsList={productsList} />
           <LoadMoreButton
             visible={visibleLoadMoreProducts}
@@ -109,21 +92,7 @@ export const Content = ({
           />
         </TabPane>
         <TabPane key={tabs.ARTWORK} tab={tabs.ARTWORK}>
-          {isProfilePage && !artworksCount && !artworksList?.length && (
-            <EmptyState username={username} isCreator={true} isProfile={isProfile} />
-          )}
-
-          {!isProfilePage && !loading && !artworksList?.length && (
-            <div className='empty' padding-top='100px'>
-              <EmptyWrapper>
-                <NoResultIcon />
-                <Paragraph level={4} color='dark25'>
-                  No result
-                </Paragraph>
-              </EmptyWrapper>
-            </div>
-          )}
-
+          {!artworksCount && !artworksList?.length && <EmptyState {...props} />}
           <ArtworksList artworksList={artworksList} />
           <LoadMoreButton
             visible={visibleLoadMoreArtworks}
