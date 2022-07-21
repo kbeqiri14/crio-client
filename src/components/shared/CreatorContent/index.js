@@ -70,22 +70,20 @@ export const Content = ({
   // if ((!loading || !initialPolling) && !works?.length) {
   //   return <EmptyState username={username} isCreator={true} isProfile={isProfile} />;
   // }
+  const props = isProfilePage
+    ? {
+        username,
+        isProfile,
+        isCreator: true,
+        isMarketplace: true,
+      }
+    : { isNoResult: true };
 
   return (
     <Wrapper>
       <Tabs activeKey={activeKey} onTabClick={onTabClick}>
         <TabPane key={tabs.MARKETPLACE} tab={tabs.MARKETPLACE}>
-          {isProfilePage && !productsCount && !productsList?.length && (
-            <EmptyState
-              username={username}
-              isCreator={true}
-              isProfile={isProfile}
-              isMarketplace={true}
-            />
-          )}
-
-          {!isProfilePage && !loading && !productsList?.length && <EmptyState isNoResult={true} />}
-
+          {!productsCount && !productsList?.length && <EmptyState {...props} />}
           <ProductsList productsList={productsList} />
           <LoadMoreButton
             visible={visibleLoadMoreProducts}
@@ -94,12 +92,7 @@ export const Content = ({
           />
         </TabPane>
         <TabPane key={tabs.ARTWORK} tab={tabs.ARTWORK}>
-          {isProfilePage && !artworksCount && !artworksList?.length && (
-            <EmptyState username={username} isCreator={true} isProfile={isProfile} />
-          )}
-
-          {!isProfilePage && !loading && !artworksList?.length && <EmptyState isNoResult={true} />}
-
+          {!artworksCount && !artworksList?.length && <EmptyState {...props} />}
           <ArtworksList artworksList={artworksList} />
           <LoadMoreButton
             visible={visibleLoadMoreArtworks}
