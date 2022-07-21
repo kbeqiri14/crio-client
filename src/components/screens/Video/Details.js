@@ -49,6 +49,9 @@ const StyledVideoDetails = styled('div')`
       border-radius: 16px;
     }
   }
+  .access-section {
+    margin: 0 15px;
+  }
 `;
 
 const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
@@ -133,7 +136,7 @@ const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
             )}
           />
         </Col>
-        <Col span={24}>
+        <Col className='access-section' span={24}>
           <Text level={3}>Accessibility</Text>
           <br />
           <Controller
