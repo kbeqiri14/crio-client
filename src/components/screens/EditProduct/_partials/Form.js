@@ -24,13 +24,13 @@ const Form = ({
   const { data } = useQuery(getProductTypes);
 
   return (
-    <Row align='center' gutter={[0, 8]}>
-      <Col span={22} offset={1} align='start'>
+    <Row align='center' justify='center' gutter={[0, 8]}>
+      <Col span={22} align='start'>
         <Text level={3} padding_bottom={8}>
           Title*
         </Text>
       </Col>
-      <Col span={22} offset={1} padding_bottom={32}>
+      <Col span={22} padding_bottom={32}>
         <Controller
           name='title'
           control={control}
@@ -40,10 +40,10 @@ const Form = ({
           )}
         />
       </Col>
-      <Col span={22} offset={1} align='start'>
+      <Col span={22} align='start'>
         <Text level={3}>Description</Text>
       </Col>
-      <Col span={22} offset={1} padding_bottom={32}>
+      <Col span={22} padding_bottom={32}>
         <Controller
           name='desc'
           control={control}
@@ -59,17 +59,12 @@ const Form = ({
           )}
         />
       </Col>
-      <Col span={22} offset={1} align='start'>
+      <Col span={22} align='start'>
         <Text level={3} disabled={isFree}>
           Price*
         </Text>
       </Col>
-      <Col
-        xs={{ span: 19, offset: 1 }}
-        md={{ span: 18, offset: 1 }}
-        padding_bottom={32}
-        className='price'
-      >
+      <Col xs={19} md={18} padding_bottom={32} className='price'>
         <Controller
           name='price'
           control={control}
@@ -129,11 +124,11 @@ const Form = ({
           )}
         />
       </Col>
-      <Col span={22} offset={1} align='start'>
+      <Col span={22} align='start'>
         <Text level={3}>Thumbnail</Text>
       </Col>
       {isProduct && (
-        <Col span={22} offset={1} padding_bottom={32}>
+        <Col span={22} padding_bottom={32}>
           <Controller
             name='desc'
             control={control}
@@ -154,15 +149,15 @@ const Form = ({
         </Col>
       )}
 
-      <Col span={22} offset={1} padding_bottom={32}>
+      <Col span={22} padding_bottom={32}>
         <DraggerImage isProduct={isProduct} control={control} image={image} setImage={setImage} />
       </Col>
-      <Col span={22} offset={1} align='start'>
+      <Col span={22} align='start'>
         <Text level={3} disabled={isFree}>
           Who can see this?
         </Text>
       </Col>
-      <Col span={22} offset={1} padding_bottom={32} align='start'>
+      <Col span={22} padding_bottom={32} align='start'>
         <Controller
           name='accessibility'
           control={control}
@@ -179,16 +174,16 @@ const Form = ({
           )}
         />
       </Col>
-      <Col span={22} offset={1} align='start' padding_bottom={32}>
+      <Col span={22} align='start' padding_bottom={32}>
         <Switch checked={limitVisible} onChange={setLimitation} />
         <Text level={3}> Limit your sales?</Text>
       </Col>
       {limitVisible && (
         <>
-          <Col span={22} offset={1} align='start'>
+          <Col span={22} align='start'>
             <Text level={3}>Maximum numbers of purchases</Text>
           </Col>
-          <Col span={22} offset={1} padding_bottom={32}>
+          <Col span={22} padding_bottom={32}>
             <Controller
               name='limit'
               control={control}
@@ -200,7 +195,7 @@ const Form = ({
           </Col>
         </>
       )}
-      <Col span={22} offset={1}>
+      <Col span={22}>
         <ActionButtons
           state={state}
           image={image}

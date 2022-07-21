@@ -9,7 +9,7 @@ const FormWrapper = styled('div')`
   }
   .ant-tabs-nav {
     width: 568px;
-    margin-left: 40px;
+    margin-left: 24px;
   }
   .ant-upload {
     .ant-upload-btn {
@@ -35,7 +35,7 @@ const FormWrapper = styled('div')`
     flex-direction: column;
     position: absolute;
     top: 10px;
-    right: 10px;
+    right: 24px;
     .ant-tooltip {
       top: 0 !important;
     }
