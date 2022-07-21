@@ -2,12 +2,24 @@ import { memo, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { Spin, Upload } from 'antd';
 import imageCompression from 'browser-image-compression';
+import styled from 'styled-components';
 
 import { Col, Row, Text } from '@ui-kit';
 import { ReactComponent as RemoveIcon } from '@svgs/remove.svg';
 import CoverDraggerWrapper from '../styled/CoverDraggerWrapper';
 
 const { Dragger } = Upload;
+
+const Dot = styled.span`
+  background-color: ${(props) => props.theme.colors.dark25};
+  border-radius: 50%;
+  display: inline-block;
+  height: 4px;
+  left: -12px;
+  position: relative;
+  top: -4px;
+  width: 4px;
+`;
 
 const DraggerImage = ({ control, image, setImage }) => {
   const [compressing, setCompressing] = useState(false);
@@ -55,7 +67,8 @@ const DraggerImage = ({ control, image, setImage }) => {
               </Col>
               <Col span={24}>
                 <Text level={4} color='dark25'>
-                  .HI-Res images (png, jpg, gif)
+                  <Dot />
+                  HI-Res images (png, jpg, gif)
                 </Text>
               </Col>
             </Row>
