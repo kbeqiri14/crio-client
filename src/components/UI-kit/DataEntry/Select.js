@@ -18,7 +18,9 @@ const Select = styled(
   background: #202020 !important;
   border-radius: 4px !important;
   height: 50px !important;
-
+  .ant-select-selection-item {
+    color: white;
+  }
   .ant-select-arrow {
     color: #878c94;
   }

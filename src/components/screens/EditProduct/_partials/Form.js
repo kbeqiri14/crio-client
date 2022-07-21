@@ -141,7 +141,6 @@ const Form = ({
             render={({ field }) => (
               <Select
                 {...field}
-                defaultOpen
                 bordered={false}
                 size='large'
                 placeholder='Select the type of your product'
