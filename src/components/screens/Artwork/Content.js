@@ -30,10 +30,18 @@ const Wrapper = styled('div')`
       }
     }
   }
-
-  @media screen and (max-width: 1030px) {
+  .content {
+    margin-top: -15px;
+  }
+  .text {
+    margin-top: -40px;
+  }
+  @media screen and (max-width: 1050px) {
     .flex-dir {
       flex-direction: column-reverse;
+    }
+    .widget {
+      width: 350px;
     }
   }
 `;
@@ -140,9 +148,9 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
             )}
           </Col>
         )}
-        <Col span={24}>
+        <Col className='content' span={24}>
           <Row className='flex-dir' justify='space-between' gutter={[0, 30]}>
-            <Col max_width={videoInfo.isProduct ? 722 : undefined}>
+            <Col className='text' max_width={videoInfo.isProduct ? 722 : undefined}>
               <Text level={4} color='dark25'>
                 <div
                   dangerouslySetInnerHTML={{ __html: urlify(videoInfo.description) }}
