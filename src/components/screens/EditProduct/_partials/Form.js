@@ -3,25 +3,9 @@ import { Controller } from 'react-hook-form';
 import { Checkbox, Col, Input, Radio, Row, Switch, Text, Tooltip, Select } from '@ui-kit';
 import DraggerImage from './DraggerImage';
 import ActionButtons from './ActionButtons';
+import { useQuery } from '@apollo/client';
 
-const selectOptions = [
-  {
-    value: 'eBooks',
-    key: '1',
-  },
-  {
-    value: 'artworks',
-    key: '2',
-  },
-  {
-    value: 'photos',
-    key: '3',
-  },
-  {
-    value: 'game assets',
-    key: '4',
-  },
-];
+import { getProductTypes } from '@app/graphql/queries/products.query';
 
 const Form = ({
   isProduct,
@@ -37,14 +21,16 @@ const Form = ({
   setLimitation,
   handleSubmit,
 }) => {
+  const { data } = useQuery(getProductTypes);
+
   return (
     <Row align='center' gutter={[0, 8]}>
-      <Col span={24} align='start'>
+      <Col span={22} offset={1} align='start'>
         <Text level={3} padding_bottom={8}>
           Title*
         </Text>
       </Col>
-      <Col span={24} padding_bottom={32}>
+      <Col span={22} offset={1} padding_bottom={32}>
         <Controller
           name='title'
           control={control}
@@ -54,10 +40,10 @@ const Form = ({
           )}
         />
       </Col>
-      <Col span={24} align='start'>
+      <Col span={22} offset={1} align='start'>
         <Text level={3}>Description</Text>
       </Col>
-      <Col span={24} padding_bottom={32}>
+      <Col span={22} offset={1} padding_bottom={32}>
         <Controller
           name='desc'
           control={control}
@@ -73,12 +59,17 @@ const Form = ({
           )}
         />
       </Col>
-      <Col span={24} align='start'>
+      <Col span={22} offset={1} align='start'>
         <Text level={3} disabled={isFree}>
           Price*
         </Text>
       </Col>
-      <Col xs={19} md={20} padding_bottom={32} className='price'>
+      <Col
+        xs={{ span: 19, offset: 1 }}
+        md={{ span: 18, offset: 1 }}
+        padding_bottom={32}
+        className='price'
+      >
         <Controller
           name='price'
           control={control}
@@ -138,11 +129,11 @@ const Form = ({
           )}
         />
       </Col>
-      <Col span={24} align='start'>
+      <Col span={22} offset={1} align='start'>
         <Text level={3}>Thumbnail</Text>
       </Col>
       {isProduct && (
-        <Col span={24} padding_bottom={32}>
+        <Col span={22} offset={1} padding_bottom={32}>
           <Controller
             name='desc'
             control={control}
@@ -150,25 +141,29 @@ const Form = ({
             render={({ field }) => (
               <Select
                 {...field}
+                defaultOpen
                 bordered={false}
                 size='large'
                 placeholder='Select the type of your product'
-                options={selectOptions.map((item) => ({ label: item.value, value: item.key }))}
+                options={data?.getProductTypes.map((item) => ({
+                  label: item.name,
+                  value: item.id,
+                }))}
               />
             )}
           />
         </Col>
       )}
 
-      <Col span={24} padding_bottom={32}>
+      <Col span={22} offset={1} padding_bottom={32}>
         <DraggerImage isProduct={isProduct} control={control} image={image} setImage={setImage} />
       </Col>
-      <Col span={24} align='start'>
+      <Col span={22} offset={1} align='start'>
         <Text level={3} disabled={isFree}>
           Who can see this?
         </Text>
       </Col>
-      <Col span={24} padding_bottom={32} align='start'>
+      <Col span={22} offset={1} padding_bottom={32} align='start'>
         <Controller
           name='accessibility'
           control={control}
@@ -185,16 +180,16 @@ const Form = ({
           )}
         />
       </Col>
-      <Col span={24} align='start' padding_bottom={32}>
+      <Col span={22} offset={1} align='start' padding_bottom={32}>
         <Switch checked={limitVisible} onChange={setLimitation} />
         <Text level={3}> Limit your sales?</Text>
       </Col>
       {limitVisible && (
         <>
-          <Col span={24} align='start'>
+          <Col span={22} offset={1} align='start'>
             <Text level={3}>Maximum numbers of purchases</Text>
           </Col>
-          <Col span={24} padding_bottom={32}>
+          <Col span={22} offset={1} padding_bottom={32}>
             <Controller
               name='limit'
               control={control}
@@ -206,7 +201,7 @@ const Form = ({
           </Col>
         </>
       )}
-      <Col span={24}>
+      <Col span={22} offset={1}>
         <ActionButtons
           state={state}
           image={image}

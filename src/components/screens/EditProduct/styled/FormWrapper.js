@@ -5,7 +5,7 @@ const FormWrapper = styled('div')`
   justify-content: center;
   padding: 40px 20px;
   > div {
-    max-width: 568px;
+    max-width: 620px;
   }
   .ant-upload {
     .ant-upload-btn {
