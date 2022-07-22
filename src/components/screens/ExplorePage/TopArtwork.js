@@ -79,7 +79,7 @@ const TopArtwork = ({ username, thumbnail }) => {
         )}
       </Row>
       <Text level={3} className='absolute-bottom'>
-        Artwork by {username}
+        by {username}
       </Text>
       <img alt='artwork' height={380} width='100%' className='fit-cover' src={thumbnail} />
     </Wrapper>
