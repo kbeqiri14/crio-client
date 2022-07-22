@@ -91,7 +91,7 @@ const Artwork = ({
 }) => {
   const { user } = useLoggedInUser();
   const { pathname } = useLocation();
-  const { setVideoInfo } = usePresentation();
+  const { setInfo } = usePresentation();
   const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
 
   const showActions = useMemo(() => {
@@ -112,7 +112,7 @@ const Artwork = ({
       return;
     }
     window.history.replaceState('', '', `/artwork/${artworkId}`);
-    setVideoInfo({
+    setInfo({
       title,
       description,
       id: videoUri?.substring(videoUri?.lastIndexOf('/') + 1),
@@ -136,7 +136,7 @@ const Artwork = ({
     description,
     videoUri,
     pathname,
-    setVideoInfo,
+    setInfo,
   ]);
 
   return (

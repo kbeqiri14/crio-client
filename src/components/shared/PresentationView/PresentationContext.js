@@ -5,11 +5,11 @@ export const PresentationContext = createContext();
 export const usePresentation = () => useContext(PresentationContext);
 
 export const PresentationProvider = ({ children }) => {
-  const [videoInfo, setVideoInfo] = useState({});
-  const isVisible = useMemo(() => !!Object.keys(videoInfo).length, [videoInfo]);
+  const [info, setInfo] = useState({});
+  const isVisible = useMemo(() => !!Object.keys(info).length, [info]);
 
   return (
-    <PresentationContext.Provider value={{ isVisible, videoInfo, setVideoInfo }}>
+    <PresentationContext.Provider value={{ isVisible, info, setInfo }}>
       {children}
     </PresentationContext.Provider>
   );

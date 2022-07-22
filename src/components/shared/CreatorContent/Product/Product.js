@@ -32,7 +32,7 @@ const Product = ({
   const [isHovering, setIsHovering] = useState(false);
   const { user } = useLoggedInUser();
   const { pathname } = useLocation();
-  const { setVideoInfo } = usePresentation();
+  const { setInfo } = usePresentation();
   const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
 
   const handleMouseOver = useCallback(() => setIsHovering(true), []);
@@ -95,7 +95,7 @@ const Product = ({
     return name;
   }, [thumbnail, large]);
 
-  const hide = useCallback(() => setVideoInfo({}), [setVideoInfo]);
+  const hide = useCallback(() => setInfo({}), [setInfo]);
 
   const showProduct = useCallback(() => {
     if (pathname.includes('/product/')) {
@@ -103,7 +103,7 @@ const Product = ({
       return;
     }
     window.history.replaceState('', '', `/product/${productId}`);
-    setVideoInfo({
+    setInfo({
       userId,
       providerType,
       providerUserId,
@@ -134,7 +134,7 @@ const Product = ({
     src,
     pathname,
     productId,
-    setVideoInfo,
+    setInfo,
   ]);
 
   return (

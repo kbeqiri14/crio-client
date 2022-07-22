@@ -82,8 +82,8 @@ export const Product = () => {
   }
   return (
     <>
-      <Content videoInfo={product} isLocked={isLocked} />
-      <MoreProductsSection videoInfo={product} />
+      <Content info={product} isLocked={isLocked} />
+      <MoreProductsSection info={product} />
     </>
   );
 };

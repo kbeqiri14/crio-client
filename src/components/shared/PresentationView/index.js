@@ -10,11 +10,11 @@ import './styles.less';
 
 export const PresentationView = () => {
   const { pathname } = useLocation();
-  const { isVisible, videoInfo, setVideoInfo } = usePresentation();
+  const { isVisible, info, setInfo } = usePresentation();
   const hide = useCallback(() => {
-    setVideoInfo({});
+    setInfo({});
     window.history.replaceState('', '', pathname);
-  }, [pathname, setVideoInfo]);
+  }, [pathname, setInfo]);
 
   useEffect(() => {
     document.querySelector('.video-view-modal__wrapper')?.scrollTo({
@@ -22,7 +22,7 @@ export const PresentationView = () => {
       left: 0,
       behavior: 'auto',
     });
-  }, [videoInfo]);
+  }, [info]);
 
   return (
     <Modal
@@ -36,8 +36,8 @@ export const PresentationView = () => {
       wrapClassName='video-view-modal__wrapper'
       className='video-view-modal'
     >
-      <Content videoInfo={videoInfo} videoUri={videoInfo.id} />
-      <MoreProductsSection videoInfo={videoInfo} />
+      <Content info={info} videoUri={info.id} />
+      <MoreProductsSection info={info} />
     </Modal>
   );
 };

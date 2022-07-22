@@ -65,27 +65,23 @@ const ImageWrapper = styled('div')`
   }
 `;
 
-export const Content = ({ videoInfo, videoUri, isLocked }) => {
-  const avatarUrl = useAvatarUrl(
-    videoInfo.providerType,
-    videoInfo.providerUserId,
-    videoInfo.avatar,
-  );
-  const { setVideoInfo } = usePresentation();
+export const Content = ({ info, videoUri, isLocked }) => {
+  const avatarUrl = useAvatarUrl(info.providerType, info.providerUserId, info.avatar);
+  const { setInfo } = usePresentation();
 
-  const hide = useCallback(() => setVideoInfo({}), [setVideoInfo]);
+  const hide = useCallback(() => setInfo({}), [setInfo]);
   return (
     <Wrapper>
       <Row justify='center' gutter={[0, 20]}>
         <Col span={24}>
           <Row gutter={[0, 12]}>
             <Col span={24}>
-              <Title level={1}>{videoInfo.title}</Title>
+              <Title level={1}>{info.title}</Title>
             </Col>
             <Col span={24}>
               <Row align='middle'>
                 <Col>
-                  {videoInfo.providerUserId && (
+                  {info.providerUserId && (
                     <img
                       src={avatarUrl}
                       height='33'
@@ -97,7 +93,7 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
                 </Col>
                 <Col margin_left={20}>
                   <Text level={4} color='primary' onClick={hide}>
-                    <Link to={`/profile/${videoInfo.username}`}>{videoInfo.username}</Link>
+                    <Link to={`/profile/${info.username}`}>{info.username}</Link>
                   </Text>
                 </Col>
               </Row>
@@ -107,48 +103,42 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
         {isLocked ? (
           <Col span={24}>
             <div className='lock'>
-              <LockState
-                userId={videoInfo.userId}
-                accessibility={videoInfo.accessibility}
-                size='lg'
-              />
+              <LockState userId={info.userId} accessibility={info.accessibility} size='lg' />
               <ImageWrapper>
                 <img
                   src={
-                    videoInfo.isProduct || videoInfo.isImage
-                      ? `https://${BUCKET_NAME}.s3.${COGNITO_REGION}.amazonaws.com/${
-                          videoInfo.userId
-                        }/${videoInfo.isProduct ? PRODUCTS : ARTWORKS}/${
-                          videoInfo.isProduct ? videoInfo.thumbnail : videoInfo.videoUri
-                        }`
-                      : videoInfo.thumbnail
+                    info.isProduct || info.isImage
+                      ? `https://${BUCKET_NAME}.s3.${COGNITO_REGION}.amazonaws.com/${info.userId}/${
+                          info.isProduct ? PRODUCTS : ARTWORKS
+                        }/${info.isProduct ? info.thumbnail : info.videoUri}`
+                      : info.thumbnail
                   }
                   alt='artwork'
-                  className={videoInfo.videoUri?.startsWith('/static/media/') ? 'default' : ''}
+                  className={info.videoUri?.startsWith('/static/media/') ? 'default' : ''}
                 />
               </ImageWrapper>
             </div>
           </Col>
         ) : (
           <Col span={24}>
-            {videoInfo.isProduct || videoInfo.isImage ? (
+            {info.isProduct || info.isImage ? (
               <ImageWrapper>
                 <img
                   src={
-                    videoInfo.isProduct
-                      ? videoInfo.thumbnail
-                      : `https://${BUCKET_NAME}.s3.${COGNITO_REGION}.amazonaws.com/${
-                          videoInfo.userId
-                        }/${videoInfo.isProduct ? PRODUCTS : ARTWORKS}/${videoInfo.videoUri}`
+                    info.isProduct
+                      ? info.thumbnail
+                      : `https://${BUCKET_NAME}.s3.${COGNITO_REGION}.amazonaws.com/${info.userId}/${
+                          info.isProduct ? PRODUCTS : ARTWORKS
+                        }/${info.videoUri}`
                   }
                   alt='product'
-                  className={videoInfo.thumbnail?.startsWith('/static/media/') ? 'default' : ''}
+                  className={info.thumbnail?.startsWith('/static/media/') ? 'default' : ''}
                 />
               </ImageWrapper>
             ) : (
               <div className='video-view__player embed-responsive aspect-ratio-16/9'>
                 <iframe
-                  title={videoInfo.title || 'Crio video player'}
+                  title={info.title || 'Crio video player'}
                   src={`https://player.vimeo.com/video/${videoUri}?h=dc77330a55&color=ffffff&title=0&byline=0&portrait=0`}
                   frameBorder='0'
                   allow='autoplay; fullscreen; picture-in-picture'
@@ -160,23 +150,23 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
         )}
         <Col span={24}>
           <Row className='flex-dir' justify='space-between'>
-            <Col max_width={videoInfo.isProduct ? 722 : undefined}>
+            <Col max_width={info.isProduct ? 722 : undefined}>
               <Text level={4} color='dark25'>
                 <div
-                  dangerouslySetInnerHTML={{ __html: urlify(videoInfo.description) }}
+                  dangerouslySetInnerHTML={{ __html: urlify(info.description) }}
                   style={{ whiteSpace: 'pre-line' }}
                 />
               </Text>
             </Col>
-            {videoInfo.isProduct && (
+            {info.isProduct && (
               <Col>
                 <BuyWidget
-                  userId={videoInfo.userId}
-                  username={videoInfo.username}
-                  productId={videoInfo.productId}
-                  price={videoInfo.price}
-                  limit={videoInfo.limit}
-                  accessibility={videoInfo.accessibility}
+                  userId={info.userId}
+                  username={info.username}
+                  productId={info.productId}
+                  price={info.price}
+                  limit={info.limit}
+                  accessibility={info.accessibility}
                 />
               </Col>
             )}

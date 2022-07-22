@@ -79,8 +79,8 @@ export const Artwork = () => {
   }
   return (
     <>
-      <Content videoInfo={artwork} videoUri={videoUri} isLocked={isLocked} />
-      <MoreProductsSection videoInfo={artwork} />
+      <Content info={artwork} videoUri={videoUri} isLocked={isLocked} />
+      <MoreProductsSection info={artwork} />
     </>
   );
 };
