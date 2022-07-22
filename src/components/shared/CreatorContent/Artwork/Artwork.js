@@ -3,10 +3,12 @@ import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import history from '@configs/history';
+import { ARTWORKS } from '@configs/constants';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 // import videoIcon from '@images/video-icon.png';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
+import { getThumbnail } from '@utils/helpers';
 import { Col, Row, Text } from '@ui-kit';
 import Actions from '@screens/Video/Actions';
 import LockState from '../LockState';
@@ -85,6 +87,7 @@ const Artwork = ({
   title,
   description,
   content,
+  thumbnail,
   accessibility,
   status,
   src,
@@ -93,6 +96,10 @@ const Artwork = ({
   const { pathname } = useLocation();
   const { setInfo } = usePresentation();
   const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
+  const source = useMemo(
+    () => (content.startsWith('/videos/') ? thumbnail : getThumbnail(ARTWORKS, userId, content)),
+    [userId, content, thumbnail],
+  );
 
   const showActions = useMemo(() => {
     const username = pathname.split('/').slice(-1)[0];
@@ -160,7 +167,7 @@ const Artwork = ({
         <LockState userId={userId} accessibility={accessibility} status={status} />
         {/* <div className='video'> */}
         {/* <img src={videoIcon} alt='video' className='video-icon' /> */}
-        <img src={src} alt='artwork' width={330} height={330} onClick={showArtwork} />
+        <img src={source} alt='artwork' width={330} height={330} onClick={showArtwork} />
         {/* </div> */}
       </Wrapper>
       <Link to={`/profile/${username}`}>
