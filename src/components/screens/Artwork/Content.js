@@ -2,6 +2,8 @@ import { memo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { PRODUCTS, ARTWORKS } from '@configs/constants';
+import { BUCKET_NAME, COGNITO_REGION } from '@app/configs/environment';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { urlify } from '@utils/helpers';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
@@ -112,19 +114,33 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
               />
               <ImageWrapper>
                 <img
-                  src={videoInfo.isProduct ? videoInfo.thumbnail : videoInfo.thumbnailUri}
+                  src={
+                    videoInfo.isProduct || videoInfo.isImage
+                      ? `https://${BUCKET_NAME}.s3.${COGNITO_REGION}.amazonaws.com/${
+                          videoInfo.userId
+                        }/${videoInfo.isProduct ? PRODUCTS : ARTWORKS}/${
+                          videoInfo.isProduct ? videoInfo.thumbnail : videoInfo.videoUri
+                        }`
+                      : videoInfo.thumbnail
+                  }
                   alt='artwork'
-                  className={videoInfo.thumbnail?.startsWith('/static/media/') ? 'default' : ''}
+                  className={videoInfo.videoUri?.startsWith('/static/media/') ? 'default' : ''}
                 />
               </ImageWrapper>
             </div>
           </Col>
         ) : (
           <Col span={24}>
-            {videoInfo.isProduct ? (
+            {videoInfo.isProduct || videoInfo.isImage ? (
               <ImageWrapper>
                 <img
-                  src={videoInfo.thumbnail}
+                  src={
+                    videoInfo.isProduct
+                      ? videoInfo.thumbnail
+                      : `https://${BUCKET_NAME}.s3.${COGNITO_REGION}.amazonaws.com/${
+                          videoInfo.userId
+                        }/${videoInfo.isProduct ? PRODUCTS : ARTWORKS}/${videoInfo.videoUri}`
+                  }
                   alt='product'
                   className={videoInfo.thumbnail?.startsWith('/static/media/') ? 'default' : ''}
                 />

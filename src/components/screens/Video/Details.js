@@ -99,7 +99,7 @@ const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
       const videoUri = content?.image?.split('/')?.slice(-1)[0];
       saveArtwork({
         variables: {
-          params: { videoUri, thumbnailUri: videoUri, title, description: desc, accessibility },
+          params: { videoUri, thumbnail: videoUri, title, description: desc, accessibility },
         },
       });
     } else {

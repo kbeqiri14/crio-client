@@ -122,6 +122,8 @@ const Artwork = ({
       providerUserId,
       username,
       avatar,
+      videoUri,
+      isImage: !videoUri.startsWith('/videos/'),
     });
   }, [
     providerType,
