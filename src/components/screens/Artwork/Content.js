@@ -30,12 +30,6 @@ const Wrapper = styled('div')`
       }
     }
   }
-  .content {
-    margin-top: -15px;
-  }
-  .text {
-    margin-top: -40px;
-  }
   @media screen and (max-width: 1050px) {
     .flex-dir {
       flex-direction: column-reverse;
@@ -80,7 +74,7 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
   const hide = useCallback(() => setVideoInfo({}), [setVideoInfo]);
   return (
     <Wrapper>
-      <Row justify='center' gutter={[0, 40]}>
+      <Row justify='center' gutter={[0, 20]}>
         <Col span={24}>
           <Row gutter={[0, 12]}>
             <Col span={24}>
@@ -148,9 +142,9 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
             )}
           </Col>
         )}
-        <Col className='content' span={24}>
-          <Row className='flex-dir' justify='space-between' gutter={[0, 30]}>
-            <Col className='text' max_width={videoInfo.isProduct ? 722 : undefined}>
+        <Col span={24}>
+          <Row className='flex-dir' justify='space-between'>
+            <Col max_width={videoInfo.isProduct ? 722 : undefined}>
               <Text level={4} color='dark25'>
                 <div
                   dangerouslySetInnerHTML={{ __html: urlify(videoInfo.description) }}
