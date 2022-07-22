@@ -119,7 +119,7 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
                         }/${videoInfo.isProduct ? PRODUCTS : ARTWORKS}/${
                           videoInfo.isProduct ? videoInfo.thumbnail : videoInfo.videoUri
                         }`
-                      : videoInfo.thumbnailUri
+                      : videoInfo.thumbnail
                   }
                   alt='artwork'
                   className={videoInfo.videoUri?.startsWith('/static/media/') ? 'default' : ''}

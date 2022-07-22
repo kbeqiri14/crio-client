@@ -6,9 +6,9 @@ import Artwork from './Artwork';
 
 export const ArtworksList = ({ artworksList = [] }) => {
   const getSource = useCallback(
-    (userId, videoUri, thumbnailUri) =>
+    (userId, videoUri, thumbnail) =>
       videoUri.startsWith('/videos/')
-        ? thumbnailUri
+        ? thumbnail
         : `https://${BUCKET_NAME}.s3.${COGNITO_REGION}.amazonaws.com/${userId}/artworks/${videoUri}`,
     [],
   );
@@ -21,7 +21,7 @@ export const ArtworksList = ({ artworksList = [] }) => {
             providerType={item?.providerType}
             providerUserId={item?.providerUserId}
             avatar={item?.avatar}
-            src={getSource(item.userId, item.videoUri, item.thumbnailUri)}
+            src={getSource(item.userId, item.videoUri, item.thumbnail)}
             userId={item?.userId}
             username={item?.username}
             artworkId={item?.artworkId}

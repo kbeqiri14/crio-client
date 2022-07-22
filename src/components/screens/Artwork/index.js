@@ -31,7 +31,10 @@ export const Artwork = () => {
 
   const { data, loading: loadingArtwork } = useQuery(getArtwork, { variables: { artworkId } });
   const artwork = useMemo(
-    () => ({ ...(data?.getArtwork || {}), isImage: true }),
+    () => ({
+      ...(data?.getArtwork || {}),
+      isImage: !data?.getArtwork?.videoUri.startsWith('/videos/'),
+    }),
     [data?.getArtwork],
   );
   const videoUri = useMemo(

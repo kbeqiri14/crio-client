@@ -123,7 +123,7 @@ const Artwork = ({
       username,
       avatar,
       videoUri,
-      isImage: true,
+      isImage: !videoUri.startsWith('/videos/'),
     });
   }, [
     providerType,
