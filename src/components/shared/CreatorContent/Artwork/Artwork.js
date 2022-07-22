@@ -84,7 +84,7 @@ const Artwork = ({
   artworkId,
   title,
   description,
-  videoUri,
+  content,
   accessibility,
   status,
   src,
@@ -115,15 +115,15 @@ const Artwork = ({
     setInfo({
       title,
       description,
-      id: videoUri?.substring(videoUri?.lastIndexOf('/') + 1),
+      id: content?.substring(content?.lastIndexOf('/') + 1),
       artworkId,
       userId,
       providerType,
       providerUserId,
       username,
       avatar,
-      videoUri,
-      isImage: !videoUri.startsWith('/videos/'),
+      content,
+      isImage: !content.startsWith('/videos/'),
     });
   }, [
     providerType,
@@ -134,7 +134,7 @@ const Artwork = ({
     artworkId,
     title,
     description,
-    videoUri,
+    content,
     pathname,
     setInfo,
   ]);
@@ -147,7 +147,7 @@ const Artwork = ({
             <Actions
               username={username}
               artworkId={artworkId}
-              videoUri={videoUri}
+              content={content}
               title={title}
               description={description}
               accessibility={accessibility}

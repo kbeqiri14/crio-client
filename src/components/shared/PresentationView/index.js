@@ -36,7 +36,7 @@ export const PresentationView = () => {
       wrapClassName='video-view-modal__wrapper'
       className='video-view-modal'
     >
-      <Content info={info} videoUri={info.id} />
+      <Content info={info} content={info.id} />
       <MoreProductsSection info={info} />
     </Modal>
   );

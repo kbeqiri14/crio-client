@@ -33,13 +33,13 @@ export const Artwork = () => {
   const artwork = useMemo(
     () => ({
       ...(data?.getArtwork || {}),
-      isImage: !data?.getArtwork?.videoUri.startsWith('/videos/'),
+      isImage: !data?.getArtwork?.content.startsWith('/videos/'),
     }),
     [data?.getArtwork],
   );
-  const videoUri = useMemo(
-    () => artwork.videoUri?.substring(artwork.videoUri?.lastIndexOf('/') + 1),
-    [artwork.videoUri],
+  const content = useMemo(
+    () => artwork.content?.substring(artwork.content?.lastIndexOf('/') + 1),
+    [artwork.content],
   );
   const isLocked = useMemo(() => {
     if (user.isCreator || artwork.accessibility === 'everyone') {
@@ -79,7 +79,7 @@ export const Artwork = () => {
   }
   return (
     <>
-      <Content info={artwork} videoUri={videoUri} isLocked={isLocked} />
+      <Content info={artwork} content={content} isLocked={isLocked} />
       <MoreProductsSection info={artwork} />
     </>
   );

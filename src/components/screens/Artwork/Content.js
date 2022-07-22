@@ -65,7 +65,7 @@ const ImageWrapper = styled('div')`
   }
 `;
 
-export const Content = ({ info, videoUri, isLocked }) => {
+export const Content = ({ info, content, isLocked }) => {
   const avatarUrl = useAvatarUrl(info.providerType, info.providerUserId, info.avatar);
   const { setInfo } = usePresentation();
 
@@ -110,11 +110,11 @@ export const Content = ({ info, videoUri, isLocked }) => {
                     info.isProduct || info.isImage
                       ? `https://${BUCKET_NAME}.s3.${COGNITO_REGION}.amazonaws.com/${info.userId}/${
                           info.isProduct ? PRODUCTS : ARTWORKS
-                        }/${info.isProduct ? info.thumbnail : info.videoUri}`
+                        }/${info.isProduct ? info.thumbnail : info.content}`
                       : info.thumbnail
                   }
                   alt='artwork'
-                  className={info.videoUri?.startsWith('/static/media/') ? 'default' : ''}
+                  className={info.content?.startsWith('/static/media/') ? 'default' : ''}
                 />
               </ImageWrapper>
             </div>
@@ -129,7 +129,7 @@ export const Content = ({ info, videoUri, isLocked }) => {
                       ? info.thumbnail
                       : `https://${BUCKET_NAME}.s3.${COGNITO_REGION}.amazonaws.com/${info.userId}/${
                           info.isProduct ? PRODUCTS : ARTWORKS
-                        }/${info.videoUri}`
+                        }/${info.content}`
                   }
                   alt='product'
                   className={info.thumbnail?.startsWith('/static/media/') ? 'default' : ''}
@@ -139,7 +139,7 @@ export const Content = ({ info, videoUri, isLocked }) => {
               <div className='video-view__player embed-responsive aspect-ratio-16/9'>
                 <iframe
                   title={info.title || 'Crio video player'}
-                  src={`https://player.vimeo.com/video/${videoUri}?h=dc77330a55&color=ffffff&title=0&byline=0&portrait=0`}
+                  src={`https://player.vimeo.com/video/${content}?h=dc77330a55&color=ffffff&title=0&byline=0&portrait=0`}
                   frameBorder='0'
                   allow='autoplay; fullscreen; picture-in-picture'
                   allowFullScreen

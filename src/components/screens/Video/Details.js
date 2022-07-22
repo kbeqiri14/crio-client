@@ -69,8 +69,8 @@ const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
   }, [artworkId, file]);
   const disabled = useMemo(() => !title?.trim() || !desc?.trim(), [desc, title]);
   const videoId = useMemo(
-    () => state?.videoUri?.substring(state?.videoUri?.lastIndexOf('/') + 1),
-    [state?.videoUri],
+    () => state?.content?.substring(state?.content?.lastIndexOf('/') + 1),
+    [state?.content],
   );
 
   const [saveArtwork, { loading: creatingArtwork }] = useMutation(createArtwork, {
@@ -95,11 +95,11 @@ const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
 
   const onContinue = useCallback(async () => {
     if (isImage) {
-      const content = await formItemContent({ userId: user.id, image: file, type: ARTWORKS });
-      const videoUri = content?.image?.split('/')?.slice(-1)[0];
+      const im = await formItemContent({ userId: user.id, image: file, type: ARTWORKS });
+      const content = im?.image?.split('/')?.slice(-1)[0];
       saveArtwork({
         variables: {
-          params: { videoUri, thumbnail: videoUri, title, description: desc, accessibility },
+          params: { content, thumbnail: content, title, description: desc, accessibility },
         },
       });
     } else {

@@ -12,19 +12,19 @@ import dragAndDropImage from '@images/drag-and-drop.png';
 
 const { Dragger } = Upload;
 
-const DragAndDrop = ({ videoUri, file, types, dispatch, goToProfile }) => {
+const DragAndDrop = ({ content, file, types, dispatch, goToProfile }) => {
   const [requestUploadUrl, { data, loading }] = useLazyQuery(getUploadUrl, {
     fetchPolicy: 'no-cache',
     onCompleted: ({ getUploadUrl }) =>
       dispatch({
         type: types.SET_VIDEO_URI,
-        videoUri: getUploadUrl.uri,
+        content: getUploadUrl.uri,
         uploadLink: getUploadUrl.upload_link,
       }),
     onError: () => errorToast('Something went wrong!', 'Please, try again later!'),
   });
   const [removeArtwork, { loading: removingArtwork }] = useMutation(deleteArtwork, {
-    variables: { params: { videoUri } },
+    variables: { params: { content } },
   });
 
   const isVideo = useMemo(() => file?.type?.split('/')?.[0] === 'video', [file?.type]);
@@ -35,8 +35,8 @@ const DragAndDrop = ({ videoUri, file, types, dispatch, goToProfile }) => {
     [isVideo, isImage, loading, data?.getUploadUrl?.uri],
   );
   const onCancel = useCallback(
-    () => (videoUri ? dispatch({ type: types.CONFIRMATION_VISIBLE }) : goToProfile()),
-    [videoUri, goToProfile, dispatch, types.CONFIRMATION_VISIBLE],
+    () => (content ? dispatch({ type: types.CONFIRMATION_VISIBLE }) : goToProfile()),
+    [content, goToProfile, dispatch, types.CONFIRMATION_VISIBLE],
   );
   const onContinue = useCallback(async () => {
     if (isImage) {
