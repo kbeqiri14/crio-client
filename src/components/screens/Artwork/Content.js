@@ -3,9 +3,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { PRODUCTS, ARTWORKS } from '@configs/constants';
-import { BUCKET_NAME, COGNITO_REGION } from '@app/configs/environment';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
-import { urlify } from '@utils/helpers';
+import { getThumbnail, urlify } from '@utils/helpers';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { Col, Row, Text, Title } from '@ui-kit';
 import LockState from '@shared/CreatorContent/LockState';
@@ -108,9 +107,11 @@ export const Content = ({ info, content, isLocked }) => {
                 <img
                   src={
                     info.isProduct || info.isImage
-                      ? `https://${BUCKET_NAME}.s3.${COGNITO_REGION}.amazonaws.com/${info.userId}/${
-                          info.isProduct ? PRODUCTS : ARTWORKS
-                        }/${info.isProduct ? info.thumbnail : info.content}`
+                      ? getThumbnail(
+                          info.isProduct ? PRODUCTS : ARTWORKS,
+                          info.userId,
+                          info.isProduct ? info.thumbnail : info.content,
+                        )
                       : info.thumbnail
                   }
                   alt='artwork'
@@ -127,9 +128,11 @@ export const Content = ({ info, content, isLocked }) => {
                   src={
                     info.isProduct
                       ? info.thumbnail
-                      : `https://${BUCKET_NAME}.s3.${COGNITO_REGION}.amazonaws.com/${info.userId}/${
-                          info.isProduct ? PRODUCTS : ARTWORKS
-                        }/${info.content}`
+                      : getThumbnail(
+                          info.isProduct ? PRODUCTS : ARTWORKS,
+                          info.userId,
+                          info.content,
+                        )
                   }
                   alt='product'
                   className={info.thumbnail?.startsWith('/static/media/') ? 'default' : ''}

@@ -1,15 +1,14 @@
 import { memo, useCallback } from 'react';
 
-import { BUCKET_NAME, COGNITO_REGION } from '@app/configs/environment';
+import { ARTWORKS } from '@configs/constants';
+import { getThumbnail } from '@utils/helpers';
 import { Col, Row } from '@ui-kit';
 import Artwork from './Artwork';
 
 export const ArtworksList = ({ artworksList = [] }) => {
   const getSource = useCallback(
     (userId, content, thumbnail) =>
-      content.startsWith('/videos/')
-        ? thumbnail
-        : `https://${BUCKET_NAME}.s3.${COGNITO_REGION}.amazonaws.com/${userId}/artworks/${content}`,
+      content.startsWith('/videos/') ? thumbnail : getThumbnail(ARTWORKS, userId, content),
     [],
   );
 
