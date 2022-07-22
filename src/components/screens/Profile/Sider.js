@@ -119,7 +119,7 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
               </Col>
               <Col align='center'>
                 <Text level={3}>
-                  Artworks
+                  Contents
                   <br />
                   {user.artworksCount}
                 </Text>
