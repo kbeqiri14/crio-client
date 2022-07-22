@@ -1,8 +1,10 @@
 import { memo } from 'react';
-import { Collapse, Col, Row, Title } from '@ui-kit';
+import { Col, Collapse, Row, Title } from '@ui-kit';
 
 import styled from 'styled-components';
-import { DownOutlined } from '@ant-design/icons';
+import { ReactComponent as ArrowDownIcon } from '@svgs/arrow-down.svg';
+import { ReactComponent as ArrowUpIcon } from '@svgs/arrow-up.svg';
+
 import { questions } from './_partials/questions';
 import { Footer } from '@shared/Footer';
 
@@ -18,7 +20,7 @@ const Wrapper = styled('div')`
   }
   .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow {
     left: auto;
-    right: 30px;
+    right: 20px;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -42,9 +44,9 @@ export const FAQ = () => {
         <Col lg={14} md={16} sm={18} xs={20}>
           <Collapse
             bordered={false}
-            defaultActiveKey={['0']}
+            accordion
             expandIconPosition='end'
-            expandIcon={({ isActive }) => <DownOutlined rotate={isActive ? 180 : 0} />}
+            expandIcon={({ isActive }) => (isActive ? <ArrowDownIcon /> : <ArrowUpIcon />)}
           >
             {questions?.map(({ key, question, answer }) => {
               return (

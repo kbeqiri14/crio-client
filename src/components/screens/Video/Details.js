@@ -1,12 +1,15 @@
-import { memo, useMemo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import ReactPlayer from 'react-player';
 import { Col, Row } from 'antd';
 import { useMutation } from '@apollo/client';
 import styled from 'styled-components';
 
-import { updateMetadata } from '@app/graphql/mutations/artwork.mutation';
+import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
+import { createArtwork, updateMetadata } from '@app/graphql/mutations/artwork.mutation';
+import { ARTWORKS } from '@configs/constants';
 import ActionButtons from '@shared/ActionButtons';
+import { formItemContent } from '@utils/upload.helper';
 import { Input, Radio, Text } from '@ui-kit';
 import { errorToast } from '@ui-kit/Notification';
 
@@ -46,14 +49,19 @@ const StyledVideoDetails = styled('div')`
       border-radius: 16px;
     }
   }
+  .access-section {
+    margin: 0 15px;
+  }
 `;
 
-const VideoInfo = ({ artworkId, file, state, onCancel, onCompleted }) => {
+const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
+  const { user } = useLoggedInUser();
   const { control, watch, handleSubmit } = useForm();
   const title = watch('title');
   const desc = watch('desc');
   const accessibility = watch('accessibility');
 
+  const isImage = useMemo(() => file?.type?.split('/')?.[0] === 'image', [file?.type]);
   const url = useMemo(() => {
     if (artworkId) {
       return URL.createObjectURL(file);
@@ -64,6 +72,14 @@ const VideoInfo = ({ artworkId, file, state, onCancel, onCompleted }) => {
     () => state?.videoUri?.substring(state?.videoUri?.lastIndexOf('/') + 1),
     [state?.videoUri],
   );
+
+  const [saveArtwork, { loading: creatingArtwork }] = useMutation(createArtwork, {
+    onCompleted,
+    onError: () => {
+      errorToast('Something went wrong!', 'Please, try again later!');
+    },
+  });
+
   const [updateArtwork, { loading: updatingArtwork }] = useMutation(updateMetadata, {
     variables: {
       params: { artworkId: artworkId || state?.artworkId, title, description: desc, accessibility },
@@ -71,6 +87,25 @@ const VideoInfo = ({ artworkId, file, state, onCancel, onCompleted }) => {
     onCompleted,
     onError: (data) => errorToast(data?.message),
   });
+
+  const loading = useMemo(
+    () => creatingArtwork || updatingArtwork,
+    [creatingArtwork, updatingArtwork],
+  );
+
+  const onContinue = useCallback(async () => {
+    if (isImage) {
+      const content = await formItemContent({ userId: user.id, image: file, type: ARTWORKS });
+      const videoUri = content?.image?.split('/')?.slice(-1)[0];
+      saveArtwork({
+        variables: {
+          params: { videoUri, thumbnailUri: videoUri, title, description: desc, accessibility },
+        },
+      });
+    } else {
+      updateArtwork();
+    }
+  }, [isImage, user.id, file, title, desc, accessibility, saveArtwork, updateArtwork]);
 
   return (
     <StyledVideoDetails>
@@ -101,7 +136,7 @@ const VideoInfo = ({ artworkId, file, state, onCancel, onCompleted }) => {
             )}
           />
         </Col>
-        <Col span={24}>
+        <Col className='access-section' span={24}>
           <Text level={3}>Accessibility</Text>
           <br />
           <Controller
@@ -117,7 +152,9 @@ const VideoInfo = ({ artworkId, file, state, onCancel, onCompleted }) => {
         </Col>
       </Row>
       <div className='player'>
-        {artworkId ? (
+        {isImage ? (
+          <img alt='artwork' src={src} />
+        ) : artworkId ? (
           <ReactPlayer url={url} controls={true} width='inherit' height={520} />
         ) : (
           <div className='edit-video video-view__player embed-responsive aspect-ratio-16/9'>
@@ -133,10 +170,10 @@ const VideoInfo = ({ artworkId, file, state, onCancel, onCompleted }) => {
       </div>
       <ActionButtons
         saveText='CONTINUE'
-        loading={updatingArtwork}
+        loading={loading}
         disabled={disabled}
         onCancel={onCancel}
-        onSave={handleSubmit(updateArtwork)}
+        onSave={handleSubmit(onContinue)}
       />
     </StyledVideoDetails>
   );

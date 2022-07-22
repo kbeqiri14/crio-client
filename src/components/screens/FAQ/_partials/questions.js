@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { Col, Row, Divider, Text } from '@ui-kit';
+import { Col, Divider, Row, Text } from '@ui-kit';
 
 export const questions = [
   {
