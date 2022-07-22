@@ -30,7 +30,10 @@ export const Artwork = () => {
   const loggedInUserLoading = useReactiveVar(loggedInUserLoadingVar);
 
   const { data, loading: loadingArtwork } = useQuery(getArtwork, { variables: { artworkId } });
-  const artwork = useMemo(() => data?.getArtwork || {}, [data?.getArtwork]);
+  const artwork = useMemo(
+    () => ({ ...(data?.getArtwork || {}), isImage: true }),
+    [data?.getArtwork],
+  );
   const videoUri = useMemo(
     () => artwork.videoUri?.substring(artwork.videoUri?.lastIndexOf('/') + 1),
     [artwork.videoUri],
