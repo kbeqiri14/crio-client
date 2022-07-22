@@ -30,10 +30,12 @@ const Wrapper = styled('div')`
       }
     }
   }
-
-  @media screen and (max-width: 1030px) {
+  @media screen and (max-width: 1050px) {
     .flex-dir {
       flex-direction: column-reverse;
+    }
+    .widget {
+      width: 350px;
     }
   }
 `;
@@ -72,7 +74,7 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
   const hide = useCallback(() => setVideoInfo({}), [setVideoInfo]);
   return (
     <Wrapper>
-      <Row justify='center' gutter={[0, 40]}>
+      <Row justify='center' gutter={[0, 20]}>
         <Col span={24}>
           <Row gutter={[0, 12]}>
             <Col span={24}>
@@ -141,7 +143,7 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
           </Col>
         )}
         <Col span={24}>
-          <Row className='flex-dir' justify='space-between' gutter={[0, 30]}>
+          <Row className='flex-dir' justify='space-between'>
             <Col max_width={videoInfo.isProduct ? 722 : undefined}>
               <Text level={4} color='dark25'>
                 <div
