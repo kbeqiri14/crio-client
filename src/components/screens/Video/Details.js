@@ -162,7 +162,7 @@ const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
         </Col>
       </Row>
       <div className='player'>
-        {isImage ? (
+        {src ? (
           <img alt='artwork' src={src} />
         ) : artworkId ? (
           <ReactPlayer url={url} controls={true} width='inherit' height={520} />

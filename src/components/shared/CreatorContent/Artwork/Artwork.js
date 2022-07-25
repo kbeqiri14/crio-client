@@ -156,6 +156,7 @@ const Artwork = ({
         <div className='actions' onClick={() => !showActions && showArtwork()}>
           {showActions && (
             <Actions
+              userId={userId}
               username={username}
               artworkId={artworkId}
               content={content}
