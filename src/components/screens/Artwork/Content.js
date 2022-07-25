@@ -31,12 +31,12 @@ const Wrapper = styled('div')`
       }
     }
   }
-  @media screen and (max-width: 1050px) {
+  @media screen and (max-width: 420px) {
     .flex-dir {
       flex-direction: column-reverse;
     }
     .widget {
-      width: 350px;
+      width: 380px;
     }
   }
 `;
