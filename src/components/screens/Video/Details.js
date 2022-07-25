@@ -51,7 +51,9 @@ const StyledVideoDetails = styled('div')`
       border-radius: 16px;
     }
     img {
-      max-width: 922px;
+      height: auto;
+      width: 100%;
+      max-height: 538px;
     }
   }
   .access-section {

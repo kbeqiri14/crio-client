@@ -48,12 +48,12 @@ const ImageWrapper = styled('div')`
   background: #182024;
   border-radius: 16px;
   max-width: 1040px;
-  max-height: 638px;
+  max-height: 538px;
   height: auto;
   img {
     width: 100%;
     height: auto;
-    max-height: 638px;
+    max-height: 538px;
     object-fit: cover;
     border-radius: 16px;
     &.default {

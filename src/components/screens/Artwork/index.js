@@ -31,10 +31,13 @@ export const Artwork = () => {
 
   const { data, loading: loadingArtwork } = useQuery(getArtwork, { variables: { artworkId } });
   const artwork = useMemo(
-    () => ({
-      ...(data?.getArtwork || {}),
-      isImage: !data?.getArtwork?.content.startsWith('/videos/'),
-    }),
+    () =>
+      data?.getArtwork
+        ? {
+            ...data.getArtwork,
+            isImage: !data?.getArtwork?.content.startsWith('/videos/'),
+          }
+        : {},
     [data?.getArtwork],
   );
   const content = useMemo(
