@@ -1,11 +1,11 @@
 import { memo, useCallback, useMemo } from 'react';
-import { Col, Row, Upload } from 'antd';
+import { Upload } from 'antd';
 import { useLazyQuery, useMutation } from '@apollo/client';
 
 import { getUploadUrl } from '@app/graphql/queries/artworks.query';
 import { deleteArtwork } from '@app/graphql/mutations/artwork.mutation';
 import ActionButtons from '@shared/ActionButtons';
-import { Text, Title } from '@ui-kit';
+import { Col, Row, Text, Title } from '@ui-kit';
 import { Spinner } from '@ui-kit/Spinner';
 import { errorToast, warningToast } from '@ui-kit/Notification';
 import dragAndDropImage from '@images/drag-and-drop.png';
@@ -81,17 +81,36 @@ const DragAndDrop = ({ content, file, types, dispatch, goToProfile }) => {
   return (
     <Row justify='center' gutter={[0, 50]} className='upload'>
       <Col span={24}>
-        <Title level={1}>Upload your artwork</Title>
+        <Title level={1}>Upload your content</Title>
       </Col>
-      <Col span={24} align='center' className='uploadCol'>
+      <Col span={24} align='center' padding_left={24} padding_right={24}>
         <Dragger {...props} className='dragger'>
           <Spinner spinning={loading} color='white'>
-            <Row justify='center' align='center' gutter={[0, 25]} className='drag-and-drop'>
-              <Col span={24}>
+            <Row justify='center' align='center' gutter={[0, 27]} className='drag-and-drop'>
+              <Col span={24} padding_bottom={13}>
                 <img alt='drag-and-drop' src={dragAndDropImage} />
               </Col>
+              <Col span={24} padding_bottom={13}>
+                <Text level={4}>Drag and drop a File</Text>
+              </Col>
               <Col span={24}>
-                <Text level={4}>Drag and drop a video</Text>
+                <ul>
+                  <li>
+                    <Text level={4} color='dark25'>
+                      1600x1200 or higher recommended. Max 10MB each (20MB for videos)
+                    </Text>
+                  </li>
+                  <li>
+                    <Text level={4} color='dark25'>
+                      HI-RES images (png, jpg, gif)
+                    </Text>
+                  </li>
+                  <li>
+                    <Text level={4} color='dark25'>
+                      {`Videos (mp4, 4:3, <60 secs)`}
+                    </Text>
+                  </li>
+                </ul>
               </Col>
               {file?.name && (
                 <Col span={24}>

@@ -110,7 +110,7 @@ export const Content = ({ info, content, isLocked }) => {
                       ? getThumbnail(
                           info.isProduct ? PRODUCTS : ARTWORKS,
                           info.userId,
-                          info.isProduct ? info.thumbnail : info.content,
+                          info.isProduct ? info.thumbnail : `main-${info.thumbnail}`,
                         )
                       : info.thumbnail
                   }
@@ -131,7 +131,7 @@ export const Content = ({ info, content, isLocked }) => {
                       : getThumbnail(
                           info.isProduct ? PRODUCTS : ARTWORKS,
                           info.userId,
-                          info.content,
+                          info.isProduct ? info.content : `main-${info.thumbnail}`,
                         )
                   }
                   alt='product'

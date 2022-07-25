@@ -99,7 +99,7 @@ const Artwork = ({
     () =>
       content.startsWith('/videos/')
         ? thumbnail
-        : getThumbnail(ARTWORKS, userId, `main-${content}`),
+        : getThumbnail(ARTWORKS, userId, `main-${thumbnail}`),
     [userId, content, thumbnail],
   );
 
@@ -132,6 +132,7 @@ const Artwork = ({
       username,
       avatar,
       content,
+      thumbnail,
       isImage: !content.startsWith('/videos/'),
     });
   }, [
@@ -144,6 +145,7 @@ const Artwork = ({
     title,
     description,
     content,
+    thumbnail,
     pathname,
     setInfo,
   ]);
