@@ -3,10 +3,12 @@ import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import history from '@configs/history';
+import { ARTWORKS } from '@configs/constants';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 // import videoIcon from '@images/video-icon.png';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
+import { getThumbnail } from '@utils/helpers';
 import { Col, Row, Text } from '@ui-kit';
 import Actions from '@screens/Video/Actions';
 import LockState from '../LockState';
@@ -84,15 +86,22 @@ const Artwork = ({
   artworkId,
   title,
   description,
-  videoUri,
+  content,
+  thumbnail,
   accessibility,
   status,
-  src,
 }) => {
   const { user } = useLoggedInUser();
   const { pathname } = useLocation();
-  const { setVideoInfo } = usePresentation();
+  const { setInfo } = usePresentation();
   const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
+  const source = useMemo(
+    () =>
+      content.startsWith('/videos/')
+        ? thumbnail
+        : getThumbnail(ARTWORKS, userId, `main-${thumbnail}`),
+    [userId, content, thumbnail],
+  );
 
   const showActions = useMemo(() => {
     const username = pathname.split('/').slice(-1)[0];
@@ -112,16 +121,19 @@ const Artwork = ({
       return;
     }
     window.history.replaceState('', '', `/artwork/${artworkId}`);
-    setVideoInfo({
+    setInfo({
       title,
       description,
-      id: videoUri?.substring(videoUri?.lastIndexOf('/') + 1),
+      id: content?.substring(content?.lastIndexOf('/') + 1),
       artworkId,
       userId,
       providerType,
       providerUserId,
       username,
       avatar,
+      content,
+      thumbnail,
+      isImage: !content.startsWith('/videos/'),
     });
   }, [
     providerType,
@@ -132,9 +144,10 @@ const Artwork = ({
     artworkId,
     title,
     description,
-    videoUri,
+    content,
+    thumbnail,
     pathname,
-    setVideoInfo,
+    setInfo,
   ]);
 
   return (
@@ -143,9 +156,10 @@ const Artwork = ({
         <div className='actions' onClick={() => !showActions && showArtwork()}>
           {showActions && (
             <Actions
+              userId={userId}
               username={username}
               artworkId={artworkId}
-              videoUri={videoUri}
+              content={content}
               title={title}
               description={description}
               accessibility={accessibility}
@@ -158,7 +172,7 @@ const Artwork = ({
         <LockState userId={userId} accessibility={accessibility} status={status} />
         {/* <div className='video'> */}
         {/* <img src={videoIcon} alt='video' className='video-icon' /> */}
-        <img src={src} alt='artwork' width={330} height={330} onClick={showArtwork} />
+        <img src={source} alt='artwork' width={330} height={330} onClick={showArtwork} />
         {/* </div> */}
       </Wrapper>
       <Link to={`/profile/${username}`}>

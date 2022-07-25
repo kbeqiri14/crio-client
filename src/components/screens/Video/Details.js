@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import ReactPlayer from 'react-player';
 import { Col, Row } from 'antd';
@@ -44,9 +44,16 @@ const StyledVideoDetails = styled('div')`
     display: flex;
     justify-content: center;
     padding: 24px 0 48px;
+    margin: auto;
+    max-width: 922px;
     min-height: 520px;
     video {
       border-radius: 16px;
+    }
+    img {
+      height: auto;
+      width: 100%;
+      max-height: 538px;
     }
   }
   .access-section {
@@ -56,6 +63,7 @@ const StyledVideoDetails = styled('div')`
 
 const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
   const { user } = useLoggedInUser();
+  const [uploading, setUploading] = useState(false);
   const { control, watch, handleSubmit } = useForm();
   const title = watch('title');
   const desc = watch('desc');
@@ -69,12 +77,12 @@ const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
   }, [artworkId, file]);
   const disabled = useMemo(() => !title?.trim() || !desc?.trim(), [desc, title]);
   const videoId = useMemo(
-    () => state?.videoUri?.substring(state?.videoUri?.lastIndexOf('/') + 1),
-    [state?.videoUri],
+    () => state?.content?.substring(state?.content?.lastIndexOf('/') + 1),
+    [state?.content],
   );
 
   const [saveArtwork, { loading: creatingArtwork }] = useMutation(createArtwork, {
-    onCompleted,
+    onCompleted: () => (isImage ? onCancel() : onCompleted()),
     onError: () => {
       errorToast('Something went wrong!', 'Please, try again later!');
     },
@@ -84,22 +92,29 @@ const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
     variables: {
       params: { artworkId: artworkId || state?.artworkId, title, description: desc, accessibility },
     },
-    onCompleted,
+    onCompleted: () => (isImage ? onCancel() : onCompleted()),
     onError: (data) => errorToast(data?.message),
   });
 
   const loading = useMemo(
-    () => creatingArtwork || updatingArtwork,
-    [creatingArtwork, updatingArtwork],
+    () => creatingArtwork || updatingArtwork || uploading,
+    [creatingArtwork, updatingArtwork, uploading],
   );
 
   const onContinue = useCallback(async () => {
     if (isImage) {
-      const content = await formItemContent({ userId: user.id, image: file, type: ARTWORKS });
-      const videoUri = content?.image?.split('/')?.slice(-1)[0];
+      setUploading(true);
+      const itemContent = await formItemContent({
+        userId: user.id,
+        image: file,
+        type: ARTWORKS,
+        prefix: 'main',
+      });
+      const content = itemContent?.image?.split('/')?.slice(-1)[0].slice('main-'.length);
+      setUploading(false);
       saveArtwork({
         variables: {
-          params: { videoUri, thumbnailUri: videoUri, title, description: desc, accessibility },
+          params: { content, thumbnail: content, title, description: desc, accessibility },
         },
       });
     } else {
@@ -152,7 +167,7 @@ const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
         </Col>
       </Row>
       <div className='player'>
-        {isImage ? (
+        {src ? (
           <img alt='artwork' src={src} />
         ) : artworkId ? (
           <ReactPlayer url={url} controls={true} width='inherit' height={520} />

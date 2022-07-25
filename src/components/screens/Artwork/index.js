@@ -30,10 +30,19 @@ export const Artwork = () => {
   const loggedInUserLoading = useReactiveVar(loggedInUserLoadingVar);
 
   const { data, loading: loadingArtwork } = useQuery(getArtwork, { variables: { artworkId } });
-  const artwork = useMemo(() => data?.getArtwork || {}, [data?.getArtwork]);
-  const videoUri = useMemo(
-    () => artwork.videoUri?.substring(artwork.videoUri?.lastIndexOf('/') + 1),
-    [artwork.videoUri],
+  const artwork = useMemo(
+    () =>
+      data?.getArtwork
+        ? {
+            ...data.getArtwork,
+            isImage: !data?.getArtwork?.content.startsWith('/videos/'),
+          }
+        : {},
+    [data?.getArtwork],
+  );
+  const content = useMemo(
+    () => artwork.content?.substring(artwork.content?.lastIndexOf('/') + 1),
+    [artwork.content],
   );
   const isLocked = useMemo(() => {
     if (user.isCreator || artwork.accessibility === 'everyone') {
@@ -73,8 +82,8 @@ export const Artwork = () => {
   }
   return (
     <>
-      <Content videoInfo={artwork} videoUri={videoUri} isLocked={isLocked} />
-      <MoreProductsSection videoInfo={artwork} />
+      <Content info={artwork} content={content} isLocked={isLocked} />
+      <MoreProductsSection info={artwork} />
     </>
   );
 };

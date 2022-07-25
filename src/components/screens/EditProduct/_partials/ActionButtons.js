@@ -48,7 +48,12 @@ const ProductActionButtons = ({ state, image, disabled, handleSubmit, fillColor 
   const onPublish = useAsyncFn(async (attributes) => {
     let thumbnail = state?.thumbnail && !image.src ? 'remove-thumbnail' : undefined;
     if (attributes.image?.file) {
-      const content = await formItemContent({ userId, image: image.file, type: PRODUCTS });
+      const content = await formItemContent({
+        userId,
+        image: image.file,
+        type: PRODUCTS,
+        prefix: 'thumbnail',
+      });
       thumbnail = content?.image?.split('/')?.slice(-1)[0].slice('thumbnail-'.length);
     }
 

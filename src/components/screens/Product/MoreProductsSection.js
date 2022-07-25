@@ -36,19 +36,19 @@ const MoreProductsWrapper = styled('div')`
   }
 `;
 
-export const MoreProductsSection = ({ videoInfo }) => {
+export const MoreProductsSection = ({ info }) => {
   const { pathname } = useLocation();
-  const { setVideoInfo } = usePresentation();
+  const { setInfo } = usePresentation();
 
   const { data } = useQuery(getMoreProducts, {
     fetchPolicy: 'no-cache',
-    variables: { params: { userId: videoInfo.userId } },
+    variables: { params: { userId: info.userId } },
   });
 
   const hide = useCallback(() => {
-    setVideoInfo({});
+    setInfo({});
     window.history.replaceState('', '', pathname);
-  }, [pathname, setVideoInfo]);
+  }, [pathname, setInfo]);
 
   return (
     <>
@@ -58,10 +58,10 @@ export const MoreProductsSection = ({ videoInfo }) => {
             <Col span={24} padding_bottom={20} padding_right={15} padding_left={15}>
               <Row justify='space-between' align='middle'>
                 <Col>
-                  <Text level={2}>More products by {videoInfo.username}</Text>
+                  <Text level={2}>More products by {info.username}</Text>
                 </Col>
                 <Col>
-                  <Link to={`/profile/${videoInfo.username}`} onClick={hide}>
+                  <Link to={`/profile/${info.username}`} onClick={hide}>
                     <Text level={2} color='primary'>
                       View profile
                     </Text>

@@ -11,7 +11,6 @@ export const ArtworksList = ({ artworksList = [] }) => (
           providerType={item?.providerType}
           providerUserId={item?.providerUserId}
           avatar={item?.avatar}
-          src={item?.thumbnailUri}
           userId={item?.userId}
           username={item?.username}
           artworkId={item?.artworkId}
@@ -19,7 +18,8 @@ export const ArtworksList = ({ artworksList = [] }) => (
           description={item?.description}
           status={item?.status}
           accessibility={item?.accessibility}
-          videoUri={item?.videoUri}
+          content={item?.content}
+          thumbnail={item.thumbnail}
         />
       </Col>
     ))}

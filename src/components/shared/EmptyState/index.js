@@ -34,7 +34,7 @@ const EmptyState = ({
 }) => {
   const text = useMemo(() => {
     if (isNotFound) {
-      return isMarketplace ? 'Product is not found' : 'Artwork is not found';
+      return isMarketplace ? 'Product is not found' : 'Content is not found';
     }
     if (isNoResult) {
       return 'No result';
@@ -44,12 +44,12 @@ const EmptyState = ({
       if (isCreator) {
         text = isMarketplace
           ? 'hasn’t added a products and services yet'
-          : 'hasn’t added an artwork yet';
+          : 'hasn’t added a content yet';
       }
       return `${username} ${text}`;
     }
     if (isCreator) {
-      return isMarketplace ? 'Upload your first product or service' : 'Upload your first artwork';
+      return isMarketplace ? 'Upload your first product or service' : 'Upload your first content';
     }
     return isSubscribed
       ? 'You don’t have any following yet'
