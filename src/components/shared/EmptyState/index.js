@@ -44,7 +44,7 @@ const EmptyState = ({
       if (isCreator) {
         text = isMarketplace
           ? 'hasn’t added a products and services yet'
-          : 'hasn’t added an artwork yet';
+          : 'hasn’t added a content yet';
       }
       return `${username} ${text}`;
     }

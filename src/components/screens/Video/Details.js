@@ -50,6 +50,9 @@ const StyledVideoDetails = styled('div')`
     video {
       border-radius: 16px;
     }
+    img {
+      max-width: 922px;
+    }
   }
   .access-section {
     margin: 0 15px;
