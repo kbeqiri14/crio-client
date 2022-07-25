@@ -36,10 +36,10 @@ const LockState = ({
             {
               width: large ? 684 : 330,
               height: isProduct ? (large ? 636 : 245) : 330,
-              borderTopLeftRadius: 16,
-              borderTopRightRadius: 16,
-              borderBottomLeftRadius: isProduct ? 0 : 16,
-              borderBottomRightRadius: isProduct ? 0 : 16,
+              borderTopLeftRadius: 30,
+              borderTopRightRadius: 30,
+              borderBottomLeftRadius: isProduct ? 0 : 30,
+              borderBottomRightRadius: isProduct ? 0 : 30,
             },
           ]
         : [
@@ -47,10 +47,10 @@ const LockState = ({
             {
               width: '100%',
               height: '100%',
-              borderTopLeftRadius: 16,
-              borderTopRightRadius: 16,
-              borderBottomLeftRadius: isProduct ? 0 : 16,
-              borderBottomRightRadius: isProduct ? 0 : 16,
+              borderTopLeftRadius: 30,
+              borderTopRightRadius: 30,
+              borderBottomLeftRadius: isProduct ? 0 : 30,
+              borderBottomRightRadius: isProduct ? 0 : 30,
             },
           ],
     [size, large, isProduct],

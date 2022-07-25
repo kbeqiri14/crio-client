@@ -46,7 +46,7 @@ const ImageWrapper = styled('div')`
   justify-content: center;
   align-items: center;
   background: #182024;
-  border-radius: 16px;
+  border-radius: 30px;
   max-width: 1040px;
   max-height: 538px;
   height: auto;
@@ -55,7 +55,7 @@ const ImageWrapper = styled('div')`
     height: auto;
     max-height: 538px;
     object-fit: cover;
-    border-radius: 16px;
+    border-radius: 30px;
     &.default {
       width: 409px;
       height: 309px;
