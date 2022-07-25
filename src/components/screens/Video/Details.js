@@ -54,6 +54,7 @@ const StyledVideoDetails = styled('div')`
       height: auto;
       width: 100%;
       max-height: 538px;
+      object-fit: cover;
     }
   }
   .access-section {
