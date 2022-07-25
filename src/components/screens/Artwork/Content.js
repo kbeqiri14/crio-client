@@ -35,9 +35,6 @@ const Wrapper = styled('div')`
     .flex-dir {
       flex-direction: column-reverse;
     }
-    .widget {
-      width: 350px;
-    }
   }
 `;
 
