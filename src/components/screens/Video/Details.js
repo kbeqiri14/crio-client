@@ -44,6 +44,8 @@ const StyledVideoDetails = styled('div')`
     display: flex;
     justify-content: center;
     padding: 24px 0 48px;
+    margin: auto;
+    max-width: 922px;
     min-height: 520px;
     video {
       border-radius: 16px;
