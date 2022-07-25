@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import ReactPlayer from 'react-player';
 import { Col, Row } from 'antd';
@@ -56,6 +56,7 @@ const StyledVideoDetails = styled('div')`
 
 const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
   const { user } = useLoggedInUser();
+  const [uploading, setUploading] = useState(false);
   const { control, watch, handleSubmit } = useForm();
   const title = watch('title');
   const desc = watch('desc');
@@ -74,7 +75,7 @@ const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
   );
 
   const [saveArtwork, { loading: creatingArtwork }] = useMutation(createArtwork, {
-    onCompleted,
+    onCompleted: () => (isImage ? onCancel() : onCompleted()),
     onError: () => {
       errorToast('Something went wrong!', 'Please, try again later!');
     },
@@ -84,24 +85,26 @@ const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
     variables: {
       params: { artworkId: artworkId || state?.artworkId, title, description: desc, accessibility },
     },
-    onCompleted,
+    onCompleted: () => (isImage ? onCancel() : onCompleted()),
     onError: (data) => errorToast(data?.message),
   });
 
   const loading = useMemo(
-    () => creatingArtwork || updatingArtwork,
-    [creatingArtwork, updatingArtwork],
+    () => creatingArtwork || updatingArtwork || uploading,
+    [creatingArtwork, updatingArtwork, uploading],
   );
 
   const onContinue = useCallback(async () => {
     if (isImage) {
-      const im = await formItemContent({
+      setUploading(true);
+      const itemContent = await formItemContent({
         userId: user.id,
         image: file,
         type: ARTWORKS,
         prefix: 'main',
       });
-      const content = im?.image?.split('/')?.slice(-1)[0].slice('main-'.length);
+      const content = itemContent?.image?.split('/')?.slice(-1)[0].slice('main-'.length);
+      setUploading(false);
       saveArtwork({
         variables: {
           params: { content, thumbnail: content, title, description: desc, accessibility },

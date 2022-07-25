@@ -70,11 +70,11 @@ const Upload = () => {
 
   const onCancel = useCallback(() => {
     if (state.file?.type?.split('/')?.[0] === 'image') {
-      history.push(`/profile/artworks/${state?.username}`);
+      goToProfile();
     } else {
       dispatch({ type: types.CONFIRMATION_VISIBLE });
     }
-  }, [state?.username, state.file?.type, dispatch]);
+  }, [state.file?.type, goToProfile, dispatch]);
   const onConfirm = useCallback(
     () => (state.file?.type?.split('/')?.[0] === 'image' ? goToProfile() : removeArtwork()),
     [state.file?.type, goToProfile, removeArtwork],
