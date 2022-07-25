@@ -95,8 +95,13 @@ const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
 
   const onContinue = useCallback(async () => {
     if (isImage) {
-      const im = await formItemContent({ userId: user.id, image: file, type: ARTWORKS });
-      const content = im?.image?.split('/')?.slice(-1)[0];
+      const im = await formItemContent({
+        userId: user.id,
+        image: file,
+        type: ARTWORKS,
+        prefix: 'main',
+      });
+      const content = im?.image?.split('/')?.slice(-1)[0].slice('main-'.length);
       saveArtwork({
         variables: {
           params: { content, thumbnail: content, title, description: desc, accessibility },

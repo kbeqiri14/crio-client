@@ -90,14 +90,16 @@ const Artwork = ({
   thumbnail,
   accessibility,
   status,
-  src,
 }) => {
   const { user } = useLoggedInUser();
   const { pathname } = useLocation();
   const { setInfo } = usePresentation();
   const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
   const source = useMemo(
-    () => (content.startsWith('/videos/') ? thumbnail : getThumbnail(ARTWORKS, userId, content)),
+    () =>
+      content.startsWith('/videos/')
+        ? thumbnail
+        : getThumbnail(ARTWORKS, userId, `main-${content}`),
     [userId, content, thumbnail],
   );
 
