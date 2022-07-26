@@ -62,7 +62,7 @@ const StyledVideoDetails = styled('div')`
   }
 `;
 
-const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
+const VideoInfo = ({ artworkId, file, src, state, setVisible, onCancel, onCompleted }) => {
   const { user } = useLoggedInUser();
   const [uploading, setUploading] = useState(false);
   const { control, watch, handleSubmit } = useForm();
@@ -81,9 +81,9 @@ const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
       !title?.trim() ||
       !desc?.trim() ||
       !(
-        (title && state.title !== title) ||
-        (desc && state.description !== desc) ||
-        (accessibility && state.accessibility !== accessibility)
+        (title && state?.title !== title) ||
+        (desc && state?.description !== desc) ||
+        (accessibility && state?.accessibility !== accessibility)
       ),
     [title, desc, accessibility, state?.title, state?.description, state?.accessibility],
   );
@@ -132,6 +132,14 @@ const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
       updateArtwork();
     }
   }, [isImage, user.id, file, title, desc, accessibility, saveArtwork, updateArtwork]);
+
+  const handleCancel = useCallback(() => {
+    if (artworkId && !disabled) {
+      setVisible(true);
+    } else {
+      onCancel();
+    }
+  }, [artworkId, disabled, setVisible, onCancel]);
 
   return (
     <StyledVideoDetails>
@@ -198,7 +206,7 @@ const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
         saveText='CONTINUE'
         loading={loading}
         disabled={disabled}
-        onCancel={onCancel}
+        onCancel={handleCancel}
         onSave={handleSubmit(onContinue)}
       />
     </StyledVideoDetails>

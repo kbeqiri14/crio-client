@@ -1,14 +1,17 @@
-import { memo, useCallback, useEffect, useMemo } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { ARTWORKS } from '@configs/constants';
 import history from '@configs/history';
+import Confirmation from '@shared/Confirmation';
 import { getThumbnail } from '@utils/helpers';
 import { successToast } from '@ui-kit/Notification';
 import VideoDetails from './Details';
 
 const Video = () => {
   const { state } = useLocation();
+  const [visible, setVisible] = useState(false);
+  const hideConfirmation = useCallback(() => setVisible(false), []);
 
   const source = useMemo(
     () =>
@@ -33,7 +36,25 @@ const Video = () => {
     successToast('The content info is successfully updated');
   };
 
-  return <VideoDetails state={state} src={source} onCancel={onCancel} onCompleted={onCompleted} />;
+  return (
+    <>
+      <VideoDetails
+        state={state}
+        src={source}
+        setVisible={setVisible}
+        onCancel={onCancel}
+        onCompleted={onCompleted}
+      />
+      {visible && (
+        <Confirmation
+          visible={visible}
+          title='Are you sure you want to discard these changes?'
+          onConfirm={onCancel}
+          onCancel={hideConfirmation}
+        />
+      )}
+    </>
+  );
 };
 
 export default memo(Video);
