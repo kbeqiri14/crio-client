@@ -26,7 +26,7 @@ const LockState = ({
   isHovering,
 }) => {
   const { user } = useLoggedInUser();
-  const { setVideoInfo } = usePresentation();
+  const { setInfo } = usePresentation();
 
   const [image, wrapper] = useMemo(
     () =>
@@ -75,11 +75,11 @@ const LockState = ({
       'Subscribe and follow Creator to gain access',
       lockImage,
       () => {
-        setVideoInfo({});
+        setInfo({});
         history.push('/pricing');
       },
     ];
-  }, [unavailable, user.isSubscribed, setVideoInfo]);
+  }, [unavailable, user.isSubscribed, setInfo]);
 
   return unavailable || isLocked ? (
     <Wrapper style={wrapper} onClick={onClick}>

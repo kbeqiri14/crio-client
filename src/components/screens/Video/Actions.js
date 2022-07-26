@@ -13,7 +13,7 @@ const Actions = (props) => {
   const [visible, setVisible] = useState(false);
   const showConfirmation = useCallback(() => setVisible(true), []);
   const hideConfirmation = useCallback(() => setVisible(false), []);
-  const name = useMemo(() => (props.isProduct ? 'product' : 'artwork'), [props.isProduct]);
+  const name = useMemo(() => (props.isProduct ? 'product' : 'content'), [props.isProduct]);
   const handleEdit = useCallback(() => history.push(`/edit-${name}`, props), [name, props]);
 
   const [removeProduct, { loading: removingProduct }] = useMutation(deleteProduct, {

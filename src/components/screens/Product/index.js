@@ -4,9 +4,10 @@ import { Skeleton } from 'antd';
 import { useQuery } from '@apollo/client';
 import styled from 'styled-components';
 
-import { BUCKET_NAME, COGNITO_REGION } from '@app/configs/environment';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { getProduct } from '@app/graphql/queries/products.query';
+import { PRODUCTS } from '@configs/constants';
+import { getThumbnail } from '@utils/helpers';
 import { Col, Row } from '@ui-kit';
 import defaultCover from '@images/product.png';
 import Content from '../Artwork/Content';
@@ -38,7 +39,11 @@ export const Product = () => {
             ...data.getProduct,
             isProduct: true,
             thumbnail: data.getProduct.thumbnail
-              ? `https://${BUCKET_NAME}.s3.${COGNITO_REGION}.amazonaws.com/${data.getProduct.userId}/products/thumbnail-${data.getProduct.thumbnail}`
+              ? getThumbnail(
+                  PRODUCTS,
+                  data.getProduct.userId,
+                  `thumbnail-${data.getProduct.thumbnail}`,
+                )
               : defaultCover,
           }
         : {},
@@ -82,8 +87,8 @@ export const Product = () => {
   }
   return (
     <>
-      <Content videoInfo={product} isLocked={isLocked} />
-      <MoreProductsSection videoInfo={product} />
+      <Content info={product} isLocked={isLocked} />
+      <MoreProductsSection info={product} />
     </>
   );
 };

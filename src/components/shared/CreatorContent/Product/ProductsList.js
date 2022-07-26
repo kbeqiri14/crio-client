@@ -25,7 +25,7 @@ const Item = memo(({ item, large }) => (
 ));
 
 const Block = memo(({ block, padding_top = 0 }) => (
-  <Row justify='center' gutter={[22, 20]} padding_top={padding_top}>
+  <Row gutter={[22, 20]} padding_top={padding_top}>
     {block.map((item) => (
       <Col key={item.productId}>
         <Item item={item} />

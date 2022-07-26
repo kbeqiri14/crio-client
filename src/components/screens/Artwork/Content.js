@@ -2,8 +2,9 @@ import { memo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { PRODUCTS, ARTWORKS } from '@configs/constants';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
-import { urlify } from '@utils/helpers';
+import { getThumbnail, urlify } from '@utils/helpers';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { Col, Row, Text, Title } from '@ui-kit';
 import LockState from '@shared/CreatorContent/LockState';
@@ -30,10 +31,12 @@ const Wrapper = styled('div')`
       }
     }
   }
-
-  @media screen and (max-width: 1030px) {
+  @media screen and (max-width: 420px) {
     .flex-dir {
       flex-direction: column-reverse;
+    }
+    .widget {
+      width: 380px;
     }
   }
 `;
@@ -43,16 +46,16 @@ const ImageWrapper = styled('div')`
   justify-content: center;
   align-items: center;
   background: #182024;
-  border-radius: 16px;
+  border-radius: 30px;
   max-width: 1040px;
-  max-height: 638px;
+  max-height: 538px;
   height: auto;
   img {
     width: 100%;
     height: auto;
-    max-height: 638px;
+    max-height: 538px;
     object-fit: cover;
-    border-radius: 16px;
+    border-radius: 30px;
     &.default {
       width: 409px;
       height: 309px;
@@ -61,27 +64,23 @@ const ImageWrapper = styled('div')`
   }
 `;
 
-export const Content = ({ videoInfo, videoUri, isLocked }) => {
-  const avatarUrl = useAvatarUrl(
-    videoInfo.providerType,
-    videoInfo.providerUserId,
-    videoInfo.avatar,
-  );
-  const { setVideoInfo } = usePresentation();
+export const Content = ({ info, content, isLocked }) => {
+  const avatarUrl = useAvatarUrl(info.providerType, info.providerUserId, info.avatar);
+  const { setInfo } = usePresentation();
 
-  const hide = useCallback(() => setVideoInfo({}), [setVideoInfo]);
+  const hide = useCallback(() => setInfo({}), [setInfo]);
   return (
     <Wrapper>
-      <Row justify='center' gutter={[0, 40]}>
+      <Row justify='center' gutter={[0, 20]}>
         <Col span={24}>
           <Row gutter={[0, 12]}>
             <Col span={24}>
-              <Title level={1}>{videoInfo.title}</Title>
+              <Title level={1}>{info.title}</Title>
             </Col>
             <Col span={24}>
               <Row align='middle'>
                 <Col>
-                  {videoInfo.providerUserId && (
+                  {info.providerUserId && (
                     <img
                       src={avatarUrl}
                       height='33'
@@ -93,7 +92,7 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
                 </Col>
                 <Col margin_left={20}>
                   <Text level={4} color='primary' onClick={hide}>
-                    <Link to={`/profile/${videoInfo.username}`}>{videoInfo.username}</Link>
+                    <Link to={`/profile/${info.username}`}>{info.username}</Link>
                   </Text>
                 </Col>
               </Row>
@@ -103,35 +102,47 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
         {isLocked ? (
           <Col span={24}>
             <div className='lock'>
-              <LockState
-                userId={videoInfo.userId}
-                accessibility={videoInfo.accessibility}
-                size='lg'
-              />
+              <LockState userId={info.userId} accessibility={info.accessibility} size='lg' />
               <ImageWrapper>
                 <img
-                  src={videoInfo.isProduct ? videoInfo.thumbnail : videoInfo.thumbnailUri}
+                  src={
+                    info.isProduct || info.isImage
+                      ? getThumbnail(
+                          info.isProduct ? PRODUCTS : ARTWORKS,
+                          info.userId,
+                          info.isProduct ? info.thumbnail : `main-${info.thumbnail}`,
+                        )
+                      : info.thumbnail
+                  }
                   alt='artwork'
-                  className={videoInfo.thumbnail?.startsWith('/static/media/') ? 'default' : ''}
+                  className={info.content?.startsWith('/static/media/') ? 'default' : ''}
                 />
               </ImageWrapper>
             </div>
           </Col>
         ) : (
           <Col span={24}>
-            {videoInfo.isProduct ? (
+            {info.isProduct || info.isImage ? (
               <ImageWrapper>
                 <img
-                  src={videoInfo.thumbnail}
+                  src={
+                    info.isProduct
+                      ? info.thumbnail
+                      : getThumbnail(
+                          info.isProduct ? PRODUCTS : ARTWORKS,
+                          info.userId,
+                          info.isProduct ? info.content : `main-${info.thumbnail}`,
+                        )
+                  }
                   alt='product'
-                  className={videoInfo.thumbnail?.startsWith('/static/media/') ? 'default' : ''}
+                  className={info.thumbnail?.startsWith('/static/media/') ? 'default' : ''}
                 />
               </ImageWrapper>
             ) : (
               <div className='video-view__player embed-responsive aspect-ratio-16/9'>
                 <iframe
-                  title={videoInfo.title || 'Crio video player'}
-                  src={`https://player.vimeo.com/video/${videoUri}?h=dc77330a55&color=ffffff&title=0&byline=0&portrait=0`}
+                  title={info.title || 'Crio video player'}
+                  src={`https://player.vimeo.com/video/${content}?h=dc77330a55&color=ffffff&title=0&byline=0&portrait=0`}
                   frameBorder='0'
                   allow='autoplay; fullscreen; picture-in-picture'
                   allowFullScreen
@@ -141,24 +152,24 @@ export const Content = ({ videoInfo, videoUri, isLocked }) => {
           </Col>
         )}
         <Col span={24}>
-          <Row className='flex-dir' justify='space-between' gutter={[0, 30]}>
-            <Col max_width={videoInfo.isProduct ? 722 : undefined}>
+          <Row className='flex-dir' justify='space-between'>
+            <Col max_width={info.isProduct ? 722 : undefined}>
               <Text level={4} color='dark25'>
                 <div
-                  dangerouslySetInnerHTML={{ __html: urlify(videoInfo.description) }}
+                  dangerouslySetInnerHTML={{ __html: urlify(info.description) }}
                   style={{ whiteSpace: 'pre-line' }}
                 />
               </Text>
             </Col>
-            {videoInfo.isProduct && (
+            {info.isProduct && (
               <Col>
                 <BuyWidget
-                  userId={videoInfo.userId}
-                  username={videoInfo.username}
-                  productId={videoInfo.productId}
-                  price={videoInfo.price}
-                  limit={videoInfo.limit}
-                  accessibility={videoInfo.accessibility}
+                  userId={info.userId}
+                  username={info.username}
+                  productId={info.productId}
+                  price={info.price}
+                  limit={info.limit}
+                  accessibility={info.accessibility}
                 />
               </Col>
             )}

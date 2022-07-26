@@ -3,12 +3,14 @@ import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import history from '@configs/history';
+import { ARTWORKS } from '@configs/constants';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
-// import videoIcon from '@images/video-icon.png';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
-import { Col, Row, Text } from '@ui-kit';
 import Actions from '@screens/Video/Actions';
+import { getThumbnail } from '@utils/helpers';
+import { Col, Row, Text } from '@ui-kit';
+import { ReactComponent as VideoIcon } from '@svgs/video.svg';
 import LockState from '../LockState';
 
 const Wrapper = styled('div')`
@@ -22,25 +24,10 @@ const Wrapper = styled('div')`
     border-radius: 30px;
     object-fit: cover;
   }
-  .video-icon {
+  .video {
     position: absolute;
     top: 20px;
-    right: 20px;
-  }
-  .video {
-    position: relative;
-  }
-  .actions {
-    width: 332px;
-    position: absolute;
-    svg {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-    }
-    opacity: 0;
-    visibility: hidden;
-    transition: visibility 0s, opacity 0.4s linear;
+    right: 35px;
   }
   .info {
     position: absolute;
@@ -66,7 +53,6 @@ const Wrapper = styled('div')`
     }
   }
   &:hover:not(.is-locked) {
-    .actions,
     .info,
     .tooltip {
       opacity: 1;
@@ -84,15 +70,21 @@ const Artwork = ({
   artworkId,
   title,
   description,
-  videoUri,
+  content,
+  thumbnail,
   accessibility,
   status,
-  src,
 }) => {
   const { user } = useLoggedInUser();
   const { pathname } = useLocation();
-  const { setVideoInfo } = usePresentation();
+  const { setInfo } = usePresentation();
   const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
+
+  const isVideo = useMemo(() => content.startsWith('/videos/'), [content]);
+  const source = useMemo(
+    () => (isVideo ? thumbnail : getThumbnail(ARTWORKS, userId, `main-${thumbnail}`)),
+    [isVideo, userId, thumbnail],
+  );
 
   const showActions = useMemo(() => {
     const username = pathname.split('/').slice(-1)[0];
@@ -112,16 +104,19 @@ const Artwork = ({
       return;
     }
     window.history.replaceState('', '', `/artwork/${artworkId}`);
-    setVideoInfo({
+    setInfo({
       title,
       description,
-      id: videoUri?.substring(videoUri?.lastIndexOf('/') + 1),
+      id: content?.substring(content?.lastIndexOf('/') + 1),
       artworkId,
       userId,
       providerType,
       providerUserId,
       username,
       avatar,
+      content,
+      thumbnail,
+      isImage: !content.startsWith('/videos/'),
     });
   }, [
     providerType,
@@ -132,34 +127,40 @@ const Artwork = ({
     artworkId,
     title,
     description,
-    videoUri,
+    content,
+    thumbnail,
     pathname,
-    setVideoInfo,
+    setInfo,
   ]);
 
   return (
     <>
       <Wrapper className={isLocked ? 'is-locked' : ''}>
-        <div className='actions' onClick={() => !showActions && showArtwork()}>
-          {showActions && (
-            <Actions
-              username={username}
-              artworkId={artworkId}
-              videoUri={videoUri}
-              title={title}
-              description={description}
-              accessibility={accessibility}
-            />
-          )}
-        </div>
-        <div className='info' onClick={showArtwork}>
-          <Text level={4}>{title}</Text>
+        <div className='info'>
+          <Row justify='space-between'>
+            <Col span={showActions ? 19 : 24}>
+              <Text level={4} ellipsis={{ rows: 1, tooltip: title }}>
+                {title}
+              </Text>
+            </Col>
+            {showActions && (
+              <Col span={3}>
+                <Actions
+                  userId={userId}
+                  username={username}
+                  artworkId={artworkId}
+                  content={content}
+                  title={title}
+                  description={description}
+                  accessibility={accessibility}
+                />
+              </Col>
+            )}
+          </Row>
         </div>
         <LockState userId={userId} accessibility={accessibility} status={status} />
-        {/* <div className='video'> */}
-        {/* <img src={videoIcon} alt='video' className='video-icon' /> */}
-        <img src={src} alt='artwork' width={330} height={330} onClick={showArtwork} />
-        {/* </div> */}
+        {isVideo && <VideoIcon className='video' />}
+        <img src={source} alt='artwork' width={330} height={330} onClick={showArtwork} />
       </Wrapper>
       <Link to={`/profile/${username}`}>
         <Row gutter={12} align='middle' padding_top={8}>

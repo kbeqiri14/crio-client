@@ -218,6 +218,7 @@ const ProductForm = ({ state }) => {
                   name='price'
                   control={control}
                   defaultValue={state?.price}
+                  rules={{ pattern: /[0-9]/ }}
                   render={({ field }) =>
                     visibleBroadcast ? (
                       <Link to='/payment'>
@@ -231,7 +232,6 @@ const ProductForm = ({ state }) => {
                             <Input
                               {...field}
                               level={4}
-                              pattern='[0-9]*'
                               maxLength={50}
                               placeholder='$'
                               disabled={isFree}
@@ -243,7 +243,6 @@ const ProductForm = ({ state }) => {
                       <Input
                         {...field}
                         level={4}
-                        pattern='[0-9]*'
                         maxLength={50}
                         placeholder='$'
                         disabled={isFree}

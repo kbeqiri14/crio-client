@@ -75,7 +75,6 @@ export const Content = ({
         username,
         isProfile,
         isCreator: true,
-        isMarketplace: true,
       }
     : { isNoResult: true };
 
@@ -83,7 +82,9 @@ export const Content = ({
     <Wrapper>
       <Tabs activeKey={activeKey} onTabClick={onTabClick}>
         <TabPane key={tabs.MARKETPLACE} tab={tabs.MARKETPLACE}>
-          {!productsCount && !productsList?.length && <EmptyState {...props} />}
+          {!productsCount && !productsList?.length && (
+            <EmptyState {...props} isMarketplace={true} />
+          )}
           <ProductsList productsList={productsList} />
           <LoadMoreButton
             visible={visibleLoadMoreProducts}

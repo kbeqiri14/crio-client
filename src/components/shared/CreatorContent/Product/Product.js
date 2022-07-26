@@ -2,10 +2,11 @@ import { memo, useCallback, useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import history from '@configs/history';
-import { BUCKET_NAME, COGNITO_REGION } from '@app/configs/environment';
+import { PRODUCTS } from '@configs/constants';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
+import { getThumbnail } from '@utils/helpers';
 import { Col, Row, Text } from '@ui-kit';
 import Actions from '@screens/Video/Actions';
 import product from '@images/product.png';
@@ -32,7 +33,7 @@ const Product = ({
   const [isHovering, setIsHovering] = useState(false);
   const { user } = useLoggedInUser();
   const { pathname } = useLocation();
-  const { setVideoInfo } = usePresentation();
+  const { setInfo } = usePresentation();
   const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
 
   const handleMouseOver = useCallback(() => setIsHovering(true), []);
@@ -61,10 +62,7 @@ const Product = ({
   }, [user.isCreator, user.isSubscribed, user.followings, price, userId]);
 
   const src = useMemo(
-    () =>
-      thumbnail
-        ? `https://${BUCKET_NAME}.s3.${COGNITO_REGION}.amazonaws.com/${userId}/products/thumbnail-${thumbnail}`
-        : product,
+    () => (thumbnail ? getThumbnail(PRODUCTS, userId, `thumbnail-${thumbnail}`) : product),
     [userId, thumbnail],
   );
 
@@ -95,7 +93,7 @@ const Product = ({
     return name;
   }, [thumbnail, large]);
 
-  const hide = useCallback(() => setVideoInfo({}), [setVideoInfo]);
+  const hide = useCallback(() => setInfo({}), [setInfo]);
 
   const showProduct = useCallback(() => {
     if (pathname.includes('/product/')) {
@@ -103,7 +101,7 @@ const Product = ({
       return;
     }
     window.history.replaceState('', '', `/product/${productId}`);
-    setVideoInfo({
+    setInfo({
       userId,
       providerType,
       providerUserId,
@@ -134,7 +132,7 @@ const Product = ({
     src,
     pathname,
     productId,
-    setVideoInfo,
+    setInfo,
   ]);
 
   return (

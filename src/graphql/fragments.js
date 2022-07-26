@@ -71,8 +71,8 @@ export const artworkFragment = gql`
     providerType
     providerUserId
     avatar
-    videoUri
-    thumbnailUri
+    content
+    thumbnail
     title
     description
     accessibility
