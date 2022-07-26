@@ -76,7 +76,17 @@ const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
       return URL.createObjectURL(file);
     }
   }, [artworkId, file]);
-  const disabled = useMemo(() => !title?.trim() || !desc?.trim(), [desc, title]);
+  const disabled = useMemo(
+    () =>
+      !title?.trim() ||
+      !desc?.trim() ||
+      !(
+        (title && state.title !== title) ||
+        (desc && state.description !== desc) ||
+        (accessibility && state.accessibility !== accessibility)
+      ),
+    [title, desc, accessibility, state?.title, state?.description, state?.accessibility],
+  );
   const videoId = useMemo(
     () => state?.content?.substring(state?.content?.lastIndexOf('/') + 1),
     [state?.content],
@@ -169,11 +179,11 @@ const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
       </Row>
       <div className='player'>
         {src ? (
-          <img alt='artwork' src={src} />
+          <img alt='artwork' src={src} className='border-radius-16' />
         ) : artworkId ? (
           <ReactPlayer url={url} controls={true} width='inherit' height={520} />
         ) : (
-          <div className='edit-video video-view__player embed-responsive aspect-ratio-16/9'>
+          <div className='video-view__player embed-responsive aspect-ratio-16/9'>
             <iframe
               title={'Crio video player'}
               src={`https://player.vimeo.com/video/${videoId}?h=dc77330a55&color=ffffff&title=0&byline=0&portrait=0`}
