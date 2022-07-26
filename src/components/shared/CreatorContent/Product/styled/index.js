@@ -76,11 +76,6 @@ export const ImageWrapper = styled('div')`
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
     background: #182024;
-    img {
-      width: 212px;
-      height: 160px;
-      object-fit: contain;
-    }
   }
   &.large {
     width: 684px;
@@ -93,11 +88,6 @@ export const ImageWrapper = styled('div')`
       border-top-left-radius: 30px;
       border-top-right-radius: 30px;
       background: #182024;
-      img {
-        width: 404px;
-        height: 305px;
-        object-fit: contain;
-      }
     }
     .actions {
       width: 684px;

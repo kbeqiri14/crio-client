@@ -48,7 +48,7 @@ export const Profile = () => {
   }, [username, loggedInUser.username, requestUser]);
 
   if (!loggedInUserLoading && !loading && !user) {
-    return <EmptyState />;
+    return <EmptyState isNoData />;
   }
   return (
     <>
