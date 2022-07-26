@@ -30,7 +30,7 @@ const Video = () => {
   );
   const onCompleted = () => {
     onCancel();
-    successToast('The video info is successfully updated');
+    successToast('The content info is successfully updated');
   };
 
   return <VideoDetails state={state} src={source} onCancel={onCancel} onCompleted={onCompleted} />;
