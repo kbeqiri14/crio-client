@@ -134,12 +134,12 @@ const VideoInfo = ({ artworkId, file, src, state, setVisible, onCancel, onComple
   }, [isImage, user.id, file, title, desc, accessibility, saveArtwork, updateArtwork]);
 
   const handleCancel = useCallback(() => {
-    if (artworkId && !disabled) {
+    if (state && !disabled) {
       setVisible(true);
     } else {
       onCancel();
     }
-  }, [artworkId, disabled, setVisible, onCancel]);
+  }, [state, disabled, setVisible, onCancel]);
 
   return (
     <StyledVideoDetails>
