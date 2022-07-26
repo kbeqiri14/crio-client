@@ -94,6 +94,7 @@ const Upload = () => {
           src={state.src}
           onCancel={onCancel}
           onCompleted={onCompleted}
+          goToProfile={goToProfile}
         />
       )}
       {state.coverImageVisible && (
