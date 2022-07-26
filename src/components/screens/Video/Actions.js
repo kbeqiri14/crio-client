@@ -29,7 +29,7 @@ const Actions = (props) => {
     variables: { params: { artworkId: props.artworkId } },
     onCompleted: () => {
       hideConfirmation();
-      successToast('The video is successfully deleted');
+      successToast('The content is successfully deleted');
       setTimeout(() => (window.location.href = `/profile/artworks/${props.username}`), 1300);
     },
   });
