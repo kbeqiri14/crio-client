@@ -57,8 +57,6 @@ const ImageWrapper = styled('div')`
     object-fit: cover;
     border-radius: 30px;
     &.default {
-      width: 409px;
-      height: 309px;
       object-fit: contain;
     }
   }
