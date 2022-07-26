@@ -46,7 +46,7 @@ const ImageWrapper = styled('div')`
   justify-content: center;
   align-items: center;
   background: #182024;
-  border-radius: 30px;
+  border-radius: 16px;
   max-width: 1040px;
   max-height: 538px;
   height: auto;
@@ -55,7 +55,7 @@ const ImageWrapper = styled('div')`
     height: auto;
     max-height: 538px;
     object-fit: cover;
-    border-radius: 30px;
+    border-radius: 16px;
     &.default {
       object-fit: contain;
     }
@@ -104,13 +104,13 @@ export const Content = ({ info, content, isLocked }) => {
               <ImageWrapper>
                 <img
                   src={
-                    info.isProduct || info.isImage
-                      ? getThumbnail(
+                    info.isProduct
+                      ? info.thumbnail
+                      : getThumbnail(
                           info.isProduct ? PRODUCTS : ARTWORKS,
                           info.userId,
                           info.isProduct ? info.thumbnail : `main-${info.thumbnail}`,
                         )
-                      : info.thumbnail
                   }
                   alt='artwork'
                   className={info.content?.startsWith('/static/media/') ? 'default' : ''}
