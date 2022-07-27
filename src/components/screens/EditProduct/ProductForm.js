@@ -246,6 +246,15 @@ const ProductForm = ({ state }) => {
                         maxLength={50}
                         placeholder='$'
                         disabled={isFree}
+                        onChange={(e) =>
+                          field.onChange(
+                            isNaN(e.target.value)
+                              ? isNaN(field.value)
+                                ? ''
+                                : field.value
+                              : e.target.value,
+                          )
+                        }
                       />
                     )
                   }
@@ -320,7 +329,21 @@ const ProductForm = ({ state }) => {
                       control={control}
                       defaultValue={state?.limit}
                       render={({ field }) => (
-                        <Input {...field} level={4} maxLength={50} placeholder='Unlimited' />
+                        <Input
+                          {...field}
+                          level={4}
+                          maxLength={50}
+                          placeholder='Unlimited'
+                          onChange={(e) =>
+                            field.onChange(
+                              isNaN(e.target.value)
+                                ? isNaN(field.value)
+                                  ? ''
+                                  : field.value
+                                : e.target.value,
+                            )
+                          }
+                        />
                       )}
                     />
                   </Col>
