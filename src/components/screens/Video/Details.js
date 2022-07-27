@@ -48,12 +48,13 @@ const StyledVideoDetails = styled('div')`
     max-width: 922px;
     min-height: 520px;
     video {
-      border-radius: 16px;
+      border-radius: 30px;
     }
     img {
       height: auto;
       width: 100%;
       max-height: 538px;
+      object-fit: cover;
     }
   }
   .access-section {
@@ -61,7 +62,7 @@ const StyledVideoDetails = styled('div')`
   }
 `;
 
-const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
+const VideoInfo = ({ artworkId, file, src, state, setVisible, onCancel, onCompleted }) => {
   const { user } = useLoggedInUser();
   const [uploading, setUploading] = useState(false);
   const { control, watch, handleSubmit } = useForm();
@@ -75,14 +76,24 @@ const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
       return URL.createObjectURL(file);
     }
   }, [artworkId, file]);
-  const disabled = useMemo(() => !title?.trim() || !desc?.trim(), [desc, title]);
+  const disabled = useMemo(
+    () =>
+      !title?.trim() ||
+      !desc?.trim() ||
+      !(
+        (title && state?.title !== title) ||
+        (desc && state?.description !== desc) ||
+        (accessibility && state?.accessibility !== accessibility)
+      ),
+    [title, desc, accessibility, state?.title, state?.description, state?.accessibility],
+  );
   const videoId = useMemo(
     () => state?.content?.substring(state?.content?.lastIndexOf('/') + 1),
     [state?.content],
   );
 
   const [saveArtwork, { loading: creatingArtwork }] = useMutation(createArtwork, {
-    onCompleted: () => (isImage ? onCancel() : onCompleted()),
+    onCompleted: ({ createArtwork }) => onCompleted(createArtwork.id),
     onError: () => {
       errorToast('Something went wrong!', 'Please, try again later!');
     },
@@ -92,7 +103,7 @@ const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
     variables: {
       params: { artworkId: artworkId || state?.artworkId, title, description: desc, accessibility },
     },
-    onCompleted: () => (isImage ? onCancel() : onCompleted()),
+    onCompleted: () => onCompleted(),
     onError: (data) => errorToast(data?.message),
   });
 
@@ -122,6 +133,14 @@ const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
     }
   }, [isImage, user.id, file, title, desc, accessibility, saveArtwork, updateArtwork]);
 
+  const handleCancel = useCallback(() => {
+    if (state && !disabled) {
+      setVisible(true);
+    } else {
+      onCancel();
+    }
+  }, [state, disabled, setVisible, onCancel]);
+
   return (
     <StyledVideoDetails>
       <Row gutter={[0, 20]} className='info'>
@@ -131,7 +150,7 @@ const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
             control={control}
             defaultValue={state?.title}
             render={({ field }) => (
-              <Input {...field} level={4} maxLength={50} placeholder='Write the artwork title' />
+              <Input {...field} level={4} maxLength={50} placeholder='Write the content title' />
             )}
           />
         </Col>
@@ -168,11 +187,11 @@ const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
       </Row>
       <div className='player'>
         {src ? (
-          <img alt='artwork' src={src} />
+          <img alt='artwork' src={src} className='border-radius-16' />
         ) : artworkId ? (
           <ReactPlayer url={url} controls={true} width='inherit' height={520} />
         ) : (
-          <div className='edit-video video-view__player embed-responsive aspect-ratio-16/9'>
+          <div className='video-view__player embed-responsive aspect-ratio-16/9'>
             <iframe
               title={'Crio video player'}
               src={`https://player.vimeo.com/video/${videoId}?h=dc77330a55&color=ffffff&title=0&byline=0&portrait=0`}
@@ -187,7 +206,7 @@ const VideoInfo = ({ artworkId, file, src, state, onCancel, onCompleted }) => {
         saveText='CONTINUE'
         loading={loading}
         disabled={disabled}
-        onCancel={onCancel}
+        onCancel={handleCancel}
         onSave={handleSubmit(onContinue)}
       />
     </StyledVideoDetails>

@@ -38,7 +38,7 @@ const Wrapper = styled('div')`
   .menu {
     height: 100vh;
     overflow-y: scroll;
-    padding-bottom: 70px;
+    padding-bottom: 100px;
   }
 `;
 

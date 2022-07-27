@@ -1,8 +1,8 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { PRODUCTS, ARTWORKS } from '@configs/constants';
+import { ARTWORKS } from '@configs/constants';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { getThumbnail, urlify } from '@utils/helpers';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
@@ -31,12 +31,12 @@ const Wrapper = styled('div')`
       }
     }
   }
-  @media screen and (max-width: 1050px) {
+  @media screen and (max-width: 420px) {
     .flex-dir {
       flex-direction: column-reverse;
     }
     .widget {
-      width: 350px;
+      width: 380px;
     }
   }
 `;
@@ -57,8 +57,6 @@ const ImageWrapper = styled('div')`
     object-fit: cover;
     border-radius: 16px;
     &.default {
-      width: 409px;
-      height: 309px;
       object-fit: contain;
     }
   }
@@ -68,7 +66,16 @@ export const Content = ({ info, content, isLocked }) => {
   const avatarUrl = useAvatarUrl(info.providerType, info.providerUserId, info.avatar);
   const { setInfo } = usePresentation();
 
+  const source = useMemo(
+    () =>
+      info.isProduct || info.content?.startsWith('/videos/')
+        ? info.thumbnail
+        : getThumbnail(ARTWORKS, info.userId, `main-${info.content}`),
+    [info.isProduct, info.userId, info.content, info.thumbnail],
+  );
+
   const hide = useCallback(() => setInfo({}), [setInfo]);
+
   return (
     <Wrapper>
       <Row justify='center' gutter={[0, 20]}>
@@ -105,15 +112,7 @@ export const Content = ({ info, content, isLocked }) => {
               <LockState userId={info.userId} accessibility={info.accessibility} size='lg' />
               <ImageWrapper>
                 <img
-                  src={
-                    info.isProduct || info.isImage
-                      ? getThumbnail(
-                          info.isProduct ? PRODUCTS : ARTWORKS,
-                          info.userId,
-                          info.isProduct ? info.thumbnail : `main-${info.thumbnail}`,
-                        )
-                      : info.thumbnail
-                  }
+                  src={source}
                   alt='artwork'
                   className={info.content?.startsWith('/static/media/') ? 'default' : ''}
                 />
@@ -125,15 +124,7 @@ export const Content = ({ info, content, isLocked }) => {
             {info.isProduct || info.isImage ? (
               <ImageWrapper>
                 <img
-                  src={
-                    info.isProduct
-                      ? info.thumbnail
-                      : getThumbnail(
-                          info.isProduct ? PRODUCTS : ARTWORKS,
-                          info.userId,
-                          info.isProduct ? info.content : `main-${info.thumbnail}`,
-                        )
-                  }
+                  src={source}
                   alt='product'
                   className={info.thumbnail?.startsWith('/static/media/') ? 'default' : ''}
                 />

@@ -21,6 +21,9 @@ const Wrapper = styled('div')`
   &.second-wrap {
     padding-bottom: 100px;
   }
+  > div {
+    padding-top: 100px;
+  }
 `;
 
 const EmptyState = ({
@@ -29,15 +32,19 @@ const EmptyState = ({
   isProfile,
   isNotFound,
   isNoResult,
+  isNoData,
   isSubscribed,
   isMarketplace,
 }) => {
   const text = useMemo(() => {
-    if (isNotFound) {
-      return isMarketplace ? 'Product is not found' : 'Content is not found';
+    if (isNoData) {
+      return 'No data found';
     }
     if (isNoResult) {
       return 'No result';
+    }
+    if (isNotFound) {
+      return isMarketplace ? 'Product is not found' : 'Content is not found';
     }
     if (isProfile) {
       let text = 'is not following anyone yet';
@@ -54,7 +61,17 @@ const EmptyState = ({
     return isSubscribed
       ? 'You don’t have any following yet'
       : 'Subscribe to follow creators and gain access to free digital products across Crio';
-  }, [username, isCreator, isProfile, isSubscribed, isMarketplace, isNotFound, isNoResult]);
+  }, [
+    username,
+    isCreator,
+    isProfile,
+    isSubscribed,
+    isMarketplace,
+    isNotFound,
+    isNoResult,
+    isNoData,
+  ]);
+
   const icon = useMemo(() => {
     if (isNotFound) {
       return notFound;
@@ -70,22 +87,22 @@ const EmptyState = ({
     }
     return noUser;
   }, [isCreator, isProfile, isMarketplace, isNotFound, isNoResult]);
+
   const [label, color] = useMemo(
     () => (isCreator ? ['UPLOAD', 'blue'] : ['SUBSCRIBE', 'green']),
     [isCreator],
   );
-  const visible = useMemo(
-    () => !isNoResult && !isNotFound && !isProfile && (isCreator || !isSubscribed),
-    [isCreator, isProfile, isSubscribed, isNotFound, isNoResult],
-  );
+
+  const visible = useMemo(() => isProfile !== undefined && !isProfile, [isProfile]);
+
   const onClick = useCallback(
     () => history.push(`/${isCreator ? (isMarketplace ? 'upload' : 'upload/artwork') : 'pricing'}`),
     [isCreator, isMarketplace],
   );
 
   return (
-    <Wrapper className={isNotFound ? 'wrap' : isNoResult ? 'second-wrap' : ''}>
-      <Row justify='center' align='middle' padding_top={100} gutter={[0, 20]}>
+    <Wrapper className={isNotFound || isNoData ? 'wrap' : isNoResult ? 'second-wrap' : ''}>
+      <Row justify='center' align='middle' gutter={[0, 20]}>
         <Col span={24} align='center' padding_bottom={20}>
           <img src={icon} alt='empty' />
         </Col>

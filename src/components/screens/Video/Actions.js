@@ -13,7 +13,7 @@ const Actions = (props) => {
   const [visible, setVisible] = useState(false);
   const showConfirmation = useCallback(() => setVisible(true), []);
   const hideConfirmation = useCallback(() => setVisible(false), []);
-  const name = useMemo(() => (props.isProduct ? 'product' : 'artwork'), [props.isProduct]);
+  const name = useMemo(() => (props.isProduct ? 'product' : 'content'), [props.isProduct]);
   const handleEdit = useCallback(() => history.push(`/edit-${name}`, props), [name, props]);
 
   const [removeProduct, { loading: removingProduct }] = useMutation(deleteProduct, {
@@ -29,7 +29,7 @@ const Actions = (props) => {
     variables: { params: { artworkId: props.artworkId } },
     onCompleted: () => {
       hideConfirmation();
-      successToast('The video is successfully deleted');
+      successToast('The content is successfully deleted');
       setTimeout(() => (window.location.href = `/profile/artworks/${props.username}`), 1300);
     },
   });

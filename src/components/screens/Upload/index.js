@@ -35,7 +35,7 @@ const setState = (payload) => ({
     artworkId: payload.artworkId,
     src: payload.src,
   },
-  [types.UPLOAD_COVER_IMAGE]: { coverImageVisible: true },
+  [types.UPLOAD_COVER_IMAGE]: { coverImageVisible: true, artworkId: payload.artworkId },
   [types.SET_FILE]: { file: payload.file },
   [types.SET_VIDEO_URI]: { content: payload.content, uploadLink: payload.uploadLink },
   [types.CONFIRMATION_VISIBLE]: { confirmationVisible: true },
@@ -68,18 +68,15 @@ const Upload = () => {
     onCompleted: goToProfile,
   });
 
-  const onCancel = useCallback(() => {
-    if (state.file?.type?.split('/')?.[0] === 'image') {
-      goToProfile();
-    } else {
-      dispatch({ type: types.CONFIRMATION_VISIBLE });
-    }
-  }, [state.file?.type, goToProfile, dispatch]);
+  const onCancel = useCallback(() => dispatch({ type: types.CONFIRMATION_VISIBLE }), [dispatch]);
   const onConfirm = useCallback(
     () => (state.file?.type?.split('/')?.[0] === 'image' ? goToProfile() : removeArtwork()),
     [state.file?.type, goToProfile, removeArtwork],
   );
-  const onCompleted = useCallback(() => dispatch({ type: types.UPLOAD_COVER_IMAGE }), [dispatch]);
+  const onCompleted = useCallback(
+    (id) => dispatch({ type: types.UPLOAD_COVER_IMAGE, artworkId: id }),
+    [dispatch],
+  );
 
   return (
     <Fragment>
@@ -105,7 +102,9 @@ const Upload = () => {
       {state.coverImageVisible && (
         <CoverImage
           visible={state.coverImageVisible}
+          userId={user.id}
           artworkId={state.artworkId}
+          isImage={state.file?.type?.split('/')?.[0] === 'image'}
           goToProfile={goToProfile}
         />
       )}

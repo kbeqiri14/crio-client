@@ -155,7 +155,7 @@ export const AppRoutes = () => {
             <PrivateRoute
               exact
               isAuthenticated={isAuthenticated}
-              path='/edit-artwork'
+              path='/edit-content'
               component={EditArtwork}
             />
             <PrivateRoute

@@ -35,8 +35,8 @@ const DragAndDrop = ({ content, file, types, dispatch, goToProfile }) => {
     [isVideo, isImage, loading, data?.getUploadUrl?.uri],
   );
   const onCancel = useCallback(
-    () => (content ? dispatch({ type: types.CONFIRMATION_VISIBLE }) : goToProfile()),
-    [content, goToProfile, dispatch, types.CONFIRMATION_VISIBLE],
+    () => (file ? dispatch({ type: types.CONFIRMATION_VISIBLE }) : goToProfile()),
+    [file, goToProfile, dispatch, types.CONFIRMATION_VISIBLE],
   );
   const onContinue = useCallback(async () => {
     if (isImage) {
