@@ -82,8 +82,15 @@ const Artwork = ({
 
   const isVideo = useMemo(() => content.startsWith('/videos/'), [content]);
   const source = useMemo(
-    () => (isVideo ? thumbnail : getThumbnail(ARTWORKS, userId, `thumbnail-${thumbnail}`)),
-    [isVideo, userId, thumbnail],
+    () =>
+      isVideo
+        ? thumbnail
+        : getThumbnail(
+            ARTWORKS,
+            userId,
+            `${thumbnail === content ? 'main' : 'thumbnail'}-${thumbnail}`,
+          ),
+    [isVideo, userId, thumbnail, content],
   );
 
   const showActions = useMemo(() => {
