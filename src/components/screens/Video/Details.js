@@ -62,16 +62,7 @@ const StyledVideoDetails = styled('div')`
   }
 `;
 
-const VideoInfo = ({
-  artworkId,
-  file,
-  src,
-  state,
-  setVisible,
-  onCancel,
-  onCompleted,
-  goToProfile,
-}) => {
+const VideoInfo = ({ artworkId, file, src, state, setVisible, onCancel, onCompleted }) => {
   const { user } = useLoggedInUser();
   const [uploading, setUploading] = useState(false);
   const { control, watch, handleSubmit } = useForm();
@@ -102,7 +93,7 @@ const VideoInfo = ({
   );
 
   const [saveArtwork, { loading: creatingArtwork }] = useMutation(createArtwork, {
-    onCompleted: () => (isImage ? goToProfile() : onCompleted()),
+    onCompleted: ({ createArtwork }) => onCompleted(createArtwork.id),
     onError: () => {
       errorToast('Something went wrong!', 'Please, try again later!');
     },
@@ -112,7 +103,7 @@ const VideoInfo = ({
     variables: {
       params: { artworkId: artworkId || state?.artworkId, title, description: desc, accessibility },
     },
-    onCompleted: () => (isImage ? goToProfile() : onCompleted()),
+    onCompleted: () => onCompleted(),
     onError: (data) => errorToast(data?.message),
   });
 

@@ -1,11 +1,14 @@
 import { memo, useCallback, useState } from 'react';
 import axios from 'axios';
 import { Col, Row, Upload } from 'antd';
+import imageCompression from 'browser-image-compression';
 import { useLazyQuery, useMutation } from '@apollo/client';
 
 import { getUploadImageLink } from '@app/graphql/queries/artworks.query';
 import { updateMetadata } from '@app/graphql/mutations/artwork.mutation';
+import { ARTWORKS } from '@configs/constants';
 import ActionButtons from '@shared/ActionButtons';
+import { formItemContent } from '@utils/upload.helper';
 import { Modal, Text, Title } from '@ui-kit';
 import { errorToast } from '@ui-kit/Notification';
 import { ReactComponent as CloseIcon } from '@svgs/close.svg';
@@ -13,7 +16,7 @@ import coverImage from '@images/cover-image.png';
 
 const { Dragger } = Upload;
 
-const CoverImage = ({ visible, artworkId, goToProfile }) => {
+const CoverImage = ({ visible, userId, artworkId, isImage, goToProfile }) => {
   const [image, setImage] = useState({});
   const [loading, setLoading] = useState(false);
   const props = {
@@ -58,10 +61,29 @@ const CoverImage = ({ visible, artworkId, goToProfile }) => {
     },
   });
 
-  const onSave = useCallback(() => {
+  const onSave = useCallback(async () => {
     setLoading(true);
-    requestUploadUrl();
-  }, [requestUploadUrl]);
+    if (isImage) {
+      const compressionFile = await imageCompression(image.file, {
+        maxSizeMB: 0.5,
+        maxWidthOrHeight: 1600,
+        useWebWorker: true,
+      });
+      const content = await formItemContent({
+        userId,
+        image: compressionFile,
+        type: ARTWORKS,
+        prefix: 'thumbnail',
+      });
+      const thumbnail = content?.image?.split('/')?.slice(-1)[0].slice('thumbnail-'.length);
+      updateArtwork({
+        variables: { params: { artworkId, thumbnail } },
+        onCompleted: () => setLoading(false),
+      });
+    } else {
+      requestUploadUrl();
+    }
+  }, [isImage, userId, artworkId, image.file, requestUploadUrl, updateArtwork]);
 
   return (
     <Modal
