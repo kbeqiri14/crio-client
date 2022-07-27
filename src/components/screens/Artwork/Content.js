@@ -2,7 +2,7 @@ import { memo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { PRODUCTS, ARTWORKS } from '@configs/constants';
+import { ARTWORKS } from '@configs/constants';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { getThumbnail, urlify } from '@utils/helpers';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
@@ -104,13 +104,9 @@ export const Content = ({ info, content, isLocked }) => {
               <ImageWrapper>
                 <img
                   src={
-                    info.isProduct
+                    info.isProduct || info.content?.startsWith('/videos/')
                       ? info.thumbnail
-                      : getThumbnail(
-                          info.isProduct ? PRODUCTS : ARTWORKS,
-                          info.userId,
-                          info.isProduct ? info.thumbnail : `main-${info.thumbnail}`,
-                        )
+                      : getThumbnail(ARTWORKS, info.userId, `main-${info.thumbnail}`)
                   }
                   alt='artwork'
                   className={info.content?.startsWith('/static/media/') ? 'default' : ''}
@@ -124,13 +120,9 @@ export const Content = ({ info, content, isLocked }) => {
               <ImageWrapper>
                 <img
                   src={
-                    info.isProduct
+                    info.isProduct || info.content?.startsWith('/videos/')
                       ? info.thumbnail
-                      : getThumbnail(
-                          info.isProduct ? PRODUCTS : ARTWORKS,
-                          info.userId,
-                          info.isProduct ? info.content : `main-${info.thumbnail}`,
-                        )
+                      : getThumbnail(ARTWORKS, info.userId, `main-${info.thumbnail}`)
                   }
                   alt='product'
                   className={info.thumbnail?.startsWith('/static/media/') ? 'default' : ''}
