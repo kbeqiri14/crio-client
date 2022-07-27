@@ -36,7 +36,10 @@ const Wrapper = styled('div')`
       flex-direction: column-reverse;
     }
     .widget {
-      width: 380px;
+      width: 334px;
+    }
+    .imageCol {
+      padding: 0 8px;
     }
   }
 `;
@@ -98,7 +101,7 @@ export const Content = ({ info, content, isLocked }) => {
           </Row>
         </Col>
         {isLocked ? (
-          <Col span={24}>
+          <Col className='imageCol' span={24}>
             <div className='lock'>
               <LockState userId={info.userId} accessibility={info.accessibility} size='lg' />
               <ImageWrapper>
@@ -119,7 +122,7 @@ export const Content = ({ info, content, isLocked }) => {
             </div>
           </Col>
         ) : (
-          <Col span={24}>
+          <Col className='imageCol' span={24}>
             {info.isProduct || info.isImage ? (
               <ImageWrapper>
                 <img
