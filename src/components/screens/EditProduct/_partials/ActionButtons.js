@@ -11,7 +11,14 @@ import { errorToast, successToast } from '@ui-kit/Notification';
 import { formItemContent } from '@utils/upload.helper';
 import Confirmation from '@shared/Confirmation';
 
-const ProductActionButtons = ({ state, image, disabled, handleSubmit, fillColor = 'blue' }) => {
+const ProductActionButtons = ({
+  state,
+  image,
+  disabled,
+  handleSubmit,
+  fillColor = 'blue',
+  files,
+}) => {
   const buttonLabel = useMemo(() => (state?.productId ? 'UPDATE' : 'PUBLISH'), [state?.productId]);
   const { userId, redirect } = useRedirectToProfile();
   const [visible, setVisible] = useState(false);
@@ -69,6 +76,7 @@ const ProductActionButtons = ({ state, image, disabled, handleSubmit, fillColor 
               limit: +attributes.limit || undefined,
               accessibility: attributes.accessibility,
               thumbnail,
+              files,
             },
           },
         })
@@ -82,6 +90,7 @@ const ProductActionButtons = ({ state, image, disabled, handleSubmit, fillColor 
               limit: +attributes.limit || undefined,
               accessibility: attributes.accessibility,
               thumbnail,
+              files,
             },
           },
         });

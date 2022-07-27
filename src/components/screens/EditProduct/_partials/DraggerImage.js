@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import { Col, Row, Text } from '@ui-kit';
 import { ReactComponent as RemoveIcon } from '@svgs/remove.svg';
-import CoverDraggerWrapper from '../styled/CoverDraggerWrapper';
+import ImageDraggerWrapper from '../styled/ImageDraggerWrapper';
 
 const { Dragger } = Upload;
 
@@ -47,10 +47,10 @@ const DraggerImage = ({ control, image, setImage }) => {
   };
 
   return image.src ? (
-    <CoverDraggerWrapper>
+    <ImageDraggerWrapper>
       <img alt='cover' src={image.src} />
       <RemoveIcon className='remove' onClick={() => setImage({})} />
-    </CoverDraggerWrapper>
+    </ImageDraggerWrapper>
   ) : (
     <Controller
       name='image'

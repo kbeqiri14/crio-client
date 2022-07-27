@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const CoverDraggerWrapper = styled('div')`
+const ImageDraggerWrapper = styled('div')`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,4 +30,4 @@ const CoverDraggerWrapper = styled('div')`
   }
 `;
 
-export default CoverDraggerWrapper;
+export default ImageDraggerWrapper;

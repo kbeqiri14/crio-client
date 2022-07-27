@@ -1,16 +1,7 @@
 import styled from 'styled-components';
 
 const FormWrapper = styled('div')`
-  display: flex;
-  justify-content: center;
   padding: 40px 20px;
-  > div {
-    max-width: 620px;
-  }
-  .ant-tabs-nav {
-    width: 568px;
-    margin-left: 24px;
-  }
   .ant-upload {
     .ant-upload-btn {
       padding: 78px 0;
@@ -34,7 +25,7 @@ const FormWrapper = styled('div')`
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 10px;
+    top: 0;
     right: 24px;
     .ant-tooltip {
       top: 0 !important;

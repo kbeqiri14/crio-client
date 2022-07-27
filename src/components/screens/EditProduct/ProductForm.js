@@ -1,18 +1,26 @@
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState, Fragment } from 'react';
 import { useForm } from 'react-hook-form';
 import { useQuery } from '@apollo/client';
 
 import { getConnectAccount } from '@app/graphql/queries/payment-method.query';
-import { Tabs } from '@ui-kit';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
-import HelpTooltip from '@screens/Product/HelpTooltip';
 import Broadcast from './_partials/Broadcast';
 import FormWrapper from './styled/FormWrapper';
-import Form from './_partials/Form';
+
+import { Link } from 'react-router-dom';
+import { Controller } from 'react-hook-form';
+import { Checkbox, Input, Radio, Switch, Text, Tooltip, Select, Title, Row, Col } from '@ui-kit';
+import DraggerImage from './_partials/DraggerImage';
+import DraggerFile from './_partials/DraggerFile';
+import ActionButtons from './_partials/ActionButtons';
+import HelpTooltip from '@screens/Product/HelpTooltip';
+import { getProductTypes } from '@app/graphql/queries/products.query';
 
 const ProductForm = ({ state }) => {
   const [visibleBroadcast, setVisibleBroadcast] = useState(false);
   const [limitVisible, setLimitVisible] = useState(state?.limit !== null && state?.limit >= 0);
+  const { data } = useQuery(getProductTypes);
+  const [files, setFiles] = useState([]);
   const [image, setImage] = useState(
     state?.thumbnail && !state?.thumbnail?.startsWith('/static/media/product')
       ? { src: state.thumbnail }
@@ -37,7 +45,9 @@ const ProductForm = ({ state }) => {
   const isFree = watch('isFree');
   const limit = watch('limit');
   const accessibility = watch('accessibility');
-
+  const type = watch('type');
+  const productType = data?.getProductTypes.find((item) => item.id === type);
+  console.log(productType === 'Digital Product', productType);
   const disabled = useMemo(
     () =>
       !(
@@ -102,46 +112,217 @@ const ProductForm = ({ state }) => {
     <>
       {visibleBroadcast && <Broadcast hideBroadcast={hideBroadcast} />}
       <FormWrapper>
-        <Tabs className='relative'>
-          <Tabs.TabPane key='product' tab='Product'>
-            <Form
-              isProduct={true}
-              control={control}
-              state={state}
-              isFree={isFree}
-              visibleBroadcast={visibleBroadcast}
-              setFree={setFree}
-              image={image}
-              setImage={setImage}
-              limitVisible={limitVisible}
-              disabled={disabled}
-              setLimitation={setLimitation}
-              handleSubmit={handleSubmit}
-            />
-          </Tabs.TabPane>
-          <Tabs.TabPane key='service' tab='Service'>
-            <Form
-              isProduct={false}
-              control={control}
-              state={state}
-              isFree={isFree}
-              visibleBroadcast={visibleBroadcast}
-              setFree={setFree}
-              image={image}
-              setImage={setImage}
-              limitVisible={limitVisible}
-              disabled={disabled}
-              setLimitation={setLimitation}
-              handleSubmit={handleSubmit}
-            />
-          </Tabs.TabPane>
-          <div className='help'>
-            <HelpTooltip
-              placement='right'
-              title='After a user makes a purchase, you will receive an automatic email. Please check your email and complete the order'
-            />
-          </div>
-        </Tabs>
+        <Row justify='center'>
+          <Col md={9}>
+            <form>
+              <Row style={{ position: 'relative' }} align='center' justify='center' gutter={[0, 8]}>
+                <Col padding_bottom={32}>
+                  <Title level={1}>Add new Digital Product or Service</Title>
+                </Col>
+                <Col className='help'>
+                  <HelpTooltip
+                    placement='right'
+                    title='After a user makes a purchase, you will receive an automatic email. Please check your email and complete the order'
+                  />
+                </Col>
+                <Col span={22} padding_bottom={32}>
+                  <Controller
+                    name='type'
+                    control={control}
+                    defaultValue={state?.productType}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        bordered={false}
+                        size='large'
+                        placeholder='Select the type of your product'
+                        // onChange={() => setValue('type', field.value)}
+                        options={data?.getProductTypes.map((item) => ({
+                          label: item.name,
+                          value: item.id,
+                        }))}
+                      />
+                    )}
+                  />
+                </Col>
+                <Col span={22} align='start'>
+                  <Text level={3} padding_bottom={8}>
+                    Title*
+                  </Text>
+                </Col>
+                <Col span={22} padding_bottom={32}>
+                  <Controller
+                    name='title'
+                    control={control}
+                    defaultValue={state?.title}
+                    render={({ field }) => (
+                      <Input {...field} level={4} maxLength={100} placeholder='Write here' />
+                    )}
+                  />
+                </Col>
+                <Col span={22} align='start'>
+                  <Text level={3}>Description</Text>
+                </Col>
+                <Col span={22} padding_bottom={32}>
+                  <Controller
+                    name='desc'
+                    control={control}
+                    defaultValue={state?.description}
+                    render={({ field }) => (
+                      <Input.TextArea
+                        {...field}
+                        level={3}
+                        maxLength={1000}
+                        autoSize={{ minRows: 3, maxRows: 3 }}
+                        placeholder='Write here'
+                      />
+                    )}
+                  />
+                </Col>
+                <Col span={22} align='start'>
+                  <Text level={3} disabled={isFree}>
+                    Price*
+                  </Text>
+                </Col>
+                <Col xs={19} md={18} padding_bottom={32} className='price'>
+                  <Controller
+                    name='price'
+                    control={control}
+                    defaultValue={state?.price}
+                    render={({ field }) =>
+                      visibleBroadcast ? (
+                        <Link to='/payment'>
+                          <Tooltip
+                            getPopupContainer={(triggerNode) =>
+                              triggerNode.parentNode.querySelector('.ant-tooltip-open')
+                            }
+                            title='Start earning instantly using Crios simple payments platform.'
+                          >
+                            <div className='relative'>
+                              <Input
+                                {...field}
+                                level={4}
+                                pattern='[0-9]*'
+                                maxLength={50}
+                                placeholder='$'
+                                disabled={isFree}
+                              />
+                            </div>
+                          </Tooltip>
+                        </Link>
+                      ) : (
+                        <Input
+                          {...field}
+                          level={4}
+                          pattern='[0-9]*'
+                          maxLength={50}
+                          placeholder='$'
+                          disabled={isFree}
+                        />
+                      )
+                    }
+                  />
+                </Col>
+                <Col
+                  xs={{ offset: 1 }}
+                  md={{ offset: 0 }}
+                  span={4}
+                  padding_bottom={32}
+                  align='end'
+                  className='self-center'
+                >
+                  <Controller
+                    name='isFree'
+                    control={control}
+                    defaultValue={isFree}
+                    render={({ field }) => (
+                      <Checkbox
+                        {...field}
+                        checked={isFree}
+                        disabled={visibleBroadcast}
+                        onChange={setFree}
+                      >
+                        <Text level={3} disabled={visibleBroadcast}>
+                          Free
+                        </Text>
+                      </Checkbox>
+                    )}
+                  />
+                </Col>
+                <Col span={22} align='start'>
+                  <Text level={3}>Thumbnail</Text>
+                </Col>
+                <Col span={22} padding_bottom={32}>
+                  <DraggerImage control={control} image={image} setImage={setImage} />
+                </Col>
+                {productType?.name === 'Digital Product' && (
+                  <Fragment>
+                    <Col span={22} align='start'>
+                      <Text level={3}>Product Files*</Text>
+                    </Col>
+                    <Col span={22} padding_bottom={32}>
+                      <DraggerFile control={control} files={files} setFiles={setFiles} />
+                    </Col>
+                  </Fragment>
+                )}
+                <Col span={22} align='start'>
+                  <Text level={3} disabled={isFree}>
+                    Who can see this?
+                  </Text>
+                </Col>
+                <Col span={22} padding_bottom={32} align='start'>
+                  <Controller
+                    name='accessibility'
+                    control={control}
+                    defaultValue={state?.accessibility || 'subscriber_only'}
+                    render={({ field }) => (
+                      <Radio.Group
+                        value={
+                          isFree ? 'subscriber_only' : state?.accessibility || 'subscriber_only'
+                        }
+                        {...field}
+                        disabled={isFree}
+                      >
+                        <Radio value='subscriber_only'>Subscriber Only</Radio>
+                        <Radio value='everyone'>Everyone</Radio>
+                      </Radio.Group>
+                    )}
+                  />
+                </Col>
+                <Col span={22} align='start' padding_bottom={32}>
+                  <Switch checked={limitVisible} onChange={setLimitation} />
+                  <Text level={3}> Limit your sales?</Text>
+                </Col>
+                {limitVisible && (
+                  <>
+                    <Col span={22} align='start'>
+                      <Text level={3}>Maximum numbers of purchases</Text>
+                    </Col>
+                    <Col span={22} padding_bottom={32}>
+                      <Controller
+                        name='limit'
+                        control={control}
+                        defaultValue={state?.limit}
+                        render={({ field }) => (
+                          <Input {...field} level={4} maxLength={50} placeholder='Unlimited' />
+                        )}
+                      />
+                    </Col>
+                  </>
+                )}
+                <Col span={22}>
+                  <ActionButtons
+                    state={state}
+                    image={image}
+                    disabled={disabled}
+                    handleSubmit={handleSubmit}
+                    files={files}
+                  />
+                </Col>
+              </Row>
+            </form>
+          </Col>
+        </Row>
       </FormWrapper>
     </>
   );
