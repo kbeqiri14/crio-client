@@ -159,7 +159,7 @@ const VideoInfo = ({
             control={control}
             defaultValue={state?.title}
             render={({ field }) => (
-              <Input {...field} level={4} maxLength={50} placeholder='Write the artwork title' />
+              <Input {...field} level={4} maxLength={50} placeholder='Write the content title' />
             )}
           />
         </Col>
