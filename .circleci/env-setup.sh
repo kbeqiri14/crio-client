@@ -31,7 +31,7 @@ then
     echo "export REACT_APP_COGNITO_REGION=us-west-2"
     echo "export REACT_APP_COGNITO_APP_CLIENT_ID=49dblm50ird6105qvaaj8ie9bd"
     echo "export REACT_APP_COGNITO_USER_POOL_ID=us-west-2_rIf40f9kz"
-    echo "export REACT_APP_COGNITO_DOMAIN=crio-in-staging-auth.auth.us-west-2.amazoncognito.com"
+    echo "export REACT_APP_COGNITO_DOMAIN=o-auth.criointeractive.com"
     echo "export REACT_APP_STRIPE_PAYMENT_URL=https://buy.stripe.com/test_6oEcQm1xf0NufC07st"
     echo "export REACT_APP_GTAG=UA-215522581-1"
     echo "export REACT_APP_BUCKET_NAME=crio-in-staging-bucket"
