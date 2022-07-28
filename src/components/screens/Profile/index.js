@@ -1,11 +1,9 @@
 import { memo, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useLazyQuery, useReactiveVar } from '@apollo/client';
-import { Helmet } from 'react-helmet';
 
 import { loggedInUserLoadingVar } from '@configs/client-cache';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
-import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { getUser } from '@app/graphql/queries/users.query';
 import { Layout } from '@ui-kit';
 import ProfileSider from '@root/src/components/screens/Profile/Sider';
@@ -39,7 +37,6 @@ export const Profile = () => {
       (isProfile && (loggedInUser.isCreator || !user?.isCreator)),
     [isProfile, loggedInUser.username, loggedInUser.isCreator, user?.isCreator],
   );
-  const avatarUrl = useAvatarUrl(user?.providerType, user?.providerUserId, user?.avatar);
 
   useEffect(() => {
     if (username !== loggedInUser.username) {
@@ -52,13 +49,6 @@ export const Profile = () => {
   }
   return (
     <>
-      <Helmet>
-        <meta name='description' content={'description'} />
-        <meta property='og:url' content={`https://criointeractive.com/${username}`} />
-        <meta property='og:image' content={avatarUrl} />
-        <meta property='twitter:url' content={`https://criointeractive.com/${username}`} />
-        <meta property='twitter:image' content={avatarUrl} />
-      </Helmet>
       <Layout>
         <Sider width={355} breakpoint='lg' collapsedWidth={0}>
           <ProfileSider
