@@ -9,19 +9,27 @@ const FileDraggerWrapper = styled('div')`
     padding: 0 20px;
     border-radius: 8px;
     margin: 20px 0;
-    color: red !important;
+    color: white;
     cursor: pointer;
     :hover {
+      color: #878c94;
       .remove-icon {
         display: block;
+        text-align: end;
       }
       .file-name {
-        color: #878C94;
+        color: #878c94;
       }
     }
-  .remove-icon {
-    display: none;
+    > div {
+      display: inline-block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .remove-icon {
+      display: none;
+    }
   }
-}
-`
+`;
 export default FileDraggerWrapper;
