@@ -247,13 +247,7 @@ const ProductForm = ({ state }) => {
                         placeholder='$'
                         disabled={isFree}
                         onChange={(e) =>
-                          field.onChange(
-                            isNaN(e.target.value)
-                              ? isNaN(field.value)
-                                ? ''
-                                : field.value
-                              : e.target.value,
-                          )
+                          field.onChange(isNaN(e.target.value) ? field.value || '' : e.target.value)
                         }
                       />
                     )
@@ -336,11 +330,7 @@ const ProductForm = ({ state }) => {
                           placeholder='Unlimited'
                           onChange={(e) =>
                             field.onChange(
-                              isNaN(e.target.value)
-                                ? isNaN(field.value)
-                                  ? ''
-                                  : field.value
-                                : e.target.value,
+                              isNaN(e.target.value) ? field.value || '' : e.target.value,
                             )
                           }
                         />

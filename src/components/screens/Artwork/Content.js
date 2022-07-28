@@ -38,7 +38,7 @@ const Wrapper = styled('div')`
     .widget {
       width: 334px;
     }
-    .imageCol {
+    .image-padding {
       padding: 0 8px;
     }
   }
@@ -101,7 +101,7 @@ export const Content = ({ info, content, isLocked }) => {
           </Row>
         </Col>
         {isLocked ? (
-          <Col className='imageCol' span={24}>
+          <Col className='image-padding' span={24}>
             <div className='lock'>
               <LockState userId={info.userId} accessibility={info.accessibility} size='lg' />
               <ImageWrapper>
@@ -122,7 +122,7 @@ export const Content = ({ info, content, isLocked }) => {
             </div>
           </Col>
         ) : (
-          <Col className='imageCol' span={24}>
+          <Col className='image-padding' span={24}>
             {info.isProduct || info.isImage ? (
               <ImageWrapper>
                 <img
