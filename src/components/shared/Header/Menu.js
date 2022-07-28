@@ -16,6 +16,11 @@ const getTabItems = (id, isCreator, isSubscribed, featuresSeen) => {
       path: '/',
     },
     {
+      id: 'earnMore',
+      title: 'Earn More',
+      path: '/earn-more',
+    },
+    {
       id: 'features',
       title: <Fragment>Features {id && !featuresSeen && <img src={star} alt='star' />}</Fragment>,
       path: '/features',
