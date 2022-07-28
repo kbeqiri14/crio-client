@@ -76,7 +76,7 @@ const ProductActionButtons = ({
               limit: +attributes.limit || undefined,
               accessibility: attributes.accessibility,
               thumbnail,
-              files,
+              // files,
             },
           },
         })
@@ -90,7 +90,7 @@ const ProductActionButtons = ({
               limit: +attributes.limit || undefined,
               accessibility: attributes.accessibility,
               thumbnail,
-              files,
+              // files,
             },
           },
         });

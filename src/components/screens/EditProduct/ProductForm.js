@@ -47,7 +47,7 @@ const ProductForm = ({ state }) => {
   const accessibility = watch('accessibility');
   const type = watch('type');
   const productType = data?.getProductTypes.find((item) => item.id === type);
-  console.log(productType === 'Digital Product', productType);
+
   const disabled = useMemo(
     () =>
       !(
