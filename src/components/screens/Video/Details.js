@@ -2,6 +2,7 @@ import { memo, useCallback, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import ReactPlayer from 'react-player';
 import { Col, Row } from 'antd';
+import imageCompression from 'browser-image-compression';
 import { useMutation } from '@apollo/client';
 import styled from 'styled-components';
 
@@ -115,9 +116,14 @@ const VideoInfo = ({ artworkId, file, src, state, setVisible, onCancel, onComple
   const onContinue = useCallback(async () => {
     if (isImage) {
       setUploading(true);
+      const compressionFile = await imageCompression(file, {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1600,
+        useWebWorker: true,
+      });
       const itemContent = await formItemContent({
         userId: user.id,
-        image: file,
+        image: compressionFile,
         type: ARTWORKS,
         prefix: 'main',
       });

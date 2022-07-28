@@ -66,7 +66,7 @@ const CoverImage = ({ visible, userId, artworkId, isImage, goToProfile }) => {
     if (isImage) {
       const compressionFile = await imageCompression(image.file, {
         maxSizeMB: 0.5,
-        maxWidthOrHeight: 1600,
+        maxWidthOrHeight: 800,
         useWebWorker: true,
       });
       const content = await formItemContent({
