@@ -9,7 +9,7 @@ import { updateMetadata } from '@app/graphql/mutations/artwork.mutation';
 import { ARTWORKS } from '@configs/constants';
 import ActionButtons from '@shared/ActionButtons';
 import { formItemContent } from '@utils/upload.helper';
-import { Modal, Text, Title } from '@ui-kit';
+import { Badge, Modal, Text, Title } from '@ui-kit';
 import { errorToast } from '@ui-kit/Notification';
 import { ReactComponent as CloseIcon } from '@svgs/close.svg';
 import coverImage from '@images/cover-image.png';
@@ -92,22 +92,26 @@ const CoverImage = ({ visible, userId, artworkId, isImage, goToProfile }) => {
       closeIcon={<CloseIcon />}
       maskClosable={false}
       visible={visible}
-      width={686}
+      width={733}
       onCancel={goToProfile}
     >
       <Row justify='center' gutter={[0, 40]} className='cover-image'>
-        <Col span={24}>
+        <Col className='textContent' span={24}>
           <Title level={1}>Upload cover image</Title>
         </Col>
-        <Col span={24} className='desc'>
-          <Text level={4}>If skipped we will generate a cover image from video.</Text>
+        <Col span={24} className='textContent'>
+          <Text level={4}>
+            {isImage
+              ? 'If skipped uploaded image will also be used as the thumbnail.'
+              : 'If skipped we will generate a cover image from video.'}
+          </Text>
         </Col>
-        <Col span={24}>
+        <Col className='imageContent' span={24}>
           {image.src ? (
             <img alt='uploaded file' src={image.src} className='uploaded-image' />
           ) : (
             <Dragger {...props}>
-              <Row justify='center' align='center' gutter={[0, 11]} className='drag-and-drop'>
+              <Row justify='center' align='center' gutter={[0, 18]} className='drag-and-drop'>
                 <Col span={24}>
                   <img alt='cover' src={coverImage} />
                 </Col>
@@ -116,6 +120,14 @@ const CoverImage = ({ visible, userId, artworkId, isImage, goToProfile }) => {
                     {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                     Drag and drop an image, or <a>Upload</a>
                   </Text>
+                </Col>
+                <Col span={24}>
+                  <Text level={4} color='dark25'>
+                    <Badge status='default' text='HI-Res images (png, jpg, gif)' />
+                  </Text>
+                </Col>
+                <Col span={24}>
+                  <Text level={4}>File name goes here.jpg</Text>
                 </Col>
               </Row>
             </Dragger>

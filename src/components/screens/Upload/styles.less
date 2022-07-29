@@ -17,7 +17,7 @@
 
 .ant-upload.ant-upload-drag .ant-upload-drag-container {
   max-width: 330px;
-  padding: 0 10px;
+  padding: 20px 10px;
 }
 
 .dragger {
@@ -61,13 +61,13 @@
 
 .cover-image {
   padding: 15px 35px 7px;
-  text-align: center;
+  text-align: left;
   img {
     min-height: 127px;
     max-width: 184px;
   }
   .drag-and-drop {
-    padding: 33px 0 25px;
+    padding: 50px 0 45px;
   }
   .uploaded-image {
     margin: auto;
@@ -75,8 +75,15 @@
     max-height: 259px;
     border-radius: 43px;
   }
-  .desc {
-    margin-top: -20px;
+  .imageContent {
+    padding: 15px 68px;
+  }
+  .imageContent > span {
+    display: flex;
+    justify-content: center;
+  }
+  .textContent {
+    margin-right: 55px;
   }
 }
 
@@ -84,6 +91,7 @@
   border-color: @white_50;
   border-radius: 43px;
   background: none !important;
+  min-width: 280px;
 }
 .ant-upload:hover,
 .ant-upload.ant-upload-drag.ant-upload-drag-hover {
