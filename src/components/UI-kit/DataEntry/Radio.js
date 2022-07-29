@@ -37,6 +37,9 @@ const Radio = styled(antRadio)`
   .ant-radio-inner::after {
     background-color: ${(props) => props.theme.colors.primary};
   }
+  .ant-radio-input:focus + .ant-radio-inner {
+    box-shadow: none;
+  }
 `;
 
 export default Radio;
