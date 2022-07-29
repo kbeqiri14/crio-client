@@ -21,6 +21,9 @@ const EarnMoreWrapper = styled('div')`
   .works-section {
     align-items: flex-start;
   }
+  .works-title {
+    margin-top: 200px;
+  }
   .circled {
     border: 1px solid white;
     border-radius: 50%;
@@ -36,13 +39,50 @@ const EarnMoreWrapper = styled('div')`
   .text-options:last-child {
     margin-bottom: 180px;
   }
+  @media (max-width: 768px) {
+    .earn-more-img {
+      margin-bottom: 40px;
+      width: 500px;
+    }
+    .text-options {
+      margin-bottom: 40px;
+    }
+    .text-options:last-child {
+      margin-bottom: 80px;
+    }
+  }
+  @media (max-width: 575px) {
+    .earn-more-img {
+      width: 440px;
+      margin-bottom: 40px;
+    }
+    .works-title {
+      margin-top: 100px;
+      margin-bottom: 60px;
+    }
+    .paper-plane {
+      width: 380px;
+    }
+    @media (max-width: 420px) {
+      .earn-more-img {
+        width: 320px;
+        margin-bottom: 40px;
+      }
+    }
+  }
 `;
 
 export const FeaturesPage = () => {
   return (
     <EarnMoreWrapper>
       <Row justify='center' align='middle'>
-        <Col className='email-section'>
+        <Col
+          className='email-section'
+          xl={{ span: 7, offset: 0 }}
+          lg={{ span: 10, offset: 0 }}
+          md={{ span: 10, offset: 0 }}
+          xs={{ span: 22 }}
+        >
           <Title level={4}>Invite New Creators and Start Earning More with Crio</Title>
           <Text level={4} className='margin-bottom'>
             For every creator that signs-up, you will get a payout equal to 5% of each of their
@@ -52,22 +92,35 @@ export const FeaturesPage = () => {
           <Input className='email-input' level={4} maxLength={50} placeholder='Write here...' />
           <Button type='primary'>SEND INVITATION</Button>
         </Col>
-        <Col offset={2}>
+        <Col
+          xl={{ span: 6, offset: 4 }}
+          lg={{ span: 10, offset: 0 }}
+          md={{ span: 12, offset: 0 }}
+          offset={2}
+        >
           <img src={paperPlane} alt='paper plane' className='paper-plane' />
         </Col>
       </Row>
-      <Title
-        level={6}
-        className='text-center'
-        style={{ marginTop: '200px', marginBottom: '120px' }}
-      >
+      <Title level={6} className='text-center works-title'>
         How it works
       </Title>
       <Row justify='center' align='middle' style={{ marginTop: '120px' }} className='works-section'>
-        <Col md={12}>
-          <img src={earnMore} alt='earn more' />
+        <Col
+          xl={{ span: 12, offset: 1 }}
+          lg={{ span: 14, offset: 0 }}
+          md={{ span: 14, offset: 0 }}
+          sm={{ span: 20, offset: 2 }}
+          xs={{ span: 22, offset: 1 }}
+        >
+          <img src={earnMore} alt='earn more' className='earn-more-img' />
         </Col>
-        <Col md={5}>
+        <Col
+          xl={{ span: 8, offset: 0 }}
+          lg={{ span: 8, offset: 0 }}
+          md={{ span: 8, offset: 0 }}
+          sm={{ span: 20, offset: 2 }}
+          xs={{ span: 22, offset: 1 }}
+        >
           <Row gutter={[0, 24]}>
             <Col md={4} xs={4}>
               <div className='circled'>
