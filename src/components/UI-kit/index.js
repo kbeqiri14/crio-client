@@ -23,6 +23,7 @@ export { default as Menu } from './Navigation/Menu';
 /*
   Data Display
 */
+export { default as Badge } from './DataDisplay/Badge';
 export { default as Carousel } from './DataDisplay/Carousel';
 export { default as Collapse } from './DataDisplay/Collapse';
 export { default as Tabs } from './DataDisplay/Tabs';
