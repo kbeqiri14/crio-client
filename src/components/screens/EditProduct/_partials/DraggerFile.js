@@ -1,11 +1,10 @@
 import { memo, Fragment, useState, useEffect, useMemo } from 'react';
 import { Controller } from 'react-hook-form';
 import { Upload } from 'antd';
-import { Col, Row, Text, Title, Button } from '@ui-kit';
+import { Col, Row, Text, Title, Button, Badge } from '@ui-kit';
 import deleteIcon from '@images/delete.png';
 import FileDraggerWrapper from '../styled/FileDraggerWrapper';
 import { errorToast } from '@ui-kit/Notification';
-import Dot from '../styled/Dot';
 
 const { Dragger } = Upload;
 
@@ -44,10 +43,7 @@ const DraggerFile = ({ control, files, setFiles }) => {
                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                 <a>Upload</a> your files
               </Title>
-              <Text level={4} color='dark25'>
-                <Dot />
-                Maximum uploaded file count: 5
-              </Text>
+              <Badge status='default' text='Maximum uploaded file count: 5' />
             </Dragger>
             {files.map((file) => (
               <Row className='file-box' key={file.uid}>
