@@ -107,7 +107,7 @@ const DragAndDrop = ({ content, file, types, dispatch, goToProfile }) => {
                   </li>
                   <li>
                     <Text level={4} color='dark25'>
-                      {`Videos (mp4, 4:3, <60 secs)`}
+                      Videos (mp4, 4:3, {<span className='less-than-sign'>&#60;</span>}60 secs)
                     </Text>
                   </li>
                 </ul>
