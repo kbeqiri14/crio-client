@@ -1,5 +1,5 @@
 import { Badge as antBadge } from 'antd';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const Badge = styled(antBadge)`
   .ant-badge-status-text {
@@ -14,6 +14,13 @@ const Badge = styled(antBadge)`
     width: 4px;
     height: 4px;
   }
+  ${(props) =>
+    props?.color &&
+    css`
+      .ant-badge-status-text {
+        color: ${props.theme.colors[props.color]};
+      }
+    `}
 `;
 
 export default Badge;
