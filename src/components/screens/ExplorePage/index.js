@@ -1,6 +1,7 @@
 import { memo, useEffect, useMemo, useState } from 'react';
 import { useReactiveVar } from '@apollo/client';
 
+import { Meta } from '@shared/Meta';
 import { Footer } from '@shared/Footer';
 import useRandomInfo from '@root/src/hooks/useRandomInfo';
 import { searchKeywordVar, refetchArtworkVar, refetchMarketplaceVar } from '@configs/client-cache';
@@ -79,6 +80,7 @@ export const ExplorePage = () => {
 
   return (
     <>
+      <Meta title='Explore' description='Crio - Explore' />
       <Carousel autoplay effect='fade'>
         {carouselArtworks.map((item) => (
           <TopArtwork key={item.artworkId} username={item.username} thumbnail={item.thumbnail} />

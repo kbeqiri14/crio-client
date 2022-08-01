@@ -1,8 +1,12 @@
+import { memo } from 'react';
+
+import { Meta } from '@shared/Meta';
 import { Col, Row, Text, Title } from '@ui-kit';
 
 const TermsOfUse = () => {
   return (
     <section className='cr-privacy-policy'>
+      <Meta title='Terms of Use' description='Crio - Terms of Use' />
       <div className='pp--wrapper'>
         <Row justify='center'>
           <Title level={1} margin_bottom={30}>
@@ -644,4 +648,4 @@ const TermsOfUse = () => {
   );
 };
 
-export default TermsOfUse;
+export default memo(TermsOfUse);

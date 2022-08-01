@@ -5,7 +5,7 @@ import { useLazyQuery, useMutation } from '@apollo/client';
 import { getUploadUrl } from '@app/graphql/queries/artworks.query';
 import { deleteArtwork } from '@app/graphql/mutations/artwork.mutation';
 import ActionButtons from '@shared/ActionButtons';
-import { Col, Row, Text, Title } from '@ui-kit';
+import { Badge, Col, Row, Text, Title } from '@ui-kit';
 import { Spinner } from '@ui-kit/Spinner';
 import { errorToast, warningToast } from '@ui-kit/Notification';
 import dragAndDropImage from '@images/drag-and-drop.png';
@@ -94,23 +94,25 @@ const DragAndDrop = ({ content, file, types, dispatch, goToProfile }) => {
                 <Text level={4}>Drag and drop a File</Text>
               </Col>
               <Col span={24}>
-                <ul>
-                  <li>
-                    <Text level={4} color='dark25'>
-                      1600x1200 or higher recommended. Max 10MB each (20MB for videos)
-                    </Text>
-                  </li>
-                  <li>
-                    <Text level={4} color='dark25'>
-                      HI-RES images (png, jpg, gif)
-                    </Text>
-                  </li>
-                  <li>
-                    <Text level={4} color='dark25'>
-                      {`Videos (mp4, 4:3, <60 secs)`}
-                    </Text>
-                  </li>
-                </ul>
+                <Badge
+                  color='white'
+                  status='default'
+                  text='1600x1200 or higher recommended. Max 10MB each (20MB for videos)'
+                />
+              </Col>
+              <Col span={24}>
+                <Badge color='white' status='default' text='HI-RES images (png, jpg, gif)' />
+              </Col>
+              <Col span={24}>
+                <Badge
+                  color='white'
+                  status='default'
+                  text={
+                    <>
+                      Videos (mp4, 4:3, <span className='less-than-sign'>{'<'}</span>60 secs)
+                    </>
+                  }
+                />
               </Col>
               {file?.name && (
                 <Col span={24}>

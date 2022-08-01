@@ -35,7 +35,9 @@ const setState = (payload) => ({
     artworkId: payload.artworkId,
     src: payload.src,
   },
-  [types.UPLOAD_COVER_IMAGE]: { coverImageVisible: true, artworkId: payload.artworkId },
+  [types.UPLOAD_COVER_IMAGE]: payload.artworkId
+    ? { coverImageVisible: true, artworkId: payload.artworkId }
+    : { coverImageVisible: true },
   [types.SET_FILE]: { file: payload.file },
   [types.SET_VIDEO_URI]: { content: payload.content, uploadLink: payload.uploadLink },
   [types.CONFIRMATION_VISIBLE]: { confirmationVisible: true },

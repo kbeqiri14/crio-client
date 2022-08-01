@@ -1,11 +1,13 @@
 import { memo } from 'react';
 
+import { Meta } from '@shared/Meta';
 import { Col, Row, Text, Title } from '@ui-kit';
 import './styles.less';
 
 const PrivacyPolicy = () => {
   return (
     <section className='cr-privacy-policy'>
+      <Meta title='Privacy Policy' description='Crio - Privacy Policy' />
       <div className='pp--wrapper'>
         <Row justify='center'>
           <Title level={1} margin_bottom={30}>
