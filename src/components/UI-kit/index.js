@@ -36,6 +36,7 @@ export { default as Checkbox } from './DataEntry/Checkbox';
 export { default as Input } from './DataEntry/Input';
 export { default as Radio } from './DataEntry/Radio';
 export { default as Switch } from './DataEntry/Switch';
+export { default as Select } from './DataEntry/Select';
 
 /*
   Feedback
