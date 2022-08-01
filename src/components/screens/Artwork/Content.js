@@ -81,7 +81,7 @@ export const Content = ({ info, content, isLocked }) => {
 
   return (
     <Wrapper>
-      <Row justify='center' gutter={[0, 20]}>
+      <Row justify='center' gutter={[0, 40]}>
         <Col span={24}>
           <Row gutter={[0, 12]}>
             <Col span={24}>

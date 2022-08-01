@@ -40,7 +40,7 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
         padding_horizontal={20}
         padding_bottom={20}
       >
-        <Col span={24} align='center' margin_bottom={20}>
+        <Col span={24} align='center'>
           {user.isCreator ? (
             <Badge count={<CreatorIcon />} offset={[-12, 105]}>
               <img
