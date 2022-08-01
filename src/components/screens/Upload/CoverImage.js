@@ -122,12 +122,7 @@ const CoverImage = ({ visible, userId, artworkId, isImage, goToProfile }) => {
                   </Text>
                 </Col>
                 <Col span={24}>
-                  <Text level={4} color='dark25'>
-                    <Badge status='default' text='HI-Res images (png, jpg, gif)' />
-                  </Text>
-                </Col>
-                <Col span={24}>
-                  <Text level={4}>File name goes here.jpg</Text>
+                  <Badge status='default' text='HI-Res images (png, jpg, gif)' />
                 </Col>
               </Row>
             </Dragger>
