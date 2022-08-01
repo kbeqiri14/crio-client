@@ -108,7 +108,7 @@ export const Content = ({ info, content, isLocked }) => {
           </Row>
         </Col>
         {isLocked ? (
-          <Col className='image-padding' span={24}>
+          <Col span={24}>
             <div className='lock'>
               <LockState userId={info.userId} accessibility={info.accessibility} size='lg' />
               <ImageWrapper>
@@ -121,7 +121,7 @@ export const Content = ({ info, content, isLocked }) => {
             </div>
           </Col>
         ) : (
-          <Col className='image-padding' span={24}>
+          <Col span={24}>
             {info.isProduct || info.isImage ? (
               <ImageWrapper>
                 <img
