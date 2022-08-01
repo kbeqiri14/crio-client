@@ -16,6 +16,7 @@ const Wrapper = styled('div')`
   padding: 40px 20px;
   > div {
     width: 1040px;
+    padding: 0 10px;
   }
   .lock {
     .tooltip {
@@ -37,9 +38,6 @@ const Wrapper = styled('div')`
     }
     .widget {
       width: 334px;
-    }
-    .image-padding {
-      padding: 0 8px;
     }
   }
 `;
