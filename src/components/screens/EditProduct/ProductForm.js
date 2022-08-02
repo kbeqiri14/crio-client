@@ -136,7 +136,6 @@ const ProductForm = ({ state }) => {
                         bordered={false}
                         size='large'
                         placeholder='Select the type of your product'
-                        // onChange={() => setValue('type', field.value)}
                         options={data?.getProductTypes.map((item) => ({
                           label: item.name,
                           value: item.id,
@@ -265,7 +264,7 @@ const ProductForm = ({ state }) => {
                     <Col span={22} align='start'>
                       <Text level={3}>Product Files*</Text>
                     </Col>
-                    <Col span={22} padding_bottom={32}>
+                    <Col span={22} padding_bottom={6}>
                       <DraggerFile control={control} files={files} setFiles={setFiles} />
                     </Col>
                   </Fragment>

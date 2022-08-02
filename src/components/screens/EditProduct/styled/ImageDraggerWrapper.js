@@ -4,9 +4,12 @@ const ImageDraggerWrapper = styled('div')`
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: 568px;
   max-height: 232px;
   border-radius: 8px;
+  .ant-upload.ant-upload-drag {
+    width: 600px;
+    height: 250px;
+  }
   img {
     width: 100%;
     height: auto;
