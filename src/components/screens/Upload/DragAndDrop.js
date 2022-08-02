@@ -1,16 +1,21 @@
 import { memo, useCallback, useMemo } from 'react';
-import { Upload } from 'antd';
 import { useLazyQuery, useMutation } from '@apollo/client';
+import styled from 'styled-components';
 
 import { getUploadUrl } from '@app/graphql/queries/artworks.query';
 import { deleteArtwork } from '@app/graphql/mutations/artwork.mutation';
 import ActionButtons from '@shared/ActionButtons';
-import { Badge, Col, Row, Text, Title } from '@ui-kit';
+import { Badge, Col, Row, Text, Title, Upload } from '@ui-kit';
 import { Spinner } from '@ui-kit/Spinner';
 import { errorToast, warningToast } from '@ui-kit/Notification';
 import dragAndDropImage from '@images/drag-and-drop.png';
 
 const { Dragger } = Upload;
+
+const Wrapper = styled('div')`
+  padding: 34px 0 63px;
+  text-align: center;
+`;
 
 const DragAndDrop = ({ content, file, types, dispatch, goToProfile }) => {
   const [requestUploadUrl, { data, loading }] = useLazyQuery(getUploadUrl, {
@@ -79,60 +84,62 @@ const DragAndDrop = ({ content, file, types, dispatch, goToProfile }) => {
   };
 
   return (
-    <Row justify='center' gutter={[0, 50]} className='upload'>
-      <Col span={24}>
-        <Title level={1}>Upload your content</Title>
-      </Col>
-      <Col span={24} align='center' padding_left={24} padding_right={24}>
-        <Dragger {...props} className='dragger'>
-          <Spinner spinning={loading} color='white'>
-            <Row justify='center' align='center' gutter={[0, 27]} className='drag-and-drop'>
-              <Col span={24} padding_bottom={13}>
-                <img alt='drag-and-drop' src={dragAndDropImage} />
-              </Col>
-              <Col span={24} padding_bottom={13}>
-                <Text level={4}>Drag and drop a File</Text>
-              </Col>
-              <Col span={24}>
-                <Badge
-                  color='white'
-                  status='default'
-                  text='1600x1200 or higher recommended. Max 10MB each (20MB for videos)'
-                />
-              </Col>
-              <Col span={24}>
-                <Badge color='white' status='default' text='HI-RES images (png, jpg, gif)' />
-              </Col>
-              <Col span={24}>
-                <Badge
-                  color='white'
-                  status='default'
-                  text={
-                    <>
-                      Videos (mp4, 4:3, <span className='less-than-sign'>{'<'}</span>60 secs)
-                    </>
-                  }
-                />
-              </Col>
-              {file?.name && (
-                <Col span={24}>
-                  <Text level={4}>{file.name}</Text>
+    <Wrapper>
+      <Row justify='center' gutter={[0, 50]}>
+        <Col span={24}>
+          <Title level={1}>Upload your content</Title>
+        </Col>
+        <Col span={24} align='center' padding_left={24} padding_right={24}>
+          <Dragger {...props} className='dragger'>
+            <Spinner spinning={loading} color='white'>
+              <Row justify='center' align='center' gutter={[0, 27]} className='drag-and-drop'>
+                <Col span={24} padding_bottom={13}>
+                  <img alt='drag-and-drop' src={dragAndDropImage} />
                 </Col>
-              )}
-            </Row>
-          </Spinner>
-        </Dragger>
-      </Col>
-      <Col span={24}>
-        <ActionButtons
-          saveText='CONTINUE'
-          disabled={disabled}
-          cancelDisabled={loading}
-          onCancel={onCancel}
-          onSave={onContinue}
-        />
-      </Col>
-    </Row>
+                <Col span={24} padding_bottom={13}>
+                  <Text level={4}>Drag and drop a File</Text>
+                </Col>
+                <Col span={24}>
+                  <Badge
+                    color='white'
+                    status='default'
+                    text='1600x1200 or higher recommended. Max 10MB each (20MB for videos)'
+                  />
+                </Col>
+                <Col span={24}>
+                  <Badge color='white' status='default' text='HI-RES images (png, jpg, gif)' />
+                </Col>
+                <Col span={24}>
+                  <Badge
+                    color='white'
+                    status='default'
+                    text={
+                      <>
+                        Videos (mp4, 4:3,<span className='less-than-sign'> {'<'}</span>60 secs)
+                      </>
+                    }
+                  />
+                </Col>
+                {file?.name && (
+                  <Col span={24}>
+                    <Text level={4}>{file.name}</Text>
+                  </Col>
+                )}
+              </Row>
+            </Spinner>
+          </Dragger>
+        </Col>
+        <Col span={24}>
+          <ActionButtons
+            saveText='CONTINUE'
+            disabled={disabled}
+            cancelDisabled={loading}
+            onCancel={onCancel}
+            onSave={onContinue}
+          />
+        </Col>
+      </Row>
+    </Wrapper>
   );
 };
 

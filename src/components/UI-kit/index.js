@@ -36,12 +36,13 @@ export { default as Checkbox } from './DataEntry/Checkbox';
 export { default as Input } from './DataEntry/Input';
 export { default as Radio } from './DataEntry/Radio';
 export { default as Switch } from './DataEntry/Switch';
-export { default as Select } from './DataEntry/Select';
+export { default as Upload } from './DataEntry/Upload';
 
 /*
   Feedback
 */
 export { default as Modal } from './Feedback/Modal';
+export { default as Progress } from './Feedback/Progress';
 
 /*
   Theme Provider

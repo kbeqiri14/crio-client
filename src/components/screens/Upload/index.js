@@ -9,7 +9,6 @@ import DragAndDrop from './DragAndDrop';
 import Uploading from './Uploading';
 import VideoDetails from '../Video/Details';
 import CoverImage from './CoverImage';
-import './styles.less';
 
 const types = {
   UPLOADING: 1,
