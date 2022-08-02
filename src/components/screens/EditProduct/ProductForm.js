@@ -50,7 +50,7 @@ const Wrapper = styled('div')`
     .got-it-button {
       left: 160px;
       @media (max-width: 1060px) {
-        left: -115px;
+        left: -123px;
       }
       margin-top: 58px;
     }
