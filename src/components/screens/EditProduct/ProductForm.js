@@ -136,7 +136,6 @@ const ProductForm = ({ state }) => {
                         bordered={false}
                         size='large'
                         placeholder='Select the type of your product'
-                        // onChange={() => setValue('type', field.value)}
                         options={data?.getProductTypes.map((item) => ({
                           label: item.name,
                           value: item.id,

@@ -1,9 +1,11 @@
-import { memo } from 'react';
-import { Col, Row, Text, Title, Input, Button } from '@ui-kit';
+import { memo, useState, useEffect } from 'react';
+import { Col, Row, Text, Title, Select, Button } from '@ui-kit';
 import { Footer } from '@shared/Footer';
+import { validateEmail } from './_partials/email-validation';
 import paperPlane from '@images/paper-plane.png';
 import earnMore from '@images/earn-more.png';
 import styled from 'styled-components';
+import { errorToast } from '@ui-kit/Notification';
 
 const EarnMoreWrapper = styled('div')`
   margin-top: 150px;
@@ -39,6 +41,24 @@ const EarnMoreWrapper = styled('div')`
   .text-options:last-child {
     margin-bottom: 180px;
   }
+  .ant-select-dropdown {
+    display: none;
+  }
+  .ant-select-selection-item {
+    background: #878c94;
+    border: 1px solid #878c94;
+    color: white !important;
+    height: 32px;
+    padding: 0 4px 0 10px;
+    align-items: center;
+  }
+  .ant-select-selection-search-input,
+  .ant-select-selection-item-remove {
+    color: white !important;
+  }
+  .ant-select-selector {
+    padding: 4px 16px !important;
+  }
   @media (max-width: 768px) {
     .earn-more-img {
       margin-bottom: 40px;
@@ -73,6 +93,22 @@ const EarnMoreWrapper = styled('div')`
 `;
 
 export const FeaturesPage = () => {
+  const [emails, setEmails] = useState([]);
+
+  const a = (values) => {
+    const v = values.filter(validateEmail);
+    setEmails(v);
+    if (values.length !== v.length) {
+      console.log(values.length, v.length);
+      errorToast('Invalid email address');
+    }
+  };
+  useEffect(() => {
+    if (emails.length > 5) {
+      errorToast('You can send this to 5 people at a time');
+    }
+  }, [emails]);
+
   return (
     <EarnMoreWrapper>
       <Row justify='center' align='middle'>
@@ -89,7 +125,18 @@ export const FeaturesPage = () => {
             earnings for as long as they are Creators on Crio!{' '}
             <b>This comes out of Crio’s pocket not the creators.</b>
           </Text>
-          <Input className='email-input' level={4} maxLength={50} placeholder='Write here...' />
+          <Select
+            mode='tags'
+            autoFocus
+            onChange={a}
+            maxTagCount={5}
+            showArrow={false}
+            filterOption={false}
+            className='email-input'
+            placeholder='Write here ...'
+            tokenSeparators={[' ']}
+            value={emails}
+          />
           <Button type='primary'>SEND INVITATION</Button>
         </Col>
         <Col
