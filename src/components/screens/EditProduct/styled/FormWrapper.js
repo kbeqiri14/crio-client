@@ -21,6 +21,13 @@ const FormWrapper = styled('div')`
   .upload-text {
     padding-bottom: 10px;
   }
+  .limit-section {
+    display: flex;
+    align-items: center;
+    > .ant-typography {
+      margin-left: 12px;
+    }
+  }
   .help {
     display: flex;
     flex-direction: column;

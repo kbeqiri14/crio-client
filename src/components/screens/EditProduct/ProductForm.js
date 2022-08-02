@@ -293,7 +293,7 @@ const ProductForm = ({ state }) => {
                     )}
                   />
                 </Col>
-                <Col span={22} align='start' padding_bottom={32}>
+                <Col span={22} align='start' padding_bottom={32} className='limit-section'>
                   <Switch checked={limitVisible} onChange={setLimitation} />
                   <Text level={3}> Limit your sales?</Text>
                 </Col>
