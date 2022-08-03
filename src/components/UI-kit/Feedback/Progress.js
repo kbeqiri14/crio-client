@@ -2,10 +2,10 @@ import { Progress as antProgress } from 'antd';
 import styled from 'styled-components';
 
 const Progress = styled(antProgress)`
-  .ant-progress {
+  &.ant-progress {
     margin-top: 20px;
   }
-  .ant-progress-bg {
+  &.ant-progress-bg {
     background: 'gradient-4';
     .ant-progress-status-success {
     }
