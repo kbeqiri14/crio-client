@@ -25,10 +25,6 @@ const Wrapper = styled('div')`
       min-height: 127px;
       max-width: 184px;
     }
-    .ant-upload-drag-container {
-      max-width: 330px;
-      padding: 20px 10px;
-    }
     .drag-and-drop {
       padding: 58px 0 71px;
     }

@@ -25,18 +25,16 @@ const Dragger = styled(Upload.Dragger)`
       min-height: 200px;
       max-width: 270px;
     }
+    .drag-and-drop {
+      padding: 58px 0 71px;
+    }
+    .ant-upload-drag-container {
+      max-width: 330px;
+      padding: 20px 10px;
+    }
     .less-than-sign {
       padding-bottom: 3px;
     }
-  }
-
-  .ant-spin-container {
-    border-radius: 43px;
-  }
-
-  .ant-upload-drag-container {
-    max-width: 330px;
-    padding: 20px 10px;
   }
 `;
 
