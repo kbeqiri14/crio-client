@@ -23,13 +23,13 @@ const Wrapper = styled('div')`
   }
   .ant-tooltip {
     top: 0 !important;
-    right 0 !important;
+    right: 0 !important;
     left: -243px !important;
   }
   .got-it-button {
     position: absolute;
     top: 257px;
-    right: 119px;
+    right: 121px;
   }
 `;
 
