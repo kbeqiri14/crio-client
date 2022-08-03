@@ -6,6 +6,7 @@ const Badge = styled(antBadge)`
     color: ${(props) => props.theme.colors.dark25};
     font-size: ${(props) => props.theme.text[4].size}px;
     font-weight: ${(props) => props.theme.text[4].weight};
+    font-style: ${(props) => props.theme.text[4].style || 'normal'};
   }
   .ant-badge-status-dot {
     background-color: ${(props) => props.theme.colors.dark25};
