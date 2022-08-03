@@ -49,7 +49,7 @@ const StyledVideoDetails = styled('div')`
     max-width: 922px;
     min-height: 520px;
     video {
-      border-radius: 30px;
+      border-radius: 16px;
     }
     img {
       height: auto;
