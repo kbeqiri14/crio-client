@@ -21,6 +21,13 @@ const Badge = styled(antBadge)`
         color: ${props.theme.colors[props.color]};
       }
     `}
+  ${(props) =>
+    props?.size &&
+    css`
+      .ant-badge-status-text {
+        font-size: ${props.size}px;
+      }
+    `}
 `;
 
 export default Badge;
