@@ -1,8 +1,11 @@
-import { memo, useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { Checkbox, Switch, Table } from 'antd';
 import styled from 'styled-components';
-import { useQuery } from '@apollo/client';
+import { useReactiveVar, useQuery } from '@apollo/client';
 
+import history from '@configs/history';
+import { loggedInUserLoadingVar } from '@configs/client-cache';
+import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { job } from '@app/graphql/queries/users.query';
 import { Col, Row, Text, Title } from '@ui-kit';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
@@ -53,14 +56,18 @@ const columns = [
   },
 ];
 
+const AMOUNT = 6.5;
+
 const Job = () => {
+  const { user } = useLoggedInUser();
   const [state, setState] = useState({});
   const [dataSource, setDataSource] = useState([]);
+  const loggedInUserLoading = useReactiveVar(loggedInUserLoadingVar);
   const { loading } = useQuery(job, {
     onCompleted: ({ job }) => {
       let totalFollowersCount = 0;
       job.creatorsFollowersCount.forEach((item) => (totalFollowersCount += +item.followersCount));
-      const price = (7 * job.subscribersCount * 80) / 100;
+      const price = (AMOUNT * job.subscribersCount * 80) / 100;
       const creatorsFollowers = job.creatorsFollowersCount.reduce(
         (acc, item) => [
           ...acc,
@@ -81,7 +88,7 @@ const Job = () => {
   });
 
   const pool = useMemo(
-    () => ((state.subscribersCount * 7 * 80) / 100).toFixed(2),
+    () => ((state.subscribersCount * AMOUNT * 80) / 100).toFixed(2),
     [state.subscribersCount],
   );
   const totalShare = useMemo(
@@ -108,7 +115,15 @@ const Job = () => {
     [dataSource, state.creatorsFollowers],
   );
 
-  if (loading) {
+  useEffect(() => {
+    if (user.id || !(loading || loggedInUserLoading)) {
+      if (!(user.email === 'kbeqiri14@gmail.com' || user.email === 'nkosyan123@gmail.com')) {
+        history.push('/');
+      }
+    }
+  }, [user.email, user.id, loading, loggedInUserLoading]);
+
+  if (loading || loggedInUserLoading) {
     return <GlobalSpinner />;
   }
 
@@ -131,7 +146,7 @@ const Job = () => {
               </Text>
             </Col>
             <Col span={2} align='right'>
-              <Title level={2}>$7.00</Title>
+              <Title level={2}>${AMOUNT.toFixed(2)}</Title>
             </Col>
             <Col span={22} align='right'>
               <Text level={4} color='dark25'>
@@ -139,7 +154,7 @@ const Job = () => {
               </Text>
             </Col>
             <Col span={2} align='right'>
-              <Title level={2}>${(state.subscribersCount * 7).toFixed(2)}</Title>
+              <Title level={2}>${(state.subscribersCount * AMOUNT).toFixed(2)}</Title>
             </Col>
             <Col span={22} align='right'>
               <Text level={4} color='dark25'>
