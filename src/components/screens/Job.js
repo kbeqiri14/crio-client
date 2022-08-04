@@ -42,14 +42,14 @@ const columns = [
     dataIndex: 'share',
     key: 'share',
     align: 'right',
-    render: (text) => <span>{text}%</span>,
+    render: (text) => <span>{text.toFixed(1)}%</span>,
   },
   {
     title: 'Payout',
     dataIndex: 'payout',
     key: 'payout',
     align: 'right',
-    render: (text) => <span>${text}</span>,
+    render: (text) => <span>${text.toFixed(2)}</span>,
   },
 ];
 
@@ -69,8 +69,8 @@ const Job = () => {
             email: item.email,
             stripe: item.stripe,
             count: +item.followersCount,
-            share: ((+item.followersCount / totalFollowersCount) * 100).toFixed(1),
-            payout: ((+item.followersCount / totalFollowersCount) * price).toFixed(2),
+            share: (+item.followersCount / totalFollowersCount) * 100,
+            payout: (+item.followersCount / totalFollowersCount) * price,
           },
         ],
         [],
