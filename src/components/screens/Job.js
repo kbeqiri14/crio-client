@@ -1,5 +1,5 @@
 import { memo, useCallback, useMemo, useState } from 'react';
-import { Switch, Table } from 'antd';
+import { Checkbox, Switch, Table } from 'antd';
 import styled from 'styled-components';
 import { useQuery } from '@apollo/client';
 
@@ -23,6 +23,13 @@ const columns = [
     title: 'Creator Email',
     dataIndex: 'email',
     key: 'email',
+  },
+  {
+    title: 'Stripe Account',
+    dataIndex: 'stripe',
+    key: 'stripe',
+    render: (checked) => <Checkbox defaultChecked={checked} disabled />,
+    align: 'center',
   },
   {
     title: 'Follower Count',
@@ -58,9 +65,10 @@ const Job = () => {
           {
             name: `${item.firstName} ${item.lastName}`,
             email: item.email,
+            stripe: item.stripe,
             count: +item.followersCount,
-            share: `${(+item.followersCount / totalFollowersCount) * 100}%`,
-            payout: `$${(+item.followersCount / totalFollowersCount) * price}`,
+            share: `${((+item.followersCount / totalFollowersCount) * 100).toFixed(2)}%`,
+            payout: `$${((+item.followersCount / totalFollowersCount) * price).toFixed(2)}`,
           },
         ],
         [],
@@ -153,7 +161,7 @@ const Job = () => {
             summary={() => (
               <Table.Summary>
                 <Table.Summary.Row>
-                  <Table.Summary.Cell colSpan={2}>
+                  <Table.Summary.Cell colSpan={3}>
                     <span style={{ fontWeight: 'bold' }}>Total</span>
                   </Table.Summary.Cell>
                   <Table.Summary.Cell align='center'>
