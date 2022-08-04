@@ -42,12 +42,14 @@ const columns = [
     dataIndex: 'share',
     key: 'share',
     align: 'right',
+    render: (text) => <span>{text.toFixed(1)}%</span>,
   },
   {
     title: 'Payout',
     dataIndex: 'payout',
     key: 'payout',
     align: 'right',
+    render: (text) => <span>${text.toFixed(2)}</span>,
   },
 ];
 
@@ -67,8 +69,8 @@ const Job = () => {
             email: item.email,
             stripe: item.stripe,
             count: +item.followersCount,
-            share: `${((+item.followersCount / totalFollowersCount) * 100).toFixed(2)}%`,
-            payout: `$${((+item.followersCount / totalFollowersCount) * price).toFixed(2)}`,
+            share: (+item.followersCount / totalFollowersCount) * 100,
+            payout: (+item.followersCount / totalFollowersCount) * price,
           },
         ],
         [],
@@ -81,6 +83,22 @@ const Job = () => {
   const pool = useMemo(
     () => ((state.subscribersCount * 7 * 80) / 100).toFixed(2),
     [state.subscribersCount],
+  );
+  const totalShare = useMemo(
+    () =>
+      dataSource.reduce((acc, item) => {
+        acc += +item.share;
+        return acc;
+      }, 0),
+    [dataSource],
+  );
+  const totalPayout = useMemo(
+    () =>
+      dataSource.reduce((acc, item) => {
+        acc += +item.payout;
+        return acc;
+      }, 0),
+    [dataSource],
   );
   const filter = useCallback(
     (checked) =>
@@ -168,10 +186,10 @@ const Job = () => {
                     <span style={{ fontWeight: 'bold' }}>{state.totalFollowersCount}</span>
                   </Table.Summary.Cell>
                   <Table.Summary.Cell align='right'>
-                    <span style={{ fontWeight: 'bold' }}>100%</span>
+                    <span style={{ fontWeight: 'bold' }}>{totalShare.toFixed(1)}%</span>
                   </Table.Summary.Cell>
                   <Table.Summary.Cell align='right'>
-                    <span style={{ fontWeight: 'bold' }}>${pool}</span>
+                    <span style={{ fontWeight: 'bold' }}>${totalPayout.toFixed(2)}</span>
                   </Table.Summary.Cell>
                 </Table.Summary.Row>
               </Table.Summary>
