@@ -48,6 +48,7 @@ export const job = gql`
         firstName
         lastName
         email
+        stripe
         followersCount
       }
     }
