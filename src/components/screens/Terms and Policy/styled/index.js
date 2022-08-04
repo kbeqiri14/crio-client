@@ -5,7 +5,7 @@ const TermsAndPolicyWrapper = styled('div')`
     height: 100%;
     padding: 40px 23px 200px 23px;
     .container {
-      width: 100%;
+      width: 97%;
       max-width: 1158px;
       margin: 0 auto;
       min-height: 90%;
