@@ -30,6 +30,7 @@ import EditProduct from '@screens/EditProduct';
 import Payment from '@screens/Payment';
 import FeaturesPage from '@screens/FeaturesPage';
 import FAQ from '@screens/FAQ';
+import Job from '@screens/Job';
 
 export const AppRoutes = () => {
   const [keyword, setKeyword] = useState('');
@@ -137,6 +138,7 @@ export const AppRoutes = () => {
             <Route exact path='/cognito/callback' component={CognitoCallback} />
             <Route exact path='/features' component={FeaturesPage} />
             <Route exact path='/faq' component={FAQ} />
+            <Route exact path='/subscription-automation-result' component={Job} />
 
             {!loading && !user && <Redirect to='/' />}
             {/* PRIVATE ROUTES */}
