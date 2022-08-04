@@ -253,7 +253,7 @@ const ProductForm = ({ state }) => {
                     )}
                   />
                 </Col>
-                <Col span={22} align='start'>
+                <Col span={22} align='start' padding_bottom={20}>
                   <Text level={3}>Thumbnail</Text>
                 </Col>
                 <Col span={22} padding_bottom={32}>
