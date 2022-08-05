@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { Col, Row, Text } from '@ui-kit';
-import BuyButton from '../../shared/CreatorContent/Product/BuyButton';
+import BuyButton from '@shared/CreatorContent/Product/BuyButton';
 import HelpTooltip from './HelpTooltip';
 
 const Wrapper = styled('div')`

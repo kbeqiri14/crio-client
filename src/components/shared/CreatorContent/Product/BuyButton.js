@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { useLazyQuery } from '@apollo/client';
 
 import { useSendEmail } from '@root/src/components/shared/SendEmailModal/Context';
@@ -8,10 +8,13 @@ import { getStripeCheckoutSession } from '@app/graphql/queries/products.query';
 import { Button } from '@ui-kit';
 import { errorToast } from '@ui-kit/Notification';
 import { ReactComponent as LockIcon } from '@svgs/lock-buy.svg';
+import { usePresentation } from '@shared/PresentationView/PresentationContext';
 
 const BuyButton = ({ userId, username, productId, price, limit, accessibility, block }) => {
   const { user } = useLoggedInUser();
   const { setSendEmailInfo } = useSendEmail();
+  const { setInfo } = usePresentation();
+  const hide = useCallback(() => setInfo({}), [setInfo]);
   const [getCheckoutSession, { loading }] = useLazyQuery(getStripeCheckoutSession, {
     fetchPolicy: 'no-cache',
     variables: { productId },
@@ -23,7 +26,15 @@ const BuyButton = ({ userId, username, productId, price, limit, accessibility, b
   const [label, color, onClick, icon] = useMemo(() => {
     if (accessibility === 'subscriber_only') {
       if (!user.isSubscribed) {
-        return ['BUY', 'blue', () => history.push('/pricing'), <LockIcon />];
+        return [
+          'BUY',
+          'blue',
+          () => {
+            hide();
+            history.push('/pricing');
+          },
+          <LockIcon />,
+        ];
       }
       if (!user.followings?.includes(userId)) {
         return ['BUY', 'blue', () => history.push(`/profile/${username}`), <LockIcon />];
@@ -56,6 +67,7 @@ const BuyButton = ({ userId, username, productId, price, limit, accessibility, b
     accessibility,
     setSendEmailInfo,
     getCheckoutSession,
+    hide,
   ]);
 
   return (
