@@ -1,7 +1,8 @@
 import { memo, useState, useEffect } from 'react';
 import { Col, Row, Text, Title, Select, Button } from '@ui-kit';
 import { Footer } from '@shared/Footer';
-import { validateEmail } from './_partials/email-validation';
+import { validateEmail } from '@utils/helpers';
+
 import paperPlane from '@images/paper-plane.png';
 import earnMore from '@images/earn-more.png';
 import { errorToast } from '@ui-kit/Notification';
