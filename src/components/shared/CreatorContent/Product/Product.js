@@ -11,7 +11,6 @@ import { Col, Row, Text } from '@ui-kit';
 import Actions from '@screens/Video/Actions';
 import product from '@images/product.png';
 import { ProductWrapper, ImageWrapper } from './styled';
-import LockState from '../LockState';
 import BuyButton from './BuyButton';
 
 const Product = ({
@@ -142,13 +141,6 @@ const Product = ({
         onMouseOver={handleMouseOver}
         onMouseLeave={handleMouseOut}
       >
-        <LockState
-          userId={userId}
-          accessibility={accessibility}
-          large={large}
-          isProduct={true}
-          isHovering={isHovering}
-        />
         <ImageWrapper className={imageClasses}>
           <img src={src} alt='product' onClick={showProduct} />
           <div

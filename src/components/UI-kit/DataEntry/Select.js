@@ -39,6 +39,7 @@ const Select = styled(
   .ant-select-dropdown {
     background: #2b2b2b !important;
     box-shadow: 0px 7px 25px rgba(0, 0, 0, 0.35);
+    border-radius: 0px 0px 8px 8px;
   }
   .ant-select-item-option-content {
     color: white;

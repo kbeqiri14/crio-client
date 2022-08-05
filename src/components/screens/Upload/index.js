@@ -74,10 +74,7 @@ const Upload = () => {
     () => (state.file?.type?.split('/')?.[0] === 'image' ? goToProfile() : removeArtwork()),
     [state.file?.type, goToProfile, removeArtwork],
   );
-  const onCompleted = useCallback(
-    (id) => dispatch({ type: types.UPLOAD_COVER_IMAGE, artworkId: id }),
-    [dispatch],
-  );
+  const onCompleted = useCallback(() => dispatch({ type: types.UPLOAD_COVER_IMAGE }), [dispatch]);
 
   return (
     <Fragment>
@@ -98,14 +95,13 @@ const Upload = () => {
           src={state.src}
           onCancel={onCancel}
           onCompleted={onCompleted}
+          goToProfile={goToProfile}
         />
       )}
       {state.coverImageVisible && (
         <CoverImage
           visible={state.coverImageVisible}
-          userId={user.id}
           artworkId={state.artworkId}
-          isImage={state.file?.type?.split('/')?.[0] === 'image'}
           goToProfile={goToProfile}
         />
       )}

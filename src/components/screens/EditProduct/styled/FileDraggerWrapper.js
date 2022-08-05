@@ -1,6 +1,14 @@
 import styled from 'styled-components';
 
 const FileDraggerWrapper = styled('div')`
+  .ant-upload.ant-upload-drag {
+    height: 135px;
+  }
+  .ant-upload {
+    .ant-upload-btn {
+      padding: 0 !important;
+    }
+  }
   .file-box {
     justify-content: space-between;
     align-items: center;

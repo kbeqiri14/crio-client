@@ -107,7 +107,7 @@ export const Content = ({ info, content, isLocked }) => {
             </Col>
           </Row>
         </Col>
-        {isLocked ? (
+        {isLocked && !info.isProduct ? (
           <Col span={24}>
             <div className='lock'>
               <LockState userId={info.userId} accessibility={info.accessibility} size='lg' />

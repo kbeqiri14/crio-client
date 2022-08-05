@@ -39,7 +39,7 @@ const DraggerFile = ({ control, files, setFiles }) => {
         render={({ field }) => (
           <Fragment>
             <Dragger {...props} {...field} disabled={files.length > 4}>
-              <Title level={2}>
+              <Title level={2} className='upload-text'>
                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                 <a>Upload</a> your files
               </Title>

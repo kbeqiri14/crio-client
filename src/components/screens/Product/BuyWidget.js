@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { Col, Row, Text } from '@ui-kit';
-import BuyButton from '../../shared/CreatorContent/Product/BuyButton';
+import BuyButton from '@shared/CreatorContent/Product/BuyButton';
 import HelpTooltip from './HelpTooltip';
 
 const Wrapper = styled('div')`
@@ -23,13 +23,13 @@ const Wrapper = styled('div')`
   }
   .ant-tooltip {
     top: 0 !important;
-    right 0 !important;
+    right: 0 !important;
     left: -243px !important;
   }
   .got-it-button {
     position: absolute;
     top: 257px;
-    right: 119px;
+    right: 121px;
   }
 `;
 
