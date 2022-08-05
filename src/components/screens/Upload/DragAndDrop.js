@@ -1,6 +1,5 @@
 import { memo, useCallback, useMemo } from 'react';
 import { useLazyQuery, useMutation } from '@apollo/client';
-import styled from 'styled-components';
 
 import { getUploadUrl } from '@app/graphql/queries/artworks.query';
 import { deleteArtwork } from '@app/graphql/mutations/artwork.mutation';
