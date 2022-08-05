@@ -16,6 +16,7 @@ const Wrapper = styled('div')`
   padding: 40px 20px;
   > div {
     width: 1040px;
+    padding: 0 10px;
   }
   .lock {
     .tooltip {
@@ -37,9 +38,6 @@ const Wrapper = styled('div')`
     }
     .widget {
       width: 334px;
-    }
-    .image-padding {
-      padding: 0 8px;
     }
   }
 `;
@@ -109,8 +107,8 @@ export const Content = ({ info, content, isLocked }) => {
             </Col>
           </Row>
         </Col>
-        {isLocked ? (
-          <Col className='image-padding' span={24}>
+        {isLocked && !info.isProduct ? (
+          <Col span={24}>
             <div className='lock'>
               <LockState userId={info.userId} accessibility={info.accessibility} size='lg' />
               <ImageWrapper>
@@ -123,7 +121,7 @@ export const Content = ({ info, content, isLocked }) => {
             </div>
           </Col>
         ) : (
-          <Col className='image-padding' span={24}>
+          <Col span={24}>
             {info.isProduct || info.isImage ? (
               <ImageWrapper>
                 <img

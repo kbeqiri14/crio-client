@@ -1,4 +1,4 @@
-import { memo, useState, useMemo } from 'react';
+import { memo, useState, useMemo, Fragment } from 'react';
 import { Controller } from 'react-hook-form';
 import { Spin, Upload } from 'antd';
 import imageCompression from 'browser-image-compression';
@@ -36,27 +36,31 @@ const DraggerImage = ({ control, image, setImage }) => {
     [setImage],
   );
 
-  return image.src ? (
+  return (
     <ImageDraggerWrapper>
-      <img alt='cover' src={image.src} />
-      <RemoveIcon className='remove' onClick={() => setImage({})} />
-    </ImageDraggerWrapper>
-  ) : (
-    <Controller
-      name='image'
-      control={control}
-      render={({ field }) => (
-        <Spin spinning={compressing}>
-          <Dragger {...props} {...field}>
-            <Title level={2}>
-              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-              Drag and drop an image, or <a>Upload</a>
-            </Title>
-            <Badge status='default' text='HI-Res images (png, jpg, gif)' />
-          </Dragger>
-        </Spin>
+      {image.src ? (
+        <Fragment>
+          <img alt='cover' src={image.src} />
+          <RemoveIcon className='remove' onClick={() => setImage({})} />
+        </Fragment>
+      ) : (
+        <Controller
+          name='image'
+          control={control}
+          render={({ field }) => (
+            <Spin spinning={compressing}>
+              <Dragger {...props} {...field}>
+                <Title level={2} className='upload-text'>
+                  {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                  Drag and drop an image, or <a>Upload</a>
+                </Title>
+                <Badge status='default' text='HI-Res images (png, jpg, gif)' />
+              </Dragger>
+            </Spin>
+          )}
+        />
       )}
-    />
+    </ImageDraggerWrapper>
   );
 };
 

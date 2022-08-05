@@ -39,3 +39,18 @@ export const isSubscriber = gql`
     isSubscriber(subscriberId: $subscriberId)
   }
 `;
+
+export const job = gql`
+  query {
+    job {
+      subscribersCount
+      creatorsFollowersCount {
+        firstName
+        lastName
+        email
+        stripe
+        followersCount
+      }
+    }
+  }
+`;

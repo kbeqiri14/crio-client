@@ -3,9 +3,6 @@ import styled from 'styled-components';
 const FormWrapper = styled('div')`
   padding: 40px 20px;
   .ant-upload {
-    .ant-upload-btn {
-      padding: 78px 0;
-    }
     &.ant-upload-drag {
       border-radius: 8px;
     }
@@ -19,6 +16,16 @@ const FormWrapper = styled('div')`
     .info {
       opacity: 1;
       visibility: visible;
+    }
+  }
+  .upload-text {
+    padding-bottom: 10px;
+  }
+  .limit-section {
+    display: flex;
+    align-items: center;
+    > .ant-typography {
+      margin-left: 12px;
     }
   }
   .help {

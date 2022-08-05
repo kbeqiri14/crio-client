@@ -57,7 +57,7 @@ export const ImageWrapper = styled('div')`
   img {
     width: inherit;
     height: inherit;
-    border: 1px solid transparent;
+    border-bottom: 1px solid transparent;
   }
   .actions {
     width: 330px;
