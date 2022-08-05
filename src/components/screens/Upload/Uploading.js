@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { memo, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
-import styled from 'styled-components';
 
 import { createArtwork } from '@app/graphql/mutations/artwork.mutation';
 import { Modal, Text, Title, Progress } from '@ui-kit';
@@ -9,16 +8,6 @@ import { Spinner } from '@ui-kit/Spinner';
 import { errorToast } from '@ui-kit/Notification';
 import { ReactComponent as CloseIcon } from '@svgs/close.svg';
 
-const Wrapper = styled('div')`
-  &.uploading {
-    h2 {
-      margin-bottom: 2px;
-    }
-    .ant-modal-body {
-      padding: 27px 35px !important;
-    }
-  }
-`;
 const timeStarted = new Date();
 const formatRemainingTime = (time) => {
   let formattedTime = Math.round(time);
@@ -85,27 +74,25 @@ const Uploading = ({ state, types, dispatch }) => {
   ]);
 
   return (
-    <Wrapper>
-      <Modal
-        centered
-        footer={null}
-        closeIcon={<CloseIcon />}
-        visible={true}
-        closable={false}
-        maskClosable={false}
-        width={686}
-        className='uploading'
-      >
-        <Spinner spinning={loading} color='white'>
-          <Title level={2}>Uploading</Title>
-          <Text level={3}>
-            <span>{state.percent} % &bull; </span>
-            <span>{formatRemainingTime(state.remainingTime)}</span>
-          </Text>
-          <Progress percent={state.percent} showInfo={false} />
-        </Spinner>
-      </Modal>
-    </Wrapper>
+    <Modal
+      centered
+      footer={null}
+      closeIcon={<CloseIcon />}
+      visible={true}
+      closable={false}
+      maskClosable={false}
+      width={686}
+      className='uploading'
+    >
+      <Spinner spinning={loading} color='white'>
+        <Title level={2}>Uploading</Title>
+        <Text level={3}>
+          <span>{state.percent} % &bull; </span>
+          <span>{formatRemainingTime(state.remainingTime)}</span>
+        </Text>
+        <Progress percent={state.percent} showInfo={false} />
+      </Spinner>
+    </Modal>
   );
 };
 

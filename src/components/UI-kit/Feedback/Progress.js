@@ -5,9 +5,10 @@ const Progress = styled(antProgress)`
   &.ant-progress {
     margin-top: 20px;
   }
-  &.ant-progress-bg {
-    background: 'gradient-4';
+  .ant-progress-bg {
+    background: linear-gradient(151.27deg, #04a7fd 13.55%, #0b47fd 80.64%);
     .ant-progress-status-success {
+      background: linear-gradient(151.27deg, #04a7fd 13.55%, #0b47fd 80.64%);
     }
   }
   .ant-progress-inner {

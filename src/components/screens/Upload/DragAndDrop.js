@@ -12,11 +12,6 @@ import dragAndDropImage from '@images/drag-and-drop.png';
 
 const { Dragger } = Upload;
 
-const Wrapper = styled('div')`
-  padding: 34px 0 63px;
-  text-align: center;
-`;
-
 const DragAndDrop = ({ content, file, types, dispatch, goToProfile }) => {
   const [requestUploadUrl, { data, loading }] = useLazyQuery(getUploadUrl, {
     fetchPolicy: 'no-cache',
@@ -84,62 +79,60 @@ const DragAndDrop = ({ content, file, types, dispatch, goToProfile }) => {
   };
 
   return (
-    <Wrapper>
-      <Row justify='center' gutter={[0, 50]}>
-        <Col span={24}>
-          <Title level={1}>Upload your content</Title>
-        </Col>
-        <Col span={24} align='center' padding_left={24} padding_right={24}>
-          <Dragger {...props} className='dragger'>
-            <Spinner spinning={loading} color='white'>
-              <Row justify='center' align='center' gutter={[0, 27]} className='drag-and-drop'>
-                <Col span={24} padding_bottom={13}>
-                  <img alt='drag-and-drop' src={dragAndDropImage} />
-                </Col>
-                <Col span={24} padding_bottom={13}>
-                  <Text level={4}>Drag and drop a File</Text>
-                </Col>
+    <Row justify='center' gutter={[0, 50]} padding_top={34} padding_bottom={63}>
+      <Col className='text-center' span={24}>
+        <Title level={1}>Upload your content</Title>
+      </Col>
+      <Col span={24} align='center' padding_left={24} padding_right={24}>
+        <Dragger {...props} className='dragger'>
+          <Spinner spinning={loading} color='white'>
+            <Row justify='center' align='center' gutter={[0, 27]} className='drag-and-drop'>
+              <Col span={24} padding_bottom={13}>
+                <img alt='drag-and-drop' src={dragAndDropImage} />
+              </Col>
+              <Col span={24} padding_bottom={13}>
+                <Text level={4}>Drag and drop a File</Text>
+              </Col>
+              <Col span={24}>
+                <Badge
+                  color='white'
+                  status='default'
+                  text='1600x1200 or higher recommended. Max 10MB each (20MB for videos)'
+                />
+              </Col>
+              <Col span={24}>
+                <Badge color='white' status='default' text='HI-RES images (png, jpg, gif)' />
+              </Col>
+              <Col span={24}>
+                <Badge
+                  color='white'
+                  status='default'
+                  text={
+                    <>
+                      Videos (mp4, 4:3,<span className='less-than-sign'> {'<'}</span>60 secs)
+                    </>
+                  }
+                />
+              </Col>
+              {file?.name && (
                 <Col span={24}>
-                  <Badge
-                    color='white'
-                    status='default'
-                    text='1600x1200 or higher recommended. Max 10MB each (20MB for videos)'
-                  />
+                  <Text level={4}>{file.name}</Text>
                 </Col>
-                <Col span={24}>
-                  <Badge color='white' status='default' text='HI-RES images (png, jpg, gif)' />
-                </Col>
-                <Col span={24}>
-                  <Badge
-                    color='white'
-                    status='default'
-                    text={
-                      <>
-                        Videos (mp4, 4:3,<span className='less-than-sign'> {'<'}</span>60 secs)
-                      </>
-                    }
-                  />
-                </Col>
-                {file?.name && (
-                  <Col span={24}>
-                    <Text level={4}>{file.name}</Text>
-                  </Col>
-                )}
-              </Row>
-            </Spinner>
-          </Dragger>
-        </Col>
-        <Col span={24}>
-          <ActionButtons
-            saveText='CONTINUE'
-            disabled={disabled}
-            cancelDisabled={loading}
-            onCancel={onCancel}
-            onSave={onContinue}
-          />
-        </Col>
-      </Row>
-    </Wrapper>
+              )}
+            </Row>
+          </Spinner>
+        </Dragger>
+      </Col>
+      <Col span={24}>
+        <ActionButtons
+          saveText='CONTINUE'
+          disabled={disabled}
+          cancelDisabled={loading}
+          onCancel={onCancel}
+          onSave={onContinue}
+        />
+      </Col>
+    </Row>
   );
 };
 
