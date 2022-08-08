@@ -50,16 +50,6 @@ const Product = ({
     return user.isSubscribed ? !user.followings?.includes(userId) : true;
   }, [user.isCreator, user.isSubscribed, user.followings, accessibility, userId]);
 
-  const showBuyButton = useMemo(() => {
-    if (user.isCreator) {
-      return false;
-    }
-    if (price) {
-      return true;
-    }
-    return user.isSubscribed ? user.followings?.includes(userId) : false;
-  }, [user.isCreator, user.isSubscribed, user.followings, price, userId]);
-
   const src = useMemo(
     () => (thumbnail ? getThumbnail(PRODUCTS, userId, `thumbnail-${thumbnail}`) : product),
     [userId, thumbnail],
@@ -168,7 +158,7 @@ const Product = ({
               <Col span={24}>
                 <Text
                   level={4}
-                  style={{ width: showBuyButton && isHovering ? 140 : 332 }}
+                  style={{ width: isHovering ? 140 : 332 }}
                   ellipsis={{ rows: 1, tooltip: title }}
                 >
                   {title}
@@ -177,7 +167,7 @@ const Product = ({
               <Col span={24}>
                 <Text
                   level={4}
-                  style={{ width: showBuyButton && isHovering ? 140 : 332 }}
+                  style={{ width: isHovering ? 140 : 332 }}
                   ellipsis={{ rows: 1, tooltip: priceText }}
                 >
                   {priceText}

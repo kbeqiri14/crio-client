@@ -23,16 +23,6 @@ const BuyButton = ({ userId, productId, price, limit, accessibility, block }) =>
     onError: (e) => errorToast(e?.message),
   });
 
-  const showBuyButton = useMemo(() => {
-    if (user.isCreator) {
-      return false;
-    }
-    if (price) {
-      return true;
-    }
-    return user.isSubscribed ? user.followings?.includes(userId) : false;
-  }, [user.isCreator, user.isSubscribed, user.followings, price, userId]);
-
   const isLocked = useMemo(() => {
     if (user.isCreator || accessibility === 'everyone') {
       return false;
@@ -48,10 +38,7 @@ const BuyButton = ({ userId, productId, price, limit, accessibility, block }) =>
     [user.isSubscribed],
   );
 
-  const label = useMemo(
-    () => (!isLocked && (!price || user.boughtProducts?.includes(productId)) ? 'EMAIL' : 'BUY'),
-    [isLocked, price, productId, user.boughtProducts],
-  );
+  const label = useMemo(() => (price ? 'BUY' : 'EMAIL'), [price]);
   const color = useMemo(() => (label === 'BUY' ? 'blue' : 'green'), [label]);
   const disabled = useMemo(() => label === 'BUY' && limit === 0, [limit, label]);
   const onClick = useMemo(() => {
@@ -81,7 +68,7 @@ const BuyButton = ({ userId, productId, price, limit, accessibility, block }) =>
     ),
     [block, color, loading, disabled, isLocked, label, onClick],
   );
-  if (!showBuyButton) {
+  if (user.isCreator) {
     return null;
   }
 
