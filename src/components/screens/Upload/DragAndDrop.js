@@ -1,11 +1,10 @@
 import { memo, useCallback, useMemo } from 'react';
-import { Upload } from 'antd';
 import { useLazyQuery, useMutation } from '@apollo/client';
 
 import { getUploadUrl } from '@app/graphql/queries/artworks.query';
 import { deleteArtwork } from '@app/graphql/mutations/artwork.mutation';
 import ActionButtons from '@shared/ActionButtons';
-import { Badge, Col, Row, Text, Title } from '@ui-kit';
+import { Badge, Col, Row, Text, Title, Upload } from '@ui-kit';
 import { Spinner } from '@ui-kit/Spinner';
 import { errorToast, warningToast } from '@ui-kit/Notification';
 import dragAndDropImage from '@images/drag-and-drop.png';
@@ -79,8 +78,8 @@ const DragAndDrop = ({ content, file, types, dispatch, goToProfile }) => {
   };
 
   return (
-    <Row justify='center' gutter={[0, 50]} className='upload'>
-      <Col span={24}>
+    <Row justify='center' gutter={[0, 50]} padding_top={34} padding_bottom={63}>
+      <Col align='center' span={24}>
         <Title level={1}>Upload your content</Title>
       </Col>
       <Col span={24} align='center' padding_left={24} padding_right={24}>
@@ -93,27 +92,27 @@ const DragAndDrop = ({ content, file, types, dispatch, goToProfile }) => {
               <Col span={24} padding_bottom={13}>
                 <Text level={4}>Drag and drop a File</Text>
               </Col>
-              <Col span={24}>
-                <Badge
-                  color='white'
-                  status='default'
-                  text='1600x1200 or higher recommended. Max 10MB each (20MB for videos)'
-                />
-              </Col>
-              <Col span={24}>
-                <Badge color='white' status='default' text='HI-RES images (png, jpg, gif)' />
-              </Col>
-              <Col span={24}>
-                <Badge
-                  color='white'
-                  status='default'
-                  text={
-                    <>
-                      Videos (mp4, 4:3, <span className='less-than-sign'>{'<'}</span>60 secs)
-                    </>
-                  }
-                />
-              </Col>
+              <div className='textContainer'>
+                <Col span={24}>
+                  <Badge
+                    status='default'
+                    text='1600x1200 or higher recommended. Max 10MB each (20MB for videos)'
+                  />
+                </Col>
+                <Col span={24}>
+                  <Badge status='default' text='HI-RES images (png, jpg, gif)' />
+                </Col>
+                <Col span={24}>
+                  <Badge
+                    status='default'
+                    text={
+                      <>
+                        Videos (mp4, 4:3,<span className='less-than-sign'> {'<'}</span>60 secs)
+                      </>
+                    }
+                  />
+                </Col>
+              </div>
               {file?.name && (
                 <Col span={24}>
                   <Text level={4}>{file.name}</Text>

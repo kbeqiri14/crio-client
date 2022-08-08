@@ -2,6 +2,14 @@ import { Modal as antModal } from 'antd';
 import styled from 'styled-components';
 
 const Modal = styled(antModal)`
+  &.uploading {
+    h2 {
+      margin-bottom: 2px;
+    }
+    .ant-modal-body {
+      padding: 27px 35px !important;
+    }
+  }
   .ant-modal-body {
     padding: 0 40px 40px 40px;
   }
