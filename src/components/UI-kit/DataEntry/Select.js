@@ -16,10 +16,11 @@ const Select = styled(
   width: 100% !important;
   font-size: ${(props) => props.theme.text[4].size}px;
   background: #202020 !important;
-  border-radius: 4px !important;
+  border-radius: 8px;
   min-height: 50px !important;
 
   .ant-select-selector {
+    align-items: center;
     min-height: 50px !important;
     padding: 0px 12px !important;
   }
@@ -39,7 +40,7 @@ const Select = styled(
   .ant-select-dropdown {
     background: #2b2b2b !important;
     box-shadow: 0px 7px 25px rgba(0, 0, 0, 0.35);
-    border-radius: 0px 0px 8px 8px;
+    border-radius: 8px;
   }
   .ant-select-item-option-content {
     color: white;
@@ -62,6 +63,7 @@ const Select = styled(
   }
   .ant-select-selector {
     background: #202020 !important;
+    border-radius: 8px !important;
     border: 1px solid #202020 !important;
     :hover {
       border: 1px solid #202020;
