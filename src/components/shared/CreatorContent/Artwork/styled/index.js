@@ -60,6 +60,7 @@ export const SkeletonWrapper = styled('div')`
       width: 330px;
       height: 330px;
       border-radius: 30px;
+      background: transparent;
     }
   }
 `;

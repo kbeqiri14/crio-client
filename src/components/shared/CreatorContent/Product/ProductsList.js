@@ -79,9 +79,6 @@ const ProductsList = ({ productsList = [], loading }) => {
   const { pathname } = useLocation();
   const isProfile = useMemo(() => pathname.includes('/profile'), [pathname]);
   const width = useClientWidth();
-  if (width < 1438) {
-    return <Block block={productsList} />;
-  }
 
   if (loading) {
     return (
@@ -97,6 +94,10 @@ const ProductsList = ({ productsList = [], loading }) => {
         ))}
       </Row>
     );
+  }
+
+  if (width < 1438) {
+    return <Block block={productsList} />;
   }
 
   return isProfile || productsList.length < 5 ? (

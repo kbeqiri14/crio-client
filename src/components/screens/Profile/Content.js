@@ -1,4 +1,4 @@
-import { memo, useMemo, useEffect } from 'react';
+import { memo, useMemo, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { useLazyQuery } from '@apollo/client';
@@ -36,7 +36,7 @@ const ProfileContent = ({
   );
 
   const { pathname } = useLocation();
-  // const [initialPolling, setInitialPolling] = useState(true);
+  const [initialPolling, setInitialPolling] = useState(true);
 
   const [requestArtworks, { data: Artworks, loading: artworkLoading }] = useLazyQuery(
     getUserArtworks,
@@ -45,10 +45,7 @@ const ProfileContent = ({
       fetchPolicy: 'no-cache',
       notifyOnNetworkStatusChange: true,
       pollInterval: 30000,
-      // onCompleted: ({ getUserArtworks }) => {
-      //   setInitialPolling(false);
-      //   setWorks(getUserArtworks);
-      // },
+      onCompleted: () => setInitialPolling(false),
     },
   );
 
@@ -59,10 +56,7 @@ const ProfileContent = ({
       fetchPolicy: 'no-cache',
       notifyOnNetworkStatusChange: true,
       pollInterval: 30000,
-      // onCompleted: ({ getUserArtworks }) => {
-      //   setInitialPolling(false);
-      //   setWorks(getUserArtworks);
-      // },
+      onCompleted: () => setInitialPolling(false),
     },
   );
 
@@ -82,6 +76,7 @@ const ProfileContent = ({
         productsList={Products?.getUserProducts}
         artworksList={Artworks?.getUserArtworks}
         loading={artworkLoading || productLoading}
+        initialPolling={initialPolling}
       />
     );
   }

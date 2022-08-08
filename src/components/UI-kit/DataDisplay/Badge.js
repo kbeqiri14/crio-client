@@ -8,8 +8,6 @@ const Badge = styled(antBadge)`
     font-size: ${(props) => props.theme.text[4].size}px;
     font-weight: ${(props) => props.theme.text[4].weight};
     font-style: ${(props) => props.theme.text[4].style || 'normal'};
-    display: inline-flex;
-    align-items: center;
   }
   .ant-badge-status-dot {
     background-color: ${(props) => props.theme.colors.dark25};
