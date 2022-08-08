@@ -1,10 +1,9 @@
 import axios from 'axios';
 import { memo, useEffect } from 'react';
-import { Progress } from 'antd';
 import { useMutation } from '@apollo/client';
 
 import { createArtwork } from '@app/graphql/mutations/artwork.mutation';
-import { Modal, Text, Title } from '@ui-kit';
+import { Modal, Text, Title, Progress } from '@ui-kit';
 import { Spinner } from '@ui-kit/Spinner';
 import { errorToast } from '@ui-kit/Notification';
 import { ReactComponent as CloseIcon } from '@svgs/close.svg';
