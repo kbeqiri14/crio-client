@@ -96,3 +96,27 @@ export const ImageWrapper = styled('div')`
   }
   border-bottom: 1px solid ${(props) => props.theme.colors.dark50};
 `;
+
+export const SkeletonWrapper = styled('div')`
+  width: 332px;
+  height: 332px;
+  border: 1px solid ${(props) => props.theme.colors.dark50};
+  border-radius: 30px;
+  margin-bottom: 8px;
+  .ant-skeleton {
+    width: 100%;
+    .ant-skeleton-image {
+      width: 330px;
+      height: 245px;
+      border-top-left-radius: 30px;
+      border-top-right-radius: 30px;
+      border-bottom: 1px solid ${(props) => props.theme.colors.dark50};
+    }
+    .ant-skeleton-content {
+      padding: 0 20px;
+      .ant-skeleton-paragraph {
+        margin: 10px 0 0;
+      }
+    }
+  }
+`;

@@ -1,25 +1,9 @@
 import { memo } from 'react';
-import styled from 'styled-components';
 import { Skeleton } from 'antd';
 
 import { Col, Row } from '@ui-kit';
 import Artwork from './Artwork';
-
-export const Wrapper = styled('div')`
-  width: 332px;
-  height: 332px;
-  border: 1px solid ${(props) => props.theme.colors.dark50};
-  border-radius: 30px;
-  margin-bottom: 8px;
-  .ant-skeleton {
-    width: 100%;
-    .ant-skeleton-image {
-      width: 330px;
-      height: 330px;
-      border-radius: 30px;
-    }
-  }
-`;
+import { SkeletonWrapper } from './styled';
 
 export const ArtworksList = ({ artworksList = [], loading }) => {
   const dummyArray = new Array(6).fill();
@@ -28,9 +12,9 @@ export const ArtworksList = ({ artworksList = [], loading }) => {
       <Row gutter={22}>
         {dummyArray.map(() => (
           <Col>
-            <Wrapper>
+            <SkeletonWrapper>
               <Skeleton.Image active />;
-            </Wrapper>
+            </SkeletonWrapper>
             <Skeleton active avatar title={{ width: '100%' }} paragraph={{ rows: 0 }} />
           </Col>
         ))}

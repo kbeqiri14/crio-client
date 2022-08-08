@@ -1,35 +1,11 @@
 import { memo, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Skeleton } from 'antd';
-import styled from 'styled-components';
 
 import useClientWidth from '@app/hooks/useClientWidth';
 import { Col, Row } from '@ui-kit';
 import Product from './Product';
-
-export const Wrapper = styled('div')`
-  width: 332px;
-  height: 332px;
-  border: 1px solid ${(props) => props.theme.colors.dark50};
-  border-radius: 30px;
-  margin-bottom: 8px;
-  .ant-skeleton {
-    width: 100%;
-    .ant-skeleton-image {
-      width: 330px;
-      height: 245px;
-      border-top-left-radius: 30px;
-      border-top-right-radius: 30px;
-      border-bottom: 1px solid ${(props) => props.theme.colors.dark50};
-    }
-    .ant-skeleton-content {
-      padding: 0 20px;
-      .ant-skeleton-paragraph {
-        margin: 10px 0 0;
-      }
-    }
-  }
-`;
+import { SkeletonWrapper } from './styled';
 
 const Item = memo(({ item, large }) => (
   <Product
@@ -112,10 +88,10 @@ const ProductsList = ({ productsList = [], loading }) => {
       <Row gutter={22}>
         {dummyArray.map(() => (
           <Col>
-            <Wrapper>
+            <SkeletonWrapper>
               <Skeleton.Image active />;
               <Skeleton active title={{ width: '100%' }} paragraph={{ rows: 1, width: '100%' }} />
-            </Wrapper>
+            </SkeletonWrapper>
             <Skeleton active avatar title={{ width: '100%' }} paragraph={{ rows: 0 }} />
           </Col>
         ))}
