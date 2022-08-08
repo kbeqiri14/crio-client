@@ -15,18 +15,26 @@ const getTabItems = (id, isCreator, isSubscribed, featuresSeen) => {
       title: 'Explore',
       path: '/',
     },
+
     {
       id: 'features',
       title: <Fragment>Features {id && !featuresSeen && <img src={star} alt='star' />}</Fragment>,
       path: '/features',
     },
   ];
-  if (!isCreator)
-    items.push({
-      id: 'pricing',
-      title: isSubscribed ? 'Pro account' : 'Pricing',
-      path: '/pricing',
-    });
+  items.push(
+    isCreator
+      ? {
+          id: 'earnMore',
+          title: 'Earn More',
+          path: '/earn-more',
+        }
+      : {
+          id: 'pricing',
+          title: isSubscribed ? 'Pro account' : 'Pricing',
+          path: '/pricing',
+        },
+  );
   return items;
 };
 

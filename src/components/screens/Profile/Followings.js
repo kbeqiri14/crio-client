@@ -1,8 +1,8 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo, Fragment } from 'react';
 import { Badge } from 'antd';
 import styled from 'styled-components';
 import { useQuery } from '@apollo/client';
-
+import { Skeleton } from 'antd';
 import history from '@configs/history';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { getFollowings } from '@app/graphql/queries/users.query';
@@ -60,17 +60,31 @@ const FollowingCard = ({ user }) => {
 };
 
 const Followings = ({ username, isProfile, isSubscribed }) => {
-  const { data: followings } = useQuery(getFollowings, {
+  const { data: followings, loading } = useQuery(getFollowings, {
     fetchPolicy: 'cache-and-network',
     ...(isProfile ? { variables: { username } } : {}),
   });
-
-  if (
+  const dummyArray = new Array(6).fill({});
+  const isEmpty =
     username &&
     ((!isProfile && (!isSubscribed || !followings?.getFollowings?.length)) ||
-      (isProfile && !followings?.getFollowings?.length))
-  ) {
+      (isProfile && !followings?.getFollowings?.length));
+  if (isEmpty && !loading) {
     return <EmptyState username={username} isProfile={isProfile} isSubscribed={isSubscribed} />;
+  }
+
+  if (loading && isEmpty) {
+    return (
+      <Fragment>
+        <Row gutter={[40, 40]} padding_top={40} padding_horizontal={20} padding_bottom={20}>
+          {dummyArray.map(() => (
+            <Col span={8} align='center'>
+              <Skeleton avatar paragraph={{ rows: 1 }} title={{ width: '100%' }} />;
+            </Col>
+          ))}
+        </Row>
+      </Fragment>
+    );
   }
 
   return followings?.getFollowings?.length ? (

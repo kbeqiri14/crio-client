@@ -21,3 +21,9 @@ export function urlify(text) {
 export function getThumbnail(type, userId, fileName) {
   return `https://${BUCKET_NAME}.s3.${COGNITO_REGION}.amazonaws.com/${userId}/${type}/${fileName}`;
 }
+
+export const validateEmail = (email) => {
+  const re =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+};
