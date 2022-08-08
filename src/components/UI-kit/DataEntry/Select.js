@@ -17,10 +17,10 @@ const Select = styled(
   font-size: ${(props) => props.theme.text[4].size}px;
   background: #202020 !important;
   border-radius: 4px !important;
-  height: 50px !important;
+  min-height: 50px !important;
 
   .ant-select-selector {
-    height: 50px !important;
+    min-height: 50px !important;
     padding: 0px 12px !important;
   }
   .ant-select-single.ant-select-lg:not(.ant-select-customize-input) .ant-select-selector {
@@ -59,6 +59,13 @@ const Select = styled(
   }
   .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
     background: transparent !important;
+  }
+  .ant-select-selector {
+    background: #202020 !important;
+    border: 1px solid #202020 !important;
+    :hover {
+      border: 1px solid #202020;
+    }
   }
 `;
 
