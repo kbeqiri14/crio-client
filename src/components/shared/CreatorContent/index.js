@@ -94,7 +94,7 @@ export const Content = ({
         </TabPane>
         <TabPane key={tabs.ARTWORK} tab={tabs.ARTWORK}>
           {!artworksCount && !artworksList?.length && <EmptyState {...props} />}
-          <ArtworksList artworksList={artworksList} />
+          <ArtworksList artworksList={artworksList} loading={loading} />
           <LoadMoreButton
             visible={visibleLoadMoreArtworks}
             loading={loading}
