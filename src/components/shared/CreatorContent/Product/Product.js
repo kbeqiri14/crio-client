@@ -185,18 +185,15 @@ const Product = ({
               </Col>
             </Row>
           </Col>
-          {showBuyButton && (
-            <Col className='info'>
-              <BuyButton
-                userId={userId}
-                username={username}
-                productId={productId}
-                price={price}
-                limit={limit}
-                accessibility={accessibility}
-              />
-            </Col>
-          )}
+          <Col className='info'>
+            <BuyButton
+              userId={userId}
+              productId={productId}
+              price={price}
+              limit={limit}
+              accessibility={accessibility}
+            />
+          </Col>
         </Row>
       </ProductWrapper>
       <Link to={`/profile/${username}`} onClick={hide}>

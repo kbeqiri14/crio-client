@@ -33,7 +33,7 @@ const Wrapper = styled('div')`
   }
 `;
 
-export const BuyWidget = ({ userId, username, productId, price, limit, accessibility }) => {
+export const BuyWidget = ({ userId, productId, price, limit, accessibility }) => {
   const { user } = useLoggedInUser();
 
   return (
@@ -59,19 +59,16 @@ export const BuyWidget = ({ userId, username, productId, price, limit, accessibi
             </Col>
           </Row>
         </Col>
-        {!user.isCreator && (
-          <Col span={24} padding_top={6}>
-            <BuyButton
-              block
-              userId={userId}
-              username={username}
-              productId={productId}
-              price={price}
-              limit={limit}
-              accessibility={accessibility}
-            />
-          </Col>
-        )}
+        <Col span={24} padding_top={6}>
+          <BuyButton
+            block
+            userId={userId}
+            productId={productId}
+            price={price}
+            limit={limit}
+            accessibility={accessibility}
+          />
+        </Col>
       </Row>
       {!user.isCreator && (
         <HelpTooltip title='After purchase, please check your email to receive a service from Creator' />

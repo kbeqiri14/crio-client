@@ -157,7 +157,6 @@ export const Content = ({ info, content, isLocked }) => {
               <Col>
                 <BuyWidget
                   userId={info.userId}
-                  username={info.username}
                   productId={info.productId}
                   price={info.price}
                   limit={info.limit}
