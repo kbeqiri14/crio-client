@@ -78,7 +78,7 @@ const Uploading = ({ state, types, dispatch }) => {
       centered
       footer={null}
       closeIcon={<CloseIcon />}
-      visible={true}
+      visible={state.uploadingVisible}
       closable={false}
       maskClosable={false}
       width={686}

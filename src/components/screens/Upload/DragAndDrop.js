@@ -79,7 +79,7 @@ const DragAndDrop = ({ content, file, types, dispatch, goToProfile }) => {
 
   return (
     <Row justify='center' gutter={[0, 50]} padding_top={34} padding_bottom={63}>
-      <Col className='text-center' span={24}>
+      <Col align='center' span={24}>
         <Title level={1}>Upload your content</Title>
       </Col>
       <Col span={24} align='center' padding_left={24} padding_right={24}>
