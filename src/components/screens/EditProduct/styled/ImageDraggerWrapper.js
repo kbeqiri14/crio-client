@@ -1,9 +1,6 @@
 import styled from 'styled-components';
 
 const ImageDraggerWrapper = styled('div')`
-  display: flex;
-  justify-content: center;
-  align-items: center;
   max-height: 232px;
   border-radius: 8px;
   .ant-upload.ant-upload-drag {
