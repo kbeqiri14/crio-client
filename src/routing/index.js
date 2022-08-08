@@ -29,6 +29,7 @@ import EditArtwork from '@screens/Video';
 import EditProduct from '@screens/EditProduct';
 import Payment from '@screens/Payment';
 import FeaturesPage from '@screens/FeaturesPage';
+import EarnMore from '@screens/EarnMore';
 import FAQ from '@screens/FAQ';
 import Job from '@screens/Job';
 
@@ -171,6 +172,12 @@ export const AppRoutes = () => {
               isAuthenticated={isAuthenticated}
               path='/payment'
               component={Payment}
+            />
+            <PrivateRoute
+              exact
+              isAuthenticated={isAuthenticated}
+              path='/earn-more'
+              component={EarnMore}
             />
           </Switch>
           {isVisible && <PresentationView />}

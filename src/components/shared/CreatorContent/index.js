@@ -85,7 +85,7 @@ export const Content = ({
           {!productsCount && !productsList?.length && (
             <EmptyState {...props} isMarketplace={true} />
           )}
-          <ProductsList productsList={productsList} />
+          <ProductsList productsList={productsList} loading={loading} />
           <LoadMoreButton
             visible={visibleLoadMoreProducts}
             loading={loading}
