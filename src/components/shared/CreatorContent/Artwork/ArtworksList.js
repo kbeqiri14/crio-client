@@ -6,14 +6,14 @@ import Artwork from './Artwork';
 import { SkeletonWrapper } from './styled';
 
 export const ArtworksList = ({ artworksList = [], loading }) => {
-  const dummyArray = new Array(6).fill();
+  const dummyArray = new Array(12).fill();
   if (loading) {
     return (
       <Row gutter={22}>
         {dummyArray.map(() => (
           <Col>
             <SkeletonWrapper>
-              <Skeleton.Image active />;
+              <Skeleton.Image />;
             </SkeletonWrapper>
             <Skeleton active avatar title={{ width: '100%' }} paragraph={{ rows: 0 }} />
           </Col>

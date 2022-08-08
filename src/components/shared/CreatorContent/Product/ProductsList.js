@@ -75,7 +75,7 @@ const Blocks = memo(({ productsList }) => {
 });
 
 const ProductsList = ({ productsList = [], loading }) => {
-  const dummyArray = new Array(6).fill();
+  const dummyArray = new Array(12).fill();
   const { pathname } = useLocation();
   const isProfile = useMemo(() => pathname.includes('/profile'), [pathname]);
   const width = useClientWidth();
@@ -86,7 +86,7 @@ const ProductsList = ({ productsList = [], loading }) => {
         {dummyArray.map(() => (
           <Col>
             <SkeletonWrapper>
-              <Skeleton.Image active />;
+              <Skeleton.Image />;
               <Skeleton active title={{ width: '100%' }} paragraph={{ rows: 1, width: '100%' }} />
             </SkeletonWrapper>
             <Skeleton active avatar title={{ width: '100%' }} paragraph={{ rows: 0 }} />

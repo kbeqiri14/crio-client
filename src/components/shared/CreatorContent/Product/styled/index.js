@@ -112,6 +112,9 @@ export const SkeletonWrapper = styled('div')`
       border-top-right-radius: 30px;
       border-bottom: 1px solid ${(props) => props.theme.colors.dark50};
       background: transparent;
+      svg {
+        display: none;
+      }
     }
     .ant-skeleton-content {
       padding: 0 20px;

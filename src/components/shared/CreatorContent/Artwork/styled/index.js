@@ -61,6 +61,9 @@ export const SkeletonWrapper = styled('div')`
       height: 330px;
       border-radius: 30px;
       background: transparent;
+      svg {
+        display: none;
+      }
     }
   }
 `;
