@@ -92,27 +92,27 @@ const DragAndDrop = ({ content, file, types, dispatch, goToProfile }) => {
               <Col span={24} padding_bottom={13}>
                 <Text level={4}>Drag and drop a File</Text>
               </Col>
-              <Col span={24}>
-                <Badge
-                  color='white'
-                  status='default'
-                  text='1600x1200 or higher recommended. Max 10MB each (20MB for videos)'
-                />
-              </Col>
-              <Col span={24}>
-                <Badge color='white' status='default' text='HI-RES images (png, jpg, gif)' />
-              </Col>
-              <Col span={24}>
-                <Badge
-                  color='white'
-                  status='default'
-                  text={
-                    <>
-                      Videos (mp4, 4:3,<span className='less-than-sign'> {'<'}</span>60 secs)
-                    </>
-                  }
-                />
-              </Col>
+              <div className='textContainer'>
+                <Col span={24}>
+                  <Badge
+                    status='default'
+                    text='1600x1200 or higher recommended. Max 10MB each (20MB for videos)'
+                  />
+                </Col>
+                <Col span={24}>
+                  <Badge status='default' text='HI-RES images (png, jpg, gif)' />
+                </Col>
+                <Col span={24}>
+                  <Badge
+                    status='default'
+                    text={
+                      <>
+                        Videos (mp4, 4:3,<span className='less-than-sign'> {'<'}</span>60 secs)
+                      </>
+                    }
+                  />
+                </Col>
+              </div>
               {file?.name && (
                 <Col span={24}>
                   <Text level={4}>{file.name}</Text>

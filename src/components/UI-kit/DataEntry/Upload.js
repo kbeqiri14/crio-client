@@ -22,6 +22,9 @@ const Dragger = styled(Upload.Dragger)`
     }
     .drag-and-drop {
       padding: 58px 0 71px;
+      .textContainer > div {
+        display: flex;
+      }
     }
     .ant-upload-drag-container {
       max-width: 330px;
