@@ -30,10 +30,10 @@ const ProfileContent = ({
   isProfile,
   isSubscribed,
 }) => {
-  const tab = useMemo(() => {
-    const count = (isProfile ? followingsCount : isSubscribed && followingsCount) || '';
-    return count ? `${tabs.FOLLOWING}: ${count}` : tabs.FOLLOWING;
-  }, [isProfile, isSubscribed, followingsCount]);
+  const tab = useMemo(
+    () => (followingsCount ? `${tabs.FOLLOWING}: ${followingsCount}` : tabs.FOLLOWING),
+    [followingsCount],
+  );
 
   const { pathname } = useLocation();
   // const [initialPolling, setInitialPolling] = useState(true);
@@ -89,7 +89,12 @@ const ProfileContent = ({
     <Wrapper>
       <Tabs>
         <TabPane key='Following' tab={tab}>
-          <Followings username={username} isProfile={isProfile} isSubscribed={isSubscribed} />
+          <Followings
+            username={username}
+            isProfile={isProfile}
+            isSubscribed={isSubscribed}
+            followingsCount={followingsCount}
+          />
         </TabPane>
       </Tabs>
     </Wrapper>
