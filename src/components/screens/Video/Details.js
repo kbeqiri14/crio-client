@@ -138,13 +138,17 @@ const VideoInfo = ({
         userId: user.id,
         image: compressionFile,
         type: ARTWORKS,
-        prefix: 'main',
       });
-      const content = itemContent?.image?.split('/')?.slice(-1)[0].slice('main-'.length);
       setUploading(false);
       saveArtwork({
         variables: {
-          params: { content, thumbnail: content, title, description: desc, accessibility },
+          params: {
+            content: itemContent?.image,
+            thumbnail: itemContent?.image,
+            title,
+            description: desc,
+            accessibility,
+          },
         },
       });
     } else {
