@@ -262,7 +262,7 @@ const ProductForm = ({ state }) => {
                 {productType?.name === 'Digital Product' && (
                   <Fragment>
                     <Col span={22} align='start'>
-                      <Text level={3}>Product Files*</Text>
+                      <Text level={3}>Product File*</Text>
                     </Col>
                     <Col span={22} padding_bottom={6}>
                       <DraggerFile control={control} files={files} setFiles={setFiles} />

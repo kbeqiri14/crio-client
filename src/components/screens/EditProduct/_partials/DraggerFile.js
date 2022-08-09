@@ -1,7 +1,7 @@
 import { memo, Fragment, useState, useEffect, useMemo } from 'react';
 import { Controller } from 'react-hook-form';
 
-import { Badge, Button, Col, Row, Text, Title, Upload } from '@ui-kit';
+import { Button, Col, Row, Text, Title, Upload } from '@ui-kit';
 import { errorToast } from '@ui-kit/Notification';
 import deleteIcon from '@images/delete.png';
 import FileDraggerWrapper from '../styled/FileDraggerWrapper';
@@ -16,7 +16,7 @@ const DraggerFile = ({ control, files, setFiles }) => {
       accept: 'file/*',
       listType: 'file',
       showUploadList: false,
-      multiple: true,
+      // multiple: true,
       beforeUpload: (file, fileList) => {
         if (fileList.length > 5 || files.length + fileList.length > 5) {
           setIsLimitReached(true);
@@ -41,9 +41,9 @@ const DraggerFile = ({ control, files, setFiles }) => {
             <Dragger {...props} {...field} disabled={files.length > 4}>
               <Title level={2} className='upload-text'>
                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                <a>Upload</a> your files
+                <a>Upload</a> your file
               </Title>
-              <Badge status='default' text='Maximum uploaded file count: 5' />
+              {/* <Badge status='default' text='Maximum uploaded file count: 5' /> */}
             </Dragger>
             {files.map((file) => (
               <Row className='file-box' key={file.uid}>
