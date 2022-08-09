@@ -2,6 +2,7 @@ import { memo } from 'react';
 
 import { Meta } from '@shared/Meta';
 import Bullet from './partials/Bullet';
+import Content from './partials/Content';
 import { Col, Divider, Row, Text, Title } from '@ui-kit';
 import TermsAndPolicyWrapper from './styled';
 
@@ -56,7 +57,7 @@ const TermsAndConditions = () => {
     ],
   ];
 
-  const text = [
+  const content = [
     [
       `By accessing this website we assume you accept these terms and conditions. Do not continue to use Crio Interactive if you do not agree to take all of the terms and 
   conditions stated on this page.`,
@@ -130,6 +131,12 @@ const TermsAndConditions = () => {
       `We do not ensure that the information on this website is correct, we do not warrant its completeness or accuracy; nor do we promise to ensure that the website remains 
   available or that the material on the website is kept up to date.`,
     ],
+    [
+      `The limitations and prohibitions of liability set in this Section and elsewhere in this disclaimer: (a) are subject to the preceding paragraph; and (b) govern all liabilities 
+    arising under the disclaimer, including liabilities arising in contract, in tort and for breach of statutory duty.`,
+      `As long as the website and the information and services on the
+     website are provided free of charge, we will not be liable for any loss or damage of any nature.`,
+    ],
   ];
   return (
     <TermsAndPolicyWrapper>
@@ -151,37 +158,9 @@ const TermsAndConditions = () => {
                 <a href='https://criointeractive.com'>https://criointeractive.com</a>.
               </Text>
             </Col>
-            {text[0].map((item) => (
-              <>
-                {Array.isArray(item) ? (
-                  <Col span={24}>
-                    <Text level={4}>{item[0]}</Text>
-                    <br />
-                    <Text level={3}>{item[1]}</Text>
-                  </Col>
-                ) : (
-                  <Col span={24}>
-                    <Text level={3}>{item}</Text>
-                  </Col>
-                )}
-              </>
-            ))}
+            <Content contentArr={content[0]} />
             <Bullet desc='You must not:' badgeArr={info[0]} />
-            {text[1].map((item) => (
-              <>
-                {Array.isArray(item) ? (
-                  <Col span={24}>
-                    <Text level={4}>{item[0]}</Text>
-                    <br />
-                    <Text level={3}>{item[1]}</Text>
-                  </Col>
-                ) : (
-                  <Col span={24}>
-                    <Text level={3}>{item}</Text>
-                  </Col>
-                )}
-              </>
-            ))}
+            <Content contentArr={content[1]} />
             <Bullet desc='You warrant and represent that:' badgeArr={info[1]} />
             <Col span={24}>
               <Text level={3}>
@@ -208,40 +187,12 @@ const TermsAndConditions = () => {
               desc='We may consider and approve other link requests from the following types of organizations:'
               badgeArr={info[3]}
             />
-            {text[2].map((item) => (
-              <>
-                {Array.isArray(item) ? (
-                  <Col span={24}>
-                    <Text level={4}>{item[0]}</Text>
-                    <br />
-                    <Text level={3}>{item[1]}</Text>
-                  </Col>
-                ) : (
-                  <Col span={24}>
-                    <Text level={3}>{item}</Text>
-                  </Col>
-                )}
-              </>
-            ))}
+            <Content contentArr={content[2]} />
             <Bullet
               desc='Approved organizations may hyperlink to our Website as follows:'
               badgeArr={info[4]}
             />
-            {text[3].map((item) => (
-              <>
-                {Array.isArray(item) ? (
-                  <Col span={24}>
-                    <Text level={4}>{item[0]}</Text>
-                    <br />
-                    <Text level={3}>{item[1]}</Text>
-                  </Col>
-                ) : (
-                  <Col span={24}>
-                    <Text level={3}>{item}</Text>
-                  </Col>
-                )}
-              </>
-            ))}
+            <Content contentArr={content[3]} />
             <Bullet
               title='Disclaimer'
               desc='To the maximum extent permitted by applicable law, we exclude all representations,
@@ -249,20 +200,7 @@ const TermsAndConditions = () => {
                 Nothing in this disclaimer will:'
               badgeArr={info[5]}
             />
-            <Col>
-              <Text level={3}>
-                The limitations and prohibitions of liability set in this Section and elsewhere in
-                this disclaimer: (a) are subject to the preceding paragraph; and (b) govern all
-                liabilities arising under the disclaimer, including liabilities arising in contract,
-                in tort and for breach of statutory duty.
-              </Text>
-            </Col>
-            <Col span={24}>
-              <Text level={3}>
-                As long as the website and the information and services on the website are provided
-                free of charge, we will not be liable for any loss or damage of any nature.
-              </Text>
-            </Col>
+            <Content contentArr={content[4]} />
           </Row>
         </div>
       </div>

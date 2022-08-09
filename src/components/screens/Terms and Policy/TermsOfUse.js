@@ -2,6 +2,7 @@ import { memo } from 'react';
 
 import { Meta } from '@shared/Meta';
 import Bullet from './partials/Bullet';
+import Content from './partials/Content';
 import { Col, Divider, Row, Text, Title } from '@ui-kit';
 import TermsAndPolicyWrapper from './styled';
 
@@ -18,6 +19,182 @@ const TermsOfUse = () => {
     `a statement that the 
   information in the notification is accurate, and under penalty of perjury, that you are either the owner of the copyright that has allegedly
    been infringed or that you are authorized to act on behalf of the copyright owner.`,
+  ];
+  const content = [
+    [
+      `All such additional terms, guidelines, and rules are incorporated by reference into these Terms.`,
+      `These Terms of Use described 
+  the legally binding terms and conditions that oversee your use of the Site.When you create an account you must provide us with accurate information, 
+  in good faith, and you agree to keep your information updated if it changes. To create an account you must be at last 13 years old. To join as a creator, 
+  you must be at least 18 years old. You are responsible for anything that occurs when anyone is signed in to your account, as well as the security of the 
+  account.`,
+      `These terms require the use of arbitration Section 10.2 on an individual basis to resolve disputes and also limit the remedies available to you 
+  in the event of a dispute.`,
+      `Access to the Site`,
+      `Subject to these Terms. Company grants you a non-transferable, non-exclusive, revocable, limited license 
+  to access the Site solely for your own personal, noncommercial use.`,
+      [
+        'Certain Restrictions.',
+        `The rights approved to you in these Terms are subject to the 
+  following restrictions: (a) you shall not sell, rent, lease, transfer, assign, distribute, host, or otherwise commercially exploit the Site; (b) you shall 
+  not change, make derivative works of, disassemble, reverse compile or reverse engineer any part of the Site; (c) you shall not access the Site in order to 
+  build a similar or competitive website; and (d) except as expressly stated herein, no part of the Site may be copied, reproduced, distributed, republished, 
+  downloaded, displayed, posted or transmitted in any form or by any means unless otherwise indicated, any future release, update, or other addition to 
+  functionality of the Site shall be subject to these Terms. All copyright and other proprietary notices on the Site must be retained on all copies thereof. 
+  Company reserves the right to change, suspend, or cease the Site with or without notice to you. You approved that Company will not be held liable to you or 
+  any third-party for any change, interruption, or termination of the Site or any part. No Support or Maintenance. You agree that Company will have no obligation 
+  to provide you with any support in connection with the Site. Excluding any User Content that you may provide, you are aware that all the intellectual property 
+  rights, including copyrights, patents, trademarks, and trade secrets, in the Site and its content are owned by Company or Company’s suppliers. Note that these 
+  Terms and access to the Site do not give you any rights, title or interest in or to any intellectual property rights, except for the limited access rights 
+  expressed in Section 2.1. Company and its suppliers reserve all rights not granted in these Terms.`,
+      ],
+    ],
+    [
+      `Please note that, pursuant to 17 U.S.C. § 512(f), any 
+  misrepresentation of material fact in a written notification automatically subjects the complaining party to liability for any damages, costs and attorney’s 
+  fees incurred by us in connection with the written notification and allegation of copyright infringement.`,
+      [
+        'General',
+        `These Terms are subject to occasional 
+  revision, and if we make any substantial changes, we may notify you by sending you an e-mail to the last e-mail address you provided to us and/or by prominently 
+  posting notice of the changes on our Site. You are responsible for providing us with your most current e-mail address. In the event that the last e-mail address 
+  that you have provided us is not valid our dispatch of the e-mail containing such notice will nonetheless constitute effective notice of the changes described 
+  in the notice. Any changes to these Terms will be effective upon the earliest of thirty (30) calendar days following our dispatch of an e-mail notice to you or 
+  thirty (30) calendar days following our posting of notice of the changes on our Site. These changes will be effective immediately for new users of our Site. 
+  Continued use of our Site following notice of such changes shall indicate your acknowledgement of such changes and agreement to be bound by the terms and conditions 
+  of such changes. Dispute Resolution. Please read this Arbitration Agreement carefully. It is part of your contract with Company and affects your rights. It contains 
+  procedures for MANDATORY BINDING ARBITRATION AND A CLASS ACTION WAIVER.`,
+      ],
+      [
+        'Applicability of Arbitration Agreement.',
+        `All claims and disputes in connection with the 
+  Terms or the use of any product or service provided by the Company that cannot be resolved informally or in small claims court shall be resolved by binding arbitration 
+  on an individual basis under the terms of this Arbitration Agreement. Unless otherwise agreed to, all arbitration proceedings shall be held in English. This Arbitration 
+  Agreement applies to you and the Company, and to any subsidiaries, affiliates, agents, employees, predecessors in interest, successors, and assigns, as well as all 
+  authorized or unauthorized users or beneficiaries of services or goods provided under the Terms.`,
+      ],
+      [
+        'Notice Requirement and Informal Dispute Resolution.',
+        `Before either party may seek arbitration, the party must first send to the other party a written Notice of Dispute describing the nature and basis of the claim or dispute, 
+and the requested relief. A Notice to the Company should be sent to: 120 West 97th Street, New York, NY 10025. After the Notice is received, you and the Company may attempt 
+to resolve the claim or dispute informally. If you and the Company do not resolve the claim or dispute within thirty (30) days after the Notice is received, either party may 
+begin an arbitration proceeding. The amount of any settlement offer made by any party may not be disclosed to the arbitrator until after the arbitrator has determined the 
+amount of the award to which either party is entitled.`,
+      ],
+      [
+        'Arbitration Rules.',
+        `Arbitration shall be initiated through the American Arbitration Association, an established 
+alternative dispute resolution provider that offers arbitration as set forth in this section. If AAA is not available to arbitrate, the parties shall agree to select an 
+alternative ADR Provider. The rules of the ADR Provider shall govern all aspects of the arbitration except to the extent such rules are in conflict with the Terms. The AAA 
+Consumer Arbitration Rules governing the arbitration are available online at adr.org or by calling the AAA at 1-800-778-7879. The arbitration shall be conducted by a single, 
+neutral arbitrator. Any claims or disputes where the total amount of the award sought is less than Ten Thousand U.S. Dollars (US $10,000.00) may be resolved through binding 
+non-appearance-based arbitration, at the option of the party seeking relief. For claims or disputes where the total amount of the award sought is Ten Thousand U.S. Dollars 
+(US $10,000.00) or more, the right to a hearing will be determined by the Arbitration Rules. Any hearing will be held in a location within 100 miles of your residence, unless 
+you reside outside of the United States, and unless the parties agree otherwise. If you reside outside of the U.S., the arbitrator shall give the parties reasonable notice of 
+the date, time and place of any oral hearings. Any judgment on the award rendered by the arbitrator may be entered in any court of competent jurisdiction. If the arbitrator 
+grants you an award that is greater than the last settlement offer that the Company made to you prior to the initiation of arbitration, the Company will pay you the greater 
+of the award or $2,500.00. Each party shall bear its own costs and disbursements arising out of the arbitration and shall pay an equal share of the fees and costs of the ADR 
+Provider.`,
+      ],
+      [
+        'Additional Rules for Non-Appearance Based Arbitration.',
+        `If non-appearance based arbitration is elected, the arbitration shall be conducted by telephone, online 
+and/or based solely on written submissions; the specific manner shall be chosen by the party initiating the arbitration. The arbitration shall not involve any personal appearance 
+by the parties or witnesses unless otherwise agreed by the parties.`,
+      ],
+      [
+        'Time Limits.',
+        `If you or the Company pursues arbitration, the arbitration action must be initiated and/or 
+demanded within the statute of limitations and within any deadline imposed under the AAA Rules for the pertinent claim.`,
+      ],
+      [
+        'Authority of Arbitrator.',
+        `If arbitration is initiated, 
+the arbitrator will decide the rights and liabilities of you and the Company, and the dispute will not be consolidated with any other matters or joined with any other cases or parties. 
+The arbitrator shall have the authority to grant motions dispositive of all or part of any claim. The arbitrator shall have the authority to award monetary damages, and to grant any 
+non-monetary remedy or relief available to an individual under applicable law, the AAA Rules, and the Terms. The arbitrator shall issue a written award and statement of decision describing 
+the essential findings and conclusions on which the award is based. The arbitrator has the same authority to award relief on an individual basis that a judge in a court of law would have. 
+The award of the arbitrator is final and binding upon you and the Company.`,
+      ],
+      [
+        'Waiver of Jury Trial.',
+        `THE PARTIES HEREBY WAIVE THEIR CONSTITUTIONAL AND STATUTORY RIGHTS TO GO TO COURT AND 
+HAVE A TRIAL IN FRONT OF A JUDGE OR A JURY, instead electing that all claims and disputes shall be resolved by arbitration under this Arbitration Agreement. Arbitration procedures are typically 
+more limited, more efficient and less expensive than rules applicable in a court and are subject to very limited review by a court. In the event any litigation should arise between you and the 
+Company in any state or federal court in a suit to vacate or enforce an arbitration award or otherwise, YOU AND THE COMPANY WAIVE ALL RIGHTS TO A JURY TRIAL, instead electing that the dispute 
+be resolved by a judge.`,
+      ],
+      [
+        'Waiver of Class or Consolidated Actions.',
+        `All claims and disputes within the scope of this arbitration agreement must be arbitrated or litigated on an individual 
+basis and not on a class basis, and claims of more than one customer or user cannot be arbitrated or litigated jointly or consolidated with those of any other customer or user.`,
+      ],
+      [
+        'Confidentiality.',
+        `All aspects of the arbitration proceeding shall be strictly confidential. The parties agree to maintain confidentiality unless otherwise required by law. This paragraph 
+shall not prevent a party from submitting to a court of law any information necessary to enforce this Agreement, to enforce an arbitration award, or to seek injunctive or equitable relief.`,
+      ],
+      [
+        'Severability.',
+        `If any part or parts of this Arbitration Agreement are found under the law to be invalid or unenforceable by a court of competent jurisdiction, then such specific part or 
+parts shall be of no force and effect and shall be severed and the remainder of the Agreement shall continue in full force and effect.`,
+      ],
+      [
+        'Right to Waive.',
+        `Any or all of the rights and limitations 
+set forth in this Arbitration Agreement may be waived by the party against whom the claim is asserted. Such waiver shall not waive or affect any other portion of this Arbitration Agreement.`,
+      ],
+      [
+        'Survival of Agreement.',
+        `This Arbitration Agreement will survive the termination of your relationship with Company.`,
+      ],
+      [
+        'Small Claims Court.',
+        `Nonetheless the foregoing, either you or the 
+Company may bring an individual action in small claims court.`,
+      ],
+      [
+        'Emergency Equitable Relief.',
+        `Anyhow the foregoing, either party may seek emergency equitable relief before a state or federal court 
+in order to maintain the status quo pending arbitration. A request for interim measures shall not be deemed a waiver of any other rights or obligations under this Arbitration Agreement.`,
+      ],
+      [
+        'Claims Not Subject to Arbitration.',
+        `Notwithstanding the foregoing, claims of defamation, violation of the Computer Fraud and Abuse Act, and infringement or misappropriation of the other party’s 
+patent, copyright, trademark or trade secrets shall not be subject to this Arbitration Agreement.`,
+      ],
+      `In any circumstances where the foregoing Arbitration Agreement permits the parties to litigate 
+in court, the parties hereby agree to submit to the personal jurisdiction of the courts located within Netherlands County, California, for such purposes.`,
+      `The Site may be subject to U.S. export 
+control laws and may be subject to export or import regulations in other countries. You agree not to export, re-export, or transfer, directly or indirectly, any U.S. technical data acquired from 
+Company, or any products utilizing such data, in violation of the United States export laws or regulations.`,
+      `Company is located at the address in Section 10.8. If you are a California resident, 
+you may report complaints to the Complaint Assistance Unit of the Division of Consumer Product of the California Department of Consumer Affairs by contacting them in writing at 400 R Street, 
+Sacramento, CA 95814, or by telephone at (800) 952-5210.`,
+      [
+        'Electronic Communications.',
+        `The communications between you and Company use electronic means, whether you use the Site or send us emails, 
+or whether Company posts notices on the Site or communicates with you via email. For contractual purposes, you (a) consent to receive communications from Company in an electronic form; and (b) agree 
+that all terms and conditions, agreements, notices, disclosures, and other communications that Company provides to you electronically satisfy any legal obligation that such communications would satisfy 
+if it were be in a hard copy writing.`,
+      ],
+      [
+        'Entire Terms.',
+        `These Terms constitute the entire agreement between you and us regarding the use of the Site. Our failure to exercise or enforce any right or 
+provision of these Terms shall not operate as a waiver of such right or provision. The section titles in these Terms are for convenience only and have no legal or contractual effect. The word "including" 
+means "including without limitation". If any provision of these Terms is held to be invalid or unenforceable, the other provisions of these Terms will be unimpaired and the invalid or unenforceable provision 
+will be deemed modified so that it is valid and enforceable to the maximum extent permitted by law. Your relationship to Company is that of an independent contractor, and neither party is an agent or partner 
+of the other. These Terms, and your rights and obligations herein, may not be assigned, subcontracted, delegated, or otherwise transferred by you without Company’s prior written consent, and any attempted 
+assignment, subcontract, delegation, or transfer in violation of the foregoing will be null and void. Company may freely assign these Terms. The terms and conditions set forth in these Terms shall be binding 
+upon assignees.`,
+      ],
+      ['Your Privacy.', 'Please read our Privacy Policy.'],
+      [
+        'Copyright/Trademark Information.',
+        `Copyright ©. All rights reserved. All trademarks, logos and service marks displayed on the Site are 
+our property or the property of other third-parties. You are not permitted to use these Marks without our prior written consent or the consent of such third party which may own the Marks.`,
+      ],
+    ],
   ];
   return (
     <TermsAndPolicyWrapper>
@@ -38,73 +215,12 @@ const TermsOfUse = () => {
                 in connection with such features.
               </Text>
             </Col>
-            <Col span={24}>
-              <Text level={3}>
-                All such additional terms, guidelines, and rules are incorporated by reference into
-                these Terms.
-              </Text>
-            </Col>
-            <Col span={24}>
-              <Text level={3}>
-                These Terms of Use described the legally binding terms and conditions that oversee
-                your use of the Site.When you create an account you must provide us with accurate
-                information, in good faith, and you agree to keep your information updated if it
-                changes. To create an account you must be at last 13 years old. To join as a
-                creator, you must be at least 18 years old. You are responsible for anything that
-                occurs when anyone is signed in to your account, as well as the security of the
-                account.
-              </Text>
-            </Col>
-            <Col span={24}>
-              <Text level={3}>
-                These terms require the use of arbitration Section 10.2 on an individual basis to
-                resolve disputes and also limit the remedies available to you in the event of a
-                dispute.
-              </Text>
-            </Col>
-            <Col span={24}>
-              <Text level={3}>Access to the Site</Text>
-            </Col>
-            <Col>
-              <Text level={3}>
-                Subject to these Terms. Company grants you a non-transferable, non-exclusive,
-                revocable, limited license to access the Site solely for your own personal,
-                noncommercial use.
-              </Text>
-            </Col>
-            <Col span={24}>
-              <Text level={4}>Certain Restrictions.</Text>
-              <br />
-              <Text level={3}>
-                The rights approved to you in these Terms are subject to the following restrictions:
-                (a) you shall not sell, rent, lease, transfer, assign, distribute, host, or
-                otherwise commercially exploit the Site; (b) you shall not change, make derivative
-                works of, disassemble, reverse compile or reverse engineer any part of the Site; (c)
-                you shall not access the Site in order to build a similar or competitive website;
-                and (d) except as expressly stated herein, no part of the Site may be copied,
-                reproduced, distributed, republished, downloaded, displayed, posted or transmitted
-                in any form or by any means unless otherwise indicated, any future release, update,
-                or other addition to functionality of the Site shall be subject to these Terms. All
-                copyright and other proprietary notices on the Site must be retained on all copies
-                thereof. Company reserves the right to change, suspend, or cease the Site with or
-                without notice to you. You approved that Company will not be held liable to you or
-                any third-party for any change, interruption, or termination of the Site or any
-                part. No Support or Maintenance. You agree that Company will have no obligation to
-                provide you with any support in connection with the Site. Excluding any User Content
-                that you may provide, you are aware that all the intellectual property rights,
-                including copyrights, patents, trademarks, and trade secrets, in the Site and its
-                content are owned by Company or Company’s suppliers. Note that these Terms and
-                access to the Site do not give you any rights, title or interest in or to any
-                intellectual property rights, except for the limited access rights expressed in
-                Section 2.1. Company and its suppliers reserve all rights not granted in these
-                Terms.
-              </Text>
-            </Col>
+            <Content contentArr={content[0]} />
             <Col span={24}>
               <Text level={4}>User Content</Text>
               <br />
+              <Text level={2}>User Content. </Text>
               <Text level={3}>
-                <Text level={2}>User Content. </Text>
                 You maintain full ownership of all creations and marketplace items that you offer on
                 Crio, but we need licenses from you to operate Crio effectively. By posting on Crio
                 you grant us a royalty-free, perpetual, irrevocable, non-exclusive, sublicensable,
@@ -293,298 +409,7 @@ const TermsOfUse = () => {
                 badgeArr={info}
               />
             </Col>
-            <Col span={24}>
-              <Text level={3}>
-                Please note that, pursuant to 17 U.S.C. § 512(f), any misrepresentation of material
-                fact in a written notification automatically subjects the complaining party to
-                liability for any damages, costs and attorney’s fees incurred by us in connection
-                with the written notification and allegation of copyright infringement.
-              </Text>
-            </Col>
-
-            <Col span={24}>
-              <Text level={4}>General</Text>
-              <br />
-              <Text level={3}>
-                These Terms are subject to occasional revision, and if we make any substantial
-                changes, we may notify you by sending you an e-mail to the last e-mail address you
-                provided to us and/or by prominently posting notice of the changes on our Site. You
-                are responsible for providing us with your most current e-mail address. In the event
-                that the last e-mail address that you have provided us is not valid our dispatch of
-                the e-mail containing such notice will nonetheless constitute effective notice of
-                the changes described in the notice. Any changes to these Terms will be effective
-                upon the earliest of thirty (30) calendar days following our dispatch of an e-mail
-                notice to you or thirty (30) calendar days following our posting of notice of the
-                changes on our Site. These changes will be effective immediately for new users of
-                our Site. Continued use of our Site following notice of such changes shall indicate
-                your acknowledgement of such changes and agreement to be bound by the terms and
-                conditions of such changes. Dispute Resolution. Please read this Arbitration
-                Agreement carefully. It is part of your contract with Company and affects your
-                rights. It contains procedures for MANDATORY BINDING ARBITRATION AND A CLASS ACTION
-                WAIVER.
-              </Text>
-            </Col>
-            <Col span={24}>
-              <Text level={4}>Applicability of Arbitration Agreement.</Text>
-              <br />
-              <Text level={3}>
-                All claims and disputes in connection with the Terms or the use of any product or
-                service provided by the Company that cannot be resolved informally or in small
-                claims court shall be resolved by binding arbitration on an individual basis under
-                the terms of this Arbitration Agreement. Unless otherwise agreed to, all arbitration
-                proceedings shall be held in English. This Arbitration Agreement applies to you and
-                the Company, and to any subsidiaries, affiliates, agents, employees, predecessors in
-                interest, successors, and assigns, as well as all authorized or unauthorized users
-                or beneficiaries of services or goods provided under the Terms.
-              </Text>
-            </Col>
-            <Col span={24}>
-              <Text level={4}>Notice Requirement and Informal Dispute Resolution.</Text>
-              <br />
-              <Text level={3}>
-                Before either party may seek arbitration, the party must first send to the other
-                party a written Notice of Dispute describing the nature and basis of the claim or
-                dispute, and the requested relief. A Notice to the Company should be sent to: 120
-                West 97th Street, New York, NY 10025. After the Notice is received, you and the
-                Company may attempt to resolve the claim or dispute informally. If you and the
-                Company do not resolve the claim or dispute within thirty (30) days after the Notice
-                is received, either party may begin an arbitration proceeding. The amount of any
-                settlement offer made by any party may not be disclosed to the arbitrator until
-                after the arbitrator has determined the amount of the award to which either party is
-                entitled.
-              </Text>
-            </Col>
-            <Col span={24}>
-              <Text level={4}>Arbitration Rules.</Text>
-              <br />
-              <Text level={3}>
-                Arbitration shall be initiated through the American Arbitration Association, an
-                established alternative dispute resolution provider that offers arbitration as set
-                forth in this section. If AAA is not available to arbitrate, the parties shall agree
-                to select an alternative ADR Provider. The rules of the ADR Provider shall govern
-                all aspects of the arbitration except to the extent such rules are in conflict with
-                the Terms. The AAA Consumer Arbitration Rules governing the arbitration are
-                available online at adr.org or by calling the AAA at 1-800-778-7879. The arbitration
-                shall be conducted by a single, neutral arbitrator. Any claims or disputes where the
-                total amount of the award sought is less than Ten Thousand U.S. Dollars (US
-                $10,000.00) may be resolved through binding non-appearance-based arbitration, at the
-                option of the party seeking relief. For claims or disputes where the total amount of
-                the award sought is Ten Thousand U.S. Dollars (US $10,000.00) or more, the right to
-                a hearing will be determined by the Arbitration Rules. Any hearing will be held in a
-                location within 100 miles of your residence, unless you reside outside of the United
-                States, and unless the parties agree otherwise. If you reside outside of the U.S.,
-                the arbitrator shall give the parties reasonable notice of the date, time and place
-                of any oral hearings. Any judgment on the award rendered by the arbitrator may be
-                entered in any court of competent jurisdiction. If the arbitrator grants you an
-                award that is greater than the last settlement offer that the Company made to you
-                prior to the initiation of arbitration, the Company will pay you the greater of the
-                award or $2,500.00. Each party shall bear its own costs and disbursements arising
-                out of the arbitration and shall pay an equal share of the fees and costs of the ADR
-                Provider.
-              </Text>
-            </Col>
-            <Col span={24}>
-              <Text level={4}>Additional Rules for Non-Appearance Based Arbitration.</Text>
-              <br />
-              <Text level={3}>
-                If non-appearance based arbitration is elected, the arbitration shall be conducted
-                by telephone, online and/or based solely on written submissions; the specific manner
-                shall be chosen by the party initiating the arbitration. The arbitration shall not
-                involve any personal appearance by the parties or witnesses unless otherwise agreed
-                by the parties.
-              </Text>
-            </Col>
-            <Col span={24}>
-              <Text level={4}>Time Limits.</Text>
-              <br />
-              <Text level={3}>
-                If you or the Company pursues arbitration, the arbitration action must be initiated
-                and/or demanded within the statute of limitations and within any deadline imposed
-                under the AAA Rules for the pertinent claim.
-              </Text>
-            </Col>
-            <Col span={24}>
-              <Text level={4}>Authority of Arbitrator.</Text>
-              <br />
-              <Text level={3}>
-                If arbitration is initiated, the arbitrator will decide the rights and liabilities
-                of you and the Company, and the dispute will not be consolidated with any other
-                matters or joined with any other cases or parties. The arbitrator shall have the
-                authority to grant motions dispositive of all or part of any claim. The arbitrator
-                shall have the authority to award monetary damages, and to grant any non-monetary
-                remedy or relief available to an individual under applicable law, the AAA Rules, and
-                the Terms. The arbitrator shall issue a written award and statement of decision
-                describing the essential findings and conclusions on which the award is based. The
-                arbitrator has the same authority to award relief on an individual basis that a
-                judge in a court of law would have. The award of the arbitrator is final and binding
-                upon you and the Company.
-              </Text>
-            </Col>
-            <Col span={24}>
-              <Text level={4}>Waiver of Jury Trial.</Text>
-              <br />
-              <Text level={3}>
-                THE PARTIES HEREBY WAIVE THEIR CONSTITUTIONAL AND STATUTORY RIGHTS TO GO TO COURT
-                AND HAVE A TRIAL IN FRONT OF A JUDGE OR A JURY, instead electing that all claims and
-                disputes shall be resolved by arbitration under this Arbitration Agreement.
-                Arbitration procedures are typically more limited, more efficient and less expensive
-                than rules applicable in a court and are subject to very limited review by a court.
-                In the event any litigation should arise between you and the Company in any state or
-                federal court in a suit to vacate or enforce an arbitration award or otherwise, YOU
-                AND THE COMPANY WAIVE ALL RIGHTS TO A JURY TRIAL, instead electing that the dispute
-                be resolved by a judge.
-              </Text>
-            </Col>
-            <Col span={24}>
-              <Text level={4}>Waiver of Class or Consolidated Actions.</Text>
-              <br />
-              <Text level={3}>
-                All claims and disputes within the scope of this arbitration agreement must be
-                arbitrated or litigated on an individual basis and not on a class basis, and claims
-                of more than one customer or user cannot be arbitrated or litigated jointly or
-                consolidated with those of any other customer or user.
-              </Text>
-            </Col>
-            <Col span={24}>
-              <Text level={4}>Confidentiality.</Text>
-              <br />
-              <Text level={3}>
-                All aspects of the arbitration proceeding shall be strictly confidential. The
-                parties agree to maintain confidentiality unless otherwise required by law. This
-                paragraph shall not prevent a party from submitting to a court of law any
-                information necessary to enforce this Agreement, to enforce an arbitration award, or
-                to seek injunctive or equitable relief.
-              </Text>
-            </Col>
-            <Col span={24}>
-              <Text level={4}>Severability.</Text>
-              <br />
-              <Text level={3}>
-                If any part or parts of this Arbitration Agreement are found under the law to be
-                invalid or unenforceable by a court of competent jurisdiction, then such specific
-                part or parts shall be of no force and effect and shall be severed and the remainder
-                of the Agreement shall continue in full force and effect.
-              </Text>
-            </Col>
-            <Col span={24}>
-              <Text level={4}>Right to Waive.</Text>
-              <br />
-              <Text level={3}>
-                Any or all of the rights and limitations set forth in this Arbitration Agreement may
-                be waived by the party against whom the claim is asserted. Such waiver shall not
-                waive or affect any other portion of this Arbitration Agreement.
-              </Text>
-            </Col>
-            <Col span={24}>
-              <Text level={4}>Survival of Agreement.</Text>
-              <br />
-              <Text level={3}>
-                This Arbitration Agreement will survive the termination of your relationship with
-                Company.
-              </Text>
-            </Col>
-            <Col span={24}>
-              <Text level={4}>Small Claims Court.;</Text>
-              <br />
-              <Text level={3}>
-                Nonetheless the foregoing, either you or the Company may bring an individual action
-                in small claims court.
-              </Text>
-            </Col>
-            <Col span={24}>
-              <Text level={4}>Emergency Equitable Relief.</Text>
-              <br />
-              <Text level={3}>
-                Anyhow the foregoing, either party may seek emergency equitable relief before a
-                state or federal court in order to maintain the status quo pending arbitration. A
-                request for interim measures shall not be deemed a waiver of any other rights or
-                obligations under this Arbitration Agreement.
-              </Text>
-            </Col>
-            <Col span={24}>
-              <Text level={4}>Claims Not Subject to Arbitration.</Text>
-              <br />
-              <Text level={3}>
-                Notwithstanding the foregoing, claims of defamation, violation of the Computer Fraud
-                and Abuse Act, and infringement or misappropriation of the other party’s patent,
-                copyright, trademark or trade secrets shall not be subject to this Arbitration
-                Agreement.
-              </Text>
-            </Col>
-            <Col span={24}>
-              <Text level={3}>
-                In any circumstances where the foregoing Arbitration Agreement permits the parties
-                to litigate in court, the parties hereby agree to submit to the personal
-                jurisdiction of the courts located within Netherlands County, California, for such
-                purposes.
-              </Text>
-            </Col>
-            <Col span={24}>
-              <Text level={3}>
-                The Site may be subject to U.S. export control laws and may be subject to export or
-                import regulations in other countries. You agree not to export, re-export, or
-                transfer, directly or indirectly, any U.S. technical data acquired from Company, or
-                any products utilizing such data, in violation of the United States export laws or
-                regulations.
-              </Text>
-            </Col>
-            <Col span={24}>
-              <Text level={3}>
-                Company is located at the address in Section 10.8. If you are a California resident,
-                you may report complaints to the Complaint Assistance Unit of the Division of
-                Consumer Product of the California Department of Consumer Affairs by contacting them
-                in writing at 400 R Street, Sacramento, CA 95814, or by telephone at (800) 952-5210.
-              </Text>
-            </Col>
-            <Col span={24}>
-              <Text level={4}>Electronic Communications.</Text>
-              <br />
-              <Text level={3}>
-                The communications between you and Company use electronic means, whether you use the
-                Site or send us emails, or whether Company posts notices on the Site or communicates
-                with you via email. For contractual purposes, you (a) consent to receive
-                communications from Company in an electronic form; and (b) agree that all terms and
-                conditions, agreements, notices, disclosures, and other communications that Company
-                provides to you electronically satisfy any legal obligation that such communications
-                would satisfy if it were be in a hard copy writing.
-              </Text>
-            </Col>
-            <Col span={24}>
-              <Text level={4}>Entire Terms.</Text>
-              <br />
-              <Text level={3}>
-                These Terms constitute the entire agreement between you and us regarding the use of
-                the Site. Our failure to exercise or enforce any right or provision of these Terms
-                shall not operate as a waiver of such right or provision. The section titles in
-                these Terms are for convenience only and have no legal or contractual effect. The
-                word "including" means "including without limitation". If any provision of these
-                Terms is held to be invalid or unenforceable, the other provisions of these Terms
-                will be unimpaired and the invalid or unenforceable provision will be deemed
-                modified so that it is valid and enforceable to the maximum extent permitted by law.
-                Your relationship to Company is that of an independent contractor, and neither party
-                is an agent or partner of the other. These Terms, and your rights and obligations
-                herein, may not be assigned, subcontracted, delegated, or otherwise transferred by
-                you without Company’s prior written consent, and any attempted assignment,
-                subcontract, delegation, or transfer in violation of the foregoing will be null and
-                void. Company may freely assign these Terms. The terms and conditions set forth in
-                these Terms shall be binding upon assignees.
-              </Text>
-            </Col>
-            <Col span={24}>
-              <Text level={4}>Your Privacy.</Text>
-              <br />
-              <Text level={3}>Please read our Privacy Policy.</Text>
-            </Col>
-            <Col span={24}>
-              <Text level={4}>Copyright/Trademark Information.</Text>
-              <br />
-              <Text level={3}>
-                Copyright ©. All rights reserved. All trademarks, logos and service marks displayed
-                on the Site are our property or the property of other third-parties. You are not
-                permitted to use these Marks without our prior written consent or the consent of
-                such third party which may own the Marks.
-              </Text>
-            </Col>
+            <Content contentArr={content[1]} />
             <Col span={24}>
               <Text level={4} margin_bottom={10}>
                 Contact Information
