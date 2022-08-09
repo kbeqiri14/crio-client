@@ -38,7 +38,10 @@ const BuyButton = ({ userId, productId, price, limit, accessibility, block }) =>
     [user.isSubscribed],
   );
 
-  const label = useMemo(() => (price ? 'BUY' : 'EMAIL'), [price]);
+  const label = useMemo(
+    () => (price && !user.boughtProducts?.includes(productId) ? 'BUY' : 'EMAIL'),
+    [price, productId, user.boughtProducts],
+  );
   const color = useMemo(() => (label === 'BUY' ? 'blue' : 'green'), [label]);
   const disabled = useMemo(() => label === 'BUY' && limit === 0, [limit, label]);
   const onClick = useMemo(() => {
