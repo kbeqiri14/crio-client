@@ -1,10 +1,11 @@
-import { memo, useMemo, Fragment } from 'react';
+import { memo, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
+import { Skeleton } from 'antd';
 
 import useClientWidth from '@app/hooks/useClientWidth';
 import { Col, Row } from '@ui-kit';
-import { Skeleton } from 'antd';
 import Product from './Product';
+import { SkeletonWrapper } from './styled';
 
 const Item = memo(({ item, large }) => (
   <Product
@@ -74,33 +75,29 @@ const Blocks = memo(({ productsList }) => {
 });
 
 const ProductsList = ({ productsList = [], loading }) => {
-  const dummyArray = new Array(6).fill({});
+  const dummyArray = new Array(12).fill();
   const { pathname } = useLocation();
   const isProfile = useMemo(() => pathname.includes('/profile'), [pathname]);
   const width = useClientWidth();
-  if (width < 1438) {
-    return <Block block={productsList} />;
-  }
 
   if (loading) {
     return (
-      <Fragment>
-        <Row gutter={[40, 40]} padding_top={40} padding_horizontal={20} padding_bottom={20}>
-          {dummyArray.map(() => (
-            <Col span={8} align='center'>
-              <Skeleton round active avatar={{ size: 122 }} title={false} paragraph={false} />
-              <Skeleton
-                round
-                active
-                title={{ width: '100%' }}
-                paragraph={{ rows: 1, width: '100%' }}
-              />
-              <Skeleton avatar paragraph={{ rows: 0 }} title={{ width: '100%' }} />;
-            </Col>
-          ))}
-        </Row>
-      </Fragment>
+      <Row gutter={22}>
+        {dummyArray.map(() => (
+          <Col>
+            <SkeletonWrapper>
+              <Skeleton.Image />;
+              <Skeleton active title={{ width: '100%' }} paragraph={{ rows: 1, width: '100%' }} />
+            </SkeletonWrapper>
+            <Skeleton active avatar title={{ width: '100%' }} paragraph={{ rows: 0 }} />
+          </Col>
+        ))}
+      </Row>
     );
+  }
+
+  if (width < 1438) {
+    return <Block block={productsList} />;
   }
 
   return isProfile || productsList.length < 5 ? (

@@ -1,4 +1,4 @@
-import { memo, useState, useEffect } from 'react';
+import { Fragment, memo, useState, useEffect } from 'react';
 import { Col, Row, Text, Title, Select, Button } from '@ui-kit';
 import { Footer } from '@shared/Footer';
 import { validateEmail } from '@utils/helpers';
@@ -6,7 +6,21 @@ import { validateEmail } from '@utils/helpers';
 import paperPlane from '@images/paper-plane.png';
 import earnMore from '@images/earn-more.png';
 import { errorToast } from '@ui-kit/Notification';
-import EarnMoreWrapper from './styled';
+import Wrapper from './styled';
+
+const info = [
+  { key: 1, title: 'Invite Members', desc: 'Let’s say you Invited two creators: Erika and John' },
+  {
+    key: 2,
+    title: 'Invited Members Earnings',
+    desc: 'Erika earns $1,000 / month on Crio and John earns $500 / month"',
+  },
+  {
+    key: 3,
+    title: 'Your Earnings',
+    desc: `You will get total of $300 per month! $250 ($5,000 * 5%) for inviting Erika $50 ($1,000 * 5%) for inviting John This is in addition to other income streams you earn on Crio.`,
+  },
+];
 
 export const FeaturesPage = () => {
   const [emails, setEmails] = useState([]);
@@ -25,7 +39,7 @@ export const FeaturesPage = () => {
   }, [emails]);
 
   return (
-    <EarnMoreWrapper>
+    <Wrapper>
       <Row justify='center' align='middle'>
         <Col
           className='email-section'
@@ -52,7 +66,9 @@ export const FeaturesPage = () => {
             tokenSeparators={[' ']}
             value={emails}
           />
-          <Button type='primary'>SEND INVITATION</Button>
+          <Button type='primary' width={220}>
+            SEND INVITATIONS
+          </Button>
         </Col>
         <Col
           xl={{ span: 6, offset: 4 }}
@@ -84,52 +100,28 @@ export const FeaturesPage = () => {
           xs={{ span: 22, offset: 1 }}
         >
           <Row gutter={[0, 24]}>
-            <Col md={4} xs={4}>
-              <div className='circled'>
-                <Text level={4}>1</Text>
-              </div>
-            </Col>
-            <Col md={19} xs={18} className='text-left text-options'>
-              <Text level={4}>
-                Invited Members <br />
-              </Text>
-              <Text level={3} color='dark25'>
-                Let’s say you Invited two creators: Erika and John
-              </Text>
-            </Col>
-            <Col md={4} xs={4}>
-              <div className='circled'>
-                <Text level={4}>2</Text>
-              </div>
-            </Col>
-            <Col md={19} xs={18} className='text-left text-options'>
-              <Text level={4}>
-                Invited Members Earnings <br />
-              </Text>
-              <Text level={3} color='dark25'>
-                Erika earns $1,000 / month on Crio and John earns $500 / month"
-              </Text>
-            </Col>
-            <Col md={4} xs={4}>
-              <div className='circled'>
-                <Text level={4}>3</Text>
-              </div>
-            </Col>
-            <Col md={19} xs={18} className='text-left text-options'>
-              <Text level={4}>
-                Your Earnings <br />
-              </Text>
-              <Text level={3} color='dark25'>
-                You will get total of $300 per month! $250 ($5,000 * 5%) for inviting Erika $50
-                ($1,000 * 5%) for inviting John This is in addition to other income streams you earn
-                on Crio.
-              </Text>
-            </Col>
+            {info.map(({ key, title, desc }) => (
+              <Fragment key={key}>
+                <Col md={4} xs={4}>
+                  <div className='circled'>
+                    <Text level={4}>{key}</Text>
+                  </div>
+                </Col>
+                <Col md={19} xs={18} className='text-left text-options'>
+                  <Text level={4}>
+                    {title} <br />
+                  </Text>
+                  <Text level={3} color='dark25'>
+                    {desc}
+                  </Text>
+                </Col>
+              </Fragment>
+            ))}
           </Row>
         </Col>
       </Row>
       <Footer />
-    </EarnMoreWrapper>
+    </Wrapper>
   );
 };
 

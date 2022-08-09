@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const EarnMoreWrapper = styled('div')`
+const Wrapper = styled('div')`
   margin-top: 150px;
   .paper-plane {
     -webkit-transform: scaleX(-1);
@@ -26,7 +26,7 @@ const EarnMoreWrapper = styled('div')`
     height: 50px;
     background: #202020;
     padding: 9px 18px;
-    margin-right: 20px;
+    text-align: center;
   }
   .text-options {
     margin-bottom: 80px;
@@ -88,4 +88,4 @@ const EarnMoreWrapper = styled('div')`
   }
 `;
 
-export default EarnMoreWrapper;
+export default Wrapper;

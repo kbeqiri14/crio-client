@@ -47,6 +47,7 @@ export const Content = ({
   loading,
   loadMoreProducts,
   loadMoreArtworks,
+  initialPolling,
 }) => {
   const { pathname } = useLocation(tabs.MARKETPLACE);
   const [activeKey, setActiveKey] = useState(
@@ -67,9 +68,6 @@ export const Content = ({
     [isProfilePage, username],
   );
 
-  // if ((!loading || !initialPolling) && !works?.length) {
-  //   return <EmptyState username={username} isCreator={true} isProfile={isProfile} />;
-  // }
   const props = isProfilePage
     ? {
         username,
@@ -85,7 +83,7 @@ export const Content = ({
           {!productsCount && !productsList?.length && (
             <EmptyState {...props} isMarketplace={true} />
           )}
-          <ProductsList productsList={productsList} loading={loading} />
+          <ProductsList productsList={productsList} loading={initialPolling && loading} />
           <LoadMoreButton
             visible={visibleLoadMoreProducts}
             loading={loading}
@@ -94,7 +92,7 @@ export const Content = ({
         </TabPane>
         <TabPane key={tabs.ARTWORK} tab={tabs.ARTWORK}>
           {!artworksCount && !artworksList?.length && <EmptyState {...props} />}
-          <ArtworksList artworksList={artworksList} />
+          <ArtworksList artworksList={artworksList} loading={initialPolling && loading} />
           <LoadMoreButton
             visible={visibleLoadMoreArtworks}
             loading={loading}
