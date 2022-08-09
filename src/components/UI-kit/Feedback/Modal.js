@@ -11,14 +11,14 @@ const Modal = styled(antModal)`
     }
   }
   .ant-modal-body {
-    padding: 0 40px 40px 40px;
+    padding: 20px 40px 40px;
   }
   .ant-modal-content {
     background: #0f0e16;
     border-radius: 27px;
   }
   .ant-modal-close {
-    top: 15px;
+    top: 19px;
     right: 25px;
   }
   &.confirmation {

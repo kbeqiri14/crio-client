@@ -15,7 +15,7 @@ import coverImage from '@images/cover-image.png';
 const { Dragger } = Upload;
 
 const Wrapper = styled('div')`
-  padding: 15px 35px 7px;
+  padding: 0 35px 7px;
   text-align: left;
   .cover-image {
     img {

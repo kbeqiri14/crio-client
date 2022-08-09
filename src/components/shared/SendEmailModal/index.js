@@ -32,7 +32,7 @@ const SendEmailModal = () => {
       onCancel={hide}
     >
       <Row justify='center' align='top' gutter={[0, 40]}>
-        <Col span={24} padding_top={20}>
+        <Col span={24}>
           <Title level={1}>Email Message</Title>
         </Col>
         <Col span={24}>
