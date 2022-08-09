@@ -65,11 +65,11 @@ const chunk = (arr, size) =>
 const Blocks = memo(({ productsList }) => {
   const blocks = useMemo(() => chunk(productsList, 5), [productsList]);
 
-  return blocks.map((block, i) =>
+  return blocks.map((block, index) =>
     block.length > 4 ? (
-      <BlockLarge key={i} block={block} right={i % 2 === 1} />
+      <BlockLarge key={index} block={block} right={index % 2 === 1} />
     ) : (
-      <Block key={i} block={block} padding_top={20} />
+      <Block key={index} block={block} padding_top={20} />
     ),
   );
 });
@@ -83,8 +83,8 @@ const ProductsList = ({ productsList = [], loading }) => {
   if (loading) {
     return (
       <Row gutter={22}>
-        {dummyArray.map(() => (
-          <Col>
+        {dummyArray.map((_, index) => (
+          <Col key={index}>
             <SkeletonWrapper>
               <Skeleton.Image />;
               <Skeleton

@@ -11,14 +11,7 @@ import { errorToast, successToast } from '@ui-kit/Notification';
 import { formItemContent } from '@utils/upload.helper';
 import Confirmation from '@shared/Confirmation';
 
-const ProductActionButtons = ({
-  state,
-  image,
-  disabled,
-  handleSubmit,
-  fillColor = 'blue',
-  files,
-}) => {
+const ProductActionButtons = ({ state, image, disabled, handleSubmit, fillColor = 'blue' }) => {
   const buttonLabel = useMemo(() => (state?.productId ? 'UPDATE' : 'PUBLISH'), [state?.productId]);
   const { userId, redirect } = useRedirectToProfile();
   const [visible, setVisible] = useState(false);
@@ -53,13 +46,14 @@ const ProductActionButtons = ({
   });
 
   const onPublish = useAsyncFn(async (attributes) => {
+    let file;
     let thumbnail = state?.thumbnail && !image.src ? 'remove-thumbnail' : undefined;
     if (attributes.image?.file) {
       const content = await formItemContent({
         userId,
         image: image.file,
+        file: attributes.file,
         type: PRODUCTS,
-        prefix: 'thumbnail',
       });
       thumbnail = content?.image?.split('/')?.slice(-1)[0].slice('thumbnail-'.length);
     }
@@ -76,7 +70,7 @@ const ProductActionButtons = ({
               limit: +attributes.limit || undefined,
               accessibility: attributes.accessibility,
               thumbnail,
-              // files,
+              file,
             },
           },
         })
@@ -90,7 +84,7 @@ const ProductActionButtons = ({
               limit: +attributes.limit || undefined,
               accessibility: attributes.accessibility,
               thumbnail,
-              // files,
+              file,
             },
           },
         });

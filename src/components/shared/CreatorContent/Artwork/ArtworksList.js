@@ -10,8 +10,8 @@ export const ArtworksList = ({ artworksList = [], loading }) => {
   if (loading) {
     return (
       <Row gutter={22}>
-        {dummyArray.map(() => (
-          <Col>
+        {dummyArray.map((_, index) => (
+          <Col key={index}>
             <SkeletonWrapper>
               <Skeleton.Image />;
             </SkeletonWrapper>

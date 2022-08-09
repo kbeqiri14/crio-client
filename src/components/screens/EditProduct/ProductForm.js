@@ -195,7 +195,7 @@ const ProductForm = ({ state }) => {
                             getPopupContainer={(triggerNode) =>
                               triggerNode.parentNode.querySelector('.ant-tooltip-open')
                             }
-                            title='Start earning instantly using Crios simple payments platform.'
+                            title="Start earning instantly using Crio's simple payments platform."
                           >
                             <div className='relative'>
                               <Input
@@ -295,7 +295,7 @@ const ProductForm = ({ state }) => {
                 </Col>
                 <Col span={22} align='start' padding_bottom={32} className='limit-section'>
                   <Switch checked={limitVisible} onChange={setLimitation} />
-                  <Text level={3}> Limit your sales?</Text>
+                  <Text level={3}>Limit your sales?</Text>
                 </Col>
                 {limitVisible && (
                   <>
@@ -330,7 +330,6 @@ const ProductForm = ({ state }) => {
                     image={image}
                     disabled={disabled}
                     handleSubmit={handleSubmit}
-                    files={files}
                   />
                 </Col>
               </Row>
