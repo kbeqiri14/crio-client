@@ -20,6 +20,12 @@ const PrivacyPolicy = () => {
   ];
   const content = [
     [
+      <>
+        At Crio Interactive, accessible from{' '}
+        <a href='https://criointeractive.com'>https://criointeractive.com</a>, one of our main
+        priorities is the privacy of our visitors. This Privacy Policy document contains types of
+        information that is collected and recorded by Crio Interactive and how we use it.
+      </>,
       `If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us.`,
       `This Privacy Policy applies only 
   to our online activities and is valid for visitors to our website with regards to the information that they shared and/or collect in Crio Interactive. This policy is not applicable to any information collected offline
@@ -27,6 +33,21 @@ const PrivacyPolicy = () => {
       [
         'Consent',
         `By using our website, you hereby consent to our Privacy Policy and agree to its terms.`,
+      ],
+      [
+        'Information we collect',
+        <>
+          The personal information that you are asked to provide, and the reasons why you are asked
+          to provide it, will be made clear to you at the point we ask you to provide your personal
+          information.
+          <br />
+          If you contact us directly, we may receive additional information about you such as your
+          name, email address, phone number, the contents of the message and/or attachments you may
+          send us, and any other information you may choose to provide.
+          <br />
+          When you register for an Account, we may ask for your contact information, including items
+          such as name, company name, address, email address, and telephone number.
+        </>,
       ],
     ],
     [
@@ -43,8 +64,10 @@ const PrivacyPolicy = () => {
   the visitor accessed or visited. The information is used to optimize the users' experience by customizing our web page content based on visitors' browser type and/or other 
   information.`,
       ],
-    ],
-    [
+      <>
+        For more general information on cookies, please read more on the{' '}
+        <a href='https://www.cookieconsent.com/'>Cookie Consent website</a>
+      </>,
       [
         'Advertising Partners Privacy Policies',
         `You may consult this list to find the Privacy Policy for each 
@@ -96,6 +119,19 @@ const PrivacyPolicy = () => {
   certain conditions.`,
       `If you make a request, we have one month to respond to you. If you would like to
   exercise any of these rights, please contact us.`,
+      [
+        `Children's Information`,
+        <>
+          Another part of our priority is adding protection for children while using the internet.
+          We encourage parents and guardians to observe, participate in, and/or monitor and guide
+          their online activity.
+          <br />
+          Crio Interactive does not knowingly collect any Personal Identifiable Information from
+          children under the age of 13. If you think that your child provided this kind of
+          information on our website, we strongly encourage you to contact us immediately and we
+          will do our best efforts to promptly remove such information from our records.
+        </>,
+      ],
     ],
   ];
   return (
@@ -106,56 +142,9 @@ const PrivacyPolicy = () => {
           <Title level={3}>PRIVACY POLICY FOR CRIO INTERACTIVE</Title>
           <Divider />
           <Row gutter={[0, 30]}>
-            <Col span={24}>
-              <Text level={3}>
-                At Crio Interactive, accessible from{' '}
-                <a href='https://criointeractive.com'>https://criointeractive.com</a>, one of our
-                main priorities is the privacy of our visitors. This Privacy Policy document
-                contains types of information that is collected and recorded by Crio Interactive and
-                how we use it.
-              </Text>
-            </Col>
             <Content contentArr={content[0]} />
-            <Col span={24}>
-              <Text level={4}>Information we collect</Text>
-              <br />
-              <Text level={3}>
-                The personal information that you are asked to provide, and the reasons why you are
-                asked to provide it, will be made clear to you at the point we ask you to provide
-                your personal information.
-                <br />
-                If you contact us directly, we may receive additional information about you such as
-                your name, email address, phone number, the contents of the message and/or
-                attachments you may send us, and any other information you may choose to provide.
-                <br />
-                When you register for an Account, we may ask for your contact information, including
-                items such as name, company name, address, email address, and telephone number.
-              </Text>
-            </Col>
             <Bullet desc='How we use your information' badgeArr={info} />
             <Content contentArr={content[1]} />
-            <Col span={24}>
-              <Text level={3}>
-                For more general information on cookies, please read more on the{' '}
-                <a href='https://www.cookieconsent.com/'>Cookie Consent website</a>
-              </Text>
-            </Col>
-            <Content contentArr={content[2]} />
-            <Col span={24}>
-              <Text level={4}>Children's Information</Text>
-              <br />
-              <Text level={3}>
-                Another part of our priority is adding protection for children while using the
-                internet. We encourage parents and guardians to observe, participate in, and/or
-                monitor and guide their online activity.
-                <br />
-                Crio Interactive does not knowingly collect any Personal Identifiable Information
-                from children under the age of 13. If you think that your child provided this kind
-                of information on our website, we strongly encourage you to contact us immediately
-                and we will do our best efforts to promptly remove such information from our
-                records.
-              </Text>
-            </Col>
           </Row>
         </div>
       </div>

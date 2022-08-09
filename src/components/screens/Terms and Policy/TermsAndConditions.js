@@ -59,6 +59,12 @@ const TermsAndConditions = () => {
 
   const content = [
     [
+      'Welcome to Crio Interactive!',
+      <>
+        These terms and conditions outline the rules and regulations for the use of Crio
+        Interactive's Website, located at{' '}
+        <a href='https://criointeractive.com'>https://criointeractive.com</a>.
+      </>,
       `By accessing this website we assume you accept these terms and conditions. Do not continue to use Crio Interactive if you do not agree to take all of the terms and 
   conditions stated on this page.`,
       `The following terminology applies to these Terms and Conditions, Privacy Statement and Disclaimer Notice and all Agreements: "Client", "You" and 
@@ -88,6 +94,15 @@ const TermsAndConditions = () => {
    the Comments or for any liability, damages or expenses caused and/or suffered as a result of any use of and/or posting of and/or appearance of the Comments on this website.`,
       `Crio Interactive reserves 
    the right to monitor all Comments and to remove any Comments which can be considered inappropriate, offensive or causes breach of these Terms and Conditions.`,
+    ],
+    [
+      `You hereby grant Crio Interactive a non-exclusive license to use, reproduce, edit
+      and authorize others to use, reproduce and edit any of your Comments in any and all
+      forms, formats or media.`,
+    ],
+    [
+      `These organizations may link to our home page, to publications or to other Website information so long as the link: (a) is not in any way deceptive; (b) does not falsely imply sponsorship, 
+      endorsement or approval of the linking party and its products and/or services; and (c) fits within the context of the linking party’s site.`,
     ],
     [
       `We will approve link requests from these 
@@ -148,51 +163,27 @@ const TermsAndConditions = () => {
           </Title>
           <Divider />
           <Row gutter={[0, 30]}>
-            <Col span={24}>
-              <Text level={3}>Welcome to Crio Interactive!</Text>
-            </Col>
-            <Col span={24}>
-              <Text level={3}>
-                These terms and conditions outline the rules and regulations for the use of Crio
-                Interactive's Website, located at{' '}
-                <a href='https://criointeractive.com'>https://criointeractive.com</a>.
-              </Text>
-            </Col>
             <Content contentArr={content[0]} />
             <Bullet desc='You must not:' badgeArr={info[0]} />
             <Content contentArr={content[1]} />
             <Bullet desc='You warrant and represent that:' badgeArr={info[1]} />
-            <Col span={24}>
-              <Text level={3}>
-                You hereby grant Crio Interactive a non-exclusive license to use, reproduce, edit
-                and authorize others to use, reproduce and edit any of your Comments in any and all
-                forms, formats or media.
-              </Text>
-            </Col>
+            <Content contentArr={content[2]} />
             <Bullet
               title='Hyperlinking to our Content'
               desc='The following organizations may link to our Website without prior written approval:'
               badgeArr={info[2]}
             />
-            <Col span={24}>
-              <Text level={3}>
-                These organizations may link to our home page, to publications or to other Website
-                information so long as the link: (a) is not in any way deceptive; (b) does not
-                falsely imply sponsorship, endorsement or approval of the linking party and its
-                products and/or services; and (c) fits within the context of the linking party’s
-                site.
-              </Text>
-            </Col>
+            <Content contentArr={content[3]} />
             <Bullet
               desc='We may consider and approve other link requests from the following types of organizations:'
               badgeArr={info[3]}
             />
-            <Content contentArr={content[2]} />
+            <Content contentArr={content[4]} />
             <Bullet
               desc='Approved organizations may hyperlink to our Website as follows:'
               badgeArr={info[4]}
             />
-            <Content contentArr={content[3]} />
+            <Content contentArr={content[5]} />
             <Bullet
               title='Disclaimer'
               desc='To the maximum extent permitted by applicable law, we exclude all representations,
@@ -200,7 +191,7 @@ const TermsAndConditions = () => {
                 Nothing in this disclaimer will:'
               badgeArr={info[5]}
             />
-            <Content contentArr={content[4]} />
+            <Content contentArr={content[6]} />
           </Row>
         </div>
       </div>
