@@ -1,9 +1,9 @@
 import { memo, useState, useMemo, Fragment } from 'react';
 import { Controller } from 'react-hook-form';
-import { Spin, Upload } from 'antd';
+import { Spin } from 'antd';
 import imageCompression from 'browser-image-compression';
 
-import { Title, Badge } from '@ui-kit';
+import { Badge, Title, Upload } from '@ui-kit';
 import { ReactComponent as RemoveIcon } from '@svgs/remove.svg';
 import ImageDraggerWrapper from '../styled/ImageDraggerWrapper';
 

@@ -1,10 +1,10 @@
 import { memo, Fragment, useState, useEffect, useMemo } from 'react';
 import { Controller } from 'react-hook-form';
-import { Upload } from 'antd';
-import { Col, Row, Text, Title, Button, Badge } from '@ui-kit';
+
+import { Badge, Button, Col, Row, Text, Title, Upload } from '@ui-kit';
+import { errorToast } from '@ui-kit/Notification';
 import deleteIcon from '@images/delete.png';
 import FileDraggerWrapper from '../styled/FileDraggerWrapper';
-import { errorToast } from '@ui-kit/Notification';
 
 const { Dragger } = Upload;
 
