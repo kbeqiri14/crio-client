@@ -57,7 +57,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
       onCancel={onCancel}
     >
       <Row justify='center' gutter={[0, 8]}>
-        <Col span={24} padding_bottom={32}>
+        <Col span={24} padding_bottom={32} padding_top={20}>
           <Title level={1}>Edit Profile</Title>
         </Col>
         <Col span={24}>
