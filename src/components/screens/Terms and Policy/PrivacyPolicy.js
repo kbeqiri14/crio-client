@@ -3,7 +3,7 @@ import { memo } from 'react';
 import { Meta } from '@shared/Meta';
 import Bullet from './partials/Bullet';
 import Content from './partials/Content';
-import { Col, Divider, Row, Text, Title } from '@ui-kit';
+import { Divider, Row, Title } from '@ui-kit';
 import TermsAndPolicyWrapper from './styled';
 
 const PrivacyPolicy = () => {
@@ -142,9 +142,9 @@ const PrivacyPolicy = () => {
           <Title level={3}>PRIVACY POLICY FOR CRIO INTERACTIVE</Title>
           <Divider />
           <Row gutter={[0, 30]}>
-            <Content contentArr={content[0]} />
-            <Bullet desc='How we use your information' badgeArr={info} />
-            <Content contentArr={content[1]} />
+            <Content content={content[0]} />
+            <Bullet desc='How we use your information' badge={info} />
+            <Content content={content[1]} />
           </Row>
         </div>
       </div>

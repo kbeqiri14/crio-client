@@ -2,7 +2,7 @@ import { memo } from 'react';
 
 import { Badge, Col, Row, Text } from '@ui-kit';
 
-const Bullet = ({ title, desc, badgeArr }) => {
+const Bullet = ({ title, desc, badge }) => {
   return (
     <Row>
       {title && (
@@ -12,7 +12,7 @@ const Bullet = ({ title, desc, badgeArr }) => {
       )}
       <Col span={24}>
         <Text level={3}>{desc}</Text>
-        {badgeArr.map((item) => (
+        {badge.map((item) => (
           <Badge status='default' color='white' level={3} text={item} />
         ))}
       </Col>

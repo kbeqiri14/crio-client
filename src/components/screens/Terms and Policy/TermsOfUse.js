@@ -368,7 +368,7 @@ our property or the property of other third-parties. You are not permitted to us
                 in connection with such features.
               </Text>
             </Col>
-            <Content contentArr={content[0]} />
+            <Content content={content[0]} />
             <Col span={24}>
               <Bullet
                 title='Copyright Policy.'
@@ -381,10 +381,10 @@ our property or the property of other third-parties. You are not permitted to us
                 work, and wish to have the allegedly infringing material removed, the following
                 information in the form of a written notification (pursuant to 17 U.S.C. § 512(c))
                 must be provided to our designated Copyright Agent:'
-                badgeArr={info}
+                badge={info}
               />
             </Col>
-            <Content contentArr={content[1]} />
+            <Content content={content[1]} />
             <Col span={24}>
               <Text level={4} margin_bottom={10}>
                 Contact Information

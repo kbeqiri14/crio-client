@@ -2,8 +2,8 @@ import { memo } from 'react';
 
 import { Col, Text } from '@ui-kit';
 
-const Content = ({ contentArr }) => {
-  return contentArr.map((item) => (
+const Content = ({ content }) =>
+  content.map((item) => (
     <>
       {Array.isArray(item) ? (
         <Col span={24}>
@@ -18,6 +18,5 @@ const Content = ({ contentArr }) => {
       )}
     </>
   ));
-};
 
 export default memo(Content);
