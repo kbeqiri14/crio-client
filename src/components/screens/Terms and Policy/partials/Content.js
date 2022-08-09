@@ -1,6 +1,6 @@
 import { memo } from 'react';
 
-import { Badge, Col, Text } from '@ui-kit';
+import { Col, Text } from '@ui-kit';
 
 const Content = ({ contentArr }) => {
   return contentArr.map((item) => (

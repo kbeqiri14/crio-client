@@ -1,10 +1,24 @@
 import { memo } from 'react';
 
 import { Meta } from '@shared/Meta';
-import { Badge, Col, Divider, Row, Text, Title } from '@ui-kit';
+import Bullet from './partials/Bullet';
+import { Col, Divider, Row, Text, Title } from '@ui-kit';
 import TermsAndPolicyWrapper from './styled';
 
 const TermsOfUse = () => {
+  const info = [
+    `your physical or electronic signature;`,
+    `identification of the copyrighted work(s) that you claim to have been infringed;`,
+    `identification of the material on our services that you claim is infringing andthat you request us to remove;`,
+    `sufficient information to 
+  permit us to locate such material;`,
+    `your address, telephone number, and e-mail address;`,
+    `a statement that you have a good faith belief 
+  that use of the objectionable material is not authorized by the copyright owner, its agent, or under the law; and`,
+    `a statement that the 
+  information in the notification is accurate, and under penalty of perjury, that you are either the owner of the copyright that has allegedly
+   been infringed or that you are authorized to act on behalf of the copyright owner.`,
+  ];
   return (
     <TermsAndPolicyWrapper>
       <div className='cr-privacy-policy'>
@@ -265,10 +279,9 @@ const TermsOfUse = () => {
               </Text>
             </Col>
             <Col span={24}>
-              <Text level={4}>Copyright Policy.</Text>
-              <br />
-              <Text level={3}>
-                Company respects the intellectual property of others and asks that users of our Site
+              <Bullet
+                title='Copyright Policy.'
+                desc='Company respects the intellectual property of others and asks that users of our Site
                 do the same. In connection with our Site, we have adopted and implemented a policy
                 respecting copyright law that provides for the removal of any infringing materials
                 and for the termination of users of our online Site who are repeated infringers of
@@ -276,66 +289,9 @@ const TermsOfUse = () => {
                 users is, through the use of our Site, unlawfully infringing the copyright(s) in a
                 work, and wish to have the allegedly infringing material removed, the following
                 information in the form of a written notification (pursuant to 17 U.S.C. § 512(c))
-                must be provided to our designated Copyright Agent:
-              </Text>
-              <br />' '
-              <Badge
-                status='default'
-                color='white'
-                size='16'
-                text='your physical or electronic signature;'
+                must be provided to our designated Copyright Agent:'
+                badgeArr={info}
               />
-              <br />' '
-              <Badge
-                status='default'
-                color='white'
-                size='16'
-                text='identification of the copyrighted work(s) that 
-                you claim to have been infringed;'
-              />
-              <br />' '
-              <Badge
-                status='default'
-                color='white'
-                size='16'
-                text='identification of the material on our services 
-                that you claim is infringing andthat you request us to remove;'
-              />
-              <br />' '
-              <Badge
-                status='default'
-                color='white'
-                size='16'
-                text='sufficient information to permit us to locate 
-                such material;'
-              />
-              <br />' '
-              <Badge
-                status='default'
-                color='white'
-                size='16'
-                text='your address, telephone number, and e-mail 
-                address;'
-              />
-              ' '{' '}
-              <Badge
-                status='default'
-                color='white'
-                size='16'
-                text='a statement that you have a good faith belief 
-                that use of the objectionable material is not authorized by the copyright owner, its 
-                agent, or under the law; and'
-              />
-              <Badge
-                status='default'
-                color='white'
-                size='16'
-                text='a statement that the information in the 
-                notification is accurate, and under penalty of perjury, that you are either the owner of 
-                the copyright that has allegedly been infringed or that you are authorized to act on behalf 
-                of the copyright owner.'
-              />
-              <br />
             </Col>
             <Col span={24}>
               <Text level={3}>

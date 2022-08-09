@@ -2,6 +2,7 @@ import { Badge as antBadge } from 'antd';
 import styled, { css } from 'styled-components';
 
 const Badge = styled(antBadge)`
+  display: block;
   padding-left: 22px;
   .ant-badge-status-text {
     color: ${(props) => props.theme.colors.dark25};

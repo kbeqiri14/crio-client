@@ -1,7 +1,8 @@
 import { memo } from 'react';
 
 import { Meta } from '@shared/Meta';
-import { Badge, Col, Divider, Row, Text, Title } from '@ui-kit';
+import Bullet from './partials/Bullet';
+import { Col, Divider, Row, Text, Title } from '@ui-kit';
 import TermsAndPolicyWrapper from './styled';
 
 const TermsAndConditions = () => {
@@ -165,14 +166,7 @@ const TermsAndConditions = () => {
                 )}
               </>
             ))}
-            <Col span={24}>
-              <Text level={3}>You must not:</Text>
-              {info[0].map((item) => (
-                <div>
-                  <Badge status='default' color='white' level={3} text={item} />
-                </div>
-              ))}
-            </Col>
+            <Bullet desc='You must not:' badgeArr={info[0]} />
             {text[1].map((item) => (
               <>
                 {Array.isArray(item) ? (
@@ -188,14 +182,7 @@ const TermsAndConditions = () => {
                 )}
               </>
             ))}
-            <Col span={24}>
-              <Text level={3}>You warrant and represent that:</Text>
-              {info[1].map((item) => (
-                <div>
-                  <Badge status='default' color='white' level={3} text={item} />
-                </div>
-              ))}
-            </Col>
+            <Bullet desc='You warrant and represent that:' badgeArr={info[1]} />
             <Col span={24}>
               <Text level={3}>
                 You hereby grant Crio Interactive a non-exclusive license to use, reproduce, edit
@@ -203,18 +190,11 @@ const TermsAndConditions = () => {
                 forms, formats or media.
               </Text>
             </Col>
-            <Col span={24}>
-              <Text level={4}>Hyperlinking to our Content</Text>
-              <br />
-              <Text level={3}>
-                The following organizations may link to our Website without prior written approval:
-              </Text>
-              {info[2].map((item) => (
-                <div>
-                  <Badge status='default' color='white' level={3} text={item} />
-                </div>
-              ))}
-            </Col>
+            <Bullet
+              title='Hyperlinking to our Content'
+              desc='The following organizations may link to our Website without prior written approval:'
+              badgeArr={info[2]}
+            />
             <Col span={24}>
               <Text level={3}>
                 These organizations may link to our home page, to publications or to other Website
@@ -224,17 +204,10 @@ const TermsAndConditions = () => {
                 site.
               </Text>
             </Col>
-            <Col span={24}>
-              <Text level={3}>
-                We may consider and approve other link requests from the following types of
-                organizations:
-              </Text>
-              {info[3].map((item) => (
-                <div>
-                  <Badge status='default' color='white' level={3} text={item} />
-                </div>
-              ))}
-            </Col>
+            <Bullet
+              desc='We may consider and approve other link requests from the following types of organizations:'
+              badgeArr={info[3]}
+            />
             {text[2].map((item) => (
               <>
                 {Array.isArray(item) ? (
@@ -250,14 +223,10 @@ const TermsAndConditions = () => {
                 )}
               </>
             ))}
-            <Col span={24}>
-              <Text level={3}>Approved organizations may hyperlink to our Website as follows:</Text>
-              {info[4].map((item) => (
-                <div>
-                  <Badge status='default' color='white' level={3} text={item} />
-                </div>
-              ))}
-            </Col>
+            <Bullet
+              desc='Approved organizations may hyperlink to our Website as follows:'
+              badgeArr={info[4]}
+            />
             {text[3].map((item) => (
               <>
                 {Array.isArray(item) ? (
@@ -273,20 +242,13 @@ const TermsAndConditions = () => {
                 )}
               </>
             ))}
-            <Col span={24}>
-              <Text level={4}>Disclaimer</Text>
-              <br />
-              <Text level={3}>
-                To the maximum extent permitted by applicable law, we exclude all representations,
+            <Bullet
+              title='Disclaimer'
+              desc='To the maximum extent permitted by applicable law, we exclude all representations,
                 warranties and conditions relating to our website and the use of this website.
-                Nothing in this disclaimer will:
-              </Text>
-              {info[5].map((item) => (
-                <div>
-                  <Badge status='default' color='white' level={3} text={item} />
-                </div>
-              ))}
-            </Col>
+                Nothing in this disclaimer will:'
+              badgeArr={info[5]}
+            />
             <Col>
               <Text level={3}>
                 The limitations and prohibitions of liability set in this Section and elsewhere in
