@@ -15,7 +15,7 @@ export const ArtworksList = ({ artworksList = [], loading }) => {
             <SkeletonWrapper>
               <Skeleton.Image />;
             </SkeletonWrapper>
-            <Skeleton active avatar title={{ width: '100%' }} paragraph={{ rows: 0 }} />
+            <Skeleton active round avatar title={{ width: '92%' }} paragraph={{ rows: 0 }} />
           </Col>
         ))}
       </Row>
