@@ -87,9 +87,14 @@ const ProductsList = ({ productsList = [], loading }) => {
           <Col>
             <SkeletonWrapper>
               <Skeleton.Image />;
-              <Skeleton active title={{ width: '100%' }} paragraph={{ rows: 1, width: '100%' }} />
+              <Skeleton
+                active
+                round
+                title={{ width: '100%' }}
+                paragraph={{ rows: 1, width: '100%' }}
+              />
             </SkeletonWrapper>
-            <Skeleton active avatar title={{ width: '100%' }} paragraph={{ rows: 0 }} />
+            <Skeleton active round avatar title={{ width: '92%' }} paragraph={{ rows: 0 }} />
           </Col>
         ))}
       </Row>

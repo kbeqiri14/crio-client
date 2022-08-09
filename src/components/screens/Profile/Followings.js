@@ -88,7 +88,7 @@ const Followings = ({ username, isProfile, isSubscribed, followingsCount }) => {
         {dummyArray.map((_, index) => (
           <Col key={index}>
             <StyledCard>
-              <Skeleton active avatar paragraph={{ rows: 1 }} title={{ width: '100%' }} />
+              <Skeleton active round avatar paragraph={{ rows: 1 }} title={{ width: '100%' }} />
             </StyledCard>
           </Col>
         ))}
