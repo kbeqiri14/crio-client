@@ -127,9 +127,9 @@ const ProductForm = ({ state }) => {
                 </Col>
                 <Col span={22} padding_bottom={32}>
                   <Controller
-                    name='type'
+                    name='productTypeId'
                     control={control}
-                    defaultValue={state?.productType}
+                    defaultValue={state?.productTypeId}
                     render={({ field }) => (
                       <Select
                         {...field}

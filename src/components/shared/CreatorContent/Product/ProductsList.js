@@ -22,6 +22,7 @@ const Item = memo(({ item, large }) => (
     limit={item?.limit}
     accessibility={item?.accessibility}
     thumbnail={item?.thumbnail}
+    file={item?.file}
     large={large}
   />
 ));

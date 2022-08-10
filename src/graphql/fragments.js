@@ -53,13 +53,14 @@ export const productFragment = gql`
     providerType
     providerUserId
     avatar
-    type
+    productTypeId
     title
     description
     price
     limit
     accessibility
     thumbnail
+    file
   }
 `;
 

@@ -64,7 +64,7 @@ const ProductActionButtons = ({ state, image, disabled, handleSubmit, fillColor 
           variables: {
             attributes: {
               id: state.productId,
-              type: 'service',
+              productTypeId: attributes.productTypeId,
               title: attributes.title,
               description: attributes.desc,
               price: +attributes.price || undefined,
@@ -78,7 +78,7 @@ const ProductActionButtons = ({ state, image, disabled, handleSubmit, fillColor 
       : create({
           variables: {
             attributes: {
-              type: 'service',
+              productTypeId: attributes.productTypeId,
               title: attributes.title,
               description: attributes.desc,
               price: +attributes.price || undefined,

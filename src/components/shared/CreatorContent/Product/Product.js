@@ -20,13 +20,14 @@ const Product = ({
   userId,
   username,
   productId,
-  type,
+  productTypeId,
   title,
   description,
   price,
   limit,
   accessibility,
   thumbnail,
+  file,
   large = false,
 }) => {
   const [isHovering, setIsHovering] = useState(false);
@@ -97,13 +98,14 @@ const Product = ({
       username,
       avatar,
       productId,
-      type,
+      productTypeId,
       title,
       description,
       price,
       limit,
       accessibility,
       thumbnail: src,
+      file,
       isProduct: true,
     });
   }, [
@@ -112,13 +114,14 @@ const Product = ({
     providerUserId,
     username,
     avatar,
-    type,
+    productTypeId,
     title,
     description,
     price,
     limit,
     accessibility,
     src,
+    file,
     pathname,
     productId,
     setInfo,
@@ -141,12 +144,14 @@ const Product = ({
               <Actions
                 username={username}
                 productId={productId}
+                productTypeId={productTypeId}
                 title={title}
                 description={description}
                 price={price}
                 limit={limit}
                 accessibility={accessibility}
                 thumbnail={src}
+                file={file}
                 isProduct={true}
               />
             )}
