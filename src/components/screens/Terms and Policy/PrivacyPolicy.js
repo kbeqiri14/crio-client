@@ -139,7 +139,7 @@ const PrivacyPolicy = () => {
       <div className='cr-privacy-policy'>
         <Meta title='Privacy Policy' description='Crio - Privacy Policy' />
         <div className='container'>
-          <Title level={3}>PRIVACY POLICY FOR CRIO INTERACTIVE</Title>
+          <Title level={7}>PRIVACY POLICY FOR CRIO INTERACTIVE</Title>
           <Divider />
           <Row gutter={[0, 30]}>
             <Content content={content[0]} />
