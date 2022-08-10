@@ -34,7 +34,7 @@ const Wrapper = styled('div')`
     position: absolute;
     right: 10px;
   }
-  @media (max-width: 767.98px) {
+  @media (max-width: 890px) {
     height: 100%;
   }
 `;
