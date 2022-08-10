@@ -17,9 +17,12 @@ const Wrapper = styled('div')`
     align-items: flex-start;
   }
   .works-title {
-    margin-top: 200px;
+    margin-top: 225px;
   }
   .circled {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: 1px solid white;
     border-radius: 50%;
     width: 50px;
@@ -40,14 +43,16 @@ const Wrapper = styled('div')`
   .ant-select-selection-item {
     background: #878c94;
     border: 1px solid #878c94;
-    color: white !important;
+    color: #2b2b2b !important;
     height: 32px;
     padding: 0 4px 0 10px;
     align-items: center;
   }
-  .ant-select-selection-search-input,
-  .ant-select-selection-item-remove {
+  .ant-select-selection-search-input {
     color: white !important;
+  }
+  .ant-select-selection-item-remove {
+    color: #2b2b2b !important;
   }
   .ant-select-selector {
     padding: 4px 16px !important;
@@ -55,10 +60,30 @@ const Wrapper = styled('div')`
   .ant-select-multiple .ant-select-selection-search {
     margin-inline-start: -7px;
   }
+  @media (min-width: 1200px) {
+    .image-section {
+      margin-right: 110px;
+    }
+    .email-section {
+      margin-left: 20px;
+    }
+  }
+  @media (max-width: 992px) {
+    .image-section {
+      margin-right: 125px;
+      margin-left: 70px;
+      .paper-plane {
+        width: 380px;
+      }
+    }
+  }
   @media (max-width: 768px) {
     .earn-more-img {
       margin-bottom: 40px;
       width: 500px;
+    }
+    .image-section {
+      margin: 0 auto;
     }
     .text-options {
       margin-bottom: 40px;
@@ -75,9 +100,6 @@ const Wrapper = styled('div')`
     .works-title {
       margin-top: 100px;
       margin-bottom: 60px;
-    }
-    .paper-plane {
-      width: 380px;
     }
     @media (max-width: 420px) {
       .earn-more-img {
