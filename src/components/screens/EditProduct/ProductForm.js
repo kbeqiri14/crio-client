@@ -45,8 +45,8 @@ const ProductForm = ({ state }) => {
   const isFree = watch('isFree');
   const limit = watch('limit');
   const accessibility = watch('accessibility');
-  const type = watch('type');
-  const productType = data?.getProductTypes.find((item) => item.id === type);
+  const productTypeId = watch('productTypeId');
+  const productType = data?.getProductTypes.find((item) => item.id === productTypeId);
 
   const disabled = useMemo(
     () =>
@@ -265,7 +265,12 @@ const ProductForm = ({ state }) => {
                       <Text level={3}>Product File*</Text>
                     </Col>
                     <Col span={22} padding_bottom={6}>
-                      <DraggerFile control={control} files={files} setFiles={setFiles} />
+                      <DraggerFile
+                        control={control}
+                        file={state?.file}
+                        files={files}
+                        setFiles={setFiles}
+                      />
                     </Col>
                   </Fragment>
                 )}
