@@ -22,7 +22,7 @@ const info = [
   },
 ];
 
-export const FeaturesPage = () => {
+const FeaturesPage = () => {
   const [emails, setEmails] = useState([]);
 
   const validationOfEmail = (values) => {
@@ -44,8 +44,8 @@ export const FeaturesPage = () => {
         <Col
           className='email-section'
           xl={{ span: 7, offset: 0 }}
-          lg={{ span: 10, offset: 0 }}
-          md={{ span: 10, offset: 0 }}
+          lg={{ span: 8, offset: 0 }}
+          md={{ span: 8, offset: 0 }}
           xs={{ span: 22 }}
         >
           <Title level={4}>Invite New Creators and Start Earning More with Crio</Title>
@@ -71,9 +71,10 @@ export const FeaturesPage = () => {
           </Button>
         </Col>
         <Col
+          className='image-section'
           xl={{ span: 6, offset: 4 }}
-          lg={{ span: 10, offset: 0 }}
-          md={{ span: 12, offset: 0 }}
+          lg={{ span: 10, offset: 1 }}
+          md={{ span: 6, offset: 0 }}
           offset={2}
         >
           <img src={paperPlane} alt='paper plane' className='paper-plane' />
@@ -102,7 +103,7 @@ export const FeaturesPage = () => {
           <Row gutter={[0, 24]}>
             {info.map(({ key, title, desc }) => (
               <Fragment key={key}>
-                <Col md={4} xs={4}>
+                <Col md={4} xs={4} margin_top={8}>
                   <div className='circled'>
                     <Text level={4}>{key}</Text>
                   </div>
