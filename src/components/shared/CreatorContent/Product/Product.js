@@ -142,6 +142,7 @@ const Product = ({
           >
             {showActions && (
               <Actions
+                userId={userId}
                 username={username}
                 productId={productId}
                 productTypeId={productTypeId}
@@ -184,6 +185,8 @@ const Product = ({
             <BuyButton
               userId={userId}
               productId={productId}
+              productTypeId={productTypeId}
+              file={file}
               price={price}
               limit={limit}
               accessibility={accessibility}

@@ -354,7 +354,7 @@ our property or the property of other third-parties. You are not permitted to us
       <div className='cr-privacy-policy'>
         <Meta title='Terms of Use' description='Crio - Terms of Use' />
         <div className='container'>
-          <Title level={3}>TERMS OF USE</Title>
+          <Title level={7}>TERMS OF USE</Title>
           <Divider />
           <Row gutter={[0, 30]}>
             <Col span={24} padding_top={10}>
