@@ -2,6 +2,11 @@ import styled from 'styled-components';
 
 const Wrapper = styled('div')`
   margin-top: 150px;
+  .inner {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 180px;
+  }
   .paper-plane {
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
@@ -15,9 +20,11 @@ const Wrapper = styled('div')`
   }
   .works-section {
     align-items: flex-start;
+    margin-right: 120px;
   }
   .works-title {
-    margin-top: 225px;
+    margin-top: 155px;
+    padding-bottom: 124px;
   }
   .circled {
     display: flex;
@@ -53,6 +60,7 @@ const Wrapper = styled('div')`
   }
   .ant-select-selection-item-remove {
     color: #2b2b2b !important;
+    padding-top: 2px;
   }
   .ant-select-selector {
     padding: 4px 16px !important;
@@ -60,12 +68,38 @@ const Wrapper = styled('div')`
   .ant-select-multiple .ant-select-selection-search {
     margin-inline-start: -7px;
   }
+  .works-image {
+    max-width: 588px;
+  }
+  .works-content {
+    max-width: 360px;
+    .content-container {
+      display: flex;
+      align-items: center;
+      .content {
+        max-width: 304px;
+      }
+    }
+  }
+
   @media (min-width: 1200px) {
     .image-section {
-      margin-right: 110px;
+      margin-right: 150px;
     }
     .email-section {
       margin-left: 20px;
+    }
+    .works-image {
+      margin-right: 205px;
+      margin-top: 42px;
+    }
+  }
+  @media (max-width: 1200px) {
+    .text-options {
+      margin-left: 15px;
+    }
+    .works-section {
+      margin: 0 80px;
     }
   }
   @media (max-width: 992px) {
@@ -82,8 +116,8 @@ const Wrapper = styled('div')`
       margin-bottom: 40px;
       width: 500px;
     }
-    .image-section {
-      margin: 0 auto;
+    .works-section {
+      margin: 0 40px;
     }
     .text-options {
       margin-bottom: 40px;

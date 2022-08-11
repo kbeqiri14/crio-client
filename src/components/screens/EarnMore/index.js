@@ -1,4 +1,4 @@
-import { Fragment, memo, useState, useEffect } from 'react';
+import { memo, useState, useEffect } from 'react';
 import { Col, Row, Text, Title, Select, Button } from '@ui-kit';
 import { Footer } from '@shared/Footer';
 import { validateEmail } from '@utils/helpers';
@@ -18,7 +18,16 @@ const info = [
   {
     key: 3,
     title: 'Your Earnings',
-    desc: `You will get total of $300 per month! $250 ($5,000 * 5%) for inviting Erika $50 ($1,000 * 5%) for inviting John This is in addition to other income streams you earn on Crio.`,
+    desc: (
+      <>
+        You will get total of $300 per month!
+        <br />
+        $250 ($5,000 * 5%) for inviting Erika
+        <br />
+        $50 ($1,000 * 5%) for inviting John This is in addition to other income streams you earn on
+        Crio.
+      </>
+    ),
   },
 ];
 
@@ -48,7 +57,7 @@ const FeaturesPage = () => {
           md={{ span: 8, offset: 0 }}
           xs={{ span: 22 }}
         >
-          <Title level={4}>Invite New Creators and Start Earning More with Crio</Title>
+          <Title level={8}>Invite New Creators and Start Earning More with Crio</Title>
           <Text level={4} className='margin-bottom'>
             For every creator that signs-up, you will get a payout equal to 5% of each of their
             earnings for as long as they are Creators on Crio!{' '}
@@ -83,44 +92,48 @@ const FeaturesPage = () => {
       <Title level={6} className='text-center works-title'>
         How it works
       </Title>
-      <Row justify='center' align='middle' style={{ marginTop: '120px' }} className='works-section'>
-        <Col
-          xl={{ span: 12, offset: 1 }}
-          lg={{ span: 14, offset: 0 }}
-          md={{ span: 14, offset: 0 }}
-          sm={{ span: 20, offset: 2 }}
-          xs={{ span: 22, offset: 1 }}
+      <div className='inner'>
+        <Row
+          justify='center'
+          align='middle'
+          className='works-section'
+          gutter={[0, 40]}
+          style={{ width: 1600 }}
         >
-          <img src={earnMore} alt='earn more' className='earn-more-img' />
-        </Col>
-        <Col
-          xl={{ span: 8, offset: 0 }}
-          lg={{ span: 8, offset: 0 }}
-          md={{ span: 8, offset: 0 }}
-          sm={{ span: 20, offset: 2 }}
-          xs={{ span: 22, offset: 1 }}
-        >
-          <Row gutter={[0, 24]}>
-            {info.map(({ key, title, desc }) => (
-              <Fragment key={key}>
-                <Col md={4} xs={4} margin_top={8}>
-                  <div className='circled'>
-                    <Text level={4}>{key}</Text>
-                  </div>
+          <Col span={12} className='works-image'>
+            <img src={earnMore} alt='earn more' className='earn-more-img' />
+          </Col>
+          <Col span={12} className='works-content'>
+            <Row gutter={[0, 80]}>
+              {info.map(({ key, title, desc }) => (
+                <Col>
+                  <Row key={key} gutter={20} className='content-container'>
+                    <Col>
+                      <div className='circled'>
+                        <Text level={4}>{key}</Text>
+                      </div>
+                    </Col>
+                    <Col className='content'>
+                      <Row>
+                        <Col>
+                          <Text level={4}>
+                            {title} <br />
+                          </Text>
+                        </Col>
+                        <Col>
+                          <Text level={3} color='dark25'>
+                            {desc}
+                          </Text>
+                        </Col>
+                      </Row>
+                    </Col>
+                  </Row>
                 </Col>
-                <Col md={19} xs={18} className='text-left text-options'>
-                  <Text level={4}>
-                    {title} <br />
-                  </Text>
-                  <Text level={3} color='dark25'>
-                    {desc}
-                  </Text>
-                </Col>
-              </Fragment>
-            ))}
-          </Row>
-        </Col>
-      </Row>
+              ))}
+            </Row>
+          </Col>
+        </Row>
+      </div>
       <Footer />
     </Wrapper>
   );
