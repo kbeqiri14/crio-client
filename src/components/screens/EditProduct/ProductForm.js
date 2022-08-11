@@ -20,6 +20,7 @@ const ProductForm = ({ state }) => {
   const [visibleBroadcast, setVisibleBroadcast] = useState(false);
   const [limitVisible, setLimitVisible] = useState(state?.limit !== null && state?.limit >= 0);
   const { data } = useQuery(getProductTypes);
+  const [file, setFile] = useState(state.file);
   const [files, setFiles] = useState([]);
   const [image, setImage] = useState(
     state?.thumbnail && !state?.thumbnail?.startsWith('/static/media/product')
@@ -46,7 +47,10 @@ const ProductForm = ({ state }) => {
   const limit = watch('limit');
   const accessibility = watch('accessibility');
   const productTypeId = watch('productTypeId');
-  const productType = data?.getProductTypes.find((item) => item.id === productTypeId);
+  const productType = useMemo(
+    () => data?.getProductTypes.find((item) => item.id === state?.productTypeId || productTypeId),
+    [data?.getProductTypes, productTypeId, state?.productTypeId],
+  );
 
   const disabled = useMemo(
     () =>
@@ -267,9 +271,10 @@ const ProductForm = ({ state }) => {
                     <Col span={22} padding_bottom={6}>
                       <DraggerFile
                         control={control}
-                        file={state?.file}
+                        file={file}
                         userId={state?.userId}
                         files={files}
+                        setFile={setFile}
                         setFiles={setFiles}
                       />
                     </Col>
