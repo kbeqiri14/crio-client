@@ -20,7 +20,6 @@ const Wrapper = styled('div')`
   justify-content: center;
   align-items: center;
   padding: 20px;
-
   .card {
     max-width: 410px;
     min-height: 354px;

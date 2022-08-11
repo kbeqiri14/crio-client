@@ -107,7 +107,7 @@ const DragAndDrop = ({ content, file, types, dispatch, goToProfile }) => {
                     status='default'
                     text={
                       <>
-                        Videos (mp4, 4:3,<span className='less-than-sign'> &#60;</span>60 secs)
+                        Videos (mp4, 4:3,<span className='less-than-sign'> {'<'}</span>60 secs)
                       </>
                     }
                   />
