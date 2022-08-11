@@ -20,7 +20,7 @@ const ProductForm = ({ state }) => {
   const [visibleBroadcast, setVisibleBroadcast] = useState(false);
   const [limitVisible, setLimitVisible] = useState(state?.limit !== null && state?.limit >= 0);
   const { data } = useQuery(getProductTypes);
-  const [file, setFile] = useState(state.file);
+  const [file, setFile] = useState(state?.file);
   const [files, setFiles] = useState([]);
   const [image, setImage] = useState(
     state?.thumbnail && !state?.thumbnail?.startsWith('/static/media/product')
