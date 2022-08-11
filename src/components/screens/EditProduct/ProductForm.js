@@ -268,6 +268,7 @@ const ProductForm = ({ state }) => {
                       <DraggerFile
                         control={control}
                         file={state?.file}
+                        userId={state?.userId}
                         files={files}
                         setFiles={setFiles}
                       />

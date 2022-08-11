@@ -33,7 +33,15 @@ const Wrapper = styled('div')`
   }
 `;
 
-export const BuyWidget = ({ userId, productId, price, limit, accessibility }) => {
+export const BuyWidget = ({
+  userId,
+  productId,
+  productTypeId,
+  file,
+  price,
+  limit,
+  accessibility,
+}) => {
   const { user } = useLoggedInUser();
 
   return (
@@ -64,6 +72,8 @@ export const BuyWidget = ({ userId, productId, price, limit, accessibility }) =>
             block
             userId={userId}
             productId={productId}
+            productTypeId={productTypeId}
+            file={file}
             price={price}
             limit={limit}
             accessibility={accessibility}

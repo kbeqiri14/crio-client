@@ -1,6 +1,8 @@
 import { memo, Fragment, useMemo } from 'react';
 import { Controller } from 'react-hook-form';
 
+import { PRODUCTS } from '@configs/constants';
+import { getThumbnail } from '@utils/helpers';
 import { Button, Col, Row, Text, Title, Upload } from '@ui-kit';
 // import { errorToast } from '@ui-kit/Notification';
 import deleteIcon from '@images/delete.png';
@@ -8,7 +10,8 @@ import FileDraggerWrapper from '../styled/FileDraggerWrapper';
 
 const { Dragger } = Upload;
 
-const DraggerFile = ({ control, file, files, setFiles }) => {
+const DraggerFile = ({ control, file, userId, files, setFiles }) => {
+  console.log(file, 333);
   // const [isLimitReached, setIsLimitReached] = useState(false);
   const props = useMemo(
     () => ({
@@ -65,10 +68,17 @@ const DraggerFile = ({ control, file, files, setFiles }) => {
               </Row>
             ))}
             {file && (
-              <Row className='file-box' key={file.uid}>
+              <Row className='file-box'>
                 <Col md={22}>
                   <Text level={4} className='file-name'>
-                    {file}
+                    <a
+                      href={getThumbnail(PRODUCTS, userId, `file-${file}`)}
+                      target='_blank'
+                      download
+                      rel='noreferrer'
+                    >
+                      {file}
+                    </a>
                   </Text>
                 </Col>
                 <Col md={2} className='remove-icon'>

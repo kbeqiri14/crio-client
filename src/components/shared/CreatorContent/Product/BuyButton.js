@@ -1,16 +1,27 @@
 import { memo, useCallback, useMemo } from 'react';
 import { useLazyQuery } from '@apollo/client';
 
-import { useSendEmail } from '@root/src/components/shared/SendEmailModal/Context';
+import { PRODUCTS } from '@configs/constants';
 import history from '@configs/history';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { getStripeCheckoutSession } from '@app/graphql/queries/products.query';
+import { getThumbnail } from '@utils/helpers';
 import { Button, Tooltip } from '@ui-kit';
 import { errorToast } from '@ui-kit/Notification';
 import { ReactComponent as LockIcon } from '@svgs/lock-buy.svg';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
+import { useSendEmail } from '@shared/SendEmailModal/Context';
 
-const BuyButton = ({ userId, productId, price, limit, accessibility, block }) => {
+const BuyButton = ({
+  userId,
+  productId,
+  productTypeId,
+  file,
+  price,
+  limit,
+  accessibility,
+  block,
+}) => {
   const { user } = useLoggedInUser();
   const { setSendEmailInfo } = useSendEmail();
   const { setInfo } = usePresentation();
@@ -39,8 +50,13 @@ const BuyButton = ({ userId, productId, price, limit, accessibility, block }) =>
   );
 
   const label = useMemo(
-    () => (price && !user.boughtProducts?.includes(productId) ? 'BUY' : 'EMAIL'),
-    [price, productId, user.boughtProducts],
+    () =>
+      price && !user.boughtProducts?.includes(productId)
+        ? 'BUY'
+        : +productTypeId === 2
+        ? 'DOWNLOAD'
+        : 'EMAIL',
+    [price, productId, productTypeId, user.boughtProducts],
   );
   const color = useMemo(() => (label === 'BUY' ? 'blue' : 'green'), [label]);
   const disabled = useMemo(() => label === 'BUY' && limit === 0, [limit, label]);
@@ -49,6 +65,9 @@ const BuyButton = ({ userId, productId, price, limit, accessibility, block }) =>
       return () => hide() || history.push('/pricing');
     }
     if (label === 'EMAIL') {
+      return () => setSendEmailInfo({ productId });
+    }
+    if (label === 'DOWNLOAD') {
       return () => setSendEmailInfo({ productId });
     }
     return () => limit >= 0 && getCheckoutSession();
@@ -75,16 +94,42 @@ const BuyButton = ({ userId, productId, price, limit, accessibility, block }) =>
     return null;
   }
 
-  return isLocked ? (
-    <Tooltip
-      getPopupContainer={(triggerNode) => triggerNode.parentNode.querySelector('.ant-tooltip-open')}
-      title={tooltip}
-    >
-      {button}
-    </Tooltip>
-  ) : (
-    button
-  );
+  if (isLocked) {
+    return (
+      <Tooltip
+        getPopupContainer={(triggerNode) =>
+          triggerNode.parentNode.querySelector('.ant-tooltip-open')
+        }
+        title={tooltip}
+      >
+        {button}
+      </Tooltip>
+    );
+  }
+
+  if (label === 'DOWNLOAD') {
+    return (
+      <Button
+        block={block}
+        type='primary'
+        fill_color={color}
+        min_width={126}
+        disabled={disabled}
+        loading={loading}
+      >
+        <a
+          href={getThumbnail(PRODUCTS, userId, `file-${file}`)}
+          target='_blank'
+          download
+          rel='noreferrer'
+        >
+          DOWNLOAD
+        </a>
+      </Button>
+    );
+  }
+
+  return button;
 };
 
 export default memo(BuyButton);
