@@ -20,6 +20,7 @@ const Wrapper = styled('div')`
   justify-content: center;
   align-items: center;
   padding: 20px;
+
   .card {
     max-width: 410px;
     min-height: 354px;
@@ -36,6 +37,15 @@ const Wrapper = styled('div')`
   }
   @media (max-width: 890px) {
     height: 100%;
+  }
+  @media (max-height: 820px) {
+    .card.pro {
+      height: 320px;
+      padding-top: 20px;
+    }
+    .proWrapper {
+      padding-top: 50px;
+    }
   }
 `;
 
@@ -101,7 +111,7 @@ const Pricing = () => {
             </Col>
           </Row>
         </Col>
-        <Col>
+        <Col className='proWrapper'>
           <RecommendIcon className='recommend' />
           <Row gutter={[0, 16]} className='card pro'>
             <Col span={24}>
