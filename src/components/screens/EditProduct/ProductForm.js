@@ -48,7 +48,7 @@ const ProductForm = ({ state }) => {
   const accessibility = watch('accessibility');
   const productTypeId = watch('productTypeId');
   const productType = useMemo(
-    () => data?.getProductTypes.find((item) => item.id === state?.productTypeId || productTypeId),
+    () => data?.getProductTypes.find((item) => item.id === productTypeId || state?.productTypeId),
     [data?.getProductTypes, productTypeId, state?.productTypeId],
   );
 
