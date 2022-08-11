@@ -6,6 +6,7 @@ const typography = {
     4: { size: 50, height: 75, weight: 700 },
     5: { size: 22, height: 33, weight: 700 },
     6: { size: 30, height: 45, weight: 700 },
+    7: { size: 45, height: 68, weight: 700 },
   },
   text: {
     1: { size: 14, height: 21, weight: 500 },

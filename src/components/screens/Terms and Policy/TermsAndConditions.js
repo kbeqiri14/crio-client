@@ -182,7 +182,7 @@ const TermsAndConditions = () => (
     <div className='cr-privacy-policy'>
       <Meta title='Terms and Conditions' description='Crio - Terms and Conditions' />
       <div className='container'>
-        <Title level={3} margin_bottom={30}>
+        <Title level={7} margin_bottom={30}>
           TERMS AND CONDITIONS
         </Title>
         <Divider />
