@@ -20,6 +20,7 @@ const ProductForm = ({ state }) => {
   const [visibleBroadcast, setVisibleBroadcast] = useState(false);
   const [limitVisible, setLimitVisible] = useState(state?.limit !== null && state?.limit >= 0);
   const { data } = useQuery(getProductTypes);
+  const [file, setFile] = useState(state?.file);
   const [files, setFiles] = useState([]);
   const [image, setImage] = useState(
     state?.thumbnail && !state?.thumbnail?.startsWith('/static/media/product')
@@ -27,7 +28,7 @@ const ProductForm = ({ state }) => {
       : {},
   );
   const hideBroadcast = useCallback(() => setVisibleBroadcast(false), []);
-  const { loading } = useQuery(getConnectAccount, {
+  const { data: stripeAccount, loading } = useQuery(getConnectAccount, {
     fetchPolicy: 'cache-and-network',
     onCompleted: ({ getConnectAccount }) => {
       const chargesEnabled = getConnectAccount?.charges_enabled;
@@ -46,7 +47,12 @@ const ProductForm = ({ state }) => {
   const limit = watch('limit');
   const accessibility = watch('accessibility');
   const productTypeId = watch('productTypeId');
-  const productType = data?.getProductTypes.find((item) => item.id === productTypeId);
+  const isDigitalProduct = useMemo(
+    () =>
+      data?.getProductTypes?.find((item) => item.id === (productTypeId || state?.productTypeId))
+        ?.name === 'Digital Product',
+    [data?.getProductTypes, productTypeId, state?.productTypeId],
+  );
 
   const disabled = useMemo(
     () =>
@@ -54,7 +60,10 @@ const ProductForm = ({ state }) => {
         title?.trim() &&
         (+price > 0 || isFree) &&
         (!limitVisible || (limitVisible && +limit > 0)) &&
-        ((title?.trim() && title?.trim() !== state?.title) ||
+        !(isDigitalProduct && !(files.length || file)) &&
+        ((productTypeId && productTypeId !== state?.productTypeId) ||
+          (title?.trim() && title?.trim() !== state?.title) ||
+          (state.file && file !== state.file) ||
           (description?.trim() && description?.trim() !== state?.description) ||
           (description?.trim() === '' && !!state?.description) ||
           (price && +price !== +state?.price) ||
@@ -82,6 +91,12 @@ const ProductForm = ({ state }) => {
       state?.limit,
       state?.accessibility,
       state?.thumbnail,
+      state.file,
+      state?.productTypeId,
+      productTypeId,
+      isDigitalProduct,
+      file,
+      files,
     ],
   );
 
@@ -179,7 +194,10 @@ const ProductForm = ({ state }) => {
                   />
                 </Col>
                 <Col span={22} align='start'>
-                  <Text level={3} disabled={isFree}>
+                  <Text
+                    level={3}
+                    disabled={isFree || !stripeAccount?.getConnectAccount?.charges_enabled}
+                  >
                     Price*
                   </Text>
                 </Col>
@@ -204,7 +222,9 @@ const ProductForm = ({ state }) => {
                                 pattern='[0-9]*'
                                 maxLength={50}
                                 placeholder='$'
-                                disabled={isFree}
+                                disabled={
+                                  isFree || !stripeAccount?.getConnectAccount?.charges_enabled
+                                }
                               />
                             </div>
                           </Tooltip>
@@ -216,7 +236,7 @@ const ProductForm = ({ state }) => {
                           pattern='[0-9]*'
                           maxLength={50}
                           placeholder='$'
-                          disabled={isFree}
+                          disabled={isFree || !stripeAccount?.getConnectAccount?.charges_enabled}
                           onChange={(e) =>
                             field.onChange(
                               isNaN(e.target.value) ? field.value || '' : e.target.value,
@@ -242,11 +262,16 @@ const ProductForm = ({ state }) => {
                     render={({ field }) => (
                       <Checkbox
                         {...field}
-                        checked={isFree}
+                        checked={isFree || !stripeAccount?.getConnectAccount?.charges_enabled}
                         disabled={visibleBroadcast}
                         onChange={setFree}
                       >
-                        <Text level={3} disabled={visibleBroadcast}>
+                        <Text
+                          level={3}
+                          disabled={
+                            visibleBroadcast || !stripeAccount?.getConnectAccount?.charges_enabled
+                          }
+                        >
                           Free
                         </Text>
                       </Checkbox>
@@ -259,7 +284,7 @@ const ProductForm = ({ state }) => {
                 <Col span={22} padding_bottom={32}>
                   <DraggerImage control={control} image={image} setImage={setImage} />
                 </Col>
-                {productType?.name === 'Digital Product' && (
+                {isDigitalProduct && (
                   <Fragment>
                     <Col span={22} align='start'>
                       <Text level={3}>Product File*</Text>
@@ -267,9 +292,10 @@ const ProductForm = ({ state }) => {
                     <Col span={22} padding_bottom={6}>
                       <DraggerFile
                         control={control}
-                        file={state?.file}
+                        file={file}
                         userId={state?.userId}
                         files={files}
+                        setFile={setFile}
                         setFiles={setFiles}
                       />
                     </Col>
