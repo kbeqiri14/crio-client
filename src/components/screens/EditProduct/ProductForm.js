@@ -49,7 +49,7 @@ const ProductForm = ({ state }) => {
   const productTypeId = watch('productTypeId');
   const isDigitalProduct = useMemo(
     () =>
-      data?.getProductTypes?.find((item) => item.id === productTypeId || state?.productTypeId)
+      data?.getProductTypes?.find((item) => item.id === (productTypeId || state?.productTypeId))
         ?.name === 'Digital Product',
     [data?.getProductTypes, productTypeId, state?.productTypeId],
   );
@@ -61,7 +61,9 @@ const ProductForm = ({ state }) => {
         (+price > 0 || isFree) &&
         (!limitVisible || (limitVisible && +limit > 0)) &&
         !(isDigitalProduct && !(files.length || file)) &&
-        ((title?.trim() && title?.trim() !== state?.title) ||
+        ((productTypeId && productTypeId !== state?.productTypeId) ||
+          (title?.trim() && title?.trim() !== state?.title) ||
+          (state.file && file !== state.file) ||
           (description?.trim() && description?.trim() !== state?.description) ||
           (description?.trim() === '' && !!state?.description) ||
           (price && +price !== +state?.price) ||
@@ -89,6 +91,9 @@ const ProductForm = ({ state }) => {
       state?.limit,
       state?.accessibility,
       state?.thumbnail,
+      state.file,
+      state?.productTypeId,
+      productTypeId,
       isDigitalProduct,
       file,
       files,
