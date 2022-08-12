@@ -80,7 +80,7 @@ const ProductForm = ({ state }) => {
       : {},
   );
   const hideBroadcast = useCallback(() => setVisibleBroadcast(false), []);
-  const { loading } = useQuery(getConnectAccount, {
+  const { data, loading } = useQuery(getConnectAccount, {
     fetchPolicy: 'cache-and-network',
     onCompleted: ({ getConnectAccount }) => {
       const chargesEnabled = getConnectAccount?.charges_enabled;
@@ -209,7 +209,7 @@ const ProductForm = ({ state }) => {
                 />
               </Col>
               <Col span={24} align='start'>
-                <Text level={3} disabled={isFree}>
+                <Text level={3} disabled={isFree || !data?.getConnectAccount?.charges_enabled}>
                   Price*
                 </Text>
               </Col>
@@ -234,7 +234,7 @@ const ProductForm = ({ state }) => {
                               level={4}
                               maxLength={50}
                               placeholder='$'
-                              disabled={isFree}
+                              disabled={isFree || !data?.getConnectAccount?.charges_enabled}
                             />
                           </div>
                         </Tooltip>
@@ -245,7 +245,7 @@ const ProductForm = ({ state }) => {
                         level={4}
                         maxLength={50}
                         placeholder='$'
-                        disabled={isFree}
+                        disabled={isFree || !data?.getConnectAccount?.charges_enabled}
                         onChange={(e) =>
                           field.onChange(isNaN(e.target.value) ? field.value || '' : e.target.value)
                         }
@@ -270,10 +270,13 @@ const ProductForm = ({ state }) => {
                     <Checkbox
                       {...field}
                       checked={isFree}
-                      disabled={visibleBroadcast}
+                      disabled={visibleBroadcast || !data?.getConnectAccount?.charges_enabled}
                       onChange={setFree}
                     >
-                      <Text level={3} disabled={visibleBroadcast}>
+                      <Text
+                        level={3}
+                        disabled={visibleBroadcast || !data?.getConnectAccount?.charges_enabled}
+                      >
                         Free
                       </Text>
                     </Checkbox>
