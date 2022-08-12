@@ -1,7 +1,8 @@
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import { useQuery, useLazyQuery } from '@apollo/client';
 
+import { env } from '@app/configs/environment';
 import history from '@configs/history';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useQueryParams from '@app/hooks/useQueryParams';
@@ -9,6 +10,7 @@ import {
   getConnectAccount,
   getConnectLoginLink,
   getConnectOnboardingLink,
+  deleteStripeAccount,
 } from '@app/graphql/queries/payment-method.query';
 import { Button, Col, Row, Text, Title } from '@ui-kit';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
@@ -27,6 +29,10 @@ const Wrapper = styled('div')`
 const Payment = () => {
   const { user } = useLoggedInUser();
   const { refreshUrl } = useQueryParams();
+  const [requestDelete, { loading }] = useLazyQuery(deleteStripeAccount, {
+    fetchPolicy: 'no-cache',
+    onCompleted: () => (window.location.href = '/payment'),
+  });
   const { data: connectAccount, loading: gettingConnectAccount } = useQuery(getConnectAccount);
   const [requestConnectOnboardingLink, { loading: gettingConnectOnboardingLink }] = useLazyQuery(
     getConnectOnboardingLink,
@@ -44,6 +50,12 @@ const Payment = () => {
       onCompleted: ({ getConnectLoginLink }) =>
         window.open(getConnectLoginLink.url, '_blank', 'noopener,noreferrer,nofollow'),
     },
+  );
+  const showRetry = useMemo(
+    () =>
+      env !== 'production' &&
+      (user.email === 'klodi.beqiri14@gmail.com' || user.email === 'nkosyan123@gmail.com'),
+    [user.email],
   );
 
   useEffect(() => {
@@ -101,6 +113,13 @@ const Payment = () => {
                 >
                   ONBOARDING YOUR STRIPE ACCOUNT
                 </Button>
+              )}
+              {showRetry && (
+                <Col span={24} padding_top={20}>
+                  <Button onClick={requestDelete} loading={loading}>
+                    RETRY
+                  </Button>
+                </Col>
               )}
             </Col>
           </Row>
