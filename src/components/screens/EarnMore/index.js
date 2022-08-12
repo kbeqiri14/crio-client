@@ -1,12 +1,40 @@
 import { memo, useState, useEffect } from 'react';
-import { Col, Row, Text, Title, Select, Button } from '@ui-kit';
-import { Footer } from '@shared/Footer';
-import { validateEmail } from '@utils/helpers';
+import styled from 'styled-components';
 
+import { validateEmail } from '@utils/helpers';
+import { Col, Row, Text, Title, Select, Button } from '@ui-kit';
+import { errorToast } from '@ui-kit/Notification';
 import paperPlane from '@images/paper-plane.png';
 import earnMore from '@images/earn-more.png';
-import { errorToast } from '@ui-kit/Notification';
-import Wrapper from './styled';
+import { Footer } from '@shared/Footer';
+
+const Wrapper = styled('div')`
+  width: 100%;
+  .ant-select-dropdown {
+    display: none;
+  }
+  .ant-select-selection-item {
+    background: #878c94;
+    border: 1px solid #878c94;
+    color: #2b2b2b !important;
+    height: 32px;
+    padding: 0 4px 0 10px;
+    align-items: center;
+  }
+  .ant-select-selection-search-input {
+    color: white !important;
+  }
+  .ant-select-selection-item-remove {
+    color: #2b2b2b !important;
+    padding-top: 2px;
+  }
+  .ant-select-selector {
+    padding: 4px 16px !important;
+  }
+  .ant-select-multiple .ant-select-selection-search {
+    margin-inline-start: -7px;
+  }
+`;
 
 const info = [
   { key: 1, title: 'Invite Members', desc: 'Let’s say you Invited two creators: Erika and John' },
@@ -48,76 +76,81 @@ const FeaturesPage = () => {
   }, [emails]);
 
   return (
-    <Wrapper>
-      <Row justify='center' align='middle' style={{ padding: 20, maxWidth: 1170 }}>
-        <Col>
-          <Row justify='space-between' align='middle' style={{ maxWidth: 1170 }}>
-            <Col className='email-section'>
-              <Title level={8}>Invite New Creators and Start Earning More with Crio</Title>
-              <Text level={4} className='margin-bottom'>
-                For every creator that signs-up, you will get a payout equal to 5% of each of their
-                earnings for as long as they are Creators on Crio!{' '}
-                <b>This comes out of Crio’s pocket not the creators.</b>
-              </Text>
-              <Select
-                mode='tags'
-                autoFocus
-                // onChange={validationOfEmail}
-                maxTagCount={5}
-                showArrow={false}
-                filterOption={false}
-                className='email-input'
-                placeholder='Write here ...'
-                tokenSeparators={[' ']}
-                value={emails}
-              />
-              <Button type='primary' width={220}>
-                SEND INVITATIONS
-              </Button>
+    <>
+      <Row
+        justify='center'
+        align='middle'
+        gutter={[0, 200]}
+        padding_horizontal={25}
+        padding_vertical={40}
+      >
+        <Col span={24}>
+          <Row justify='center' align='middle' gutter={172}>
+            <Col max_width={568 + 172}>
+              <Row gutter={[0, 20]}>
+                <Col>
+                  <Title level={8}>Invite New Creators and Start Earning More with Crio</Title>
+                </Col>
+                <Col>
+                  <Text level={4}>
+                    For every creator that signs-up, you will get a payout equal to 5% of each of
+                    their earnings for as long as they are Creators on Crio!{' '}
+                    <b>This comes out of Crio’s pocket not the creators.</b>
+                  </Text>
+                </Col>
+                <Wrapper>
+                  <Select
+                    mode='tags'
+                    autoFocus
+                    onChange={validationOfEmail}
+                    maxTagCount={5}
+                    showArrow={false}
+                    filterOption={false}
+                    placeholder='Write here ...'
+                    tokenSeparators={[' ']}
+                    value={emails}
+                  />
+                </Wrapper>
+                <Col>
+                  <Button type='primary' width={220}>
+                    SEND INVITATIONS
+                  </Button>
+                </Col>
+              </Row>
             </Col>
-            <Col align='right'>
-              <img src={paperPlane} alt='paper plane' className='paper-plane' />
+            <Col>
+              <img
+                src={paperPlane}
+                alt='paper plane'
+                width={431}
+                height={474}
+                className='rotate full-max-width'
+              />
             </Col>
           </Row>
         </Col>
-
-        <Col>
-          <Title level={6} className='text-center works-title'>
+        <Col span={24}>
+          <Title level={6} align='center'>
             How it works
           </Title>
-          <Row
-            justify='space-between'
-            align='middle'
-            className='works-section'
-            gutter={[0, 40]}
-            style={{ width: 1600 }}
-          >
-            <Col span={12} className='works-image'>
-              <img src={earnMore} alt='earn more' className='earn-more-img' />
+          <Row justify='center' align='middle' gutter={[186, 80]} padding_top={124}>
+            <Col>
+              <img src={earnMore} alt='earn more' className='full-max-width' />
             </Col>
-            <Col span={12} className='works-content'>
-              <Row gutter={[0, 80]}>
+            <Col max_width={365 + 186}>
+              <Row justify='center' align='middle' gutter={[0, 80]}>
                 {info.map(({ key, title, desc }) => (
-                  <Col>
-                    <Row key={key} gutter={20} className='content-container'>
-                      <Col>
-                        <div className='circled'>
-                          <Text level={4}>{key}</Text>
-                        </div>
+                  <Col span={24}>
+                    <Row align='middle' gutter={20}>
+                      <Col className='circle'>
+                        <Text level={4}>{key}</Text>
                       </Col>
-                      <Col className='content'>
-                        <Row>
-                          <Col>
-                            <Text level={4}>
-                              {title} <br />
-                            </Text>
-                          </Col>
-                          <Col>
-                            <Text level={3} color='dark25'>
-                              {desc}
-                            </Text>
-                          </Col>
-                        </Row>
+                      <Col max_width={285}>
+                        <Text level={4}>{title}</Text>
+                        <br />
+                        <Text level={3} color='dark25'>
+                          {desc}
+                        </Text>
                       </Col>
                     </Row>
                   </Col>
@@ -128,7 +161,7 @@ const FeaturesPage = () => {
         </Col>
       </Row>
       <Footer />
-    </Wrapper>
+    </>
   );
 };
 
