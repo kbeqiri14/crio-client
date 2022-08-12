@@ -28,7 +28,7 @@ const ProductForm = ({ state }) => {
       : {},
   );
   const hideBroadcast = useCallback(() => setVisibleBroadcast(false), []);
-  const { loading } = useQuery(getConnectAccount, {
+  const { data: stripeAccount, loading } = useQuery(getConnectAccount, {
     fetchPolicy: 'cache-and-network',
     onCompleted: ({ getConnectAccount }) => {
       const chargesEnabled = getConnectAccount?.charges_enabled;
@@ -183,7 +183,10 @@ const ProductForm = ({ state }) => {
                   />
                 </Col>
                 <Col span={22} align='start'>
-                  <Text level={3} disabled={isFree}>
+                  <Text
+                    level={3}
+                    disabled={isFree || !stripeAccount?.getConnectAccount?.charges_enabled}
+                  >
                     Price*
                   </Text>
                 </Col>
@@ -208,7 +211,9 @@ const ProductForm = ({ state }) => {
                                 pattern='[0-9]*'
                                 maxLength={50}
                                 placeholder='$'
-                                disabled={isFree}
+                                disabled={
+                                  isFree || !stripeAccount?.getConnectAccount?.charges_enabled
+                                }
                               />
                             </div>
                           </Tooltip>
@@ -220,7 +225,7 @@ const ProductForm = ({ state }) => {
                           pattern='[0-9]*'
                           maxLength={50}
                           placeholder='$'
-                          disabled={isFree}
+                          disabled={isFree || !stripeAccount?.getConnectAccount?.charges_enabled}
                           onChange={(e) =>
                             field.onChange(
                               isNaN(e.target.value) ? field.value || '' : e.target.value,
@@ -246,11 +251,16 @@ const ProductForm = ({ state }) => {
                     render={({ field }) => (
                       <Checkbox
                         {...field}
-                        checked={isFree}
+                        checked={isFree || !stripeAccount?.getConnectAccount?.charges_enabled}
                         disabled={visibleBroadcast}
                         onChange={setFree}
                       >
-                        <Text level={3} disabled={visibleBroadcast}>
+                        <Text
+                          level={3}
+                          disabled={
+                            visibleBroadcast || !stripeAccount?.getConnectAccount?.charges_enabled
+                          }
+                        >
                           Free
                         </Text>
                       </Checkbox>

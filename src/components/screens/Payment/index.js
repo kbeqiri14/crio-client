@@ -26,6 +26,12 @@ const Wrapper = styled('div')`
   }
 `;
 
+const emails = [
+  'klodi.beqiri14@gmail.com',
+  'nkosyan123@gmail.com',
+  'siranushgasparyan93@gmail.com',
+];
+
 const Payment = () => {
   const { user } = useLoggedInUser();
   const { refreshUrl } = useQueryParams();
@@ -52,9 +58,7 @@ const Payment = () => {
     },
   );
   const showRetry = useMemo(
-    () =>
-      env !== 'production' &&
-      (user.email === 'klodi.beqiri14@gmail.com' || user.email === 'nkosyan123@gmail.com'),
+    () => env !== 'production' && emails.includes(user.email),
     [user.email],
   );
 
