@@ -47,8 +47,10 @@ const ProductForm = ({ state }) => {
   const limit = watch('limit');
   const accessibility = watch('accessibility');
   const productTypeId = watch('productTypeId');
-  const productType = useMemo(
-    () => data?.getProductTypes.find((item) => item.id === productTypeId || state?.productTypeId),
+  const isDigitalProduct = useMemo(
+    () =>
+      data?.getProductTypes?.find((item) => item.id === productTypeId || state?.productTypeId)
+        ?.name === 'Digital Product',
     [data?.getProductTypes, productTypeId, state?.productTypeId],
   );
 
@@ -58,6 +60,7 @@ const ProductForm = ({ state }) => {
         title?.trim() &&
         (+price > 0 || isFree) &&
         (!limitVisible || (limitVisible && +limit > 0)) &&
+        !(isDigitalProduct && !(files.length || file)) &&
         ((title?.trim() && title?.trim() !== state?.title) ||
           (description?.trim() && description?.trim() !== state?.description) ||
           (description?.trim() === '' && !!state?.description) ||
@@ -86,6 +89,9 @@ const ProductForm = ({ state }) => {
       state?.limit,
       state?.accessibility,
       state?.thumbnail,
+      isDigitalProduct,
+      file,
+      files,
     ],
   );
 
@@ -273,7 +279,7 @@ const ProductForm = ({ state }) => {
                 <Col span={22} padding_bottom={32}>
                   <DraggerImage control={control} image={image} setImage={setImage} />
                 </Col>
-                {productType?.name === 'Digital Product' && (
+                {isDigitalProduct && (
                   <Fragment>
                     <Col span={22} align='start'>
                       <Text level={3}>Product File*</Text>
