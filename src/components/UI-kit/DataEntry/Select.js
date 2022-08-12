@@ -69,9 +69,6 @@ const Select = styled(
       border: 1px solid #202020;
     }
   }
-  .ant-select-selection-search {
-    margin-inline-start: -4px !important;
-  }
 `;
 
 Select.Option = Component.Option;

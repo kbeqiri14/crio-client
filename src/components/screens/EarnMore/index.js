@@ -31,9 +31,6 @@ const Wrapper = styled('div')`
   .ant-select-selector {
     padding: 4px 16px !important;
   }
-  .ant-select-multiple .ant-select-selection-search {
-    margin-inline-start: -7px;
-  }
 `;
 
 const info = [
