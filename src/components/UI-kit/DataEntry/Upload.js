@@ -31,7 +31,8 @@ const Dragger = styled(Upload.Dragger)`
       padding: 20px 10px;
     }
     .less-than-sign {
-      padding-bottom: 3px;
+      position: relative;
+      top: -2px;
     }
   }
 `;
