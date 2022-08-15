@@ -28,7 +28,7 @@ const Wrapper = styled('div')`
   }
   .got-it-button {
     position: absolute;
-    top: 257px;
+    top: 275px;
     right: 121px;
   }
 `;

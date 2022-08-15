@@ -38,9 +38,9 @@ const FormWrapper = styled('div')`
       top: 0 !important;
     }
     .got-it-button {
-      left: 160px;
-      @media (max-width: 1060px) {
-        left: -115px;
+      left: 158px;
+      @media (max-width: 768px) {
+        left: -123px;
       }
       margin-top: 58px;
     }
