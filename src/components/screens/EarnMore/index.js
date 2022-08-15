@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { validateEmail } from '@utils/helpers';
 import { Col, Row, Text, Title, Select, Button } from '@ui-kit';
 import { errorToast } from '@ui-kit/Notification';
+import Circle from '@ui-kit/Custom/Circle';
 import paperPlane from '@images/paper-plane.png';
 import earnMore from '@images/earn-more.png';
 import { Footer } from '@shared/Footer';
@@ -14,9 +15,9 @@ const Wrapper = styled('div')`
     display: none;
   }
   .ant-select-selection-item {
-    background: #878c94;
-    border: 1px solid #878c94;
-    color: #2b2b2b !important;
+    background: ${(props) => props.theme.colors.dark50};
+    border: 1px solid ${(props) => props.theme.colors.dark50};
+    color: ${(props) => props.theme.colors.dark100} !important;
     height: 32px;
     padding: 0 4px 0 10px;
     align-items: center;
@@ -25,7 +26,7 @@ const Wrapper = styled('div')`
     color: white !important;
   }
   .ant-select-selection-item-remove {
-    color: #2b2b2b !important;
+    color: ${(props) => props.theme.colors.dark0} !important;
     padding-top: 2px;
   }
   .ant-select-selector {
@@ -118,13 +119,13 @@ const FeaturesPage = () => {
                 </Col>
               </Row>
             </Col>
-            <Col>
+            <Col max_width='100%'>
               <img
                 src={paperPlane}
                 alt='paper plane'
-                width={431}
+                width='100%'
                 height={474}
-                className='rotate full-max-width'
+                className='rotate'
               />
             </Col>
           </Row>
@@ -134,16 +135,16 @@ const FeaturesPage = () => {
             How it works
           </Title>
           <Row justify='center' align='middle' gutter={[186, 80]} padding_top={124}>
-            <Col>
-              <img src={earnMore} alt='earn more' className='full-max-width' />
+            <Col max_width='100%'>
+              <img src={earnMore} alt='earn more' width='100%' />
             </Col>
             <Col max_width={365 + 186}>
               <Row justify='center' align='middle' gutter={[0, 80]}>
                 {info.map(({ key, title, desc }) => (
-                  <Col span={24}>
+                  <Col span={24} key={key}>
                     <Row align='middle' gutter={20}>
-                      <Col className='circle'>
-                        <Text level={4}>{key}</Text>
+                      <Col>
+                        <Circle>{key}</Circle>
                       </Col>
                       <Col max_width={285}>
                         <Text level={4}>{title}</Text>
