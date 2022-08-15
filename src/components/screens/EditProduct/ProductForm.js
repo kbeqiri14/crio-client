@@ -63,7 +63,7 @@ const ProductForm = ({ state }) => {
         !(isDigitalProduct && !(files.length || file)) &&
         ((productTypeId && productTypeId !== state?.productTypeId) ||
           (title?.trim() && title?.trim() !== state?.title) ||
-          (state.file && file !== state.file) ||
+          (state?.file && file !== state?.file) ||
           (description?.trim() && description?.trim() !== state?.description) ||
           (description?.trim() === '' && !!state?.description) ||
           (price && +price !== +state?.price) ||
@@ -91,7 +91,7 @@ const ProductForm = ({ state }) => {
       state?.limit,
       state?.accessibility,
       state?.thumbnail,
-      state.file,
+      state?.file,
       state?.productTypeId,
       productTypeId,
       isDigitalProduct,
