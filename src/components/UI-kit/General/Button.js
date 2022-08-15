@@ -157,17 +157,12 @@ const Button = styled(antButton)`
       background-color: ${(props) => props.theme.colors.white};
     }
     font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 500;
     font-size: 14px;
     line-height: 16px;
     color: rgba(0, 0, 0, 0.54);
-    background: #ffffff;
+    background: ${(props) => props.theme.colors.white};
     box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.24);
     border-radius: 2px;
-    display: flex;
-    align-items: flex-end;
-    letter-spacing: 0.21875px;
   }
 
   ///************** FACEBOOK BUTTON **************///
