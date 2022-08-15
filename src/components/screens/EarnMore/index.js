@@ -1,12 +1,41 @@
-import { Fragment, memo, useState, useEffect } from 'react';
-import { Col, Row, Text, Title, Select, Button } from '@ui-kit';
-import { Footer } from '@shared/Footer';
-import { validateEmail } from '@utils/helpers';
+import { memo, useState, useEffect } from 'react';
+import styled from 'styled-components';
 
+import { validateEmail } from '@utils/helpers';
+import { Col, Row, Text, Title, Select, Button } from '@ui-kit';
+import { errorToast } from '@ui-kit/Notification';
+import Circle from '@ui-kit/Custom/Circle';
 import paperPlane from '@images/paper-plane.png';
 import earnMore from '@images/earn-more.png';
-import { errorToast } from '@ui-kit/Notification';
-import Wrapper from './styled';
+import { Footer } from '@shared/Footer';
+
+const Wrapper = styled('div')`
+  width: 100%;
+  .ant-select-dropdown {
+    display: none;
+  }
+  .ant-select-selection-item {
+    background: ${(props) => props.theme.colors.dark50};
+    border: 1px solid ${(props) => props.theme.colors.dark50};
+    color: ${(props) => props.theme.colors.dark100} !important;
+    height: 32px;
+    padding: 0 4px 0 10px;
+    align-items: center;
+  }
+  .ant-select-selection-search-input {
+    color: white !important;
+  }
+  .ant-select-selection-item-remove {
+    color: ${(props) => props.theme.colors.dark0} !important;
+    padding-top: 2px;
+  }
+  .ant-select-selector {
+    padding: 4px 16px !important;
+  }
+  .ant-select-selection-search {
+    margin-inline-start: -5px;
+  }
+`;
 
 const info = [
   { key: 1, title: 'Invite Members', desc: 'Let’s say you Invited two creators: Erika and John' },
@@ -18,7 +47,16 @@ const info = [
   {
     key: 3,
     title: 'Your Earnings',
-    desc: `You will get total of $300 per month! $250 ($5,000 * 5%) for inviting Erika $50 ($1,000 * 5%) for inviting John This is in addition to other income streams you earn on Crio.`,
+    desc: (
+      <>
+        You will get total of $300 per month!
+        <br />
+        $250 ($5,000 * 5%) for inviting Erika
+        <br />
+        $50 ($1,000 * 5%) for inviting John This is in addition to other income streams you earn on
+        Crio.
+      </>
+    ),
   },
 ];
 
@@ -39,90 +77,92 @@ const FeaturesPage = () => {
   }, [emails]);
 
   return (
-    <Wrapper>
-      <Row justify='center' align='middle'>
-        <Col
-          className='email-section'
-          xl={{ span: 7, offset: 0 }}
-          lg={{ span: 8, offset: 0 }}
-          md={{ span: 8, offset: 0 }}
-          xs={{ span: 22 }}
-        >
-          <Title level={4}>Invite New Creators and Start Earning More with Crio</Title>
-          <Text level={4} className='margin-bottom'>
-            For every creator that signs-up, you will get a payout equal to 5% of each of their
-            earnings for as long as they are Creators on Crio!{' '}
-            <b>This comes out of Crio’s pocket not the creators.</b>
-          </Text>
-          <Select
-            mode='tags'
-            autoFocus
-            onChange={validationOfEmail}
-            maxTagCount={5}
-            showArrow={false}
-            filterOption={false}
-            className='email-input'
-            placeholder='Write here ...'
-            tokenSeparators={[' ']}
-            value={emails}
-          />
-          <Button type='primary' width={220}>
-            SEND INVITATIONS
-          </Button>
-        </Col>
-        <Col
-          className='image-section'
-          xl={{ span: 6, offset: 4 }}
-          lg={{ span: 10, offset: 1 }}
-          md={{ span: 6, offset: 0 }}
-          offset={2}
-        >
-          <img src={paperPlane} alt='paper plane' className='paper-plane' />
-        </Col>
-      </Row>
-      <Title level={6} className='text-center works-title'>
-        How it works
-      </Title>
-      <Row justify='center' align='middle' style={{ marginTop: '120px' }} className='works-section'>
-        <Col
-          xl={{ span: 12, offset: 1 }}
-          lg={{ span: 14, offset: 0 }}
-          md={{ span: 14, offset: 0 }}
-          sm={{ span: 20, offset: 2 }}
-          xs={{ span: 22, offset: 1 }}
-        >
-          <img src={earnMore} alt='earn more' className='earn-more-img' />
-        </Col>
-        <Col
-          xl={{ span: 8, offset: 0 }}
-          lg={{ span: 8, offset: 0 }}
-          md={{ span: 8, offset: 0 }}
-          sm={{ span: 20, offset: 2 }}
-          xs={{ span: 22, offset: 1 }}
-        >
-          <Row gutter={[0, 24]}>
-            {info.map(({ key, title, desc }) => (
-              <Fragment key={key}>
-                <Col md={4} xs={4} margin_top={8}>
-                  <div className='circled'>
-                    <Text level={4}>{key}</Text>
-                  </div>
+    <>
+      <Row
+        justify='center'
+        align='middle'
+        gutter={[0, 200]}
+        padding_horizontal={25}
+        padding_vertical={40}
+      >
+        <Col span={24}>
+          <Row justify='center' align='middle' gutter={172}>
+            <Col max_width={568 + 172}>
+              <Row gutter={[0, 20]}>
+                <Col>
+                  <Title level={8}>Invite New Creators and Start Earning More with Crio</Title>
                 </Col>
-                <Col md={19} xs={18} className='text-left text-options'>
+                <Col>
                   <Text level={4}>
-                    {title} <br />
-                  </Text>
-                  <Text level={3} color='dark25'>
-                    {desc}
+                    For every creator that signs-up, you will get a payout equal to 5% of each of
+                    their earnings for as long as they are Creators on Crio!{' '}
+                    <b>This comes out of Crio’s pocket not the creators.</b>
                   </Text>
                 </Col>
-              </Fragment>
-            ))}
+                <Wrapper>
+                  <Select
+                    mode='tags'
+                    autoFocus
+                    onChange={validationOfEmail}
+                    maxTagCount={5}
+                    showArrow={false}
+                    filterOption={false}
+                    placeholder='Write here ...'
+                    tokenSeparators={[' ']}
+                    value={emails}
+                  />
+                </Wrapper>
+                <Col>
+                  <Button type='primary' width={220}>
+                    SEND INVITATIONS
+                  </Button>
+                </Col>
+              </Row>
+            </Col>
+            <Col max_width='100%'>
+              <img
+                src={paperPlane}
+                alt='paper plane'
+                width='100%'
+                height={474}
+                className='rotate'
+              />
+            </Col>
+          </Row>
+        </Col>
+        <Col span={24}>
+          <Title level={6} align='center'>
+            How it works
+          </Title>
+          <Row justify='center' align='middle' gutter={[186, 80]} padding_top={124}>
+            <Col max_width='100%'>
+              <img src={earnMore} alt='earn more' width='100%' />
+            </Col>
+            <Col max_width={365 + 186}>
+              <Row justify='center' align='middle' gutter={[0, 80]}>
+                {info.map(({ key, title, desc }) => (
+                  <Col span={24} key={key}>
+                    <Row align='middle' gutter={20}>
+                      <Col>
+                        <Circle>{key}</Circle>
+                      </Col>
+                      <Col max_width={285}>
+                        <Text level={4}>{title}</Text>
+                        <br />
+                        <Text level={3} color='dark25'>
+                          {desc}
+                        </Text>
+                      </Col>
+                    </Row>
+                  </Col>
+                ))}
+              </Row>
+            </Col>
           </Row>
         </Col>
       </Row>
       <Footer />
-    </Wrapper>
+    </>
   );
 };
 

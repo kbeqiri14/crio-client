@@ -19,6 +19,9 @@ const FileDraggerWrapper = styled('div')`
     margin: 20px 0;
     color: white;
     cursor: pointer;
+    a {
+      color: white;
+    }
     :hover {
       color: #878c94;
       .remove-icon {
@@ -27,6 +30,9 @@ const FileDraggerWrapper = styled('div')`
       }
       .file-name {
         color: #878c94;
+        a {
+          color: #878c94;
+        }
       }
     }
     > div {

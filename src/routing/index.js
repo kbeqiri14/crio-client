@@ -140,7 +140,7 @@ export const AppRoutes = () => {
             <Route exact path='/features' component={FeaturesPage} />
             <Route exact path='/faq' component={FAQ} />
             <Route exact path='/subscription-automation-result' component={Job} />
-            <Route exact path='/earn-more' component={EarnMore} />
+
             {!loading && !user && <Redirect to='/' />}
             {/* PRIVATE ROUTES */}
             <PrivateRoute
