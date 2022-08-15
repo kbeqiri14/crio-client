@@ -37,13 +37,9 @@ const Wrapper = styled('div')`
   @media (max-width: 890px) {
     height: 100%;
   }
-  @media (max-height: 820px) {
-    .card.pro {
-      height: 320px;
-      padding-top: 20px;
-    }
-    .proWrapper {
-      padding-top: 50px;
+  @media (max-height: 768px) {
+    &.container {
+      height: 800px;
     }
   }
 `;
@@ -82,7 +78,7 @@ const Pricing = () => {
   }
 
   return (
-    <Wrapper>
+    <Wrapper className='container'>
       <Row justify='center' gutter={[20, 20]} className='self-center'>
         <Col className='self-center'>
           <Row gutter={[0, 16]} className='card'>
