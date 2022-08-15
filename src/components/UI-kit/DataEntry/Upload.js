@@ -32,7 +32,7 @@ const Dragger = styled(Upload.Dragger)`
     }
     .less-than-sign {
       position: relative;
-      top: -1px;
+      top: -2px;
     }
   }
 `;
