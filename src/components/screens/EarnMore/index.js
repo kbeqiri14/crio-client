@@ -81,9 +81,10 @@ const FeaturesPage = () => {
       <Row
         justify='center'
         align='middle'
-        gutter={[0, 200]}
+        gutter={[0, 225]}
         padding_horizontal={25}
-        padding_vertical={40}
+        padding_top={120}
+        padding_bottom={180}
       >
         <Col span={24}>
           <Row justify='center' align='middle' gutter={172}>
