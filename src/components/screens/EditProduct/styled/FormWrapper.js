@@ -42,7 +42,12 @@ const FormWrapper = styled('div')`
       @media (max-width: 768px) {
         left: -123px;
       }
-      margin-top: 58px;
+      margin-top: 23px;
+    }
+  }
+  .selectTitle {
+    @media (max-width: 768px) {
+      margin-top: 137px;
     }
   }
 `;

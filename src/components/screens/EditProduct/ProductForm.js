@@ -2,6 +2,7 @@ import { memo, useCallback, useEffect, useMemo, useState, Fragment } from 'react
 import { useForm } from 'react-hook-form';
 import { useQuery } from '@apollo/client';
 
+import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { getConnectAccount } from '@app/graphql/queries/payment-method.query';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import Broadcast from './_partials/Broadcast';
@@ -17,6 +18,8 @@ import HelpTooltip from '@screens/Product/HelpTooltip';
 import { getProductTypes } from '@app/graphql/queries/products.query';
 
 const ProductForm = ({ state }) => {
+  const { user } = useLoggedInUser();
+  const [visibleTooltip, setVisibleTooltip] = useState(user.id && !user.helpSeen);
   const [visibleBroadcast, setVisibleBroadcast] = useState(false);
   const [limitVisible, setLimitVisible] = useState(state?.limit !== null && state?.limit >= 0);
   const { data } = useQuery(getProductTypes);
@@ -131,11 +134,12 @@ const ProductForm = ({ state }) => {
           <Col md={9}>
             <form>
               <Row style={{ position: 'relative' }} align='center' justify='center' gutter={[0, 8]}>
-                <Col padding_bottom={32}>
+                <Col padding_bottom={32} className={visibleTooltip ? 'selectTitle' : ''}>
                   <Title level={1}>Add new Digital Product or Service</Title>
                 </Col>
                 <Col className='help'>
                   <HelpTooltip
+                    onVisibleChange={(value) => setVisibleTooltip(value)}
                     placement='right'
                     title='After a user makes a purchase, you will receive an automatic email. Please check your email and complete the order'
                   />
