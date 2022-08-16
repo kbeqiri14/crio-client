@@ -2,6 +2,7 @@ import { Tooltip as antTooltip } from 'antd';
 import styled from 'styled-components';
 
 const Tooltip = styled(antTooltip)`
+  margin-bottom: 30px;
   .ant-tooltip-inner {
     font-size: ${(props) => props.theme.text[1].size}px;
     font-weight: ${(props) => props.theme.text[1].weight};
