@@ -134,7 +134,11 @@ const ProductForm = ({ state }) => {
           <Col md={9}>
             <form>
               <Row style={{ position: 'relative' }} align='center' justify='center' gutter={[0, 8]}>
-                <Col padding_bottom={32} className={visibleTooltip ? 'selectTitle' : ''}>
+                <Col
+                  padding_bottom={32}
+                  padding_right={40}
+                  className={visibleTooltip ? 'selectTitle' : ''}
+                >
                   <Title level={1}>Add new Digital Product or Service</Title>
                 </Col>
                 <Col className='help'>
