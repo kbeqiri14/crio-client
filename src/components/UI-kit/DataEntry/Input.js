@@ -25,6 +25,9 @@ const Input = styled(antInput)`
       color: ${(props) => props.theme.colors.dark50};
     }
   }
+  &.ant-input-error {
+    border: 1px solid #e9112b !important;
+  }
 `;
 
 const TextArea = styled(Input.TextArea)`
