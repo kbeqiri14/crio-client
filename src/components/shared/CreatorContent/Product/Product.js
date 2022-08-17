@@ -164,7 +164,7 @@ const Product = ({
               <Col span={24}>
                 <Text
                   level={4}
-                  style={{ width: isHovering ? 140 : 332 }}
+                  style={{ width: !user.isCreator && isHovering ? 140 : 332 }}
                   ellipsis={{ rows: 1, tooltip: title }}
                 >
                   {title}
@@ -173,7 +173,7 @@ const Product = ({
               <Col span={24}>
                 <Text
                   level={4}
-                  style={{ width: isHovering ? 140 : 332 }}
+                  style={{ width: !user.isCreator && isHovering ? 140 : 332 }}
                   ellipsis={{ rows: 1, tooltip: priceText }}
                 >
                   {priceText}
