@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
 
 import { PRODUCTS } from '@configs/constants';
@@ -11,27 +11,6 @@ import { errorToast } from '@ui-kit/Notification';
 import { ReactComponent as LockIcon } from '@svgs/lock-buy.svg';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { useSendEmail } from '@shared/SendEmailModal/Context';
-
-const download = (url, name) => {
-  if (!url) {
-    console.log('Resource URL not provided!');
-    return;
-  }
-  fetch(url)
-    .then((response) => response.blob())
-    .then((blob) => {
-      const blobURL = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = blobURL;
-      a.style = 'display: none';
-
-      if (name && name.length) {
-        a.download = name;
-      }
-      document.body.appendChild(a);
-      a.click();
-    });
-};
 
 const BuyButton = ({
   userId,
@@ -46,6 +25,8 @@ const BuyButton = ({
   const { user } = useLoggedInUser();
   const { setSendEmailInfo } = useSendEmail();
   const { setInfo } = usePresentation();
+  const [downloading, setDownloading] = useState(false);
+
   const hide = useCallback(() => setInfo({}), [setInfo]);
   const [getCheckoutSession, { loading }] = useLazyQuery(getStripeCheckoutSession, {
     fetchPolicy: 'no-cache',
@@ -54,6 +35,29 @@ const BuyButton = ({
       (window.location.href = getStripeCheckoutSession.url),
     onError: (e) => errorToast(e?.message),
   });
+
+  const download = useCallback((url, name) => {
+    setDownloading(true);
+    if (!url) {
+      console.log('Resource URL not provided!');
+      return;
+    }
+    fetch(url)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const blobURL = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = blobURL;
+        a.style = 'display: none';
+
+        if (name && name.length) {
+          a.download = name;
+        }
+        document.body.appendChild(a);
+        a.click();
+      })
+      .finally(() => setDownloading(false));
+  }, []);
 
   const isLocked = useMemo(() => {
     if (user.isCreator || accessibility === 'everyone') {
@@ -92,7 +96,18 @@ const BuyButton = ({
       return () => download(getThumbnail(PRODUCTS, userId, `file-${file}`), file);
     }
     return () => limit >= 0 && getCheckoutSession();
-  }, [productId, limit, label, isLocked, hide, userId, file, setSendEmailInfo, getCheckoutSession]);
+  }, [
+    productId,
+    limit,
+    label,
+    isLocked,
+    hide,
+    userId,
+    file,
+    setSendEmailInfo,
+    download,
+    getCheckoutSession,
+  ]);
 
   const button = useMemo(
     () => (
@@ -103,13 +118,13 @@ const BuyButton = ({
         min_width={126}
         icon={isLocked && <LockIcon />}
         disabled={disabled}
-        loading={loading}
+        loading={loading || downloading}
         onClick={onClick}
       >
         {label}
       </Button>
     ),
-    [block, color, loading, disabled, isLocked, label, onClick],
+    [block, color, loading, downloading, disabled, isLocked, label, onClick],
   );
   if (user.isCreator) {
     return null;
