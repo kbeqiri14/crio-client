@@ -64,7 +64,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
         <Col span={24}>
           <Text level={3}>Username *</Text>
         </Col>
-        <Col span={24} padding_bottom={32}>
+        <Col span={24} padding_bottom={errorMessage ? 10 : 32}>
           <Controller
             name='username'
             control={control}
