@@ -50,6 +50,16 @@ const Product = ({
     }
     return user.isSubscribed ? !user.followings?.includes(userId) : true;
   }, [user.isCreator, user.isSubscribed, user.followings, accessibility, userId]);
+  const style = useMemo(() => {
+    let width = 332;
+    if (!user.isCreator && isHovering) {
+      width = 140;
+    }
+    if (isLocked && !price && +productTypeId === 2) {
+      width = 120;
+    }
+    return { width };
+  }, [isHovering, price, productTypeId, isLocked, user.isCreator]);
 
   const src = useMemo(
     () => (thumbnail ? getThumbnail(PRODUCTS, userId, `thumbnail-${thumbnail}`) : product),
@@ -162,20 +172,12 @@ const Product = ({
           <Col>
             <Row align='middle' gutter={[0, 8]}>
               <Col span={24}>
-                <Text
-                  level={4}
-                  style={{ width: !user.isCreator && isHovering ? 140 : 332 }}
-                  ellipsis={{ rows: 1, tooltip: title }}
-                >
+                <Text level={4} style={style} ellipsis={{ rows: 1, tooltip: title }}>
                   {title}
                 </Text>
               </Col>
               <Col span={24}>
-                <Text
-                  level={4}
-                  style={{ width: !user.isCreator && isHovering ? 140 : 332 }}
-                  ellipsis={{ rows: 1, tooltip: priceText }}
-                >
+                <Text level={4} style={style} ellipsis={{ rows: 1, tooltip: priceText }}>
                   {priceText}
                 </Text>
               </Col>
