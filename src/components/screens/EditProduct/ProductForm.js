@@ -369,6 +369,7 @@ const ProductForm = ({ state }) => {
                     state={state}
                     image={image}
                     disabled={disabled}
+                    productTypeId={productTypeId}
                     handleSubmit={handleSubmit}
                   />
                 </Col>
