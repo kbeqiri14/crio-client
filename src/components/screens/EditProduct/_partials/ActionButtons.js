@@ -98,13 +98,23 @@ const ProductActionButtons = ({ state, image, disabled, handleSubmit, fillColor 
         saveText={buttonLabel}
         loading={onPublish.loading || creating || updating}
         disabled={disabled}
-        onCancel={() => (disabled ? redirect() : setVisible(true))}
+        onCancel={() => {
+          if (!state?.productId) {
+            setVisible(true);
+            return;
+          }
+          return disabled ? redirect() : setVisible(true);
+        }}
         onSave={handleSubmit(onPublish.call)}
       />
       {visible && (
         <Confirmation
           visible={visible}
-          title='Are you sure you want to discard these changes?'
+          title={
+            state?.productId
+              ? 'Are you sure you want to discard these changes?'
+              : 'Cancel the uploading?'
+          }
           cancelText='NO'
           confirmText='YES'
           onConfirm={() => {
