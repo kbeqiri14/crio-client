@@ -12,6 +12,27 @@ import { ReactComponent as LockIcon } from '@svgs/lock-buy.svg';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { useSendEmail } from '@shared/SendEmailModal/Context';
 
+const download = (url, name) => {
+  if (!url) {
+    console.log('Resource URL not provided!');
+    return;
+  }
+  fetch(url)
+    .then((response) => response.blob())
+    .then((blob) => {
+      const blobURL = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = blobURL;
+      a.style = 'display: none';
+
+      if (name && name.length) {
+        a.download = name;
+      }
+      document.body.appendChild(a);
+      a.click();
+    });
+};
+
 const BuyButton = ({
   userId,
   productId,
@@ -68,10 +89,10 @@ const BuyButton = ({
       return () => setSendEmailInfo({ productId });
     }
     if (label === 'DOWNLOAD') {
-      return () => setSendEmailInfo({ productId });
+      return () => download(getThumbnail(PRODUCTS, userId, `file-${file}`), file);
     }
     return () => limit >= 0 && getCheckoutSession();
-  }, [productId, limit, label, isLocked, hide, setSendEmailInfo, getCheckoutSession]);
+  }, [productId, limit, label, isLocked, hide, userId, file, setSendEmailInfo, getCheckoutSession]);
 
   const button = useMemo(
     () => (
@@ -104,28 +125,6 @@ const BuyButton = ({
       >
         {button}
       </Tooltip>
-    );
-  }
-
-  if (label === 'DOWNLOAD') {
-    return (
-      <Button
-        block={block}
-        type='primary'
-        fill_color={color}
-        min_width={126}
-        disabled={disabled}
-        loading={loading}
-      >
-        <a
-          href={getThumbnail(PRODUCTS, userId, `file-${file}`)}
-          target='_blank'
-          download
-          rel='noreferrer'
-        >
-          DOWNLOAD
-        </a>
-      </Button>
     );
   }
 
