@@ -131,24 +131,26 @@ const ProductForm = ({ state }) => {
       {visibleBroadcast && <Broadcast hideBroadcast={hideBroadcast} />}
       <FormWrapper>
         <Row justify='center'>
-          <Col md={9}>
+          <Col span={19} className='formContainer'>
             <form>
               <Row style={{ position: 'relative' }} align='center' justify='center' gutter={[0, 8]}>
                 <Col
+                  span={16}
+                  align='middle'
                   padding_bottom={32}
-                  padding_right={40}
+                  padding_left={27}
                   className={visibleTooltip ? 'selectTitle' : ''}
                 >
                   <Title level={1}>Add new Digital Product or Service</Title>
                 </Col>
-                <Col className='help'>
+                <Col span={2} align='end' className='help'>
                   <HelpTooltip
                     onVisibleChange={(value) => setVisibleTooltip(value)}
                     placement='right'
                     title='After a user makes a purchase, you will receive an automatic email. Please check your email and complete the order'
                   />
                 </Col>
-                <Col span={22} padding_bottom={32}>
+                <Col span={18} padding_bottom={32}>
                   <Controller
                     name='productTypeId'
                     control={control}
@@ -167,12 +169,12 @@ const ProductForm = ({ state }) => {
                     )}
                   />
                 </Col>
-                <Col span={22} align='start'>
+                <Col span={18} align='start'>
                   <Text level={3} padding_bottom={8}>
                     Title*
                   </Text>
                 </Col>
-                <Col span={22} padding_bottom={32}>
+                <Col span={18} padding_bottom={32}>
                   <Controller
                     name='title'
                     control={control}
@@ -182,10 +184,10 @@ const ProductForm = ({ state }) => {
                     )}
                   />
                 </Col>
-                <Col span={22} align='start'>
+                <Col span={18} align='start'>
                   <Text level={3}>Description</Text>
                 </Col>
-                <Col span={22} padding_bottom={32}>
+                <Col span={18} padding_bottom={32}>
                   <Controller
                     name='desc'
                     control={control}
@@ -201,7 +203,7 @@ const ProductForm = ({ state }) => {
                     )}
                   />
                 </Col>
-                <Col span={22} align='start'>
+                <Col span={18} align='start'>
                   <Text
                     level={3}
                     disabled={isFree || !stripeAccount?.getConnectAccount?.charges_enabled}
@@ -209,7 +211,7 @@ const ProductForm = ({ state }) => {
                     Price*
                   </Text>
                 </Col>
-                <Col xs={19} md={18} padding_bottom={32} className='price'>
+                <Col span={14} md={14} xs={13} padding_bottom={32} className='price'>
                   <Controller
                     name='price'
                     control={control}
@@ -286,18 +288,18 @@ const ProductForm = ({ state }) => {
                     )}
                   />
                 </Col>
-                <Col span={22} align='start'>
+                <Col span={18} align='start'>
                   <Text level={3}>Thumbnail</Text>
                 </Col>
-                <Col span={22} padding_bottom={32}>
+                <Col span={18} padding_bottom={32}>
                   <DraggerImage control={control} image={image} setImage={setImage} />
                 </Col>
                 {isDigitalProduct && (
                   <Fragment>
-                    <Col span={22} align='start'>
+                    <Col span={18} align='start'>
                       <Text level={3}>Product File*</Text>
                     </Col>
-                    <Col span={22} padding_bottom={6}>
+                    <Col span={18} padding_bottom={32}>
                       <DraggerFile
                         control={control}
                         file={file}
@@ -309,12 +311,12 @@ const ProductForm = ({ state }) => {
                     </Col>
                   </Fragment>
                 )}
-                <Col span={22} align='start'>
+                <Col span={18} align='start'>
                   <Text level={3} disabled={isFree}>
                     Who can see this?
                   </Text>
                 </Col>
-                <Col span={22} padding_bottom={32} align='start'>
+                <Col span={18} padding_bottom={32} align='start'>
                   <Controller
                     name='accessibility'
                     control={control}
@@ -333,16 +335,16 @@ const ProductForm = ({ state }) => {
                     )}
                   />
                 </Col>
-                <Col span={22} align='start' padding_bottom={32} className='limit-section'>
+                <Col span={18} align='start' padding_bottom={32} className='limit-section'>
                   <Switch checked={limitVisible} onChange={setLimitation} />
                   <Text level={3}>Limit your sales?</Text>
                 </Col>
                 {limitVisible && (
                   <>
-                    <Col span={22} align='start'>
+                    <Col span={19} align='start'>
                       <Text level={3}>Maximum numbers of purchases</Text>
                     </Col>
-                    <Col span={22} padding_bottom={32}>
+                    <Col span={19} padding_bottom={32}>
                       <Controller
                         name='limit'
                         control={control}
@@ -364,7 +366,7 @@ const ProductForm = ({ state }) => {
                     </Col>
                   </>
                 )}
-                <Col span={22}>
+                <Col span={18}>
                   <ActionButtons
                     state={state}
                     image={image}
