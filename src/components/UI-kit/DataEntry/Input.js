@@ -27,6 +27,7 @@ const Input = styled(antInput)`
   }
   &.ant-input-error {
     border: 1px solid #e9112b !important;
+    margin-bottom: 1px;
   }
 `;
 
