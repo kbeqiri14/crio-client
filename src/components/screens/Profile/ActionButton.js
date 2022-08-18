@@ -10,7 +10,7 @@ import { ReactComponent as UnFollowIcon } from '@svgs/unfollow.svg';
 import { ReactComponent as FollowIcon } from '@svgs/follow.svg';
 import { ReactComponent as LockIcon } from '@svgs/lock.svg';
 
-const ActionButton = ({ isProfile, isSubscribed, isFollow }) => {
+const ActionButton = ({ userId, isProfile, isSubscribed, isFollow }) => {
   const { pathname } = useLocation();
   const username = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
 
@@ -40,6 +40,9 @@ const ActionButton = ({ isProfile, isSubscribed, isFollow }) => {
               ...existingLoggedInUser?.me,
               followersCount: existingLoggedInUser?.me?.followersCount + count,
               followingsCount: existingLoggedInUser?.me?.followingsCount + count,
+              followings: isFollow
+                ? existingLoggedInUser?.me?.followings?.filter((item) => item !== userId)
+                : [...existingLoggedInUser?.me?.followings, `${userId}`],
             },
           },
         });

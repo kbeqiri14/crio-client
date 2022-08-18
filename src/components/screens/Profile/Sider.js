@@ -88,6 +88,7 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
         {!hideButton && (
           <Col span={24}>
             <ActionButton
+              userId={user.id}
               isProfile={isProfile}
               isSubscribed={isSubscribed}
               isFollow={user.isFollowing}
