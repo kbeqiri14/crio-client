@@ -61,6 +61,7 @@ const ProductForm = ({ state }) => {
     () =>
       !(
         title?.trim() &&
+        (productTypeId || state?.productTypeId) &&
         (+price > 0 || isFree) &&
         (!limitVisible || (limitVisible && +limit > 0)) &&
         !(isDigitalProduct && !(files.length || file)) &&
