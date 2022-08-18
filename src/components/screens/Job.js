@@ -117,7 +117,13 @@ const Job = () => {
 
   useEffect(() => {
     if (user.id || !(loading || loggedInUserLoading)) {
-      if (!(user.email === 'kbeqiri14@gmail.com' || user.email === 'nkosyan123@gmail.com')) {
+      if (
+        !(
+          user.email === 'kbeqiri14@gmail.com' ||
+          user.email === 'nkosyan123@gmail.com' ||
+          user.email === 'siranush@tidepoollabs.com'
+        )
+      ) {
         history.push('/');
       }
     }
