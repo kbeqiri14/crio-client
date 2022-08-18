@@ -7,6 +7,7 @@ import { ReactComponent as CloseIcon } from '@svgs/close.svg';
 import Footer from './Footer';
 
 const EditProfile = ({ user, visible, closeModal }) => {
+  const [errorMessage, setErrorMessage] = useState('');
   const [confirmationVisible, setConfirmationVisible] = useState();
   const { control, watch, handleSubmit } = useForm();
   const firstName = watch('firstName');
@@ -63,13 +64,28 @@ const EditProfile = ({ user, visible, closeModal }) => {
         <Col span={24}>
           <Text level={3}>Username *</Text>
         </Col>
-        <Col span={24} padding_bottom={32}>
+        <Col span={24} padding_bottom={errorMessage ? 10 : 32}>
           <Controller
             name='username'
             control={control}
             defaultValue={user.username}
-            render={({ field }) => <Input {...field} />}
+            render={({ field }) => (
+              <Input
+                {...field}
+                className={errorMessage && 'ant-input-error'}
+                onBlur={(e) =>
+                  field.onBlur(
+                    e.target.value === ''
+                      ? setErrorMessage('Please enter your username')
+                      : setErrorMessage(''),
+                  )
+                }
+              />
+            )}
           />
+          <Text level={1} color='error100'>
+            {errorMessage}
+          </Text>
         </Col>
         <Col span={11}>
           <Text level={3}>First Name</Text>

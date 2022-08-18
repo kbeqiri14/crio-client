@@ -6,7 +6,7 @@ const Switch = styled(antSwitch)`
   &.ant-switch-checked {
     background-color: ${(props) => props.theme.colors.green100};
   }
-  .ant-switch-checked:focus {
+  &.ant-switch-checked:focus {
     box-shadow: none !important;
   }
 `;

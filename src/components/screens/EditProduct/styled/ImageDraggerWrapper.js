@@ -4,8 +4,7 @@ const ImageDraggerWrapper = styled('div')`
   max-height: 232px;
   border-radius: 8px;
   .ant-upload.ant-upload-drag {
-    max-width: 600px;
-    height: 250px;
+    height: 232px;
   }
   img {
     width: 100%;

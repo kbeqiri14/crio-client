@@ -2,7 +2,7 @@ import { memo, useCallback } from 'react';
 
 import { signIn } from '@app/auth';
 import { Button, Col, Row } from '@ui-kit';
-import { ReactComponent as GoogleIcon } from '@svgs/google-sign-in.svg';
+import { ReactComponent as GoogleIcon } from '@svgs/google.svg';
 
 // Temporary hide FB log in / sign up
 const GetStarted = () => {
@@ -17,7 +17,7 @@ const GetStarted = () => {
       </Col>
       <Col onClick={googleSignIn}>
         <Button type='google' icon={<GoogleIcon />} onClick={googleSignIn}>
-          SIGN UP WITH GOOGLE
+          Sign up with Google
         </Button>
       </Col>
     </Row>
@@ -31,7 +31,7 @@ export default memo(GetStarted);
 // import { signIn } from '@app/auth';
 // import { Button, Col, Modal, Row } from '@ui-kit';
 // import { ReactComponent as CloseIcon } from '@svgs/close.svg';
-// import { ReactComponent as GoogleIcon } from '@svgs/google-sign-in.svg';
+// import { ReactComponent as GoogleIcon } from '@svgs/google.svg';
 // import { ReactComponent as FbIcon } from '@svgs/fb-sign-in.svg';
 
 // const GetStarted = () => {

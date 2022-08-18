@@ -10,7 +10,7 @@ import FileDraggerWrapper from '../styled/FileDraggerWrapper';
 
 const { Dragger } = Upload;
 
-const DraggerFile = ({ control, file, userId, files, setFiles }) => {
+const DraggerFile = ({ control, file, userId, files, setFile, setFiles }) => {
   console.log(file, 333);
   // const [isLimitReached, setIsLimitReached] = useState(false);
   const props = useMemo(
@@ -82,10 +82,7 @@ const DraggerFile = ({ control, file, userId, files, setFiles }) => {
                   </Text>
                 </Col>
                 <Col md={2} className='remove-icon'>
-                  <Button
-                    onClick={() => setFiles((files) => files.filter((f) => f.uid !== file.uid))}
-                    type='link'
-                  >
+                  <Button onClick={() => setFile()} type='link'>
                     <img alt='delete' src={deleteIcon} />
                   </Button>
                 </Col>

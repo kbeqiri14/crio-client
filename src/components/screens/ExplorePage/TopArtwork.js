@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { signIn } from '@app/auth';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { Button, Col, Row, Text, Title } from '@ui-kit';
-import { ReactComponent as GoogleIcon } from '@svgs/google-sign-in.svg';
+import { ReactComponent as GoogleIcon } from '@svgs/google.svg';
 
 const Wrapper = styled('div')`
   .absolute-center {
@@ -73,7 +73,7 @@ const TopArtwork = ({ username, thumbnail }) => {
         {!user.id && (
           <Col lg={0}>
             <Button type='google' icon={<GoogleIcon />} onClick={googleSignIn}>
-              SIGN UP WITH GOOGLE
+              Sign up with Google
             </Button>
           </Col>
         )}
