@@ -44,7 +44,7 @@ export const BuyWidget = ({
   price,
   limit,
   accessibility,
-  ...props
+  onVisibleChange,
 }) => {
   const { user } = useLoggedInUser();
 
@@ -86,7 +86,7 @@ export const BuyWidget = ({
       </Row>
       {!user.isCreator && (
         <HelpTooltip
-          {...props}
+          onVisibleChange={onVisibleChange}
           title='After purchase, please check your email to receive a service from Creator'
         />
       )}
