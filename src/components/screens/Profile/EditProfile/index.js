@@ -85,7 +85,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
           />
         </Col>
         {errorMessage && (
-          <Col span={24} padding_left={14} padding_bottom={2}>
+          <Col span={24} padding_left={14} margin_bottom={8} margin_top={-6}>
             <Text level={1} color='error100'>
               {errorMessage}
             </Text>
