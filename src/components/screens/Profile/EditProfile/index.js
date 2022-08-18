@@ -64,7 +64,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
         <Col span={24}>
           <Text level={3}>Username *</Text>
         </Col>
-        <Col span={24} padding_bottom={errorMessage ? 9 : 32}>
+        <Col span={24} padding_bottom={errorMessage ? 0 : 32}>
           <Controller
             name='username'
             control={control}
@@ -83,10 +83,14 @@ const EditProfile = ({ user, visible, closeModal }) => {
               />
             )}
           />
-          <Text margin_left={14} level={1} color='error100'>
-            {errorMessage}
-          </Text>
         </Col>
+        {errorMessage && (
+          <Col span={24} padding_left={14} padding_bottom={2}>
+            <Text level={1} color='error100'>
+              {errorMessage}
+            </Text>
+          </Col>
+        )}
         <Col span={11}>
           <Text level={3}>First Name</Text>
         </Col>

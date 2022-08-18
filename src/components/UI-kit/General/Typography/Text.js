@@ -3,7 +3,6 @@ import styled, { css } from 'styled-components';
 
 const Text = styled(Typography.Text)`
   color: ${(props) => props.theme.colors.white};
-  margin-left: ${(props) => (props && props.margin_left) || 0}px !important;
   &.ant-typography-disabled {
     color: ${(props) => props.theme.colors.dark50};
   }
