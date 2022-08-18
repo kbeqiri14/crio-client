@@ -130,6 +130,12 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
         <Col span={24}>
           <Text level={3}>{user.about}</Text>
         </Col>
+        {!isProfile && user.isCreator && (
+          <Col align='center'>
+            <Title level={2}>Subscription Revenue</Title>
+            <Text level={3}>${user.revenue} / month</Text>
+          </Col>
+        )}
       </Row>
       {visible && <EditProfile user={user} visible={visible} closeModal={closeModal} />}
     </>
