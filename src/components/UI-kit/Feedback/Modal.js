@@ -16,6 +16,7 @@ const Modal = styled(antModal)`
   .ant-modal-content {
     background: #0f0e16;
     border-radius: 27px;
+    margin: 20px 0;
   }
   .ant-modal-close {
     top: 19px;
