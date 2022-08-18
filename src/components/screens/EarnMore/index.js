@@ -116,7 +116,13 @@ const FeaturesPage = () => {
               </Row>
             </Col>
             <Col max_width='100%'>
-              <img src={paperPlane} alt='paper plane' width='100%' height={474} />
+              <img
+                src={paperPlane}
+                alt='paper plane'
+                width='100%'
+                height={474}
+                className='rotate'
+              />
             </Col>
           </Row>
         </Col>
@@ -136,7 +142,7 @@ const FeaturesPage = () => {
                       <Col>
                         <Circle>{key}</Circle>
                       </Col>
-                      <Col max_width={285}>
+                      <Col max_width={293}>
                         <Text level={4}>{title}</Text>
                         <br />
                         <Text level={3} color='dark25'>
