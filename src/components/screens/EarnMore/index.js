@@ -47,16 +47,11 @@ const info = [
   {
     key: 3,
     title: 'Your Earnings',
-    desc: (
-      <>
+    desc: `
         You will get total of $300 per month!
-        <br />
         $250 ($5,000 * 5%) for inviting Erika
-        <br />
         $50 ($1,000 * 5%) for inviting John This is in addition to other income streams you earn on
-        Crio.
-      </>
-    ),
+        Crio.`,
   },
 ];
 
@@ -113,7 +108,7 @@ const FeaturesPage = () => {
                     value={emails}
                   />
                 </Wrapper>
-                <Col>
+                <Col padding_top={20}>
                   <Button type='primary' width={220}>
                     SEND INVITATIONS
                   </Button>
@@ -134,7 +129,7 @@ const FeaturesPage = () => {
               <img src={earnMore} alt='earn more' width='100%' />
             </Col>
             <Col max_width={365 + 186}>
-              <Row justify='center' align='middle' gutter={[0, 80]}>
+              <Row justify='center' align='middle' gutter={[0, 40]}>
                 {info.map(({ key, title, desc }) => (
                   <Col span={24} key={key}>
                     <Row align='middle' gutter={20}>
