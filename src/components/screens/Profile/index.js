@@ -6,8 +6,8 @@ import { loggedInUserLoadingVar } from '@configs/client-cache';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { getUser } from '@app/graphql/queries/users.query';
 import { Layout } from '@ui-kit';
-import ProfileSider from '@root/src/components/screens/Profile/Sider';
-import ProfileContent from '@root/src/components/screens/Profile/Content';
+import ProfileSider from '@screens/Profile/Sider';
+import ProfileContent from '@screens/Profile/Content';
 import EmptyState from '@shared/EmptyState';
 
 const { Sider, Content } = Layout;

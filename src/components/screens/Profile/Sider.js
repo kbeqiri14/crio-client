@@ -1,14 +1,14 @@
 import { memo, useCallback, useMemo, useState } from 'react';
 import { Badge, Skeleton } from 'antd';
 
+import useAvatarUrl from '@app/hooks/useAvatarUrl';
+import { urlify } from '@utils/helpers';
+import { Col, Divider, Row, Text, Title } from '@ui-kit';
 import { ReactComponent as CreatorIcon } from '@svgs/verified.svg';
 import { ReactComponent as MailIcon } from '@svgs/mail.svg';
 import { ReactComponent as EditIcon } from '@svgs/edit.svg';
-
-import useAvatarUrl from '@app/hooks/useAvatarUrl';
-import { Col, Divider, Row, Text, Title } from '@ui-kit';
-import ActionButton from '@root/src/components/screens/Profile/ActionButton';
-import EditProfile from '@root/src/components/screens/Profile/EditProfile';
+import ActionButton from '@screens/Profile/ActionButton';
+import EditProfile from '@screens/Profile/EditProfile';
 
 export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton }) => {
   const [visible, setVisible] = useState(false);
@@ -128,7 +128,12 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
           </Col>
         )}
         <Col span={24}>
-          <Text level={3}>{user.about}</Text>
+          <Text level={3}>
+            <div
+              dangerouslySetInnerHTML={{ __html: urlify(user.about) }}
+              style={{ whiteSpace: 'pre-line' }}
+            />
+          </Text>
         </Col>
         {!isProfile && user.isCreator && (
           <Col align='center'>

@@ -5,7 +5,7 @@ import { Modal } from 'antd';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { ReactComponent as CloseIcon } from '@svgs/x.svg';
 import Content from '../../screens/Artwork/Content';
-import MoreProductsSection from '@root/src/components/screens/Product/MoreProductsSection';
+import MoreProductsSection from '@screens/Product/MoreProductsSection';
 import './styles.less';
 
 export const PresentationView = () => {
