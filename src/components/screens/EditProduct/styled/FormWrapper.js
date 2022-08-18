@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 const FormWrapper = styled('div')`
   padding: 40px 20px;
+  max-width: 1000px;
+  margin: auto;
   .ant-upload {
     &.ant-upload-drag {
       border-radius: 8px;
@@ -28,12 +30,13 @@ const FormWrapper = styled('div')`
       margin-left: 12px;
     }
   }
+  .formContainer {
+    min-width: 350px;
+  }
+  .controller {
+    max-width: 568px;
+  }
   .help {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 0;
-    right: 24px;
     .ant-tooltip {
       top: 0 !important;
     }
@@ -46,7 +49,7 @@ const FormWrapper = styled('div')`
     }
   }
   .selectTitle {
-    @media (max-width: 768px) {
+    @media (max-width: 1061px) {
       margin-top: 137px;
     }
   }
