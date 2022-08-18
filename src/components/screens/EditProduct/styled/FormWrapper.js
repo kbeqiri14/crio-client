@@ -42,10 +42,10 @@ const FormWrapper = styled('div')`
     }
     .got-it-button {
       left: 158px;
-      @media (max-width: 768px) {
-        left: -123px;
+      top: 48px;
+      @media (max-width: 1061px) {
+        left: -166px;
       }
-      margin-top: 23px;
     }
   }
   .selectTitle {
