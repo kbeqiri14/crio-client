@@ -146,6 +146,9 @@ const Product = ({
       >
         <ImageWrapper className={imageClasses}>
           <img src={src} alt='product' onClick={showProduct} />
+          <div className='tag'>
+            <Text level={1}>{productTypeId === '2' ? 'Digital product' : 'Service'}</Text>
+          </div>
           <div
             className={`actions ${isHovering ? 'hover' : ''}`}
             onClick={() => !showActions && showProduct()}
