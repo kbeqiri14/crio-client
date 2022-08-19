@@ -120,12 +120,21 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
               </Col>
               <Col align='center'>
                 <Text level={3}>
-                  Contents
+                  Content
                   <br />
                   {user.artworksCount}
                 </Text>
               </Col>
             </Row>
+          </Col>
+        )}
+        {!isProfile && user.isCreator && (
+          <Col
+            align='center'
+            style={{ border: '1px solid white', borderRadius: 10, padding: '10px 50px' }}
+          >
+            <Title level={2}>Subscription Revenue</Title>
+            <Text level={3}>${user.revenue} / month</Text>
           </Col>
         )}
         <Col span={24}>
@@ -136,12 +145,6 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
             />
           </Text>
         </Col>
-        {!isProfile && user.isCreator && (
-          <Col align='center'>
-            <Title level={2}>Subscription Revenue</Title>
-            <Text level={3}>${user.revenue} / month</Text>
-          </Col>
-        )}
       </Row>
       {visible && <EditProfile user={user} visible={visible} closeModal={closeModal} />}
     </>

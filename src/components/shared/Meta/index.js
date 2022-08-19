@@ -3,7 +3,7 @@ import defaultAvatar from '@images/avatar.png';
 
 export const Meta = ({
   title = 'Crio',
-  description = 'Shop thousands of products and see the best content from the entire community of creators on Crio',
+  description = 'Discover thousands of digital products, custom services, and the best content from the entire community of creators on Crio',
   url = 'https://criointeractive.com/',
   imageUrl = defaultAvatar,
 }) => (

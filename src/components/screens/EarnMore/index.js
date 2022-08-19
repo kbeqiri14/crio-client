@@ -42,16 +42,12 @@ const info = [
   {
     key: 2,
     title: 'Invited Members Earnings',
-    desc: 'Erika earns $1,000 / month on Crio and John earns $500 / month"',
+    desc: 'Erika earns $5,000 / month on Crio and John earns $1,000 / month',
   },
   {
     key: 3,
     title: 'Your Earnings',
-    desc: `
-        You will get total of $300 per month!
-        $250 ($5,000 * 5%) for inviting Erika
-        $50 ($1,000 * 5%) for inviting John This is in addition to other income streams you earn on
-        Crio.`,
+    desc: `You will get a total of $300per month! $250 ($5,000 * 5%) for inviting Erika & $50 ($1,000 * 5%) for inviting John. This is in addition to other income streams you earn on Crio. `,
   },
 ];
 

@@ -59,8 +59,8 @@ const TopArtwork = ({ username, thumbnail }) => {
         </Col>
         <Col span={24}>
           <Text level={4} max_width={555}>
-            Shop thousands of products and see the best content from the entire community of
-            creators on Crio
+            Discover thousands of digital products, custom services, and the best content from the
+            entire community of creators on Crio
           </Text>
         </Col>
         <Col xs={user.id ? 24 : 0} lg={24}>
