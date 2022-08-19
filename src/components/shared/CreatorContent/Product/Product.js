@@ -147,9 +147,7 @@ const Product = ({
         <ImageWrapper className={imageClasses}>
           <img src={src} alt='product' onClick={showProduct} />
           {isHovering && (
-            <Tag>
-              <Text level={1}>{productTypeId === '2' ? 'Digital Product' : 'Service'}</Text>
-            </Tag>
+            <Tag level={1}>{productTypeId === '2' ? 'Digital Product' : 'Service'}</Tag>
           )}
           <div
             className={`actions ${isHovering ? 'hover' : ''}`}
