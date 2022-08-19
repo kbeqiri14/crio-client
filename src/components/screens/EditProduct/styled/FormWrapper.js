@@ -37,6 +37,8 @@ const FormWrapper = styled('div')`
     max-width: 568px;
   }
   .help {
+    max-height: 65px;
+    padding-top: 4px;
     .ant-tooltip {
       top: 0 !important;
     }
