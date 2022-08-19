@@ -90,9 +90,14 @@ const FeaturesPage = () => {
                 </Col>
                 <Col>
                   <Text level={4}>
-                    For every creator that signs-up, you will get a payout equal to 5% of each of
-                    their earnings for as long as they are Creators on Crio!{' '}
-                    <b>This comes out of Crio’s pocket not the creators.</b>
+                    For every creator that signs-up, you will get a payout equal to <b>5%</b> of
+                    each of their earnings for as long as they are Creators on Crio! You can refer
+                    up to <b>5 creators.</b>
+                  </Text>
+                </Col>
+                <Col>
+                  <Text level={4}>
+                    <b>This payout will come from us at Crio not the creators you refer!</b>
                   </Text>
                 </Col>
                 <Wrapper>
