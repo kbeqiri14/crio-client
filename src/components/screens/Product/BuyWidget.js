@@ -84,7 +84,7 @@ export const BuyWidget = ({
           />
         </Col>
       </Row>
-      {!user.isCreator && (
+      {!user.isCreator && (!user?.id || productTypeId === '1') && (
         <HelpTooltip
           onVisibleChange={onVisibleChange}
           title='After purchase, please check your email to receive a service from Creator'
