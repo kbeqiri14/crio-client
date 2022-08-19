@@ -23,7 +23,7 @@ const Wrapper = styled('div')`
       max-width: 184px;
     }
     .drag-and-drop {
-      padding: 58px 0 71px;
+      padding: 20px 0;
     }
     .uploaded-image {
       margin: auto;
@@ -31,12 +31,12 @@ const Wrapper = styled('div')`
       max-height: 259px;
       border-radius: 43px;
     }
-    .imageContent {
+    .image-content {
       display: flex;
       justify-content: center;
-      padding: 15px 68px;
+      padding: 0 68px;
     }
-    .textContent {
+    .text-content {
       margin-right: 55px;
     }
   }
@@ -94,18 +94,18 @@ const CoverImage = ({ visible, artworkId, goToProfile }) => {
       closeIcon={<CloseIcon />}
       maskClosable={false}
       visible={visible}
-      width={733}
+      width={713}
       onCancel={goToProfile}
     >
       <Wrapper>
         <Row justify='center' gutter={[0, 40]} className='cover-image'>
-          <Col className='textContent' span={24}>
+          <Col className='text-content' span={24}>
             <Title level={1}>Upload cover image</Title>
           </Col>
-          <Col span={24} className='textContent'>
+          <Col span={24} className='text-content'>
             <Text level={4}>If skipped we will generate a cover image from video.</Text>
           </Col>
-          <Col className='imageContent' span={24}>
+          <Col className='image-content' span={24}>
             {image.src ? (
               <img alt='uploaded file' src={image.src} className='uploaded-image' />
             ) : (

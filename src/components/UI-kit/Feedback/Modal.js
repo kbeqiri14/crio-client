@@ -11,12 +11,11 @@ const Modal = styled(antModal)`
     }
   }
   .ant-modal-body {
-    padding: 20px 40px 40px;
+    padding: 20px 40px 30px;
   }
   .ant-modal-content {
     background: #0f0e16;
     border-radius: 27px;
-    margin: 20px 0;
   }
   .ant-modal-close {
     top: 19px;
