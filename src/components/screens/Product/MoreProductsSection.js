@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useQuery } from '@apollo/client';
 
 import { getMoreProducts } from '@app/graphql/queries/products.query';
-import ProductsList from '@root/src/components/shared/CreatorContent/Product/ProductsList';
+import ProductsList from '@shared/CreatorContent/Product/ProductsList';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { Col, Row, Text } from '@ui-kit';
 

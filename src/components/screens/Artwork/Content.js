@@ -1,8 +1,9 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { ARTWORKS } from '@configs/constants';
+import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { getThumbnail, urlify } from '@utils/helpers';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
@@ -39,6 +40,9 @@ const Wrapper = styled('div')`
     .widget {
       width: 334px;
     }
+    .textContent {
+      margin-top: 44px;
+    }
   }
 `;
 
@@ -62,6 +66,8 @@ const ImageWrapper = styled('div')`
 `;
 
 export const Content = ({ info, content, isLocked }) => {
+  const { user } = useLoggedInUser();
+  const [visibleTooltip, setVisibleTooltip] = useState(user.id && !user.helpSeen);
   const avatarUrl = useAvatarUrl(info.providerType, info.providerUserId, info.avatar);
   const { setInfo } = usePresentation();
 
@@ -143,7 +149,10 @@ export const Content = ({ info, content, isLocked }) => {
         )}
         <Col span={24}>
           <Row className='flex-dir' justify='space-between'>
-            <Col max_width={info.isProduct ? 722 : undefined}>
+            <Col
+              max_width={info.isProduct ? 722 : undefined}
+              className={visibleTooltip && 'textContent'}
+            >
               <Text level={4} color='dark25'>
                 <div
                   dangerouslySetInnerHTML={{ __html: urlify(info.description) }}
@@ -161,6 +170,7 @@ export const Content = ({ info, content, isLocked }) => {
                   price={info.price}
                   limit={info.limit}
                   accessibility={info.accessibility}
+                  onVisibleChange={(value) => setVisibleTooltip(value)}
                 />
               </Col>
             )}

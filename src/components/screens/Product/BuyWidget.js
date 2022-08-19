@@ -26,6 +26,9 @@ const Wrapper = styled('div')`
     right: 0 !important;
     left: -243px !important;
   }
+  .ant-tooltip-open {
+    margin-bottom: 30px;
+  }
   .got-it-button {
     position: absolute;
     top: 269px;
@@ -41,6 +44,7 @@ export const BuyWidget = ({
   price,
   limit,
   accessibility,
+  onVisibleChange,
 }) => {
   const { user } = useLoggedInUser();
 
@@ -81,7 +85,10 @@ export const BuyWidget = ({
         </Col>
       </Row>
       {!user.isCreator && (
-        <HelpTooltip title='After purchase, please check your email to receive a service from Creator' />
+        <HelpTooltip
+          onVisibleChange={onVisibleChange}
+          title='After purchase, please check your email to receive a service from Creator'
+        />
       )}
     </Wrapper>
   );

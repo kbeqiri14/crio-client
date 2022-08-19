@@ -7,7 +7,7 @@ import { getUserArtworks } from '@app/graphql/queries/artworks.query';
 import { getUserProducts } from '@app/graphql/queries/products.query';
 import { Tabs } from '@ui-kit';
 import Followings from './Followings';
-import Content from '@root/src/components/shared/CreatorContent';
+import Content from '@shared/CreatorContent';
 
 const Wrapper = styled('div')`
   padding: 40px 22px;
