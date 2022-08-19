@@ -7,7 +7,7 @@ import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { getThumbnail } from '@utils/helpers';
-import { Col, Row, Text } from '@ui-kit';
+import { Col, Row, Tag, Text } from '@ui-kit';
 import Actions from '@screens/Video/Actions';
 import product from '@images/product.png';
 import { ProductWrapper, ImageWrapper } from './styled';
@@ -146,9 +146,11 @@ const Product = ({
       >
         <ImageWrapper className={imageClasses}>
           <img src={src} alt='product' onClick={showProduct} />
-          <div className='tag'>
-            <Text level={1}>{productTypeId === '2' ? 'Digital Product' : 'Service'}</Text>
-          </div>
+          {isHovering && (
+            <Tag>
+              <Text level={1}>{productTypeId === '2' ? 'Digital Product' : 'Service'}</Text>
+            </Tag>
+          )}
           <div
             className={`actions ${isHovering ? 'hover' : ''}`}
             onClick={() => !showActions && showProduct()}

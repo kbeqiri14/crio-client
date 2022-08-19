@@ -27,6 +27,7 @@ export { default as Badge } from './DataDisplay/Badge';
 export { default as Carousel } from './DataDisplay/Carousel';
 export { default as Collapse } from './DataDisplay/Collapse';
 export { default as Tabs } from './DataDisplay/Tabs';
+export { default as Tag } from './DataDisplay/Tag';
 export { default as Tooltip } from './DataDisplay/Tooltip';
 
 /*

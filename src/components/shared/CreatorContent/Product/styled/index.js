@@ -38,14 +38,6 @@ export const ProductWrapper = styled('div')`
       opacity: 1;
       visibility: visible;
     }
-    .tag {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: absolute;
-      top: 20px;
-      left: 30px;
-    }
   }
   &:hover:not(.is-locked) {
     .info,
@@ -53,13 +45,6 @@ export const ProductWrapper = styled('div')`
       opacity: 1;
       visibility: visible;
     }
-  }
-  .tag {
-    display: none;
-    height: 40px;
-    width: 129px;
-    background: #202020;
-    border-radius: 100px;
   }
 `;
 
