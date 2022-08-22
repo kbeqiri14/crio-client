@@ -56,7 +56,7 @@ const Product = ({
       width = 140;
     }
     if (isLocked && !price && +productTypeId === 2) {
-      width = 118;
+      width = 115;
     }
     return { width };
   }, [isHovering, price, productTypeId, isLocked, user.isCreator]);
