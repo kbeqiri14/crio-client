@@ -142,13 +142,12 @@ const Button = styled(antButton)`
   ///************** GOOGLE BUTTON **************///
 
   &.ant-btn-google {
-    line-height: 0px;
-    padding: 4px 15px;
+    width: 185px;
+    height: 40px;
+    padding: 11px;
     border: none;
-    background-color: ${(props) => props.theme.colors.white};
-    color: ${(props) => props.theme.colors.dark100};
     svg {
-      margin-left: -4px;
+      margin-right: 12px;
     }
     &:active,
     &:focus {
@@ -157,6 +156,13 @@ const Button = styled(antButton)`
     &:hover {
       background-color: ${(props) => props.theme.colors.white};
     }
+    font-family: 'Roboto';
+    font-size: 14px;
+    line-height: 16px;
+    color: rgba(0, 0, 0, 0.54);
+    background: ${(props) => props.theme.colors.white};
+    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.24);
+    border-radius: 2px;
   }
 
   ///************** FACEBOOK BUTTON **************///

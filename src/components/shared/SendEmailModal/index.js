@@ -1,7 +1,7 @@
 import { memo, useCallback, useState } from 'react';
 import { useMutation } from '@apollo/client';
 
-import { useSendEmail } from '@root/src/components/shared/SendEmailModal/Context';
+import { useSendEmail } from '@shared/SendEmailModal/Context';
 import { contactCreator } from '@app/graphql/mutations/user.mutation';
 import ActionButtons from '@shared/ActionButtons';
 import { Col, Modal, Row, Input, Title } from '@ui-kit';

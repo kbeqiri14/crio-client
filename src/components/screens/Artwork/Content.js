@@ -1,8 +1,9 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { ARTWORKS } from '@configs/constants';
+import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { getThumbnail, urlify } from '@utils/helpers';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
@@ -16,6 +17,7 @@ const Wrapper = styled('div')`
   padding: 40px 20px;
   > div {
     width: 1040px;
+    padding: 0 10px;
   }
   .lock {
     .tooltip {
@@ -38,8 +40,8 @@ const Wrapper = styled('div')`
     .widget {
       width: 334px;
     }
-    .image-padding {
-      padding: 0 8px;
+    .textContent {
+      margin-top: 44px;
     }
   }
 `;
@@ -51,14 +53,12 @@ const ImageWrapper = styled('div')`
   background: #182024;
   border-radius: 16px;
   max-width: 1040px;
-  max-height: 538px;
+  min-height: 538px;
   height: auto;
   img {
-    width: 100%;
     height: auto;
+    max-width: 100%;
     max-height: 538px;
-    object-fit: cover;
-    border-radius: 16px;
     &.default {
       object-fit: contain;
     }
@@ -66,6 +66,8 @@ const ImageWrapper = styled('div')`
 `;
 
 export const Content = ({ info, content, isLocked }) => {
+  const { user } = useLoggedInUser();
+  const [visibleTooltip, setVisibleTooltip] = useState(user.id && !user.helpSeen);
   const avatarUrl = useAvatarUrl(info.providerType, info.providerUserId, info.avatar);
   const { setInfo } = usePresentation();
 
@@ -81,7 +83,7 @@ export const Content = ({ info, content, isLocked }) => {
 
   return (
     <Wrapper>
-      <Row justify='center' gutter={[0, 20]}>
+      <Row justify='center' gutter={[0, 40]}>
         <Col span={24}>
           <Row gutter={[0, 12]}>
             <Col span={24}>
@@ -109,8 +111,8 @@ export const Content = ({ info, content, isLocked }) => {
             </Col>
           </Row>
         </Col>
-        {isLocked ? (
-          <Col className='image-padding' span={24}>
+        {isLocked && !info.isProduct ? (
+          <Col span={24}>
             <div className='lock'>
               <LockState userId={info.userId} accessibility={info.accessibility} size='lg' />
               <ImageWrapper>
@@ -123,7 +125,7 @@ export const Content = ({ info, content, isLocked }) => {
             </div>
           </Col>
         ) : (
-          <Col className='image-padding' span={24}>
+          <Col span={24}>
             {info.isProduct || info.isImage ? (
               <ImageWrapper>
                 <img
@@ -147,7 +149,10 @@ export const Content = ({ info, content, isLocked }) => {
         )}
         <Col span={24}>
           <Row className='flex-dir' justify='space-between'>
-            <Col max_width={info.isProduct ? 722 : undefined}>
+            <Col
+              max_width={info.isProduct ? 722 : undefined}
+              className={visibleTooltip && 'textContent'}
+            >
               <Text level={4} color='dark25'>
                 <div
                   dangerouslySetInnerHTML={{ __html: urlify(info.description) }}
@@ -159,11 +164,13 @@ export const Content = ({ info, content, isLocked }) => {
               <Col>
                 <BuyWidget
                   userId={info.userId}
-                  username={info.username}
                   productId={info.productId}
+                  productTypeId={info.productTypeId}
+                  file={info.file}
                   price={info.price}
                   limit={info.limit}
                   accessibility={info.accessibility}
+                  onVisibleChange={(value) => setVisibleTooltip(value)}
                 />
               </Col>
             )}

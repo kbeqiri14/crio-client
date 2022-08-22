@@ -49,7 +49,7 @@ const StyledVideoDetails = styled('div')`
     max-width: 922px;
     min-height: 520px;
     video {
-      border-radius: 30px;
+      border-radius: 16px;
     }
     img {
       height: auto;
@@ -63,7 +63,16 @@ const StyledVideoDetails = styled('div')`
   }
 `;
 
-const VideoInfo = ({ artworkId, file, src, state, setVisible, onCancel, onCompleted }) => {
+const VideoInfo = ({
+  artworkId,
+  file,
+  src,
+  state,
+  setVisible,
+  onCancel,
+  onCompleted,
+  goToProfile,
+}) => {
   const { user } = useLoggedInUser();
   const [uploading, setUploading] = useState(false);
   const { control, watch, handleSubmit } = useForm();
@@ -92,9 +101,13 @@ const VideoInfo = ({ artworkId, file, src, state, setVisible, onCancel, onComple
     () => state?.content?.substring(state?.content?.lastIndexOf('/') + 1),
     [state?.content],
   );
+  const completeCreateArtwork = useCallback(
+    () => (isImage ? goToProfile() : onCompleted()),
+    [isImage, goToProfile, onCompleted],
+  );
 
   const [saveArtwork, { loading: creatingArtwork }] = useMutation(createArtwork, {
-    onCompleted: ({ createArtwork }) => onCompleted(createArtwork.id),
+    onCompleted: completeCreateArtwork,
     onError: () => {
       errorToast('Something went wrong!', 'Please, try again later!');
     },
@@ -104,7 +117,7 @@ const VideoInfo = ({ artworkId, file, src, state, setVisible, onCancel, onComple
     variables: {
       params: { artworkId: artworkId || state?.artworkId, title, description: desc, accessibility },
     },
-    onCompleted: () => onCompleted(),
+    onCompleted,
     onError: (data) => errorToast(data?.message),
   });
 
@@ -125,13 +138,17 @@ const VideoInfo = ({ artworkId, file, src, state, setVisible, onCancel, onComple
         userId: user.id,
         image: compressionFile,
         type: ARTWORKS,
-        prefix: 'main',
       });
-      const content = itemContent?.image?.split('/')?.slice(-1)[0].slice('main-'.length);
       setUploading(false);
       saveArtwork({
         variables: {
-          params: { content, thumbnail: content, title, description: desc, accessibility },
+          params: {
+            content: itemContent?.image,
+            thumbnail: itemContent?.image,
+            title,
+            description: desc,
+            accessibility,
+          },
         },
       });
     } else {

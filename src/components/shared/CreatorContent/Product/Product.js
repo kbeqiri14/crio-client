@@ -7,11 +7,10 @@ import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { getThumbnail } from '@utils/helpers';
-import { Col, Row, Text } from '@ui-kit';
+import { Col, Row, Tag, Text } from '@ui-kit';
 import Actions from '@screens/Video/Actions';
 import product from '@images/product.png';
 import { ProductWrapper, ImageWrapper } from './styled';
-import LockState from '../LockState';
 import BuyButton from './BuyButton';
 
 const Product = ({
@@ -21,13 +20,14 @@ const Product = ({
   userId,
   username,
   productId,
-  type,
+  productTypeId,
   title,
   description,
   price,
   limit,
   accessibility,
   thumbnail,
+  file,
   large = false,
 }) => {
   const [isHovering, setIsHovering] = useState(false);
@@ -50,16 +50,16 @@ const Product = ({
     }
     return user.isSubscribed ? !user.followings?.includes(userId) : true;
   }, [user.isCreator, user.isSubscribed, user.followings, accessibility, userId]);
-
-  const showBuyButton = useMemo(() => {
-    if (user.isCreator) {
-      return false;
+  const style = useMemo(() => {
+    let width = 332;
+    if (!user.isCreator && isHovering) {
+      width = 140;
     }
-    if (price) {
-      return true;
+    if (isLocked && !price && +productTypeId === 2) {
+      width = 120;
     }
-    return user.isSubscribed ? user.followings?.includes(userId) : false;
-  }, [user.isCreator, user.isSubscribed, user.followings, price, userId]);
+    return { width };
+  }, [isHovering, price, productTypeId, isLocked, user.isCreator]);
 
   const src = useMemo(
     () => (thumbnail ? getThumbnail(PRODUCTS, userId, `thumbnail-${thumbnail}`) : product),
@@ -108,13 +108,14 @@ const Product = ({
       username,
       avatar,
       productId,
-      type,
+      productTypeId,
       title,
       description,
       price,
       limit,
       accessibility,
       thumbnail: src,
+      file,
       isProduct: true,
     });
   }, [
@@ -123,13 +124,14 @@ const Product = ({
     providerUserId,
     username,
     avatar,
-    type,
+    productTypeId,
     title,
     description,
     price,
     limit,
     accessibility,
     src,
+    file,
     pathname,
     productId,
     setInfo,
@@ -142,29 +144,26 @@ const Product = ({
         onMouseOver={handleMouseOver}
         onMouseLeave={handleMouseOut}
       >
-        <LockState
-          userId={userId}
-          accessibility={accessibility}
-          large={large}
-          isProduct={true}
-          isHovering={isHovering}
-        />
         <ImageWrapper className={imageClasses}>
           <img src={src} alt='product' onClick={showProduct} />
+          {isHovering && <Tag>{productTypeId === '2' ? 'Digital Product' : 'Service'}</Tag>}
           <div
             className={`actions ${isHovering ? 'hover' : ''}`}
             onClick={() => !showActions && showProduct()}
           >
             {showActions && (
               <Actions
+                userId={userId}
                 username={username}
                 productId={productId}
+                productTypeId={productTypeId}
                 title={title}
                 description={description}
                 price={price}
                 limit={limit}
                 accessibility={accessibility}
                 thumbnail={src}
+                file={file}
                 isProduct={true}
               />
             )}
@@ -174,37 +173,28 @@ const Product = ({
           <Col>
             <Row align='middle' gutter={[0, 8]}>
               <Col span={24}>
-                <Text
-                  level={4}
-                  style={{ width: showBuyButton && isHovering ? 140 : 332 }}
-                  ellipsis={{ rows: 1, tooltip: title }}
-                >
+                <Text level={4} style={style} ellipsis={{ rows: 1, tooltip: title }}>
                   {title}
                 </Text>
               </Col>
               <Col span={24}>
-                <Text
-                  level={4}
-                  style={{ width: showBuyButton && isHovering ? 140 : 332 }}
-                  ellipsis={{ rows: 1, tooltip: priceText }}
-                >
+                <Text level={4} style={style} ellipsis={{ rows: 1, tooltip: priceText }}>
                   {priceText}
                 </Text>
               </Col>
             </Row>
           </Col>
-          {showBuyButton && (
-            <Col className='info'>
-              <BuyButton
-                userId={userId}
-                username={username}
-                productId={productId}
-                price={price}
-                limit={limit}
-                accessibility={accessibility}
-              />
-            </Col>
-          )}
+          <Col className='info'>
+            <BuyButton
+              userId={userId}
+              productId={productId}
+              productTypeId={productTypeId}
+              file={file}
+              price={price}
+              limit={limit}
+              accessibility={accessibility}
+            />
+          </Col>
         </Row>
       </ProductWrapper>
       <Link to={`/profile/${username}`} onClick={hide}>

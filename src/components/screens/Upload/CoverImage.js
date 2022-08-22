@@ -1,22 +1,48 @@
-import { memo, useCallback, useState } from 'react';
+import { memo, useState } from 'react';
 import axios from 'axios';
-import { Col, Row, Upload } from 'antd';
-import imageCompression from 'browser-image-compression';
+import { Col, Row } from 'antd';
 import { useLazyQuery, useMutation } from '@apollo/client';
+import styled from 'styled-components';
 
 import { getUploadImageLink } from '@app/graphql/queries/artworks.query';
 import { updateMetadata } from '@app/graphql/mutations/artwork.mutation';
-import { ARTWORKS } from '@configs/constants';
 import ActionButtons from '@shared/ActionButtons';
-import { formItemContent } from '@utils/upload.helper';
-import { Modal, Text, Title } from '@ui-kit';
+import { Badge, Modal, Text, Title, Upload } from '@ui-kit';
 import { errorToast } from '@ui-kit/Notification';
 import { ReactComponent as CloseIcon } from '@svgs/close.svg';
 import coverImage from '@images/cover-image.png';
 
 const { Dragger } = Upload;
 
-const CoverImage = ({ visible, userId, artworkId, isImage, goToProfile }) => {
+const Wrapper = styled('div')`
+  padding: 0 35px 7px;
+  text-align: left;
+  .cover-image {
+    img {
+      min-height: 127px;
+      max-width: 184px;
+    }
+    .drag-and-drop {
+      padding: 20px 0;
+    }
+    .uploaded-image {
+      margin: auto;
+      max-width: 568px;
+      max-height: 259px;
+      border-radius: 43px;
+    }
+    .image-content {
+      display: flex;
+      justify-content: center;
+      padding: 0 68px;
+    }
+    .text-content {
+      margin-right: 55px;
+    }
+  }
+`;
+
+const CoverImage = ({ visible, artworkId, goToProfile }) => {
   const [image, setImage] = useState({});
   const [loading, setLoading] = useState(false);
   const props = {
@@ -61,30 +87,6 @@ const CoverImage = ({ visible, userId, artworkId, isImage, goToProfile }) => {
     },
   });
 
-  const onSave = useCallback(async () => {
-    setLoading(true);
-    if (isImage) {
-      const compressionFile = await imageCompression(image.file, {
-        maxSizeMB: 0.5,
-        maxWidthOrHeight: 800,
-        useWebWorker: true,
-      });
-      const content = await formItemContent({
-        userId,
-        image: compressionFile,
-        type: ARTWORKS,
-        prefix: 'thumbnail',
-      });
-      const thumbnail = content?.image?.split('/')?.slice(-1)[0].slice('thumbnail-'.length);
-      updateArtwork({
-        variables: { params: { artworkId, thumbnail } },
-        onCompleted: () => setLoading(false),
-      });
-    } else {
-      requestUploadUrl();
-    }
-  }, [isImage, userId, artworkId, image.file, requestUploadUrl, updateArtwork]);
-
   return (
     <Modal
       centered
@@ -92,46 +94,51 @@ const CoverImage = ({ visible, userId, artworkId, isImage, goToProfile }) => {
       closeIcon={<CloseIcon />}
       maskClosable={false}
       visible={visible}
-      width={686}
+      width={713}
       onCancel={goToProfile}
     >
-      <Row justify='center' gutter={[0, 40]} className='cover-image'>
-        <Col span={24}>
-          <Title level={1}>Upload cover image</Title>
-        </Col>
-        <Col span={24} className='desc'>
-          <Text level={4}>If skipped we will generate a cover image from video.</Text>
-        </Col>
-        <Col span={24}>
-          {image.src ? (
-            <img alt='uploaded file' src={image.src} className='uploaded-image' />
-          ) : (
-            <Dragger {...props}>
-              <Row justify='center' align='center' gutter={[0, 11]} className='drag-and-drop'>
-                <Col span={24}>
-                  <img alt='cover' src={coverImage} />
-                </Col>
-                <Col span={24}>
-                  <Text level={4}>
-                    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                    Drag and drop an image, or <a>Upload</a>
-                  </Text>
-                </Col>
-              </Row>
-            </Dragger>
-          )}
-        </Col>
-        <Col span={24}>
-          <ActionButtons
-            cancelText='SKIP'
-            saveText='PUBLISH'
-            loading={loading}
-            disabled={!image.file}
-            onCancel={goToProfile}
-            onSave={onSave}
-          />
-        </Col>
-      </Row>
+      <Wrapper>
+        <Row justify='center' gutter={[0, 40]} className='cover-image'>
+          <Col className='text-content' span={24}>
+            <Title level={1}>Upload cover image</Title>
+          </Col>
+          <Col span={24} className='text-content'>
+            <Text level={4}>If skipped we will generate a cover image from video.</Text>
+          </Col>
+          <Col className='image-content' span={24}>
+            {image.src ? (
+              <img alt='uploaded file' src={image.src} className='uploaded-image' />
+            ) : (
+              <Dragger {...props}>
+                <Row justify='center' align='center' gutter={[0, 18]} className='drag-and-drop'>
+                  <Col span={24}>
+                    <img alt='cover' src={coverImage} />
+                  </Col>
+                  <Col span={24}>
+                    <Text level={4}>
+                      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                      Drag and drop an image, or <a>Upload</a>
+                    </Text>
+                  </Col>
+                  <Col span={24}>
+                    <Badge status='default' text='HI-Res images (png, jpg, gif)' />
+                  </Col>
+                </Row>
+              </Dragger>
+            )}
+          </Col>
+          <Col span={24}>
+            <ActionButtons
+              cancelText='SKIP'
+              saveText='PUBLISH'
+              loading={loading}
+              disabled={!image.file}
+              onCancel={goToProfile}
+              onSave={requestUploadUrl}
+            />
+          </Col>
+        </Row>
+      </Wrapper>
     </Modal>
   );
 };

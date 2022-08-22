@@ -23,9 +23,11 @@ export { default as Menu } from './Navigation/Menu';
 /*
   Data Display
 */
+export { default as Badge } from './DataDisplay/Badge';
 export { default as Carousel } from './DataDisplay/Carousel';
 export { default as Collapse } from './DataDisplay/Collapse';
 export { default as Tabs } from './DataDisplay/Tabs';
+export { default as Tag } from './DataDisplay/Tag';
 export { default as Tooltip } from './DataDisplay/Tooltip';
 
 /*
@@ -34,12 +36,15 @@ export { default as Tooltip } from './DataDisplay/Tooltip';
 export { default as Checkbox } from './DataEntry/Checkbox';
 export { default as Input } from './DataEntry/Input';
 export { default as Radio } from './DataEntry/Radio';
+export { default as Select } from './DataEntry/Select';
 export { default as Switch } from './DataEntry/Switch';
+export { default as Upload } from './DataEntry/Upload';
 
 /*
   Feedback
 */
 export { default as Modal } from './Feedback/Modal';
+export { default as Progress } from './Feedback/Progress';
 
 /*
   Theme Provider

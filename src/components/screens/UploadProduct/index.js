@@ -3,7 +3,7 @@ import { memo, useEffect } from 'react';
 import history from '@configs/history';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
-import ProductForm from '@root/src/components/screens/EditProduct/ProductForm';
+import ProductForm from '@screens/EditProduct/ProductForm';
 
 const UploadProduct = () => {
   const { user } = useLoggedInUser();

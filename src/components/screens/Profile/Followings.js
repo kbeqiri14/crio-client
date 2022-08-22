@@ -1,5 +1,5 @@
 import { memo, useCallback, useMemo } from 'react';
-import { Badge } from 'antd';
+import { Badge, Skeleton } from 'antd';
 import styled from 'styled-components';
 import { useQuery } from '@apollo/client';
 
@@ -19,7 +19,19 @@ const StyledCard = styled('div')`
   :hover {
     border: 1px solid ${(props) => props.theme.colors.dark50};
   }
+  .ant-skeleton-header {
+    vertical-align: middle;
+  }
+  .ant-skeleton-content {
+    .ant-skeleton-title {
+      margin: 0;
+    }
+    .ant-skeleton-paragraph {
+      margin: 26px 0 0 !important;
+    }
+  }
 `;
+
 const FollowingCard = ({ user }) => {
   const { providerType, providerUserId, firstName, lastName, username, avatar } = user || {};
   const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
@@ -59,21 +71,36 @@ const FollowingCard = ({ user }) => {
   );
 };
 
-const Followings = ({ username, isProfile, isSubscribed }) => {
-  const { data: followings } = useQuery(getFollowings, {
+const Followings = ({ username, isProfile, isSubscribed, followingsCount }) => {
+  const { data: followings, loading } = useQuery(getFollowings, {
     fetchPolicy: 'cache-and-network',
     ...(isProfile ? { variables: { username } } : {}),
   });
-
-  if (
+  const dummyArray = useMemo(() => new Array(followingsCount || 6).fill(), [followingsCount]);
+  const isEmpty =
     username &&
     ((!isProfile && (!isSubscribed || !followings?.getFollowings?.length)) ||
-      (isProfile && !followings?.getFollowings?.length))
-  ) {
+      (isProfile && !followings?.getFollowings?.length));
+
+  if (loading) {
+    return (
+      <Row gutter={[20, 20]}>
+        {dummyArray.map((_, index) => (
+          <Col key={index}>
+            <StyledCard>
+              <Skeleton active round avatar paragraph={{ rows: 1 }} title={{ width: '100%' }} />
+            </StyledCard>
+          </Col>
+        ))}
+      </Row>
+    );
+  }
+
+  if (isEmpty && !loading) {
     return <EmptyState username={username} isProfile={isProfile} isSubscribed={isSubscribed} />;
   }
 
-  return followings?.getFollowings?.length ? (
+  return (
     <Row gutter={[20, 20]}>
       {followings?.getFollowings?.map((following) => (
         <Col key={following.id}>
@@ -81,7 +108,7 @@ const Followings = ({ username, isProfile, isSubscribed }) => {
         </Col>
       ))}
     </Row>
-  ) : null;
+  );
 };
 
 export default memo(Followings);

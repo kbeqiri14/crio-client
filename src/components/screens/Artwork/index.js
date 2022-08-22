@@ -10,7 +10,7 @@ import { getArtwork } from '@app/graphql/queries/artworks.query';
 import { loggedInUserLoadingVar } from '@configs/client-cache';
 import { Col, Row } from '@ui-kit';
 import Content from './Content';
-import MoreProductsSection from '@root/src/components/screens/Product/MoreProductsSection';
+import MoreProductsSection from '@screens/Product/MoreProductsSection';
 import EmptyState from '@shared/EmptyState';
 
 const Wrapper = styled('div')`

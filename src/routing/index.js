@@ -12,8 +12,8 @@ import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import Header from '@shared/Header';
 import { PresentationView } from '@shared/PresentationView';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
-import SendEmailModal from '@root/src/components/shared/SendEmailModal';
-import { useSendEmail } from '@root/src/components/shared/SendEmailModal/Context';
+import SendEmailModal from '@shared/SendEmailModal';
+import { useSendEmail } from '@shared/SendEmailModal/Context';
 import PrivacyPolicy from '@screens/Terms and Policy/PrivacyPolicy';
 import TermsAndConditions from '@screens/Terms and Policy/TermsAndConditions';
 import TermsOfUse from '@screens/Terms and Policy/TermsOfUse';
@@ -29,6 +29,7 @@ import EditArtwork from '@screens/Video';
 import EditProduct from '@screens/EditProduct';
 import Payment from '@screens/Payment';
 import FeaturesPage from '@screens/FeaturesPage';
+import EarnMore from '@screens/EarnMore';
 import FAQ from '@screens/FAQ';
 import Job from '@screens/Job';
 
@@ -171,6 +172,12 @@ export const AppRoutes = () => {
               isAuthenticated={isAuthenticated}
               path='/payment'
               component={Payment}
+            />
+            <PrivateRoute
+              exact
+              isAuthenticated={isAuthenticated}
+              path='/earn-more'
+              component={EarnMore}
             />
           </Switch>
           {isVisible && <PresentationView />}

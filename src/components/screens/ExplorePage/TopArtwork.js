@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { signIn } from '@app/auth';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { Button, Col, Row, Text, Title } from '@ui-kit';
-import { ReactComponent as GoogleIcon } from '@svgs/google-sign-in.svg';
+import { ReactComponent as GoogleIcon } from '@svgs/google.svg';
 
 const Wrapper = styled('div')`
   .absolute-center {
@@ -59,8 +59,8 @@ const TopArtwork = ({ username, thumbnail }) => {
         </Col>
         <Col span={24}>
           <Text level={4} max_width={555}>
-            Shop thousands of products and see the best content from the entire community of
-            creators on Crio
+            Discover thousands of digital products, custom services, and the best content from the
+            entire community of creators on Crio
           </Text>
         </Col>
         <Col xs={user.id ? 24 : 0} lg={24}>
@@ -73,7 +73,7 @@ const TopArtwork = ({ username, thumbnail }) => {
         {!user.id && (
           <Col lg={0}>
             <Button type='google' icon={<GoogleIcon />} onClick={googleSignIn}>
-              SIGN UP WITH GOOGLE
+              Sign up with Google
             </Button>
           </Col>
         )}

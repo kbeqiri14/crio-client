@@ -20,6 +20,7 @@ then
     echo "export REACT_APP_STRIPE_PAYMENT_URL=https://buy.stripe.com/test_6oEcQm1xf0NufC07st"
     echo "export REACT_APP_GTAG=UA-215522581-1"
     echo "export REACT_APP_BUCKET_NAME=crio-in-staging-bucket"
+    echo "export SKIP_PREFLIGHT_CHECK=true"
   } >> "$BASH_ENV"
 elif [ "${CIRCLE_BRANCH}" == "staging" ]
 then
@@ -35,6 +36,7 @@ then
     echo "export REACT_APP_STRIPE_PAYMENT_URL=https://buy.stripe.com/test_6oEcQm1xf0NufC07st"
     echo "export REACT_APP_GTAG=UA-215522581-1"
     echo "export REACT_APP_BUCKET_NAME=crio-in-staging-bucket"
+    echo "export SKIP_PREFLIGHT_CHECK=true"
   } >> "$BASH_ENV"
 elif [ "${CIRCLE_BRANCH}" == "master" ]
 then
@@ -50,6 +52,7 @@ then
     echo "export REACT_APP_STRIPE_PAYMENT_URL=https://buy.stripe.com/6oE5mf6Ahe8ffF6dQR"
     echo "export REACT_APP_GTAG=UA-215590535-1"
     echo "export REACT_APP_BUCKET_NAME=crio-in-production-bucket"
+    echo "export SKIP_PREFLIGHT_CHECK=true"
   } >> "$BASH_ENV"
 else
   #should not be executed

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { Col, Row, Text } from '@ui-kit';
-import BuyButton from '../../shared/CreatorContent/Product/BuyButton';
+import BuyButton from '@shared/CreatorContent/Product/BuyButton';
 import HelpTooltip from './HelpTooltip';
 
 const Wrapper = styled('div')`
@@ -23,16 +23,29 @@ const Wrapper = styled('div')`
   }
   .ant-tooltip {
     top: 0 !important;
-    right 0 !important;
+    right: 0 !important;
     left: -243px !important;
   }
+  .ant-tooltip-open {
+    margin-bottom: 30px;
+  }
   .got-it-button {
-    margin-top: 37px;
-    left: -16px;
+    position: absolute;
+    top: 269px;
+    right: 121px;
   }
 `;
 
-export const BuyWidget = ({ userId, username, productId, price, limit, accessibility }) => {
+export const BuyWidget = ({
+  userId,
+  productId,
+  productTypeId,
+  file,
+  price,
+  limit,
+  accessibility,
+  onVisibleChange,
+}) => {
   const { user } = useLoggedInUser();
 
   return (
@@ -58,22 +71,28 @@ export const BuyWidget = ({ userId, username, productId, price, limit, accessibi
             </Col>
           </Row>
         </Col>
-        {!user.isCreator && (
-          <Col span={24} padding_top={6}>
-            <BuyButton
-              block
-              userId={userId}
-              username={username}
-              productId={productId}
-              price={price}
-              limit={limit}
-              accessibility={accessibility}
-            />
-          </Col>
-        )}
+        <Col span={24} padding_top={6}>
+          <BuyButton
+            block
+            userId={userId}
+            productId={productId}
+            productTypeId={productTypeId}
+            file={file}
+            price={price}
+            limit={limit}
+            accessibility={accessibility}
+          />
+        </Col>
       </Row>
-      {!user.isCreator && (
-        <HelpTooltip title='After purchase, please check your email to receive a service from Creator' />
+      {!user.isCreator && (!user?.id || productTypeId === '1') && (
+        <HelpTooltip
+          onVisibleChange={onVisibleChange}
+          title={
+            user?.id
+              ? 'After purchase, please check your email to receive a service from Creator'
+              : 'After purchase, please check your email to receive product/service from Creator'
+          }
+        />
       )}
     </Wrapper>
   );

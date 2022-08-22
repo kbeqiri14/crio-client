@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useQuery } from '@apollo/client';
 
 import { getMoreProducts } from '@app/graphql/queries/products.query';
-import ProductsList from '@root/src/components/shared/CreatorContent/Product/ProductsList';
+import ProductsList from '@shared/CreatorContent/Product/ProductsList';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { Col, Row, Text } from '@ui-kit';
 
@@ -40,7 +40,7 @@ export const MoreProductsSection = ({ info }) => {
   const { pathname } = useLocation();
   const { setInfo } = usePresentation();
 
-  const { data } = useQuery(getMoreProducts, {
+  const { data, loading } = useQuery(getMoreProducts, {
     fetchPolicy: 'no-cache',
     variables: { params: { userId: info.userId } },
   });
@@ -70,7 +70,7 @@ export const MoreProductsSection = ({ info }) => {
               </Row>
             </Col>
             <Col>
-              <ProductsList productsList={data?.getMoreProducts.userProducts} />
+              <ProductsList productsList={data?.getMoreProducts.userProducts} loading={loading} />
             </Col>
           </Row>
         </UserMoreProductsWrapper>

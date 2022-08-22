@@ -10,6 +10,7 @@ const Tooltip = styled(antTooltip)`
     padding: 8px;
     border-radius: 8px;
     text-align: center;
+    white-space: pre-line;
   }
   .ant-tooltip-arrow {
     display: none;

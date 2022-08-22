@@ -1,4 +1,4 @@
-import { memo, useMemo, useState, Fragment } from 'react';
+import { Fragment, memo, useCallback, useMemo, useState } from 'react';
 import { useMutation } from '@apollo/client';
 
 import useAsyncFn from '@app/hooks/useAsyncFn';
@@ -11,7 +11,14 @@ import { errorToast, successToast } from '@ui-kit/Notification';
 import { formItemContent } from '@utils/upload.helper';
 import Confirmation from '@shared/Confirmation';
 
-const ProductActionButtons = ({ state, image, disabled, handleSubmit, fillColor = 'blue' }) => {
+const ProductActionButtons = ({
+  state,
+  image,
+  disabled,
+  productTypeId,
+  handleSubmit,
+  fillColor = 'blue',
+}) => {
   const buttonLabel = useMemo(() => (state?.productId ? 'UPDATE' : 'PUBLISH'), [state?.productId]);
   const { userId, redirect } = useRedirectToProfile();
   const [visible, setVisible] = useState(false);
@@ -46,15 +53,17 @@ const ProductActionButtons = ({ state, image, disabled, handleSubmit, fillColor 
   });
 
   const onPublish = useAsyncFn(async (attributes) => {
+    let file;
     let thumbnail = state?.thumbnail && !image.src ? 'remove-thumbnail' : undefined;
-    if (attributes.image?.file) {
+    if (attributes.image?.file || (attributes.file && +attributes.productTypeId === 2)) {
       const content = await formItemContent({
         userId,
         image: image.file,
+        file: +attributes.productTypeId === 2 ? attributes.file?.file : undefined,
         type: PRODUCTS,
-        prefix: 'thumbnail',
       });
-      thumbnail = content?.image?.split('/')?.slice(-1)[0].slice('thumbnail-'.length);
+      thumbnail = content?.image;
+      file = content?.file;
     }
 
     state?.productId
@@ -62,30 +71,42 @@ const ProductActionButtons = ({ state, image, disabled, handleSubmit, fillColor 
           variables: {
             attributes: {
               id: state.productId,
-              type: 'service',
+              productTypeId: attributes.productTypeId,
               title: attributes.title,
               description: attributes.desc,
               price: +attributes.price || undefined,
               limit: +attributes.limit || undefined,
               accessibility: attributes.accessibility,
               thumbnail,
+              file,
             },
           },
         })
       : create({
           variables: {
             attributes: {
-              type: 'service',
+              productTypeId: attributes.productTypeId,
               title: attributes.title,
               description: attributes.desc,
               price: +attributes.price || undefined,
               limit: +attributes.limit || undefined,
               accessibility: attributes.accessibility,
               thumbnail,
+              file,
             },
           },
         });
   });
+
+  const onCancel = useCallback(() => {
+    if (!state?.productId) {
+      setVisible(true);
+      return;
+    }
+    return disabled && (!productTypeId || (productTypeId && productTypeId === state?.productTypeId))
+      ? redirect()
+      : setVisible(true);
+  }, [disabled, productTypeId, state?.productId, state?.productTypeId, redirect]);
 
   return (
     <Fragment>
@@ -94,13 +115,17 @@ const ProductActionButtons = ({ state, image, disabled, handleSubmit, fillColor 
         saveText={buttonLabel}
         loading={onPublish.loading || creating || updating}
         disabled={disabled}
-        onCancel={() => (disabled ? redirect() : setVisible(true))}
+        onCancel={onCancel}
         onSave={handleSubmit(onPublish.call)}
       />
       {visible && (
         <Confirmation
           visible={visible}
-          title='Are you sure you want to discard these changes?'
+          title={
+            state?.productId
+              ? 'Are you sure you want to discard these changes?'
+              : 'Cancel the uploading?'
+          }
           cancelText='NO'
           confirmText='YES'
           onConfirm={() => {

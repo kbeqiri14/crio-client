@@ -1,9 +1,11 @@
 import { memo, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
+import { Skeleton } from 'antd';
 
 import useClientWidth from '@app/hooks/useClientWidth';
 import { Col, Row } from '@ui-kit';
 import Product from './Product';
+import { SkeletonWrapper } from './styled';
 
 const Item = memo(({ item, large }) => (
   <Product
@@ -13,13 +15,14 @@ const Item = memo(({ item, large }) => (
     userId={item?.userId}
     username={item?.username}
     productId={item?.productId}
-    type={item?.type}
+    productTypeId={item?.productTypeId}
     title={item?.title}
     description={item?.description}
     price={item?.price}
     limit={item?.limit}
     accessibility={item?.accessibility}
     thumbnail={item?.thumbnail}
+    file={item?.file}
     large={large}
   />
 ));
@@ -63,19 +66,42 @@ const chunk = (arr, size) =>
 const Blocks = memo(({ productsList }) => {
   const blocks = useMemo(() => chunk(productsList, 5), [productsList]);
 
-  return blocks.map((block, i) =>
+  return blocks.map((block, index) =>
     block.length > 4 ? (
-      <BlockLarge key={i} block={block} right={i % 2 === 1} />
+      <BlockLarge key={index} block={block} right={index % 2 === 1} />
     ) : (
-      <Block key={i} block={block} padding_top={20} />
+      <Block key={index} block={block} padding_top={20} />
     ),
   );
 });
 
-const ProductsList = ({ productsList = [] }) => {
+const ProductsList = ({ productsList = [], loading }) => {
+  const dummyArray = new Array(12).fill();
   const { pathname } = useLocation();
   const isProfile = useMemo(() => pathname.includes('/profile'), [pathname]);
   const width = useClientWidth();
+
+  if (loading) {
+    return (
+      <Row gutter={22}>
+        {dummyArray.map((_, index) => (
+          <Col key={index}>
+            <SkeletonWrapper>
+              <Skeleton.Image />;
+              <Skeleton
+                active
+                round
+                title={{ width: '100%' }}
+                paragraph={{ rows: 1, width: '100%' }}
+              />
+            </SkeletonWrapper>
+            <Skeleton active round avatar title={{ width: '92%' }} paragraph={{ rows: 0 }} />
+          </Col>
+        ))}
+      </Row>
+    );
+  }
+
   if (width < 1438) {
     return <Block block={productsList} />;
   }

@@ -1,14 +1,14 @@
 import { memo, useCallback, useMemo, useState } from 'react';
 import { Badge, Skeleton } from 'antd';
 
+import useAvatarUrl from '@app/hooks/useAvatarUrl';
+import { urlify } from '@utils/helpers';
+import { Col, Divider, Row, Text, Title } from '@ui-kit';
 import { ReactComponent as CreatorIcon } from '@svgs/verified.svg';
 import { ReactComponent as MailIcon } from '@svgs/mail.svg';
 import { ReactComponent as EditIcon } from '@svgs/edit.svg';
-
-import useAvatarUrl from '@app/hooks/useAvatarUrl';
-import { Col, Divider, Row, Text, Title } from '@ui-kit';
-import ActionButton from '@root/src/components/screens/Profile/ActionButton';
-import EditProfile from '@root/src/components/screens/Profile/EditProfile';
+import ActionButton from '@screens/Profile/ActionButton';
+import EditProfile from '@screens/Profile/EditProfile';
 
 export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton }) => {
   const [visible, setVisible] = useState(false);
@@ -40,7 +40,7 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
         padding_horizontal={20}
         padding_bottom={20}
       >
-        <Col span={24} align='center' margin_bottom={20}>
+        <Col span={24} align='center'>
           {user.isCreator ? (
             <Badge count={<CreatorIcon />} offset={[-12, 105]}>
               <img
@@ -88,6 +88,7 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
         {!hideButton && (
           <Col span={24}>
             <ActionButton
+              userId={user.id}
               isProfile={isProfile}
               isSubscribed={isSubscribed}
               isFollow={user.isFollowing}
@@ -119,7 +120,7 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
               </Col>
               <Col align='center'>
                 <Text level={3}>
-                  Contents
+                  Content
                   <br />
                   {user.artworksCount}
                 </Text>
@@ -127,8 +128,22 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
             </Row>
           </Col>
         )}
+        {!isProfile && user.isCreator && (
+          <Col
+            align='center'
+            style={{ border: '1px solid white', borderRadius: 10, padding: '10px 50px' }}
+          >
+            <Title level={2}>Subscription Revenue</Title>
+            <Text level={3}>${user.revenue} / month</Text>
+          </Col>
+        )}
         <Col span={24}>
-          <Text level={3}>{user.about}</Text>
+          <Text level={3}>
+            <div
+              dangerouslySetInnerHTML={{ __html: urlify(user.about) }}
+              style={{ whiteSpace: 'pre-line' }}
+            />
+          </Text>
         </Col>
       </Row>
       {visible && <EditProfile user={user} visible={visible} closeModal={closeModal} />}
