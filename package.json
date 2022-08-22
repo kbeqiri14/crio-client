@@ -30,8 +30,8 @@
     "history": "^4.10.1",
     "normalize.less": "^1.0.0",
     "query-string": "^7.0.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
     "react-hook-form": "^7.34.2",
     "react-player": "^2.9.0",
@@ -53,7 +53,7 @@
     "crio-scripts": "file:crio-scripts",
     "env-cmd": "^10.1.0",
     "husky": "^8.0.1",
-    "lint-staged": "^11.1.2",
+    "lint-staged": "^13.0.3",
     "prettier": "^2.4.1"
   },
   "scripts": {
