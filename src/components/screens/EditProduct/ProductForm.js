@@ -19,6 +19,7 @@ import { getProductTypes } from '@app/graphql/queries/products.query';
 
 const ProductForm = ({ state }) => {
   const { user } = useLoggedInUser();
+  const [productOption, setProductOption] = useState();
   const [visibleTooltip, setVisibleTooltip] = useState(user.id && !user.helpSeen);
   const [visibleBroadcast, setVisibleBroadcast] = useState(false);
   const [limitVisible, setLimitVisible] = useState(state?.limit !== null && state?.limit >= 0);
@@ -139,18 +140,20 @@ const ProductForm = ({ state }) => {
                   span={16}
                   align='middle'
                   padding_bottom={32}
-                  padding_left={27}
+                  padding_left={productOption === '1' && 27}
                   className={visibleTooltip ? 'selectTitle' : ''}
                 >
                   <Title level={1}>Add new Digital Product or Service</Title>
                 </Col>
-                <Col span={2} align='end' className='help'>
-                  <HelpTooltip
-                    onVisibleChange={(value) => setVisibleTooltip(value)}
-                    placement='right'
-                    title='After a user makes a purchase, you will receive an automatic email. Please check your email and complete the order'
-                  />
-                </Col>
+                {productOption === '1' && (
+                  <Col span={2} align='end' className='help'>
+                    <HelpTooltip
+                      onVisibleChange={(value) => setVisibleTooltip(value)}
+                      placement='right'
+                      title='After a user makes a purchase, you will receive an automatic email. Please check your email and complete the order'
+                    />
+                  </Col>
+                )}
                 <Col span={18} padding_bottom={32}>
                   <Controller
                     name='productTypeId'
@@ -162,6 +165,7 @@ const ProductForm = ({ state }) => {
                         bordered={false}
                         size='large'
                         placeholder='Select the type of your product'
+                        onChange={(value) => setProductOption(value)}
                         options={data?.getProductTypes.map((item) => ({
                           label: item.name,
                           value: item.id,
@@ -342,10 +346,10 @@ const ProductForm = ({ state }) => {
                 </Col>
                 {limitVisible && (
                   <>
-                    <Col span={19} align='start'>
+                    <Col span={18} align='start'>
                       <Text level={3}>Maximum numbers of purchases</Text>
                     </Col>
-                    <Col span={19} padding_bottom={32}>
+                    <Col span={18} padding_bottom={32}>
                       <Controller
                         name='limit'
                         control={control}
