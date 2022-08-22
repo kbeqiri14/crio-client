@@ -80,7 +80,7 @@ export const Content = ({
     <Wrapper>
       <Tabs activeKey={activeKey} onTabClick={onTabClick}>
         <TabPane key={tabs.MARKETPLACE} tab={tabs.MARKETPLACE}>
-          {!productsCount && !productsList?.length && (
+          {!loading && !productsCount && !productsList?.length && (
             <EmptyState {...props} isMarketplace={true} />
           )}
           <ProductsList productsList={productsList} loading={initialPolling && loading} />
@@ -91,7 +91,7 @@ export const Content = ({
           />
         </TabPane>
         <TabPane key={tabs.ARTWORK} tab={tabs.ARTWORK}>
-          {!artworksCount && !artworksList?.length && <EmptyState {...props} />}
+          {!loading && !artworksCount && !artworksList?.length && <EmptyState {...props} />}
           <ArtworksList artworksList={artworksList} loading={initialPolling && loading} />
           <LoadMoreButton
             visible={visibleLoadMoreArtworks}
