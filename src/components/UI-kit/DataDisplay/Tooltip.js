@@ -15,6 +15,9 @@ const Tooltip = styled(antTooltip)`
   .ant-tooltip-arrow {
     display: none;
   }
+  .ant-tooltip {
+    z-index: 0;
+  }
 `;
 
 export default Tooltip;
