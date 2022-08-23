@@ -7,12 +7,12 @@ const OrderedList = styled.ol`
     font-size: ${(props) => props.theme.text[3].size}px;
     font-weight: ${(props) => props.theme.text[3].weight};
     line-height: ${(props) => props.theme.text[3].height}px;
-    color: ${(props) => props.theme.colors.dark25};
+    color: ${(props) => props.theme.colors.white};
     margin-bottom: 8px;
     text-align: left;
   }
   li > span {
-    color: ${(props) => props.theme.colors.dark25};
+    color: ${(props) => props.theme.colors.white};
   }
   ${(props) =>
     props.$listWidth &&
