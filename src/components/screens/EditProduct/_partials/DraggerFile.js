@@ -11,7 +11,7 @@ import FileDraggerWrapper from '../styled/FileDraggerWrapper';
 const { Dragger } = Upload;
 
 const DraggerFile = ({ control, file, userId, files, setFile, setFiles }) => {
-  console.log(file, 333);
+  // console.log(file, 333);
   // const [isLimitReached, setIsLimitReached] = useState(false);
   const props = useMemo(
     () => ({
