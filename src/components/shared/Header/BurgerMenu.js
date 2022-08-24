@@ -96,13 +96,13 @@ export const BurgerMenu = ({ user, keyword, setKeyword }) => {
                 </Text>
               </Link>
             </Col>
-            <Col span={24} padding_left={10} onClick={closeMenu}>
+            {/* <Col span={24} padding_left={10} onClick={closeMenu}>
               <Link to='/earn-more'>
                 <Text level={3} color='dark25'>
                   Earn More
                 </Text>
               </Link>
-            </Col>
+            </Col> */}
             {!user.isCreator && (
               <Col span={24} padding_left={10} onClick={closeMenu}>
                 <Link to='/pricing'>
