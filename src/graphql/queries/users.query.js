@@ -54,3 +54,15 @@ export const job = gql`
     }
   }
 `;
+
+export const getInvitations = gql`
+  query {
+    getInvitations {
+      username
+      emails {
+        email
+        accept
+      }
+    }
+  }
+`;
