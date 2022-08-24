@@ -51,15 +51,17 @@ const Product = ({
     return user.isSubscribed ? !user.followings?.includes(userId) : true;
   }, [user.isCreator, user.isSubscribed, user.followings, accessibility, userId]);
   const style = useMemo(() => {
-    let width = 332;
-    if (!user.isCreator && isHovering) {
-      width = 140;
-    }
-    if (isLocked && !price && +productTypeId === 2) {
-      width = 115;
+    let width = large ? 686 : 332;
+    if (isHovering) {
+      if (!user.isCreator && isHovering) {
+        width = large ? 494 : 140;
+      }
+      if (isLocked && !price && +productTypeId === 2) {
+        width = large ? 469 : 115;
+      }
     }
     return { width };
-  }, [isHovering, price, productTypeId, isLocked, user.isCreator]);
+  }, [large, isHovering, user.isCreator, isLocked, price, productTypeId]);
 
   const src = useMemo(
     () => (thumbnail ? getThumbnail(PRODUCTS, userId, `thumbnail-${thumbnail}`) : product),
