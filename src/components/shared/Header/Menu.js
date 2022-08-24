@@ -22,19 +22,13 @@ const getTabItems = (id, isCreator, isSubscribed, featuresSeen) => {
       path: '/features',
     },
   ];
-  items.push(
-    isCreator
-      ? {
-          id: 'earnMore',
-          title: 'Earn More',
-          path: '/earn-more',
-        }
-      : {
-          id: 'pricing',
-          title: isSubscribed ? 'Pro account' : 'Pricing',
-          path: '/pricing',
-        },
-  );
+  if (!isCreator) {
+    items.push({
+      id: 'pricing',
+      title: isSubscribed ? 'Pro account' : 'Pricing',
+      path: '/pricing',
+    });
+  }
   return items;
 };
 
