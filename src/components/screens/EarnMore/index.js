@@ -1,9 +1,11 @@
 import { memo, useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useMutation } from '@apollo/client';
 
+import { sendInvitation } from '@app/graphql/mutations/user.mutation';
 import { validateEmail } from '@utils/helpers';
 import { Col, Row, Text, Title, Select, Button } from '@ui-kit';
-import { errorToast } from '@ui-kit/Notification';
+import { errorToast, successToast } from '@ui-kit/Notification';
 import Circle from '@ui-kit/Custom/Circle';
 import paperPlane from '@images/paper-plane.png';
 import earnMore from '@images/earn-more.png';
@@ -51,8 +53,15 @@ const info = [
   },
 ];
 
-const FeaturesPage = () => {
+const EarnMore = () => {
   const [emails, setEmails] = useState([]);
+  const [inviteUsers, { loading }] = useMutation(sendInvitation, {
+    variables: { emails },
+    onCompleted: (data) => {
+      successToast('The invitation(s) are successfully sent');
+    },
+    onError: (e) => errorToast(e?.message),
+  });
 
   const validationOfEmail = (values) => {
     const validatedEmails = values.filter(validateEmail);
@@ -61,6 +70,7 @@ const FeaturesPage = () => {
       errorToast('Invalid email address');
     }
   };
+
   useEffect(() => {
     if (emails.length > 5) {
       errorToast('You can send this to 5 people at a time');
@@ -110,7 +120,13 @@ const FeaturesPage = () => {
                   />
                 </Wrapper>
                 <Col padding_top={20}>
-                  <Button type='primary' width={220}>
+                  <Button
+                    type='primary'
+                    loading={loading}
+                    disabled={emails.length < 1}
+                    width={220}
+                    onClick={inviteUsers}
+                  >
                     SEND INVITATIONS
                   </Button>
                 </Col>
@@ -163,4 +179,4 @@ const FeaturesPage = () => {
   );
 };
 
-export default memo(FeaturesPage);
+export default memo(EarnMore);
