@@ -1,4 +1,5 @@
 const dark = {
+  dark200: '#202020',
   dark100: '#2B2B2B',
   dark50: '#878C94',
   dark25: '#BBBCBC',

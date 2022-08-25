@@ -1,24 +1,15 @@
 import styled from 'styled-components';
 
 const FeaturesWrapper = styled('div')`
-  .container {
-    width: 1680px;
-    margin: 0 auto;
-  }
   .banner {
-    height: 93vh;
-    min-height: 950px;
-    position: relative;
-  }
-  .bubble {
-    position: absolute;
-    top: 70px;
-    left: -80px;
+    display: flex;
+    justify-content: center;
+    min-height: 920px;
   }
   .half-bubble {
     position: absolute;
-    right: -110px;
-    top: 480px;
+    right: -70px;
+    top: 420px;
   }
   .banner-title {
     text-align: center;
@@ -42,34 +33,60 @@ const FeaturesWrapper = styled('div')`
     text-align: center;
   }
   .desc-content .banner-title {
-    z-index: 100;
+    max-width: 1070px;
+    margin: 0 10px;
   }
   .desc-texts {
     margin-top: 20px;
-    z-index: 100;
   }
   .title {
-    margin-top: 40px;
     font-size: ${(props) => props.theme.title[6].size}px;
+  }
+  .paper-plane {
+    max-width: 514px;
   }
   .creator-desc,
   .follower-section {
     text-align: center;
   }
   .custom-back {
-    background: #202020 !important;
+    background: #1a1e24 !important;
+  }
+  .custom-back-2 {
+    background: #000000 !important;
   }
   .subscription {
-    height: 90vh;
     min-height: 950px;
     text-align: center;
   }
-  .formula-text {
-    text-align: center;
-    margin: 30px 0;
+  .list {
+    max-width: 634px;
+    padding-bottom: 105px;
+    ol {
+      padding-inline-start: 25px;
+    }
+    li {
+      padding: 0 10px;
+    }
   }
-  .followers {
-    margin: 40px 0px 80px;
+  .formula-text {
+    max-width: 581px;
+    height: 111px;
+    border-radius: 12px;
+    background: #ffffff;
+    text-align: center;
+    margin-left: 25px;
+    margin-bottom: 23px;
+    opacity: 80%;
+    padding: 0 10px;
+    .formula-divider {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  .title-section {
+    margin: 0 15px;
   }
   .text-options,
   .eCommerce {
@@ -78,9 +95,12 @@ const FeaturesWrapper = styled('div')`
 
   .eCommerce-info {
     margin: 20px auto 60px;
-  }
-  .eCommerce-info li {
-    margin-left: 40px;
+    li:first-child {
+      max-width: 365px;
+    }
+    li:last-child {
+      max-width: 486px;
+    }
   }
   .faq {
     display: inline;
@@ -91,7 +111,7 @@ const FeaturesWrapper = styled('div')`
     color: white !important;
   }
   .final-section {
-    margin: 80px 0;
+    margin: 120px 0;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -99,110 +119,41 @@ const FeaturesWrapper = styled('div')`
   .info {
     padding-top: 20px;
   }
-  @media (max-width: 1679px) {
-    .container {
-      max-width: 1200px !important;
-    }
-    .bubble {
-      left: -220px;
+  @media (max-width: 1200px) {
+    .banner-title {
+      font-size: 50px !important;
+      font-weight: 400px !important;
+      line-height: 60px !important;
     }
     .half-bubble {
-      right: -220px;
+      width: 230px;
+      right: 60px;
+      top: 320px;
     }
-    .follower-section {
-      justify-content: space-between;
-    }
-    .creator-desc .text-options {
-      margin-left: 18px;
-    }
-  }
-  @media (max-width: 1200px) {
-    .container {
-      max-width: 800px !important;
-    }
-    .banner,
-    .creator-desc,
-    .eCommerce {
-      max-width: 650px !important;
-      .bubble {
-        left: -270px;
-      }
-      .half-bubble {
-        right: -320px;
-      }
-    }
-    .creator-desc-block {
-      margin-top: 85px;
-    }
-    .follower-section {
-      max-width: 100% !important;
-    }
-    .followers .text-options {
-      margin-left: 30px;
-    }
-  }
-  @media (max-width: 992px) {
-    .cash-flow {
-      display: none;
-    }
-    .list {
-      margin: 0;
-    }
-    .followers {
-      margin-left: 50px;
-    }
-    .follower-section {
-      max-width: 750px !important;
-    }
-    .follow-img {
-      width: 300px;
-    }
-  }
-  @media (max-width: 750px) {
-    .follower-section {
-      max-width: 100% !important;
-    }
-    .subscription {
-      min-height: 645px;
-      max-width: 500px !important;
+    .desc-content {
+      height: 680px;
     }
   }
   @media (max-width: 575px) {
-    .container {
-      min-height: 800px;
-      max-width: 385px !important;
-      .bubble {
-        left: -280px;
-      }
-      .half-bubble {
-        top: 500px;
-        right: -270px;
-      }
-    }
-    .paper-plane,
-    .follow-img {
-      width: 380px;
-    }
-    .eCommerce-info li {
-      margin-left: 0;
-    }
-    .list {
-      margin-top: 20px;
-    }
-    .cash-flow {
-      display: none;
-    }
     .followers {
-      margin: 0 0 40px 0;
+      margin: 0 20px 0 25px;
     }
     .follower-section {
       max-width: 100% !important;
     }
-    .circled {
-      margin: 0 10px 10px;
+    .follow-img {
+      padding: 0 10px;
     }
-    .creator-desc {
-      margin-bottom: 40px;
+    .creator-desc-block {
+      margin: 0 20px 20px 30px;
+    }
+    .formula-text {
+      height: 130px;
+      margin-right: 20px;
+    }
+    .half-bubble {
+      right: 40px;
+      top: 375px;
     }
   }
 `;

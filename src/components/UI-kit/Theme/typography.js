@@ -8,6 +8,7 @@ const typography = {
     6: { size: 30, height: 45, weight: 700 },
     7: { size: 45, height: 68, weight: 700 },
     8: { size: 50, height: 60, weight: 700 },
+    9: { size: 120, height: 137, weight: 700 },
   },
   text: {
     1: { size: 14, height: 21, weight: 500 },
