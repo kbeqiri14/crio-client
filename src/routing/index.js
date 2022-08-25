@@ -30,6 +30,7 @@ import EditProduct from '@screens/EditProduct';
 import Payment from '@screens/Payment';
 import FeaturesPage from '@screens/FeaturesPage';
 import EarnMore from '@screens/EarnMore';
+import Invitations from '@screens/Invitations';
 import FAQ from '@screens/FAQ';
 import Job from '@screens/Job';
 
@@ -139,7 +140,6 @@ export const AppRoutes = () => {
             <Route exact path='/cognito/callback' component={CognitoCallback} />
             <Route exact path='/features' component={FeaturesPage} />
             <Route exact path='/faq' component={FAQ} />
-            <Route exact path='/subscription-automation-result' component={Job} />
 
             {!loading && !user && <Redirect to='/' />}
             {/* PRIVATE ROUTES */}
@@ -172,6 +172,18 @@ export const AppRoutes = () => {
               isAuthenticated={isAuthenticated}
               path='/payment'
               component={Payment}
+            />
+            <PrivateRoute
+              exact
+              isAuthenticated={isAuthenticated}
+              path='/subscription-automation-result'
+              component={Job}
+            />
+            <PrivateRoute
+              exact
+              isAuthenticated={isAuthenticated}
+              path='/invitations'
+              component={Invitations}
             />
             <PrivateRoute
               exact
