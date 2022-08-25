@@ -33,6 +33,7 @@ import EarnMore from '@screens/EarnMore';
 import Invitations from '@screens/Invitations';
 import FAQ from '@screens/FAQ';
 import Job from '@screens/Job';
+import AcceptInvitation from '@screens/AcceptInvitation';
 
 export const AppRoutes = () => {
   const [keyword, setKeyword] = useState('');
@@ -140,6 +141,7 @@ export const AppRoutes = () => {
             <Route exact path='/cognito/callback' component={CognitoCallback} />
             <Route exact path='/features' component={FeaturesPage} />
             <Route exact path='/faq' component={FAQ} />
+            <Route exact path='/accept-invitation/:email' component={AcceptInvitation} />
 
             {!loading && !user && <Redirect to='/' />}
             {/* PRIVATE ROUTES */}

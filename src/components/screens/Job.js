@@ -1,7 +1,7 @@
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { Checkbox, Switch, Table } from 'antd';
 import styled from 'styled-components';
-import { useReactiveVar, useQuery } from '@apollo/client';
+import { useQuery, useReactiveVar } from '@apollo/client';
 
 import history from '@configs/history';
 import { loggedInUserLoadingVar } from '@configs/client-cache';

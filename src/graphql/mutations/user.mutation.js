@@ -52,3 +52,9 @@ export const cancelSubscription = gql`
     cancelSubscription
   }
 `;
+
+export const acceptInvitation = gql`
+  mutation acceptInvitation($email: String!) {
+    acceptInvitation(email: $email)
+  }
+`;

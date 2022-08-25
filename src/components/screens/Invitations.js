@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Table } from 'antd';
 import { CheckCircleTwoTone, CloseCircleOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
-import { useReactiveVar, useQuery } from '@apollo/client';
+import { useQuery, useReactiveVar } from '@apollo/client';
 
 import history from '@configs/history';
 import { loggedInUserLoadingVar } from '@configs/client-cache';
