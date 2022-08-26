@@ -1,6 +1,6 @@
 import { memo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Table } from 'antd';
+import { Table, Tooltip } from 'antd';
 import { CheckCircleTwoTone, CloseCircleOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import { useQuery, useReactiveVar } from '@apollo/client';
@@ -37,7 +37,16 @@ const columns = [
     render: ({ emails }) =>
       emails.map(({ email, accept }) => (
         <Title level={2} color='dark50' ellipsis={{ tooltip: email }}>
-          {accept ? <CheckCircleTwoTone /> : <CloseCircleOutlined />} {email}
+          {accept ? (
+            <Tooltip title='Accepted'>
+              <CheckCircleTwoTone />
+            </Tooltip>
+          ) : (
+            <Tooltip title='Pending'>
+              <CloseCircleOutlined />
+            </Tooltip>
+          )}{' '}
+          {email}
         </Title>
       )),
   },
