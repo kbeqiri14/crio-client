@@ -49,7 +49,7 @@ const info = [
   {
     key: 3,
     title: 'Your Earnings',
-    desc: `You will get a total of $300per month! $250 ($5,000 * 5%) for inviting Erika & $50 ($1,000 * 5%) for inviting John. This is in addition to other income streams you earn on Crio. `,
+    desc: `You will get a total of $300 / month! $250 ($5,000 * 5%) for inviting Erika & $50 ($1,000 * 5%) for inviting John. This is in addition to other income streams you earn on Crio. `,
   },
 ];
 
@@ -159,7 +159,7 @@ const EarnMore = () => {
                       <Col>
                         <Circle>{key}</Circle>
                       </Col>
-                      <Col max_width={293}>
+                      <Col max_width={310}>
                         <Text level={4}>{title}</Text>
                         <br />
                         <Text level={3} color='dark25'>
