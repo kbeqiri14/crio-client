@@ -34,6 +34,7 @@ import Invitations from '@screens/Invitations';
 import FAQ from '@screens/FAQ';
 import Job from '@screens/Job';
 import AcceptInvitation from '@screens/AcceptInvitation';
+import NotFound from '@root/src/components/shared/EmptyState/notFound';
 
 export const AppRoutes = () => {
   const [keyword, setKeyword] = useState('');
@@ -142,6 +143,7 @@ export const AppRoutes = () => {
             <Route exact path='/features' component={FeaturesPage} />
             <Route exact path='/faq' component={FAQ} />
             <Route exact path='/accept-invitation/:email' component={AcceptInvitation} />
+            <Route path='/' component={NotFound} />
 
             {!loading && !user && <Redirect to='/' />}
             {/* PRIVATE ROUTES */}
