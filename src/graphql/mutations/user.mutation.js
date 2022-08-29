@@ -58,3 +58,9 @@ export const acceptInvitation = gql`
     acceptInvitation(email: $email)
   }
 `;
+
+export const createTransfers = gql`
+  mutation {
+    createTransfers
+  }
+`;
