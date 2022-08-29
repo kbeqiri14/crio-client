@@ -53,8 +53,8 @@ html {
     }
   }
   main {
-    height: calc(100vh - @app-header-height);
-    margin-top: @app-header-height;
+    height: 100vh;
+    // margin-top: @app-header-height;
     /* Hide scrollbar for Chrome, Safari and Opera */
     ::-webkit-scrollbar {
       display: none;
@@ -62,6 +62,9 @@ html {
     /* Hide scrollbar for IE, Edge and Firefox */
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
+  }
+  section {
+    margin-top: 70px;
   }
   /* Hide scrollbar for Chrome, Safari and Opera */
   ::-webkit-scrollbar {

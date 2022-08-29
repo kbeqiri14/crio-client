@@ -2,6 +2,8 @@ import { Tabs as antTabs } from 'antd';
 import styled from 'styled-components';
 
 const Tabs = styled(antTabs)`
+  /* margin-top: 70px; */
+  /* height: 65vh; */
   .ant-tabs-tab {
     margin-right: 20px;
   }
