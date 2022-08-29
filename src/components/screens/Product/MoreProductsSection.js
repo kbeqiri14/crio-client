@@ -15,6 +15,16 @@ const UserMoreProductsWrapper = styled('div')`
   background-color: #202020;
   > div {
     max-width: 1040px;
+
+    @media (max-width: 1393px) {
+      max-width: 1040px;
+    }
+    @media (max-width: 1059px) {
+      max-width: 686px;
+    }
+    @media (max-width: 705px) {
+      max-width: 332px;
+    }
   }
 `;
 
