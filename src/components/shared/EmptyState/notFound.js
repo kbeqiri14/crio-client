@@ -8,59 +8,47 @@ import ellipse1 from '@images/ellipse-1.png';
 import ellipse2 from '@images/ellipse-2.png';
 
 const Wrapper = styled('div')`
-  position: relative;
-  max-width: 600px;
-  margin: auto;
+  display: flex;
+  justify-content: center;
   padding: 0 15px;
-  .half-bubble-1 {
-    position: absolute;
-    top: 220px;
-    right: -235px;
-  }
-  .half-bubble-2 {
-    position: absolute;
-    top: 570px;
-    right: 590px;
-  }
-
-  @media (max-width: 1084px) {
-    .half-bubble-1,
-    .half-bubble-2 {
-      display: none;
-    }
-  }
 `;
 export const NotFound = () => {
   const onClick = useCallback(() => history.push('/'), []);
   return (
     <>
       <Wrapper>
-        <Row
-          className='text-center'
-          padding_top={230}
-          justify='center'
-          align='middle'
-          gutter={[0, 20]}
-        >
-          <Col span={24}>
-            <img src={notFound} alt='404' />
-          </Col>
-          <Col padding_top={60} span={24}>
-            <Title level={8}>Something went wrong</Title>
-          </Col>
-          <Col span={24}>
-            <Text level={4} color='dark25'>
-              This page is missing or you assembled the link incorectly
-            </Text>
-          </Col>
-          <Col padding_top={20} span={24}>
-            <Button type='primary' onClick={onClick}>
-              GO BACK
-            </Button>
-          </Col>
-        </Row>
-        <img src={ellipse1} alt='ellipse1' className='half-bubble-1' />
-        <img src={ellipse2} alt='ellipse2' className='half-bubble-2' />
+        <Col padding_top={600} xs={0} sm={0} md={0} lg={4} xl={3}>
+          <img src={ellipse1} alt='ellipse1' />
+        </Col>
+        <Col max_width={600}>
+          <Row
+            className='text-center'
+            padding_top={230}
+            justify='center'
+            align='middle'
+            gutter={[0, 20]}
+          >
+            <Col span={24}>
+              <img src={notFound} alt='404' />
+            </Col>
+            <Col padding_top={60} span={24}>
+              <Title level={8}>Something went wrong</Title>
+            </Col>
+            <Col span={24}>
+              <Text level={4} color='dark25'>
+                This page is missing or you assembled the link incorectly
+              </Text>
+            </Col>
+            <Col padding_top={20} span={24}>
+              <Button type='primary' onClick={onClick}>
+                GO BACK
+              </Button>
+            </Col>
+          </Row>
+        </Col>
+        <Col padding_top={220} offset={1} xs={0} sm={0} md={0} lg={4} xl={3}>
+          <img src={ellipse2} alt='ellipse2' />
+        </Col>
       </Wrapper>
     </>
   );
