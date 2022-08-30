@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { Checkbox, Switch, Table } from 'antd';
 import styled from 'styled-components';
@@ -223,11 +224,11 @@ const Job = () => {
             )}
           />
         </Col>
-        <Col span={24} align='end'>
+        {/* <Col span={24} align='end'>
           <Button type='primary' loading={transferring} onClick={transfer}>
             Transfer
           </Button>
-        </Col>
+        </Col> */}
       </Row>
     </Wrapper>
   );
