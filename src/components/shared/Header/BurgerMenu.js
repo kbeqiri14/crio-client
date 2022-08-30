@@ -96,13 +96,6 @@ export const BurgerMenu = ({ user, keyword, setKeyword }) => {
                 </Text>
               </Link>
             </Col>
-            <Col span={24} padding_left={10} onClick={closeMenu}>
-              <Link to='/earn-more'>
-                <Text level={3} color='dark25'>
-                  Earn More
-                </Text>
-              </Link>
-            </Col>
             {!user.isCreator && (
               <Col span={24} padding_left={10} onClick={closeMenu}>
                 <Link to='/pricing'>
@@ -115,16 +108,25 @@ export const BurgerMenu = ({ user, keyword, setKeyword }) => {
             {user.id && (
               <>
                 {user.isCreator && (
-                  <Col span={24} padding_left={10} onClick={setOptions}>
-                    <Text level={3} color='dark25'>
-                      Upload
-                    </Text>{' '}
-                    {visibleOptions ? (
-                      <ArrowUpIcon className='vertical-middle' />
-                    ) : (
-                      <ArrowDownIcon className='vertical-middle' />
-                    )}
-                  </Col>
+                  <>
+                    <Col span={24} padding_left={10} onClick={closeMenu}>
+                      <Link to='/earn-more'>
+                        <Text level={3} color='dark25'>
+                          Earn More
+                        </Text>
+                      </Link>
+                    </Col>
+                    <Col span={24} padding_left={10} onClick={setOptions}>
+                      <Text level={3} color='dark25'>
+                        Upload
+                      </Text>{' '}
+                      {visibleOptions ? (
+                        <ArrowUpIcon className='vertical-middle' />
+                      ) : (
+                        <ArrowDownIcon className='vertical-middle' />
+                      )}
+                    </Col>
+                  </>
                 )}
                 {visibleOptions && (
                   <Col span={24} padding_left={10} onClick={closeMenu}>
