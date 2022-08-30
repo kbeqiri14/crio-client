@@ -143,7 +143,6 @@ export const AppRoutes = () => {
             <Route exact path='/features' component={FeaturesPage} />
             <Route exact path='/faq' component={FAQ} />
             <Route exact path='/accept-invitation/:email' component={AcceptInvitation} />
-            <Route path='/' component={NotFound} />
 
             {!loading && !user && <Redirect to='/' />}
             {/* PRIVATE ROUTES */}
@@ -195,6 +194,7 @@ export const AppRoutes = () => {
               path='/earn-more'
               component={EarnMore}
             />
+            <Route path='/' component={NotFound} />
           </Switch>
           {isVisible && <PresentationView />}
           {visible && <SendEmailModal />}
