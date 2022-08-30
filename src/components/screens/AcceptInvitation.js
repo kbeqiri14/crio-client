@@ -13,7 +13,7 @@ const AcceptInvitation = () => {
     variables: { email: pathname.split('/').slice(-1)[0] },
     onCompleted: () => {
       history.push('/');
-      successToast('Congratulations. You successfully accepted invitation.');
+      successToast('You successfully accepted invitation.');
     },
     onError: (e) => {
       history.push('/');
