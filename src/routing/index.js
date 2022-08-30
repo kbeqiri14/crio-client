@@ -34,6 +34,7 @@ import Invitations from '@screens/Invitations';
 import FAQ from '@screens/FAQ';
 import Job from '@screens/Job';
 import AcceptInvitation from '@screens/AcceptInvitation';
+import NotFound from '@root/src/components/shared/EmptyState/notFound';
 
 export const AppRoutes = () => {
   const [keyword, setKeyword] = useState('');
@@ -193,6 +194,7 @@ export const AppRoutes = () => {
               path='/earn-more'
               component={EarnMore}
             />
+            <Route path='/' component={NotFound} />
           </Switch>
           {isVisible && <PresentationView />}
           {visible && <SendEmailModal />}
