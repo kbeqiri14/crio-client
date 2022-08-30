@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { memo } from 'react';
 import styled from 'styled-components';
 import history from '@configs/history';
 
@@ -7,27 +7,24 @@ import notFound from '@images/404.png';
 import ellipse1 from '@images/ellipse-1.png';
 import ellipse2 from '@images/ellipse-2.png';
 
+const onClick = () => history.push('/');
+
 const Wrapper = styled('div')`
   display: flex;
   justify-content: center;
-  padding: 0 15px;
+  text-align: center;
+  padding: 230px 15px 0;
 `;
+
 export const NotFound = () => {
-  const onClick = useCallback(() => history.push('/'), []);
   return (
     <>
       <Wrapper>
-        <Col padding_top={600} xs={0} sm={0} md={0} lg={4} xl={3}>
+        <Col padding_top={330} xs={0} sm={0} md={0} lg={4} xl={3}>
           <img src={ellipse1} alt='ellipse1' />
         </Col>
         <Col max_width={600}>
-          <Row
-            className='text-center'
-            padding_top={230}
-            justify='center'
-            align='middle'
-            gutter={[0, 20]}
-          >
+          <Row gutter={[0, 20]}>
             <Col span={24}>
               <img src={notFound} alt='404' />
             </Col>
@@ -36,7 +33,7 @@ export const NotFound = () => {
             </Col>
             <Col span={24}>
               <Text level={4} color='dark25'>
-                This page is missing or you assembled the link incorectly
+                This page is missing or you assembled the link incorrectly
               </Text>
             </Col>
             <Col padding_top={20} span={24}>
@@ -46,7 +43,7 @@ export const NotFound = () => {
             </Col>
           </Row>
         </Col>
-        <Col padding_top={220} offset={1} xs={0} sm={0} md={0} lg={4} xl={3}>
+        <Col offset={1} xs={0} sm={0} md={0} lg={4} xl={3}>
           <img src={ellipse2} alt='ellipse2' />
         </Col>
       </Wrapper>
