@@ -141,7 +141,7 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
           <Text level={3}>
             <div
               dangerouslySetInnerHTML={{ __html: urlify(user.about) }}
-              style={{ whiteSpace: 'pre-line' }}
+              style={{ whiteSpace: 'pre-line', overflowWrap: 'break-word' }}
             />
           </Text>
         </Col>
