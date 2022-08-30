@@ -79,7 +79,7 @@ const EarnMore = () => {
 
   const send = useCallback(() => {
     if (emails.length + +data?.getUserInvitations?.length > 5) {
-      errorToast('You can send this to 5 people at a time');
+      errorToast("You can't invite more then 5 people");
       return;
     }
     inviteUsers();
