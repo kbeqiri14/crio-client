@@ -93,7 +93,10 @@ const EarnMore = () => {
     }
   };
 
-  useEffect(() => requestUserInvitations(), [requestUserInvitations]);
+  useEffect(() => {
+    const asyncFunc = async () => requestUserInvitations();
+    asyncFunc();
+  }, [requestUserInvitations]);
 
   if (initial && loadingInvitations) {
     return <GlobalSpinner />;
