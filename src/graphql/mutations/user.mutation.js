@@ -35,6 +35,12 @@ export const createFollowing = gql`
   }
 `;
 
+export const sendInvitation = gql`
+  mutation sendInvitation($emails: [String!]!) {
+    sendInvitation(emails: $emails)
+  }
+`;
+
 export const createSubscriber = gql`
   mutation createSubscriber($subscriberId: ID!) {
     createSubscriber(subscriberId: $subscriberId)
@@ -44,5 +50,17 @@ export const createSubscriber = gql`
 export const cancelSubscription = gql`
   mutation {
     cancelSubscription
+  }
+`;
+
+export const acceptInvitation = gql`
+  mutation acceptInvitation($email: String!) {
+    acceptInvitation(email: $email)
+  }
+`;
+
+export const createTransfers = gql`
+  mutation {
+    createTransfers
   }
 `;

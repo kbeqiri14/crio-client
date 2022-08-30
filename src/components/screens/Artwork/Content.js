@@ -33,7 +33,7 @@ const Wrapper = styled('div')`
       }
     }
   }
-  @media screen and (max-width: 420px) {
+  @media (max-width: 420px) {
     .flex-dir {
       flex-direction: column-reverse;
     }

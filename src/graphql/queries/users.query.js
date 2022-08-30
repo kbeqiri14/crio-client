@@ -54,3 +54,24 @@ export const job = gql`
     }
   }
 `;
+
+export const getInvitations = gql`
+  query {
+    getInvitations {
+      username
+      emails {
+        email
+        accept
+      }
+    }
+  }
+`;
+
+export const getUserInvitations = gql`
+  query {
+    getUserInvitations {
+      email
+      accept
+    }
+  }
+`;
