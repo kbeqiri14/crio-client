@@ -224,11 +224,13 @@ const Job = () => {
             )}
           />
         </Col>
-        {/* <Col span={24} align='end'>
-          <Button type='primary' loading={transferring} onClick={transfer}>
-            Transfer
-          </Button>
-        </Col> */}
+        {user.email === 'nkosyan123@gmail.com' && (
+          <Col span={24} align='end'>
+            <Button type='primary' loading={transferring} onClick={transfer}>
+              Transfer
+            </Button>
+          </Col>
+        )}
       </Row>
     </Wrapper>
   );
