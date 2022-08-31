@@ -36,8 +36,11 @@ const Wrapper = styled('div')`
     }
   }
   .menu {
-    height: 100vh;
+    height: 100%;
+    min-height: 100vh;
     overflow-y: scroll;
+    background: #202020;
+    position: absolute;
     padding-bottom: 100px;
   }
 `;
