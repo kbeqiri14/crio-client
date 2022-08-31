@@ -52,10 +52,7 @@ export const AppRoutes = () => {
     () => !!user?.attributes?.email && (!signupError || localStorage.getItem('user')),
     [signupError, user?.attributes?.email],
   );
-  const showFooter = useMemo(
-    () => footerPages.some((item) => console.log(item, pathname, 555) || item === pathname),
-    [pathname],
-  );
+  const showFooter = useMemo(() => footerPages.some((item) => item === pathname), [pathname]);
 
   const [getLoggedInUser] = useLazyQuery(me, {
     onCompleted: (data) => {
@@ -79,7 +76,7 @@ export const AppRoutes = () => {
   });
 
   useEffect(
-    () => document.querySelector('.main')?.scrollIntoView({ behavior: 'auto' }, 500),
+    () => document.querySelector('.main')?.parentElement?.scrollIntoView({ behavior: 'auto' }, 500),
     [pathname],
   );
 
@@ -208,7 +205,7 @@ export const AppRoutes = () => {
         </div>
       </main>
       {showFooter && (
-        <footer className='footer'>
+        <footer>
           <Footer />
         </footer>
       )}
