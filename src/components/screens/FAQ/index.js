@@ -6,7 +6,6 @@ import { ReactComponent as ArrowDownIcon } from '@svgs/arrow-down.svg';
 import { ReactComponent as ArrowUpIcon } from '@svgs/arrow-up.svg';
 
 import { questions } from './_partials/questions';
-import { Footer } from '@shared/Footer';
 
 const { Panel } = Collapse;
 
@@ -58,7 +57,6 @@ export const FAQ = () => {
           </Collapse>
         </Col>
       </Row>
-      <Footer />
     </Wrapper>
   );
 };

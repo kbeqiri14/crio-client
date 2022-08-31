@@ -35,7 +35,7 @@ export const NotFound = () => (
           </Text>
         </Col>
         <Col padding_top={20} span={24}>
-          <Button type='primary' onClick={onClick}>
+          <Button type='primary' onClick={onClick} width={141}>
             GO BACK
           </Button>
         </Col>

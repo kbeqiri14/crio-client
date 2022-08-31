@@ -9,7 +9,6 @@ import { updateUser } from '@app/graphql/mutations/user.mutation';
 // import history from '@configs/history';
 import { loggedInUserLoadingVar } from '@configs/client-cache';
 import { Meta } from '@shared/Meta';
-import { Footer } from '@shared/Footer';
 import { Carousel, Col, Divider, List, Row, Text, Title } from '@ui-kit';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import bubble from '@images/bubble.png';
@@ -336,7 +335,6 @@ export const FeaturesPage = () => {
           </Text>
         </Col>
       </Row>
-      <Footer />
     </FeaturesWrapper>
   );
 };
