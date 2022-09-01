@@ -1,14 +1,17 @@
+/* eslint-disable no-unused-vars */
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { Checkbox, Switch, Table } from 'antd';
 import styled from 'styled-components';
-import { useQuery, useReactiveVar } from '@apollo/client';
+import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 
 import history from '@configs/history';
 import { loggedInUserLoadingVar } from '@configs/client-cache';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { job } from '@app/graphql/queries/users.query';
-import { Col, Row, Text, Title } from '@ui-kit';
+import { createTransfers } from '@app/graphql/mutations/user.mutation';
+import { Button, Col, Row, Text, Title } from '@ui-kit';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
+import { errorToast, successToast } from '@ui-kit/Notification';
 
 const Wrapper = styled('div')`
   display: flex;
@@ -85,6 +88,10 @@ const Job = () => {
       setState({ totalFollowersCount, subscribersCount: job.subscribersCount, creatorsFollowers });
       setDataSource(creatorsFollowers.filter(({ count }) => count > 0));
     },
+  });
+  const [transfer, { loading: transferring }] = useMutation(createTransfers, {
+    onCompleted: () => successToast('Transfers successfully done'),
+    onError: () => errorToast('Something went wrong!'),
   });
 
   const pool = useMemo(
@@ -217,6 +224,13 @@ const Job = () => {
             )}
           />
         </Col>
+        {user.email === 'nkosyan123@gmail.com' && (
+          <Col span={24} align='end'>
+            <Button type='primary' loading={transferring} onClick={transfer}>
+              Transfer
+            </Button>
+          </Col>
+        )}
       </Row>
     </Wrapper>
   );

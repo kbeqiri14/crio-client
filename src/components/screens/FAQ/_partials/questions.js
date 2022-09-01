@@ -136,14 +136,10 @@ export const questions = [
     answer: (
       <Fragment>
         <li>
-          Once a fan makes a purchase, the Creator will get an automatic e-mail alert connecting
-          them to the fan. Creators can then fulfill the order over e-mail.
+          Once a fan makes a purchase of a service, the Creator will get an automatic email alert
+          connecting them to the fan. Creators can fulfill the service over email.
         </li>
-        <li>
-          End of July, we will enable creators to upload files for the digital products they are
-          offering. Fans can just download the product after purchase without needing to email
-          creators.
-        </li>
+        <li>For digital products, fans can simply download after they make a purchase.</li>
       </Fragment>
     ),
   },
@@ -285,19 +281,8 @@ export const questions = [
         </li>
         <li>
           <b>Subscription: </b>
-          At first, we will calculate each creator’s portion of the “Creator Pool” at the end of
-          every month and send money manually using their preferred payment method (PayPal, Wires,
-          Wise, etc.). Please e-mail us directly at
-          <a href={`mailto:info@criointeractive.com`}> info@criointeractive.com </a> on your
-          preferred method of payment.
-          <ul>
-            <li>
-              <em>
-                Starting August 2022, we will automate this so creators can receive subscription
-                revenue directly to their bank!
-              </em>
-            </li>
-          </ul>
+          Subscription payments will automatically be sent to each creator’s Stripe Express accounts
+          at the end of every month (either the 30<sup>th</sup> or 31<sup>st</sup> at 11:59 EST).
         </li>
       </Fragment>
     ),
@@ -367,32 +352,6 @@ export const questions = [
               products to a higher-intent (subscribed) user base.
             </li>
           </ul>
-        </li>
-      </Fragment>
-    ),
-  },
-  {
-    key: 16,
-    question: 'New features coming in July & August',
-    answer: (
-      <Fragment>
-        <li>
-          <b>Uploading Digital Products: </b>
-          Creators can upload files for each digital product they are offering, so when a user makes
-          a purchase, they can just download the files directly from Crio without needing to email
-          creators.
-        </li>
-        <li>
-          <b>Automatic Subscription Payments: </b>
-          We will automate the subscription payments, so they go to directly each creator’s bank
-          account at the end of every month.
-        </li>
-        <li>
-          <b>Referral Program: </b>
-          Creators will be able to make passive income simply by just referring other creators to
-          the platform. When you refer another creator, you will get a payout equal to 5% of the
-          referred person’s earnings every month for a whole year. For example, if the creator you
-          refer makes $5,000 / month, you will receive $250/month from Crio (not the creator).
         </li>
       </Fragment>
     ),
