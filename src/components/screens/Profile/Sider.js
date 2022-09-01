@@ -129,10 +129,7 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
           </Col>
         )}
         {!isProfile && user.isCreator && (
-          <Col
-            align='center'
-            style={{ border: '1px solid white', borderRadius: 10, padding: '10px 50px' }}
-          >
+          <Col align='center' className='revenue'>
             <Title level={2}>Subscription Revenue</Title>
             <Text level={3}>${user.revenue} / month</Text>
           </Col>

@@ -2,7 +2,6 @@ import { memo, useEffect, useMemo, useState } from 'react';
 import { useReactiveVar } from '@apollo/client';
 
 import { Meta } from '@shared/Meta';
-import { Footer } from '@shared/Footer';
 import useRandomInfo from '@root/src/hooks/useRandomInfo';
 import { searchKeywordVar, refetchArtworkVar, refetchMarketplaceVar } from '@configs/client-cache';
 import { Carousel } from '@ui-kit';
@@ -95,7 +94,6 @@ export const ExplorePage = () => {
         loadMoreProducts={loadMoreProducts}
         loadMoreArtworks={loadMoreArtworks}
       />
-      <Footer />
     </>
   );
 };

@@ -2,7 +2,6 @@ import { memo, useMemo } from 'react';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { Meta } from '@shared/Meta';
-import { Footer } from '@shared/Footer';
 import CancelSubscription from './CancelSubscription';
 import Pricing from './Pricing';
 
@@ -18,7 +17,6 @@ const PricingPlans = () => {
     <>
       <Meta title='Pricing Plans' description='Crio - Pricing Plans' />
       {showCancelSubscription ? <CancelSubscription /> : <Pricing />}
-      <Footer />
     </>
   );
 };

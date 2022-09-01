@@ -15,7 +15,6 @@ import { ReactComponent as CheckMark } from '@svgs/check.svg';
 import { ReactComponent as RecommendIcon } from '@svgs/recommend.svg';
 
 const Wrapper = styled('div')`
-  height: calc(100vh - 140px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,14 +32,6 @@ const Wrapper = styled('div')`
   .recommend {
     position: absolute;
     right: 10px;
-  }
-  @media (max-width: 890px) {
-    height: 100%;
-  }
-  @media (max-height: 768px) {
-    &.container {
-      height: 800px;
-    }
   }
 `;
 
@@ -78,7 +69,7 @@ const Pricing = () => {
   }
 
   return (
-    <Wrapper className='container'>
+    <Wrapper>
       <Row justify='center' gutter={[20, 20]} className='self-center'>
         <Col className='self-center'>
           <Row gutter={[0, 16]} className='card'>
@@ -106,7 +97,7 @@ const Pricing = () => {
             </Col>
           </Row>
         </Col>
-        <Col className='proWrapper'>
+        <Col>
           <RecommendIcon className='recommend' />
           <Row gutter={[0, 16]} className='card pro'>
             <Col span={24}>
