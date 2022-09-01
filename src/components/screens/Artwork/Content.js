@@ -42,7 +42,7 @@ const Wrapper = styled('div')`
     .widget {
       width: 334px;
     }
-    .textContent {
+    .text-content {
       margin-top: 44px;
     }
   }
@@ -155,7 +155,7 @@ export const Content = ({ info, content, isLocked }) => {
             <Row className='flex-dir' justify='space-between'>
               <Col
                 max_width={info.isProduct ? 722 : undefined}
-                className={visibleTooltip ? 'textContent' : ''}
+                className={visibleTooltip || (user.id && !user.helpSeen) ? 'text-content' : ''}
               >
                 <Text level={4} color='dark25'>
                   <div
