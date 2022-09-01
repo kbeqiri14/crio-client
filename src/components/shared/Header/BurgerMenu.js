@@ -41,7 +41,7 @@ const Wrapper = styled('div')`
     overflow-y: scroll;
     background: #202020;
     position: absolute;
-    padding-bottom: 140px;
+    padding-bottom: 155px;
   }
 `;
 
