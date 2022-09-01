@@ -140,7 +140,7 @@ const ProductForm = ({ state }) => {
                   align='middle'
                   padding_bottom={32}
                   padding_left={productTypeId === '1' && 27}
-                  className={visibleTooltip ? 'selectTitle' : ''}
+                  className={productTypeId === '1' && visibleTooltip ? 'selectTitle' : ''}
                 >
                   <Title level={1}>Add new Digital Product or Service</Title>
                 </Col>
