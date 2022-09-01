@@ -1,6 +1,7 @@
 import { memo, useCallback, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { useReactiveVar } from '@apollo/client';
 
 import { ARTWORKS } from '@configs/constants';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
@@ -10,6 +11,7 @@ import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { Col, Row, Text, Title } from '@ui-kit';
 import LockState from '@shared/CreatorContent/LockState';
 import BuyWidget from '../Product/BuyWidget';
+import { loggedInUserLoadingVar } from '@configs/client-cache';
 
 const Wrapper = styled('div')`
   display: flex;
@@ -67,6 +69,7 @@ const ImageWrapper = styled('div')`
 
 export const Content = ({ info, content, isLocked }) => {
   const { user } = useLoggedInUser();
+  const loggedInUserLoading = useReactiveVar(loggedInUserLoadingVar);
   const [visibleTooltip, setVisibleTooltip] = useState(user.id && !user.helpSeen);
   const avatarUrl = useAvatarUrl(info.providerType, info.providerUserId, info.avatar);
   const { setInfo } = usePresentation();
@@ -83,100 +86,102 @@ export const Content = ({ info, content, isLocked }) => {
 
   return (
     <Wrapper>
-      <Row justify='center' gutter={[0, 40]}>
-        <Col span={24}>
-          <Row gutter={[0, 12]}>
-            <Col span={24}>
-              <Title level={1}>{info.title}</Title>
-            </Col>
-            <Col span={24}>
-              <Row align='middle'>
-                <Col>
-                  {info.providerUserId && (
-                    <img
-                      src={avatarUrl}
-                      height='33'
-                      width='33'
-                      alt='Author avatar'
-                      className='border-radius-100'
-                    />
-                  )}
-                </Col>
-                <Col margin_left={20}>
-                  <Text level={4} color='primary' onClick={hide}>
-                    <Link to={`/profile/${info.username}`}>{info.username}</Link>
-                  </Text>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </Col>
-        {isLocked && !info.isProduct ? (
+      {!loggedInUserLoading && (
+        <Row justify='center' gutter={[0, 40]}>
           <Col span={24}>
-            <div className='lock'>
-              <LockState userId={info.userId} accessibility={info.accessibility} size='lg' />
-              <ImageWrapper>
-                <img
-                  src={source}
-                  alt='artwork'
-                  className={info.content?.startsWith('/static/media/') ? 'default' : ''}
-                />
-              </ImageWrapper>
-            </div>
-          </Col>
-        ) : (
-          <Col span={24}>
-            {info.isProduct || info.isImage ? (
-              <ImageWrapper>
-                <img
-                  src={source}
-                  alt='product'
-                  className={info.thumbnail?.startsWith('/static/media/') ? 'default' : ''}
-                />
-              </ImageWrapper>
-            ) : (
-              <div className='video-view__player embed-responsive aspect-ratio-16/9'>
-                <iframe
-                  title={info.title || 'Crio video player'}
-                  src={`https://player.vimeo.com/video/${content}?h=dc77330a55&color=ffffff&title=0&byline=0&portrait=0`}
-                  frameBorder='0'
-                  allow='autoplay; fullscreen; picture-in-picture'
-                  allowFullScreen
-                />
-              </div>
-            )}
-          </Col>
-        )}
-        <Col span={24}>
-          <Row className='flex-dir' justify='space-between'>
-            <Col
-              max_width={info.isProduct ? 722 : undefined}
-              className={visibleTooltip || (user.id && !user.helpSeen) ? 'text-content' : ''}
-            >
-              <Text level={4} color='dark25'>
-                <div
-                  dangerouslySetInnerHTML={{ __html: urlify(info.description) }}
-                  style={{ whiteSpace: 'pre-line' }}
-                />
-              </Text>
-            </Col>
-            {info.isProduct && (
-              <Col>
-                <BuyWidget
-                  userId={info.userId}
-                  productId={info.productId}
-                  productTypeId={info.productTypeId}
-                  file={info.file}
-                  price={info.price}
-                  limit={info.limit}
-                  accessibility={info.accessibility}
-                  onVisibleChange={(value) => setVisibleTooltip(value)}
-                />
+            <Row gutter={[0, 12]}>
+              <Col span={24}>
+                <Title level={1}>{info.title}</Title>
               </Col>
-            )}
-          </Row>
-        </Col>
-      </Row>
+              <Col span={24}>
+                <Row align='middle'>
+                  <Col>
+                    {info.providerUserId && (
+                      <img
+                        src={avatarUrl}
+                        height='33'
+                        width='33'
+                        alt='Author avatar'
+                        className='border-radius-100'
+                      />
+                    )}
+                  </Col>
+                  <Col margin_left={20}>
+                    <Text level={4} color='primary' onClick={hide}>
+                      <Link to={`/profile/${info.username}`}>{info.username}</Link>
+                    </Text>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+          </Col>
+          {isLocked && !info.isProduct ? (
+            <Col span={24}>
+              <div className='lock'>
+                <LockState userId={info.userId} accessibility={info.accessibility} size='lg' />
+                <ImageWrapper>
+                  <img
+                    src={source}
+                    alt='artwork'
+                    className={info.content?.startsWith('/static/media/') ? 'default' : ''}
+                  />
+                </ImageWrapper>
+              </div>
+            </Col>
+          ) : (
+            <Col span={24}>
+              {info.isProduct || info.isImage ? (
+                <ImageWrapper>
+                  <img
+                    src={source}
+                    alt='product'
+                    className={info.thumbnail?.startsWith('/static/media/') ? 'default' : ''}
+                  />
+                </ImageWrapper>
+              ) : (
+                <div className='video-view__player embed-responsive aspect-ratio-16/9'>
+                  <iframe
+                    title={info.title || 'Crio video player'}
+                    src={`https://player.vimeo.com/video/${content}?h=dc77330a55&color=ffffff&title=0&byline=0&portrait=0`}
+                    frameBorder='0'
+                    allow='autoplay; fullscreen; picture-in-picture'
+                    allowFullScreen
+                  />
+                </div>
+              )}
+            </Col>
+          )}
+          <Col span={24}>
+            <Row className='flex-dir' justify='space-between'>
+              <Col
+                max_width={info.isProduct ? 722 : undefined}
+                className={visibleTooltip || (user.id && !user.helpSeen) ? 'text-content' : ''}
+              >
+                <Text level={4} color='dark25'>
+                  <div
+                    dangerouslySetInnerHTML={{ __html: urlify(info.description) }}
+                    style={{ whiteSpace: 'pre-line' }}
+                  />
+                </Text>
+              </Col>
+              {info.isProduct && (
+                <Col>
+                  <BuyWidget
+                    userId={info.userId}
+                    productId={info.productId}
+                    productTypeId={info.productTypeId}
+                    file={info.file}
+                    price={info.price}
+                    limit={info.limit}
+                    accessibility={info.accessibility}
+                    onVisibleChange={(value) => setVisibleTooltip(value)}
+                  />
+                </Col>
+              )}
+            </Row>
+          </Col>
+        </Row>
+      )}
     </Wrapper>
   );
 };

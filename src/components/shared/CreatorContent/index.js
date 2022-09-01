@@ -14,10 +14,6 @@ const Wrapper = styled('div')`
   margin: auto;
   padding: 40px 22px;
 
-  .empty {
-    text-align: center;
-  }
-
   @media (max-width: 1437px) {
     max-width: 1084px;
   }
