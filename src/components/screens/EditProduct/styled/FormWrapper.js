@@ -50,7 +50,7 @@ const FormWrapper = styled('div')`
       }
     }
   }
-  .selectTitle {
+  .select-title {
     @media (max-width: 1061px) {
       margin-top: 137px;
     }
