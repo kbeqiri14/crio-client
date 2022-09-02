@@ -31,11 +31,8 @@ export const Profile = () => {
     [loggedInUser.username, username],
   );
   const hideButton = useMemo(
-    () =>
-      !loggedInUser.username ||
-      !isProfile ||
-      (isProfile && (loggedInUser.isCreator || !user?.isCreator)),
-    [isProfile, loggedInUser.username, loggedInUser.isCreator, user?.isCreator],
+    () => !isProfile || (isProfile && (loggedInUser.isCreator || !user?.isCreator)),
+    [isProfile, loggedInUser.isCreator, user?.isCreator],
   );
 
   useEffect(() => {

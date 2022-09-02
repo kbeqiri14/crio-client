@@ -3,15 +3,20 @@ import { useLocation } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { getUser, me } from '@app/graphql/queries/users.query';
 import { createFollowing } from '@app/graphql/mutations/user.mutation';
+import { useReactiveVar } from '@apollo/client';
 
 import history from '@configs/history';
+import { loggedInUserLoadingVar } from '@configs/client-cache';
+import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { Button } from '@ui-kit';
 import { ReactComponent as UnFollowIcon } from '@svgs/unfollow.svg';
 import { ReactComponent as FollowIcon } from '@svgs/follow.svg';
 import { ReactComponent as LockIcon } from '@svgs/lock.svg';
 
 const ActionButton = ({ userId, isProfile, isSubscribed, isFollow }) => {
+  const { user } = useLoggedInUser();
   const { pathname } = useLocation();
+  const loggedInUserLoading = useReactiveVar(loggedInUserLoadingVar);
   const username = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
 
   const [follow, { loading }] = useMutation(createFollowing, {
@@ -55,6 +60,10 @@ const ActionButton = ({ userId, isProfile, isSubscribed, isFollow }) => {
     let type = 'primary';
     let icon = <LockIcon />;
     let onClick = () => history.push('/pricing');
+    if (!loggedInUserLoading && !user.id) {
+      label = 'SUBSCRIBE TO SUPPORT';
+      icon = <FollowIcon />;
+    }
     if (isProfile && isSubscribed) {
       if (isFollow) {
         label = 'UNFOLLOW';
@@ -66,7 +75,7 @@ const ActionButton = ({ userId, isProfile, isSubscribed, isFollow }) => {
       onClick = follow;
     }
     return [label, icon, type, onClick];
-  }, [isProfile, isSubscribed, isFollow, follow]);
+  }, [loggedInUserLoading, user.id, isProfile, isSubscribed, isFollow, follow]);
 
   return (
     <Button block icon={icon} loading={loading} onClick={onClick} type={type}>

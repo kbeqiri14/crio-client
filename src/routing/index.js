@@ -10,6 +10,7 @@ import { PrivateRoute } from '@app/routing/routes';
 import { me } from '@app/graphql/queries/users.query';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import Header from '@shared/Header';
+import Footer from '@shared/Footer';
 import { PresentationView } from '@shared/PresentationView';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import SendEmailModal from '@shared/SendEmailModal';
@@ -36,6 +37,8 @@ import Job from '@screens/Job';
 import AcceptInvitation from '@screens/AcceptInvitation';
 import NotFound from '@root/src/components/shared/EmptyState/notFound';
 
+const footerPages = ['/', '/artworks', '/pricing', '/earn-more', '/faq', '/features'];
+
 export const AppRoutes = () => {
   const [keyword, setKeyword] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(true);
@@ -49,6 +52,7 @@ export const AppRoutes = () => {
     () => !!user?.attributes?.email && (!signupError || localStorage.getItem('user')),
     [signupError, user?.attributes?.email],
   );
+  const showFooter = useMemo(() => footerPages.some((item) => item === pathname), [pathname]);
 
   const [getLoggedInUser] = useLazyQuery(me, {
     onCompleted: (data) => {
@@ -72,7 +76,7 @@ export const AppRoutes = () => {
   });
 
   useEffect(
-    () => document.querySelector('.main')?.scrollIntoView({ behavior: 'auto' }, 500),
+    () => document.querySelector('.main')?.parentElement?.scrollIntoView({ behavior: 'auto' }, 500),
     [pathname],
   );
 
@@ -200,6 +204,11 @@ export const AppRoutes = () => {
           {visible && <SendEmailModal />}
         </div>
       </main>
+      {showFooter && (
+        <footer>
+          <Footer />
+        </footer>
+      )}
     </div>
   );
 };
