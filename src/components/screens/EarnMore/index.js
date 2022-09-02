@@ -157,9 +157,9 @@ const EarnMore = () => {
                       mode='tags'
                       autoFocus
                       onChange={validationOfEmail}
-                      maxTagCount={5}
                       showArrow={false}
                       filterOption={false}
+                      autoClearSearchValue={false}
                       placeholder='Write here ...'
                       tokenSeparators={[' ']}
                       value={emails}
