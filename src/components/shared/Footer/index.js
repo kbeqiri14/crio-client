@@ -12,13 +12,13 @@ const links = [
 ];
 
 const Wrapper = styled('div')`
-  @media (max-width: 768px) {
+  @media (max-width: 1600px) {
     margin-right: 45px;
     .flex-direction {
       flex-direction: column;
     }
   }
-  @media (max-width: 915px) {
+  @media (max-width: 810px) {
     .container {
       flex-direction: column-reverse;
     }
@@ -32,7 +32,7 @@ const Footer = () => (
       padding_vertical={20}
       className='container items-center'
     >
-      <Col lg={8}>
+      <Col xxl={8}>
         <Row justify='center' align='center' gutter={[20]} className='items-center'>
           <Col>
             <img alt='Crio logo' src={logo} width={48} height={28} />
@@ -42,9 +42,9 @@ const Footer = () => (
           </Col>
         </Row>
       </Col>
-      <Col lg={10}>
+      <Col xxl={10}>
         <Row justify='center' gutter={[35, 20]}>
-          <Col lg={0} md={0}>
+          <Col xxl={0}>
             <Row className='flex-direction' gutter={[0, 20]}>
               <Col key={'FAQ'}>
                 <Link to={'/faq'}>
@@ -58,14 +58,14 @@ const Footer = () => (
               </Col>
             </Row>
           </Col>
-          <Col lg={24}>
+          <Col xxl={24}>
             <Row className='flex-direction' gutter={[20, 20]}>
-              <Col xxl={2} xl={3} lg={3} md={3} sm={0} xs={0} key={'FAQ'}>
+              <Col xxl={2} xl={0} lg={0} md={0} sm={0} xs={0} key={'FAQ'}>
                 <Link to={'/faq'}>
                   <Text level={3}>FAQ</Text>
                 </Link>
               </Col>
-              <Col xxl={4} xl={6} lg={6} md={6} sm={0} xs={0}>
+              <Col xxl={4} xl={0} lg={0} md={0} sm={0} xs={0}>
                 <a href={`mailto:info@criointeractive.com`}>
                   <Text level={3}>Contact Us</Text>
                 </a>
