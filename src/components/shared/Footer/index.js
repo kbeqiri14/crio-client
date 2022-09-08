@@ -34,11 +34,14 @@ const Footer = () => (
     >
       <Col xl={10} xxl={8}>
         <Row justify='center' align='center' gutter={[20]} className='items-center'>
-          <Col>
+          <Col padding_left={34}>
             <img alt='Crio logo' src={logo} width={48} height={28} />
           </Col>
+          <Col padding_right={27}>
+            <Text level={3}> Crio</Text>
+          </Col>
           <Col>
-            <Text level={3}>Crio ©2021. All right reserved</Text>
+            <Text level={3}> ©2021. All right reserved</Text>
           </Col>
         </Row>
       </Col>
