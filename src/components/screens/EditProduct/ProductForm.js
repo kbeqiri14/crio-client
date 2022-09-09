@@ -4,13 +4,24 @@ import { useQuery } from '@apollo/client';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { getConnectAccount } from '@app/graphql/queries/payment-method.query';
-import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import Broadcast from './_partials/Broadcast';
 import FormWrapper from './styled/FormWrapper';
 
 import { Link } from 'react-router-dom';
 import { Controller } from 'react-hook-form';
-import { Checkbox, Input, Radio, Switch, Text, Tooltip, Select, Title, Row, Col } from '@ui-kit';
+import {
+  Checkbox,
+  Input,
+  GlobalSpinner,
+  Radio,
+  Switch,
+  Text,
+  Tooltip,
+  Select,
+  Title,
+  Row,
+  Col,
+} from '@ui-kit';
 import DraggerImage from './_partials/DraggerImage';
 import DraggerFile from './_partials/DraggerFile';
 import ActionButtons from './_partials/ActionButtons';
