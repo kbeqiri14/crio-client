@@ -4,9 +4,8 @@ import { useMutation } from '@apollo/client';
 import { useSendEmail } from '@shared/SendEmailModal/Context';
 import { contactCreator } from '@app/graphql/mutations/user.mutation';
 import ActionButtons from '@shared/ActionButtons';
-import { Col, Modal, Row, Input, Title } from '@ui-kit';
+import { Col, Modal, notification, Row, Input, Title } from '@ui-kit';
 import { ReactComponent as CloseIcon } from '@svgs/close.svg';
-import { errorToast, successToast } from '@ui-kit/Notification';
 
 const SendEmailModal = () => {
   const [message, setMessage] = useState();
@@ -17,9 +16,9 @@ const SendEmailModal = () => {
     variables: { mailInfo: { message: message?.trim(), productId: sendEmailInfo.productId } },
     onCompleted: () => {
       hide();
-      successToast('The message is successfully sent');
+      notification.successToast('The message is successfully sent');
     },
-    onError: () => errorToast('Something went wrong!', 'Please, try again later!'),
+    onError: () => notification.errorToast('Something went wrong!', 'Please, try again later!'),
   });
 
   return (

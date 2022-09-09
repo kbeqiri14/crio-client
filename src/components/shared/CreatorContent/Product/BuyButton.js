@@ -6,8 +6,7 @@ import history from '@configs/history';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { getStripeCheckoutSession } from '@app/graphql/queries/products.query';
 import { getThumbnail } from '@utils/helpers';
-import { Button, Tooltip } from '@ui-kit';
-import { errorToast } from '@ui-kit/Notification';
+import { Button, notification, Tooltip } from '@ui-kit';
 import { ReactComponent as LockIcon } from '@svgs/lock-buy.svg';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { useSendEmail } from '@shared/SendEmailModal/Context';
@@ -33,7 +32,7 @@ const BuyButton = ({
     variables: { productId },
     onCompleted: ({ getStripeCheckoutSession }) =>
       (window.location.href = getStripeCheckoutSession.url),
-    onError: (e) => errorToast(e?.message),
+    onError: (e) => notification.errorToast(e?.message),
   });
 
   const download = useCallback((url, name) => {

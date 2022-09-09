@@ -3,9 +3,8 @@ import { memo, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 
 import { createArtwork } from '@app/graphql/mutations/artwork.mutation';
-import { Modal, Text, Title, Progress } from '@ui-kit';
+import { Modal, notification, Text, Title, Progress } from '@ui-kit';
 import { Spinner } from '@ui-kit/Spinner';
-import { errorToast } from '@ui-kit/Notification';
 import { ReactComponent as CloseIcon } from '@svgs/close.svg';
 
 const timeStarted = new Date();
@@ -29,7 +28,7 @@ const Uploading = ({ state, types, dispatch }) => {
       dispatch({ type: types.UPLOADED_VIDEO_VISIBLE, artworkId: createArtwork.id }),
     onError: () => {
       dispatch({ type: types.CANCEL_UPLOADING });
-      errorToast('Something went wrong!', 'Please, try again later!');
+      notification.errorToast('Something went wrong!', 'Please, try again later!');
     },
   });
 
@@ -58,7 +57,7 @@ const Uploading = ({ state, types, dispatch }) => {
           saveArtwork();
         }
       } catch (e) {
-        errorToast('Something went wrong!', 'Please, try again later!');
+        notification.errorToast('Something went wrong!', 'Please, try again later!');
       }
     };
     if (state.file && state.uploadLink) {

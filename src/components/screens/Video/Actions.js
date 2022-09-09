@@ -5,8 +5,7 @@ import { useMutation } from '@apollo/client';
 import { deleteProduct } from '@app/graphql/mutations/product.mutation';
 import { deleteArtwork } from '@app/graphql/mutations/artwork.mutation';
 import Confirmation from '@shared/Confirmation';
-import { Dropdown, Menu } from '@ui-kit';
-import { successToast } from '@ui-kit/Notification';
+import { Dropdown, Menu, notification } from '@ui-kit';
 import { ReactComponent as SettingsIcon } from '@svgs/settings.svg';
 
 const Actions = (props) => {
@@ -20,7 +19,7 @@ const Actions = (props) => {
     variables: { productId: props.productId },
     onCompleted: () => {
       hideConfirmation();
-      successToast('The product is successfully deleted');
+      notification.successToast('The product is successfully deleted');
       setTimeout(() => (window.location.href = `/profile/${props.username}`), 1300);
     },
   });
@@ -29,7 +28,7 @@ const Actions = (props) => {
     variables: { params: { artworkId: props.artworkId } },
     onCompleted: () => {
       hideConfirmation();
-      successToast('The content is successfully deleted');
+      notification.successToast('The content is successfully deleted');
       setTimeout(() => (window.location.href = `/profile/artworks/${props.username}`), 1300);
     },
   });

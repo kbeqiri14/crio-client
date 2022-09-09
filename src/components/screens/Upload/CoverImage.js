@@ -7,8 +7,7 @@ import styled from 'styled-components';
 import { getUploadImageLink } from '@app/graphql/queries/artworks.query';
 import { updateMetadata } from '@app/graphql/mutations/artwork.mutation';
 import ActionButtons from '@shared/ActionButtons';
-import { Badge, Modal, Text, Title, Upload } from '@ui-kit';
-import { errorToast } from '@ui-kit/Notification';
+import { Badge, Modal, notification, Text, Title, Upload } from '@ui-kit';
 import { ReactComponent as CloseIcon } from '@svgs/close.svg';
 import coverImage from '@images/cover-image.png';
 
@@ -83,7 +82,7 @@ const CoverImage = ({ visible, artworkId, goToProfile }) => {
     },
     onError: () => {
       setLoading(false);
-      errorToast('Something went wrong!', 'Please, try again later!');
+      notification.errorToast('Something went wrong!', 'Please, try again later!');
     },
   });
 

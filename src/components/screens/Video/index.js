@@ -5,7 +5,7 @@ import { ARTWORKS } from '@configs/constants';
 import history from '@configs/history';
 import Confirmation from '@shared/Confirmation';
 import { getThumbnail } from '@utils/helpers';
-import { successToast } from '@ui-kit/Notification';
+import { notification } from '@ui-kit';
 import VideoDetails from './Details';
 
 const Video = () => {
@@ -33,7 +33,7 @@ const Video = () => {
   );
   const onCompleted = () => {
     onCancel();
-    successToast('The content info is successfully updated');
+    notification.successToast('The content info is successfully updated');
   };
 
   return (
