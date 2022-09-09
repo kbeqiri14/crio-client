@@ -159,7 +159,7 @@ const EarnMore = () => {
                       onChange={validationOfEmail}
                       showArrow={false}
                       filterOption={false}
-                      placeholder='Write here ...'
+                      placeholder='Write gmail address here ...'
                       tokenSeparators={[' ']}
                       value={emails}
                     />
