@@ -8,7 +8,7 @@ import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { useCurrentUser } from '@app/auth/hooks';
 import { PrivateRoute } from '@app/routing/routes';
 import { me } from '@app/graphql/queries/users.query';
-import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
+import { GlobalSpinner } from '@ui-kit';
 import Header from '@shared/Header';
 import Footer from '@shared/Footer';
 import { PresentationView } from '@shared/PresentationView';

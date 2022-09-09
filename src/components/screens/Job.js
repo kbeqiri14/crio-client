@@ -9,8 +9,7 @@ import { loggedInUserLoadingVar } from '@configs/client-cache';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { job } from '@app/graphql/queries/users.query';
 import { createTransfers } from '@app/graphql/mutations/user.mutation';
-import { Button, Col, Row, Text, Title } from '@ui-kit';
-import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
+import { Button, Col, GlobalSpinner, Row, Text, Title } from '@ui-kit';
 import { errorToast, successToast } from '@ui-kit/Notification';
 
 const Wrapper = styled('div')`

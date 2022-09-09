@@ -47,6 +47,13 @@ export { default as Modal } from './Feedback/Modal';
 export { default as Progress } from './Feedback/Progress';
 
 /*
+  Custom
+*/
+
+export { default as Circle } from './Custom/Circle';
+export { default as GlobalSpinner } from './Custom/GlobalSpinner';
+
+/*
   Theme Provider
 */
 export { default as ThemeProvider } from './ThemeProvider';

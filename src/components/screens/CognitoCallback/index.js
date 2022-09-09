@@ -7,7 +7,7 @@ import history from '@configs/history';
 import { useCurrentUser } from '@app/auth/hooks';
 import { useQueryParams } from '@app/hooks/useRouter';
 import { signIn } from '@app/graphql/mutations/user.mutation';
-import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
+import { GlobalSpinner } from '@ui-kit';
 import { errorToast } from '@ui-kit/Notification';
 
 export const CognitoCallback = () => {

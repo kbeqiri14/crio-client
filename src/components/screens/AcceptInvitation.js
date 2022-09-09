@@ -4,7 +4,7 @@ import { useMutation } from '@apollo/client';
 
 import history from '@configs/history';
 import { acceptInvitation } from '@app/graphql/mutations/user.mutation';
-import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
+import { GlobalSpinner } from '@ui-kit';
 import { errorToast, successToast } from '@ui-kit/Notification';
 
 const AcceptInvitation = () => {

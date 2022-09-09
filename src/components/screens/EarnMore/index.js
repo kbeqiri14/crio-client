@@ -7,10 +7,8 @@ import { useLazyQuery, useMutation } from '@apollo/client';
 import { getUserInvitations } from '@app/graphql/queries/users.query';
 import { sendInvitation } from '@app/graphql/mutations/user.mutation';
 import { validateEmail } from '@utils/helpers';
-import { Col, Row, Text, Title, Select, Button } from '@ui-kit';
-import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
+import { Col, Circle, GlobalSpinner, Row, Text, Title, Select, Button } from '@ui-kit';
 import { errorToast, successToast } from '@ui-kit/Notification';
-import Circle from '@ui-kit/Custom/Circle';
 import paperPlane from '@images/paper-plane.png';
 import earnMore from '@images/earn-more.png';
 
