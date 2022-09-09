@@ -11,8 +11,7 @@ import { createArtwork, updateMetadata } from '@app/graphql/mutations/artwork.mu
 import { ARTWORKS } from '@configs/constants';
 import ActionButtons from '@shared/ActionButtons';
 import { formItemContent } from '@utils/upload.helper';
-import { Input, Radio, Text } from '@ui-kit';
-import { errorToast } from '@ui-kit/Notification';
+import { Input, notification, Radio, Text } from '@ui-kit';
 
 const StyledVideoDetails = styled('div')`
   padding: 40px 10px;
@@ -109,7 +108,7 @@ const VideoInfo = ({
   const [saveArtwork, { loading: creatingArtwork }] = useMutation(createArtwork, {
     onCompleted: completeCreateArtwork,
     onError: () => {
-      errorToast('Something went wrong!', 'Please, try again later!');
+      notification.errorToast('Something went wrong!', 'Please, try again later!');
     },
   });
 
@@ -118,7 +117,7 @@ const VideoInfo = ({
       params: { artworkId: artworkId || state?.artworkId, title, description: desc, accessibility },
     },
     onCompleted,
-    onError: (data) => errorToast(data?.message),
+    onError: (data) => notification.errorToast(data?.message),
   });
 
   const loading = useMemo(

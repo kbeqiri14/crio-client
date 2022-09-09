@@ -7,7 +7,7 @@ import { me } from '@app/graphql/queries/users.query';
 import { createProduct, updateProduct } from '@app/graphql/mutations/product.mutation';
 import { PRODUCTS } from '@configs/constants';
 import ActionButtons from '@shared/ActionButtons';
-import { errorToast, successToast } from '@ui-kit/Notification';
+import { notification } from '@ui-kit';
 import { formItemContent } from '@utils/upload.helper';
 import Confirmation from '@shared/Confirmation';
 
@@ -40,16 +40,16 @@ const ProductActionButtons = ({
     },
     onCompleted: () => {
       redirect();
-      successToast('The product is successfully created');
+      notification.successToast('The product is successfully created');
     },
-    onError: () => errorToast('Something went wrong!', 'Please, try again later!'),
+    onError: () => notification.errorToast('Something went wrong!', 'Please, try again later!'),
   });
   const [update, { loading: updating }] = useMutation(updateProduct, {
     onCompleted: () => {
       redirect();
-      successToast('The product info is successfully updated');
+      notification.successToast('The product info is successfully updated');
     },
-    onError: () => errorToast('Something went wrong!', 'Please, try again later!'),
+    onError: () => notification.errorToast('Something went wrong!', 'Please, try again later!'),
   });
 
   const onPublish = useAsyncFn(async (attributes) => {

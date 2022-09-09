@@ -6,8 +6,7 @@ import styled from 'styled-components';
 import { cancelSubscription } from '@app/graphql/mutations/user.mutation';
 import { me } from '@app/graphql/queries/users.query';
 import Confirmation from '@shared/Confirmation';
-import { Title, Text } from '@ui-kit';
-import { errorToast, successToast } from '@ui-kit/Notification';
+import { notification, Title, Text } from '@ui-kit';
 
 const Wrapper = styled('div')`
   text-align: center;
@@ -49,11 +48,11 @@ const CancelSubscription = () => {
     },
     onCompleted: () => {
       hide();
-      successToast('Your cancellation request is successfully sent');
+      notification.successToast('Your cancellation request is successfully sent');
     },
     onError: () => {
       hide();
-      errorToast('Something went wrong!', 'Please, try again later!');
+      notification.errorToast('Something went wrong!', 'Please, try again later!');
     },
   });
 

@@ -4,9 +4,8 @@ import { useLazyQuery, useMutation } from '@apollo/client';
 import { getUploadUrl } from '@app/graphql/queries/artworks.query';
 import { deleteArtwork } from '@app/graphql/mutations/artwork.mutation';
 import ActionButtons from '@shared/ActionButtons';
-import { Badge, Col, Row, Text, Title, Upload } from '@ui-kit';
+import { Badge, Col, notification, Row, Text, Title, Upload } from '@ui-kit';
 import { Spinner } from '@ui-kit/Spinner';
-import { errorToast, warningToast } from '@ui-kit/Notification';
 import dragAndDropImage from '@images/drag-and-drop.png';
 
 const { Dragger } = Upload;
@@ -20,7 +19,7 @@ const DragAndDrop = ({ content, file, types, dispatch, goToProfile }) => {
         content: getUploadUrl.uri,
         uploadLink: getUploadUrl.upload_link,
       }),
-    onError: () => errorToast('Something went wrong!', 'Please, try again later!'),
+    onError: () => notification.errorToast('Something went wrong!', 'Please, try again later!'),
   });
   const [removeArtwork, { loading: removingArtwork }] = useMutation(deleteArtwork, {
     variables: { params: { content } },
@@ -68,7 +67,7 @@ const DragAndDrop = ({ content, file, types, dispatch, goToProfile }) => {
           requestUploadUrl({ variables: { size: newFile.size } });
           break;
         default:
-          warningToast(
+          notification.warningToast(
             'Validation Failed',
             'Please, make sure to choose only a file of image/video type!',
           );

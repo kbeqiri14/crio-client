@@ -8,8 +8,7 @@ import history from '@configs/history';
 import { STRIPE_PAYMENT_URL } from '@configs/environment';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { Button } from '@ui-kit';
-import { Col, Divider, Row, Text, Title, Tooltip } from '@ui-kit';
-import { warningToast } from '@ui-kit/Notification';
+import { Col, Divider, notification, Row, Text, Title, Tooltip } from '@ui-kit';
 import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
 import { ReactComponent as CheckMark } from '@svgs/check.svg';
 import { ReactComponent as RecommendIcon } from '@svgs/recommend.svg';
@@ -60,7 +59,7 @@ const Pricing = () => {
     if (user?.id) {
       window.open(STRIPE_PAYMENT_URL, '_blank', 'noopener,noreferrer,nofollow');
     } else {
-      warningToast('Warning', 'Please sign in to get started.');
+      notification.warningToast('Warning', 'Please sign in to get started.');
     }
   }, [user?.id]);
 
