@@ -12,8 +12,7 @@ import {
   getConnectOnboardingLink,
   deleteStripeAccount,
 } from '@app/graphql/queries/payment-method.query';
-import { Button, Col, notification, Row, Text, Title } from '@ui-kit';
-import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
+import { Button, Col, GlobalSpinner, notification, Row, Text, Title } from '@ui-kit';
 import card from '@images/card.png';
 
 const Wrapper = styled('div')`

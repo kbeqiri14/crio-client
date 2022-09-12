@@ -4,8 +4,7 @@ import { useMutation } from '@apollo/client';
 
 import history from '@configs/history';
 import { acceptInvitation } from '@app/graphql/mutations/user.mutation';
-import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
-import { notification } from '@ui-kit';
+import { GlobalSpinner, notification } from '@ui-kit';
 
 const AcceptInvitation = () => {
   const { pathname } = useLocation();
