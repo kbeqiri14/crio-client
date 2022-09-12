@@ -11,7 +11,7 @@
     "@aws-cdk/aws-route53-targets": "^1.172.0",
     "@aws-cdk/aws-s3": "^1.172.0",
     "@aws-cdk/core": "^1.172.0",
-    "@craco/craco": "^6.3.0",
+    "@craco/craco": "^6.4.5",
     "@sentry/react": "^7.12.1",
     "@sentry/tracing": "^7.12.1",
     "@testing-library/jest-dom": "^5.16.5",
@@ -29,19 +29,19 @@
     "graphql": "^16.6.0",
     "history": "^4.10.1",
     "normalize.less": "^1.0.0",
-    "query-string": "^7.0.1",
+    "query-string": "^7.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
     "react-hook-form": "^7.35.0",
-    "react-player": "^2.9.0",
+    "react-player": "^2.10.1",
     "react-router-dom": "^5.3.0",
     "react-scripts": "^4.0.3",
-    "styled-components": "^5.3.3",
+    "styled-components": "^5.3.5",
     "web-vitals": "^2.1.0"
   },
   "devDependencies": {
-    "@react-theming/storybook-addon": "^1.1.5",
+    "@react-theming/storybook-addon": "^1.1.7",
     "@storybook/addon-actions": "^6.5.10",
     "@storybook/addon-essentials": "^6.5.10",
     "@storybook/addon-links": "^6.5.10",
@@ -54,7 +54,7 @@
     "env-cmd": "^10.1.0",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
-    "prettier": "^2.4.1"
+    "prettier": "^2.7.1"
   },
   "scripts": {
     "prepare": "npx husky install",
