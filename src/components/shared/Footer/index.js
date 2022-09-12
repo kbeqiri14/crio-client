@@ -33,11 +33,11 @@ const Footer = () => (
       className='container items-center'
     >
       <Col xl={10} xxl={8}>
-        <Row justify='center' align='center' gutter={[20]} className='items-center'>
-          <Col padding_left={34}>
+        <Row justify='center' align='center' className='items-center'>
+          <Col padding_right={9}>
             <img alt='Crio logo' src={logo} width={48} height={28} />
           </Col>
-          <Col padding_right={27}>
+          <Col padding_right={32}>
             <Text level={3}> Crio</Text>
           </Col>
           <Col>
