@@ -26,13 +26,15 @@ const Wrapper = styled('div')`
     right: 0 !important;
     left: -243px !important;
   }
-  .ant-tooltip-open {
-    margin-bottom: 30px;
-  }
   .got-it-button {
     position: absolute;
     top: 269px;
     right: 121px;
+  }
+  @media (max-width: 992px) {
+    .ant-tooltip-open {
+      margin-bottom: 30px;
+    }
   }
 `;
 
