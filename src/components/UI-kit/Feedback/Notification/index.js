@@ -8,7 +8,7 @@ import {
 } from '@ant-design/icons';
 import './styles.less';
 
-export const successToast = (title) => {
+const successToast = (title) => {
   notification.success({
     message: title,
     className: 'success-toast',
@@ -18,7 +18,7 @@ export const successToast = (title) => {
   });
 };
 
-export const infoToast = (title, message) => {
+const infoToast = (title, message) => {
   notification.info({
     message: title,
     description: message,
@@ -28,7 +28,7 @@ export const infoToast = (title, message) => {
   });
 };
 
-export const warningToast = (title, message) => {
+const warningToast = (title, message) => {
   notification.warning({
     message: title,
     description: message,
@@ -39,7 +39,7 @@ export const warningToast = (title, message) => {
   });
 };
 
-export const errorToast = (title, message) => {
+const errorToast = (title, message) => {
   notification.error({
     message: title,
     description: message,
@@ -50,18 +50,11 @@ export const errorToast = (title, message) => {
   });
 };
 
-const notifyByType = {
-  error: errorToast,
-  success: successToast,
-  warning: warningToast,
-  info: infoToast,
+const notifications = {
+  successToast,
+  infoToast,
+  warningToast,
+  errorToast,
 };
 
-/**
- * @param {'error' | 'success' | 'warning' | 'info'} type
- * @param {string} title
- * @param {string} message
- */
-export const showToast = (type, title, message) => {
-  notifyByType[type](title, message);
-};
+export default notifications;

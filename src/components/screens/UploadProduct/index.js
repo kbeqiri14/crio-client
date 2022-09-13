@@ -2,7 +2,7 @@ import { memo, useEffect } from 'react';
 
 import history from '@configs/history';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
-import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
+import { GlobalSpinner } from '@ui-kit';
 import ProductForm from '@screens/EditProduct/ProductForm';
 
 const UploadProduct = () => {

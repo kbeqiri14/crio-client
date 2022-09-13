@@ -9,9 +9,7 @@ import { loggedInUserLoadingVar } from '@configs/client-cache';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { job } from '@app/graphql/queries/users.query';
 import { createTransfers } from '@app/graphql/mutations/user.mutation';
-import { Button, Col, Row, Text, Title } from '@ui-kit';
-import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
-import { errorToast, successToast } from '@ui-kit/Notification';
+import { Button, Col, GlobalSpinner, notification, Row, Text, Title } from '@ui-kit';
 
 const Wrapper = styled('div')`
   display: flex;
@@ -90,8 +88,8 @@ const Job = () => {
     },
   });
   const [transfer, { loading: transferring }] = useMutation(createTransfers, {
-    onCompleted: () => successToast('Transfers successfully done'),
-    onError: () => errorToast('Something went wrong!'),
+    onCompleted: () => notification.successToast('Transfers successfully done'),
+    onError: () => notification.errorToast('Something went wrong!'),
   });
 
   const pool = useMemo(

@@ -45,6 +45,14 @@ export { default as Upload } from './DataEntry/Upload';
 */
 export { default as Modal } from './Feedback/Modal';
 export { default as Progress } from './Feedback/Progress';
+export { default as notification } from './Feedback/Notification';
+
+/*
+  Custom
+*/
+
+export { default as Circle } from './Custom/Circle';
+export { default as GlobalSpinner } from './Custom/GlobalSpinner';
 
 /*
   Theme Provider

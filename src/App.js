@@ -8,8 +8,7 @@ import { env, isOnProduction, SENTRY_DSN } from '@configs/environment';
 import history from '@configs/history';
 import { PresentationProvider } from '@shared/PresentationView/PresentationContext';
 import { SendEmailProvider } from '@shared/SendEmailModal/Context';
-import { ThemeProvider } from '@ui-kit';
-import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
+import { GlobalSpinner, ThemeProvider } from '@ui-kit';
 import { client } from './graphql/client';
 import '@styles/main.less';
 

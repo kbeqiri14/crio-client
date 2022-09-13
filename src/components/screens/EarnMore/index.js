@@ -7,9 +7,7 @@ import { useLazyQuery, useMutation } from '@apollo/client';
 import { getUserInvitations } from '@app/graphql/queries/users.query';
 import { sendInvitation } from '@app/graphql/mutations/user.mutation';
 import { validateEmail } from '@utils/helpers';
-import { Col, Row, Text, Title, Select, Button } from '@ui-kit';
-import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
-import { errorToast, successToast } from '@ui-kit/Notification';
+import { Col, GlobalSpinner, notification, Row, Text, Title, Select, Button } from '@ui-kit';
 import Circle from '@ui-kit/Custom/Circle';
 import paperPlane from '@images/paper-plane.png';
 import earnMore from '@images/earn-more.png';
@@ -70,15 +68,15 @@ const EarnMore = () => {
     variables: { emails },
     onCompleted: () => {
       setEmails([]);
-      successToast('The invitation(s) are successfully sent');
+      notification.successToast('The invitation(s) are successfully sent');
       requestUserInvitations();
     },
-    onError: (e) => errorToast(e?.message),
+    onError: (e) => notification.errorToast(e?.message),
   });
 
   const send = useCallback(() => {
     if (emails.length + +data?.getUserInvitations?.length > 5) {
-      errorToast("You can't invite more then 5 people");
+      notification.errorToast("You can't invite more then 5 people");
       return;
     }
     inviteUsers();
@@ -88,7 +86,7 @@ const EarnMore = () => {
     const validatedEmails = values.filter(validateEmail);
     setEmails(validatedEmails);
     if (values.length !== validatedEmails.length) {
-      errorToast('Invalid email address');
+      notification.errorToast('Invalid email address');
     }
   };
 
