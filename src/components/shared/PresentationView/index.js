@@ -7,46 +7,43 @@ import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { ReactComponent as CloseIcon } from '@svgs/x.svg';
 import Content from '@screens/Artwork/Content';
 import MoreProductsSection from '@screens/Product/MoreProductsSection';
-// import './styles.less';
 
-const Wrapper = styled('div')`
-  .video-view-modal__wrapper {
-    .ant-modal-content {
-      background-color: #2b2b2b !important;
-      padding-top: 40px;
-      height: 100%;
+const Wrapper = styled(Modal)`
+  .ant-modal-content {
+    background-color: #2b2b2b !important;
+    padding-top: 40px;
+    height: 100%;
+  }
+  .video-view-modal {
+    background-color: #2b2b2b !important;
+    height: 100%;
+    max-width: unset;
+    margin: unset;
+    padding: 0;
+    top: 0;
+    .ant-modal-close {
+      width: 34px;
+      height: 34px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      top: 41px;
+      right: 82px;
+      span {
+        display: inline-block;
+        line-height: 0;
+        width: auto;
+        height: auto;
+      }
+      @media (max-width: 767.98px) {
+        top: 20px;
+        right: 20px;
+      }
     }
-    .video-view-modal {
-      background-color: #2b2b2b !important;
-      height: 100%;
-      max-width: unset;
-      margin: unset;
+    .ant-modal-body {
       padding: 0;
-      top: 0;
-      .ant-modal-close {
-        width: 34px;
-        height: 34px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        top: 41px;
-        right: 82px;
-        span {
-          display: inline-block;
-          line-height: 0;
-          width: auto;
-          height: auto;
-        }
-        @media (max-width: 767.98px) {
-          top: 20px;
-          right: 20px;
-        }
-      }
-      .ant-modal-body {
-        padding: 0;
-        margin: 0;
-        background-color: #2b2b2b !important;
-      }
+      margin: 0;
+      background-color: #2b2b2b !important;
     }
   }
 
@@ -87,21 +84,18 @@ export const PresentationView = () => {
   }, [info]);
 
   return (
-    <Wrapper>
-      <Modal
-        destroyOnClose
-        onCancel={hide}
-        visible={isVisible}
-        maskClosable={false}
-        footer={false}
-        width='100%'
-        closeIcon={<CloseIcon />}
-        wrapClassName='video-view-modal__wrapper'
-        className='video-view-modal'
-      >
-        <Content info={info} content={info.id} />
-        <MoreProductsSection info={info} />
-      </Modal>
+    <Wrapper
+      destroyOnClose
+      onCancel={hide}
+      visible={isVisible}
+      maskClosable={false}
+      footer={false}
+      width='100%'
+      closeIcon={<CloseIcon />}
+      className='video-view-modal'
+    >
+      <Content info={info} content={info.id} />
+      <MoreProductsSection info={info} />
     </Wrapper>
   );
 };
