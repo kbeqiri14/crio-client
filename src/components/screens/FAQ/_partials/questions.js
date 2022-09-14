@@ -19,7 +19,7 @@ export const questions = [
       <Fragment>
         <li>
           <b>Creator Profile:</b> Once a creator signs-up, they can quickly set up a profile, which
-          will consist of two main parts
+          will consist of two main parts.
           <ul>
             <li>
               <b>Marketplace:</b> The marketplace section will feature all of a creator's digital
