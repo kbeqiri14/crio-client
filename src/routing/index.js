@@ -8,8 +8,9 @@ import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { useCurrentUser } from '@app/auth/hooks';
 import { PrivateRoute } from '@app/routing/routes';
 import { me } from '@app/graphql/queries/users.query';
-import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
+import { GlobalSpinner } from '@ui-kit';
 import Header from '@shared/Header';
+import Footer from '@shared/Footer';
 import { PresentationView } from '@shared/PresentationView';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import SendEmailModal from '@shared/SendEmailModal';
@@ -33,6 +34,10 @@ import EarnMore from '@screens/EarnMore';
 import Invitations from '@screens/Invitations';
 import FAQ from '@screens/FAQ';
 import Job from '@screens/Job';
+import AcceptInvitation from '@screens/AcceptInvitation';
+import NotFound from '@root/src/components/shared/EmptyState/notFound';
+
+const footerPages = ['/', '/artworks', '/pricing', '/earn-more', '/faq', '/features'];
 
 export const AppRoutes = () => {
   const [keyword, setKeyword] = useState('');
@@ -47,6 +52,7 @@ export const AppRoutes = () => {
     () => !!user?.attributes?.email && (!signupError || localStorage.getItem('user')),
     [signupError, user?.attributes?.email],
   );
+  const showFooter = useMemo(() => footerPages.some((item) => item === pathname), [pathname]);
 
   const [getLoggedInUser] = useLazyQuery(me, {
     onCompleted: (data) => {
@@ -70,7 +76,7 @@ export const AppRoutes = () => {
   });
 
   useEffect(
-    () => document.querySelector('.main')?.scrollIntoView({ behavior: 'auto' }, 500),
+    () => document.querySelector('.main')?.parentElement?.scrollIntoView({ behavior: 'auto' }, 500),
     [pathname],
   );
 
@@ -140,6 +146,7 @@ export const AppRoutes = () => {
             <Route exact path='/cognito/callback' component={CognitoCallback} />
             <Route exact path='/features' component={FeaturesPage} />
             <Route exact path='/faq' component={FAQ} />
+            <Route exact path='/accept-invitation/:email' component={AcceptInvitation} />
 
             {!loading && !user && <Redirect to='/' />}
             {/* PRIVATE ROUTES */}
@@ -191,11 +198,17 @@ export const AppRoutes = () => {
               path='/earn-more'
               component={EarnMore}
             />
+            <Route path='/' component={NotFound} />
           </Switch>
           {isVisible && <PresentationView />}
           {visible && <SendEmailModal />}
         </div>
       </main>
+      {showFooter && (
+        <footer>
+          <Footer />
+        </footer>
+      )}
     </div>
   );
 };

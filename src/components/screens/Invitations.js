@@ -1,16 +1,15 @@
 import { memo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Table } from 'antd';
+import { Table, Tooltip } from 'antd';
 import { CheckCircleTwoTone, CloseCircleOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
-import { useReactiveVar, useQuery } from '@apollo/client';
+import { useQuery, useReactiveVar } from '@apollo/client';
 
 import history from '@configs/history';
 import { loggedInUserLoadingVar } from '@configs/client-cache';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { getInvitations } from '@app/graphql/queries/users.query';
-import { Title } from '@ui-kit';
-import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
+import { GlobalSpinner, Title } from '@ui-kit';
 
 const Wrapper = styled('div')`
   display: flex;
@@ -37,7 +36,16 @@ const columns = [
     render: ({ emails }) =>
       emails.map(({ email, accept }) => (
         <Title level={2} color='dark50' ellipsis={{ tooltip: email }}>
-          {accept ? <CheckCircleTwoTone /> : <CloseCircleOutlined />} {email}
+          {accept ? (
+            <Tooltip title='Accepted'>
+              <CheckCircleTwoTone />
+            </Tooltip>
+          ) : (
+            <Tooltip title='Pending'>
+              <CloseCircleOutlined />
+            </Tooltip>
+          )}{' '}
+          {email}
         </Title>
       )),
   },

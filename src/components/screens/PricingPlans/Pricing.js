@@ -8,18 +8,15 @@ import history from '@configs/history';
 import { STRIPE_PAYMENT_URL } from '@configs/environment';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { Button } from '@ui-kit';
-import { Col, Divider, Row, Text, Title, Tooltip } from '@ui-kit';
-import { warningToast } from '@ui-kit/Notification';
-import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
+import { Col, Divider, GlobalSpinner, notification, Row, Text, Title, Tooltip } from '@ui-kit';
 import { ReactComponent as CheckMark } from '@svgs/check.svg';
 import { ReactComponent as RecommendIcon } from '@svgs/recommend.svg';
 
 const Wrapper = styled('div')`
-  height: calc(100vh - 140px);
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 40px 20px;
   .card {
     max-width: 410px;
     min-height: 354px;
@@ -33,14 +30,6 @@ const Wrapper = styled('div')`
   .recommend {
     position: absolute;
     right: 10px;
-  }
-  @media (max-width: 890px) {
-    height: 100%;
-  }
-  @media (max-height: 768px) {
-    &.container {
-      height: 800px;
-    }
   }
 `;
 
@@ -69,7 +58,7 @@ const Pricing = () => {
     if (user?.id) {
       window.open(STRIPE_PAYMENT_URL, '_blank', 'noopener,noreferrer,nofollow');
     } else {
-      warningToast('Warning', 'Please sign in to get started.');
+      notification.warningToast('Warning', 'Please sign in to get started.');
     }
   }, [user?.id]);
 
@@ -78,7 +67,7 @@ const Pricing = () => {
   }
 
   return (
-    <Wrapper className='container'>
+    <Wrapper>
       <Row justify='center' gutter={[20, 20]} className='self-center'>
         <Col className='self-center'>
           <Row gutter={[0, 16]} className='card'>
@@ -106,7 +95,7 @@ const Pricing = () => {
             </Col>
           </Row>
         </Col>
-        <Col className='proWrapper'>
+        <Col>
           <RecommendIcon className='recommend' />
           <Row gutter={[0, 16]} className='card pro'>
             <Col span={24}>

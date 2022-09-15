@@ -15,6 +15,16 @@ const UserMoreProductsWrapper = styled('div')`
   background-color: #202020;
   > div {
     max-width: 1040px;
+
+    @media (max-width: 1393px) {
+      max-width: 1040px;
+    }
+    @media (max-width: 1059px) {
+      max-width: 686px;
+    }
+    @media (max-width: 705px) {
+      max-width: 332px;
+    }
   }
 `;
 
@@ -23,10 +33,10 @@ const MoreProductsWrapper = styled('div')`
   @media (max-width: 1393px) {
     max-width: 1040px;
   }
-  @media (max-width: 1039px) {
+  @media (max-width: 1059px) {
     max-width: 686px;
   }
-  @media (max-width: 685px) {
+  @media (max-width: 705px) {
     max-width: 332px;
   }
   margin: auto;

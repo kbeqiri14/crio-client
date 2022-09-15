@@ -7,8 +7,7 @@ import history from '@configs/history';
 import { useCurrentUser } from '@app/auth/hooks';
 import { useQueryParams } from '@app/hooks/useRouter';
 import { signIn } from '@app/graphql/mutations/user.mutation';
-import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
-import { errorToast } from '@ui-kit/Notification';
+import { GlobalSpinner, notification } from '@ui-kit';
 
 export const CognitoCallback = () => {
   const { access_token } = useQueryParams();
@@ -18,14 +17,14 @@ export const CognitoCallback = () => {
     onCompleted: (data) => {
       if (data.saveUser.error) {
         localStorage.clear();
-        errorToast('Sign up error', data.saveUser.error);
+        notification.errorToast('Sign up error', data.saveUser.error);
       } else {
         signupErrorVar(false);
       }
     },
     onError: () => {
       localStorage.clear();
-      errorToast('Something went wrong!', 'Please, try again later!');
+      notification.errorToast('Something went wrong!', 'Please, try again later!');
     },
   });
 

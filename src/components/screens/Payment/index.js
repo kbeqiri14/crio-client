@@ -12,9 +12,7 @@ import {
   getConnectOnboardingLink,
   deleteStripeAccount,
 } from '@app/graphql/queries/payment-method.query';
-import { Button, Col, Row, Text, Title } from '@ui-kit';
-import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
-import { errorToast } from '@ui-kit/Notification';
+import { Button, Col, GlobalSpinner, notification, Row, Text, Title } from '@ui-kit';
 import card from '@images/card.png';
 
 const Wrapper = styled('div')`
@@ -46,7 +44,7 @@ const Payment = () => {
       fetchPolicy: 'no-cache',
       onCompleted: ({ getConnectOnboardingLink }) =>
         (window.location.href = getConnectOnboardingLink.url),
-      onError: (e) => errorToast(`Cannot create onboarding link: ${e?.message}`),
+      onError: (e) => notification.errorToast(`Cannot create onboarding link: ${e?.message}`),
     },
   );
   const [requestConnectLoginLink, { loading: gettingConnectLoginLink }] = useLazyQuery(

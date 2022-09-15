@@ -66,3 +66,12 @@ export const getInvitations = gql`
     }
   }
 `;
+
+export const getUserInvitations = gql`
+  query {
+    getUserInvitations {
+      email
+      accept
+    }
+  }
+`;

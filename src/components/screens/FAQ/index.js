@@ -6,7 +6,6 @@ import { ReactComponent as ArrowDownIcon } from '@svgs/arrow-down.svg';
 import { ReactComponent as ArrowUpIcon } from '@svgs/arrow-up.svg';
 
 import { questions } from './_partials/questions';
-import { Footer } from '@shared/Footer';
 
 const { Panel } = Collapse;
 
@@ -17,6 +16,9 @@ const Wrapper = styled('div')`
   .email {
     color: #04a0ff;
     border-bottom: 1px solid #04a0ff;
+  }
+  .ant-collapse-header-text {
+    padding-right: 52px;
   }
   .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow {
     left: auto;
@@ -58,7 +60,6 @@ export const FAQ = () => {
           </Collapse>
         </Col>
       </Row>
-      <Footer />
     </Wrapper>
   );
 };

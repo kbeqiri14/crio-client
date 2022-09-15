@@ -34,10 +34,11 @@ const FeaturesWrapper = styled('div')`
   }
   .desc-content .banner-title {
     max-width: 1070px;
-    margin: 0 10px;
+    margin: 0 20px;
   }
   .desc-texts {
-    margin-top: 20px;
+    max-width: 505px;
+    margin: 20px auto 0;
   }
   .title {
     font-size: ${(props) => props.theme.title[6].size}px;
@@ -60,7 +61,6 @@ const FeaturesWrapper = styled('div')`
     text-align: center;
   }
   .list {
-    max-width: 634px;
     padding-bottom: 105px;
     ol {
       padding-inline-start: 25px;
@@ -119,11 +119,10 @@ const FeaturesWrapper = styled('div')`
   .info {
     padding-top: 20px;
   }
-  @media (max-width: 1200px) {
+  @media (max-width: 1300px) {
     .banner-title {
-      font-size: 50px !important;
-      font-weight: 400px !important;
-      line-height: 60px !important;
+      font-size: 55px !important;
+      line-height: 70px !important;
     }
     .half-bubble {
       width: 230px;
@@ -153,7 +152,7 @@ const FeaturesWrapper = styled('div')`
     }
     .half-bubble {
       right: 40px;
-      top: 375px;
+      top: 395px;
     }
   }
 `;

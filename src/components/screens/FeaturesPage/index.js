@@ -9,9 +9,7 @@ import { updateUser } from '@app/graphql/mutations/user.mutation';
 // import history from '@configs/history';
 import { loggedInUserLoadingVar } from '@configs/client-cache';
 import { Meta } from '@shared/Meta';
-import { Footer } from '@shared/Footer';
-import { Carousel, Col, Divider, List, Row, Text, Title } from '@ui-kit';
-import { GlobalSpinner } from '@ui-kit/GlobalSpinner';
+import { Carousel, Col, GlobalSpinner, Divider, List, Row, Text, Title } from '@ui-kit';
 import Circle from '@ui-kit/Custom/Circle';
 import halfBubble from '@images/half-bubble.png';
 import paperPlane from '@images/paper-plane.png';
@@ -89,7 +87,7 @@ export const FeaturesPage = () => {
       </div>
       <div className='custom-back-2'>
         <Row className='creator-desc' justify='center'>
-          <Col padding_top={93} className='title-section'>
+          <Col xl={24} lg={22} md={20} sm={18} xs={20} padding_top={93} className='title-section'>
             <Title level={8} className='title'>
               How to Get Started as a Creator
             </Title>
@@ -97,43 +95,42 @@ export const FeaturesPage = () => {
               There are two ways to become a creator
             </Text>
           </Col>
-          <Col span={24}>
-            <Row>
-              <Col span={24} padding_top={93} padding_bottom={80} className='title-section1'>
-                <Row justify='center' align='middle' gutter={[177, 80]}>
-                  <Col max_width='100%'>
-                    <img src={paperPlane} alt='paper plane' width='100%' />
+          <Col span={24} padding_bottom={45}>
+            <Row justify='center' align='middle' gutter={[177, 80]}>
+              <Col xxl={8} xl={10} lg={14} md={14} sm={18} xs={22}>
+                <img src={paperPlane} alt='paper plane' width='100%' />
+              </Col>
+              <Col
+                xl={8}
+                lg={12}
+                md={14}
+                sm={18}
+                xs={22}
+                className='self-center creator-desc-block'
+              >
+                <Row gutter={[0, 40]}>
+                  <Col xl={4} xxl={3} margin_right={18}>
+                    <Circle border='none'>
+                      <Text level={4}>1</Text>
+                    </Circle>
                   </Col>
-                  <Col max_width={615} className='self-center creator-desc-block'>
-                    <Row gutter={[0, 40]}>
-                      <Col span={3} margin_right={18}>
-                        <Circle border='none'>
-                          <Text level={4}>1</Text>
-                        </Circle>
-                      </Col>
-                      <Col max_width={327} className='text-options'>
-                        <Text level={4}>
-                          Ask a current creator on Crio to invite you by emailing us.
-                        </Text>
-                      </Col>
-                      <Col span={3} margin_right={18}>
-                        <Circle border='none'>
-                          <Text level={4}>2</Text>
-                        </Circle>
-                      </Col>
-                      <Col max_width={449} className='text-options'>
-                        <Text level={4}>
-                          Email us directly at
-                          <br />
-                          <a href={`mailto:info@criointeractive.com`}>
-                            info@criointeractive.com
-                          </a>{' '}
-                          and we can
-                          <br />
-                          upgrade your account to "creator status."
-                        </Text>
-                      </Col>
-                    </Row>
+                  <Col span={18} className='text-options'>
+                    <Text level={4}>
+                      Ask a current creator on Crio to invite you by emailing us.
+                    </Text>
+                  </Col>
+                  <Col xl={4} xxl={3} margin_right={18}>
+                    <Circle border='none'>
+                      <Text level={4}>2</Text>
+                    </Circle>
+                  </Col>
+                  <Col span={18} className='text-options'>
+                    <Text level={4}>
+                      Email us directly at
+                      <br />
+                      <a href={`mailto:info@criointeractive.com`}>info@criointeractive.com</a> and
+                      we can upgrade your account to "creator status."
+                    </Text>
                   </Col>
                 </Row>
               </Col>
@@ -152,61 +149,57 @@ export const FeaturesPage = () => {
               and efforts!
             </Text>
           </Col>
-          <Col span={22}>
-            <Row>
-              <Col span={24} padding_top={70}>
-                <Row justify='center' align='middle' gutter={[114, 20]}>
-                  <Col className='list'>
-                    <List
-                      $type='disc'
-                      $listWidth='100%'
-                      $padding={10}
-                      items={listData.map((item) => (
-                        <Text level={4}>{item}</Text>
-                      ))}
-                    />
-                    <Row className='formula-text' align='middle' justify='center'>
-                      <Col span={16}>
-                        <Row className='formula-divider'>
-                          <Col span={16} max_width={214}>
-                            <Text level={4} color='dark200'>
-                              {' '}
-                              # of fans following you{' '}
-                            </Text>
-                          </Col>
-                          <Col span={22} max_width={343}>
-                            <Divider margin={4} />
-                          </Col>
-                          <Col>
-                            <Text level={4} color='dark200'>
-                              Total # of fans following all creators
-                            </Text>
-                          </Col>
-                        </Row>
+          <Col span={24} padding_top={70}>
+            <Row justify='center' align='middle' gutter={[114, 20]}>
+              <Col xxl={8} xl={10} lg={12} md={14} sm={16} xs={22} className='list'>
+                <List
+                  $type='disc'
+                  $listWidth='100%'
+                  $padding={10}
+                  items={listData.map((item) => (
+                    <Text level={4}>{item}</Text>
+                  ))}
+                />
+                <Row className='formula-text' align='middle' justify='center'>
+                  <Col span={16}>
+                    <Row className='formula-divider'>
+                      <Col span={16} max_width={214}>
+                        <Text level={4} color='dark200'>
+                          {' '}
+                          # of fans following you{' '}
+                        </Text>
                       </Col>
-                      <Col span={8}>
-                        <Row>
-                          <Col max_width={172}>
-                            <Text level={4} color='dark200'>
-                              x &nbsp; Creator Pool{' '}
-                            </Text>
-                          </Col>
-                        </Row>
+                      <Col span={22} max_width={343}>
+                        <Divider margin={4} />
+                      </Col>
+                      <Col>
+                        <Text level={4} color='dark200'>
+                          Total # of fans following all creators
+                        </Text>
                       </Col>
                     </Row>
-                    <List
-                      $type='disc'
-                      $listWidth='100%'
-                      $padding={10}
-                      items={subData.map((item) => (
-                        <Text level={4}>{item}</Text>
-                      ))}
-                    />
                   </Col>
-                  <Col max-width='100%'>
-                    <img src={cashFlow} alt='cash flow' width='100%' className='cash-flow' />
+                  <Col span={8}>
+                    <Row>
+                      <Col max_width={172}>
+                        <Text level={4} color='dark200'>
+                          x &nbsp; Creator Pool{' '}
+                        </Text>
+                      </Col>
+                    </Row>
                   </Col>
                 </Row>
+                <List
+                  $type='disc'
+                  $listWidth='100%'
+                  $padding={10}
+                  items={subData.map((item) => (
+                    <Text level={4}>{item}</Text>
+                  ))}
+                />
+              </Col>
+              <Col xxl={6} xl={8} lg={14} md={14} sm={18} xs={22}>
+                <img src={cashFlow} alt='cash flow' width='100%' className='cash-flow' />
               </Col>
             </Row>
           </Col>
@@ -214,7 +207,7 @@ export const FeaturesPage = () => {
       </div>
       <div className='custom-back-2'>
         <Row className='follower-section' align='middle' justify='center'>
-          <Col max_width={480} className='title-section' padding_top={104}>
+          <Col xl={24} lg={22} md={20} sm={18} xs={20} padding_top={104} className='title-section'>
             <Title level={8} className='title'>
               How to Get More Followers
             </Title>
@@ -223,55 +216,45 @@ export const FeaturesPage = () => {
               subscription
             </Text>
           </Col>
-          <Col span={24}>
-            <Row>
-              <Col span={24} padding_bottom={167} padding_top={140}>
-                <Row justify='center' align='middle' gutter={[147, 80]}>
-                  <Col max_width='100%' padding_bottom={45}>
-                    <img
-                      src={follow}
-                      alt='follow'
-                      width='100%'
-                      height={150}
-                      className='follow-img'
-                    />
+          <Col span={24} padding_bottom={167} padding_top={140}>
+            <Row justify='center' align='middle' gutter={[147, 80]}>
+              <Col xxl={8} xl={10} lg={14} md={14} sm={18} xs={22} padding_bottom={45}>
+                <img src={follow} alt='follow' width='100%' height={150} className='follow-img' />
+              </Col>
+              <Col xl={8} lg={12} md={14} sm={16} xs={20} className='self-center followers'>
+                <Row gutter={[0, 30]}>
+                  <Col xl={4} xxl={3} margin_right={18}>
+                    <Circle border='none'>
+                      <Text level={4}>1</Text>
+                    </Circle>
                   </Col>
-                  <Col max_width={660} className='self-center followers'>
-                    <Row gutter={[0, 30]}>
-                      <Col span={3} margin_right={10}>
-                        <Circle border='none'>
-                          <Text level={4}>1</Text>
-                        </Circle>
-                      </Col>
-                      <Col max_width={400} className='text-options'>
-                        <Text level={4}>
-                          Ask your current fans to support you on Crio! All they have to do is{' '}
-                          subscribe and follow your profile.
-                        </Text>
-                      </Col>
-                      <Col span={3} margin_right={10}>
-                        <Circle border='none'>
-                          <Text level={4}>2</Text>
-                        </Circle>
-                      </Col>
-                      <Col max_width={435} className='text-options'>
-                        <Text level={4}>
-                          Attract more subscribers to follow your profile by setting certain{' '}
-                          products/perks as “free” or offering exclusive content.
-                        </Text>
-                      </Col>
-                      <Col span={3} margin_right={10}>
-                        <Circle border='none'>
-                          <Text level={4}>3</Text>
-                        </Circle>
-                      </Col>
-                      <Col max_width={405} className='text-options'>
-                        <Text level={4}>
-                          The more followers you have, the more subscription revenue you can make
-                          monthly!
-                        </Text>
-                      </Col>
-                    </Row>
+                  <Col span={18} className='text-options'>
+                    <Text level={4}>
+                      Ask your current fans to support you on Crio! All they have to do is subscribe
+                      and follow your profile.
+                    </Text>
+                  </Col>
+                  <Col xl={4} xxl={3} margin_right={18}>
+                    <Circle border='none'>
+                      <Text level={4}>2</Text>
+                    </Circle>
+                  </Col>
+                  <Col span={18} className='text-options'>
+                    <Text level={4}>
+                      Attract more subscribers to follow your profile by setting certain{' '}
+                      products/perks as “free” or offering exclusive content.
+                    </Text>
+                  </Col>
+                  <Col xl={4} xxl={3} margin_right={18}>
+                    <Circle border='none'>
+                      <Text level={4}>3</Text>
+                    </Circle>
+                  </Col>
+                  <Col span={18} className='text-options'>
+                    <Text level={4}>
+                      The more followers you have, the more subscription revenue you can make
+                      monthly!
+                    </Text>
                   </Col>
                 </Row>
               </Col>
@@ -281,7 +264,7 @@ export const FeaturesPage = () => {
       </div>
       <div className='custom-back'>
         <Row className='text-center eCommerce' align='middle' justify='center'>
-          <Col md={24} padding_bottom={30} padding_top={80}>
+          <Col span={24} padding_bottom={30} padding_top={80}>
             <Title level={8} className='title'>
               eCommerce
             </Title>
@@ -315,13 +298,13 @@ export const FeaturesPage = () => {
         </Row>
       </div>
       <div className='custom-back-2'>
-        <Row justify='center' align='middle' className='title-section'>
+        <Row justify='center' align='middle'>
           <Col className='final-section'>
             <Title className='banner-title'>
               Thanks for joining Crio <br />
               Let’s build a great community!
             </Title>
-            <Text level={4} className='info'>
+            <Text level={4} color='dark25' className='info'>
               Check out our
               <Link to='/faq' className='faq'>
                 {' '}
@@ -334,7 +317,6 @@ export const FeaturesPage = () => {
           </Col>
         </Row>
       </div>
-      <Footer />
     </FeaturesWrapper>
   );
 };
