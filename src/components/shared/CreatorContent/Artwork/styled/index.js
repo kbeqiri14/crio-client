@@ -46,6 +46,10 @@ export const Wrapper = styled('div')`
       visibility: visible;
     }
   }
+  .info.hover {
+    opacity: 1;
+    visibility: visible;
+  }
 `;
 
 export const SkeletonWrapper = styled('div')`

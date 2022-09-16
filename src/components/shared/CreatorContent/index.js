@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import history from '@configs/history';
-import { Col, Row, Tabs } from '@ui-kit';
+import { Col, Row, Tabs, Text } from '@ui-kit';
 import EmptyState from '@shared/EmptyState';
 import LoadMoreButton from './LoadMoreButton';
 import ArtworksList from './Artwork/ArtworksList';
@@ -45,6 +45,8 @@ const productTabs = [
   { name: 'Guids/ Documents', color: '#00A0FF', width: '157' },
   { name: 'Tamplates', color: '#CF04A3', width: '100' },
 ];
+
+const contentTabs = ['All', 'Animation', 'Illustration', 'Branding', 'Product Design'];
 
 export const Content = ({
   isProfile,
@@ -91,7 +93,7 @@ export const Content = ({
       <Tabs activeKey={activeKey} onTabClick={onTabClick}>
         <TabPane key={tabs.MARKETPLACE} tab={tabs.MARKETPLACE}>
           {!isProfilePage && (
-            <Row gutter={[12, 12]} padding_bottom={20}>
+            <Row gutter={[12, 12]} padding_bottom={20} padding_left={40}>
               {productTabs.map((item) => (
                 <Col>
                   <TagButton b_color={item.color} width={item.width}>
@@ -112,6 +114,17 @@ export const Content = ({
           />
         </TabPane>
         <TabPane key={tabs.ARTWORK} tab={tabs.ARTWORK}>
+          {!isProfilePage && (
+            <Row gutter={[36]} padding_bottom={30} padding_left={40}>
+              {contentTabs.map((item) => (
+                <Col>
+                  <Text level={3} color='dark25'>
+                    {item}
+                  </Text>
+                </Col>
+              ))}
+            </Row>
+          )}
           {!loading && !artworksCount && !artworksList?.length && <EmptyState {...props} />}
           <ArtworksList artworksList={artworksList} loading={initialPolling && loading} />
           <LoadMoreButton

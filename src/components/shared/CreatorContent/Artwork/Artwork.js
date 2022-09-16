@@ -1,5 +1,6 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useState, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+// import { useQuery } from '@apollo/client';
 
 import history from '@configs/history';
 import { ARTWORKS } from '@configs/constants';
@@ -8,10 +9,11 @@ import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import Actions from '@screens/Video/Actions';
 import { getThumbnail } from '@utils/helpers';
-import { Col, Row, Text } from '@ui-kit';
+import { Col, Row, Tag, Text } from '@ui-kit';
 import { ReactComponent as VideoIcon } from '@svgs/video.svg';
 import LockState from '../LockState';
 import { Wrapper } from './styled';
+// import { getProductTypes } from '@app/graphql/queries/products.query';
 
 const Artwork = ({
   providerType,
@@ -27,10 +29,15 @@ const Artwork = ({
   accessibility,
   status,
 }) => {
+  // const { data } = useQuery(getProductTypes);
+  const [isHovering, setIsHovering] = useState(false);
   const { user } = useLoggedInUser();
   const { pathname } = useLocation();
   const { setInfo } = usePresentation();
   const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
+
+  const handleMouseOver = useCallback(() => setIsHovering(true), []);
+  const handleMouseOut = useCallback(() => setIsHovering(false), []);
 
   const isVideo = useMemo(() => content.startsWith('/videos/'), [content]);
   const source = useMemo(
@@ -94,8 +101,16 @@ const Artwork = ({
 
   return (
     <>
-      <Wrapper className={isLocked ? 'is-locked' : ''}>
-        <div className='info'>
+      <Wrapper
+        className={isLocked ? 'is-locked' : ''}
+        onMouseOver={handleMouseOver}
+        onMouseLeave={handleMouseOut}
+      >
+        <LockState userId={userId} accessibility={accessibility} status={status} />
+        {isVideo && <VideoIcon className='video' />}
+        <img src={source} alt='artwork' width={330} height={330} onClick={showArtwork} />
+        {isHovering && <Tag>Illustration</Tag>}
+        <div className={`info ${isHovering ? 'hover' : ''}`}>
           <Row justify='space-between'>
             <Col span={showActions ? 19 : 24}>
               <Text level={4} ellipsis={{ rows: 1, tooltip: title }}>
@@ -117,9 +132,6 @@ const Artwork = ({
             )}
           </Row>
         </div>
-        <LockState userId={userId} accessibility={accessibility} status={status} />
-        {isVideo && <VideoIcon className='video' />}
-        <img src={source} alt='artwork' width={330} height={330} onClick={showArtwork} />
       </Wrapper>
       <Link to={`/profile/${username}`}>
         <Row gutter={12} align='middle' padding_top={8}>
