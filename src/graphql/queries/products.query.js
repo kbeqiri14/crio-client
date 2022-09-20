@@ -15,6 +15,7 @@ export const getProductTypes = gql`
     getProductTypes {
       id
       name
+      mainTypeId
     }
   }
 `;
