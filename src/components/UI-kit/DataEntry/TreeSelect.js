@@ -19,11 +19,11 @@ const TreeSelect = styled(
   border-radius: 8px;
   min-height: 50px !important;
 
-  //   .ant-select-selector {
-  //     align-items: center;
-  //     min-height: 50px !important;
-  //     padding: 0px 12px !important;
-  //   }
+  .ant-select-selector {
+    align-items: center;
+    min-height: 50px !important;
+    padding: 0px 12px !important;
+  }
 
   .ant-tree-select-dropdown {
     padding: 0px !important;
@@ -33,39 +33,48 @@ const TreeSelect = styled(
   .ant-select-single.ant-select-lg:not(.ant-select-customize-input) .ant-select-selector {
     padding: 0px 20px;
   }
+
   .ant-select-tree-treenode {
+    display: flex;
+    align-items: center;
+    height: 50px;
     color: white;
-    line-height: 45px !important;
+    line-height: 50px !important;
     font-weight: initial;
     font-size: ${(props) => props.theme.text[4].size}px;
     padding: 8px;
+
     :hover {
       background: transparent;
       color: #878c94;
     }
   }
+  .ant-select-tree-treenode:not(:last-child) {
+    border-bottom: 1px solid rgba(96, 96, 96, 0.2);
+  }
+
   .ant-select-arrow {
     color: #878c94;
   }
-  .ant-select-selection-placeholder {
-    line-height: 45px !important;
-  }
-  //   .ant-select-tree {
-  //     background: #2b2b2b !important;
-  //     box-shadow: 0px 7px 25px rgba(0, 0, 0, 0.35) !important;
-  //     border-radius: 8px !important;
-  //   }
 
-  .ant-select-item-option:not(:last-child) {
-    border-bottom: 1px solid rgba(96, 96, 96, 0.2);
+  .ant-select-selection-placeholder {
+    line-height: 50px !important;
   }
-  .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+  .ant-select-tree {
+    background: #2b2b2b !important;
+    box-shadow: 0px 7px 25px rgba(0, 0, 0, 0.35) !important;
+    border-radius: 8px !important;
+  }
+
+  .ant-select-tree-node-content-wrapper:hover {
     background: transparent !important;
   }
-  .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  .ant-select-tree-node-selected {
     background: transparent !important;
   }
+
   .ant-select-selector {
+    color: white !important;
     background: #202020 !important;
     border-radius: 8px !important;
     border: 1px solid #202020 !important;

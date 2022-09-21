@@ -18,6 +18,7 @@ const Tabs = styled(antTabs)`
   }
   .ant-tabs-nav {
     margin-bottom: 20px;
+    margin-left: 40px;
   }
   .ant-tabs-nav::before {
     display: none;

@@ -9,7 +9,6 @@ import EmptyState from '@shared/EmptyState';
 import LoadMoreButton from './LoadMoreButton';
 import ArtworksList from './Artwork/ArtworksList';
 import ProductsList from './Product/ProductsList';
-import CategoryTab from '@ui-kit/Custom/CategoryTab';
 import { productTypesVar } from '@configs/client-cache';
 
 const Wrapper = styled('div')`
@@ -84,12 +83,12 @@ export const Content = ({
       <Tabs activeKey={activeKey} onTabClick={onTabClick}>
         <TabPane key={tabs.MARKETPLACE} tab={tabs.MARKETPLACE}>
           {!isProfilePage && (
-            <Row gutter={[12, 12]} padding_bottom={20}>
+            <Row gutter={[28, 12]} padding_bottom={20} padding_left={40}>
               {productTypes
                 .filter((item) => item.mainTypeId === '2')
                 .map((item) => (
                   <Col>
-                    <CategoryTab>{item.name}</CategoryTab>
+                    <Text level={3}>{item.name}</Text>
                   </Col>
                 ))}
             </Row>
@@ -106,12 +105,10 @@ export const Content = ({
         </TabPane>
         <TabPane key={tabs.ARTWORK} tab={tabs.ARTWORK}>
           {!isProfilePage && (
-            <Row gutter={[36]} padding_bottom={30}>
+            <Row gutter={[28, 12]} padding_bottom={30} padding_left={40}>
               {contentTabs.map((item) => (
                 <Col>
-                  <Text level={3} color='dark25'>
-                    {item}
-                  </Text>
+                  <Text level={3}>{item}</Text>
                 </Col>
               ))}
             </Row>

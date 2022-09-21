@@ -1,6 +1,6 @@
 import { memo, useCallback, useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useReactiveVar } from '@apollo/client';
 
 import history from '@configs/history';
 import { PRODUCTS } from '@configs/constants';
@@ -13,7 +13,7 @@ import Actions from '@screens/Video/Actions';
 import product from '@images/product.png';
 import { ProductWrapper, ImageWrapper } from './styled';
 import BuyButton from './BuyButton';
-import { getProductTypes } from '@app/graphql/queries/products.query';
+import { productTypesVar } from '@configs/client-cache';
 
 const Product = ({
   providerType,
@@ -32,8 +32,8 @@ const Product = ({
   file,
   large = false,
 }) => {
-  const { data } = useQuery(getProductTypes);
   const [isHovering, setIsHovering] = useState(false);
+  const productTypes = useReactiveVar(productTypesVar);
   const { user } = useLoggedInUser();
   const { pathname } = useLocation();
   const { setInfo } = usePresentation();
@@ -151,9 +151,7 @@ const Product = ({
       >
         <ImageWrapper className={imageClasses}>
           <img src={src} alt='product' onClick={showProduct} />
-          {isHovering && (
-            <Tag>{data?.getProductTypes?.filter((item) => item.id === productTypeId)[0]?.name}</Tag>
-          )}
+          {isHovering && <Tag>{productTypes?.find((item) => item.id === productTypeId)?.name}</Tag>}
           <div
             className={`actions ${isHovering ? 'hover' : ''}`}
             onClick={() => !showActions && showProduct()}
