@@ -1,5 +1,6 @@
 import { memo, useEffect, useMemo, useState } from 'react';
 import { useReactiveVar } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 
 import { Meta } from '@shared/Meta';
 import useRandomInfo from '@root/src/hooks/useRandomInfo';
@@ -7,6 +8,8 @@ import { searchKeywordVar, refetchArtworkVar, refetchMarketplaceVar } from '@con
 import { Carousel, GlobalSpinner } from '@ui-kit';
 import TopArtwork from './TopArtwork';
 import Content from '../../shared/CreatorContent';
+import { getProductTypes } from '@app/graphql/queries/products.query';
+import { productTypesVar } from '@configs/client-cache';
 
 const PRODUCTS_LIMIT = 15;
 const ARTWORKS_LIMIT = 24;
@@ -16,6 +19,9 @@ export const ExplorePage = () => {
   const [artworksOffset, setArtworksOffset] = useState(0);
   const [productsList, setProductsList] = useState([]);
   const [artworksList, setArtworksList] = useState([]);
+  useQuery(getProductTypes, {
+    onCompleted: ({ getProductTypes }) => console.log(55555) || productTypesVar(getProductTypes),
+  });
   const keyword = useReactiveVar(searchKeywordVar);
   const refetchArtwork = useReactiveVar(refetchArtworkVar);
   const refetchMarketplace = useReactiveVar(refetchMarketplaceVar);

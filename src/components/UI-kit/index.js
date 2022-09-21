@@ -37,6 +37,7 @@ export { default as Checkbox } from './DataEntry/Checkbox';
 export { default as Input } from './DataEntry/Input';
 export { default as Radio } from './DataEntry/Radio';
 export { default as Select } from './DataEntry/Select';
+export { default as TreeSelect } from './DataEntry/TreeSelect';
 export { default as Switch } from './DataEntry/Switch';
 export { default as Upload } from './DataEntry/Upload';
 

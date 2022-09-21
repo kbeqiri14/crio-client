@@ -1,11 +1,12 @@
 import { memo, useCallback, useEffect, useMemo, useState, Fragment } from 'react';
 import { useForm } from 'react-hook-form';
-import { useQuery } from '@apollo/client';
+import { useQuery, useLazyQuery, useReactiveVar } from '@apollo/client';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { getConnectAccount } from '@app/graphql/queries/payment-method.query';
 import Broadcast from './_partials/Broadcast';
 import FormWrapper from './styled/FormWrapper';
+import { productTypesVar } from '@configs/client-cache';
 
 import { Link } from 'react-router-dom';
 import { Controller } from 'react-hook-form';
@@ -17,7 +18,7 @@ import {
   Switch,
   Text,
   Tooltip,
-  Select,
+  TreeSelect,
   Title,
   Row,
   Col,
@@ -29,11 +30,12 @@ import HelpTooltip from '@screens/Product/HelpTooltip';
 import { getProductTypes } from '@app/graphql/queries/products.query';
 
 const ProductForm = ({ state }) => {
+  const productTypes = useReactiveVar(productTypesVar);
   const { user } = useLoggedInUser();
   const [visibleTooltip, setVisibleTooltip] = useState(user.id && !user.helpSeen);
   const [visibleBroadcast, setVisibleBroadcast] = useState(false);
   const [limitVisible, setLimitVisible] = useState(state?.limit !== null && state?.limit >= 0);
-  const { data } = useQuery(getProductTypes);
+  const [getProductTypesfunc, { data }] = useLazyQuery(getProductTypes);
   const [file, setFile] = useState(state?.file);
   const [files, setFiles] = useState([]);
   const [image, setImage] = useState(
@@ -63,9 +65,9 @@ const ProductForm = ({ state }) => {
   const productTypeId = watch('productTypeId');
   const isDigitalProduct = useMemo(
     () =>
-      data?.getProductTypes?.find((item) => item.id === (productTypeId || state?.productTypeId))
-        ?.name === 'Digital Product',
-    [data?.getProductTypes, productTypeId, state?.productTypeId],
+      productTypes?.find((item) => item.id === (productTypeId || state?.productTypeId))?.name ===
+      'Digital Product',
+    [productTypes, productTypeId, state?.productTypeId],
   );
 
   const disabled = useMemo(
@@ -120,6 +122,13 @@ const ProductForm = ({ state }) => {
     [state?.productId, state?.price, setValue],
   );
 
+  useEffect(() => {
+    !productTypes?.length &&
+      getProductTypesfunc({
+        onCompleted: ({ getProductTypes }) => productTypesVar(getProductTypes),
+      });
+  }, [productTypes, getProductTypesfunc, data?.getProductTypes]);
+
   const setLimitation = useCallback(() => {
     setLimitVisible(!limitVisible);
     setValue('limit', undefined);
@@ -150,7 +159,7 @@ const ProductForm = ({ state }) => {
                   span={16}
                   align='middle'
                   padding_bottom={32}
-                  padding_left={productTypeId === '1' && 27}
+                  padding_left={productTypeId === '1' ? 27 : ''}
                   className={
                     productTypeId === '1' && (visibleTooltip || (user.id && !user.helpSeen))
                       ? 'select-title'
@@ -174,16 +183,32 @@ const ProductForm = ({ state }) => {
                     control={control}
                     defaultValue={state?.productTypeId}
                     render={({ field }) => (
-                      <Select
+                      <TreeSelect
                         {...field}
                         bordered={false}
                         size='large'
                         placeholder='Select the type of your product'
-                        options={data?.getProductTypes.map((item) => ({
-                          label: item.name,
-                          value: item.id,
-                        }))}
-                      />
+                      >
+                        <TreeSelect.TreeNode
+                          selectable={false}
+                          value={productTypes.find((item) => item.id === '2')?.name}
+                          title={productTypes.find((item) => item.id === '2')?.name}
+                        >
+                          {productTypes
+                            .filter((item) => item.mainTypeId !== null)
+                            .map((item) => (
+                              <TreeSelect.TreeNode
+                                value={item.id}
+                                title={item.name}
+                                key={item.id}
+                              />
+                            ))}
+                        </TreeSelect.TreeNode>
+                        <TreeSelect.TreeNode
+                          value={productTypes.find((item) => item.id === '1')?.name}
+                          title={productTypes.find((item) => item.id === '1')?.name}
+                        />
+                      </TreeSelect>
                     )}
                   />
                 </Col>

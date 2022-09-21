@@ -17,7 +17,6 @@ const Tabs = styled(antTabs)`
     background: ${(props) => props.theme.colors.white} !important;
   }
   .ant-tabs-nav {
-    margin-left: 40px;
     margin-bottom: 20px;
   }
   .ant-tabs-nav::before {

@@ -1,6 +1,7 @@
 import { memo, useCallback, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import { useReactiveVar } from '@apollo/client';
 
 import history from '@configs/history';
 import { Col, Row, Tabs, Text } from '@ui-kit';
@@ -8,7 +9,8 @@ import EmptyState from '@shared/EmptyState';
 import LoadMoreButton from './LoadMoreButton';
 import ArtworksList from './Artwork/ArtworksList';
 import ProductsList from './Product/ProductsList';
-import TagButton from '@ui-kit/Custom/TagButton';
+import CategoryTab from '@ui-kit/Custom/CategoryTab';
+import { productTypesVar } from '@configs/client-cache';
 
 const Wrapper = styled('div')`
   max-width: 1438px;
@@ -32,19 +34,6 @@ const tabs = {
   MARKETPLACE: 'Marketplace',
   ARTWORK: 'Content',
 };
-
-const productTabs = [
-  { name: 'eBook', color: '#00A0FF', width: '75' },
-  { name: 'Comics', color: '#CF04A3', width: '78' },
-  { name: 'Artwork', color: '#A304CB', width: '78' },
-  { name: 'Art Tools % Assets', color: '#4C9A08', width: '150' },
-  { name: 'Game Assets', color: '#00A0FF', width: '118' },
-  { name: 'Software', color: '#CF04A3', width: '87' },
-  { name: 'Photos', color: '#A304CB', width: '72' },
-  { name: 'Video', color: '#4C9A08', width: '65' },
-  { name: 'Guids/ Documents', color: '#00A0FF', width: '157' },
-  { name: 'Tamplates', color: '#CF04A3', width: '100' },
-];
 
 const contentTabs = ['All', 'Animation', 'Illustration', 'Branding', 'Product Design'];
 
@@ -88,19 +77,21 @@ export const Content = ({
       }
     : { isNoResult: true };
 
+  const productTypes = useReactiveVar(productTypesVar);
+
   return (
     <Wrapper>
       <Tabs activeKey={activeKey} onTabClick={onTabClick}>
         <TabPane key={tabs.MARKETPLACE} tab={tabs.MARKETPLACE}>
           {!isProfilePage && (
-            <Row gutter={[12, 12]} padding_bottom={20} padding_left={40}>
-              {productTabs.map((item) => (
-                <Col>
-                  <TagButton b_color={item.color} width={item.width}>
-                    {item.name}
-                  </TagButton>
-                </Col>
-              ))}
+            <Row gutter={[12, 12]} padding_bottom={20}>
+              {productTypes
+                .filter((item) => item.mainTypeId === '2')
+                .map((item) => (
+                  <Col>
+                    <CategoryTab>{item.name}</CategoryTab>
+                  </Col>
+                ))}
             </Row>
           )}
           {!loading && !productsCount && !productsList?.length && (
@@ -115,7 +106,7 @@ export const Content = ({
         </TabPane>
         <TabPane key={tabs.ARTWORK} tab={tabs.ARTWORK}>
           {!isProfilePage && (
-            <Row gutter={[36]} padding_bottom={30} padding_left={40}>
+            <Row gutter={[36]} padding_bottom={30}>
               {contentTabs.map((item) => (
                 <Col>
                   <Text level={3} color='dark25'>
