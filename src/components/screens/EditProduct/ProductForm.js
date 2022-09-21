@@ -331,7 +331,7 @@ const ProductForm = ({ state }) => {
                 )}
                 <Col span={18} align='start'>
                   <Text level={3} disabled={isFree}>
-                    Who can see this?
+                    Who can get this?
                   </Text>
                 </Col>
                 <Col span={18} padding_bottom={32} align='start'>
