@@ -1,5 +1,5 @@
 import { Fragment, memo, useCallback, useMemo, useState } from 'react';
-import { useMutation } from '@apollo/client';
+import { useMutation, useReactiveVar } from '@apollo/client';
 
 import useAsyncFn from '@app/hooks/useAsyncFn';
 import useRedirectToProfile from '@app/hooks/useRedirectToProfile';
@@ -10,6 +10,7 @@ import ActionButtons from '@shared/ActionButtons';
 import { notification } from '@ui-kit';
 import { formItemContent } from '@utils/upload.helper';
 import Confirmation from '@shared/Confirmation';
+import { productTypesVar } from '@configs/client-cache';
 
 const ProductActionButtons = ({
   state,
@@ -22,6 +23,7 @@ const ProductActionButtons = ({
   const buttonLabel = useMemo(() => (state?.productId ? 'UPDATE' : 'PUBLISH'), [state?.productId]);
   const { userId, redirect } = useRedirectToProfile();
   const [visible, setVisible] = useState(false);
+  const productTypes = useReactiveVar(productTypesVar);
 
   const [create, { loading: creating }] = useMutation(createProduct, {
     update: (cache, mutationResult) => {
@@ -55,11 +57,15 @@ const ProductActionButtons = ({
   const onPublish = useAsyncFn(async (attributes) => {
     let file;
     let thumbnail = state?.thumbnail && !image.src ? 'remove-thumbnail' : undefined;
-    if (attributes.image?.file || (attributes.file && +attributes.productTypeId === 2)) {
+    if (
+      attributes.image?.file ||
+      (attributes.file && attributes.productTypeId === productTypes.digitalId)
+    ) {
       const content = await formItemContent({
         userId,
         image: image.file,
-        file: +attributes.productTypeId === 2 ? attributes.file?.file : undefined,
+        file:
+          attributes.productTypeId === productTypes.digitalId ? attributes.file?.file : undefined,
         type: PRODUCTS,
       });
       thumbnail = content?.image;

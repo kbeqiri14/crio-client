@@ -14,13 +14,28 @@ import { productTypesVar } from '@configs/client-cache';
 const PRODUCTS_LIMIT = 15;
 const ARTWORKS_LIMIT = 24;
 
+const DIGITAL = 'Digital Product';
+const COMMISSIONS = 'Commissions';
+
 export const ExplorePage = () => {
   const [productsOffset, setProductsOffset] = useState(0);
   const [artworksOffset, setArtworksOffset] = useState(0);
   const [productsList, setProductsList] = useState([]);
   const [artworksList, setArtworksList] = useState([]);
   useQuery(getProductTypes, {
-    onCompleted: ({ getProductTypes }) => console.log(55555) || productTypesVar(getProductTypes),
+    onCompleted: ({ getProductTypes }) => {
+      const mainProductTypes = getProductTypes.reduce((acc, item) => {
+        if (!item.mainTypeId) {
+          return { ...acc, [item.name]: item.id };
+        }
+        return acc;
+      }, {});
+      productTypesVar({
+        digitalId: mainProductTypes[DIGITAL],
+        commissionId: mainProductTypes[COMMISSIONS],
+        productCategories: getProductTypes,
+      });
+    },
   });
   const keyword = useReactiveVar(searchKeywordVar);
   const refetchArtwork = useReactiveVar(refetchArtworkVar);

@@ -1,6 +1,5 @@
 import { memo, useCallback, useState, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-// import { useQuery } from '@apollo/client';
 
 import history from '@configs/history';
 import { ARTWORKS } from '@configs/constants';
@@ -13,7 +12,6 @@ import { Col, Row, Tag, Text } from '@ui-kit';
 import { ReactComponent as VideoIcon } from '@svgs/video.svg';
 import LockState from '../LockState';
 import { Wrapper } from './styled';
-// import { getProductTypes } from '@app/graphql/queries/products.query';
 
 const Artwork = ({
   providerType,
@@ -29,7 +27,6 @@ const Artwork = ({
   accessibility,
   status,
 }) => {
-  // const { data } = useQuery(getProductTypes);
   const [isHovering, setIsHovering] = useState(false);
   const { user } = useLoggedInUser();
   const { pathname } = useLocation();

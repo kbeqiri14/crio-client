@@ -10,6 +10,7 @@ import LoadMoreButton from './LoadMoreButton';
 import ArtworksList from './Artwork/ArtworksList';
 import ProductsList from './Product/ProductsList';
 import { productTypesVar } from '@configs/client-cache';
+import CategoryTab from '@ui-kit/Custom/CategoryTab';
 
 const Wrapper = styled('div')`
   max-width: 1438px;
@@ -83,12 +84,15 @@ export const Content = ({
       <Tabs activeKey={activeKey} onTabClick={onTabClick}>
         <TabPane key={tabs.MARKETPLACE} tab={tabs.MARKETPLACE}>
           {!isProfilePage && (
-            <Row gutter={[28, 12]} padding_bottom={20} padding_left={40}>
-              {productTypes
-                .filter((item) => item.mainTypeId === '2')
+            <Row gutter={[4]} padding_bottom={20} padding_left={40}>
+              <Col>
+                <CategoryTab>All</CategoryTab>
+              </Col>
+              {productTypes.productCategories
+                .filter((item) => item.name !== 'Digital Product')
                 .map((item) => (
                   <Col>
-                    <Text level={3}>{item.name}</Text>
+                    <CategoryTab>{item.name}</CategoryTab>
                   </Col>
                 ))}
             </Row>

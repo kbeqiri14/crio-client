@@ -1,10 +1,12 @@
 import { memo } from 'react';
 import styled from 'styled-components';
+import { useReactiveVar } from '@apollo/client';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { Col, Row, Text } from '@ui-kit';
 import BuyButton from '@shared/CreatorContent/Product/BuyButton';
 import HelpTooltip from './HelpTooltip';
+import { productTypesVar } from '@configs/client-cache';
 
 const Wrapper = styled('div')`
   display: flex;
@@ -49,6 +51,7 @@ export const BuyWidget = ({
   onVisibleChange,
 }) => {
   const { user } = useLoggedInUser();
+  const productTypes = useReactiveVar(productTypesVar);
 
   return (
     <Wrapper>
@@ -86,7 +89,7 @@ export const BuyWidget = ({
           />
         </Col>
       </Row>
-      {!user.isCreator && (!user?.id || productTypeId === '1') && (
+      {!user.isCreator && (!user?.id || productTypes.commissionId) && (
         <HelpTooltip
           onVisibleChange={onVisibleChange}
           title={

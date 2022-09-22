@@ -59,12 +59,12 @@ const Product = ({
       if (!user.isCreator && isHovering) {
         width = large ? 494 : 140;
       }
-      if (isLocked && !price && +productTypeId === 2) {
+      if (isLocked && !price && productTypeId === productTypes.digitalId) {
         width = large ? 469 : 115;
       }
     }
     return { width };
-  }, [large, isHovering, user.isCreator, isLocked, price, productTypeId]);
+  }, [large, isHovering, user.isCreator, isLocked, price, productTypeId, productTypes.digitalId]);
 
   const src = useMemo(
     () => (thumbnail ? getThumbnail(PRODUCTS, userId, `thumbnail-${thumbnail}`) : product),
@@ -151,7 +151,11 @@ const Product = ({
       >
         <ImageWrapper className={imageClasses}>
           <img src={src} alt='product' onClick={showProduct} />
-          {isHovering && <Tag>{productTypes?.find((item) => item.id === productTypeId)?.name}</Tag>}
+          {isHovering && (
+            <Tag>
+              {productTypes.productCategories.find((item) => item.id === productTypeId).name}
+            </Tag>
+          )}
           <div
             className={`actions ${isHovering ? 'hover' : ''}`}
             onClick={() => !showActions && showProduct()}

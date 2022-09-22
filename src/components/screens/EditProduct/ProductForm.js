@@ -29,6 +29,9 @@ import ActionButtons from './_partials/ActionButtons';
 import HelpTooltip from '@screens/Product/HelpTooltip';
 import { getProductTypes } from '@app/graphql/queries/products.query';
 
+const DIGITAL = 'Digital Product';
+const COMMISSIONS = 'Commissions';
+
 const ProductForm = ({ state }) => {
   const productTypes = useReactiveVar(productTypesVar);
   const { user } = useLoggedInUser();
@@ -65,9 +68,10 @@ const ProductForm = ({ state }) => {
   const productTypeId = watch('productTypeId');
   const isDigitalProduct = useMemo(
     () =>
-      productTypes?.find((item) => item.id === (productTypeId || state?.productTypeId))?.name ===
-      'Digital Product',
-    [productTypes, productTypeId, state?.productTypeId],
+      productTypes.productCategories.find(
+        (item) => item.id === (productTypeId || state?.productTypeId),
+      )?.mainTypeId === productTypes.digitalId,
+    [productTypes.productCategories, productTypes.digitalId, productTypeId, state?.productTypeId],
   );
 
   const disabled = useMemo(
@@ -123,9 +127,21 @@ const ProductForm = ({ state }) => {
   );
 
   useEffect(() => {
-    !productTypes?.length &&
+    !productTypes.productCategories.length &&
       getProductTypesfunc({
-        onCompleted: ({ getProductTypes }) => productTypesVar(getProductTypes),
+        onCompleted: ({ getProductTypes }) => {
+          const mainProductTypes = getProductTypes.reduce((acc, item) => {
+            if (!item.mainTypeId) {
+              return { ...acc, [item.name]: item.id };
+            }
+            return acc;
+          }, {});
+          productTypesVar({
+            digitalId: mainProductTypes[DIGITAL],
+            commissionId: mainProductTypes[COMMISSIONS],
+            productCategories: getProductTypes,
+          });
+        },
       });
   }, [productTypes, getProductTypesfunc, data?.getProductTypes]);
 
@@ -159,24 +175,23 @@ const ProductForm = ({ state }) => {
                   span={16}
                   align='middle'
                   padding_bottom={32}
-                  padding_left={productTypeId === '1' ? 27 : ''}
+                  padding_left={productTypeId === productTypes.commissionId ? 27 : ''}
                   className={
-                    productTypeId === '1' && (visibleTooltip || (user.id && !user.helpSeen))
+                    productTypeId === productTypes.commissionId &&
+                    (visibleTooltip || (user.id && !user.helpSeen))
                       ? 'select-title'
                       : ''
                   }
                 >
                   <Title level={1}>Add new Digital Product or Service</Title>
                 </Col>
-                {(productTypeId ? productTypeId === '1' : state?.productTypeId === '1') && (
-                  <Col span={2} align='end' className='help'>
-                    <HelpTooltip
-                      onVisibleChange={(value) => setVisibleTooltip(value)}
-                      placement='right'
-                      title='After a user makes a purchase, you will receive an automatic email. Please check your email and complete the order'
-                    />
-                  </Col>
-                )}
+                <Col span={2} align='end' className='help'>
+                  <HelpTooltip
+                    onVisibleChange={(value) => setVisibleTooltip(value)}
+                    placement='right'
+                    title='After a user makes a purchase, you will receive an automatic email. Please check your email and complete the order'
+                  />
+                </Col>
                 <Col span={18} padding_bottom={32}>
                   <Controller
                     name='productTypeId'
@@ -191,10 +206,18 @@ const ProductForm = ({ state }) => {
                       >
                         <TreeSelect.TreeNode
                           selectable={false}
-                          value={productTypes.find((item) => item.id === '2')?.name}
-                          title={productTypes.find((item) => item.id === '2')?.name}
+                          value={
+                            productTypes.productCategories.find(
+                              (item) => item.id === productTypes.digitalId,
+                            )?.name
+                          }
+                          title={
+                            productTypes.productCategories.find(
+                              (item) => item.id === productTypes.digitalId,
+                            )?.name
+                          }
                         >
-                          {productTypes
+                          {productTypes.productCategories
                             .filter((item) => item.mainTypeId !== null)
                             .map((item) => (
                               <TreeSelect.TreeNode
@@ -205,8 +228,16 @@ const ProductForm = ({ state }) => {
                             ))}
                         </TreeSelect.TreeNode>
                         <TreeSelect.TreeNode
-                          value={productTypes.find((item) => item.id === '1')?.name}
-                          title={productTypes.find((item) => item.id === '1')?.name}
+                          value={
+                            productTypes.productCategories.find(
+                              (item) => item.id === productTypes.commissionId,
+                            )?.name
+                          }
+                          title={
+                            productTypes.productCategories.find(
+                              (item) => item.id === productTypes.commissionId,
+                            )?.name
+                          }
                         />
                       </TreeSelect>
                     )}

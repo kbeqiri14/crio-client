@@ -1,5 +1,5 @@
 import { memo, useCallback, useMemo, useState } from 'react';
-import { useLazyQuery } from '@apollo/client';
+import { useLazyQuery, useReactiveVar } from '@apollo/client';
 
 import { PRODUCTS } from '@configs/constants';
 import history from '@configs/history';
@@ -10,6 +10,7 @@ import { Button, notification, Tooltip } from '@ui-kit';
 import { ReactComponent as LockIcon } from '@svgs/lock-buy.svg';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { useSendEmail } from '@shared/SendEmailModal/Context';
+import { productTypesVar } from '@configs/client-cache';
 
 const BuyButton = ({
   userId,
@@ -25,6 +26,7 @@ const BuyButton = ({
   const { setSendEmailInfo } = useSendEmail();
   const { setInfo } = usePresentation();
   const [downloading, setDownloading] = useState(false);
+  const productTypes = useReactiveVar(productTypesVar);
 
   const hide = useCallback(() => setInfo({}), [setInfo]);
   const [getCheckoutSession, { loading }] = useLazyQuery(getStripeCheckoutSession, {
@@ -77,10 +79,10 @@ const BuyButton = ({
     () =>
       price && !user.boughtProducts?.includes(productId)
         ? 'BUY'
-        : +productTypeId === 2
+        : productTypeId === productTypes.digitalId
         ? 'DOWNLOAD'
         : 'EMAIL',
-    [price, productId, productTypeId, user.boughtProducts],
+    [price, productId, productTypeId, productTypes.digitalId, user.boughtProducts],
   );
   const color = useMemo(() => (label === 'BUY' ? 'blue' : 'green'), [label]);
   const disabled = useMemo(() => label === 'BUY' && limit === 0, [limit, label]);
