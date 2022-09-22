@@ -10,7 +10,7 @@ npx cdk bootstrap aws://"$STACK_ACCOUNT"/"$STACK_REGION"
 npx cdk deploy --all --require-approval=never
 
 echo "deploying client"
-npm install --dev --legacy-peer-deps
+npm install --include=dev --legacy-peer-deps
 echo "----env vars -----"
 echo "----end env vars -----"
 
