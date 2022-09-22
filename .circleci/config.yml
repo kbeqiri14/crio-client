@@ -15,7 +15,7 @@ commands:
       - run: npm run deploy
   install-packages:
     steps:
-      - run: npm install --force
+      - run: npm install --legacy-peer-deps
 
 jobs:
   test-client:
