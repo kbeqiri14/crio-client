@@ -35,7 +35,7 @@ const COMMISSIONS = 'Commissions';
 const ProductForm = ({ state }) => {
   const productTypes = useReactiveVar(productTypesVar);
   const { user } = useLoggedInUser();
-  const [visibleTooltip, setVisibleTooltip] = useState(user.id && !user.helpSeen);
+  const [openTooltip, setOpenTooltip] = useState(user.id && !user.helpSeen);
   const [visibleBroadcast, setVisibleBroadcast] = useState(false);
   const [limitVisible, setLimitVisible] = useState(state?.limit !== null && state?.limit >= 0);
   const [getCategoriesRequest, { data }] = useLazyQuery(getCategories);
@@ -177,20 +177,23 @@ const ProductForm = ({ state }) => {
                   padding_left={categoryId === productTypes.commissionId ? 27 : ''}
                   className={
                     categoryId === productTypes.commissionId &&
-                    (visibleTooltip || (user.id && !user.helpSeen))
+                    (openTooltip || (user.id && !user.helpSeen))
                       ? 'select-title'
                       : ''
                   }
                 >
                   <Title level={1}>Add new Digital Product or Service</Title>
                 </Col>
-                <Col span={2} align='end' className='help'>
-                  <HelpTooltip
-                    onVisibleChange={(value) => setVisibleTooltip(value)}
-                    placement='right'
-                    title='After a user makes a purchase, you will receive an automatic email. Please check your email and complete the order'
-                  />
-                </Col>
+                {!isDigitalProduct && (
+                  <Col span={2} align='end' className='help'>
+                    <HelpTooltip
+                      onOpenChange={(value) => setOpenTooltip(value)}
+                      placement='right'
+                      title='After a user makes a purchase, you will receive an automatic email. Please check your email and complete the order'
+                    />
+                  </Col>
+                )}
+
                 <Col span={18} padding_bottom={32}>
                   <Controller
                     name='categoryId'

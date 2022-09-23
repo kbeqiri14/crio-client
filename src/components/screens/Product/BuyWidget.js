@@ -48,7 +48,7 @@ export const BuyWidget = ({
   price,
   limit,
   accessibility,
-  onVisibleChange,
+  onOpenChange,
 }) => {
   const { user } = useLoggedInUser();
   // const productTypes = useReactiveVar(productTypesVar);
@@ -91,7 +91,7 @@ export const BuyWidget = ({
       </Row>
       {!user.isCreator && (!user?.id || categoryId === '1') && (
         <HelpTooltip
-          onVisibleChange={onVisibleChange}
+          onOpenChange={onOpenChange}
           title={
             user?.id
               ? 'After purchase, please check your email to receive a service from Creator'

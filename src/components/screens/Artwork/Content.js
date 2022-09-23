@@ -70,7 +70,7 @@ const ImageWrapper = styled('div')`
 export const Content = ({ info, content, isLocked }) => {
   const { user } = useLoggedInUser();
   const loggedInUserLoading = useReactiveVar(loggedInUserLoadingVar);
-  const [visibleTooltip, setVisibleTooltip] = useState(user.id && !user.helpSeen);
+  const [openTooltip, setOpenTooltip] = useState(user.id && !user.helpSeen);
   const avatarUrl = useAvatarUrl(info.providerType, info.providerUserId, info.avatar);
   const { setInfo } = usePresentation();
 
@@ -155,7 +155,7 @@ export const Content = ({ info, content, isLocked }) => {
             <Row className='flex-dir' justify='space-between'>
               <Col
                 max_width={info.isProduct ? 722 : undefined}
-                className={visibleTooltip || (user.id && !user.helpSeen) ? 'text-content' : ''}
+                className={openTooltip || (user.id && !user.helpSeen) ? 'text-content' : ''}
               >
                 <Text level={4} color='dark25'>
                   <div
@@ -174,7 +174,7 @@ export const Content = ({ info, content, isLocked }) => {
                     price={info.price}
                     limit={info.limit}
                     accessibility={info.accessibility}
-                    onVisibleChange={(value) => setVisibleTooltip(value)}
+                    onOpenChange={(value) => setOpenTooltip(value)}
                   />
                 </Col>
               )}
