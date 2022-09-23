@@ -22,7 +22,7 @@ const Product = ({
   userId,
   username,
   productId,
-  productTypeId,
+  categoryId,
   title,
   description,
   price,
@@ -59,12 +59,12 @@ const Product = ({
       if (!user.isCreator && isHovering) {
         width = large ? 494 : 140;
       }
-      if (isLocked && !price && productTypeId === productTypes.digitalId) {
+      if (isLocked && !price && categoryId === productTypes.digitalId) {
         width = large ? 469 : 115;
       }
     }
     return { width };
-  }, [large, isHovering, user.isCreator, isLocked, price, productTypeId, productTypes.digitalId]);
+  }, [large, isHovering, user.isCreator, isLocked, price, categoryId, productTypes.digitalId]);
 
   const src = useMemo(
     () => (thumbnail ? getThumbnail(PRODUCTS, userId, `thumbnail-${thumbnail}`) : product),
@@ -113,7 +113,7 @@ const Product = ({
       username,
       avatar,
       productId,
-      productTypeId,
+      categoryId,
       title,
       description,
       price,
@@ -129,7 +129,7 @@ const Product = ({
     providerUserId,
     username,
     avatar,
-    productTypeId,
+    categoryId,
     title,
     description,
     price,
@@ -152,9 +152,7 @@ const Product = ({
         <ImageWrapper className={imageClasses}>
           <img src={src} alt='product' onClick={showProduct} />
           {isHovering && (
-            <Tag>
-              {productTypes.productCategories.find((item) => item.id === productTypeId).name}
-            </Tag>
+            <Tag>{productTypes.productCategories.find((item) => item.id === categoryId).name}</Tag>
           )}
           <div
             className={`actions ${isHovering ? 'hover' : ''}`}
@@ -165,7 +163,7 @@ const Product = ({
                 userId={userId}
                 username={username}
                 productId={productId}
-                productTypeId={productTypeId}
+                categoryId={categoryId}
                 title={title}
                 description={description}
                 price={price}
@@ -197,7 +195,7 @@ const Product = ({
             <BuyButton
               userId={userId}
               productId={productId}
-              productTypeId={productTypeId}
+              categoryId={categoryId}
               file={file}
               price={price}
               limit={limit}

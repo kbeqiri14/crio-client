@@ -169,7 +169,7 @@ export const Content = ({ info, content, isLocked }) => {
                   <BuyWidget
                     userId={info.userId}
                     productId={info.productId}
-                    productTypeId={info.productTypeId}
+                    categoryId={info.categoryId}
                     file={info.file}
                     price={info.price}
                     limit={info.limit}

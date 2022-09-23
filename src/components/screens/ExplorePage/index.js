@@ -8,7 +8,7 @@ import { searchKeywordVar, refetchArtworkVar, refetchMarketplaceVar } from '@con
 import { Carousel, GlobalSpinner } from '@ui-kit';
 import TopArtwork from './TopArtwork';
 import Content from '../../shared/CreatorContent';
-import { getProductTypes } from '@app/graphql/queries/products.query';
+import { getCategories } from '@app/graphql/queries/products.query';
 import { productTypesVar } from '@configs/client-cache';
 
 const PRODUCTS_LIMIT = 15;
@@ -22,9 +22,9 @@ export const ExplorePage = () => {
   const [artworksOffset, setArtworksOffset] = useState(0);
   const [productsList, setProductsList] = useState([]);
   const [artworksList, setArtworksList] = useState([]);
-  useQuery(getProductTypes, {
-    onCompleted: ({ getProductTypes }) => {
-      const mainProductTypes = getProductTypes.reduce((acc, item) => {
+  useQuery(getCategories, {
+    onCompleted: ({ getCategories }) => {
+      const mainProductTypes = getCategories.reduce((acc, item) => {
         if (!item.mainTypeId) {
           return { ...acc, [item.name]: item.id };
         }
@@ -33,7 +33,7 @@ export const ExplorePage = () => {
       productTypesVar({
         digitalId: mainProductTypes[DIGITAL],
         commissionId: mainProductTypes[COMMISSIONS],
-        productCategories: getProductTypes,
+        productCategories: getCategories,
       });
     },
   });

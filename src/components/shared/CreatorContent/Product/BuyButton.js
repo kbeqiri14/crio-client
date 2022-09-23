@@ -12,16 +12,7 @@ import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { useSendEmail } from '@shared/SendEmailModal/Context';
 import { productTypesVar } from '@configs/client-cache';
 
-const BuyButton = ({
-  userId,
-  productId,
-  productTypeId,
-  file,
-  price,
-  limit,
-  accessibility,
-  block,
-}) => {
+const BuyButton = ({ userId, productId, categoryId, file, price, limit, accessibility, block }) => {
   const { user } = useLoggedInUser();
   const { setSendEmailInfo } = useSendEmail();
   const { setInfo } = usePresentation();
@@ -79,10 +70,10 @@ const BuyButton = ({
     () =>
       price && !user.boughtProducts?.includes(productId)
         ? 'BUY'
-        : productTypeId === productTypes.digitalId
+        : categoryId === productTypes.digitalId
         ? 'DOWNLOAD'
         : 'EMAIL',
-    [price, productId, productTypeId, productTypes.digitalId, user.boughtProducts],
+    [price, productId, categoryId, productTypes.digitalId, user.boughtProducts],
   );
   const color = useMemo(() => (label === 'BUY' ? 'blue' : 'green'), [label]);
   const disabled = useMemo(() => label === 'BUY' && limit === 0, [limit, label]);

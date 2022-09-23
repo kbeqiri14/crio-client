@@ -27,7 +27,7 @@ import DraggerImage from './_partials/DraggerImage';
 import DraggerFile from './_partials/DraggerFile';
 import ActionButtons from './_partials/ActionButtons';
 import HelpTooltip from '@screens/Product/HelpTooltip';
-import { getProductTypes } from '@app/graphql/queries/products.query';
+import { getCategories } from '@app/graphql/queries/products.query';
 
 const DIGITAL = 'Digital Product';
 const COMMISSIONS = 'Commissions';
@@ -38,7 +38,7 @@ const ProductForm = ({ state }) => {
   const [visibleTooltip, setVisibleTooltip] = useState(user.id && !user.helpSeen);
   const [visibleBroadcast, setVisibleBroadcast] = useState(false);
   const [limitVisible, setLimitVisible] = useState(state?.limit !== null && state?.limit >= 0);
-  const [getProductTypesfunc, { data }] = useLazyQuery(getProductTypes);
+  const [getCategoriesRequest, { data }] = useLazyQuery(getCategories);
   const [file, setFile] = useState(state?.file);
   const [files, setFiles] = useState([]);
   const [image, setImage] = useState(
@@ -65,24 +65,23 @@ const ProductForm = ({ state }) => {
   const isFree = watch('isFree');
   const limit = watch('limit');
   const accessibility = watch('accessibility');
-  const productTypeId = watch('productTypeId');
+  const categoryId = watch('categoryId');
   const isDigitalProduct = useMemo(
     () =>
-      productTypes.productCategories.find(
-        (item) => item.id === (productTypeId || state?.productTypeId),
-      )?.mainTypeId === productTypes.digitalId,
-    [productTypes.productCategories, productTypes.digitalId, productTypeId, state?.productTypeId],
+      productTypes.productCategories.find((item) => item.id === (categoryId || state?.categoryId))
+        ?.mainTypeId === productTypes.digitalId,
+    [productTypes.productCategories, productTypes.digitalId, categoryId, state?.categoryId],
   );
 
   const disabled = useMemo(
     () =>
       !(
         title?.trim() &&
-        (productTypeId || state?.productTypeId) &&
+        (categoryId || state?.categoryId) &&
         (+price > 0 || isFree) &&
         (!limitVisible || (limitVisible && +limit > 0)) &&
         !(isDigitalProduct && !(files.length || file)) &&
-        ((productTypeId && productTypeId !== state?.productTypeId) ||
+        ((categoryId && categoryId !== state?.categoryId) ||
           (title?.trim() && title?.trim() !== state?.title) ||
           (state?.file && file !== state?.file) ||
           (description?.trim() && description?.trim() !== state?.description) ||
@@ -113,8 +112,8 @@ const ProductForm = ({ state }) => {
       state?.accessibility,
       state?.thumbnail,
       state?.file,
-      state?.productTypeId,
-      productTypeId,
+      state?.categoryId,
+      categoryId,
       isDigitalProduct,
       file,
       files,
@@ -128,9 +127,9 @@ const ProductForm = ({ state }) => {
 
   useEffect(() => {
     !productTypes.productCategories.length &&
-      getProductTypesfunc({
-        onCompleted: ({ getProductTypes }) => {
-          const mainProductTypes = getProductTypes.reduce((acc, item) => {
+      getCategoriesRequest({
+        onCompleted: ({ getCategories }) => {
+          const mainProductTypes = getCategories.reduce((acc, item) => {
             if (!item.mainTypeId) {
               return { ...acc, [item.name]: item.id };
             }
@@ -139,11 +138,11 @@ const ProductForm = ({ state }) => {
           productTypesVar({
             digitalId: mainProductTypes[DIGITAL],
             commissionId: mainProductTypes[COMMISSIONS],
-            productCategories: getProductTypes,
+            productCategories: getCategories.filter((item) => item.type === 'Prduct'),
           });
         },
       });
-  }, [productTypes, getProductTypesfunc, data?.getProductTypes]);
+  }, [productTypes, getCategoriesRequest, data?.getCategories]);
 
   const setLimitation = useCallback(() => {
     setLimitVisible(!limitVisible);
@@ -175,9 +174,9 @@ const ProductForm = ({ state }) => {
                   span={16}
                   align='middle'
                   padding_bottom={32}
-                  padding_left={productTypeId === productTypes.commissionId ? 27 : ''}
+                  padding_left={categoryId === productTypes.commissionId ? 27 : ''}
                   className={
-                    productTypeId === productTypes.commissionId &&
+                    categoryId === productTypes.commissionId &&
                     (visibleTooltip || (user.id && !user.helpSeen))
                       ? 'select-title'
                       : ''
@@ -194,9 +193,9 @@ const ProductForm = ({ state }) => {
                 </Col>
                 <Col span={18} padding_bottom={32}>
                   <Controller
-                    name='productTypeId'
+                    name='categoryId'
                     control={control}
-                    defaultValue={state?.productTypeId}
+                    defaultValue={state?.categoryId}
                     render={({ field }) => (
                       <TreeSelect
                         {...field}
@@ -445,7 +444,7 @@ const ProductForm = ({ state }) => {
                     state={state}
                     image={image}
                     disabled={disabled}
-                    productTypeId={productTypeId}
+                    categoryId={categoryId}
                     handleSubmit={handleSubmit}
                   />
                 </Col>
