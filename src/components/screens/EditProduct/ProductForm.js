@@ -6,7 +6,7 @@ import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { getConnectAccount } from '@app/graphql/queries/payment-method.query';
 import Broadcast from './_partials/Broadcast';
 import FormWrapper from './styled/FormWrapper';
-import { productTypesVar } from '@configs/client-cache';
+import { categoriesVar } from '@configs/client-cache';
 
 import { Link } from 'react-router-dom';
 import { Controller } from 'react-hook-form';
@@ -33,7 +33,7 @@ const DIGITAL = 'Digital Product';
 const COMMISSIONS = 'Commissions';
 
 const ProductForm = ({ state }) => {
-  const productTypes = useReactiveVar(productTypesVar);
+  const categories = useReactiveVar(categoriesVar);
   const { user } = useLoggedInUser();
   const [openTooltip, setOpenTooltip] = useState(user.id && !user.helpSeen);
   const [visibleBroadcast, setVisibleBroadcast] = useState(false);
@@ -68,9 +68,9 @@ const ProductForm = ({ state }) => {
   const categoryId = watch('categoryId');
   const isDigitalProduct = useMemo(
     () =>
-      productTypes.productCategories.find((item) => item.id === (categoryId || state?.categoryId))
-        ?.mainTypeId === productTypes.digitalId,
-    [productTypes.productCategories, productTypes.digitalId, categoryId, state?.categoryId],
+      categories.productCategories.find((item) => item.id === (categoryId || state?.categoryId))
+        ?.mainCategoryId === categories.digitalId,
+    [categories.productCategories, categories.digitalId, categoryId, state?.categoryId],
   );
 
   const disabled = useMemo(
@@ -126,23 +126,23 @@ const ProductForm = ({ state }) => {
   );
 
   useEffect(() => {
-    !productTypes.productCategories.length &&
+    !categories.productCategories.length &&
       getCategoriesRequest({
         onCompleted: ({ getCategories }) => {
-          const mainProductTypes = getCategories.reduce((acc, item) => {
-            if (!item.mainTypeId) {
+          const mainCategories = getCategories.reduce((acc, item) => {
+            if (!item.mainCategoryId && item.type === 'product') {
               return { ...acc, [item.name]: item.id };
             }
             return acc;
           }, {});
-          productTypesVar({
-            digitalId: mainProductTypes[DIGITAL],
-            commissionId: mainProductTypes[COMMISSIONS],
-            productCategories: getCategories.filter((item) => item.type === 'Prduct'),
+          categoriesVar({
+            digitalId: mainCategories[DIGITAL],
+            commissionId: mainCategories[COMMISSIONS],
+            productCategories: getCategories.filter((item) => item.type === 'product'),
           });
         },
       });
-  }, [productTypes, getCategoriesRequest, data?.getCategories]);
+  }, [categories, getCategoriesRequest, data?.getCategories]);
 
   const setLimitation = useCallback(() => {
     setLimitVisible(!limitVisible);
@@ -174,9 +174,9 @@ const ProductForm = ({ state }) => {
                   span={16}
                   align='middle'
                   padding_bottom={32}
-                  padding_left={categoryId === productTypes.commissionId ? 27 : ''}
+                  padding_left={categoryId === categories.commissionId ? 27 : ''}
                   className={
-                    categoryId === productTypes.commissionId &&
+                    categoryId === categories.commissionId &&
                     (openTooltip || (user.id && !user.helpSeen))
                       ? 'select-title'
                       : ''
@@ -209,18 +209,18 @@ const ProductForm = ({ state }) => {
                         <TreeSelect.TreeNode
                           selectable={false}
                           value={
-                            productTypes.productCategories.find(
-                              (item) => item.id === productTypes.digitalId,
+                            categories.productCategories.find(
+                              (item) => item.id === categories.digitalId,
                             )?.name
                           }
                           title={
-                            productTypes.productCategories.find(
-                              (item) => item.id === productTypes.digitalId,
+                            categories.productCategories.find(
+                              (item) => item.id === categories.digitalId,
                             )?.name
                           }
                         >
-                          {productTypes.productCategories
-                            .filter((item) => item.mainTypeId !== null)
+                          {categories.productCategories
+                            .filter((item) => item.mainCategoryId !== null)
                             .map((item) => (
                               <TreeSelect.TreeNode
                                 value={item.id}
@@ -231,13 +231,13 @@ const ProductForm = ({ state }) => {
                         </TreeSelect.TreeNode>
                         <TreeSelect.TreeNode
                           value={
-                            productTypes.productCategories.find(
-                              (item) => item.id === productTypes.commissionId,
+                            categories.productCategories.find(
+                              (item) => item.id === categories.commissionId,
                             )?.name
                           }
                           title={
-                            productTypes.productCategories.find(
-                              (item) => item.id === productTypes.commissionId,
+                            categories.productCategories.find(
+                              (item) => item.id === categories.commissionId,
                             )?.name
                           }
                         />

@@ -10,14 +10,14 @@ import { Button, notification, Tooltip } from '@ui-kit';
 import { ReactComponent as LockIcon } from '@svgs/lock-buy.svg';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { useSendEmail } from '@shared/SendEmailModal/Context';
-import { productTypesVar } from '@configs/client-cache';
+import { categoriesVar } from '@configs/client-cache';
 
 const BuyButton = ({ userId, productId, categoryId, file, price, limit, accessibility, block }) => {
   const { user } = useLoggedInUser();
   const { setSendEmailInfo } = useSendEmail();
   const { setInfo } = usePresentation();
   const [downloading, setDownloading] = useState(false);
-  const productTypes = useReactiveVar(productTypesVar);
+  const categories = useReactiveVar(categoriesVar);
 
   const hide = useCallback(() => setInfo({}), [setInfo]);
   const [getCheckoutSession, { loading }] = useLazyQuery(getStripeCheckoutSession, {
@@ -70,10 +70,10 @@ const BuyButton = ({ userId, productId, categoryId, file, price, limit, accessib
     () =>
       price && !user.boughtProducts?.includes(productId)
         ? 'BUY'
-        : categoryId === productTypes.digitalId
+        : categoryId === categories.digitalId
         ? 'DOWNLOAD'
         : 'EMAIL',
-    [price, productId, categoryId, productTypes.digitalId, user.boughtProducts],
+    [price, productId, categoryId, categories.digitalId, user.boughtProducts],
   );
   const color = useMemo(() => (label === 'BUY' ? 'blue' : 'green'), [label]);
   const disabled = useMemo(() => label === 'BUY' && limit === 0, [limit, label]);

@@ -9,7 +9,7 @@ import { Carousel, GlobalSpinner } from '@ui-kit';
 import TopArtwork from './TopArtwork';
 import Content from '../../shared/CreatorContent';
 import { getCategories } from '@app/graphql/queries/products.query';
-import { productTypesVar } from '@configs/client-cache';
+import { categoriesVar } from '@configs/client-cache';
 
 const PRODUCTS_LIMIT = 15;
 const ARTWORKS_LIMIT = 24;
@@ -22,18 +22,23 @@ export const ExplorePage = () => {
   const [artworksOffset, setArtworksOffset] = useState(0);
   const [productsList, setProductsList] = useState([]);
   const [artworksList, setArtworksList] = useState([]);
+
   useQuery(getCategories, {
     onCompleted: ({ getCategories }) => {
-      const mainProductTypes = getCategories.reduce((acc, item) => {
-        if (!item.mainTypeId) {
+      const productCategories = getCategories.filter((item) => item.type === 'product');
+      const contentCategories = getCategories.filter((item) => item.type === 'content');
+      const mainCategories = getCategories.reduce((acc, item) => {
+        if (!item.mainCategoryId && item.type === 'product') {
           return { ...acc, [item.name]: item.id };
         }
         return acc;
       }, {});
-      productTypesVar({
-        digitalId: mainProductTypes[DIGITAL],
-        commissionId: mainProductTypes[COMMISSIONS],
-        productCategories: getCategories,
+
+      categoriesVar({
+        digitalId: mainCategories[DIGITAL],
+        commissionId: mainCategories[COMMISSIONS],
+        productCategories: productCategories,
+        contentCategories: contentCategories,
       });
     },
   });

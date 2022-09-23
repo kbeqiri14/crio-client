@@ -10,7 +10,7 @@ import ActionButtons from '@shared/ActionButtons';
 import { notification } from '@ui-kit';
 import { formItemContent } from '@utils/upload.helper';
 import Confirmation from '@shared/Confirmation';
-import { productTypesVar } from '@configs/client-cache';
+import { categoriesVar } from '@configs/client-cache';
 
 const ProductActionButtons = ({
   state,
@@ -23,7 +23,7 @@ const ProductActionButtons = ({
   const buttonLabel = useMemo(() => (state?.productId ? 'UPDATE' : 'PUBLISH'), [state?.productId]);
   const { userId, redirect } = useRedirectToProfile();
   const [visible, setVisible] = useState(false);
-  const productTypes = useReactiveVar(productTypesVar);
+  const categories = useReactiveVar(categoriesVar);
 
   const [create, { loading: creating }] = useMutation(createProduct, {
     update: (cache, mutationResult) => {
@@ -59,12 +59,12 @@ const ProductActionButtons = ({
     let thumbnail = state?.thumbnail && !image.src ? 'remove-thumbnail' : undefined;
     if (
       attributes.image?.file ||
-      (attributes.file && attributes.categoryId === productTypes.digitalId)
+      (attributes.file && attributes.categoryId === categories.digitalId)
     ) {
       const content = await formItemContent({
         userId,
         image: image.file,
-        file: attributes.categoryId === productTypes.digitalId ? attributes.file?.file : undefined,
+        file: attributes.categoryId === categories.digitalId ? attributes.file?.file : undefined,
         type: PRODUCTS,
       });
       thumbnail = content?.image;

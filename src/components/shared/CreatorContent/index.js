@@ -4,12 +4,12 @@ import styled from 'styled-components';
 import { useReactiveVar } from '@apollo/client';
 
 import history from '@configs/history';
-import { Col, Row, Tabs, Text } from '@ui-kit';
+import { Tabs } from '@ui-kit';
 import EmptyState from '@shared/EmptyState';
 import LoadMoreButton from './LoadMoreButton';
 import ArtworksList from './Artwork/ArtworksList';
 import ProductsList from './Product/ProductsList';
-import { productTypesVar } from '@configs/client-cache';
+import { categoriesVar } from '@configs/client-cache';
 import CategoryTab from '@ui-kit/Custom/CategoryTab';
 
 const Wrapper = styled('div')`
@@ -28,14 +28,22 @@ const Wrapper = styled('div')`
   }
 `;
 
+const CategoryWrapper = styled('div')`
+  width: 1316px;
+  height: 100%;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  margin-left: 32px;
+  overflow-x: auto;
+  white-space: nowrap;
+`;
+
 const { TabPane } = Tabs;
 
 const tabs = {
   MARKETPLACE: 'Marketplace',
   ARTWORK: 'Content',
 };
-
-const contentTabs = ['All', 'Animation', 'Illustration', 'Branding', 'Product Design'];
 
 export const Content = ({
   isProfile,
@@ -77,29 +85,21 @@ export const Content = ({
       }
     : { isNoResult: true };
 
-  const productTypes = useReactiveVar(productTypesVar);
+  const categories = useReactiveVar(categoriesVar);
 
   return (
     <Wrapper>
       <Tabs activeKey={activeKey} onTabClick={onTabClick}>
         <TabPane key={tabs.MARKETPLACE} tab={tabs.MARKETPLACE}>
           {!isProfilePage && (
-            <div
-              style={{
-                width: '100%',
-                height: '100%',
-                paddingBottom: 40,
-                overflowX: 'auto',
-                whiteSpace: 'nowrap',
-              }}
-            >
+            <CategoryWrapper>
               <CategoryTab>All</CategoryTab>
-              {productTypes.productCategories
+              {categories.productCategories
                 .filter((item) => item.name !== 'Digital Product')
                 .map((item) => (
                   <CategoryTab>{item.name}</CategoryTab>
                 ))}
-            </div>
+            </CategoryWrapper>
           )}
           {!loading && !productsCount && !productsList?.length && (
             <EmptyState {...props} isMarketplace={true} />
@@ -113,13 +113,12 @@ export const Content = ({
         </TabPane>
         <TabPane key={tabs.ARTWORK} tab={tabs.ARTWORK}>
           {!isProfilePage && (
-            <Row gutter={[28, 12]} padding_bottom={30} padding_left={40}>
-              {contentTabs.map((item) => (
-                <Col>
-                  <Text level={3}>{item}</Text>
-                </Col>
+            <CategoryWrapper>
+              <CategoryTab>All</CategoryTab>
+              {categories.contentCategories.map((item) => (
+                <CategoryTab>{item.name}</CategoryTab>
               ))}
-            </Row>
+            </CategoryWrapper>
           )}
           {!loading && !artworksCount && !artworksList?.length && <EmptyState {...props} />}
           <ArtworksList artworksList={artworksList} loading={initialPolling && loading} />

@@ -33,6 +33,7 @@ export const ArtworksList = ({ artworksList = [], loading }) => {
             userId={item?.userId}
             username={item?.username}
             artworkId={item?.artworkId}
+            categoryId={item?.categoryId}
             title={item?.title}
             description={item?.description}
             status={item?.status}
