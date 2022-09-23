@@ -20,7 +20,7 @@ const Product = ({
   userId,
   username,
   productId,
-  productTypeId,
+  categoryId,
   title,
   description,
   price,
@@ -56,12 +56,12 @@ const Product = ({
       if (!user.isCreator && isHovering) {
         width = large ? 494 : 140;
       }
-      if (isLocked && !price && +productTypeId === 2) {
+      if (isLocked && !price && +categoryId === 2) {
         width = large ? 469 : 115;
       }
     }
     return { width };
-  }, [large, isHovering, user.isCreator, isLocked, price, productTypeId]);
+  }, [large, isHovering, user.isCreator, isLocked, price, categoryId]);
 
   const src = useMemo(
     () => (thumbnail ? getThumbnail(PRODUCTS, userId, `thumbnail-${thumbnail}`) : product),
@@ -110,7 +110,7 @@ const Product = ({
       username,
       avatar,
       productId,
-      productTypeId,
+      categoryId,
       title,
       description,
       price,
@@ -126,7 +126,7 @@ const Product = ({
     providerUserId,
     username,
     avatar,
-    productTypeId,
+    categoryId,
     title,
     description,
     price,
@@ -148,7 +148,7 @@ const Product = ({
       >
         <ImageWrapper className={imageClasses}>
           <img src={src} alt='product' onClick={showProduct} />
-          {isHovering && <Tag>{productTypeId === '2' ? 'Digital Product' : 'Service'}</Tag>}
+          {isHovering && <Tag>{categoryId === '2' ? 'Digital Product' : 'Service'}</Tag>}
           <div
             className={`actions ${isHovering ? 'hover' : ''}`}
             onClick={() => !showActions && showProduct()}
@@ -158,7 +158,7 @@ const Product = ({
                 userId={userId}
                 username={username}
                 productId={productId}
-                productTypeId={productTypeId}
+                categoryId={categoryId}
                 title={title}
                 description={description}
                 price={price}
@@ -190,7 +190,7 @@ const Product = ({
             <BuyButton
               userId={userId}
               productId={productId}
-              productTypeId={productTypeId}
+              categoryId={categoryId}
               file={file}
               price={price}
               limit={limit}

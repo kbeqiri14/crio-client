@@ -54,7 +54,7 @@ export const productFragment = gql`
     providerType
     providerUserId
     avatar
-    productTypeId
+    categoryId
     title
     description
     price

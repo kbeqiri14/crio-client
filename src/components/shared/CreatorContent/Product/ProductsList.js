@@ -15,7 +15,7 @@ const Item = memo(({ item, large }) => (
     userId={item?.userId}
     username={item?.username}
     productId={item?.productId}
-    productTypeId={item?.productTypeId}
+    categoryId={item?.categoryId}
     title={item?.title}
     description={item?.description}
     price={item?.price}

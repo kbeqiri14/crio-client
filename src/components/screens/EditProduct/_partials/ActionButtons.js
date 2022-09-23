@@ -15,7 +15,7 @@ const ProductActionButtons = ({
   state,
   image,
   disabled,
-  productTypeId,
+  categoryId,
   handleSubmit,
   fillColor = 'blue',
 }) => {
@@ -55,11 +55,11 @@ const ProductActionButtons = ({
   const onPublish = useAsyncFn(async (attributes) => {
     let file;
     let thumbnail = state?.thumbnail && !image.src ? 'remove-thumbnail' : undefined;
-    if (attributes.image?.file || (attributes.file && +attributes.productTypeId === 2)) {
+    if (attributes.image?.file || (attributes.file && +attributes.categoryId === 2)) {
       const content = await formItemContent({
         userId,
         image: image.file,
-        file: +attributes.productTypeId === 2 ? attributes.file?.file : undefined,
+        file: +attributes.categoryId === 2 ? attributes.file?.file : undefined,
         type: PRODUCTS,
       });
       thumbnail = content?.image;
@@ -71,7 +71,7 @@ const ProductActionButtons = ({
           variables: {
             attributes: {
               id: state.productId,
-              productTypeId: attributes.productTypeId,
+              categoryId: attributes.categoryId,
               title: attributes.title,
               description: attributes.desc,
               price: +attributes.price || undefined,
@@ -85,7 +85,7 @@ const ProductActionButtons = ({
       : create({
           variables: {
             attributes: {
-              productTypeId: attributes.productTypeId,
+              categoryId: attributes.categoryId,
               title: attributes.title,
               description: attributes.desc,
               price: +attributes.price || undefined,
@@ -103,10 +103,10 @@ const ProductActionButtons = ({
       setVisible(true);
       return;
     }
-    return disabled && (!productTypeId || (productTypeId && productTypeId === state?.productTypeId))
+    return disabled && (!categoryId || (categoryId && categoryId === state?.categoryId))
       ? redirect()
       : setVisible(true);
-  }, [disabled, productTypeId, state?.productId, state?.productTypeId, redirect]);
+  }, [disabled, categoryId, state?.productId, state?.categoryId, redirect]);
 
   return (
     <Fragment>

@@ -26,14 +26,14 @@ import DraggerImage from './_partials/DraggerImage';
 import DraggerFile from './_partials/DraggerFile';
 import ActionButtons from './_partials/ActionButtons';
 import HelpTooltip from '@screens/Product/HelpTooltip';
-import { getProductTypes } from '@app/graphql/queries/products.query';
+import { getCategories } from '@app/graphql/queries/products.query';
 
 const ProductForm = ({ state }) => {
   const { user } = useLoggedInUser();
   const [visibleTooltip, setVisibleTooltip] = useState(user.id && !user.helpSeen);
   const [visibleBroadcast, setVisibleBroadcast] = useState(false);
   const [limitVisible, setLimitVisible] = useState(state?.limit !== null && state?.limit >= 0);
-  const { data } = useQuery(getProductTypes);
+  const { data } = useQuery(getCategories);
   const [file, setFile] = useState(state?.file);
   const [files, setFiles] = useState([]);
   const [image, setImage] = useState(
@@ -60,23 +60,23 @@ const ProductForm = ({ state }) => {
   const isFree = watch('isFree');
   const limit = watch('limit');
   const accessibility = watch('accessibility');
-  const productTypeId = watch('productTypeId');
+  const categoryId = watch('categoryId');
   const isDigitalProduct = useMemo(
     () =>
-      data?.getProductTypes?.find((item) => item.id === (productTypeId || state?.productTypeId))
-        ?.name === 'Digital Product',
-    [data?.getProductTypes, productTypeId, state?.productTypeId],
+      data?.getCategories?.find((item) => item.id === (categoryId || state?.categoryId))?.name ===
+      'Digital Product',
+    [data?.getCategories, categoryId, state?.categoryId],
   );
 
   const disabled = useMemo(
     () =>
       !(
         title?.trim() &&
-        (productTypeId || state?.productTypeId) &&
+        (categoryId || state?.categoryId) &&
         (+price > 0 || isFree) &&
         (!limitVisible || (limitVisible && +limit > 0)) &&
         !(isDigitalProduct && !(files.length || file)) &&
-        ((productTypeId && productTypeId !== state?.productTypeId) ||
+        ((categoryId && categoryId !== state?.categoryId) ||
           (title?.trim() && title?.trim() !== state?.title) ||
           (state?.file && file !== state?.file) ||
           (description?.trim() && description?.trim() !== state?.description) ||
@@ -107,8 +107,8 @@ const ProductForm = ({ state }) => {
       state?.accessibility,
       state?.thumbnail,
       state?.file,
-      state?.productTypeId,
-      productTypeId,
+      state?.categoryId,
+      categoryId,
       isDigitalProduct,
       file,
       files,
@@ -150,16 +150,16 @@ const ProductForm = ({ state }) => {
                   span={16}
                   align='middle'
                   padding_bottom={32}
-                  padding_left={productTypeId === '1' && 27}
+                  padding_left={categoryId === '1' && 27}
                   className={
-                    productTypeId === '1' && (visibleTooltip || (user.id && !user.helpSeen))
+                    categoryId === '1' && (visibleTooltip || (user.id && !user.helpSeen))
                       ? 'select-title'
                       : ''
                   }
                 >
                   <Title level={1}>Add new Digital Product or Service</Title>
                 </Col>
-                {(productTypeId ? productTypeId === '1' : state?.productTypeId === '1') && (
+                {(categoryId ? categoryId === '1' : state?.categoryId === '1') && (
                   <Col span={2} align='end' className='help'>
                     <HelpTooltip
                       onVisibleChange={(value) => setVisibleTooltip(value)}
@@ -170,16 +170,16 @@ const ProductForm = ({ state }) => {
                 )}
                 <Col span={18} padding_bottom={32}>
                   <Controller
-                    name='productTypeId'
+                    name='categoryId'
                     control={control}
-                    defaultValue={state?.productTypeId}
+                    defaultValue={state?.categoryId}
                     render={({ field }) => (
                       <Select
                         {...field}
                         bordered={false}
                         size='large'
                         placeholder='Select the type of your product'
-                        options={data?.getProductTypes.map((item) => ({
+                        options={data?.getCategories.map((item) => ({
                           label: item.name,
                           value: item.id,
                         }))}
@@ -389,7 +389,7 @@ const ProductForm = ({ state }) => {
                     state={state}
                     image={image}
                     disabled={disabled}
-                    productTypeId={productTypeId}
+                    categoryId={categoryId}
                     handleSubmit={handleSubmit}
                   />
                 </Col>
