@@ -84,18 +84,22 @@ export const Content = ({
       <Tabs activeKey={activeKey} onTabClick={onTabClick}>
         <TabPane key={tabs.MARKETPLACE} tab={tabs.MARKETPLACE}>
           {!isProfilePage && (
-            <Row gutter={[4]} padding_bottom={20} padding_left={40}>
-              <Col>
-                <CategoryTab>All</CategoryTab>
-              </Col>
+            <div
+              style={{
+                width: '100%',
+                height: '100%',
+                paddingBottom: 40,
+                overflowX: 'auto',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              <CategoryTab>All</CategoryTab>
               {productTypes.productCategories
                 .filter((item) => item.name !== 'Digital Product')
                 .map((item) => (
-                  <Col>
-                    <CategoryTab>{item.name}</CategoryTab>
-                  </Col>
+                  <CategoryTab>{item.name}</CategoryTab>
                 ))}
-            </Row>
+            </div>
           )}
           {!loading && !productsCount && !productsList?.length && (
             <EmptyState {...props} isMarketplace={true} />
