@@ -11,16 +11,7 @@ import { ReactComponent as LockIcon } from '@svgs/lock-buy.svg';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { useSendEmail } from '@shared/SendEmailModal/Context';
 
-const BuyButton = ({
-  userId,
-  productId,
-  productTypeId,
-  file,
-  price,
-  limit,
-  accessibility,
-  block,
-}) => {
+const BuyButton = ({ userId, productId, categoryId, file, price, limit, accessibility, block }) => {
   const { user } = useLoggedInUser();
   const { setSendEmailInfo } = useSendEmail();
   const { setInfo } = usePresentation();
@@ -77,10 +68,10 @@ const BuyButton = ({
     () =>
       price && !user.boughtProducts?.includes(productId)
         ? 'BUY'
-        : +productTypeId === 2
+        : +categoryId === 2
         ? 'DOWNLOAD'
         : 'EMAIL',
-    [price, productId, productTypeId, user.boughtProducts],
+    [price, productId, categoryId, user.boughtProducts],
   );
   const color = useMemo(() => (label === 'BUY' ? 'blue' : 'green'), [label]);
   const disabled = useMemo(() => label === 'BUY' && limit === 0, [limit, label]);

@@ -10,9 +10,9 @@ export const getProduct = gql`
   ${productFragment}
 `;
 
-export const getProductTypes = gql`
+export const getCategories = gql`
   query {
-    getProductTypes {
+    getCategories {
       id
       name
     }

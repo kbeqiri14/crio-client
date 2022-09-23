@@ -41,7 +41,7 @@ const Wrapper = styled('div')`
 export const BuyWidget = ({
   userId,
   productId,
-  productTypeId,
+  categoryId,
   file,
   price,
   limit,
@@ -78,7 +78,7 @@ export const BuyWidget = ({
             block
             userId={userId}
             productId={productId}
-            productTypeId={productTypeId}
+            categoryId={categoryId}
             file={file}
             price={price}
             limit={limit}
@@ -86,7 +86,7 @@ export const BuyWidget = ({
           />
         </Col>
       </Row>
-      {!user.isCreator && (!user?.id || productTypeId === '1') && (
+      {!user.isCreator && (!user?.id || categoryId === '1') && (
         <HelpTooltip
           onVisibleChange={onVisibleChange}
           title={
