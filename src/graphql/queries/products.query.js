@@ -15,7 +15,8 @@ export const getCategories = gql`
     getCategories {
       id
       name
-      mainTypeId
+      type
+      mainCategoryId
     }
   }
 `;
