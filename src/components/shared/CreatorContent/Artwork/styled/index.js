@@ -46,7 +46,7 @@ export const Wrapper = styled('div')`
       visibility: visible;
     }
   }
-  .info.hover {
+  :not(.is-locked).info.hover {
     opacity: 1;
     visibility: visible;
   }

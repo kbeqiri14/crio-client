@@ -112,7 +112,7 @@ const Artwork = ({
         <LockState userId={userId} accessibility={accessibility} status={status} />
         {isVideo && <VideoIcon className='video' />}
         <img src={source} alt='artwork' width={330} height={330} onClick={showArtwork} />
-        {isHovering && categoryId && (
+        {isHovering && !isLocked && categoryId && (
           <Tag>{categories?.contents?.find((item) => item.id === categoryId).name}</Tag>
         )}
         <div className={`info ${isHovering ? 'hover' : ''}`}>

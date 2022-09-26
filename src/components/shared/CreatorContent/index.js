@@ -37,8 +37,6 @@ const CategoryWrapper = styled('div')`
   white-space: nowrap;
 `;
 
-const { TabPane } = Tabs;
-
 const tabs = {
   MARKETPLACE: 'Marketplace',
   ARTWORK: 'Content',
@@ -108,46 +106,62 @@ export const Content = ({
 
   return (
     <Wrapper>
-      <Tabs activeKey={activeKey} onTabClick={onTabClick}>
-        <TabPane key={tabs.MARKETPLACE} tab={tabs.MARKETPLACE}>
-          {!isProfilePage && (
-            <CategoryWrapper>
-              <CategoryTab>All</CategoryTab>
-              {categories.products
-                .filter((item) => item.name !== 'Digital Product')
-                .map((item) => (
-                  <CategoryTab>{item.name}</CategoryTab>
-                ))}
-            </CategoryWrapper>
-          )}
-          {!loading && !productsCount && !productsList?.length && (
-            <EmptyState {...props} isMarketplace={true} />
-          )}
-          <ProductsList productsList={productsList} loading={initialPolling && loading} />
-          <LoadMoreButton
-            visible={visibleLoadMoreProducts}
-            loading={loading}
-            onClick={loadMoreProducts}
-          />
-        </TabPane>
-        <TabPane key={tabs.ARTWORK} tab={tabs.ARTWORK}>
-          {!isProfilePage && (
-            <CategoryWrapper>
-              <CategoryTab>All</CategoryTab>
-              {categories.contents.map((item) => (
-                <CategoryTab>{item.name}</CategoryTab>
-              ))}
-            </CategoryWrapper>
-          )}
-          {!loading && !artworksCount && !artworksList?.length && <EmptyState {...props} />}
-          <ArtworksList artworksList={artworksList} loading={initialPolling && loading} />
-          <LoadMoreButton
-            visible={visibleLoadMoreArtworks}
-            loading={loading}
-            onClick={loadMoreArtworks}
-          />
-        </TabPane>
-      </Tabs>
+      <Tabs
+        activeKey={activeKey}
+        onTabClick={onTabClick}
+        items={[
+          {
+            label: tabs.MARKETPLACE,
+            key: tabs.MARKETPLACE,
+            children: (
+              <>
+                {!isProfilePage && (
+                  <CategoryWrapper>
+                    <CategoryTab>All</CategoryTab>
+                    {categories.products
+                      .filter((item) => item.name !== 'Digital Product')
+                      .map((item) => (
+                        <CategoryTab>{item.name}</CategoryTab>
+                      ))}
+                  </CategoryWrapper>
+                )}
+                {!loading && !productsCount && !productsList?.length && (
+                  <EmptyState {...props} isMarketplace={true} />
+                )}
+                <ProductsList productsList={productsList} loading={initialPolling && loading} />
+                <LoadMoreButton
+                  visible={visibleLoadMoreProducts}
+                  loading={loading}
+                  onClick={loadMoreProducts}
+                />
+              </>
+            ),
+          },
+          {
+            label: tabs.ARTWORK,
+            key: tabs.ARTWORK,
+            children: (
+              <>
+                {!isProfilePage && (
+                  <CategoryWrapper>
+                    <CategoryTab>All</CategoryTab>
+                    {categories.contents.map((item) => (
+                      <CategoryTab>{item.name}</CategoryTab>
+                    ))}
+                  </CategoryWrapper>
+                )}
+                {!loading && !artworksCount && !artworksList?.length && <EmptyState {...props} />}
+                <ArtworksList artworksList={artworksList} loading={initialPolling && loading} />
+                <LoadMoreButton
+                  visible={visibleLoadMoreArtworks}
+                  loading={loading}
+                  onClick={loadMoreArtworks}
+                />
+              </>
+            ),
+          },
+        ]}
+      ></Tabs>
     </Wrapper>
   );
 };
