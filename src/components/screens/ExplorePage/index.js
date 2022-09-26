@@ -10,12 +10,10 @@ import TopArtwork from './TopArtwork';
 import Content from '../../shared/CreatorContent';
 import { getCategories } from '@app/graphql/queries/products.query';
 import { categoriesVar } from '@configs/client-cache';
+import { DIGITAL, COMMISSIONS } from '@configs/constants';
 
 const PRODUCTS_LIMIT = 15;
 const ARTWORKS_LIMIT = 24;
-
-const DIGITAL = 'Digital Product';
-const COMMISSIONS = 'Commissions';
 
 export const ExplorePage = () => {
   const [productsOffset, setProductsOffset] = useState(0);

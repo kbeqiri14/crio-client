@@ -1,7 +1,7 @@
-import { memo, useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useMemo, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { useReactiveVar } from '@apollo/client';
+import { useLazyQuery, useReactiveVar } from '@apollo/client';
 
 import history from '@configs/history';
 import { Tabs } from '@ui-kit';
@@ -11,6 +11,8 @@ import ArtworksList from './Artwork/ArtworksList';
 import ProductsList from './Product/ProductsList';
 import { categoriesVar } from '@configs/client-cache';
 import CategoryTab from '@ui-kit/Custom/CategoryTab';
+import { getCategories } from '@app/graphql/queries/products.query';
+import { DIGITAL, COMMISSIONS } from '@configs/constants';
 
 const Wrapper = styled('div')`
   max-width: 1438px;
@@ -29,11 +31,8 @@ const Wrapper = styled('div')`
 `;
 
 const CategoryWrapper = styled('div')`
-  width: 1316px;
-  height: 100%;
-  padding-top: 10px;
-  padding-bottom: 20px;
-  margin-left: 32px;
+  width: 100%;
+  padding: 10px 32px 20px;
   overflow-x: auto;
   white-space: nowrap;
 `;
@@ -64,6 +63,8 @@ export const Content = ({
   );
   const username = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
   const isProfilePage = useMemo(() => pathname.includes('/profile'), [pathname]);
+  const categories = useReactiveVar(categoriesVar);
+  const [getCategoriesRequest, { data }] = useLazyQuery(getCategories);
 
   const onTabClick = useCallback(
     (key) => {
@@ -85,7 +86,25 @@ export const Content = ({
       }
     : { isNoResult: true };
 
-  const categories = useReactiveVar(categoriesVar);
+  useEffect(() => {
+    !(categories.productCategories?.length && categories.contentCategories?.length) &&
+      getCategoriesRequest({
+        onCompleted: ({ getCategories }) => {
+          const mainCategories = getCategories.reduce((acc, item) => {
+            if (!item.mainCategoryId && item.type === 'product') {
+              return { ...acc, [item.name]: item.id };
+            }
+            return acc;
+          }, {});
+          categoriesVar({
+            digitalId: mainCategories[DIGITAL],
+            commissionId: mainCategories[COMMISSIONS],
+            productCategories: getCategories.filter((item) => item.type === 'product'),
+            contentCategories: getCategories.filter((item) => item.type === 'content'),
+          });
+        },
+      });
+  }, [categories, getCategoriesRequest, data?.getCategories]);
 
   return (
     <Wrapper>

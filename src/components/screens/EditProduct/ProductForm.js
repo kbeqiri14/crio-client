@@ -28,9 +28,7 @@ import DraggerFile from './_partials/DraggerFile';
 import ActionButtons from './_partials/ActionButtons';
 import HelpTooltip from '@screens/Product/HelpTooltip';
 import { getCategories } from '@app/graphql/queries/products.query';
-
-const DIGITAL = 'Digital Product';
-const COMMISSIONS = 'Commissions';
+import { DIGITAL, COMMISSIONS } from '@configs/constants';
 
 const ProductForm = ({ state }) => {
   const categories = useReactiveVar(categoriesVar);

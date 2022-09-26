@@ -1,5 +1,6 @@
 import { memo, useCallback, useState, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useReactiveVar } from '@apollo/client';
 
 import history from '@configs/history';
 import { ARTWORKS } from '@configs/constants';
@@ -12,6 +13,7 @@ import { Col, Row, Tag, Text } from '@ui-kit';
 import { ReactComponent as VideoIcon } from '@svgs/video.svg';
 import LockState from '../LockState';
 import { Wrapper } from './styled';
+import { categoriesVar } from '@configs/client-cache';
 
 const Artwork = ({
   providerType,
@@ -30,6 +32,7 @@ const Artwork = ({
 }) => {
   const [isHovering, setIsHovering] = useState(false);
   const { user } = useLoggedInUser();
+  const categories = useReactiveVar(categoriesVar);
   const { pathname } = useLocation();
   const { setInfo } = usePresentation();
   const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
@@ -109,7 +112,9 @@ const Artwork = ({
         <LockState userId={userId} accessibility={accessibility} status={status} />
         {isVideo && <VideoIcon className='video' />}
         <img src={source} alt='artwork' width={330} height={330} onClick={showArtwork} />
-        {isHovering && <Tag>Illustration</Tag>}
+        {isHovering && categoryId && (
+          <Tag>{categories?.contentCategories?.find((item) => item.id === categoryId).name}</Tag>
+        )}
         <div className={`info ${isHovering ? 'hover' : ''}`}>
           <Row justify='space-between'>
             <Col span={showActions ? 19 : 24}>
@@ -123,6 +128,7 @@ const Artwork = ({
                   userId={userId}
                   username={username}
                   artworkId={artworkId}
+                  categoryId={categoryId}
                   content={content}
                   title={title}
                   description={description}

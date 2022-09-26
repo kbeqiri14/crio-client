@@ -41,6 +41,7 @@ const Select = styled(
     background: #2b2b2b !important;
     box-shadow: 0px 7px 25px rgba(0, 0, 0, 0.35);
     border-radius: 8px;
+    z-index: 1 !important;
   }
   .ant-select-item-option-content {
     color: white;

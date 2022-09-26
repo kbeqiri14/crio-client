@@ -29,6 +29,7 @@ const TreeSelect = styled(
     padding: 0px !important;
     background: #202020 !important;
     border-radius: 8px;
+    z-index: 1 !important;
   }
   .ant-select-single.ant-select-lg:not(.ant-select-customize-input) .ant-select-selector {
     padding: 0px 20px;
