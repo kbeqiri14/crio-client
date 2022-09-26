@@ -113,7 +113,7 @@ const Artwork = ({
         {isVideo && <VideoIcon className='video' />}
         <img src={source} alt='artwork' width={330} height={330} onClick={showArtwork} />
         {isHovering && categoryId && (
-          <Tag>{categories?.contentCategories?.find((item) => item.id === categoryId).name}</Tag>
+          <Tag>{categories?.contents?.find((item) => item.id === categoryId).name}</Tag>
         )}
         <div className={`info ${isHovering ? 'hover' : ''}`}>
           <Row justify='space-between'>

@@ -66,9 +66,9 @@ const ProductForm = ({ state }) => {
   const categoryId = watch('categoryId');
   const isDigitalProduct = useMemo(
     () =>
-      categories.productCategories.find((item) => item.id === (categoryId || state?.categoryId))
+      categories.products.find((item) => item.id === (categoryId || state?.categoryId))
         ?.mainCategoryId === categories.digitalId,
-    [categories.productCategories, categories.digitalId, categoryId, state?.categoryId],
+    [categories.products, categories.digitalId, categoryId, state?.categoryId],
   );
 
   const disabled = useMemo(
@@ -124,7 +124,7 @@ const ProductForm = ({ state }) => {
   );
 
   useEffect(() => {
-    !categories.productCategories.length &&
+    !categories.products.length &&
       getCategoriesRequest({
         onCompleted: ({ getCategories }) => {
           const mainCategories = getCategories.reduce((acc, item) => {
@@ -136,7 +136,7 @@ const ProductForm = ({ state }) => {
           categoriesVar({
             digitalId: mainCategories[DIGITAL],
             commissionId: mainCategories[COMMISSIONS],
-            productCategories: getCategories.filter((item) => item.type === 'product'),
+            products: getCategories.filter((item) => item.type === 'product'),
           });
         },
       });
@@ -207,17 +207,15 @@ const ProductForm = ({ state }) => {
                         <TreeSelect.TreeNode
                           selectable={false}
                           value={
-                            categories.productCategories.find(
-                              (item) => item.id === categories.digitalId,
-                            )?.name
+                            categories.products.find((item) => item.id === categories.digitalId)
+                              ?.name
                           }
                           title={
-                            categories.productCategories.find(
-                              (item) => item.id === categories.digitalId,
-                            )?.name
+                            categories.products.find((item) => item.id === categories.digitalId)
+                              ?.name
                           }
                         >
-                          {categories.productCategories
+                          {categories.products
                             .filter((item) => item.mainCategoryId !== null)
                             .map((item) => (
                               <TreeSelect.TreeNode
@@ -229,14 +227,12 @@ const ProductForm = ({ state }) => {
                         </TreeSelect.TreeNode>
                         <TreeSelect.TreeNode
                           value={
-                            categories.productCategories.find(
-                              (item) => item.id === categories.commissionId,
-                            )?.name
+                            categories.products.find((item) => item.id === categories.commissionId)
+                              ?.name
                           }
                           title={
-                            categories.productCategories.find(
-                              (item) => item.id === categories.commissionId,
-                            )?.name
+                            categories.products.find((item) => item.id === categories.commissionId)
+                              ?.name
                           }
                         />
                       </TreeSelect>

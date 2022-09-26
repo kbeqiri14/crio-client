@@ -35,8 +35,8 @@ export const ExplorePage = () => {
       categoriesVar({
         digitalId: mainCategories[DIGITAL],
         commissionId: mainCategories[COMMISSIONS],
-        productCategories: productCategories,
-        contentCategories: contentCategories,
+        products: productCategories,
+        contents: contentCategories,
       });
     },
   });

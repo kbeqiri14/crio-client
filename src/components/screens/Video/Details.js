@@ -171,7 +171,7 @@ const VideoInfo = ({
   }, [state, disabled, setVisible, onCancel]);
 
   useEffect(() => {
-    !categories.contentCategories.length &&
+    !categories.contents.length &&
       getCategoriesRequest({
         onCompleted: ({ getCategories }) => {
           const mainCategories = getCategories.reduce((acc, item) => {
@@ -183,7 +183,7 @@ const VideoInfo = ({
           categoriesVar({
             digitalId: mainCategories[DIGITAL],
             commissionId: mainCategories[COMMISSIONS],
-            contentCategories: getCategories.filter((item) => item.type === 'content'),
+            contents: getCategories.filter((item) => item.type === 'content'),
           });
         },
       });
@@ -229,7 +229,7 @@ const VideoInfo = ({
                 bordered={false}
                 size='large'
                 placeholder='Select the type of your artwork'
-                options={categories?.contentCategories.map((item) => ({
+                options={categories?.contents.map((item) => ({
                   label: item.name,
                   value: item.id,
                 }))}

@@ -12,6 +12,6 @@ export const refetchMarketplaceVar = makeVar(false);
 export const categoriesVar = makeVar({
   digitalId: null,
   commissionId: null,
-  productCategories: [],
-  contentCategories: [],
+  products: [],
+  contents: [],
 });

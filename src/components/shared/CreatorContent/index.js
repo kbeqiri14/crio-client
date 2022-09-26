@@ -87,7 +87,7 @@ export const Content = ({
     : { isNoResult: true };
 
   useEffect(() => {
-    !(categories.productCategories?.length && categories.contentCategories?.length) &&
+    !(categories.products?.length && categories.contents?.length) &&
       getCategoriesRequest({
         onCompleted: ({ getCategories }) => {
           const mainCategories = getCategories.reduce((acc, item) => {
@@ -99,8 +99,8 @@ export const Content = ({
           categoriesVar({
             digitalId: mainCategories[DIGITAL],
             commissionId: mainCategories[COMMISSIONS],
-            productCategories: getCategories.filter((item) => item.type === 'product'),
-            contentCategories: getCategories.filter((item) => item.type === 'content'),
+            products: getCategories.filter((item) => item.type === 'product'),
+            contents: getCategories.filter((item) => item.type === 'content'),
           });
         },
       });
@@ -113,7 +113,7 @@ export const Content = ({
           {!isProfilePage && (
             <CategoryWrapper>
               <CategoryTab>All</CategoryTab>
-              {categories.productCategories
+              {categories.products
                 .filter((item) => item.name !== 'Digital Product')
                 .map((item) => (
                   <CategoryTab>{item.name}</CategoryTab>
@@ -134,7 +134,7 @@ export const Content = ({
           {!isProfilePage && (
             <CategoryWrapper>
               <CategoryTab>All</CategoryTab>
-              {categories.contentCategories.map((item) => (
+              {categories.contents.map((item) => (
                 <CategoryTab>{item.name}</CategoryTab>
               ))}
             </CategoryWrapper>
