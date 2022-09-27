@@ -44,13 +44,13 @@ const Select = styled(
     z-index: 1 !important;
   }
   .ant-select-item-option-content {
-    color: white;
+    color: #878c94;
     font-weight: initial;
     font-size: ${(props) => props.theme.text[4].size}px;
     padding: 8px;
     :hover {
       background: transparent;
-      color: #878c94;
+      color: #bbbcbc;
     }
   }
   .ant-select-item-option:not(:last-child) {

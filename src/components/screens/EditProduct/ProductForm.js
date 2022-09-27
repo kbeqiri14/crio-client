@@ -205,6 +205,16 @@ const ProductForm = ({ state }) => {
                         placeholder='Select the type of your product'
                       >
                         <TreeSelect.TreeNode
+                          value={
+                            categories.products.find((item) => item.id === categories.commissionId)
+                              ?.id
+                          }
+                          title={
+                            categories.products.find((item) => item.id === categories.commissionId)
+                              ?.name
+                          }
+                        />
+                        <TreeSelect.TreeNode
                           selectable={false}
                           value={
                             categories.products.find((item) => item.id === categories.digitalId)
@@ -225,16 +235,6 @@ const ProductForm = ({ state }) => {
                               />
                             ))}
                         </TreeSelect.TreeNode>
-                        <TreeSelect.TreeNode
-                          value={
-                            categories.products.find((item) => item.id === categories.commissionId)
-                              ?.name
-                          }
-                          title={
-                            categories.products.find((item) => item.id === categories.commissionId)
-                              ?.name
-                          }
-                        />
                       </TreeSelect>
                     )}
                   />
