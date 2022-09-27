@@ -1,11 +1,12 @@
 import { memo, useCallback, useEffect, useMemo, useState, Fragment } from 'react';
 import { useForm } from 'react-hook-form';
-import { useQuery } from '@apollo/client';
+import { useQuery, useLazyQuery, useReactiveVar } from '@apollo/client';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { getConnectAccount } from '@app/graphql/queries/payment-method.query';
 import Broadcast from './_partials/Broadcast';
 import FormWrapper from './styled/FormWrapper';
+import { categoriesVar } from '@configs/client-cache';
 
 import { Link } from 'react-router-dom';
 import { Controller } from 'react-hook-form';
@@ -17,7 +18,7 @@ import {
   Switch,
   Text,
   Tooltip,
-  Select,
+  TreeSelect,
   Title,
   Row,
   Col,
@@ -27,13 +28,15 @@ import DraggerFile from './_partials/DraggerFile';
 import ActionButtons from './_partials/ActionButtons';
 import HelpTooltip from '@screens/Product/HelpTooltip';
 import { getCategories } from '@app/graphql/queries/products.query';
+import { DIGITAL, COMMISSIONS } from '@configs/constants';
 
 const ProductForm = ({ state }) => {
+  const categories = useReactiveVar(categoriesVar);
   const { user } = useLoggedInUser();
-  const [visibleTooltip, setVisibleTooltip] = useState(user.id && !user.helpSeen);
+  const [openTooltip, setOpenTooltip] = useState(user.id && !user.helpSeen);
   const [visibleBroadcast, setVisibleBroadcast] = useState(false);
   const [limitVisible, setLimitVisible] = useState(state?.limit !== null && state?.limit >= 0);
-  const { data } = useQuery(getCategories);
+  const [getCategoriesRequest, { data }] = useLazyQuery(getCategories);
   const [file, setFile] = useState(state?.file);
   const [files, setFiles] = useState([]);
   const [image, setImage] = useState(
@@ -63,9 +66,9 @@ const ProductForm = ({ state }) => {
   const categoryId = watch('categoryId');
   const isDigitalProduct = useMemo(
     () =>
-      data?.getCategories?.find((item) => item.id === (categoryId || state?.categoryId))?.name ===
-      'Digital Product',
-    [data?.getCategories, categoryId, state?.categoryId],
+      categories.products.find((item) => item.id === (categoryId || state?.categoryId))
+        ?.mainCategoryId === categories.digitalId,
+    [categories.products, categories.digitalId, categoryId, state?.categoryId],
   );
 
   const disabled = useMemo(
@@ -120,6 +123,25 @@ const ProductForm = ({ state }) => {
     [state?.productId, state?.price, setValue],
   );
 
+  useEffect(() => {
+    !categories.products.length &&
+      getCategoriesRequest({
+        onCompleted: ({ getCategories }) => {
+          const mainCategories = getCategories.reduce((acc, item) => {
+            if (!item.mainCategoryId && item.type === 'product') {
+              return { ...acc, [item.name]: item.id };
+            }
+            return acc;
+          }, {});
+          categoriesVar({
+            digitalId: mainCategories[DIGITAL],
+            commissionId: mainCategories[COMMISSIONS],
+            products: getCategories.filter((item) => item.type === 'product'),
+          });
+        },
+      });
+  }, [categories, getCategoriesRequest, data?.getCategories]);
+
   const setLimitation = useCallback(() => {
     setLimitVisible(!limitVisible);
     setValue('limit', undefined);
@@ -150,40 +172,70 @@ const ProductForm = ({ state }) => {
                   span={16}
                   align='middle'
                   padding_bottom={32}
-                  padding_left={categoryId === '1' && 27}
+                  padding_left={categoryId === categories.commissionId ? 27 : ''}
                   className={
-                    categoryId === '1' && (visibleTooltip || (user.id && !user.helpSeen))
+                    categoryId === categories.commissionId &&
+                    (openTooltip || (user.id && !user.helpSeen))
                       ? 'select-title'
                       : ''
                   }
                 >
                   <Title level={1}>Add new Digital Product or Service</Title>
                 </Col>
-                {(categoryId ? categoryId === '1' : state?.categoryId === '1') && (
+                {!isDigitalProduct && (
                   <Col span={2} align='end' className='help'>
                     <HelpTooltip
-                      onVisibleChange={(value) => setVisibleTooltip(value)}
+                      onOpenChange={(value) => setOpenTooltip(value)}
                       placement='right'
                       title='After a user makes a purchase, you will receive an automatic email. Please check your email and complete the order'
                     />
                   </Col>
                 )}
+
                 <Col span={18} padding_bottom={32}>
                   <Controller
                     name='categoryId'
                     control={control}
                     defaultValue={state?.categoryId}
                     render={({ field }) => (
-                      <Select
+                      <TreeSelect
                         {...field}
                         bordered={false}
                         size='large'
                         placeholder='Select the type of your product'
-                        options={data?.getCategories.map((item) => ({
-                          label: item.name,
-                          value: item.id,
-                        }))}
-                      />
+                      >
+                        <TreeSelect.TreeNode
+                          selectable={false}
+                          value={
+                            categories.products.find((item) => item.id === categories.digitalId)
+                              ?.name
+                          }
+                          title={
+                            categories.products.find((item) => item.id === categories.digitalId)
+                              ?.name
+                          }
+                        >
+                          {categories.products
+                            .filter((item) => item.mainCategoryId !== null)
+                            .map((item) => (
+                              <TreeSelect.TreeNode
+                                value={item.id}
+                                title={item.name}
+                                key={item.id}
+                              />
+                            ))}
+                        </TreeSelect.TreeNode>
+                        <TreeSelect.TreeNode
+                          value={
+                            categories.products.find((item) => item.id === categories.commissionId)
+                              ?.name
+                          }
+                          title={
+                            categories.products.find((item) => item.id === categories.commissionId)
+                              ?.name
+                          }
+                        />
+                      </TreeSelect>
                     )}
                   />
                 </Col>

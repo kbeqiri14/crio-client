@@ -1,5 +1,6 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useState, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useReactiveVar } from '@apollo/client';
 
 import history from '@configs/history';
 import { ARTWORKS } from '@configs/constants';
@@ -8,10 +9,11 @@ import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import Actions from '@screens/Video/Actions';
 import { getThumbnail } from '@utils/helpers';
-import { Col, Row, Text } from '@ui-kit';
+import { Col, Row, Tag, Text } from '@ui-kit';
 import { ReactComponent as VideoIcon } from '@svgs/video.svg';
 import LockState from '../LockState';
 import { Wrapper } from './styled';
+import { categoriesVar } from '@configs/client-cache';
 
 const Artwork = ({
   providerType,
@@ -20,6 +22,7 @@ const Artwork = ({
   userId,
   username,
   artworkId,
+  categoryId,
   title,
   description,
   content,
@@ -27,10 +30,15 @@ const Artwork = ({
   accessibility,
   status,
 }) => {
+  const [isHovering, setIsHovering] = useState(false);
   const { user } = useLoggedInUser();
+  const categories = useReactiveVar(categoriesVar);
   const { pathname } = useLocation();
   const { setInfo } = usePresentation();
   const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
+
+  const handleMouseOver = useCallback(() => setIsHovering(true), []);
+  const handleMouseOut = useCallback(() => setIsHovering(false), []);
 
   const isVideo = useMemo(() => content.startsWith('/videos/'), [content]);
   const source = useMemo(
@@ -68,6 +76,7 @@ const Artwork = ({
       description,
       id: content?.substring(content?.lastIndexOf('/') + 1),
       artworkId,
+      categoryId,
       userId,
       providerType,
       providerUserId,
@@ -84,6 +93,7 @@ const Artwork = ({
     userId,
     username,
     artworkId,
+    categoryId,
     title,
     description,
     content,
@@ -94,8 +104,18 @@ const Artwork = ({
 
   return (
     <>
-      <Wrapper className={isLocked ? 'is-locked' : ''}>
-        <div className='info'>
+      <Wrapper
+        className={isLocked ? 'is-locked' : ''}
+        onMouseOver={handleMouseOver}
+        onMouseLeave={handleMouseOut}
+      >
+        <LockState userId={userId} accessibility={accessibility} status={status} />
+        {isVideo && <VideoIcon className='video' />}
+        <img src={source} alt='artwork' width={330} height={330} onClick={showArtwork} />
+        {isHovering && !isLocked && categoryId && (
+          <Tag>{categories?.contents?.find((item) => item.id === categoryId).name}</Tag>
+        )}
+        <div className={`info ${isHovering ? 'hover' : ''}`}>
           <Row justify='space-between'>
             <Col span={showActions ? 19 : 24}>
               <Text level={4} ellipsis={{ rows: 1, tooltip: title }}>
@@ -108,6 +128,7 @@ const Artwork = ({
                   userId={userId}
                   username={username}
                   artworkId={artworkId}
+                  categoryId={categoryId}
                   content={content}
                   title={title}
                   description={description}
@@ -117,9 +138,6 @@ const Artwork = ({
             )}
           </Row>
         </div>
-        <LockState userId={userId} accessibility={accessibility} status={status} />
-        {isVideo && <VideoIcon className='video' />}
-        <img src={source} alt='artwork' width={330} height={330} onClick={showArtwork} />
       </Wrapper>
       <Link to={`/profile/${username}`}>
         <Row gutter={12} align='middle' padding_top={8}>

@@ -84,7 +84,7 @@ const LockState = ({
   return unavailable || isLocked ? (
     <Wrapper style={wrapper} onClick={onClick}>
       <Tooltip
-        visible={isHovering}
+        open={isHovering}
         getPopupContainer={(triggerNode) =>
           triggerNode.parentNode.querySelector('.ant-tooltip-open')
         }

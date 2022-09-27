@@ -1,5 +1,6 @@
 import { memo, useCallback, useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useReactiveVar } from '@apollo/client';
 
 import history from '@configs/history';
 import { PRODUCTS } from '@configs/constants';
@@ -12,6 +13,7 @@ import Actions from '@screens/Video/Actions';
 import product from '@images/product.png';
 import { ProductWrapper, ImageWrapper } from './styled';
 import BuyButton from './BuyButton';
+import { categoriesVar } from '@configs/client-cache';
 
 const Product = ({
   providerType,
@@ -31,6 +33,7 @@ const Product = ({
   large = false,
 }) => {
   const [isHovering, setIsHovering] = useState(false);
+  const categories = useReactiveVar(categoriesVar);
   const { user } = useLoggedInUser();
   const { pathname } = useLocation();
   const { setInfo } = usePresentation();
@@ -56,12 +59,12 @@ const Product = ({
       if (!user.isCreator && isHovering) {
         width = large ? 494 : 140;
       }
-      if (isLocked && !price && +categoryId === 2) {
+      if (isLocked && !price && categoryId === categories.digitalId) {
         width = large ? 469 : 115;
       }
     }
     return { width };
-  }, [large, isHovering, user.isCreator, isLocked, price, categoryId]);
+  }, [large, isHovering, user.isCreator, isLocked, price, categoryId, categories.digitalId]);
 
   const src = useMemo(
     () => (thumbnail ? getThumbnail(PRODUCTS, userId, `thumbnail-${thumbnail}`) : product),
@@ -148,7 +151,9 @@ const Product = ({
       >
         <ImageWrapper className={imageClasses}>
           <img src={src} alt='product' onClick={showProduct} />
-          {isHovering && <Tag>{categoryId === '2' ? 'Digital Product' : 'Service'}</Tag>}
+          {isHovering && (
+            <Tag>{categories.products.find((item) => item.id === categoryId).name}</Tag>
+          )}
           <div
             className={`actions ${isHovering ? 'hover' : ''}`}
             onClick={() => !showActions && showProduct()}

@@ -9,3 +9,9 @@ export const signupErrorVar = makeVar(true);
 export const searchKeywordVar = makeVar('');
 export const refetchArtworkVar = makeVar(false);
 export const refetchMarketplaceVar = makeVar(false);
+export const categoriesVar = makeVar({
+  digitalId: null,
+  commissionId: null,
+  products: [],
+  contents: [],
+});
