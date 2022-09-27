@@ -33,8 +33,11 @@ const Wrapper = styled('div')`
 const CategoryWrapper = styled('div')`
   width: 100%;
   padding: 10px 32px 20px;
+  margin-bottom: 20px;
   overflow-x: auto;
   white-space: nowrap;
+  background: #2a2a2a;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
 const tabs = {

@@ -42,18 +42,21 @@ const Actions = (props) => {
     [props.isProduct, removeProduct, removeArtwork],
   );
 
-  const items = [
-    {
-      label: 'Edit',
-      key: 'edit',
-      onClick: handleEdit,
-    },
-    {
-      label: 'Delete',
-      key: 'delete',
-      onClick: showConfirmation,
-    },
-  ];
+  const items = useMemo(
+    () => [
+      {
+        label: 'Edit',
+        key: 'edit',
+        onClick: handleEdit,
+      },
+      {
+        label: 'Delete',
+        key: 'delete',
+        onClick: showConfirmation,
+      },
+    ],
+    [handleEdit, showConfirmation],
+  );
 
   return (
     <>

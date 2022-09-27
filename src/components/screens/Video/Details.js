@@ -95,12 +95,23 @@ const VideoInfo = ({
     () =>
       !title?.trim() ||
       !desc?.trim() ||
+      !categoryId?.trim() ||
       !(
         (title && state?.title !== title) ||
         (desc && state?.description !== desc) ||
+        (categoryId && state?.categoryId !== categoryId) ||
         (accessibility && state?.accessibility !== accessibility)
       ),
-    [title, desc, accessibility, state?.title, state?.description, state?.accessibility],
+    [
+      title,
+      desc,
+      categoryId,
+      accessibility,
+      state?.title,
+      state?.description,
+      state?.categoryId,
+      state?.accessibility,
+    ],
   );
   const videoId = useMemo(
     () => state?.content?.substring(state?.content?.lastIndexOf('/') + 1),
@@ -228,7 +239,7 @@ const VideoInfo = ({
                 {...field}
                 bordered={false}
                 size='large'
-                placeholder='Select the type of your artwork'
+                placeholder='Select the type of your content'
                 options={categories?.contents.map((item) => ({
                   label: item.name,
                   value: item.id,
