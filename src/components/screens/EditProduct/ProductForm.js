@@ -200,6 +200,7 @@ const ProductForm = ({ state }) => {
                     render={({ field }) => (
                       <TreeSelect
                         {...field}
+                        treeDefaultExpandAll
                         bordered={false}
                         size='large'
                         placeholder='Select the type of your product'
