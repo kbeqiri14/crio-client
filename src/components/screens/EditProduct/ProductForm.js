@@ -6,6 +6,8 @@ import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { getConnectAccount } from '@app/graphql/queries/payment-method.query';
 import Broadcast from './_partials/Broadcast';
 import FormWrapper from './styled/FormWrapper';
+import { ReactComponent as ArrowIcon } from '@svgs/arrow.svg';
+import { Badge } from '@ui-kit';
 import { categoriesVar } from '@configs/client-cache';
 
 import { Link } from 'react-router-dom';
@@ -233,6 +235,7 @@ const ProductForm = ({ state }) => {
                                 categories.products.find((item) => item.id === categories.digitalId)
                                   ?.name
                               }
+                              <ArrowIcon className='custom-arrow' />
                             </>
                           }
                         >
@@ -241,7 +244,7 @@ const ProductForm = ({ state }) => {
                             .map((item) => (
                               <TreeSelect.TreeNode
                                 value={item.id}
-                                title={<>{item.name}</>}
+                                title={<Badge color='dark50' text={item.name} />}
                                 key={item.id}
                               />
                             ))}

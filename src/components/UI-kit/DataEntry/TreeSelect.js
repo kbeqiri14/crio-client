@@ -50,6 +50,12 @@ const TreeSelect = styled(
       color: ${(props) => props.theme.colors.dark25};
     }
   }
+  .ant-badge-status-text {
+    :hover {
+      background: transparent;
+      color: #bbbcbc;
+    }
+  }
   .ant-select-tree-treenode:not(:last-child) {
     border-bottom: 1px solid rgba(96, 96, 96, 0.2);
   }
@@ -60,7 +66,16 @@ const TreeSelect = styled(
   .ant-select-tree-switcher {
     line-height: 30px;
   }
-
+  .ant-select-tree-switcher-icon {
+    display: none;
+  }
+  .custom-arrow {
+    color: #878c94;
+    font-style: normal;
+    position: absolute;
+    top: 2px;
+    right: -4px;
+  }
   .ant-select-selection-placeholder {
     line-height: 50px !important;
   }
@@ -87,6 +102,13 @@ const TreeSelect = styled(
     border: 1px solid #202020 !important;
     :hover {
       border: 1px solid #202020;
+    }
+    .ant-badge-status-text {
+      color: white !important;
+    }
+    .ant-badge-status {
+      display: inline !important;
+      padding-left: 0px !important;
     }
   }
 
