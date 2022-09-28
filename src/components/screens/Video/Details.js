@@ -131,7 +131,13 @@ const VideoInfo = ({
 
   const [updateArtwork, { loading: updatingArtwork }] = useMutation(updateMetadata, {
     variables: {
-      params: { artworkId: artworkId || state?.artworkId, title, description: desc, accessibility },
+      params: {
+        artworkId: artworkId || state?.artworkId,
+        title,
+        description: desc,
+        accessibility,
+        categoryId: categoryId,
+      },
     },
     onCompleted,
     onError: (data) => notification.errorToast(data?.message),
