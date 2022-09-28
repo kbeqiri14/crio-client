@@ -5,6 +5,7 @@ import { useLazyQuery, useReactiveVar } from '@apollo/client';
 
 import history from '@configs/history';
 import { Tabs } from '@ui-kit';
+import { ReactComponent as ArrowRightIcon } from '@svgs/arrow-down.svg';
 import EmptyState from '@shared/EmptyState';
 import LoadMoreButton from './LoadMoreButton';
 import ArtworksList from './Artwork/ArtworksList';
@@ -18,6 +19,9 @@ const Wrapper = styled('div')`
   max-width: 1438px;
   margin: auto;
   padding: 40px 22px;
+  .category-block {
+    position: relative;
+  }
 
   @media (max-width: 1437px) {
     max-width: 1084px;
@@ -31,13 +35,18 @@ const Wrapper = styled('div')`
 `;
 
 const CategoryWrapper = styled('div')`
-  width: 100%;
+  max-width: 1347px;
   padding: 10px 32px 20px;
   margin-bottom: 20px;
   overflow-x: auto;
   white-space: nowrap;
   background: #2a2a2a;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  .arrow-right {
+    position: absolute;
+    right: 9px;
+    transform: rotate(270deg);
+  }
 `;
 
 const tabs = {
@@ -119,14 +128,17 @@ export const Content = ({
             children: (
               <>
                 {!isProfilePage && (
-                  <CategoryWrapper>
-                    <CategoryTab>All</CategoryTab>
-                    {categories.products
-                      .filter((item) => item.name !== 'Digital Product')
-                      .map((item) => (
-                        <CategoryTab>{item.name}</CategoryTab>
-                      ))}
-                  </CategoryWrapper>
+                  <div className='category-block'>
+                    <CategoryWrapper>
+                      <CategoryTab>All</CategoryTab>
+                      {categories.products
+                        .filter((item) => item.name !== 'Digital Product')
+                        .map((item) => (
+                          <CategoryTab>{item.name}</CategoryTab>
+                        ))}
+                      <ArrowRightIcon className='arrow-right' />
+                    </CategoryWrapper>
+                  </div>
                 )}
                 {!loading && !productsCount && !productsList?.length && (
                   <EmptyState {...props} isMarketplace={true} />
@@ -146,12 +158,15 @@ export const Content = ({
             children: (
               <>
                 {!isProfilePage && (
-                  <CategoryWrapper>
-                    <CategoryTab>All</CategoryTab>
-                    {categories.contents.map((item) => (
-                      <CategoryTab>{item.name}</CategoryTab>
-                    ))}
-                  </CategoryWrapper>
+                  <div className='category-block'>
+                    <CategoryWrapper>
+                      <CategoryTab>All</CategoryTab>
+                      {categories.contents.map((item) => (
+                        <CategoryTab>{item.name}</CategoryTab>
+                      ))}
+                      <ArrowRightIcon className='arrow-right' />
+                    </CategoryWrapper>
+                  </div>
                 )}
                 {!loading && !artworksCount && !artworksList?.length && <EmptyState {...props} />}
                 <ArtworksList artworksList={artworksList} loading={initialPolling && loading} />
