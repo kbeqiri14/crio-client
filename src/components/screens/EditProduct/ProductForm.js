@@ -201,6 +201,7 @@ const ProductForm = ({ state }) => {
                       <TreeSelect
                         {...field}
                         treeDefaultExpandAll
+                        treeExpandAction='click'
                         bordered={false}
                         size='large'
                         placeholder='Select the type of your product'
