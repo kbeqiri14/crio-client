@@ -9,7 +9,7 @@ import Content from '@screens/Artwork/Content';
 import MoreProductsSection from '@screens/Product/MoreProductsSection';
 
 const Wrapper = styled(Modal)`
-  background-color: #2b2b2b !important;
+  background-color: ${(props) => props.theme.colors.dark100} !important;
   height: 100%;
   max-width: unset;
   margin: unset;
@@ -17,7 +17,7 @@ const Wrapper = styled(Modal)`
   top: 0;
 
   .ant-modal-content {
-    background-color: #2b2b2b !important;
+    background-color: ${(props) => props.theme.colors.dark100} !important;
     padding-top: 40px;
     height: 100%;
   }
@@ -43,13 +43,13 @@ const Wrapper = styled(Modal)`
   .ant-modal-body {
     padding: 0;
     margin: 0;
-    background-color: #2b2b2b !important;
+    background-color: ${(props) => props.theme.colors.dark100} !important;
   }
 
   .video-view-container {
     width: 100%;
     height: 100%;
-    background-color: #2b2b2b;
+    background-color: ${(props) => props.theme.colors.dark100};
     padding: 90px 0 0;
     display: flex;
     flex-flow: column nowrap;

@@ -95,7 +95,7 @@ const VideoInfo = ({
     () =>
       !title?.trim() ||
       !desc?.trim() ||
-      !categoryId?.trim() ||
+      !categoryId ||
       !(
         (title && state?.title !== title) ||
         (desc && state?.description !== desc) ||

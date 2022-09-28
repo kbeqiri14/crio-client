@@ -39,7 +39,7 @@ const TreeSelect = styled(
     display: flex;
     align-items: center;
     height: 50px;
-    color: #878c94;
+    color: ${(props) => props.theme.colors.dark50};
     line-height: 50px !important;
     font-weight: initial;
     font-size: ${(props) => props.theme.text[4].size}px;
@@ -47,7 +47,7 @@ const TreeSelect = styled(
 
     :hover {
       background: transparent;
-      color: #bbbcbc;
+      color: ${(props) => props.theme.colors.dark25};
     }
   }
   .ant-select-tree-treenode:not(:last-child) {
@@ -55,7 +55,7 @@ const TreeSelect = styled(
   }
 
   .ant-select-arrow {
-    color: #878c94;
+    color: ${(props) => props.theme.colors.dark50};
   }
   .ant-select-tree-switcher {
     line-height: 30px;
@@ -65,7 +65,7 @@ const TreeSelect = styled(
     line-height: 50px !important;
   }
   .ant-select-tree {
-    background: #2b2b2b !important;
+    background: ${(props) => props.theme.colors.dark100} !important;
     box-shadow: 0px 7px 25px rgba(0, 0, 0, 0.35) !important;
     border-radius: 8px !important;
   }
@@ -91,7 +91,7 @@ const TreeSelect = styled(
   }
 
   .ant-select-tree-list-holder-inner {
-    background: #2b2b2b !important;
+    background: ${(props) => props.theme.colors.dark100} !important;
     box-shadow: 0px 7px 25px rgba(0, 0, 0, 0.35);
     border-radius: 8px;
   }

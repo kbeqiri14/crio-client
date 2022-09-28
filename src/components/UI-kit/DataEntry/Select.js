@@ -28,29 +28,29 @@ const Select = styled(
     padding: 0px 20px;
   }
   .ant-select-selection-item {
-    color: white;
+    color: ${(props) => props.theme.colors.white};
     line-height: 45px !important;
   }
   .ant-select-arrow {
-    color: #878c94;
+    color: ${(props) => props.theme.colors.dark50};
   }
   .ant-select-selection-placeholder {
     line-height: 45px !important;
   }
   .ant-select-dropdown {
-    background: #2b2b2b !important;
+    background: ${(props) => props.theme.colors.dark100} !important;
     box-shadow: 0px 7px 25px rgba(0, 0, 0, 0.35);
     border-radius: 8px;
     z-index: 1 !important;
   }
   .ant-select-item-option-content {
-    color: #878c94;
+    color: ${(props) => props.theme.colors.dark50};
     font-weight: initial;
     font-size: ${(props) => props.theme.text[4].size}px;
     padding: 8px;
     :hover {
       background: transparent;
-      color: #bbbcbc;
+      color: ${(props) => props.theme.colors.dark25};
     }
   }
   .ant-select-item-option:not(:last-child) {

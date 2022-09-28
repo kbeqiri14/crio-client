@@ -23,15 +23,15 @@ const FileDraggerWrapper = styled('div')`
       color: white;
     }
     :hover {
-      color: #878c94;
+      color: ${(props) => props.theme.colors.dark50};
       .remove-icon {
         display: block;
         text-align: end;
       }
       .file-name {
-        color: #878c94;
+        color: ${(props) => props.theme.colors.dark50};
         a {
-          color: #878c94;
+          color: ${(props) => props.theme.colors.dark50};
         }
       }
     }
