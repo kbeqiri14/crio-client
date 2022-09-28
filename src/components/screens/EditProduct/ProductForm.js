@@ -212,8 +212,13 @@ const ProductForm = ({ state }) => {
                               ?.id
                           }
                           title={
-                            categories.products.find((item) => item.id === categories.commissionId)
-                              ?.name
+                            <>
+                              {
+                                categories.products.find(
+                                  (item) => item.id === categories.commissionId,
+                                )?.name
+                              }
+                            </>
                           }
                         />
                         <TreeSelect.TreeNode
@@ -223,8 +228,12 @@ const ProductForm = ({ state }) => {
                               ?.name
                           }
                           title={
-                            categories.products.find((item) => item.id === categories.digitalId)
-                              ?.name
+                            <>
+                              {
+                                categories.products.find((item) => item.id === categories.digitalId)
+                                  ?.name
+                              }
+                            </>
                           }
                         >
                           {categories.products
@@ -232,7 +241,7 @@ const ProductForm = ({ state }) => {
                             .map((item) => (
                               <TreeSelect.TreeNode
                                 value={item.id}
-                                title={item.name}
+                                title={<>{item.name}</>}
                                 key={item.id}
                               />
                             ))}
