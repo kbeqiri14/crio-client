@@ -55,13 +55,6 @@ const ProductActionButtons = ({
   });
 
   const onPublish = useAsyncFn(async (attributes) => {
-    console.log(
-      attributes.file,
-      attributes.categoryId,
-      categories.commissionId,
-      categories.digitalId,
-      4444,
-    );
     let file;
     let thumbnail = state?.thumbnail && !image.src ? 'remove-thumbnail' : undefined;
     if (
