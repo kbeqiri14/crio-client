@@ -55,16 +55,23 @@ const ProductActionButtons = ({
   });
 
   const onPublish = useAsyncFn(async (attributes) => {
+    console.log(
+      attributes.file,
+      attributes.categoryId,
+      categories.commissionId,
+      categories.digitalId,
+      4444,
+    );
     let file;
     let thumbnail = state?.thumbnail && !image.src ? 'remove-thumbnail' : undefined;
     if (
       attributes.image?.file ||
-      (attributes.file && attributes.categoryId === categories.digitalId)
+      (attributes.file && attributes.categoryId !== categories.commissionId)
     ) {
       const content = await formItemContent({
         userId,
         image: image.file,
-        file: attributes.categoryId === categories.digitalId ? attributes.file?.file : undefined,
+        file: attributes.categoryId === categories.commissionId ? undefined : attributes.file?.file,
         type: PRODUCTS,
       });
       thumbnail = content?.image;
