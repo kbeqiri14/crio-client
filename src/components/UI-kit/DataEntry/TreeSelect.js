@@ -39,21 +39,14 @@ const TreeSelect = styled(
     display: flex;
     align-items: center;
     height: 50px;
-    color: ${(props) => props.theme.colors.dark50};
+    color: ${(props) => props.theme.colors.white};
     line-height: 50px !important;
     font-weight: initial;
     font-size: ${(props) => props.theme.text[4].size}px;
     padding: 8px;
 
     :hover {
-      background: transparent;
-      color: ${(props) => props.theme.colors.dark25};
-    }
-  }
-  .ant-badge-status-text {
-    :hover {
-      background: transparent;
-      color: #bbbcbc;
+      background: #202020 !important;
     }
   }
   .ant-select-tree-treenode:not(:last-child) {
