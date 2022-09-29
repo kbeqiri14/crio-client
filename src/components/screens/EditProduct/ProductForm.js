@@ -244,7 +244,7 @@ const ProductForm = ({ state }) => {
                             .map((item) => (
                               <TreeSelect.TreeNode
                                 value={item.id}
-                                title={<Badge color='dark50' text={item.name} />}
+                                title={<Badge color='white' text={item.name} />}
                                 key={item.id}
                               />
                             ))}

@@ -43,21 +43,22 @@ const Select = styled(
     border-radius: 8px;
     z-index: 1 !important;
   }
+  .ant-select-item-option {
+    :hover {
+      background: #202020 !important;
+    }
+  }
   .ant-select-item-option-content {
-    color: ${(props) => props.theme.colors.dark50};
+    color: ${(props) => props.theme.colors.white};
     font-weight: initial;
     font-size: ${(props) => props.theme.text[4].size}px;
     padding: 8px;
-    :hover {
-      background: transparent;
-      color: ${(props) => props.theme.colors.dark25};
-    }
   }
   .ant-select-item-option:not(:last-child) {
     border-bottom: 1px solid rgba(96, 96, 96, 0.2);
   }
   .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
-    background: transparent !important;
+    background: transparent;
   }
   .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
     background: transparent !important;
