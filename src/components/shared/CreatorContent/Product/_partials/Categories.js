@@ -5,7 +5,7 @@ import { Row, Col } from '@ui-kit';
 import { ReactComponent as ArrowRightIcon } from '@svgs/arrow-down.svg';
 
 const Wrapper = styled('div')`
-  max-width: 1322px;
+  max-width: 1300px;
   margin: 0 14px 20px 32px;
   padding-bottom: 20px;
   overflow-x: auto;
@@ -31,26 +31,31 @@ const Tag = styled('span')`
 
 const Categories = ({ categories }) => {
   const [scrollX, setScrollX] = useState(100);
-  const categoryRef = useRef();
+  const ref = useRef();
 
   const scrollMore = () => {
-    categoryRef.current.scroll({ left: scrollX, behavior: 'smooth' });
+    ref.current.scroll({ left: scrollX, behavior: 'smooth' });
     setScrollX((prev) => (prev += 400));
   };
 
   return (
     <Row>
       <Col>
-        <Wrapper ref={categoryRef}>
+        <ArrowRightIcon onClick={scrollMore} className='arrow-left' />
+      </Col>
+      <Col>
+        <Wrapper ref={ref}>
           <Tag>All</Tag>
-          {categories.map((item) => (
-            <Tag>{item.name}</Tag>
+          {categories.map(({ id, name }) => (
+            <Tag key={id}>{name}</Tag>
           ))}
         </Wrapper>
       </Col>
-      <Col>
-        <ArrowRightIcon onClick={scrollMore} className='arrow-right' />
-      </Col>
+      {(!ref.current?.scrollLeft || ref.current?.scrollLeft < 380) && (
+        <Col>
+          <ArrowRightIcon onClick={scrollMore} className='arrow-right' />
+        </Col>
+      )}
     </Row>
   );
 };
