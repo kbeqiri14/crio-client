@@ -20,8 +20,6 @@ const Wrapper = styled('div')`
   padding: 40px 22px;
   .arrow-right {
     position: absolute;
-    top: 10px;
-    right: -35px;
     transform: rotate(270deg);
     :hover {
       cursor: pointer;
@@ -117,7 +115,13 @@ export const Content = ({
             key: tabs.MARKETPLACE,
             children: (
               <>
-                {!isProfilePage && <Categories isProduct={true} />}
+                {!isProfilePage && (
+                  <Categories
+                    categories={categories.products.filter(
+                      ({ name }) => name !== 'Digital Product',
+                    )}
+                  />
+                )}
                 {!loading && !productsCount && !productsList?.length && (
                   <EmptyState {...props} isMarketplace={true} />
                 )}
@@ -135,7 +139,7 @@ export const Content = ({
             key: tabs.ARTWORK,
             children: (
               <>
-                {!isProfilePage && <Categories />}
+                {!isProfilePage && <Categories categories={categories.contents} />}
                 {!loading && !artworksCount && !artworksList?.length && <EmptyState {...props} />}
                 <ArtworksList artworksList={artworksList} loading={initialPolling && loading} />
                 <LoadMoreButton
