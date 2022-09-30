@@ -8,36 +8,10 @@ import { Button, Col, Row, Text, Title } from '@ui-kit';
 import { ReactComponent as GoogleIcon } from '@svgs/google.svg';
 
 const Wrapper = styled('div')`
-  .absolute-center {
-    position: absolute;
-    left: 140px;
-    top: 50%;
-    transform: translateY(-50%);
-    @media (max-width: 767.98px) {
-      left: 10px;
-    }
-  }
-  .absolute-bottom {
-    position: absolute;
-    bottom: 20px;
-    right: 40px;
-  }
-  .darken-background {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 103.09%);
-  }
+  height: 450px;
+  padding-top: 85px;
 
   @media (max-width: 767.98px) {
-    .absolute-center {
-      padding: 0 15px;
-      top: 40%;
-    }
-    .absolute-bottom {
-      bottom: 50px;
-      left: 30px;
-    }
     .title {
       font-size: 35px !important;
     }
@@ -50,38 +24,52 @@ const TopArtwork = ({ username, thumbnail }) => {
 
   return (
     <Wrapper>
-      <div className='darken-background' />
-      <Row gutter={[0, 12]} className='absolute-center'>
-        <Col span={24}>
-          <Title level={3} className='title'>
-            Crio: The Creative Marketplace
-          </Title>
+      <Row justify='space-around' gutter={[0, 40]}>
+        <Col
+          padding_top={25}
+          xxl={{ span: 12, offset: 3 }}
+          xl={{ span: 12, offset: 1 }}
+          lg={{ span: 18, offset: 2 }}
+          md={{ span: 14, offset: 0 }}
+          sm={{ span: 14, offset: 0 }}
+          xs={{ span: 20, offset: 0 }}
+        >
+          <Row gutter={[0, 20]}>
+            <Col span={24}>
+              <Title level={3} className='title'>
+                Crio: The Creative Marketplace
+              </Title>
+            </Col>
+            <Col span={24} padding_bottom={10}>
+              <Text level={4}>
+                Shop thousands of products and see the best artwork from the <br /> entire community
+                of creators on Crio
+              </Text>
+            </Col>
+            <Col xs={user.id ? 24 : 0} lg={24}>
+              <Link to={`/profile/${username}`}>
+                <Button type='primary' size='large'>
+                  VISIT FEATURED CREATOR
+                </Button>
+              </Link>
+            </Col>
+            {!user.id && (
+              <Col lg={0}>
+                <Button type='google' icon={<GoogleIcon />} onClick={googleSignIn}>
+                  Sign up with Google
+                </Button>
+              </Col>
+            )}
+          </Row>
         </Col>
-        <Col span={24}>
-          <Text level={4} max_width={555}>
-            Discover thousands of digital products, custom services, and the best content from the
-            entire community of creators on Crio
-          </Text>
+        <Col xl={6} xs={0}>
+          <img alt='artwork' height={304} width={284} className='fit-cover' src={thumbnail} />
+          <Text color='white' level={3}>
+            by {username}
+          </Text>{' '}
+          <Text>$2.99</Text>
         </Col>
-        <Col xs={user.id ? 24 : 0} lg={24}>
-          <Link to={`/profile/${username}`}>
-            <Button type='primary' size='large'>
-              VISIT FEATURED CREATOR
-            </Button>
-          </Link>
-        </Col>
-        {!user.id && (
-          <Col lg={0}>
-            <Button type='google' icon={<GoogleIcon />} onClick={googleSignIn}>
-              Sign up with Google
-            </Button>
-          </Col>
-        )}
       </Row>
-      <Text level={3} className='absolute-bottom'>
-        by {username}
-      </Text>
-      <img alt='artwork' height={380} width='100%' className='fit-cover' src={thumbnail} />
     </Wrapper>
   );
 };
