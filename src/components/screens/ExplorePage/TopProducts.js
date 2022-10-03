@@ -1,9 +1,12 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { signIn } from '@app/auth';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
+import useAvatarUrl from '@app/hooks/useAvatarUrl';
+import { PRODUCTS } from '@configs/constants';
+import { getThumbnail } from '@utils/helpers';
 import { Button, Col, Row, Text, Title } from '@ui-kit';
 import { ReactComponent as GoogleIcon } from '@svgs/google.svg';
 
@@ -18,9 +21,24 @@ const Wrapper = styled('div')`
   }
 `;
 
-const TopProducts = ({ username, thumbnail, title, price }) => {
+const TopProducts = ({
+  userId,
+  username,
+  providerType,
+  providerUserId,
+  avatar,
+  thumbnail,
+  title,
+  price,
+}) => {
+  console.log(thumbnail);
   const { user } = useLoggedInUser();
   const googleSignIn = useCallback(() => signIn('Google'), []);
+  const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
+  const src = useMemo(
+    () => getThumbnail(PRODUCTS, userId, `thumbnail-${thumbnail}`),
+    [userId, thumbnail],
+  );
 
   return (
     <Wrapper>
@@ -63,7 +81,17 @@ const TopProducts = ({ username, thumbnail, title, price }) => {
           </Row>
         </Col>
         <Col xl={6} xs={0}>
-          <img alt='artwork' height={304} width={284} className='fit-cover' src={thumbnail} />
+          <img alt='artwork' height={304} width={284} className='fit-cover' src={src} />
+          <Text color='white' level={3}>
+            {title}
+          </Text>
+          <img
+            src={avatarUrl}
+            height='33'
+            width='33'
+            alt='Author avatar'
+            className='border-radius-100'
+          />
           <Text color='white' level={3}>
             by {username}
           </Text>{' '}
