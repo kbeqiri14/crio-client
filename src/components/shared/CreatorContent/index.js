@@ -21,10 +21,12 @@ const Wrapper = styled('div')`
   .arrow-left {
     transform: rotate(90deg);
     cursor: pointer;
+    margin: 0 20px;
   }
   .arrow-right {
     transform: rotate(270deg);
     cursor: pointer;
+    margin: 0 20px;
   }
 
   @media (max-width: 1437px) {

@@ -1,17 +1,14 @@
-import { useState, useRef, memo } from 'react';
+import React, { useContext, memo } from 'react';
+import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
 import styled from 'styled-components';
 
-import { Row, Col } from '@ui-kit';
 import { ReactComponent as ArrowRightIcon } from '@svgs/arrow-down.svg';
 
 const Wrapper = styled('div')`
-  max-width: 1300px;
-  margin: 0 14px 20px 32px;
+  max-width: 1400px;
   padding-top: 10px;
   padding-bottom: 20px;
-  overflow-x: auto;
   white-space: nowrap;
-  background: #2a2a2a;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
@@ -30,38 +27,41 @@ const Tag = styled('span')`
   }
 `;
 
-const Categories = ({ categories }) => {
-  const [scrollX, setScrollX] = useState(100);
-  const ref = useRef();
+const LeftArrow = () => {
+  const { isFirstItemVisible, scrollPrev } = useContext(VisibilityContext);
 
-  const scrollLeft = () => {
-    ref.current.scroll({ left: scrollX, behavior: 'smooth' });
-    setScrollX((prev) => (prev -= 400));
-  };
-
-  const scrollRight = () => {
-    ref.current.scroll({ left: scrollX, behavior: 'smooth' });
-    setScrollX((prev) => (prev += 400));
-  };
-
-  return (
-    <Row>
-      <Col padding_top={10}>
-        <ArrowRightIcon onClick={scrollLeft} className='arrow-left' />
-      </Col>
-      <Col>
-        <Wrapper ref={ref}>
-          <Tag>All</Tag>
-          {categories.map(({ id, name }) => (
-            <Tag key={id}>{name}</Tag>
-          ))}
-        </Wrapper>
-      </Col>
-      <Col padding_top={10}>
-        <ArrowRightIcon onClick={scrollRight} className='arrow-right' />
-      </Col>
-    </Row>
+  return isFirstItemVisible ? null : (
+    <ArrowRightIcon className='arrow-left' onClick={() => scrollPrev()} />
   );
 };
+
+const RightArrow = () => {
+  const { isLastItemVisible, scrollNext } = useContext(VisibilityContext);
+
+  return isLastItemVisible ? null : (
+    <ArrowRightIcon className='arrow-right' onClick={() => scrollNext()} />
+  );
+};
+
+const Card = ({ name, onClick }) => {
+  const visibility = useContext(VisibilityContext);
+
+  return (
+    <div onClick={() => onClick(visibility)} tabIndex={0}>
+      <Tag>{name}</Tag>
+    </div>
+  );
+};
+
+const Categories = ({ categories }) => (
+  <Wrapper>
+    <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
+      <Tag>All</Tag>
+      {categories.map(({ id, name }) => (
+        <Card key={id} name={name} />
+      ))}
+    </ScrollMenu>
+  </Wrapper>
+);
 
 export default memo(Categories);
