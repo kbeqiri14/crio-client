@@ -246,7 +246,7 @@ const VideoInfo = ({
                 bordered={false}
                 size='large'
                 placeholder='Select the type of your content'
-                options={categories?.contents.map((item) => ({
+                options={categories.contents.map((item) => ({
                   label: <>{item.name}</>,
                   value: item.id,
                 }))}

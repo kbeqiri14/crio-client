@@ -18,7 +18,7 @@ const Wrapper = styled('div')`
   }
 `;
 
-const TopArtwork = ({ username, thumbnail }) => {
+const TopProducts = ({ username, thumbnail, title, price }) => {
   const { user } = useLoggedInUser();
   const googleSignIn = useCallback(() => signIn('Google'), []);
 
@@ -67,11 +67,11 @@ const TopArtwork = ({ username, thumbnail }) => {
           <Text color='white' level={3}>
             by {username}
           </Text>{' '}
-          <Text>$2.99</Text>
+          <Text>${price}</Text>
         </Col>
       </Row>
     </Wrapper>
   );
 };
 
-export default memo(TopArtwork);
+export default memo(TopProducts);

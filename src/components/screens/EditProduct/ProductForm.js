@@ -126,7 +126,7 @@ const ProductForm = ({ state }) => {
   );
 
   useEffect(() => {
-    !categories.products.length &&
+    if (!categories.products.length) {
       getCategoriesRequest({
         onCompleted: ({ getCategories }) => {
           const mainCategories = getCategories.reduce((acc, item) => {
@@ -142,6 +142,7 @@ const ProductForm = ({ state }) => {
           });
         },
       });
+    }
   }, [categories, getCategoriesRequest, data?.getCategories]);
 
   const setLimitation = useCallback(() => {

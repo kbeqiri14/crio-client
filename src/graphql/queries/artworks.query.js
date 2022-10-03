@@ -47,16 +47,3 @@ export const getRandomArtworks = gql`
   }
   ${artworkFragment}
 `;
-
-export const getRandomInfo = gql`
-  query getRandomInfo($keyword: String) {
-    getRandomInfo(keyword: $keyword) {
-      productsCount
-      artworksCount
-      artworks {
-        ...ArtworkDetailAttributes
-      }
-    }
-  }
-  ${artworkFragment}
-`;
