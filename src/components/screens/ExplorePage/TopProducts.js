@@ -21,6 +21,21 @@ const Wrapper = styled('div')`
   }
 `;
 
+const ProductWrapper = styled('div')`
+  height: 284px;
+  width: 304px;
+  background: #202020;
+  border-radius: 14px;
+  .img {
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+    object-fit: cover;
+    width: 304px;
+    height: 235px;
+    border-bottom: 1px solid transparent;
+  }
+`;
+
 const TopProducts = ({
   userId,
   username,
@@ -44,12 +59,12 @@ const TopProducts = ({
       <Row justify='space-around' gutter={[0, 40]}>
         <Col
           padding_top={25}
-          xxl={{ span: 12, offset: 3 }}
-          xl={{ span: 12, offset: 1 }}
+          xxl={{ span: 10, offset: 2 }}
+          xl={{ span: 12, offset: 0 }}
           lg={{ span: 18, offset: 2 }}
           md={{ span: 14, offset: 0 }}
           sm={{ span: 14, offset: 0 }}
-          xs={{ span: 20, offset: 0 }}
+          xs={{ span: 14, offset: 0 }}
         >
           <Row gutter={[0, 20]}>
             <Col span={24}>
@@ -79,22 +94,40 @@ const TopProducts = ({
             )}
           </Row>
         </Col>
-        <Col xl={6} xs={0}>
-          <img alt='artwork' height={304} width={284} className='fit-cover' src={src} />
-          <Text color='white' level={3}>
-            {title}
-          </Text>
-          <img
-            src={avatarUrl}
-            height='33'
-            width='33'
-            alt='Author avatar'
-            className='border-radius-100'
-          />
-          <Text color='white' level={3}>
-            by {username}
-          </Text>{' '}
-          <Text>${price}</Text>
+        <Col xl={6} xs={12}>
+          <Row>
+            <ProductWrapper>
+              <Col span={24}>
+                <img alt='artwork' height={304} width={284} className='img fit-cover' src={src} />
+              </Col>
+              <Col span={24} padding_top={12} padding_left={15}>
+                <Text color='dark25' level={1}>
+                  {title}
+                </Text>
+              </Col>
+            </ProductWrapper>
+          </Row>
+          <Row padding_top={7}>
+            <Col span={2}>
+              <img
+                src={avatarUrl}
+                height='33'
+                width='33'
+                alt='Author avatar'
+                className='border-radius-100'
+              />
+            </Col>
+            <Col span={10} className='self-center'>
+              <Text color='dark50' level={3}>
+                {username}
+              </Text>{' '}
+            </Col>
+            {price && (
+              <Col span={2} offset={2} className='self-center'>
+                <Text color='white'>${price}</Text>
+              </Col>
+            )}
+          </Row>
         </Col>
       </Row>
     </Wrapper>
