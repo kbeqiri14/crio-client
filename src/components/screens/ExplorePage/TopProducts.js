@@ -31,7 +31,6 @@ const TopProducts = ({
   title,
   price,
 }) => {
-  console.log(thumbnail);
   const { user } = useLoggedInUser();
   const googleSignIn = useCallback(() => signIn('Google'), []);
   const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
