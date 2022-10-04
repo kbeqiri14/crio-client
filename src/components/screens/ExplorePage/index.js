@@ -99,7 +99,7 @@ export const ExplorePage = () => {
       <Meta title='Explore' description='Crio - Explore' />
       <Carousel autoplay effect='fade'>
         {topProducts.map((item) => (
-          <TopProducts key={item.artworkId} {...item} />
+          <TopProducts key={item.productId} {...item} />
         ))}
       </Carousel>
       <Content
