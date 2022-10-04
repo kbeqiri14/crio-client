@@ -1,8 +1,8 @@
-import { memo, useState, useEffect, useCallback } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { Tooltip } from 'antd';
 import { CheckCircleTwoTone, CloseCircleOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
-import { useLazyQuery, useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 
 import { getUserInvitations } from '@app/graphql/queries/users.query';
 import { sendInvitation } from '@app/graphql/mutations/user.mutation';
@@ -57,19 +57,20 @@ const info = [
 const EarnMore = () => {
   const [initial, setInitial] = useState(true);
   const [emails, setEmails] = useState([]);
-  const [requestUserInvitations, { data, loading: loadingInvitations }] = useLazyQuery(
-    getUserInvitations,
-    {
-      fetchPolicy: 'cache-and-network',
-      onCompleted: () => setInitial(false),
-    },
-  );
+  const {
+    data,
+    loading: loadingInvitations,
+    refetch,
+  } = useQuery(getUserInvitations, {
+    fetchPolicy: 'cache-and-network',
+    onCompleted: () => setInitial(false),
+  });
   const [inviteUsers, { loading }] = useMutation(sendInvitation, {
     variables: { emails },
     onCompleted: () => {
       setEmails([]);
       notification.successToast('The invitation(s) are successfully sent');
-      requestUserInvitations();
+      refetch();
     },
     onError: (e) => notification.errorToast(e?.message),
   });
@@ -89,11 +90,6 @@ const EarnMore = () => {
       notification.errorToast('Invalid email address');
     }
   };
-
-  useEffect(() => {
-    const asyncFunc = async () => requestUserInvitations();
-    asyncFunc();
-  }, [requestUserInvitations]);
 
   if (initial && loadingInvitations) {
     return <GlobalSpinner />;
@@ -134,7 +130,7 @@ const EarnMore = () => {
               </Col>
               <Col padding_left={20}>
                 {data?.getUserInvitations?.map(({ email, accept }) => (
-                  <Title level={2}>
+                  <Title level={2} key={email}>
                     {accept ? (
                       <Tooltip title='Accepted'>
                         <CheckCircleTwoTone />

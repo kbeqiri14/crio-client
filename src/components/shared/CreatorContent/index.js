@@ -18,16 +18,6 @@ const Wrapper = styled('div')`
   max-width: 1438px;
   margin: auto;
   padding: 40px 22px;
-  .arrow-left {
-    transform: rotate(90deg);
-    cursor: pointer;
-    margin: 0 20px;
-  }
-  .arrow-right {
-    transform: rotate(270deg);
-    cursor: pointer;
-    margin: 0 20px;
-  }
 
   @media (max-width: 1437px) {
     max-width: 1084px;

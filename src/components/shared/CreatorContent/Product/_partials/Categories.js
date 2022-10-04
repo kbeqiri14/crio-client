@@ -5,11 +5,42 @@ import styled from 'styled-components';
 import { ReactComponent as ArrowRightIcon } from '@svgs/arrow-down.svg';
 
 const Wrapper = styled('div')`
-  max-width: 1400px;
-  padding-top: 10px;
+  max-width: 1394px;
   padding-bottom: 20px;
+  margin-bottom: 20px;
   white-space: nowrap;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  .arrow-left {
+    cursor: pointer;
+    padding: 0 10px;
+    svg {
+      opacity: 1;
+      visibility: visible;
+      transform: rotate(90deg);
+    }
+    &.hide {
+      svg {
+        opacity: 0;
+        visibility: hidden;
+        transition: visibility 0s, opacity 0.2s linear;
+      }
+    }
+  }
+  .arrow-right {
+    cursor: pointer;
+    padding: 0 10px;
+    svg {
+      opacity: 1;
+      visibility: visible;
+      transform: rotate(270deg);
+    }
+    &.hide {
+      svg {
+        opacity: 0;
+        visibility: hidden;
+        transition: visibility 0s, opacity 0.2s linear;
+      }
+    }
 `;
 
 const Tag = styled('span')`
@@ -30,26 +61,20 @@ const Tag = styled('span')`
 const LeftArrow = () => {
   const { isFirstItemVisible, scrollPrev } = useContext(VisibilityContext);
 
-  return isFirstItemVisible ? null : (
-    <ArrowRightIcon className='arrow-left' onClick={() => scrollPrev()} />
+  return (
+    <span className={`arrow-left ${isFirstItemVisible ? 'hide' : ''}`}>
+      <ArrowRightIcon onClick={() => scrollPrev()} />
+    </span>
   );
 };
 
 const RightArrow = () => {
   const { isLastItemVisible, scrollNext } = useContext(VisibilityContext);
 
-  return isLastItemVisible ? null : (
-    <ArrowRightIcon className='arrow-right' onClick={() => scrollNext()} />
-  );
-};
-
-const Card = ({ name, onClick }) => {
-  const visibility = useContext(VisibilityContext);
-
   return (
-    <div onClick={() => onClick(visibility)} tabIndex={0}>
-      <Tag>{name}</Tag>
-    </div>
+    <span className={`arrow-right ${isLastItemVisible ? 'hide' : ''}`}>
+      <ArrowRightIcon onClick={() => scrollNext()} />
+    </span>
   );
 };
 
@@ -58,7 +83,7 @@ const Categories = ({ categories }) => (
     <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
       <Tag>All</Tag>
       {categories.map(({ id, name }) => (
-        <Card key={id} name={name} />
+        <Tag key={id}>{name}</Tag>
       ))}
     </ScrollMenu>
   </Wrapper>
