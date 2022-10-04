@@ -14,6 +14,7 @@ import { ReactComponent as GoogleIcon } from '@svgs/google.svg';
 
 const Wrapper = styled('div')`
   padding-top: 85px;
+  padding-bottom: 50px;
   @media (max-width: 767.98px) {
     .title {
       font-size: 35px !important;
@@ -107,7 +108,7 @@ const TopProducts = ({
 
   return (
     <Wrapper>
-      <Row justify='space-around' gutter={[0, 50]}>
+      <Row justify='space-around' gutter={[0, 60]}>
         <Col
           padding_top={25}
           xxl={{ span: 10, offset: 2 }}
@@ -146,21 +147,21 @@ const TopProducts = ({
           </Row>
         </Col>
 
-        <Col xl={6} sm={8} md={6} lg={8} xs={18}>
+        <Col xl={6} sm={10} md={8} lg={8} xs={20}>
           <Row>
             <ProductWrapper onClick={showProduct}>
               <Col span={24}>
                 <img alt='artwork' height={304} width={284} className='img fit-cover' src={src} />
               </Col>
-              <Col span={24} padding_top={12} padding_left={15}>
-                <Text color='dark25' level={1}>
+              <Col span={24} padding_top={12} padding_left={15} padding_right={15}>
+                <Text color='dark25' level={1} ellipsis={{ rows: 1, tooltip: title }}>
                   {title}
                 </Text>
               </Col>
             </ProductWrapper>
           </Row>
           <Row padding_top={7}>
-            <Col span={2}>
+            <Col xxl={2} lg={3} md={4} sm={4}>
               <Link to={`/profile/${username}`}>
                 <img
                   src={avatarUrl}
@@ -171,7 +172,7 @@ const TopProducts = ({
                 />
               </Link>
             </Col>
-            <Col span={10} className='self-center'>
+            <Col xxl={10} lg={12} md={14} sm={14} className='self-center'>
               <Link to={`/profile/${username}`}>
                 <Text color='dark50' level={3}>
                   {username}
@@ -179,7 +180,7 @@ const TopProducts = ({
               </Link>
             </Col>
             {price && (
-              <Col span={2} offset={2} className='self-center'>
+              <Col xxl={2} offset={2} md={3} sm={4} className='self-center'>
                 <Text color='white'>${price}</Text>
               </Col>
             )}
