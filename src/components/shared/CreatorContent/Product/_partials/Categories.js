@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { ReactComponent as ArrowRightIcon } from '@svgs/arrow-down.svg';
 
 const Wrapper = styled('div')`
-  max-width: 1400px;
+  max-width: 1394px;
   padding-bottom: 20px;
   margin-bottom: 20px;
   white-space: nowrap;
@@ -78,22 +78,12 @@ const RightArrow = () => {
   );
 };
 
-const Card = ({ name, onClick }) => {
-  const visibility = useContext(VisibilityContext);
-
-  return (
-    <div onClick={() => onClick(visibility)} tabIndex={0}>
-      <Tag>{name}</Tag>
-    </div>
-  );
-};
-
 const Categories = ({ categories }) => (
   <Wrapper>
     <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
       <Tag>All</Tag>
       {categories.map(({ id, name }) => (
-        <Card key={id} name={name} />
+        <Tag key={id}>{name}</Tag>
       ))}
     </ScrollMenu>
   </Wrapper>
