@@ -1,12 +1,16 @@
 import { memo, useEffect, useMemo, useState } from 'react';
 import { useReactiveVar } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 
 import { Meta } from '@shared/Meta';
 import useRandomInfo from '@root/src/hooks/useRandomInfo';
 import { searchKeywordVar, refetchArtworkVar, refetchMarketplaceVar } from '@configs/client-cache';
 import { Carousel, GlobalSpinner } from '@ui-kit';
-import TopArtwork from './TopArtwork';
+import TopProducts from './TopProducts';
 import Content from '../../shared/CreatorContent';
+import { getCategories } from '@app/graphql/queries/products.query';
+import { categoriesVar } from '@configs/client-cache';
+import { DIGITAL, COMMISSIONS } from '@configs/constants';
 
 const PRODUCTS_LIMIT = 15;
 const ARTWORKS_LIMIT = 24;
@@ -16,6 +20,26 @@ export const ExplorePage = () => {
   const [artworksOffset, setArtworksOffset] = useState(0);
   const [productsList, setProductsList] = useState([]);
   const [artworksList, setArtworksList] = useState([]);
+
+  useQuery(getCategories, {
+    onCompleted: ({ getCategories }) => {
+      const productCategories = getCategories.filter((item) => item.type === 'product');
+      const contentCategories = getCategories.filter((item) => item.type === 'content');
+      const mainCategories = getCategories.reduce((acc, item) => {
+        if (!item.mainCategoryId && item.type === 'product') {
+          return { ...acc, [item.name]: item.id };
+        }
+        return acc;
+      }, {});
+
+      categoriesVar({
+        digitalId: mainCategories[DIGITAL],
+        commissionId: mainCategories[COMMISSIONS],
+        products: productCategories,
+        contents: contentCategories,
+      });
+    },
+  });
   const keyword = useReactiveVar(searchKeywordVar);
   const refetchArtwork = useReactiveVar(refetchArtworkVar);
   const refetchMarketplace = useReactiveVar(refetchMarketplaceVar);
@@ -25,40 +49,34 @@ export const ExplorePage = () => {
     [refetchArtwork, refetchMarketplace],
   );
 
-  const {
-    carouselArtworks,
-    isProductsEnd,
-    isArtworksEnd,
-    loading,
-    loadMoreArtworks,
-    loadMoreProducts,
-  } = useRandomInfo({
-    keyword,
-    productsOffset: showLoader ? 0 : productsOffset,
-    artworksOffset: showLoader ? 0 : artworksOffset,
-    productsLimit: PRODUCTS_LIMIT,
-    artworksLimit: ARTWORKS_LIMIT,
-    getRandomProductsCompleted: ({ getRandomProducts }) => {
-      if (refetchMarketplace) {
-        refetchMarketplaceVar(false);
-        setProductsList(getRandomProducts);
-        setProductsOffset(0 + PRODUCTS_LIMIT);
-      } else {
-        setProductsList([...productsList, ...getRandomProducts]);
-        setProductsOffset(productsOffset + PRODUCTS_LIMIT);
-      }
-    },
-    getRandomArtworksCompleted: ({ getRandomArtworks }) => {
-      if (refetchArtwork) {
-        refetchArtworkVar(false);
-        setArtworksList(getRandomArtworks);
-        setArtworksOffset(0 + ARTWORKS_LIMIT);
-      } else {
-        setArtworksList([...artworksList, ...getRandomArtworks]);
-        setArtworksOffset(artworksOffset + ARTWORKS_LIMIT);
-      }
-    },
-  });
+  const { topProducts, isProductsEnd, isArtworksEnd, loading, loadMoreArtworks, loadMoreProducts } =
+    useRandomInfo({
+      keyword,
+      productsOffset: showLoader ? 0 : productsOffset,
+      artworksOffset: showLoader ? 0 : artworksOffset,
+      productsLimit: PRODUCTS_LIMIT,
+      artworksLimit: ARTWORKS_LIMIT,
+      getRandomProductsCompleted: ({ getRandomProducts }) => {
+        if (refetchMarketplace) {
+          refetchMarketplaceVar(false);
+          setProductsList(getRandomProducts);
+          setProductsOffset(0 + PRODUCTS_LIMIT);
+        } else {
+          setProductsList([...productsList, ...getRandomProducts]);
+          setProductsOffset(productsOffset + PRODUCTS_LIMIT);
+        }
+      },
+      getRandomArtworksCompleted: ({ getRandomArtworks }) => {
+        if (refetchArtwork) {
+          refetchArtworkVar(false);
+          setArtworksList(getRandomArtworks);
+          setArtworksOffset(0 + ARTWORKS_LIMIT);
+        } else {
+          setArtworksList([...artworksList, ...getRandomArtworks]);
+          setArtworksOffset(artworksOffset + ARTWORKS_LIMIT);
+        }
+      },
+    });
 
   useEffect(
     () => () => {
@@ -80,8 +98,8 @@ export const ExplorePage = () => {
     <>
       <Meta title='Explore' description='Crio - Explore' />
       <Carousel autoplay effect='fade'>
-        {carouselArtworks.map((item) => (
-          <TopArtwork key={item.artworkId} username={item.username} thumbnail={item.thumbnail} />
+        {topProducts.map((item) => (
+          <TopProducts key={item.productId} {...item} />
         ))}
       </Carousel>
       <Content

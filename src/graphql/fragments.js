@@ -78,6 +78,7 @@ export const artworkFragment = gql`
     title
     description
     accessibility
+    categoryId
     status
   }
 `;

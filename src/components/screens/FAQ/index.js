@@ -17,6 +17,9 @@ const Wrapper = styled('div')`
     color: #04a0ff;
     border-bottom: 1px solid #04a0ff;
   }
+  .ant-collapse-header-text {
+    padding-right: 52px;
+  }
   .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow {
     left: auto;
     right: 20px;

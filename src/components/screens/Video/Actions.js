@@ -42,20 +42,25 @@ const Actions = (props) => {
     [props.isProduct, removeProduct, removeArtwork],
   );
 
+  const items = useMemo(
+    () => [
+      {
+        label: 'Edit',
+        key: 'edit',
+        onClick: handleEdit,
+      },
+      {
+        label: 'Delete',
+        key: 'delete',
+        onClick: showConfirmation,
+      },
+    ],
+    [handleEdit, showConfirmation],
+  );
+
   return (
     <>
-      <Dropdown
-        overlay={
-          <Menu>
-            <Menu.Item key='edit' onClick={handleEdit}>
-              Edit
-            </Menu.Item>
-            <Menu.Item key='delete' onClick={showConfirmation}>
-              Delete
-            </Menu.Item>
-          </Menu>
-        }
-      >
+      <Dropdown overlay={<Menu items={items} />}>
         <SettingsIcon />
       </Dropdown>
       {visible && (

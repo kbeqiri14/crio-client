@@ -15,6 +15,8 @@ export const getCategories = gql`
     getCategories {
       id
       name
+      type
+      mainCategoryId
     }
   }
 `;
@@ -28,10 +30,11 @@ export const getUserProducts = gql`
   ${productFragment}
 `;
 
-export const getRandomProductsInfo = gql`
-  query {
-    getRandomProductsInfo {
-      count
+export const getRandomInfo = gql`
+  query getRandomInfo($keyword: String) {
+    getRandomInfo(keyword: $keyword) {
+      productsCount
+      artworksCount
       products {
         ...ProductDetailAttributes
       }

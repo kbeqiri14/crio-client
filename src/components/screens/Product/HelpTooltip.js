@@ -27,7 +27,7 @@ const HelpTooltip = ({ title, placement = 'left', ...props }) => {
   return (
     <>
       <Tooltip
-        visible={user.id && !user.helpSeen ? true : undefined}
+        open={user.id && !user.helpSeen ? true : undefined}
         width={235}
         title={title}
         placement={placement}

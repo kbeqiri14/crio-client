@@ -5,19 +5,21 @@ import { Button, Dropdown, Menu } from '@ui-kit';
 
 const goTo = (path) => () => history.push(path);
 
+const items = [
+  {
+    label: 'Marketplace',
+    key: 'marketplace',
+    onClick: goTo('/upload'),
+  },
+  {
+    label: 'Content',
+    key: 'artwork',
+    onClick: goTo('/upload/artwork'),
+  },
+];
+
 const UploadButton = () => (
-  <Dropdown
-    overlay={
-      <Menu>
-        <Menu.Item key='marketplace' onClick={goTo('/upload')}>
-          Marketplace
-        </Menu.Item>
-        <Menu.Item key='artwork' onClick={goTo('/upload/artwork')}>
-          Content
-        </Menu.Item>
-      </Menu>
-    }
-  >
+  <Dropdown overlay={<Menu items={items} />}>
     <Button type='primary' className='vertical-middle'>
       UPLOAD
     </Button>

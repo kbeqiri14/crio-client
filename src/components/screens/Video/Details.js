@@ -1,9 +1,9 @@
-import { memo, useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useMemo, useState, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import ReactPlayer from 'react-player';
 import { Col, Row } from 'antd';
 import imageCompression from 'browser-image-compression';
-import { useMutation } from '@apollo/client';
+import { useMutation, useLazyQuery, useReactiveVar } from '@apollo/client';
 import styled from 'styled-components';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
@@ -11,7 +11,10 @@ import { createArtwork, updateMetadata } from '@app/graphql/mutations/artwork.mu
 import { ARTWORKS } from '@configs/constants';
 import ActionButtons from '@shared/ActionButtons';
 import { formItemContent } from '@utils/upload.helper';
-import { Input, notification, Radio, Text } from '@ui-kit';
+import { Input, notification, Radio, Text, Select } from '@ui-kit';
+import { categoriesVar } from '@configs/client-cache';
+import { getCategories } from '@app/graphql/queries/products.query';
+import { DIGITAL, COMMISSIONS } from '@configs/constants';
 
 const StyledVideoDetails = styled('div')`
   padding: 40px 10px;
@@ -73,11 +76,14 @@ const VideoInfo = ({
   goToProfile,
 }) => {
   const { user } = useLoggedInUser();
+  const categories = useReactiveVar(categoriesVar);
   const [uploading, setUploading] = useState(false);
   const { control, watch, handleSubmit } = useForm();
   const title = watch('title');
   const desc = watch('desc');
+  const categoryId = watch('categoryId');
   const accessibility = watch('accessibility');
+  const [getCategoriesRequest, { data }] = useLazyQuery(getCategories);
 
   const isImage = useMemo(() => file?.type?.split('/')?.[0] === 'image', [file?.type]);
   const url = useMemo(() => {
@@ -89,12 +95,23 @@ const VideoInfo = ({
     () =>
       !title?.trim() ||
       !desc?.trim() ||
+      !categoryId ||
       !(
         (title && state?.title !== title) ||
         (desc && state?.description !== desc) ||
+        (categoryId && state?.categoryId !== categoryId) ||
         (accessibility && state?.accessibility !== accessibility)
       ),
-    [title, desc, accessibility, state?.title, state?.description, state?.accessibility],
+    [
+      title,
+      desc,
+      categoryId,
+      accessibility,
+      state?.title,
+      state?.description,
+      state?.categoryId,
+      state?.accessibility,
+    ],
   );
   const videoId = useMemo(
     () => state?.content?.substring(state?.content?.lastIndexOf('/') + 1),
@@ -114,7 +131,13 @@ const VideoInfo = ({
 
   const [updateArtwork, { loading: updatingArtwork }] = useMutation(updateMetadata, {
     variables: {
-      params: { artworkId: artworkId || state?.artworkId, title, description: desc, accessibility },
+      params: {
+        artworkId: artworkId || state?.artworkId,
+        title,
+        description: desc,
+        accessibility,
+        categoryId: categoryId,
+      },
     },
     onCompleted,
     onError: (data) => notification.errorToast(data?.message),
@@ -147,13 +170,14 @@ const VideoInfo = ({
             title,
             description: desc,
             accessibility,
+            categoryId: categoryId,
           },
         },
       });
     } else {
       updateArtwork();
     }
-  }, [isImage, user.id, file, title, desc, accessibility, saveArtwork, updateArtwork]);
+  }, [isImage, user.id, file, title, accessibility, desc, categoryId, saveArtwork, updateArtwork]);
 
   const handleCancel = useCallback(() => {
     if (state && !disabled) {
@@ -162,6 +186,25 @@ const VideoInfo = ({
       onCancel();
     }
   }, [state, disabled, setVisible, onCancel]);
+
+  useEffect(() => {
+    !categories.contents.length &&
+      getCategoriesRequest({
+        onCompleted: ({ getCategories }) => {
+          const mainCategories = getCategories.reduce((acc, item) => {
+            if (!item.mainCategoryId && item.type === 'product') {
+              return { ...acc, [item.name]: item.id };
+            }
+            return acc;
+          }, {});
+          categoriesVar({
+            digitalId: mainCategories[DIGITAL],
+            commissionId: mainCategories[COMMISSIONS],
+            contents: getCategories.filter((item) => item.type === 'content'),
+          });
+        },
+      });
+  }, [categories, getCategoriesRequest, data?.getCategories]);
 
   return (
     <StyledVideoDetails>
@@ -188,6 +231,25 @@ const VideoInfo = ({
                 maxLength={500}
                 autoSize={{ maxRows: 5 }}
                 placeholder='Write anything what you’d like to mention about this work'
+              />
+            )}
+          />
+        </Col>
+        <Col span={14} padding_bottom={32}>
+          <Controller
+            name='categoryId'
+            control={control}
+            defaultValue={state?.categoryId}
+            render={({ field }) => (
+              <Select
+                {...field}
+                bordered={false}
+                size='large'
+                placeholder='Select the type of your content'
+                options={categories.contents.map((item) => ({
+                  label: <>{item.name}</>,
+                  value: item.id,
+                }))}
               />
             )}
           />

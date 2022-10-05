@@ -2,8 +2,8 @@ import { useCallback, useMemo, useState } from 'react';
 import { useLazyQuery, useQuery, useReactiveVar } from '@apollo/client';
 
 import { randomArtworkNumberVar, randomProductNumberVar } from '@configs/client-cache';
-import { getRandomProducts } from '@app/graphql/queries/products.query';
-import { getRandomArtworks, getRandomInfo } from '@app/graphql/queries/artworks.query';
+import { getRandomInfo, getRandomProducts } from '@app/graphql/queries/products.query';
+import { getRandomArtworks } from '@app/graphql/queries/artworks.query';
 
 const useRandomInfo = ({
   keyword,
@@ -96,7 +96,7 @@ const useRandomInfo = ({
   }, [countArtwork, artworksOffset, artworksLimit, keyword, requestRandomArtworks]);
 
   return {
-    carouselArtworks: productsInfo?.getRandomInfo?.artworks || [],
+    topProducts: productsInfo?.getRandomInfo?.products || [],
     isProductsEnd,
     isArtworksEnd,
     loading,
