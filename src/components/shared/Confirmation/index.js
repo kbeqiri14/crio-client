@@ -19,7 +19,7 @@ const Confirmation = ({
     closeIcon={<CloseIcon />}
     width={486}
     maskClosable={false}
-    visible={visible}
+    open={visible}
     onCancel={onCancel}
     className='confirmation'
   >

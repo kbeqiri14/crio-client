@@ -22,14 +22,7 @@ const SendEmailModal = () => {
   });
 
   return (
-    <Modal
-      centered
-      footer={null}
-      closeIcon={<CloseIcon />}
-      width={600}
-      visible={true}
-      onCancel={hide}
-    >
+    <Modal centered footer={null} closeIcon={<CloseIcon />} width={600} open={true} onCancel={hide}>
       <Row justify='center' align='top' gutter={[0, 40]}>
         <Col span={24}>
           <Title level={1}>Email Message</Title>

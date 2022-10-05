@@ -147,7 +147,7 @@ const TopProducts = ({
           </Row>
         </Col>
 
-        <Col xl={6} sm={10} md={8} lg={8} xs={20}>
+        <Col xl={6} sm={10} md={8} lg={8} xs={19}>
           <Row>
             <ProductWrapper onClick={showProduct}>
               <Col span={24}>
@@ -161,20 +161,20 @@ const TopProducts = ({
             </ProductWrapper>
           </Row>
           <Row padding_top={7}>
-            <Col xxl={2} lg={3} md={4} sm={4}>
+            <Col xxl={2} lg={3} md={4} sm={4} xs={3}>
               <Link to={`/profile/${username}`}>
                 <img
                   src={avatarUrl}
-                  height='33'
-                  width='33'
+                  height='28'
+                  width='28'
                   alt='Author avatar'
                   className='border-radius-100'
                 />
               </Link>
             </Col>
-            <Col xxl={10} lg={12} md={14} sm={14} className='self-center'>
+            <Col xxl={10} lg={12} md={14} sm={14} xs={16} className='self-center'>
               <Link to={`/profile/${username}`}>
-                <Text color='dark50' level={3}>
+                <Text color='dark50' level={1}>
                   {username}
                 </Text>{' '}
               </Link>
