@@ -54,7 +54,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
       footer={null}
       closeIcon={<CloseIcon />}
       width={688}
-      visible={visible}
+      open={visible}
       onCancel={onCancel}
     >
       <Row justify='center' gutter={[0, 8]}>

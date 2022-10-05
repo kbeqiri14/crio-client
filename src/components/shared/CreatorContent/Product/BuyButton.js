@@ -70,10 +70,10 @@ const BuyButton = ({ userId, productId, categoryId, file, price, limit, accessib
     () =>
       price && !user.boughtProducts?.includes(productId)
         ? 'BUY'
-        : categoryId === categories.digitalId
+        : categoryId !== categories.commissionId
         ? 'DOWNLOAD'
         : 'EMAIL',
-    [price, productId, categoryId, categories.digitalId, user.boughtProducts],
+    [price, productId, categoryId, categories.commissionId, user.boughtProducts],
   );
   const color = useMemo(() => (label === 'BUY' ? 'blue' : 'green'), [label]);
   const disabled = useMemo(() => label === 'BUY' && limit === 0, [limit, label]);

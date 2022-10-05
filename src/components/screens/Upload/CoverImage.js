@@ -92,7 +92,7 @@ const CoverImage = ({ visible, artworkId, goToProfile }) => {
       footer={null}
       closeIcon={<CloseIcon />}
       maskClosable={false}
-      visible={visible}
+      open={visible}
       width={713}
       onCancel={goToProfile}
     >
