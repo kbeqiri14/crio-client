@@ -23,14 +23,13 @@ const authLink = setContext(async (_, { headers }) => {
 
 const errorLink = onError(({ networkError, graphQLErrors }) => {
   if (graphQLErrors) {
-    graphQLErrors.map(async ({ message, ...rest }) => {
-      console.log(message, rest, 88888);
-      // if (message.includes('Not Authorized!')) {
-      //   await signOut();
-      //   const loggedInUserVar = require('@configs/client-cache').loggedInUserVar;
-      //   loggedInUserVar({});
-      //   window.location.href = '/';
-      // }
+    graphQLErrors.map(async ({ message }) => {
+      if (message.includes('Not Authorized!')) {
+        await signOut();
+        const loggedInUserVar = require('@configs/client-cache').loggedInUserVar;
+        loggedInUserVar({});
+        window.location.href = '/';
+      }
       return console.log(`GraphQL Error: ${message}`);
     });
   }
