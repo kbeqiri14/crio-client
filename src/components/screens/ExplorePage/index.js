@@ -1,6 +1,5 @@
 import { memo, useEffect, useMemo, useState } from 'react';
 import { useReactiveVar } from '@apollo/client';
-import { useQuery } from '@apollo/client';
 
 import { Meta } from '@shared/Meta';
 import useRandomInfo from '@root/src/hooks/useRandomInfo';
@@ -8,9 +7,7 @@ import { searchKeywordVar, refetchArtworkVar, refetchMarketplaceVar } from '@con
 import { Carousel, GlobalSpinner } from '@ui-kit';
 import TopProducts from './TopProducts';
 import Content from '../../shared/CreatorContent';
-import { getCategories } from '@app/graphql/queries/products.query';
-import { categoriesVar } from '@configs/client-cache';
-import { DIGITAL, COMMISSIONS } from '@configs/constants';
+import useCategories from '@app/hooks/useCategories';
 
 const PRODUCTS_LIMIT = 15;
 const ARTWORKS_LIMIT = 24;
@@ -21,25 +18,8 @@ export const ExplorePage = () => {
   const [productsList, setProductsList] = useState([]);
   const [artworksList, setArtworksList] = useState([]);
 
-  useQuery(getCategories, {
-    onCompleted: ({ getCategories }) => {
-      const productCategories = getCategories.filter((item) => item.type === 'product');
-      const contentCategories = getCategories.filter((item) => item.type === 'content');
-      const mainCategories = getCategories.reduce((acc, item) => {
-        if (!item.mainCategoryId && item.type === 'product') {
-          return { ...acc, [item.name]: item.id };
-        }
-        return acc;
-      }, {});
+  useCategories();
 
-      categoriesVar({
-        digitalId: mainCategories[DIGITAL],
-        commissionId: mainCategories[COMMISSIONS],
-        products: productCategories,
-        contents: contentCategories,
-      });
-    },
-  });
   const keyword = useReactiveVar(searchKeywordVar);
   const refetchArtwork = useReactiveVar(refetchArtworkVar);
   const refetchMarketplace = useReactiveVar(refetchMarketplaceVar);

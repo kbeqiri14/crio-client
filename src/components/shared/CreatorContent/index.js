@@ -1,7 +1,6 @@
-import { memo, useCallback, useMemo, useState, useEffect } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { useLazyQuery, useReactiveVar } from '@apollo/client';
 
 import history from '@configs/history';
 import { Tabs } from '@ui-kit';
@@ -10,9 +9,7 @@ import EmptyState from '@shared/EmptyState';
 import LoadMoreButton from './LoadMoreButton';
 import ArtworksList from './Artwork/ArtworksList';
 import ProductsList from './Product/ProductsList';
-import { categoriesVar } from '@configs/client-cache';
-import { getCategories } from '@app/graphql/queries/products.query';
-import { DIGITAL, COMMISSIONS } from '@configs/constants';
+import useCategories from '@app/hooks/useCategories';
 
 const Wrapper = styled('div')`
   max-width: 1438px;
@@ -54,8 +51,7 @@ export const Content = ({
   );
   const username = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
   const isProfilePage = useMemo(() => pathname.includes('/profile'), [pathname]);
-  const categories = useReactiveVar(categoriesVar);
-  const [getCategoriesRequest, { data }] = useLazyQuery(getCategories);
+  const { categories } = useCategories('content');
 
   const onTabClick = useCallback(
     (key) => {
@@ -76,26 +72,6 @@ export const Content = ({
         isCreator: true,
       }
     : { isNoResult: true };
-
-  useEffect(() => {
-    !(categories.products?.length && categories.contents?.length) &&
-      getCategoriesRequest({
-        onCompleted: ({ getCategories }) => {
-          const mainCategories = getCategories.reduce((acc, item) => {
-            if (!item.mainCategoryId && item.type === 'product') {
-              return { ...acc, [item.name]: item.id };
-            }
-            return acc;
-          }, {});
-          categoriesVar({
-            digitalId: mainCategories[DIGITAL],
-            commissionId: mainCategories[COMMISSIONS],
-            products: getCategories.filter((item) => item.type === 'product'),
-            contents: getCategories.filter((item) => item.type === 'content'),
-          });
-        },
-      });
-  }, [categories, getCategoriesRequest, data?.getCategories]);
 
   return (
     <Wrapper>

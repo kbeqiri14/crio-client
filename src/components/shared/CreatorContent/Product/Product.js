@@ -1,6 +1,5 @@
 import { memo, useCallback, useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useReactiveVar } from '@apollo/client';
 
 import history from '@configs/history';
 import { PRODUCTS } from '@configs/constants';
@@ -13,7 +12,7 @@ import Actions from '@screens/Video/Actions';
 import product from '@images/product.png';
 import { ProductWrapper, ImageWrapper } from './styled';
 import BuyButton from './BuyButton';
-import { categoriesVar } from '@configs/client-cache';
+import useCategories from '@app/hooks/useCategories';
 
 const Product = ({
   providerType,
@@ -33,7 +32,7 @@ const Product = ({
   large = false,
 }) => {
   const [isHovering, setIsHovering] = useState(false);
-  const categories = useReactiveVar(categoriesVar);
+  const { categories } = useCategories('product');
   const { user } = useLoggedInUser();
   const { pathname } = useLocation();
   const { setInfo } = usePresentation();
@@ -151,7 +150,9 @@ const Product = ({
       >
         <ImageWrapper className={imageClasses}>
           <img src={src} alt='product' onClick={showProduct} />
-          {isHovering && <Tag>{categories.products.find(({ id }) => id === categoryId)?.name}</Tag>}
+          {categories.products.length && isHovering && (
+            <Tag>{categories.products.find(({ id }) => id === categoryId)?.name}</Tag>
+          )}
           <div
             className={`actions ${isHovering ? 'hover' : ''}`}
             onClick={() => !showActions && showProduct()}
