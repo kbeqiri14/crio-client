@@ -53,9 +53,14 @@ export const AppRoutes = () => {
     [signupError, user?.attributes?.email],
   );
   const showFooter = useMemo(() => footerPages.some((item) => item === pathname), [pathname]);
+  console.log(isAuthenticated, 'isAuthenticated');
+  console.log(loading, 'loading');
+  console.log(user, 'user');
+  console.log(authenticated, 'authenticated');
 
   const [getLoggedInUser] = useLazyQuery(me, {
     onCompleted: (data) => {
+      console.log(data, 'getLoggedInUser - onCompleted');
       if (data?.me) {
         localStorage.setItem('user', true);
         const periodEnd = data.me.payment?.periodEnd;
@@ -93,6 +98,7 @@ export const AppRoutes = () => {
   }, [authenticated, loading]);
 
   useEffect(() => {
+    console.log(authenticated, 'authenticated-useEffect');
     if (authenticated) {
       loggedInUserLoadingVar(true);
       getLoggedInUser();
