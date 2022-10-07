@@ -32,8 +32,8 @@ const Product = ({
   large = false,
 }) => {
   const [isHovering, setIsHovering] = useState(false);
-  const { categories } = useCategories('product');
   const { user } = useLoggedInUser();
+  const { categories } = useCategories();
   const { pathname } = useLocation();
   const { setInfo } = usePresentation();
   const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
@@ -150,7 +150,7 @@ const Product = ({
       >
         <ImageWrapper className={imageClasses}>
           <img src={src} alt='product' onClick={showProduct} />
-          {categories.products.length && isHovering && (
+          {isHovering && categoryId && (
             <Tag>{categories.products.find(({ id }) => id === categoryId)?.name}</Tag>
           )}
           <div

@@ -51,7 +51,7 @@ export const Content = ({
   );
   const username = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
   const isProfilePage = useMemo(() => pathname.includes('/profile'), [pathname]);
-  const { categories } = useCategories('content');
+  const { categories } = useCategories();
 
   const onTabClick = useCallback(
     (key) => {

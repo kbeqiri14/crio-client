@@ -31,7 +31,7 @@ const Artwork = ({
 }) => {
   const [isHovering, setIsHovering] = useState(false);
   const { user } = useLoggedInUser();
-  const { categories } = useCategories('content');
+  const { categories } = useCategories();
   const { pathname } = useLocation();
   const { setInfo } = usePresentation();
   const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
@@ -111,7 +111,7 @@ const Artwork = ({
         <LockState userId={userId} accessibility={accessibility} status={status} />
         {isVideo && <VideoIcon className='video' />}
         <img src={source} alt='artwork' width={330} height={330} onClick={showArtwork} />
-        {isHovering && !isLocked && categoryId && (
+        {isHovering && categoryId && !isLocked && (
           <Tag>{categories.contents.find(({ id }) => id === categoryId)?.name}</Tag>
         )}
         <div className={`info ${isHovering ? 'hover' : ''}`}>
