@@ -150,7 +150,7 @@ const Product = ({
       >
         <ImageWrapper className={imageClasses}>
           <img src={src} alt='product' onClick={showProduct} />
-          {isHovering && categoryId && (
+          {categories.products.length && isHovering && categoryId && (
             <Tag>{categories.products.find(({ id }) => id === categoryId)?.name}</Tag>
           )}
           <div
