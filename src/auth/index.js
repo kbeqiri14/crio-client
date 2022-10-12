@@ -60,6 +60,7 @@ export async function getCurrentUser() {
     const user = await Auth.currentAuthenticatedUser();
     return new User(user);
   } catch (e) {
+    console.log(e, 'getCurrentUser');
     return null;
   }
 }
