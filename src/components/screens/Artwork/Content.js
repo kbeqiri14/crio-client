@@ -12,6 +12,9 @@ import { Col, Row, Text, Title } from '@ui-kit';
 import LockState from '@shared/CreatorContent/LockState';
 import BuyWidget from '../Product/BuyWidget';
 import { loggedInUserLoadingVar } from '@configs/client-cache';
+import LikeIcon from '@images/LikeIcon.png';
+import LikedIcon from '@images/LikedIcon.png';
+import ShareIcon from '@images/ShareIcon.png';
 
 const Wrapper = styled('div')`
   display: flex;
@@ -33,6 +36,28 @@ const Wrapper = styled('div')`
         opacity: 1;
         visibility: visible;
       }
+    }
+  }
+  .like-icon {
+    position: absolute;
+    top: 75px;
+    right: -80px;
+    cursor: pointer;
+  }
+  .share-icon {
+    position: absolute;
+    top: 0;
+    right: -80px;
+    cursor: pointer;
+  }
+  @media (max-width: 1200px) {
+    .like-icon {
+      top: 555px;
+      right: 0;
+    }
+    .share-icon {
+      top: 555px;
+      right: 70px;
     }
   }
   @media (max-width: 420px) {
@@ -71,6 +96,7 @@ export const Content = ({ info, content, isLocked }) => {
   const { user } = useLoggedInUser();
   const loggedInUserLoading = useReactiveVar(loggedInUserLoadingVar);
   const [openTooltip, setOpenTooltip] = useState(user.id && !user.helpSeen);
+  const [isLiked, setIsLiked] = useState(false);
   const avatarUrl = useAvatarUrl(info.providerType, info.providerUserId, info.avatar);
   const { setInfo } = usePresentation();
 
@@ -149,6 +175,15 @@ export const Content = ({ info, content, isLocked }) => {
                   />
                 </div>
               )}
+              <img alt='share icon' className='share-icon' src={ShareIcon} />
+              <div
+                onClick={() => {
+                  setIsLiked(!isLiked);
+                }}
+              >
+                <img alt='like icon' className='like-icon' src={LikeIcon} />
+                {isLiked && <img alt='liked icon' className='like-icon' src={LikedIcon} />}
+              </div>
             </Col>
           )}
           <Col span={24}>

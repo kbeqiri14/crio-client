@@ -172,18 +172,16 @@ const TopProducts = ({
                 />
               </Link>
             </Col>
-            <Col xxl={10} lg={12} md={14} sm={14} xs={16} className='self-center'>
+            <Col xxl={9} lg={10} md={13} sm={13} xs={16} className='self-center'>
               <Link to={`/profile/${username}`}>
                 <Text color='dark50' level={1}>
                   {username}
                 </Text>{' '}
               </Link>
             </Col>
-            {price && (
-              <Col xxl={2} offset={2} md={3} sm={4} className='self-center'>
-                <Text color='white'>${price}</Text>
-              </Col>
-            )}
+            <Col xxl={2} offset={2} md={3} sm={4} className='self-center text-right'>
+              <Text color='white'>{price ? <>${price}</> : 'free'}</Text>
+            </Col>
           </Row>
         </Col>
       </Row>
