@@ -180,7 +180,7 @@ const TopProducts = ({
               </Link>
             </Col>
             <Col xxl={2} offset={2} md={3} sm={4} className='self-center text-right'>
-              <Text color='white'>{price ? <>${price}</> : 'free'}</Text>
+              <Text color='white'>{price ? <>${price}</> : 'Free'}</Text>
             </Col>
           </Row>
         </Col>
