@@ -1,4 +1,4 @@
-import Amplify, { Auth } from 'aws-amplify';
+import { Amplify, Auth } from 'aws-amplify';
 
 import {
   COGNITO_APP_CLIENT_ID,

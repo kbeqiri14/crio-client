@@ -57,7 +57,7 @@ const Product = ({
     let width = large ? 686 : 332;
     if (isHovering) {
       if (!user.isCreator && isHovering) {
-        width = large ? 494 : 140;
+        width = large ? 494 : isLocked ? 120 : 140;
       }
       if (isLocked && !price && categoryId === categories.digitalId) {
         width = large ? 469 : 115;
