@@ -3,7 +3,12 @@ import { useReactiveVar } from '@apollo/client';
 
 import { Meta } from '@shared/Meta';
 import useRandomInfo from '@root/src/hooks/useRandomInfo';
-import { searchKeywordVar, refetchArtworkVar, refetchMarketplaceVar } from '@configs/client-cache';
+import {
+  searchCategoryVar,
+  searchKeywordVar,
+  refetchArtworkVar,
+  refetchMarketplaceVar,
+} from '@configs/client-cache';
 import { Carousel, GlobalSpinner } from '@ui-kit';
 import TopProducts from './TopProducts';
 import Content from '../../shared/CreatorContent';
@@ -13,16 +18,17 @@ const PRODUCTS_LIMIT = 15;
 const ARTWORKS_LIMIT = 24;
 
 export const ExplorePage = () => {
+  useCategories();
   const [productsOffset, setProductsOffset] = useState(0);
   const [artworksOffset, setArtworksOffset] = useState(0);
   const [productsList, setProductsList] = useState([]);
   const [artworksList, setArtworksList] = useState([]);
 
-  useCategories();
-
   const keyword = useReactiveVar(searchKeywordVar);
+  const searchCategory = useReactiveVar(searchCategoryVar);
   const refetchArtwork = useReactiveVar(refetchArtworkVar);
   const refetchMarketplace = useReactiveVar(refetchMarketplaceVar);
+  console.log(searchCategory, 'searchCategory');
 
   const showLoader = useMemo(
     () => refetchArtwork || refetchMarketplace,

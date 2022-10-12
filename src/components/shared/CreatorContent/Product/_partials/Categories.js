@@ -1,7 +1,9 @@
-import React, { useContext, memo } from 'react';
+import React, { useContext, memo, useCallback } from 'react';
 import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { useReactiveVar } from '@apollo/client';
 
+import { searchCategoryVar } from '@configs/client-cache';
 import { ReactComponent as ArrowRightIcon } from '@svgs/arrow-down.svg';
 
 const Wrapper = styled('div')`
@@ -52,10 +54,18 @@ const Tag = styled('span')`
   font-weight: ${(props) => props.theme.text[3].weight};
   line-height: ${(props) => props.theme.text[3].height}px;
   font-style: ${(props) => props.theme.text[3].style || 'normal'};
+  cursor: pointer;
   :hover {
     color: #1a1e24;
     background-color: ${(props) => props.theme.colors.white};
   }
+
+  ${(props) =>
+    props?.selected &&
+    css`
+      color: #1a1e24;
+      background-color: ${(props) => props.theme.colors.white};
+    `}
 `;
 
 const LeftArrow = () => {
@@ -78,15 +88,24 @@ const RightArrow = () => {
   );
 };
 
-const Categories = ({ categories }) => (
-  <Wrapper>
-    <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
-      <Tag>All</Tag>
-      {categories.map(({ id, name }) => (
-        <Tag key={id}>{name}</Tag>
-      ))}
-    </ScrollMenu>
-  </Wrapper>
-);
+const Categories = ({ categories }) => {
+  const selected = useReactiveVar(searchCategoryVar);
+  const searchByCategory = useCallback((id) => () => searchCategoryVar(id), []);
+
+  return (
+    <Wrapper>
+      <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
+        <Tag selected={!selected} onClick={searchByCategory()}>
+          All
+        </Tag>
+        {categories.map(({ id, name }) => (
+          <Tag key={id} selected={id === selected} onClick={searchByCategory(id)}>
+            {name}
+          </Tag>
+        ))}
+      </ScrollMenu>
+    </Wrapper>
+  );
+};
 
 export default memo(Categories);
