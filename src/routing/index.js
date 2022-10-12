@@ -1,13 +1,13 @@
 import { memo, useEffect, useMemo, useState } from 'react';
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
-import { Auth } from 'aws-amplify';
+// import { Auth } from 'aws-amplify';
 import { isFuture } from 'date-fns';
 import { useLazyQuery, useReactiveVar } from '@apollo/client';
 
 import { loggedInUserLoadingVar, signupErrorVar } from '@configs/client-cache';
-import useAsyncFn from '@app/hooks/useAsyncFn';
+// import useAsyncFn from '@app/hooks/useAsyncFn';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
-import { useCurrentUser } from '@app/auth/hooks';
+import { useAmplifyUser, useCurrentUser } from '@app/auth/hooks';
 import { PrivateRoute } from '@app/routing/routes';
 import { me } from '@app/graphql/queries/users.query';
 import { GlobalSpinner } from '@ui-kit';
@@ -44,6 +44,7 @@ const footerPages = ['/', '/artworks', '/pricing', '/earn-more', '/faq', '/featu
 export const AppRoutes = () => {
   const [keyword, setKeyword] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const { user: amplifyUser, loading: amplifyLoading } = useAmplifyUser();
   const { user, loading } = useCurrentUser();
   const { dispatchUser, user: crioUser } = useLoggedInUser();
   const { isVisible } = usePresentation();
@@ -53,24 +54,9 @@ export const AppRoutes = () => {
   const authenticated = useMemo(
     () => !!user?.attributes?.email && (!signupError || localStorage.getItem('user')),
     [signupError, user?.attributes?.email],
-  ); // undefined true 'true' false false 'outer'
-
-  const { call, loading: ll } = useAsyncFn(() => Auth.currentAuthenticatedUser());
-  useEffect(() => {
-    const user1 = call();
-    console.log(user1, 'user-useEffect-currentAuthenticatedUser');
-  }, [call]);
-  console.log(
-    ll,
-    crioUser,
-    user,
-    user?.attributes?.email,
-    signupError,
-    localStorage.getItem('user'),
-    authenticated,
-    isAuthenticated,
-    'outer',
   );
+  console.log(amplifyUser, amplifyLoading);
+
   const showFooter = useMemo(() => footerPages.some((item) => item === pathname), [pathname]);
 
   const [getLoggedInUser] = useLazyQuery(me, {
