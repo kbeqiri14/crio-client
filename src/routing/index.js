@@ -52,6 +52,14 @@ export const AppRoutes = () => {
     () => !!user?.attributes?.email && (!signupError || localStorage.getItem('user')),
     [signupError, user?.attributes?.email],
   );
+  console.log(
+    user?.attributes?.email,
+    signupError,
+    localStorage.getItem('user'),
+    authenticated,
+    isAuthenticated,
+    'outer',
+  );
   const showFooter = useMemo(() => footerPages.some((item) => item === pathname), [pathname]);
 
   const [getLoggedInUser] = useLazyQuery(me, {
