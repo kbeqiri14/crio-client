@@ -1,9 +1,11 @@
 import { memo, useEffect, useMemo, useState } from 'react';
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
+import { Auth } from 'aws-amplify';
 import { isFuture } from 'date-fns';
 import { useLazyQuery, useReactiveVar } from '@apollo/client';
 
 import { loggedInUserLoadingVar, signupErrorVar } from '@configs/client-cache';
+import useAsyncFn from '@app/hooks/useAsyncFn';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { useCurrentUser } from '@app/auth/hooks';
 import { PrivateRoute } from '@app/routing/routes';
@@ -51,8 +53,17 @@ export const AppRoutes = () => {
   const authenticated = useMemo(
     () => !!user?.attributes?.email && (!signupError || localStorage.getItem('user')),
     [signupError, user?.attributes?.email],
-  );
+  ); // undefined true 'true' false false 'outer'
+
+  const { call, loading: ll } = useAsyncFn(() => Auth.currentAuthenticatedUser());
+  useEffect(() => {
+    const user1 = call();
+    console.log(user1, 'user-useEffect-currentAuthenticatedUser');
+  }, [call]);
   console.log(
+    ll,
+    crioUser,
+    user,
     user?.attributes?.email,
     signupError,
     localStorage.getItem('user'),
