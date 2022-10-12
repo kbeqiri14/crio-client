@@ -1,4 +1,4 @@
-import { BUCKET_NAME, COGNITO_REGION } from '@app/configs/environment';
+import { BUCKET_NAME } from '@app/configs/environment';
 
 /**
  * @desc Detecting URLs in a set of strings
@@ -19,7 +19,7 @@ export function urlify(text) {
  * @param {string} fileName
  */
 export function getThumbnail(type, userId, fileName) {
-  return `https://${BUCKET_NAME}.s3.${COGNITO_REGION}.amazonaws.com/${userId}/${type}/${fileName}`;
+  return `https://${BUCKET_NAME}.s3.amazonaws.com/${userId}/${type}/${fileName}`;
 }
 
 export const validateEmail = (email) => {

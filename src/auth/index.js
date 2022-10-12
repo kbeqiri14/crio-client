@@ -1,4 +1,4 @@
-import Amplify, { Auth } from 'aws-amplify';
+import { Amplify, Auth } from 'aws-amplify';
 
 import {
   COGNITO_APP_CLIENT_ID,
@@ -58,8 +58,10 @@ export async function signOut() {
 export async function getCurrentUser() {
   try {
     const user = await Auth.currentAuthenticatedUser();
+    console.log(user, 'before');
     return new User(user);
   } catch (e) {
+    console.log(e, 'getCurrentUser');
     return null;
   }
 }

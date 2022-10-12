@@ -22,7 +22,7 @@ export const CognitoCallback = () => {
         signupErrorVar(false);
       }
     },
-    onError: () => {
+    onError: (e) => {
       localStorage.clear();
       notification.errorToast('Something went wrong!', 'Please, try again later!');
     },
