@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useReactiveVar, useLazyQuery } from '@apollo/client';
 
 import { DIGITAL, COMMISSIONS } from '@configs/constants';
-import { getCategories } from '@app/graphql/queries/products.query';
 import { categoriesVar } from '@configs/client-cache';
+import { getCategories } from '@app/graphql/queries/products.query';
 
 const useCategories = (type) => {
   const categories = useReactiveVar(categoriesVar);
@@ -36,7 +36,9 @@ const useCategories = (type) => {
   });
 
   useEffect(() => {
-    (!categories.products.length || !categories.contents.length) && request();
+    if (!categories.products.length || !categories.contents.length) {
+      request();
+    }
   }, [categories.products.length, categories.contents.length, request]);
 
   return { categories };

@@ -12,13 +12,11 @@ import {
 import { Carousel, GlobalSpinner } from '@ui-kit';
 import TopProducts from './TopProducts';
 import Content from '../../shared/CreatorContent';
-import useCategories from '@app/hooks/useCategories';
 
 const PRODUCTS_LIMIT = 15;
 const ARTWORKS_LIMIT = 24;
 
 export const ExplorePage = () => {
-  useCategories();
   const [productsOffset, setProductsOffset] = useState(0);
   const [artworksOffset, setArtworksOffset] = useState(0);
   const [productsList, setProductsList] = useState([]);
