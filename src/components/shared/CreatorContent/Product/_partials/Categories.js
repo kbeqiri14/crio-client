@@ -1,4 +1,4 @@
-import React, { useContext, memo, useCallback } from 'react';
+import React, { useContext, memo, useCallback, useEffect } from 'react';
 import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
 import styled, { css } from 'styled-components';
 import { useReactiveVar } from '@apollo/client';
@@ -73,6 +73,13 @@ const Tag = styled('span')`
     `}
 `;
 
+const getSelected = (id, selectedCategory) => {
+  if (id) {
+    return selectedCategory === id;
+  }
+  return !selectedCategory;
+};
+
 const LeftArrow = () => {
   const { isFirstItemVisible, scrollPrev } = useContext(VisibilityContext);
 
@@ -93,9 +100,34 @@ const RightArrow = () => {
   );
 };
 
-const Categories = ({ isProduct, categories }) => {
+const Card = ({ id, name, isProduct, searchByCategory }) => {
+  const visibility = useContext(VisibilityContext);
   const selectedProductCategory = useReactiveVar(searchProductCategoryVar);
   const selectedArtworkCategory = useReactiveVar(searchArtworkCategoryVar);
+
+  useEffect(() => {
+    if (!visibility.isItemVisible(selectedProductCategory || 0)) {
+      visibility.scrollToItem(visibility.getItemById(selectedProductCategory || 0));
+    }
+  }, [selectedProductCategory, visibility]);
+
+  useEffect(() => {
+    if (!visibility.isItemVisible(selectedArtworkCategory || 0)) {
+      visibility.scrollToItem(visibility.getItemById(selectedArtworkCategory || 0));
+    }
+  }, [selectedArtworkCategory, visibility]);
+
+  return (
+    <Tag
+      selected={getSelected(id, isProduct ? selectedProductCategory : selectedArtworkCategory)}
+      onClick={searchByCategory(id)}
+    >
+      {name}
+    </Tag>
+  );
+};
+
+const Categories = ({ isProduct, categories }) => {
   const searchByCategory = useCallback(
     (id) => () => {
       isProduct ? searchProductCategoryVar(id) : searchArtworkCategoryVar(id);
@@ -104,26 +136,20 @@ const Categories = ({ isProduct, categories }) => {
     },
     [isProduct],
   );
-  const getSelected = useCallback(
-    (id) => {
-      if (id) {
-        return isProduct ? selectedProductCategory === id : selectedArtworkCategory === id;
-      }
-      return !(isProduct ? selectedProductCategory : selectedArtworkCategory);
-    },
-    [isProduct, selectedArtworkCategory, selectedProductCategory],
-  );
 
   return (
     <Wrapper>
       <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
-        <Tag selected={getSelected()} onClick={searchByCategory()}>
-          All
-        </Tag>
+        <Card itemId={0} name='All' isProduct={isProduct} searchByCategory={searchByCategory} />
         {categories.map(({ id, name }) => (
-          <Tag key={id} selected={getSelected(id)} onClick={searchByCategory(id)}>
-            {name}
-          </Tag>
+          <Card
+            key={id}
+            itemId={id}
+            id={id}
+            name={name}
+            isProduct={isProduct}
+            searchByCategory={searchByCategory}
+          />
         ))}
       </ScrollMenu>
     </Wrapper>
