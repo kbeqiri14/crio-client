@@ -8,13 +8,13 @@ import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { getThumbnail, urlify } from '@utils/helpers';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
-import { Col, Row, Text, Title } from '@ui-kit';
+import { Col, Row, Text, Title, notification } from '@ui-kit';
 import LockState from '@shared/CreatorContent/LockState';
 import BuyWidget from '../Product/BuyWidget';
 import { loggedInUserLoadingVar } from '@configs/client-cache';
-import { ReactComponent as ShareIcon } from '@svgs/ShareIcon.svg';
-import { ReactComponent as LikeIcon } from '@svgs/LikeIcon.svg';
-import { ReactComponent as LikedIcon } from '@svgs/LikedIcon.svg';
+import { ReactComponent as ShareIcon } from '@svgs/share.svg';
+import { ReactComponent as LikeIcon } from '@svgs/like.svg';
+import { ReactComponent as LikedIcon } from '@svgs/liked.svg';
 
 const Wrapper = styled('div')`
   display: flex;
@@ -38,24 +38,24 @@ const Wrapper = styled('div')`
       }
     }
   }
-  .like-icon {
+  .like {
     position: absolute;
     top: 75px;
-    right: -80px;
+    right: -85px;
     cursor: pointer;
   }
-  .share-icon {
+  .share {
     position: absolute;
     top: 0;
-    right: -80px;
+    right: -85px;
     cursor: pointer;
   }
   @media (max-width: 1200px) {
-    .like-icon {
+    .like {
       top: -74px;
       left: 0;
     }
-    .share-icon {
+    .share {
       top: -74px;
       left: 75px;
     }
@@ -178,14 +178,17 @@ export const Content = ({ info, content, isLocked }) => {
                   />
                 </div>
               )}
-              <ShareIcon className='share-icon' />
+              <ShareIcon
+                className='share'
+                onClick={() => notification.infoToast('Share icon clicked')}
+              />
               <div
                 onClick={() => {
                   setIsLiked(!isLiked);
                 }}
               >
-                <LikeIcon className='like-icon' />
-                {isLiked && <LikedIcon className='like-icon' />}
+                <LikeIcon className='like' />
+                {isLiked && <LikedIcon className='like' />}
               </div>
             </Col>
           )}
