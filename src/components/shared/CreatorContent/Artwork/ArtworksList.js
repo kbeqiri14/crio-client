@@ -9,7 +9,7 @@ export const ArtworksList = ({ artworksList = [], loading }) => {
   const dummyArray = new Array(12).fill();
   if (loading) {
     return (
-      <Row gutter={22}>
+      <Row gutter={22} padding_top={20}>
         {dummyArray.map((_, index) => (
           <Col key={index}>
             <SkeletonWrapper>
@@ -23,7 +23,7 @@ export const ArtworksList = ({ artworksList = [], loading }) => {
   }
 
   return (
-    <Row gutter={[22, 20]}>
+    <Row gutter={[22, 20]} padding_top={20}>
       {artworksList.map((item) => (
         <Col key={item.artworkId}>
           <Artwork
