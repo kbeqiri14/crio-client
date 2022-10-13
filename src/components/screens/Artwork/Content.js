@@ -12,9 +12,9 @@ import { Col, Row, Text, Title } from '@ui-kit';
 import LockState from '@shared/CreatorContent/LockState';
 import BuyWidget from '../Product/BuyWidget';
 import { loggedInUserLoadingVar } from '@configs/client-cache';
-// import LikeIcon from '@images/likeIcon.png';
-// import LikedIcon from '@images/likedIcon.png';
-// import ShareIcon from '@images/shareIcon.png';
+import { ReactComponent as ShareIcon } from '@svgs/ShareIcon.svg';
+import { ReactComponent as LikeIcon } from '@svgs/LikeIcon.svg';
+import { ReactComponent as LikedIcon } from '@svgs/LikedIcon.svg';
 
 const Wrapper = styled('div')`
   display: flex;
@@ -52,12 +52,15 @@ const Wrapper = styled('div')`
   }
   @media (max-width: 1200px) {
     .like-icon {
-      top: 555px;
-      right: 0;
+      top: -74px;
+      left: 0;
     }
     .share-icon {
-      top: 555px;
-      right: 70px;
+      top: -74px;
+      left: 75px;
+    }
+    .bottom-push {
+      margin-bottom: 50px;
     }
   }
   @media (max-width: 420px) {
@@ -96,7 +99,7 @@ export const Content = ({ info, content, isLocked }) => {
   const { user } = useLoggedInUser();
   const loggedInUserLoading = useReactiveVar(loggedInUserLoadingVar);
   const [openTooltip, setOpenTooltip] = useState(user.id && !user.helpSeen);
-  // const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
   const avatarUrl = useAvatarUrl(info.providerType, info.providerUserId, info.avatar);
   const { setInfo } = usePresentation();
 
@@ -114,7 +117,7 @@ export const Content = ({ info, content, isLocked }) => {
     <Wrapper>
       {!loggedInUserLoading && (
         <Row justify='center' gutter={[0, 40]}>
-          <Col span={24}>
+          <Col span={24} className='bottom-push'>
             <Row gutter={[0, 12]}>
               <Col span={24}>
                 <Title level={1}>{info.title}</Title>
@@ -175,15 +178,15 @@ export const Content = ({ info, content, isLocked }) => {
                   />
                 </div>
               )}
-              {/* <img alt='share icon' className='share-icon' src={ShareIcon} /> */}
-              {/* <div
+              <ShareIcon className='share-icon' />
+              <div
                 onClick={() => {
                   setIsLiked(!isLiked);
                 }}
               >
-                <img alt='like icon' className='like-icon' src={LikeIcon} />
-                {isLiked && <img alt='liked icon' className='like-icon' src={LikedIcon} />}
-              </div> */}
+                <LikeIcon className='like-icon' />
+                {isLiked && <LikedIcon className='like-icon' />}
+              </div>
             </Col>
           )}
           <Col span={24}>
