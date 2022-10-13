@@ -3,7 +3,12 @@ import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
 import styled, { css } from 'styled-components';
 import { useReactiveVar } from '@apollo/client';
 
-import { searchCategoryVar, refetchArtworkVar, refetchMarketplaceVar } from '@configs/client-cache';
+import {
+  searchArtworkCategoryVar,
+  searchProductCategoryVar,
+  refetchArtworkVar,
+  refetchMarketplaceVar,
+} from '@configs/client-cache';
 import { ReactComponent as ArrowRightIcon } from '@svgs/arrow-down.svg';
 
 const Wrapper = styled('div')`
@@ -88,25 +93,35 @@ const RightArrow = () => {
   );
 };
 
-const Categories = ({ categories }) => {
-  const selected = useReactiveVar(searchCategoryVar);
+const Categories = ({ isProduct, categories }) => {
+  const selectedProductCategory = useReactiveVar(searchProductCategoryVar);
+  const selectedArtworkCategory = useReactiveVar(searchArtworkCategoryVar);
   const searchByCategory = useCallback(
     (id) => () => {
-      searchCategoryVar(id);
+      isProduct ? searchProductCategoryVar(id) : searchArtworkCategoryVar(id);
       refetchArtworkVar(true);
       refetchMarketplaceVar(true);
     },
-    [],
+    [isProduct],
+  );
+  const getSelected = useCallback(
+    (id) => {
+      if (id) {
+        return isProduct ? selectedProductCategory === id : selectedArtworkCategory === id;
+      }
+      return !(isProduct ? selectedProductCategory : selectedArtworkCategory);
+    },
+    [isProduct, selectedArtworkCategory, selectedProductCategory],
   );
 
   return (
     <Wrapper>
       <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
-        <Tag selected={!selected} onClick={searchByCategory()}>
+        <Tag selected={getSelected()} onClick={searchByCategory()}>
           All
         </Tag>
         {categories.map(({ id, name }) => (
-          <Tag key={id} selected={id === selected} onClick={searchByCategory(id)}>
+          <Tag key={id} selected={getSelected(id)} onClick={searchByCategory(id)}>
             {name}
           </Tag>
         ))}

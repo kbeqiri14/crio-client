@@ -4,7 +4,8 @@ import { useReactiveVar } from '@apollo/client';
 import { Meta } from '@shared/Meta';
 import useRandomInfo from '@root/src/hooks/useRandomInfo';
 import {
-  searchCategoryVar,
+  searchProductCategoryVar,
+  searchArtworkCategoryVar,
   searchKeywordVar,
   refetchArtworkVar,
   refetchMarketplaceVar,
@@ -23,7 +24,8 @@ export const ExplorePage = () => {
   const [artworksList, setArtworksList] = useState([]);
 
   const keyword = useReactiveVar(searchKeywordVar);
-  const categoryId = useReactiveVar(searchCategoryVar);
+  const productCategoryId = useReactiveVar(searchProductCategoryVar);
+  const artworkCategoryId = useReactiveVar(searchArtworkCategoryVar);
   const refetchArtwork = useReactiveVar(refetchArtworkVar);
   const refetchMarketplace = useReactiveVar(refetchMarketplaceVar);
 
@@ -35,7 +37,8 @@ export const ExplorePage = () => {
   const { topProducts, isProductsEnd, isArtworksEnd, loading, loadMoreArtworks, loadMoreProducts } =
     useRandomInfo({
       keyword,
-      categoryId,
+      productCategoryId,
+      artworkCategoryId,
       productsOffset: showLoader ? 0 : productsOffset,
       artworksOffset: showLoader ? 0 : artworksOffset,
       productsLimit: PRODUCTS_LIMIT,
@@ -64,12 +67,11 @@ export const ExplorePage = () => {
 
   useEffect(
     () => () => {
-      if (keyword || categoryId) {
+      if (keyword || productCategoryId || artworkCategoryId) {
         refetchArtworkVar(true);
         refetchMarketplaceVar(true);
       }
       searchKeywordVar('');
-      searchCategoryVar(undefined);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],

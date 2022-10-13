@@ -1,5 +1,4 @@
 import { useCallback, useMemo, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { useLazyQuery, useQuery } from '@apollo/client';
 
 import { getRandomInfo, getRandomProducts } from '@app/graphql/queries/products.query';
@@ -7,7 +6,8 @@ import { getRandomArtworks } from '@app/graphql/queries/artworks.query';
 
 const useRandomInfo = ({
   keyword,
-  categoryId,
+  productCategoryId,
+  artworkCategoryId,
   productsOffset = 0,
   artworksOffset = 0,
   productsLimit,
@@ -15,8 +15,6 @@ const useRandomInfo = ({
   getRandomProductsCompleted,
   getRandomArtworksCompleted,
 }) => {
-  const { pathname } = useLocation();
-  const isArtworks = useMemo(() => pathname.includes('/artworks'), [pathname]);
   const [loading, setLoading] = useState(true);
 
   const [requestRandomProducts] = useLazyQuery(getRandomProducts, {
@@ -37,26 +35,26 @@ const useRandomInfo = ({
   });
 
   const { data: productsInfo } = useQuery(getRandomInfo, {
-    variables: { params: { keyword, categoryId } },
+    variables: { params: { keyword, productCategoryId, artworkCategoryId } },
     onCompleted: () => {
       setLoading(true);
       requestRandomProducts({
         variables: {
           params: {
-            offset: keyword || categoryId ? 0 : productsOffset,
+            offset: keyword || productCategoryId ? 0 : productsOffset,
             limit: productsLimit,
             keyword,
-            categoryId: isArtworks ? undefined : categoryId,
+            categoryId: productCategoryId,
           },
         },
       });
       requestRandomArtworks({
         variables: {
           params: {
-            offset: keyword || categoryId ? 0 : artworksOffset,
+            offset: keyword || artworkCategoryId ? 0 : artworksOffset,
             limit: artworksLimit,
             keyword,
-            categoryId: isArtworks ? categoryId : undefined,
+            categoryId: artworkCategoryId,
           },
         },
       });
@@ -78,19 +76,29 @@ const useRandomInfo = ({
     setLoading(true);
     requestRandomProducts({
       variables: {
-        params: { offset: productsOffset, limit: productsLimit, keyword, categoryId },
+        params: {
+          offset: productsOffset,
+          limit: productsLimit,
+          keyword,
+          categoryId: productCategoryId,
+        },
       },
     });
-  }, [productsOffset, productsLimit, keyword, categoryId, requestRandomProducts]);
+  }, [productsOffset, productsLimit, keyword, productCategoryId, requestRandomProducts]);
 
   const loadMoreArtworks = useCallback(() => {
     setLoading(true);
     requestRandomArtworks({
       variables: {
-        params: { offset: artworksOffset, limit: artworksLimit, keyword, categoryId },
+        params: {
+          offset: artworksOffset,
+          limit: artworksLimit,
+          keyword,
+          categoryId: artworkCategoryId,
+        },
       },
     });
-  }, [artworksOffset, artworksLimit, keyword, categoryId, requestRandomArtworks]);
+  }, [artworksOffset, artworksLimit, keyword, artworkCategoryId, requestRandomArtworks]);
 
   return {
     topProducts: productsInfo?.getRandomInfo?.products || [],
