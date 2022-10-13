@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import history from '@configs/history';
+import { searchCategoryVar } from '@configs/client-cache';
 import { Tabs } from '@ui-kit';
 import Categories from './Product/_partials/Categories';
 import EmptyState from '@shared/EmptyState';
@@ -56,6 +57,7 @@ export const Content = ({
   const onTabClick = useCallback(
     (key) => {
       setActiveKey(key);
+      searchCategoryVar(undefined);
       if (key === tabs.MARKETPLACE) {
         history.push(isProfilePage ? `/profile/${username}` : '/');
       } else {

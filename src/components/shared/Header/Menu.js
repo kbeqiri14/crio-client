@@ -1,7 +1,12 @@
 import { memo, useCallback, useMemo, Fragment } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { searchKeywordVar, refetchArtworkVar, refetchMarketplaceVar } from '@configs/client-cache';
+import {
+  searchCategoryVar,
+  searchKeywordVar,
+  refetchArtworkVar,
+  refetchMarketplaceVar,
+} from '@configs/client-cache';
 import history from '@configs/history';
 import { Button, Col, Row } from '@ui-kit';
 import logo from '@images/logo.png';
@@ -55,6 +60,7 @@ const Menu = ({ user, keyword, setKeyword }) => {
       if (path === '/' && keyword) {
         setKeyword('');
         searchKeywordVar('');
+        searchCategoryVar(undefined);
         refetchArtworkVar(true);
         refetchMarketplaceVar(true);
       }

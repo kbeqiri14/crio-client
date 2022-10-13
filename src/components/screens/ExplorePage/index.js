@@ -25,10 +25,9 @@ export const ExplorePage = () => {
   const [artworksList, setArtworksList] = useState([]);
 
   const keyword = useReactiveVar(searchKeywordVar);
-  const searchCategory = useReactiveVar(searchCategoryVar);
+  const categoryId = useReactiveVar(searchCategoryVar);
   const refetchArtwork = useReactiveVar(refetchArtworkVar);
   const refetchMarketplace = useReactiveVar(refetchMarketplaceVar);
-  console.log(searchCategory, 'searchCategory');
 
   const showLoader = useMemo(
     () => refetchArtwork || refetchMarketplace,
@@ -38,6 +37,7 @@ export const ExplorePage = () => {
   const { topProducts, isProductsEnd, isArtworksEnd, loading, loadMoreArtworks, loadMoreProducts } =
     useRandomInfo({
       keyword,
+      categoryId,
       productsOffset: showLoader ? 0 : productsOffset,
       artworksOffset: showLoader ? 0 : artworksOffset,
       productsLimit: PRODUCTS_LIMIT,
@@ -66,11 +66,12 @@ export const ExplorePage = () => {
 
   useEffect(
     () => () => {
-      if (keyword) {
+      if (keyword || categoryId) {
         refetchArtworkVar(true);
         refetchMarketplaceVar(true);
       }
       searchKeywordVar('');
+      searchCategoryVar(undefined);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],

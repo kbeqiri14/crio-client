@@ -3,7 +3,7 @@ import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
 import styled, { css } from 'styled-components';
 import { useReactiveVar } from '@apollo/client';
 
-import { searchCategoryVar } from '@configs/client-cache';
+import { searchCategoryVar, refetchArtworkVar, refetchMarketplaceVar } from '@configs/client-cache';
 import { ReactComponent as ArrowRightIcon } from '@svgs/arrow-down.svg';
 
 const Wrapper = styled('div')`
@@ -90,7 +90,14 @@ const RightArrow = () => {
 
 const Categories = ({ categories }) => {
   const selected = useReactiveVar(searchCategoryVar);
-  const searchByCategory = useCallback((id) => () => searchCategoryVar(id), []);
+  const searchByCategory = useCallback(
+    (id) => () => {
+      searchCategoryVar(id);
+      refetchArtworkVar(true);
+      refetchMarketplaceVar(true);
+    },
+    [],
+  );
 
   return (
     <Wrapper>
