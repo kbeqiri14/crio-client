@@ -37,32 +37,33 @@ const BuyButton = ({ userId, productId, categoryId, file, price, limit, accessib
     onError: (e) => notification.errorToast(e?.message),
   });
 
-  const download = useCallback(async (url, name) => {
+  const download = useCallback(async (url) => {
     if (!url) {
       console.log('Resource URL not provided!');
       return;
     }
-    setDownloading(true);
-    const isImage = await isImgUrl(url);
-    if (isImage) {
-      fetch(url)
-        .then((response) => response.blob())
-        .then((blob) => {
-          const blobURL = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = blobURL;
-          a.style = 'display: none';
+    window.open(url);
+    // setDownloading(true);
+    // const isImage = await isImgUrl(url);
+    // if (isImage) {
+    //   fetch(url)
+    //     .then((response) => response.blob())
+    //     .then((blob) => {
+    //       const blobURL = URL.createObjectURL(blob);
+    //       const a = document.createElement('a');
+    //       a.href = blobURL;
+    //       a.style = 'display: none';
 
-          if (name && name.length) {
-            a.download = name;
-          }
-          document.body.appendChild(a);
-          a.click();
-        })
-        .finally(() => setDownloading(false));
-    } else {
-      window.open(url, '_blank');
-    }
+    //       if (name && name.length) {
+    //         a.download = name;
+    //       }
+    //       document.body.appendChild(a);
+    //       a.click();
+    //     })
+    //     .finally(() => setDownloading(false));
+    // } else {
+    //   window.open(url, '_blank');
+    // }
   }, []);
 
   const isLocked = useMemo(() => {
