@@ -16,14 +16,14 @@ export const CognitoCallback = () => {
   const [createUser] = useMutation(signIn, {
     onCompleted: (data) => {
       if (data.saveUser.error) {
-        localStorage.clear();
+        // localStorage.clear();
         notification.errorToast('Sign up error', data.saveUser.error);
       } else {
         signupErrorVar(false);
       }
     },
     onError: (e) => {
-      localStorage.clear();
+      // localStorage.clear();
       notification.errorToast('Something went wrong!', 'Please, try again later!');
     },
   });
