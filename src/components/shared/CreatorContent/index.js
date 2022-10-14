@@ -40,7 +40,8 @@ export const Content = ({
   artworksCount,
   productsList,
   artworksList,
-  loading,
+  loadingProducts,
+  loadingArtworks,
   loadMoreProducts,
   loadMoreArtworks,
   initialPolling,
@@ -92,13 +93,13 @@ export const Content = ({
                     )}
                   />
                 )}
-                {!loading && !productsCount && !productsList?.length && (
+                {!loadingProducts && !productsCount && !productsList?.length && (
                   <EmptyState {...props} isMarketplace={true} />
                 )}
-                <ProductsList productsList={productsList} loading={initialPolling && loading} />
+                <ProductsList productsList={productsList} loading={loadingProducts} />
                 <LoadMoreButton
                   visible={visibleLoadMoreProducts}
-                  loading={loading}
+                  loading={loadingProducts}
                   onClick={loadMoreProducts}
                 />
               </>
@@ -110,11 +111,16 @@ export const Content = ({
             children: (
               <>
                 {!isProfilePage && <Categories categories={categories.contents} />}
-                {!loading && !artworksCount && !artworksList?.length && <EmptyState {...props} />}
-                <ArtworksList artworksList={artworksList} loading={initialPolling && loading} />
+                {!loadingArtworks && !artworksCount && !artworksList?.length && (
+                  <EmptyState {...props} />
+                )}
+                <ArtworksList
+                  artworksList={artworksList}
+                  loading={initialPolling && loadingArtworks}
+                />
                 <LoadMoreButton
                   visible={visibleLoadMoreArtworks}
-                  loading={loading}
+                  loading={loadingArtworks}
                   onClick={loadMoreArtworks}
                 />
               </>

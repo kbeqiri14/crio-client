@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useLazyQuery, useQuery } from '@apollo/client';
 
 import { getRandomInfo, getRandomProducts } from '@app/graphql/queries/products.query';
@@ -15,29 +15,18 @@ const useRandomInfo = ({
   getRandomProductsCompleted,
   getRandomArtworksCompleted,
 }) => {
-  const [loading, setLoading] = useState(true);
-
-  const [requestRandomProducts] = useLazyQuery(getRandomProducts, {
+  const [requestRandomProducts, { loading: loadingProducts }] = useLazyQuery(getRandomProducts, {
     fetchPolicy: 'cache-and-network',
-    onCompleted: (result) => {
-      getRandomProductsCompleted(result);
-      setLoading(false);
-    },
-    onError: () => setLoading(false),
+    onCompleted: getRandomProductsCompleted,
   });
-  const [requestRandomArtworks] = useLazyQuery(getRandomArtworks, {
+  const [requestRandomArtworks, { loading: loadingArtworks }] = useLazyQuery(getRandomArtworks, {
     fetchPolicy: 'cache-and-network',
-    onCompleted: (result) => {
-      getRandomArtworksCompleted(result);
-      setLoading(false);
-    },
-    onError: () => setLoading(false),
+    onCompleted: getRandomArtworksCompleted,
   });
 
-  const { data: productsInfo } = useQuery(getRandomInfo, {
+  const { data: productsInfo, loading } = useQuery(getRandomInfo, {
     variables: { params: { keyword, productCategoryId, artworkCategoryId } },
     onCompleted: () => {
-      setLoading(true);
       requestRandomProducts({
         variables: {
           params: {
@@ -59,7 +48,6 @@ const useRandomInfo = ({
         },
       });
     },
-    onError: () => setLoading(false),
   });
 
   const isProductsEnd = useMemo(
@@ -73,7 +61,6 @@ const useRandomInfo = ({
   );
 
   const loadMoreProducts = useCallback(() => {
-    setLoading(true);
     requestRandomProducts({
       variables: {
         params: {
@@ -87,7 +74,6 @@ const useRandomInfo = ({
   }, [productsOffset, productsLimit, keyword, productCategoryId, requestRandomProducts]);
 
   const loadMoreArtworks = useCallback(() => {
-    setLoading(true);
     requestRandomArtworks({
       variables: {
         params: {
@@ -101,10 +87,10 @@ const useRandomInfo = ({
   }, [artworksOffset, artworksLimit, keyword, artworkCategoryId, requestRandomArtworks]);
 
   return {
-    topProducts: productsInfo?.getRandomInfo?.products || [],
     isProductsEnd,
     isArtworksEnd,
-    loading,
+    loadingProducts: loading || loadingProducts,
+    loadingArtworks: loading || loadingArtworks,
     loadMoreProducts,
     loadMoreArtworks,
   };

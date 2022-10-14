@@ -12,20 +12,20 @@ import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { useSendEmail } from '@shared/SendEmailModal/Context';
 import { categoriesVar } from '@configs/client-cache';
 
-function isImgUrl(url) {
-  const img = new Image();
-  img.src = url;
-  return new Promise((resolve) => {
-    img.onerror = () => resolve(false);
-    img.onload = () => resolve(true);
-  });
-}
+// function isImgUrl(url) {
+//   const img = new Image();
+//   img.src = url;
+//   return new Promise((resolve) => {
+//     img.onerror = () => resolve(false);
+//     img.onload = () => resolve(true);
+//   });
+// }
 
 const BuyButton = ({ userId, productId, categoryId, file, price, limit, accessibility, block }) => {
   const { user } = useLoggedInUser();
   const { setSendEmailInfo } = useSendEmail();
   const { setInfo } = usePresentation();
-  const [downloading, setDownloading] = useState(false);
+  const [downloading] = useState(false); // setDownloading
   const categories = useReactiveVar(categoriesVar);
 
   const hide = useCallback(() => setInfo({}), [setInfo]);

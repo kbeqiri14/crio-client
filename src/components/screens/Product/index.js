@@ -9,7 +9,7 @@ import { getProduct } from '@app/graphql/queries/products.query';
 import { PRODUCTS } from '@configs/constants';
 import { getThumbnail } from '@utils/helpers';
 import { Col, Row } from '@ui-kit';
-import Broadcast from '@screens/EditProduct/_partials/Broadcast';
+// import Broadcast from '@screens/EditProduct/_partials/Broadcast';
 import defaultCover from '@images/product.png';
 import Content from '../Artwork/Content';
 import MoreProductsSection from './MoreProductsSection';
