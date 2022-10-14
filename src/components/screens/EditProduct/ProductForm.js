@@ -142,7 +142,17 @@ const ProductForm = ({ state }) => {
 
   return (
     <>
-      {visibleBroadcast && <Broadcast hideBroadcast={hideBroadcast} />}
+      {visibleBroadcast && (
+        <Broadcast
+          message={
+            <>
+              Start earning instantly using Crio's simple payments platform.{' '}
+              <Link to='/payment'>Onboard your Stripe account</Link> now.
+            </>
+          }
+          hideBroadcast={hideBroadcast}
+        />
+      )}
       <FormWrapper>
         <Row justify='center'>
           <Col span={19} className='formContainer'>

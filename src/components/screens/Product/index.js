@@ -88,7 +88,7 @@ export const Product = () => {
   }
   return (
     <>
-      {true && <Broadcast />}
+      {/* {true && <Broadcast />} */}
       <Content info={product} isLocked={isLocked} />
       <MoreProductsSection info={product} />
     </>

@@ -84,7 +84,7 @@ const BuyButton = ({ userId, productId, categoryId, file, price, limit, accessib
     () =>
       price && !user.boughtProducts?.includes(productId)
         ? 'BUY'
-        : categories.commissionId && categoryId !== categories.commissionId
+        : categoryId !== categories.commissionId
         ? 'DOWNLOAD'
         : 'EMAIL',
     [price, productId, categoryId, categories.commissionId, user.boughtProducts],
@@ -144,7 +144,7 @@ const BuyButton = ({ userId, productId, categoryId, file, price, limit, accessib
         }
         title={tooltip}
       >
-        {button}
+        {categories.commissionId && button}
       </Tooltip>
     );
   }
