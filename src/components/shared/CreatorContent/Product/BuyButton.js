@@ -84,7 +84,7 @@ const BuyButton = ({ userId, productId, categoryId, file, price, limit, accessib
     () =>
       price && !user.boughtProducts?.includes(productId)
         ? 'BUY'
-        : categoryId !== categories.commissionId
+        : categories.commissionId && categoryId !== categories.commissionId
         ? 'DOWNLOAD'
         : 'EMAIL',
     [price, productId, categoryId, categories.commissionId, user.boughtProducts],
