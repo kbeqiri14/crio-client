@@ -128,13 +128,25 @@ const Card = ({ id, name, isProduct, searchByCategory }) => {
 };
 
 const Categories = ({ isProduct, categories }) => {
+  const selectedProductCategory = useReactiveVar(searchProductCategoryVar);
+  const selectedArtworkCategory = useReactiveVar(searchArtworkCategoryVar);
   const searchByCategory = useCallback(
     (id) => () => {
-      isProduct ? searchProductCategoryVar(id) : searchArtworkCategoryVar(id);
+      if (isProduct) {
+        if (id === selectedProductCategory) {
+          return;
+        }
+        searchProductCategoryVar(id);
+      } else {
+        if (id === selectedArtworkCategory) {
+          return;
+        }
+        searchArtworkCategoryVar(id);
+      }
       refetchArtworkVar(true);
       refetchMarketplaceVar(true);
     },
-    [isProduct],
+    [isProduct, selectedArtworkCategory, selectedProductCategory],
   );
 
   return (
