@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useLazyQuery, useQuery } from '@apollo/client';
 
 import { getRandomInfo, getRandomProducts } from '@app/graphql/queries/products.query';
@@ -15,13 +15,24 @@ const useRandomInfo = ({
   getRandomProductsCompleted,
   getRandomArtworksCompleted,
 }) => {
+  const [loadingMoreProducts, setLoadingMoreProducts] = useState(false);
+  const [loadingMoreArtworks, setLoadingMoreArtworks] = useState(false);
+
   const [requestRandomProducts, { loading: loadingProducts }] = useLazyQuery(getRandomProducts, {
     fetchPolicy: 'cache-and-network',
-    onCompleted: getRandomProductsCompleted,
+    onCompleted: (result) => {
+      getRandomProductsCompleted(result);
+      setLoadingMoreProducts(false);
+    },
+    onError: () => setLoadingMoreProducts(false),
   });
   const [requestRandomArtworks, { loading: loadingArtworks }] = useLazyQuery(getRandomArtworks, {
     fetchPolicy: 'cache-and-network',
-    onCompleted: getRandomArtworksCompleted,
+    onCompleted: (result) => {
+      getRandomArtworksCompleted(result);
+      setLoadingMoreArtworks(false);
+    },
+    onError: () => setLoadingMoreArtworks(false),
   });
 
   const { data: productsInfo, loading } = useQuery(getRandomInfo, {
@@ -61,6 +72,7 @@ const useRandomInfo = ({
   );
 
   const loadMoreProducts = useCallback(() => {
+    setLoadingMoreProducts(true);
     requestRandomProducts({
       variables: {
         params: {
@@ -74,6 +86,7 @@ const useRandomInfo = ({
   }, [productsOffset, productsLimit, keyword, productCategoryId, requestRandomProducts]);
 
   const loadMoreArtworks = useCallback(() => {
+    setLoadingMoreArtworks(true);
     requestRandomArtworks({
       variables: {
         params: {
@@ -91,6 +104,8 @@ const useRandomInfo = ({
     isArtworksEnd,
     loadingProducts: loading || loadingProducts,
     loadingArtworks: loading || loadingArtworks,
+    loadingMoreProducts,
+    loadingMoreArtworks,
     loadMoreProducts,
     loadMoreArtworks,
   };

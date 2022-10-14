@@ -43,6 +43,8 @@ export const ExplorePage = () => {
     isArtworksEnd,
     loadingProducts,
     loadingArtworks,
+    loadingMoreProducts,
+    loadingMoreArtworks,
     loadMoreArtworks,
     loadMoreProducts,
   } = useRandomInfo({
@@ -106,6 +108,8 @@ export const ExplorePage = () => {
         artworksList={artworksList}
         loadingProducts={loadingProducts}
         loadingArtworks={loadingArtworks}
+        loadingMoreProducts={loadingMoreProducts}
+        loadingMoreArtworks={loadingMoreArtworks}
         loadMoreProducts={loadMoreProducts}
         loadMoreArtworks={loadMoreArtworks}
       />

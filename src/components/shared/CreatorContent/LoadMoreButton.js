@@ -22,14 +22,14 @@ const Wrapper = styled('div')`
   }
 `;
 
-export const LoadMoreButton = ({ visible, loading, onClick }) => {
+export const LoadMoreButton = ({ visible, disabled, loading, onClick }) => {
   if (!visible) {
     return null;
   }
 
   return (
     <Wrapper>
-      <Button white='true' loading={loading} onClick={onClick} width={168}>
+      <Button white='true' disabled={disabled} loading={loading} onClick={onClick} width={168}>
         LOAD MORE
       </Button>
     </Wrapper>

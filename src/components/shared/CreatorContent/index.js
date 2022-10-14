@@ -42,9 +42,10 @@ export const Content = ({
   artworksList,
   loadingProducts,
   loadingArtworks,
+  loadingMoreProducts,
+  loadingMoreArtworks,
   loadMoreProducts,
   loadMoreArtworks,
-  initialPolling,
 }) => {
   const { pathname } = useLocation(tabs.MARKETPLACE);
   const [activeKey, setActiveKey] = useState(
@@ -96,10 +97,14 @@ export const Content = ({
                 {!loadingProducts && !productsCount && !productsList?.length && (
                   <EmptyState {...props} isMarketplace={true} />
                 )}
-                <ProductsList productsList={productsList} loading={loadingProducts} />
+                <ProductsList
+                  productsList={productsList}
+                  loading={loadingProducts && !loadingMoreProducts}
+                />
                 <LoadMoreButton
                   visible={visibleLoadMoreProducts}
-                  loading={loadingProducts}
+                  disabled={loadingProducts && !loadingMoreProducts}
+                  loading={loadingMoreProducts}
                   onClick={loadMoreProducts}
                 />
               </>
@@ -116,11 +121,12 @@ export const Content = ({
                 )}
                 <ArtworksList
                   artworksList={artworksList}
-                  loading={initialPolling && loadingArtworks}
+                  loading={loadingArtworks && !loadingMoreArtworks}
                 />
                 <LoadMoreButton
                   visible={visibleLoadMoreArtworks}
-                  loading={loadingArtworks}
+                  disabled={loadingArtworks && !loadingMoreArtworks}
+                  loading={loadingMoreArtworks}
                   onClick={loadMoreArtworks}
                 />
               </>
