@@ -29,26 +29,27 @@ const BuyButton = ({ userId, productId, categoryId, file, price, limit, accessib
   });
 
   const download = useCallback((url, name) => {
-    setDownloading(true);
-    if (!url) {
-      console.log('Resource URL not provided!');
-      return;
-    }
-    fetch(url)
-      .then((response) => response.blob())
-      .then((blob) => {
-        const blobURL = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = blobURL;
-        a.style = 'display: none';
+    window.open(url, '_blank');
+    // setDownloading(true);
+    // if (!url) {
+    //   console.log('Resource URL not provided!');
+    //   return;
+    // }
+    // fetch(url)
+    //   .then((response) => response.blob())
+    //   .then((blob) => {
+    //     const blobURL = URL.createObjectURL(blob);
+    //     const a = document.createElement('a');
+    //     a.href = blobURL;
+    //     a.style = 'display: none';
 
-        if (name && name.length) {
-          a.download = name;
-        }
-        document.body.appendChild(a);
-        a.click();
-      })
-      .finally(() => setDownloading(false));
+    //     if (name && name.length) {
+    //       a.download = name;
+    //     }
+    //     document.body.appendChild(a);
+    //     a.click();
+    //   })
+    //   .finally(() => setDownloading(false));
   }, []);
 
   const isLocked = useMemo(() => {
