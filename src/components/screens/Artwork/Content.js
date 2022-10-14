@@ -180,7 +180,10 @@ export const Content = ({ info, content, isLocked }) => {
               )}
               <ShareIcon
                 className='share'
-                onClick={() => notification.infoToast('Share icon clicked')}
+                onClick={() => {
+                  navigator.clipboard.writeText(window.location.href);
+                  notification.infoToast('Copied');
+                }}
               />
               <div
                 onClick={() => {

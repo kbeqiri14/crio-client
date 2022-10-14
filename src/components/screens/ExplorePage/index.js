@@ -36,7 +36,7 @@ export const ExplorePage = () => {
     [refetchArtwork, refetchMarketplace],
   );
 
-  const { data: topProducts } = useQuery(getTopProducts);
+  const { data: topProducts, loading } = useQuery(getTopProducts);
 
   const {
     isProductsEnd,
@@ -89,7 +89,7 @@ export const ExplorePage = () => {
     [],
   );
 
-  if (loadMoreProducts && !productsOffset) {
+  if (loading) {
     return <GlobalSpinner />;
   }
 

@@ -7,12 +7,12 @@ import { useMutation } from '@apollo/client';
 import styled from 'styled-components';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
+import useCategories from '@app/hooks/useCategories';
 import { createArtwork, updateMetadata } from '@app/graphql/mutations/artwork.mutation';
 import { ARTWORKS } from '@configs/constants';
 import ActionButtons from '@shared/ActionButtons';
 import { formItemContent } from '@utils/upload.helper';
 import { Input, notification, Radio, Text, Select } from '@ui-kit';
-import useCategories from '@app/hooks/useCategories';
 
 const StyledVideoDetails = styled('div')`
   padding: 40px 10px;

@@ -7,6 +7,7 @@ import { useLazyQuery, useReactiveVar } from '@apollo/client';
 import { loggedInUserLoadingVar, signupErrorVar } from '@configs/client-cache';
 // import useAsyncFn from '@app/hooks/useAsyncFn';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
+import useCategories from '@app/hooks/useCategories';
 import { useAmplifyUser, useCurrentUser } from '@app/auth/hooks';
 import { PrivateRoute } from '@app/routing/routes';
 import { me } from '@app/graphql/queries/users.query';
@@ -42,6 +43,7 @@ import NotFound from '@root/src/components/shared/EmptyState/notFound';
 const footerPages = ['/', '/artworks', '/pricing', '/earn-more', '/faq', '/features'];
 
 export const AppRoutes = () => {
+  useCategories();
   const [keyword, setKeyword] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const { user: amplifyUser, loading: amplifyLoading } = useAmplifyUser();
