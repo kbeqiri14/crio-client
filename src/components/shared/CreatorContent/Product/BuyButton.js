@@ -29,7 +29,7 @@ const BuyButton = ({ userId, productId, categoryId, file, price, limit, accessib
   });
 
   const download = useCallback((url, name) => {
-    window.open(url, '_blank');
+    window.open(url);
     // setDownloading(true);
     // if (!url) {
     //   console.log('Resource URL not provided!');
