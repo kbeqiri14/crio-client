@@ -48,6 +48,10 @@ const Wrapper = styled('div')`
         transition: visibility 0s, opacity 0.2s linear;
       }
     }
+  }
+  .react-horizontal-scrolling-menu--scroll-container {
+    scrollbar-width: none; /* Firefox */
+  }
 `;
 
 const Tag = styled('span')`
