@@ -12,6 +12,15 @@ import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { useSendEmail } from '@shared/SendEmailModal/Context';
 import { categoriesVar } from '@configs/client-cache';
 
+function isImgUrl(url) {
+  const img = new Image();
+  img.src = url;
+  return new Promise((resolve) => {
+    img.onerror = () => resolve(false);
+    img.onload = () => resolve(true);
+  });
+}
+
 const BuyButton = ({ userId, productId, categoryId, file, price, limit, accessibility, block }) => {
   const { user } = useLoggedInUser();
   const { setSendEmailInfo } = useSendEmail();
@@ -28,27 +37,32 @@ const BuyButton = ({ userId, productId, categoryId, file, price, limit, accessib
     onError: (e) => notification.errorToast(e?.message),
   });
 
-  const download = useCallback((url, name) => {
-    setDownloading(true);
+  const download = useCallback(async (url, name) => {
     if (!url) {
       console.log('Resource URL not provided!');
       return;
     }
-    fetch(url)
-      .then((response) => response.blob())
-      .then((blob) => {
-        const blobURL = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = blobURL;
-        a.style = 'display: none';
+    setDownloading(true);
+    const isImage = await isImgUrl(url);
+    if (isImage) {
+      fetch(url)
+        .then((response) => response.blob())
+        .then((blob) => {
+          const blobURL = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = blobURL;
+          a.style = 'display: none';
 
-        if (name && name.length) {
-          a.download = name;
-        }
-        document.body.appendChild(a);
-        a.click();
-      })
-      .finally(() => setDownloading(false));
+          if (name && name.length) {
+            a.download = name;
+          }
+          document.body.appendChild(a);
+          a.click();
+        })
+        .finally(() => setDownloading(false));
+    } else {
+      window.open(url, '_blank');
+    }
   }, []);
 
   const isLocked = useMemo(() => {
