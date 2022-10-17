@@ -81,10 +81,12 @@ const ImageWrapper = styled('div')`
   justify-content: center;
   align-items: center;
   background: #182024;
-  border-radius: 16px;
   max-width: 1040px;
   min-height: 538px;
   height: auto;
+  @media (min-width: 575px) {
+    border-radius: 16px;
+  }
   img {
     height: auto;
     max-width: 100%;
