@@ -1,6 +1,5 @@
 import { memo, useCallback, useState, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useReactiveVar } from '@apollo/client';
 
 import history from '@configs/history';
 import { ARTWORKS } from '@configs/constants';
@@ -13,7 +12,7 @@ import { Col, Row, Tag, Text } from '@ui-kit';
 import { ReactComponent as VideoIcon } from '@svgs/video.svg';
 import LockState from '../LockState';
 import { Wrapper } from './styled';
-import { categoriesVar } from '@configs/client-cache';
+import useCategories from '@app/hooks/useCategories';
 
 const Artwork = ({
   providerType,
@@ -32,7 +31,7 @@ const Artwork = ({
 }) => {
   const [isHovering, setIsHovering] = useState(false);
   const { user } = useLoggedInUser();
-  const categories = useReactiveVar(categoriesVar);
+  const { categories } = useCategories();
   const { pathname } = useLocation();
   const { setInfo } = usePresentation();
   const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
@@ -112,7 +111,7 @@ const Artwork = ({
         <LockState userId={userId} accessibility={accessibility} status={status} />
         {isVideo && <VideoIcon className='video' />}
         <img src={source} alt='artwork' width={330} height={330} onClick={showArtwork} />
-        {isHovering && !isLocked && categoryId && (
+        {isHovering && categoryId && !isLocked && (
           <Tag>{categories.contents.find(({ id }) => id === categoryId)?.name}</Tag>
         )}
         <div className={`info ${isHovering ? 'hover' : ''}`}>

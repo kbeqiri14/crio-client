@@ -83,7 +83,7 @@ const ProductsList = ({ productsList = [], loading }) => {
 
   if (loading) {
     return (
-      <Row gutter={22}>
+      <Row gutter={22} padding_top={20}>
         {dummyArray.map((_, index) => (
           <Col key={index}>
             <SkeletonWrapper>
@@ -103,11 +103,11 @@ const ProductsList = ({ productsList = [], loading }) => {
   }
 
   if (width < 1438) {
-    return <Block block={productsList} />;
+    return <Block block={productsList} padding_top={20} />;
   }
 
   return isProfile || productsList.length < 5 ? (
-    <Block block={productsList} />
+    <Block block={productsList} padding_top={20} />
   ) : (
     <Blocks productsList={productsList} />
   );

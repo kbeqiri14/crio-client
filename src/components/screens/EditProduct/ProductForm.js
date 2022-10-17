@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect, useMemo, useState, Fragment } from 'react';
 import { useForm } from 'react-hook-form';
-import { useQuery, useLazyQuery, useReactiveVar } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { getConnectAccount } from '@app/graphql/queries/payment-method.query';
@@ -8,7 +8,6 @@ import Broadcast from './_partials/Broadcast';
 import FormWrapper from './styled/FormWrapper';
 import { ReactComponent as ArrowIcon } from '@svgs/arrow.svg';
 import { Badge } from '@ui-kit';
-import { categoriesVar } from '@configs/client-cache';
 
 import { Link } from 'react-router-dom';
 import { Controller } from 'react-hook-form';
@@ -29,16 +28,14 @@ import DraggerImage from './_partials/DraggerImage';
 import DraggerFile from './_partials/DraggerFile';
 import ActionButtons from './_partials/ActionButtons';
 import HelpTooltip from '@screens/Product/HelpTooltip';
-import { getCategories } from '@app/graphql/queries/products.query';
-import { DIGITAL, COMMISSIONS } from '@configs/constants';
+import useCategories from '@app/hooks/useCategories';
 
 const ProductForm = ({ state }) => {
-  const categories = useReactiveVar(categoriesVar);
   const { user } = useLoggedInUser();
+  const { categories } = useCategories('product');
   const [openTooltip, setOpenTooltip] = useState(user.id && !user.helpSeen);
   const [visibleBroadcast, setVisibleBroadcast] = useState(false);
   const [limitVisible, setLimitVisible] = useState(state?.limit !== null && state?.limit >= 0);
-  const [getCategoriesRequest, { data }] = useLazyQuery(getCategories);
   const [file, setFile] = useState(state?.file);
   const [files, setFiles] = useState([]);
   const [image, setImage] = useState(
@@ -125,26 +122,6 @@ const ProductForm = ({ state }) => {
     [state?.productId, state?.price, setValue],
   );
 
-  useEffect(() => {
-    if (!categories.products.length) {
-      getCategoriesRequest({
-        onCompleted: ({ getCategories }) => {
-          const mainCategories = getCategories.reduce((acc, item) => {
-            if (!item.mainCategoryId && item.type === 'product') {
-              return { ...acc, [item.name]: item.id };
-            }
-            return acc;
-          }, {});
-          categoriesVar({
-            digitalId: mainCategories[DIGITAL],
-            commissionId: mainCategories[COMMISSIONS],
-            products: getCategories.filter((item) => item.type === 'product'),
-          });
-        },
-      });
-    }
-  }, [categories, getCategoriesRequest, data?.getCategories]);
-
   const setLimitation = useCallback(() => {
     setLimitVisible(!limitVisible);
     setValue('limit', undefined);
@@ -165,7 +142,17 @@ const ProductForm = ({ state }) => {
 
   return (
     <>
-      {visibleBroadcast && <Broadcast hideBroadcast={hideBroadcast} />}
+      {visibleBroadcast && (
+        <Broadcast
+          message={
+            <>
+              Start earning instantly using Crio's simple payments platform.{' '}
+              <Link to='/payment'>Onboard your Stripe account</Link> now.
+            </>
+          }
+          hideBroadcast={hideBroadcast}
+        />
+      )}
       <FormWrapper>
         <Row justify='center'>
           <Col span={19} className='formContainer'>

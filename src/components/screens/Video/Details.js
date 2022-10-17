@@ -1,20 +1,18 @@
-import { memo, useCallback, useMemo, useState, useEffect } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import ReactPlayer from 'react-player';
 import { Col, Row } from 'antd';
 import imageCompression from 'browser-image-compression';
-import { useMutation, useLazyQuery, useReactiveVar } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import styled from 'styled-components';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
+import useCategories from '@app/hooks/useCategories';
 import { createArtwork, updateMetadata } from '@app/graphql/mutations/artwork.mutation';
 import { ARTWORKS } from '@configs/constants';
 import ActionButtons from '@shared/ActionButtons';
 import { formItemContent } from '@utils/upload.helper';
 import { Input, notification, Radio, Text, Select } from '@ui-kit';
-import { categoriesVar } from '@configs/client-cache';
-import { getCategories } from '@app/graphql/queries/products.query';
-import { DIGITAL, COMMISSIONS } from '@configs/constants';
 
 const StyledVideoDetails = styled('div')`
   padding: 40px 10px;
@@ -76,14 +74,13 @@ const VideoInfo = ({
   goToProfile,
 }) => {
   const { user } = useLoggedInUser();
-  const categories = useReactiveVar(categoriesVar);
+  const { categories } = useCategories('content');
   const [uploading, setUploading] = useState(false);
   const { control, watch, handleSubmit } = useForm();
   const title = watch('title');
   const desc = watch('desc');
   const categoryId = watch('categoryId');
   const accessibility = watch('accessibility');
-  const [getCategoriesRequest, { data }] = useLazyQuery(getCategories);
 
   const isImage = useMemo(() => file?.type?.split('/')?.[0] === 'image', [file?.type]);
   const url = useMemo(() => {
@@ -186,25 +183,6 @@ const VideoInfo = ({
       onCancel();
     }
   }, [state, disabled, setVisible, onCancel]);
-
-  useEffect(() => {
-    !categories.contents.length &&
-      getCategoriesRequest({
-        onCompleted: ({ getCategories }) => {
-          const mainCategories = getCategories.reduce((acc, item) => {
-            if (!item.mainCategoryId && item.type === 'product') {
-              return { ...acc, [item.name]: item.id };
-            }
-            return acc;
-          }, {});
-          categoriesVar({
-            digitalId: mainCategories[DIGITAL],
-            commissionId: mainCategories[COMMISSIONS],
-            contents: getCategories.filter((item) => item.type === 'content'),
-          });
-        },
-      });
-  }, [categories, getCategoriesRequest, data?.getCategories]);
 
   return (
     <StyledVideoDetails>

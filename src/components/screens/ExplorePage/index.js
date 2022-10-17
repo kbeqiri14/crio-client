@@ -2,15 +2,19 @@ import { memo, useEffect, useMemo, useState } from 'react';
 import { useReactiveVar } from '@apollo/client';
 import { useQuery } from '@apollo/client';
 
+import { getTopProducts } from '@app/graphql/queries/products.query';
 import { Meta } from '@shared/Meta';
 import useRandomInfo from '@root/src/hooks/useRandomInfo';
-import { searchKeywordVar, refetchArtworkVar, refetchMarketplaceVar } from '@configs/client-cache';
+import {
+  searchProductCategoryVar,
+  searchArtworkCategoryVar,
+  searchKeywordVar,
+  refetchArtworkVar,
+  refetchMarketplaceVar,
+} from '@configs/client-cache';
 import { Carousel, GlobalSpinner } from '@ui-kit';
 import TopProducts from './TopProducts';
 import Content from '../../shared/CreatorContent';
-import { getCategories } from '@app/graphql/queries/products.query';
-import { categoriesVar } from '@configs/client-cache';
-import { DIGITAL, COMMISSIONS } from '@configs/constants';
 
 const PRODUCTS_LIMIT = 15;
 const ARTWORKS_LIMIT = 24;
@@ -21,26 +25,9 @@ export const ExplorePage = () => {
   const [productsList, setProductsList] = useState([]);
   const [artworksList, setArtworksList] = useState([]);
 
-  useQuery(getCategories, {
-    onCompleted: ({ getCategories }) => {
-      const productCategories = getCategories.filter((item) => item.type === 'product');
-      const contentCategories = getCategories.filter((item) => item.type === 'content');
-      const mainCategories = getCategories.reduce((acc, item) => {
-        if (!item.mainCategoryId && item.type === 'product') {
-          return { ...acc, [item.name]: item.id };
-        }
-        return acc;
-      }, {});
-
-      categoriesVar({
-        digitalId: mainCategories[DIGITAL],
-        commissionId: mainCategories[COMMISSIONS],
-        products: productCategories,
-        contents: contentCategories,
-      });
-    },
-  });
   const keyword = useReactiveVar(searchKeywordVar);
+  const productCategoryId = useReactiveVar(searchProductCategoryVar);
+  const artworkCategoryId = useReactiveVar(searchArtworkCategoryVar);
   const refetchArtwork = useReactiveVar(refetchArtworkVar);
   const refetchMarketplace = useReactiveVar(refetchMarketplaceVar);
 
@@ -49,38 +36,50 @@ export const ExplorePage = () => {
     [refetchArtwork, refetchMarketplace],
   );
 
-  const { topProducts, isProductsEnd, isArtworksEnd, loading, loadMoreArtworks, loadMoreProducts } =
-    useRandomInfo({
-      keyword,
-      productsOffset: showLoader ? 0 : productsOffset,
-      artworksOffset: showLoader ? 0 : artworksOffset,
-      productsLimit: PRODUCTS_LIMIT,
-      artworksLimit: ARTWORKS_LIMIT,
-      getRandomProductsCompleted: ({ getRandomProducts }) => {
-        if (refetchMarketplace) {
-          refetchMarketplaceVar(false);
-          setProductsList(getRandomProducts);
-          setProductsOffset(0 + PRODUCTS_LIMIT);
-        } else {
-          setProductsList([...productsList, ...getRandomProducts]);
-          setProductsOffset(productsOffset + PRODUCTS_LIMIT);
-        }
-      },
-      getRandomArtworksCompleted: ({ getRandomArtworks }) => {
-        if (refetchArtwork) {
-          refetchArtworkVar(false);
-          setArtworksList(getRandomArtworks);
-          setArtworksOffset(0 + ARTWORKS_LIMIT);
-        } else {
-          setArtworksList([...artworksList, ...getRandomArtworks]);
-          setArtworksOffset(artworksOffset + ARTWORKS_LIMIT);
-        }
-      },
-    });
+  const { data: topProducts, loading } = useQuery(getTopProducts);
+
+  const {
+    isProductsEnd,
+    isArtworksEnd,
+    loadingProducts,
+    loadingArtworks,
+    loadingMoreProducts,
+    loadingMoreArtworks,
+    loadMoreArtworks,
+    loadMoreProducts,
+  } = useRandomInfo({
+    keyword,
+    productCategoryId,
+    artworkCategoryId,
+    productsOffset: showLoader ? 0 : productsOffset,
+    artworksOffset: showLoader ? 0 : artworksOffset,
+    productsLimit: PRODUCTS_LIMIT,
+    artworksLimit: ARTWORKS_LIMIT,
+    getRandomProductsCompleted: ({ getRandomProducts }) => {
+      if (refetchMarketplace) {
+        refetchMarketplaceVar(false);
+        setProductsList(getRandomProducts);
+        setProductsOffset(0 + PRODUCTS_LIMIT);
+      } else {
+        setProductsList([...productsList, ...getRandomProducts]);
+        setProductsOffset(productsOffset + PRODUCTS_LIMIT);
+      }
+    },
+    getRandomArtworksCompleted: ({ getRandomArtworks }) => {
+      if (refetchArtwork) {
+        refetchArtworkVar(false);
+        setArtworksList(getRandomArtworks);
+        setArtworksOffset(0 + ARTWORKS_LIMIT);
+      } else {
+        setArtworksList([...artworksList, ...getRandomArtworks]);
+        setArtworksOffset(artworksOffset + ARTWORKS_LIMIT);
+      }
+    },
+  });
 
   useEffect(
     () => () => {
-      if (keyword) {
+      if (keyword || productCategoryId || artworkCategoryId) {
         refetchArtworkVar(true);
         refetchMarketplaceVar(true);
       }
@@ -90,7 +89,7 @@ export const ExplorePage = () => {
     [],
   );
 
-  if (showLoader || (loadMoreProducts && !productsOffset)) {
+  if (loading) {
     return <GlobalSpinner />;
   }
 
@@ -98,7 +97,7 @@ export const ExplorePage = () => {
     <>
       <Meta title='Explore' description='Crio - Explore' />
       <Carousel autoplay effect='fade'>
-        {topProducts.map((item) => (
+        {topProducts?.getTopProducts?.map((item) => (
           <TopProducts key={item.productId} {...item} />
         ))}
       </Carousel>
@@ -107,7 +106,10 @@ export const ExplorePage = () => {
         visibleLoadMoreArtworks={!isArtworksEnd && artworksOffset}
         productsList={productsList}
         artworksList={artworksList}
-        loading={loading}
+        loadingProducts={loadingProducts}
+        loadingArtworks={loadingArtworks}
+        loadingMoreProducts={loadingMoreProducts}
+        loadingMoreArtworks={loadingMoreArtworks}
         loadMoreProducts={loadMoreProducts}
         loadMoreArtworks={loadMoreArtworks}
       />

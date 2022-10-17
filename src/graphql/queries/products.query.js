@@ -30,17 +30,22 @@ export const getUserProducts = gql`
   ${productFragment}
 `;
 
-export const getRandomInfo = gql`
-  query getRandomInfo($keyword: String) {
-    getRandomInfo(keyword: $keyword) {
-      productsCount
-      artworksCount
-      products {
-        ...ProductDetailAttributes
-      }
+export const getTopProducts = gql`
+  query {
+    getTopProducts {
+      ...ProductDetailAttributes
     }
   }
   ${productFragment}
+`;
+
+export const getRandomInfo = gql`
+  query getRandomInfo($params: SearchParams!) {
+    getRandomInfo(params: $params) {
+      productsCount
+      artworksCount
+    }
+  }
 `;
 
 export const getRandomProducts = gql`

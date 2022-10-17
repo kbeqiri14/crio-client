@@ -8,10 +8,13 @@ import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { getThumbnail, urlify } from '@utils/helpers';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
-import { Col, Row, Text, Title } from '@ui-kit';
+import { Col, Row, Text, Title, notification } from '@ui-kit';
 import LockState from '@shared/CreatorContent/LockState';
 import BuyWidget from '../Product/BuyWidget';
 import { loggedInUserLoadingVar } from '@configs/client-cache';
+import { ReactComponent as ShareIcon } from '@svgs/share.svg';
+import { ReactComponent as LikeIcon } from '@svgs/like.svg';
+import { ReactComponent as LikedIcon } from '@svgs/liked.svg';
 
 const Wrapper = styled('div')`
   display: flex;
@@ -33,6 +36,31 @@ const Wrapper = styled('div')`
         opacity: 1;
         visibility: visible;
       }
+    }
+  }
+  .like {
+    position: absolute;
+    top: 75px;
+    right: -85px;
+    cursor: pointer;
+  }
+  .share {
+    position: absolute;
+    top: 0;
+    right: -85px;
+    cursor: pointer;
+  }
+  @media (max-width: 1200px) {
+    .like {
+      top: -74px;
+      left: 0;
+    }
+    .share {
+      top: -74px;
+      left: 75px;
+    }
+    .bottom-push {
+      margin-bottom: 50px;
     }
   }
   @media (max-width: 420px) {
@@ -71,6 +99,7 @@ export const Content = ({ info, content, isLocked }) => {
   const { user } = useLoggedInUser();
   const loggedInUserLoading = useReactiveVar(loggedInUserLoadingVar);
   const [openTooltip, setOpenTooltip] = useState(user.id && !user.helpSeen);
+  const [isLiked, setIsLiked] = useState(false);
   const avatarUrl = useAvatarUrl(info.providerType, info.providerUserId, info.avatar);
   const { setInfo } = usePresentation();
 
@@ -88,7 +117,7 @@ export const Content = ({ info, content, isLocked }) => {
     <Wrapper>
       {!loggedInUserLoading && (
         <Row justify='center' gutter={[0, 40]}>
-          <Col span={24}>
+          <Col span={24} className='bottom-push'>
             <Row gutter={[0, 12]}>
               <Col span={24}>
                 <Title level={1}>{info.title}</Title>
@@ -149,6 +178,21 @@ export const Content = ({ info, content, isLocked }) => {
                   />
                 </div>
               )}
+              <ShareIcon
+                className='share'
+                onClick={() => {
+                  navigator.clipboard.writeText(window.location.href);
+                  notification.infoToast('Copied');
+                }}
+              />
+              <div
+                onClick={() => {
+                  setIsLiked(!isLiked);
+                }}
+              >
+                <LikeIcon className='like' />
+                {isLiked && <LikedIcon className='like' />}
+              </div>
             </Col>
           )}
           <Col span={24}>

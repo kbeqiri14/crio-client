@@ -1,7 +1,6 @@
-import { memo, useCallback, useMemo, useState, useEffect } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { useLazyQuery, useReactiveVar } from '@apollo/client';
 
 import history from '@configs/history';
 import { Tabs } from '@ui-kit';
@@ -10,9 +9,7 @@ import EmptyState from '@shared/EmptyState';
 import LoadMoreButton from './LoadMoreButton';
 import ArtworksList from './Artwork/ArtworksList';
 import ProductsList from './Product/ProductsList';
-import { categoriesVar } from '@configs/client-cache';
-import { getCategories } from '@app/graphql/queries/products.query';
-import { DIGITAL, COMMISSIONS } from '@configs/constants';
+import useCategories from '@app/hooks/useCategories';
 
 const Wrapper = styled('div')`
   max-width: 1438px;
@@ -43,10 +40,12 @@ export const Content = ({
   artworksCount,
   productsList,
   artworksList,
-  loading,
+  loadingProducts,
+  loadingArtworks,
+  loadingMoreProducts,
+  loadingMoreArtworks,
   loadMoreProducts,
   loadMoreArtworks,
-  initialPolling,
 }) => {
   const { pathname } = useLocation(tabs.MARKETPLACE);
   const [activeKey, setActiveKey] = useState(
@@ -54,8 +53,7 @@ export const Content = ({
   );
   const username = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
   const isProfilePage = useMemo(() => pathname.includes('/profile'), [pathname]);
-  const categories = useReactiveVar(categoriesVar);
-  const [getCategoriesRequest, { data }] = useLazyQuery(getCategories);
+  const { categories } = useCategories();
 
   const onTabClick = useCallback(
     (key) => {
@@ -77,26 +75,6 @@ export const Content = ({
       }
     : { isNoResult: true };
 
-  useEffect(() => {
-    !(categories.products?.length && categories.contents?.length) &&
-      getCategoriesRequest({
-        onCompleted: ({ getCategories }) => {
-          const mainCategories = getCategories.reduce((acc, item) => {
-            if (!item.mainCategoryId && item.type === 'product') {
-              return { ...acc, [item.name]: item.id };
-            }
-            return acc;
-          }, {});
-          categoriesVar({
-            digitalId: mainCategories[DIGITAL],
-            commissionId: mainCategories[COMMISSIONS],
-            products: getCategories.filter((item) => item.type === 'product'),
-            contents: getCategories.filter((item) => item.type === 'content'),
-          });
-        },
-      });
-  }, [categories, getCategoriesRequest, data?.getCategories]);
-
   return (
     <Wrapper>
       <Tabs
@@ -110,18 +88,23 @@ export const Content = ({
               <>
                 {!isProfilePage && (
                   <Categories
+                    isProduct
                     categories={categories.products.filter(
                       ({ name }) => name !== 'Digital Product',
                     )}
                   />
                 )}
-                {!loading && !productsCount && !productsList?.length && (
+                {!loadingProducts && !productsCount && !productsList?.length && (
                   <EmptyState {...props} isMarketplace={true} />
                 )}
-                <ProductsList productsList={productsList} loading={initialPolling && loading} />
+                <ProductsList
+                  productsList={productsList}
+                  loading={loadingProducts && !loadingMoreProducts}
+                />
                 <LoadMoreButton
                   visible={visibleLoadMoreProducts}
-                  loading={loading}
+                  disabled={loadingProducts && !loadingMoreProducts}
+                  loading={loadingMoreProducts}
                   onClick={loadMoreProducts}
                 />
               </>
@@ -133,11 +116,17 @@ export const Content = ({
             children: (
               <>
                 {!isProfilePage && <Categories categories={categories.contents} />}
-                {!loading && !artworksCount && !artworksList?.length && <EmptyState {...props} />}
-                <ArtworksList artworksList={artworksList} loading={initialPolling && loading} />
+                {!loadingArtworks && !artworksCount && !artworksList?.length && (
+                  <EmptyState {...props} />
+                )}
+                <ArtworksList
+                  artworksList={artworksList}
+                  loading={loadingArtworks && !loadingMoreArtworks}
+                />
                 <LoadMoreButton
                   visible={visibleLoadMoreArtworks}
-                  loading={loading}
+                  disabled={loadingArtworks && !loadingMoreArtworks}
+                  loading={loadingMoreArtworks}
                   onClick={loadMoreArtworks}
                 />
               </>

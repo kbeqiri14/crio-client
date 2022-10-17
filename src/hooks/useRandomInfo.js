@@ -1,12 +1,13 @@
 import { useCallback, useMemo, useState } from 'react';
-import { useLazyQuery, useQuery, useReactiveVar } from '@apollo/client';
+import { useLazyQuery, useQuery } from '@apollo/client';
 
-import { randomArtworkNumberVar, randomProductNumberVar } from '@configs/client-cache';
 import { getRandomInfo, getRandomProducts } from '@app/graphql/queries/products.query';
 import { getRandomArtworks } from '@app/graphql/queries/artworks.query';
 
 const useRandomInfo = ({
   keyword,
+  productCategoryId,
+  artworkCategoryId,
   productsOffset = 0,
   artworksOffset = 0,
   productsLimit,
@@ -14,57 +15,50 @@ const useRandomInfo = ({
   getRandomProductsCompleted,
   getRandomArtworksCompleted,
 }) => {
-  const [loading, setLoading] = useState(true);
-  const countArtwork = useReactiveVar(randomArtworkNumberVar);
-  const countProduct = useReactiveVar(randomProductNumberVar);
+  const [loadingMoreProducts, setLoadingMoreProducts] = useState(false);
+  const [loadingMoreArtworks, setLoadingMoreArtworks] = useState(false);
 
-  const [requestRandomProducts] = useLazyQuery(getRandomProducts, {
+  const [requestRandomProducts, { loading: loadingProducts }] = useLazyQuery(getRandomProducts, {
     fetchPolicy: 'cache-and-network',
     onCompleted: (result) => {
       getRandomProductsCompleted(result);
-      setLoading(false);
+      setLoadingMoreProducts(false);
     },
-    onError: () => setLoading(false),
+    onError: () => setLoadingMoreProducts(false),
   });
-  const [requestRandomArtworks] = useLazyQuery(getRandomArtworks, {
+  const [requestRandomArtworks, { loading: loadingArtworks }] = useLazyQuery(getRandomArtworks, {
     fetchPolicy: 'cache-and-network',
     onCompleted: (result) => {
       getRandomArtworksCompleted(result);
-      setLoading(false);
+      setLoadingMoreArtworks(false);
     },
-    onError: () => setLoading(false),
+    onError: () => setLoadingMoreArtworks(false),
   });
 
-  const { data: productsInfo } = useQuery(getRandomInfo, {
-    variables: { keyword },
-    onCompleted: ({ getRandomInfo }) => {
-      setLoading(true);
-      const artwork = Math.floor(Math.random() * getRandomInfo.artworksCount + 1);
-      const product = Math.floor(Math.random() * getRandomInfo.productsCount + 1);
-      randomArtworkNumberVar(artwork);
-      randomProductNumberVar(product);
+  const { data: productsInfo, loading } = useQuery(getRandomInfo, {
+    variables: { params: { keyword, productCategoryId, artworkCategoryId } },
+    onCompleted: () => {
       requestRandomProducts({
         variables: {
           params: {
-            count: product,
-            offset: keyword ? 0 : productsOffset,
+            offset: keyword || productCategoryId ? 0 : productsOffset,
             limit: productsLimit,
             keyword,
+            categoryId: productCategoryId,
           },
         },
       });
       requestRandomArtworks({
         variables: {
           params: {
-            count: artwork,
-            offset: keyword ? 0 : artworksOffset,
+            offset: keyword || artworkCategoryId ? 0 : artworksOffset,
             limit: artworksLimit,
             keyword,
+            categoryId: artworkCategoryId,
           },
         },
       });
     },
-    onError: () => setLoading(false),
   });
 
   const isProductsEnd = useMemo(
@@ -78,28 +72,40 @@ const useRandomInfo = ({
   );
 
   const loadMoreProducts = useCallback(() => {
-    setLoading(true);
+    setLoadingMoreProducts(true);
     requestRandomProducts({
       variables: {
-        params: { count: countProduct, offset: productsOffset, limit: productsLimit, keyword },
+        params: {
+          offset: productsOffset,
+          limit: productsLimit,
+          keyword,
+          categoryId: productCategoryId,
+        },
       },
     });
-  }, [countProduct, productsOffset, productsLimit, keyword, requestRandomProducts]);
+  }, [productsOffset, productsLimit, keyword, productCategoryId, requestRandomProducts]);
 
   const loadMoreArtworks = useCallback(() => {
-    setLoading(true);
+    setLoadingMoreArtworks(true);
     requestRandomArtworks({
       variables: {
-        params: { count: countArtwork, offset: artworksOffset, limit: artworksLimit, keyword },
+        params: {
+          offset: artworksOffset,
+          limit: artworksLimit,
+          keyword,
+          categoryId: artworkCategoryId,
+        },
       },
     });
-  }, [countArtwork, artworksOffset, artworksLimit, keyword, requestRandomArtworks]);
+  }, [artworksOffset, artworksLimit, keyword, artworkCategoryId, requestRandomArtworks]);
 
   return {
-    topProducts: productsInfo?.getRandomInfo?.products || [],
     isProductsEnd,
     isArtworksEnd,
-    loading,
+    loadingProducts: loading || loadingProducts,
+    loadingArtworks: loading || loadingArtworks,
+    loadingMoreProducts,
+    loadingMoreArtworks,
     loadMoreProducts,
     loadMoreArtworks,
   };
