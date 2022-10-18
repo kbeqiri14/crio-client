@@ -51,7 +51,6 @@ const StyledVideoDetails = styled('div')`
     video {
       border-radius: 16px;
     }
-    background: #182024;
     img {
       height: auto;
       width: 100%;
