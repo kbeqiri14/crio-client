@@ -1,15 +1,17 @@
-import { memo, useMemo } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import queryString from 'query-string';
 import { Skeleton } from 'antd';
-import { useQuery } from '@apollo/client';
 import styled from 'styled-components';
+import { useQuery, useReactiveVar } from '@apollo/client';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { getProduct } from '@app/graphql/queries/products.query';
+import { loggedInUserLoadingVar } from '@configs/client-cache';
 import { PRODUCTS } from '@configs/constants';
 import { getThumbnail } from '@utils/helpers';
 import { Col, Row } from '@ui-kit';
-// import Broadcast from '@screens/EditProduct/_partials/Broadcast';
+import Broadcast from '@screens/EditProduct/_partials/Broadcast';
 import defaultCover from '@images/product.png';
 import Content from '../Artwork/Content';
 import MoreProductsSection from './MoreProductsSection';
@@ -27,12 +29,22 @@ const Wrapper = styled('div')`
 
 export const Product = () => {
   const { user } = useLoggedInUser();
-  const { pathname } = useLocation();
+  const loggedInUserLoading = useReactiveVar(loggedInUserLoadingVar);
+  const { pathname, search } = useLocation();
   const productId = useMemo(() => pathname.split('/').slice(-1)[0], [pathname]);
+  const { show_banner } = queryString.parse(search);
+  const [visibleBroadcast, setVisibleBroadcast] = useState(show_banner);
+
+  const hideBroadcast = useCallback(() => setVisibleBroadcast(false), []);
 
   const { data, loading } = useQuery(getProduct, {
     variables: { productId },
   });
+
+  const showBanner = useMemo(
+    () => !loggedInUserLoading && !user.id && visibleBroadcast,
+    [loggedInUserLoading, user.id, visibleBroadcast],
+  );
   const product = useMemo(
     () =>
       data?.getProduct
@@ -88,7 +100,12 @@ export const Product = () => {
   }
   return (
     <>
-      {/* {true && <Broadcast />} */}
+      {showBanner && (
+        <Broadcast
+          message='Please check your email to receive the product/service. You can also register on Crio to download products directly!'
+          hideBroadcast={hideBroadcast}
+        />
+      )}
       <Content info={product} isLocked={isLocked} />
       <MoreProductsSection info={product} />
     </>
