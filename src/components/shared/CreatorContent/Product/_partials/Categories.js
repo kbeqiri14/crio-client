@@ -1,4 +1,4 @@
-import React, { useContext, memo, useCallback, useEffect } from 'react';
+import React, { useContext, memo, useCallback } from 'react';
 import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
 import styled, { css } from 'styled-components';
 import { useReactiveVar } from '@apollo/client';
@@ -105,21 +105,21 @@ const RightArrow = () => {
 };
 
 const Card = ({ id, name, isProduct, searchByCategory }) => {
-  const visibility = useContext(VisibilityContext);
+  // const visibility = useContext(VisibilityContext);
   const selectedProductCategory = useReactiveVar(searchProductCategoryVar);
   const selectedArtworkCategory = useReactiveVar(searchArtworkCategoryVar);
 
-  useEffect(() => {
-    if (!visibility.isItemVisible(selectedProductCategory || 0)) {
-      visibility.scrollToItem(visibility.getItemById(selectedProductCategory || 0));
-    }
-  }, [selectedProductCategory, visibility]);
+  // useEffect(() => {
+  //   if (!visibility.isItemVisible(selectedProductCategory || 0)) {
+  //     visibility.scrollToItem(visibility.getItemById(selectedProductCategory || 0));
+  //   }
+  // }, [selectedProductCategory, visibility]);
 
-  useEffect(() => {
-    if (!visibility.isItemVisible(selectedArtworkCategory || 0)) {
-      visibility.scrollToItem(visibility.getItemById(selectedArtworkCategory || 0));
-    }
-  }, [selectedArtworkCategory, visibility]);
+  // useEffect(() => {
+  //   if (!visibility.isItemVisible(selectedArtworkCategory || 0)) {
+  //     visibility.scrollToItem(visibility.getItemById(selectedArtworkCategory || 0));
+  //   }
+  // }, [selectedArtworkCategory, visibility]);
 
   return (
     <Tag
