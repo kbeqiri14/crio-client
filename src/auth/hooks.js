@@ -19,7 +19,6 @@ export const useCurrentUser = function () {
   }, [call]);
 
   useEffect(() => {
-    console.log('updateUser');
     updateUser().then(() => setLoading(false));
     // Hub.listen('auth', updateUser);
     // return () => {
