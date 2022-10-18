@@ -58,11 +58,8 @@ const Wrapper = styled(Modal)`
   }
 
   .video-view__player {
-    border-radius: 16px;
     overflow: hidden;
-    width: 100%;
     height: auto;
-    background-color: black;
   }
 `;
 
