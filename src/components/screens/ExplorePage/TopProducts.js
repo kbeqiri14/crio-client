@@ -4,37 +4,32 @@ import styled from 'styled-components';
 
 import { signIn } from '@app/auth';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
-import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { PRODUCTS } from '@configs/constants';
-import { getThumbnail } from '@utils/helpers';
 import history from '@configs/history';
+import { getThumbnail } from '@utils/helpers';
 import { Button, Col, Row, Text, Title } from '@ui-kit';
 import { ReactComponent as GoogleIcon } from '@svgs/google.svg';
+import { usePresentation } from '@shared/PresentationView/PresentationContext';
 
 const Wrapper = styled('div')`
-  padding-top: 85px;
-  padding-bottom: 50px;
-  @media (max-width: 767.98px) {
-    .title {
-      font-size: 35px !important;
-    }
-  }
-`;
-
-const ProductWrapper = styled('div')`
-  height: 284px;
-  width: 304px;
-  background: #202020;
-  border-radius: 14px;
-  cursor: pointer;
-  .img {
-    border-top-left-radius: 14px;
-    border-top-right-radius: 14px;
-    object-fit: cover;
+  padding: 85px 22px 50px;
+  .card {
     width: 304px;
-    height: 235px;
-    border-bottom: 1px solid transparent;
+    height: 284px;
+    background: #202020;
+    border-radius: 14px;
+    cursor: pointer;
+    img {
+      border-top-left-radius: 14px;
+      border-top-right-radius: 14px;
+      object-fit: cover;
+      width: 304px;
+      height: 235px;
+    }
+    span {
+      padding: 10px 16px;
+    }
   }
 `;
 
@@ -108,26 +103,16 @@ const TopProducts = ({
 
   return (
     <Wrapper>
-      <Row justify='space-around' gutter={[0, 60]}>
-        <Col
-          padding_top={25}
-          xxl={{ span: 10, offset: 2 }}
-          xl={{ span: 12, offset: 0 }}
-          lg={{ span: 18, offset: 2 }}
-          md={{ span: 20, offset: 2 }}
-          sm={{ span: 20, offset: 1 }}
-          xs={{ span: 20, offset: 0 }}
-        >
+      <Row justify='space-around' align='middle' gutter={[0, 60]}>
+        <Col max_width={733}>
           <Row gutter={[0, 20]}>
             <Col span={24}>
-              <Title level={3} className='title'>
-                Crio: The Creative Marketplace
-              </Title>
+              <Title level={3}>Crio: The Creative Marketplace</Title>
             </Col>
-            <Col span={24} padding_bottom={10}>
+            <Col span={24} padding_bottom={20} max_width={586}>
               <Text level={4}>
-                Shop thousands of products and see the best artwork from the <br /> entire community
-                of creators on Crio
+                Shop thousands of products and see the best artwork from the entire community of
+                creators on Crio
               </Text>
             </Col>
             <Col xs={user.id ? 24 : 0} lg={24}>
@@ -146,41 +131,36 @@ const TopProducts = ({
             )}
           </Row>
         </Col>
-
-        <Col xl={6} sm={10} md={8} lg={8} xs={19}>
-          <Row>
-            <ProductWrapper onClick={showProduct}>
-              <Col span={24}>
-                <img alt='artwork' height={304} width={284} className='img fit-cover' src={src} />
-              </Col>
-              <Col span={24} padding_top={12} padding_left={15} padding_right={15}>
-                <Text color='dark25' level={1} ellipsis={{ rows: 1, tooltip: title }}>
-                  {title}
-                </Text>
-              </Col>
-            </ProductWrapper>
-          </Row>
-          <Row padding_top={7}>
-            <Col xxl={2} lg={3} md={4} sm={4} xs={3}>
+        <Col>
+          <div className='card' onClick={showProduct}>
+            <img alt='product' src={src} />
+            <Text color='dark25' level={1} ellipsis={{ rows: 1, tooltip: title }}>
+              {title}
+            </Text>
+          </div>
+          <Row justify='space-between' align='middle' padding_top={8} style={{ width: 304 }}>
+            <Col>
               <Link to={`/profile/${username}`}>
-                <img
-                  src={avatarUrl}
-                  height='28'
-                  width='28'
-                  alt='Author avatar'
-                  className='border-radius-100'
-                />
+                <Row gutter={8}>
+                  <Col>
+                    <img
+                      src={avatarUrl}
+                      width={28}
+                      height={28}
+                      alt='avatar'
+                      className='border-radius-100'
+                    />
+                  </Col>
+                  <Col max_width={210}>
+                    <Text level={1} color='dark50' ellipsis={{ tooltip: username }}>
+                      {username}
+                    </Text>
+                  </Col>
+                </Row>
               </Link>
             </Col>
-            <Col xxl={9} lg={10} md={13} sm={13} xs={16} className='self-center'>
-              <Link to={`/profile/${username}`}>
-                <Text color='dark50' level={1}>
-                  {username}
-                </Text>{' '}
-              </Link>
-            </Col>
-            <Col xxl={2} offset={2} md={3} sm={4} className='self-center text-right'>
-              <Text color='white'>{price ? <>${price}</> : 'Free'}</Text>
+            <Col>
+              <Text color='white'>{price ? `$${price.toFixed(2)}` : 'Free'}</Text>
             </Col>
           </Row>
         </Col>

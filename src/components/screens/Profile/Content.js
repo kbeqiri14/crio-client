@@ -75,8 +75,8 @@ const ProfileContent = ({
         artworksCount={artworksCount}
         productsList={Products?.getUserProducts}
         artworksList={Artworks?.getUserArtworks}
-        loading={artworkLoading || productLoading}
-        initialPolling={initialPolling}
+        loadingProducts={initialPolling && productLoading}
+        loadingArtworks={initialPolling && artworkLoading}
       />
     );
   }

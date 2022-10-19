@@ -44,8 +44,8 @@ const StyledVideoDetails = styled('div')`
   .player {
     display: flex;
     justify-content: center;
-    padding: 24px 0 48px;
     margin: auto;
+    margin-bottom: 48px;
     max-width: 922px;
     min-height: 520px;
     video {
