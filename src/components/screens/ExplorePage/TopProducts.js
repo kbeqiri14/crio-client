@@ -13,7 +13,7 @@ import { ReactComponent as GoogleIcon } from '@svgs/google.svg';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 
 const Wrapper = styled('div')`
-  padding: 85px 40px 50px;
+  padding: 85px 22px 50px;
   .card {
     width: 304px;
     height: 284px;
