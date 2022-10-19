@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import axios from 'axios';
 import { Col, Row } from 'antd';
 import { useLazyQuery, useMutation } from '@apollo/client';
@@ -86,6 +86,11 @@ const CoverImage = ({ visible, artworkId, goToProfile }) => {
     },
   });
 
+  const onSave = useCallback(() => {
+    setLoading(true);
+    requestUploadUrl();
+  }, [requestUploadUrl]);
+
   return (
     <Modal
       centered
@@ -133,7 +138,7 @@ const CoverImage = ({ visible, artworkId, goToProfile }) => {
               loading={loading}
               disabled={!image.file}
               onCancel={goToProfile}
-              onSave={requestUploadUrl}
+              onSave={onSave}
             />
           </Col>
         </Row>
