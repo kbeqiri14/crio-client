@@ -102,7 +102,7 @@ export const Product = () => {
     <>
       {showBanner && (
         <Broadcast
-          message='Please check your email to receive the product/service. You can also register on Crio to download products directly!'
+          message='Please check your email (including spam folder) to receive the product/service. You can also register on Crio to download products directly!'
           hideBroadcast={hideBroadcast}
         />
       )}
