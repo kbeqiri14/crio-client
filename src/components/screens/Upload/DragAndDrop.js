@@ -102,14 +102,7 @@ const DragAndDrop = ({ content, file, types, dispatch, goToProfile }) => {
                   <Badge status='default' text='HI-RES images (png, jpg, gif)' />
                 </Col>
                 <Col span={24}>
-                  <Badge
-                    status='default'
-                    text={
-                      <>
-                        Videos (mp4, 4:3,<span className='less-than-sign'>{' <'}</span>60 secs)
-                      </>
-                    }
-                  />
+                  <Badge status='default' text='Videos (mp4, 4:3)' />
                 </Col>
               </div>
               {file?.name && (
