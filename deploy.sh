@@ -14,7 +14,7 @@ npm install --include=dev --legacy-peer-deps
 echo "----env vars -----"
 echo "----end env vars -----"
 
-npm run build --max-old-space-size=4096 --openssl-legacy-provider
+npm run build --openssl-legacy-provider --max-old-space-size=4096
 
 if [ -z ${BUCKET_NAME+x} ]
 then
