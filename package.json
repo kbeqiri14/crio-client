@@ -63,7 +63,7 @@
     "generate-config": "node generateCdkConfig.js",
     "deploy": "chmod +x ./deploy.sh && ./deploy.sh",
     "start": "crio-scripts start",
-    "build": "craco build --openssl-legacy-provider --max-old-space-size=4096",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider && craco build --max-old-space-size=4096",
     "test": "craco test --passWithNoTests",
     "lint": "eslint ./src --ext .js --max-warnings 0",
     "format": "prettier --write \"src/**/*.+(js|jsx|json|css|less|md)\"",
