@@ -30,10 +30,6 @@ const Dragger = styled(Upload.Dragger)`
       max-width: 330px;
       padding: 20px 10px;
     }
-    .less-than-sign {
-      position: relative;
-      top: -2px;
-    }
   }
 `;
 
