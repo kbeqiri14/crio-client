@@ -1,14 +1,16 @@
-import { memo, useCallback, useState, useMemo } from 'react';
+import { memo, useCallback, useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Spin } from 'antd';
 import styled from 'styled-components';
-import { useQuery, useMutation, useReactiveVar } from '@apollo/client';
+import { useLazyQuery, useMutation, useReactiveVar } from '@apollo/client';
 
 import { ARTWORKS } from '@configs/constants';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { getProductLikes } from '@app/graphql/queries/products.query';
+import { getArtworkLikes } from '@app/graphql/queries/artworks.query';
 import { likeProduct } from '@app/graphql/mutations/product.mutation';
+import { likeArtwork } from '@app/graphql/mutations/artwork.mutation';
 import { getThumbnail, urlify } from '@utils/helpers';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { Col, notification, Row, Text, Title } from '@ui-kit'; //notification
@@ -116,32 +118,69 @@ export const Content = ({ info, content, isLocked }) => {
   const [openTooltip, setOpenTooltip] = useState(user.id && !user.helpSeen);
   const avatarUrl = useAvatarUrl(info.providerType, info.providerUserId, info.avatar);
   const { setInfo } = usePresentation();
-  const { data, refetch } = useQuery(getProductLikes, {
+
+  const [requestProductLikes, { data: productLikes, refetch: refetchProductLikes }] = useLazyQuery(
+    getProductLikes,
+    {
+      variables: {
+        productId: info.productId,
+      },
+      onCompleted: () => setLoading(false),
+    },
+  );
+
+  const [requestArtworkLikes, { data: artworkLikes, refetch: refetchArtworkLikes }] = useLazyQuery(
+    getArtworkLikes,
+    {
+      variables: {
+        artworkId: info.artworkId,
+      },
+      onCompleted: () => setLoading(false),
+    },
+  );
+
+  useEffect(() => {
+    if (info.isProduct) {
+      requestProductLikes();
+    } else {
+      requestArtworkLikes();
+    }
+  }, [info.isProduct, requestArtworkLikes, requestProductLikes]);
+
+  const [likeProductMutation] = useMutation(likeProduct, {
     variables: {
       productId: info.productId,
     },
-    onCompleted: () => setLoading(false),
+    onCompleted: refetchProductLikes,
   });
-  const [like] = useMutation(likeProduct, {
+
+  const [likeArtworkMutation] = useMutation(likeArtwork, {
     variables: {
-      productId: info.productId,
+      artworkId: info.artworkId,
     },
-    onCompleted: refetch,
+    onCompleted: refetchArtworkLikes,
   });
-  const likeUnlike = useCallback(() => {
+
+  const likeOrUnlike = useCallback(() => {
     if (user.id) {
       setLoading(true);
-      like();
+      if (info.isProduct) {
+        likeProductMutation();
+      } else {
+        likeArtworkMutation();
+      }
     } else {
       notification.warningToast('Warning', 'Please sign in to get started.');
     }
-  }, [user.id, like]);
+  }, [user.id, info.isProduct, likeProductMutation, likeArtworkMutation]);
 
-  const productLikes = useMemo(
-    () => data?.getProductLikes.map(({ userId }) => userId),
-    [data?.getProductLikes],
+  const likes = useMemo(
+    () =>
+      (info.isProduct ? productLikes?.getProductLikes : artworkLikes?.getArtworkLikes)?.map(
+        ({ userId }) => userId,
+      ),
+    [info.isProduct, productLikes?.getProductLikes, artworkLikes?.getArtworkLikes],
   );
-  console.log(productLikes, user.id, 11111);
 
   const source = useMemo(
     () =>
@@ -225,13 +264,13 @@ export const Content = ({ info, content, isLocked }) => {
                   notification.infoToast('Copied');
                 }}
               /> */}
-              <div className='like' onClick={likeUnlike}>
+              <div className='like' onClick={likeOrUnlike}>
                 <Spin spinning={loading} />
-                {productLikes?.includes(+user.id) ? <LikedIcon /> : <LikeIcon />}
-                {!loading && productLikes?.includes(+user.id) && (
+                {likes?.includes(+user.id) ? <LikedIcon /> : <LikeIcon />}
+                {!loading && likes?.includes(+user.id) && (
                   <div>
                     <Text level={5} color='like'>
-                      {data?.getProductLikes?.length}
+                      {likes?.length}
                     </Text>
                   </div>
                 )}
