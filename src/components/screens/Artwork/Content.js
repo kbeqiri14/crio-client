@@ -1,20 +1,23 @@
 import { memo, useCallback, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { Spin } from 'antd';
 import styled from 'styled-components';
-import { useReactiveVar } from '@apollo/client';
+import { useQuery, useMutation, useReactiveVar } from '@apollo/client';
 
 import { ARTWORKS } from '@configs/constants';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
+import { getProductLikes } from '@app/graphql/queries/products.query';
+import { likeProduct } from '@app/graphql/mutations/product.mutation';
 import { getThumbnail, urlify } from '@utils/helpers';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
-import { Col, Row, Text, Title } from '@ui-kit'; //notification
+import { Col, notification, Row, Text, Title } from '@ui-kit'; //notification
 import LockState from '@shared/CreatorContent/LockState';
 import BuyWidget from '../Product/BuyWidget';
 import { loggedInUserLoadingVar } from '@configs/client-cache';
 // import { ReactComponent as ShareIcon } from '@svgs/share.svg';
-// import { ReactComponent as LikeIcon } from '@svgs/like.svg';
-// import { ReactComponent as LikedIcon } from '@svgs/liked.svg';
+import { ReactComponent as LikeIcon } from '@svgs/like.svg';
+import { ReactComponent as LikedIcon } from '@svgs/liked.svg';
 
 const Wrapper = styled('div')`
   display: flex;
@@ -39,25 +42,34 @@ const Wrapper = styled('div')`
     }
   }
   .like {
-    position: absolute;
-    top: 75px;
-    right: -85px;
-    cursor: pointer;
-  }
-  .share {
+    width: 54px;
+    height: 54px;
     position: absolute;
     top: 0;
     right: -85px;
     cursor: pointer;
+    text-align: center;
+    div:not(.ant-spin) {
+      position: absolute;
+      top: 25px;
+      width: 100%;
+    }
+    .ant-spin {
+      position: absolute;
+      top: 17px;
+      width: 100%;
+      .ant-spin-dot-spin {
+        .ant-spin-dot-item {
+          background-color: #ec455a;
+        }
+      }
+    }
   }
   @media (max-width: 1200px) {
     .like {
       top: -74px;
-      left: 0;
-    }
-    .share {
-      top: -74px;
       left: 75px;
+      text-align: center;
     }
     .bottom-push {
       margin-bottom: 50px;
@@ -100,10 +112,36 @@ const ImageWrapper = styled('div')`
 export const Content = ({ info, content, isLocked }) => {
   const { user } = useLoggedInUser();
   const loggedInUserLoading = useReactiveVar(loggedInUserLoadingVar);
+  const [loading, setLoading] = useState(false);
   const [openTooltip, setOpenTooltip] = useState(user.id && !user.helpSeen);
-  // const [isLiked, setIsLiked] = useState(false);
   const avatarUrl = useAvatarUrl(info.providerType, info.providerUserId, info.avatar);
   const { setInfo } = usePresentation();
+  const { data, refetch } = useQuery(getProductLikes, {
+    variables: {
+      productId: info.productId,
+    },
+    onCompleted: () => setLoading(false),
+  });
+  const [like] = useMutation(likeProduct, {
+    variables: {
+      productId: info.productId,
+    },
+    onCompleted: refetch,
+  });
+  const likeUnlike = useCallback(() => {
+    if (user.id) {
+      setLoading(true);
+      like();
+    } else {
+      notification.warningToast('Warning', 'Please sign in to get started.');
+    }
+  }, [user.id, like]);
+
+  const productLikes = useMemo(
+    () => data?.getProductLikes.map(({ userId }) => userId),
+    [data?.getProductLikes],
+  );
+  console.log(productLikes, user.id, 11111);
 
   const source = useMemo(
     () =>
@@ -186,9 +224,18 @@ export const Content = ({ info, content, isLocked }) => {
                   navigator.clipboard.writeText(window.location.href);
                   notification.infoToast('Copied');
                 }}
-              />
-              <LikeIcon className='like' onClick={() => setIsLiked(!isLiked)} />
-              {isLiked && <LikedIcon className='like' />} */}
+              /> */}
+              <div className='like' onClick={likeUnlike}>
+                <Spin spinning={loading} />
+                {productLikes?.includes(+user.id) ? <LikedIcon /> : <LikeIcon />}
+                {!loading && productLikes?.includes(+user.id) && (
+                  <div>
+                    <Text level={5} color='like'>
+                      {data?.getProductLikes?.length}
+                    </Text>
+                  </div>
+                )}
+              </div>
             </Col>
           )}
           <Col span={24}>

@@ -17,3 +17,9 @@ export const deleteProduct = gql`
     deleteProduct(productId: $productId)
   }
 `;
+
+export const likeProduct = gql`
+  mutation likeProduct($productId: ID!) {
+    likeProduct(productId: $productId)
+  }
+`;

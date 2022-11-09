@@ -31,6 +31,7 @@ const colors = {
   secondary: '#CF04A3',
   tertiary: '#A304CB',
   white: '#FFFFFF',
+  like: '#EC455A',
   ...dark,
   ...success,
   ...error,
