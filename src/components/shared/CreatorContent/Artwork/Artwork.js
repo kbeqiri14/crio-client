@@ -139,6 +139,7 @@ const Artwork = ({
         </div>
       </Wrapper>
       <Author
+        artworkId={artworkId}
         providerType={providerType}
         providerUserId={providerUserId}
         avatar={avatar}

@@ -204,6 +204,8 @@ const Product = ({
         </Row>
       </ProductWrapper>
       <Author
+        isProduct
+        productId={productId}
         providerType={providerType}
         providerUserId={providerUserId}
         avatar={avatar}

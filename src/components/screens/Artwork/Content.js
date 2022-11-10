@@ -114,66 +114,69 @@ const ImageWrapper = styled('div')`
 export const Content = ({ info, content, isLocked }) => {
   const { user } = useLoggedInUser();
   const loggedInUserLoading = useReactiveVar(loggedInUserLoadingVar);
-  const [loading, setLoading] = useState(false);
+  const [liked, setLiked] = useState(false);
   const [openTooltip, setOpenTooltip] = useState(user.id && !user.helpSeen);
   const avatarUrl = useAvatarUrl(info.providerType, info.providerUserId, info.avatar);
   const { setInfo } = usePresentation();
 
-  const [requestProductLikes, { data: productLikes, refetch: refetchProductLikes }] = useLazyQuery(
+  const [requestProductLikes, { loading: loadingProductLikes, data: productLikes }] = useLazyQuery(
     getProductLikes,
     {
       variables: {
         productId: info.productId,
       },
-      onCompleted: () => setLoading(false),
+      onCompleted: ({ getProductLikes }) =>
+        setLiked(getProductLikes.some(({ userId }) => userId === +user.id)),
     },
   );
 
-  const [requestArtworkLikes, { data: artworkLikes, refetch: refetchArtworkLikes }] = useLazyQuery(
+  const [requestArtworkLikes, { loading: loadingArtworkLikes, data: artworkLikes }] = useLazyQuery(
     getArtworkLikes,
     {
       variables: {
         artworkId: info.artworkId,
       },
-      onCompleted: () => setLoading(false),
+      onCompleted: ({ getArtworkLikes }) =>
+        setLiked(getArtworkLikes.some(({ userId }) => userId === +user.id)),
     },
   );
 
   useEffect(() => {
-    if (info.isProduct) {
-      requestProductLikes();
-    } else {
-      requestArtworkLikes();
-    }
+    info.isProduct ? requestProductLikes() : requestArtworkLikes();
   }, [info.isProduct, requestArtworkLikes, requestProductLikes]);
 
-  const [likeProductMutation] = useMutation(likeProduct, {
-    variables: {
-      productId: info.productId,
+  const [likeProductMutation, { loading: likingProduct, data: productLikesCount }] = useMutation(
+    likeProduct,
+    {
+      variables: {
+        productId: info.productId,
+      },
+      onCompleted: () => setLiked(!liked),
     },
-    onCompleted: refetchProductLikes,
-  });
+  );
 
-  const [likeArtworkMutation] = useMutation(likeArtwork, {
-    variables: {
-      artworkId: info.artworkId,
+  const [likeArtworkMutation, { loading: likingArtwork, data: artworkLikesCount }] = useMutation(
+    likeArtwork,
+    {
+      variables: {
+        artworkId: info.artworkId,
+      },
+      onCompleted: () => setLiked(!liked),
     },
-    onCompleted: refetchArtworkLikes,
-  });
+  );
 
   const likeOrUnlike = useCallback(() => {
     if (user.id) {
-      setLoading(true);
-      if (info.isProduct) {
-        likeProductMutation();
-      } else {
-        likeArtworkMutation();
-      }
+      info.isProduct ? likeProductMutation() : likeArtworkMutation();
     } else {
       notification.warningToast('Warning', 'Please sign in to get started.');
     }
   }, [user.id, info.isProduct, likeProductMutation, likeArtworkMutation]);
 
+  const spinning = useMemo(
+    () => likingProduct || likingArtwork || loadingProductLikes || loadingArtworkLikes,
+    [likingProduct, likingArtwork, loadingProductLikes, loadingArtworkLikes],
+  );
   const likes = useMemo(
     () =>
       (info.isProduct ? productLikes?.getProductLikes : artworkLikes?.getArtworkLikes)?.map(
@@ -181,11 +184,7 @@ export const Content = ({ info, content, isLocked }) => {
       ),
     [info.isProduct, productLikes?.getProductLikes, artworkLikes?.getArtworkLikes],
   );
-
-  const showLikes = useMemo(
-    () => info.userId === user.id || likes?.includes(+user.id),
-    [user.id, info.userId, likes],
-  );
+  const showLikes = useMemo(() => info.userId === user.id || liked, [user.id, info.userId, liked]);
 
   const source = useMemo(
     () =>
@@ -270,12 +269,14 @@ export const Content = ({ info, content, isLocked }) => {
                 }}
               /> */}
               <div className='like' onClick={likeOrUnlike}>
-                <Spin spinning={loading} />
+                <Spin spinning={spinning} />
                 {showLikes ? <LikedIcon /> : <LikeIcon />}
-                {!loading && showLikes && (
+                {showLikes && (
                   <div>
                     <Text level={5} color='like'>
-                      {likes?.length}
+                      {(info.isProduct
+                        ? productLikesCount?.likeProduct
+                        : artworkLikesCount?.likeArtwork) || likes?.length}
                     </Text>
                   </div>
                 )}
