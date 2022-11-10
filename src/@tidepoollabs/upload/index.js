@@ -11,7 +11,6 @@ export const s3SignMutation = gql`
 `;
 
 export const uploadToS3 = async (file, signedRequest) => {
-  console.log('Narine');
   const options = {
     headers: {
       'Content-Type': file.type,

@@ -173,7 +173,7 @@ export const Content = ({ info, content, isLocked }) => {
     }
   }, [user.id, info.isProduct, likeProductMutation, likeArtworkMutation]);
 
-  const spinning = useMemo(
+  const loading = useMemo(
     () => likingProduct || likingArtwork || loadingProductLikes || loadingArtworkLikes,
     [likingProduct, likingArtwork, loadingProductLikes, loadingArtworkLikes],
   );
@@ -269,9 +269,9 @@ export const Content = ({ info, content, isLocked }) => {
                 }}
               /> */}
               <div className='like' onClick={likeOrUnlike}>
-                <Spin spinning={spinning} />
+                <Spin spinning={loading} />
                 {showLikes ? <LikedIcon /> : <LikeIcon />}
-                {showLikes && (
+                {!loading && showLikes && (
                   <div>
                     <Text level={5} color='like'>
                       {(info.isProduct

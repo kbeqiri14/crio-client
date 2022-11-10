@@ -38,7 +38,6 @@ const Author = ({
   const [like, { loading, data }] = useMutation(isProduct ? likeProduct : likeArtwork, {
     variables: isProduct ? { productId } : { artworkId },
   });
-  console.log(data);
 
   return (
     <Wrapper>
