@@ -182,6 +182,11 @@ export const Content = ({ info, content, isLocked }) => {
     [info.isProduct, productLikes?.getProductLikes, artworkLikes?.getArtworkLikes],
   );
 
+  const showLikes = useMemo(
+    () => info.userId === user.id || likes?.includes(+user.id),
+    [user.id, info.userId, likes],
+  );
+
   const source = useMemo(
     () =>
       info.isProduct || info.content?.startsWith('/videos/')
@@ -266,8 +271,8 @@ export const Content = ({ info, content, isLocked }) => {
               /> */}
               <div className='like' onClick={likeOrUnlike}>
                 <Spin spinning={loading} />
-                {likes?.includes(+user.id) ? <LikedIcon /> : <LikeIcon />}
-                {!loading && likes?.includes(+user.id) && (
+                {showLikes ? <LikedIcon /> : <LikeIcon />}
+                {!loading && showLikes && (
                   <div>
                     <Text level={5} color='like'>
                       {likes?.length}
