@@ -1,18 +1,18 @@
 import { memo, useCallback, useState, useMemo } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import history from '@configs/history';
 import { ARTWORKS } from '@configs/constants';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
-import useAvatarUrl from '@app/hooks/useAvatarUrl';
+import useCategories from '@app/hooks/useCategories';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import Actions from '@screens/Video/Actions';
 import { getThumbnail } from '@utils/helpers';
 import { Col, Row, Tag, Text } from '@ui-kit';
 import { ReactComponent as VideoIcon } from '@svgs/video.svg';
+import Author from '../Author';
 import LockState from '../LockState';
 import { Wrapper } from './styled';
-import useCategories from '@app/hooks/useCategories';
 
 const Artwork = ({
   providerType,
@@ -28,13 +28,13 @@ const Artwork = ({
   thumbnail,
   accessibility,
   status,
+  likes,
 }) => {
   const [isHovering, setIsHovering] = useState(false);
   const { user } = useLoggedInUser();
   const { categories } = useCategories();
   const { pathname } = useLocation();
   const { setInfo } = usePresentation();
-  const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
 
   const handleMouseOver = useCallback(() => setIsHovering(true), []);
   const handleMouseOut = useCallback(() => setIsHovering(false), []);
@@ -138,24 +138,13 @@ const Artwork = ({
           </Row>
         </div>
       </Wrapper>
-      <Link to={`/profile/${username}`}>
-        <Row gutter={12} align='middle' padding_top={8}>
-          <Col>
-            <img
-              src={avatarUrl}
-              width={30}
-              height={30}
-              alt='avatar'
-              className='border-radius-100'
-            />
-          </Col>
-          <Col max_width={309}>
-            <Text level={3} ellipsis={{ tooltip: username }}>
-              {username}
-            </Text>
-          </Col>
-        </Row>
-      </Link>
+      <Author
+        providerType={providerType}
+        providerUserId={providerUserId}
+        avatar={avatar}
+        username={username}
+        likes={likes}
+      />
     </>
   );
 };

@@ -62,6 +62,7 @@ export const productFragment = gql`
     accessibility
     thumbnail
     file
+    likes
   }
 `;
 
@@ -80,5 +81,6 @@ export const artworkFragment = gql`
     accessibility
     categoryId
     status
+    likes
   }
 `;
