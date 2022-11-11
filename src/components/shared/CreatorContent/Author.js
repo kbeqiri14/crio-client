@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Spin } from 'antd';
 import styled from 'styled-components';
@@ -8,12 +8,10 @@ import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { likeProduct } from '@app/graphql/mutations/product.mutation';
 import { likeArtwork } from '@app/graphql/mutations/artwork.mutation';
 import { Col, Row, Text } from '@ui-kit';
-import { ReactComponent as LikeIcon } from '@svgs/like-gray.svg';
+import { ReactComponent as LikeIcon } from '@svgs/like-small.svg';
+import { ReactComponent as LikedIcon } from '@svgs/liked-small.svg';
 
 const Wrapper = styled('div')`
-  .count {
-    min-width: 25px;
-  }
   .ant-spin {
     .ant-spin-dot-spin {
       .ant-spin-dot-item {
@@ -31,6 +29,7 @@ const Author = ({
   providerUserId,
   avatar,
   username,
+  liked,
   likes = 0,
   hide = () => {},
 }) => {
@@ -38,6 +37,14 @@ const Author = ({
   const [like, { loading, data }] = useMutation(isProduct ? likeProduct : likeArtwork, {
     variables: isProduct ? { productId } : { artworkId },
   });
+  const likesCount = useMemo(
+    () => data?.[isProduct ? 'likeProduct' : 'likeArtwork'] || likes,
+    [isProduct, data, likes],
+  );
+  const isLiked = useMemo(() => {
+    const count = data?.[isProduct ? 'likeProduct' : 'likeArtwork'];
+    return count ? count > likes || (liked && likes === +count) : liked;
+  }, [isProduct, data, likes, liked]);
 
   return (
     <Wrapper>
@@ -63,18 +70,16 @@ const Author = ({
           </Link>
         </Col>
         <Col>
-          <Row gutter={5}>
-            <Col>
-              <LikeIcon onClick={like} />
-            </Col>
-            <Col className='count'>
-              {loading ? (
-                <Spin spinning={true} />
-              ) : (
-                <Text level={3}>{data?.[isProduct ? 'likeProduct' : 'likeArtwork'] || likes}</Text>
-              )}
-            </Col>
-          </Row>
+          {loading ? (
+            <Spin spinning={true} />
+          ) : (
+            <Row gutter={5}>
+              <Col>{isLiked ? <LikedIcon onClick={like} /> : <LikeIcon onClick={like} />}</Col>
+              <Col>
+                <Text level={3}>{likesCount}</Text>
+              </Col>
+            </Row>
+          )}
         </Col>
       </Row>
     </Wrapper>

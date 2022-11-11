@@ -40,6 +40,7 @@ export const ArtworksList = ({ artworksList = [], loading }) => {
             accessibility={item?.accessibility}
             content={item?.content}
             thumbnail={item?.thumbnail}
+            liked={item?.liked}
             likes={item?.likes}
           />
         </Col>

@@ -23,6 +23,7 @@ const Item = memo(({ item, large }) => (
     accessibility={item?.accessibility}
     thumbnail={item?.thumbnail}
     file={item?.file}
+    liked={item?.liked}
     likes={item?.likes}
     large={large}
   />
