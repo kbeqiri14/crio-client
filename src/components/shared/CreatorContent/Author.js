@@ -43,7 +43,7 @@ const Author = ({
     return count !== undefined ? count : likes;
   }, [isProduct, data, likes]);
   const liked = useMemo(() => {
-    const isLiked = user[isProduct ? 'productLikes' : 'artworkLikes'].includes(
+    const isLiked = user[isProduct ? 'productLikes' : 'artworkLikes']?.includes(
       `${isProduct ? productId : artworkId}`,
     );
     const count = data?.[isProduct ? 'likeProduct' : 'likeArtwork'];
