@@ -37,13 +37,13 @@ const Author = ({
   const [like, { loading, data }] = useMutation(isProduct ? likeProduct : likeArtwork, {
     variables: isProduct ? { productId } : { artworkId },
   });
-  const likesCount = useMemo(
-    () => data?.[isProduct ? 'likeProduct' : 'likeArtwork'] || likes,
-    [isProduct, data, likes],
-  );
+  const likesCount = useMemo(() => {
+    const count = data?.[isProduct ? 'likeProduct' : 'likeArtwork'];
+    return count !== undefined ? count : likes;
+  }, [isProduct, data, likes]);
   const isLiked = useMemo(() => {
     const count = data?.[isProduct ? 'likeProduct' : 'likeArtwork'];
-    return count ? count > likes || (liked && likes === +count) : liked;
+    return count !== undefined ? count > likes || (liked && likes === +count) : liked;
   }, [isProduct, data, likes, liked]);
 
   return (
