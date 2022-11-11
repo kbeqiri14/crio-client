@@ -73,7 +73,7 @@ const Author = ({
           {loading ? (
             <Spin spinning={true} />
           ) : (
-            <Row gutter={5}>
+            <Row gutter={5} className='pointer'>
               <Col>{isLiked ? <LikedIcon onClick={like} /> : <LikeIcon onClick={like} />}</Col>
               <Col>
                 <Text level={3}>{likesCount}</Text>
