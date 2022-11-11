@@ -268,19 +268,21 @@ export const Content = ({ info, content, isLocked }) => {
                   notification.infoToast('Copied');
                 }}
               /> */}
-              <div className='like' onClick={likeOrUnlike}>
-                <Spin spinning={loading} />
-                {showLikes ? <LikedIcon /> : <LikeIcon />}
-                {!loading && showLikes && (
-                  <div>
-                    <Text level={5} color='like'>
-                      {(info.isProduct
-                        ? productLikesCount?.likeProduct
-                        : artworkLikesCount?.likeArtwork) || likes?.length}
-                    </Text>
-                  </div>
-                )}
-              </div>
+              {!loadingProductLikes && !loadingArtworkLikes && (
+                <div className='like' onClick={likeOrUnlike}>
+                  <Spin spinning={loading} />
+                  {showLikes ? <LikedIcon /> : <LikeIcon />}
+                  {!loading && showLikes && (
+                    <div>
+                      <Text level={5} color='like'>
+                        {(info.isProduct
+                          ? productLikesCount?.likeProduct
+                          : artworkLikesCount?.likeArtwork) || likes?.length}
+                      </Text>
+                    </div>
+                  )}
+                </div>
+              )}
             </Col>
           )}
           <Col span={24}>
