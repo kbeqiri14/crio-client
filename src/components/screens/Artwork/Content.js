@@ -184,6 +184,15 @@ export const Content = ({ info, content, isLocked }) => {
       ),
     [info.isProduct, productLikes?.getProductLikes, artworkLikes?.getArtworkLikes],
   );
+  const likesCount = useMemo(() => {
+    const count = info.isProduct ? productLikesCount?.likeProduct : artworkLikesCount?.likeArtwork;
+    return count !== undefined ? count : likes?.length;
+  }, [
+    info.isProduct,
+    productLikesCount?.likeProduct,
+    artworkLikesCount?.likeArtwork,
+    likes?.length,
+  ]);
   const showLikes = useMemo(() => info.userId === user.id || liked, [user.id, info.userId, liked]);
 
   const source = useMemo(
@@ -275,9 +284,7 @@ export const Content = ({ info, content, isLocked }) => {
                   {!loading && showLikes && (
                     <div>
                       <Text level={5} color='like'>
-                        {(info.isProduct
-                          ? productLikesCount?.likeProduct
-                          : artworkLikesCount?.likeArtwork) || likes?.length}
+                        {likesCount}
                       </Text>
                     </div>
                   )}

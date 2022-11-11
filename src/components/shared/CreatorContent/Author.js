@@ -82,6 +82,9 @@ const Author = ({
               <Col>
                 <Text level={3}>{likesCount}</Text>
               </Col>
+              <Col>
+                <Text level={3}>{user.productLikes?.length}</Text>
+              </Col>
             </Row>
           )}
         </Col>
