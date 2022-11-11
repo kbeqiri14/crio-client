@@ -1,17 +1,26 @@
 import { memo, useCallback, useMemo, useState } from 'react';
-import { Badge, Skeleton } from 'antd';
+import { Badge as BadgeAnt, Skeleton } from 'antd';
+import { useReactiveVar } from '@apollo/client';
 
+import { loggedInUserLoadingVar } from '@configs/client-cache';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { urlify } from '@utils/helpers';
-import { Col, Divider, Row, Text, Title } from '@ui-kit';
+import { Badge, Col, Divider, Row, Text, Title } from '@ui-kit';
 import { ReactComponent as CreatorIcon } from '@svgs/verified.svg';
 import { ReactComponent as MailIcon } from '@svgs/mail.svg';
 import { ReactComponent as EditIcon } from '@svgs/edit.svg';
 import ActionButton from '@screens/Profile/ActionButton';
 import EditProfile from '@screens/Profile/EditProfile';
 
-export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton }) => {
+export const ProfileSider = ({
+  user = {},
+  loggedInUserId,
+  isProfile,
+  isSubscribed,
+  hideButton,
+}) => {
   const [visible, setVisible] = useState(false);
+  const loggedInUserLoading = useReactiveVar(loggedInUserLoadingVar);
   const { providerType, providerUserId, firstName, lastName, username, email, avatar } = user || {};
   const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
   const name = useMemo(() => `${firstName || ''} ${lastName || ''}`, [firstName, lastName]);
@@ -42,7 +51,7 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
       >
         <Col span={24} align='center'>
           {user.isCreator ? (
-            <Badge count={<CreatorIcon />} offset={[-12, 105]}>
+            <BadgeAnt count={<CreatorIcon />} offset={[-12, 105]}>
               <img
                 alt='profile'
                 width={122}
@@ -50,7 +59,7 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
                 src={avatarUrl}
                 className='border-radius-100'
               />
-            </Badge>
+            </BadgeAnt>
           ) : (
             <img
               alt='profile'
@@ -83,6 +92,23 @@ export const ProfileSider = ({ user = {}, isProfile, isSubscribed, hideButton })
         {!isProfile && (
           <Col span={3} offset={1} onClick={editProfile}>
             <EditIcon className='pointer' />
+          </Col>
+        )}
+        {!loggedInUserLoading && !loggedInUserId && (
+          <Col span={24} style={{ backgroundColor: '#2B2B2B', borderRadius: 4, padding: 8 }}>
+            <Text level={1}>Subscribe to Crio for $7/month</Text>
+            <Badge
+              status='default'
+              color='white'
+              level={6}
+              text='Support as many creators as you want including [Ann Bee]'
+            />
+            <Badge
+              status='default'
+              color='white'
+              level={6}
+              text='Unlock free products & exclusive content from all creators you support'
+            />
           </Col>
         )}
         {!hideButton && (

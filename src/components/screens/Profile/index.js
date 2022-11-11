@@ -51,6 +51,7 @@ export const Profile = () => {
           <ProfileSider
             user={user}
             isProfile={isProfile}
+            loggedInUserId={loggedInUser.id}
             isSubscribed={loggedInUser.isSubscribed}
             hideButton={hideButton}
           />
