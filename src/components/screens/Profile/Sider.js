@@ -101,8 +101,9 @@ export const ProfileSider = ({
               status='default'
               color='white'
               level={6}
-              text='Support as many creators as you want including [Ann Bee]'
+              text={`Support as many creators as you want including ${username}`}
             />
+            <br />
             <Badge
               status='default'
               color='white'
