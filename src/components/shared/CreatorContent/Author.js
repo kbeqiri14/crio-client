@@ -4,6 +4,7 @@ import { Spin } from 'antd';
 import styled from 'styled-components';
 import { useMutation } from '@apollo/client';
 
+import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { likeProduct } from '@app/graphql/mutations/product.mutation';
 import { likeArtwork } from '@app/graphql/mutations/artwork.mutation';
@@ -29,10 +30,10 @@ const Author = ({
   providerUserId,
   avatar,
   username,
-  liked,
   likes = 0,
   hide = () => {},
 }) => {
+  const { user } = useLoggedInUser();
   const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
   const [like, { loading, data }] = useMutation(isProduct ? likeProduct : likeArtwork, {
     variables: isProduct ? { productId } : { artworkId },
@@ -41,10 +42,13 @@ const Author = ({
     const count = data?.[isProduct ? 'likeProduct' : 'likeArtwork'];
     return count !== undefined ? count : likes;
   }, [isProduct, data, likes]);
-  const isLiked = useMemo(() => {
+  const liked = useMemo(() => {
+    const isLiked = user[isProduct ? 'productLikes' : 'artworkLikes'].includes(
+      `${isProduct ? productId : artworkId}`,
+    );
     const count = data?.[isProduct ? 'likeProduct' : 'likeArtwork'];
-    return count !== undefined ? count > likes || (liked && likes === +count) : liked;
-  }, [isProduct, data, likes, liked]);
+    return count !== undefined ? count > likes || (isLiked && likes === +count) : isLiked;
+  }, [isProduct, productId, artworkId, user, data, likes]);
 
   return (
     <Wrapper>
@@ -74,7 +78,7 @@ const Author = ({
             <Spin spinning={true} />
           ) : (
             <Row gutter={5} className='pointer'>
-              <Col>{isLiked ? <LikedIcon onClick={like} /> : <LikeIcon onClick={like} />}</Col>
+              <Col>{liked ? <LikedIcon onClick={like} /> : <LikeIcon onClick={like} />}</Col>
               <Col>
                 <Text level={3}>{likesCount}</Text>
               </Col>

@@ -28,7 +28,6 @@ const Artwork = ({
   thumbnail,
   accessibility,
   status,
-  liked,
   likes,
 }) => {
   const [isHovering, setIsHovering] = useState(false);
@@ -145,7 +144,6 @@ const Artwork = ({
         providerUserId={providerUserId}
         avatar={avatar}
         username={username}
-        liked={liked}
         likes={likes}
       />
     </>

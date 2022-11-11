@@ -29,7 +29,6 @@ const Product = ({
   accessibility,
   thumbnail,
   file,
-  liked,
   likes,
   large = false,
 }) => {
@@ -211,7 +210,6 @@ const Product = ({
         providerUserId={providerUserId}
         avatar={avatar}
         username={username}
-        liked={liked}
         likes={likes}
         hide={hide}
       />

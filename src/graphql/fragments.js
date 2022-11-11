@@ -31,6 +31,8 @@ export const meFragment = gql`
     featuresSeen
     helpSeen
     revenue
+    productLikes
+    artworkLikes
   }
 `;
 
@@ -63,7 +65,6 @@ export const productFragment = gql`
     thumbnail
     file
     likes
-    liked
   }
 `;
 
@@ -83,6 +84,5 @@ export const artworkFragment = gql`
     categoryId
     status
     likes
-    liked
   }
 `;
