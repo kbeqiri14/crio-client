@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Spin } from 'antd';
 import styled from 'styled-components';
@@ -8,7 +8,7 @@ import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { likeProduct } from '@app/graphql/mutations/product.mutation';
 import { likeArtwork } from '@app/graphql/mutations/artwork.mutation';
-import { Col, Row, Text } from '@ui-kit';
+import { Col, notification, Row, Text } from '@ui-kit';
 import { ReactComponent as LikeIcon } from '@svgs/like-small.svg';
 import { ReactComponent as LikedIcon } from '@svgs/liked-small.svg';
 
@@ -38,6 +38,13 @@ const Author = ({
   const [like, { loading, data }] = useMutation(isProduct ? likeProduct : likeArtwork, {
     variables: isProduct ? { productId } : { artworkId },
   });
+  const likeOrUnlike = useCallback(() => {
+    if (user.id) {
+      like();
+    } else {
+      notification.warningToast('Warning', 'Please sign in to get started.');
+    }
+  }, [user.id, like]);
   const likesCount = useMemo(() => {
     const count = data?.[isProduct ? 'likeProduct' : 'likeArtwork'];
     return count !== undefined ? count : likes;
@@ -78,7 +85,9 @@ const Author = ({
             <Spin spinning={true} />
           ) : (
             <Row gutter={5} className='pointer'>
-              <Col>{liked ? <LikedIcon onClick={like} /> : <LikeIcon onClick={like} />}</Col>
+              <Col>
+                {liked ? <LikedIcon onClick={likeOrUnlike} /> : <LikeIcon onClick={likeOrUnlike} />}
+              </Col>
               <Col>
                 <Text level={3}>{likesCount}</Text>
               </Col>
