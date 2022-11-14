@@ -122,6 +122,7 @@ export const Content = ({ info, content, isLocked }) => {
   const [requestProductLikes, { loading: loadingProductLikes, data: productLikes }] = useLazyQuery(
     getProductLikes,
     {
+      fetchPolicy: 'no-cache',
       variables: {
         productId: info.productId,
       },
@@ -133,6 +134,7 @@ export const Content = ({ info, content, isLocked }) => {
   const [requestArtworkLikes, { loading: loadingArtworkLikes, data: artworkLikes }] = useLazyQuery(
     getArtworkLikes,
     {
+      fetchPolicy: 'no-cache',
       variables: {
         artworkId: info.artworkId,
       },
@@ -164,7 +166,6 @@ export const Content = ({ info, content, isLocked }) => {
       onCompleted: () => setLiked(!liked),
     },
   );
-
   const likeOrUnlike = useCallback(() => {
     if (user.id) {
       info.isProduct ? likeProductMutation() : likeArtworkMutation();
