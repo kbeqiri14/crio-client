@@ -93,16 +93,16 @@ const DragAndDrop = ({ content, file, types, dispatch, goToProfile }) => {
               </Col>
               <div className='textContainer'>
                 <Col span={24}>
+                  <Badge status='default' text='Upload artworks and photos (png, jpg, gif)' />
+                </Col>
+                <Col span={24}>
+                  <Badge status='default' text='Upload short and long form video (mp4)' />
+                </Col>
+                <Col span={24}>
                   <Badge
                     status='default'
-                    text='1600x1200 or higher recommended. Max 10MB each (20MB for videos)'
+                    text='Make content publicly accessible or exclusive to subscribers'
                   />
-                </Col>
-                <Col span={24}>
-                  <Badge status='default' text='HI-RES images (png, jpg, gif)' />
-                </Col>
-                <Col span={24}>
-                  <Badge status='default' text='Videos (mp4, 4:3)' />
                 </Col>
               </div>
               {file?.name && (

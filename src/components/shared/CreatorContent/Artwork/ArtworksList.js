@@ -39,7 +39,8 @@ export const ArtworksList = ({ artworksList = [], loading }) => {
             status={item?.status}
             accessibility={item?.accessibility}
             content={item?.content}
-            thumbnail={item.thumbnail}
+            thumbnail={item?.thumbnail}
+            likes={item?.likes}
           />
         </Col>
       ))}

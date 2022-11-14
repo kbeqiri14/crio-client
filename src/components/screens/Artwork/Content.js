@@ -1,20 +1,25 @@
-import { memo, useCallback, useState, useMemo } from 'react';
+import { memo, useCallback, useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Spin } from 'antd';
 import styled from 'styled-components';
-import { useReactiveVar } from '@apollo/client';
+import { useLazyQuery, useMutation, useReactiveVar } from '@apollo/client';
 
 import { ARTWORKS } from '@configs/constants';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
+import { getProductLikes } from '@app/graphql/queries/products.query';
+import { getArtworkLikes } from '@app/graphql/queries/artworks.query';
+import { likeProduct } from '@app/graphql/mutations/product.mutation';
+import { likeArtwork } from '@app/graphql/mutations/artwork.mutation';
 import { getThumbnail, urlify } from '@utils/helpers';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
-import { Col, Row, Text, Title } from '@ui-kit'; //notification
+import { Col, notification, Row, Text, Title } from '@ui-kit'; //notification
 import LockState from '@shared/CreatorContent/LockState';
 import BuyWidget from '../Product/BuyWidget';
 import { loggedInUserLoadingVar } from '@configs/client-cache';
 // import { ReactComponent as ShareIcon } from '@svgs/share.svg';
-// import { ReactComponent as LikeIcon } from '@svgs/like.svg';
-// import { ReactComponent as LikedIcon } from '@svgs/liked.svg';
+import { ReactComponent as LikeIcon } from '@svgs/like.svg';
+import { ReactComponent as LikedIcon } from '@svgs/liked.svg';
 
 const Wrapper = styled('div')`
   display: flex;
@@ -39,25 +44,34 @@ const Wrapper = styled('div')`
     }
   }
   .like {
-    position: absolute;
-    top: 75px;
-    right: -85px;
-    cursor: pointer;
-  }
-  .share {
+    width: 54px;
+    height: 54px;
     position: absolute;
     top: 0;
     right: -85px;
     cursor: pointer;
+    text-align: center;
+    div:not(.ant-spin) {
+      position: absolute;
+      top: 25px;
+      width: 100%;
+    }
+    .ant-spin {
+      position: absolute;
+      top: 17px;
+      width: 100%;
+      .ant-spin-dot-spin {
+        .ant-spin-dot-item {
+          background-color: #ec455a;
+        }
+      }
+    }
   }
   @media (max-width: 1200px) {
     .like {
       top: -74px;
-      left: 0;
-    }
-    .share {
-      top: -74px;
       left: 75px;
+      text-align: center;
     }
     .bottom-push {
       margin-bottom: 50px;
@@ -100,10 +114,86 @@ const ImageWrapper = styled('div')`
 export const Content = ({ info, content, isLocked }) => {
   const { user } = useLoggedInUser();
   const loggedInUserLoading = useReactiveVar(loggedInUserLoadingVar);
+  const [liked, setLiked] = useState(false);
   const [openTooltip, setOpenTooltip] = useState(user.id && !user.helpSeen);
-  // const [isLiked, setIsLiked] = useState(false);
   const avatarUrl = useAvatarUrl(info.providerType, info.providerUserId, info.avatar);
   const { setInfo } = usePresentation();
+
+  const [requestProductLikes, { loading: loadingProductLikes, data: productLikes }] = useLazyQuery(
+    getProductLikes,
+    {
+      variables: {
+        productId: info.productId,
+      },
+      onCompleted: ({ getProductLikes }) =>
+        setLiked(getProductLikes.some(({ userId }) => userId === +user.id)),
+    },
+  );
+
+  const [requestArtworkLikes, { loading: loadingArtworkLikes, data: artworkLikes }] = useLazyQuery(
+    getArtworkLikes,
+    {
+      variables: {
+        artworkId: info.artworkId,
+      },
+      onCompleted: ({ getArtworkLikes }) =>
+        setLiked(getArtworkLikes.some(({ userId }) => userId === +user.id)),
+    },
+  );
+
+  useEffect(() => {
+    info.isProduct ? requestProductLikes() : requestArtworkLikes();
+  }, [info.isProduct, requestArtworkLikes, requestProductLikes]);
+
+  const [likeProductMutation, { loading: likingProduct, data: productLikesCount }] = useMutation(
+    likeProduct,
+    {
+      variables: {
+        productId: info.productId,
+      },
+      onCompleted: () => setLiked(!liked),
+    },
+  );
+
+  const [likeArtworkMutation, { loading: likingArtwork, data: artworkLikesCount }] = useMutation(
+    likeArtwork,
+    {
+      variables: {
+        artworkId: info.artworkId,
+      },
+      onCompleted: () => setLiked(!liked),
+    },
+  );
+
+  const likeOrUnlike = useCallback(() => {
+    if (user.id) {
+      info.isProduct ? likeProductMutation() : likeArtworkMutation();
+    } else {
+      notification.warningToast('Warning', 'Please sign in to get started.');
+    }
+  }, [user.id, info.isProduct, likeProductMutation, likeArtworkMutation]);
+
+  const loading = useMemo(
+    () => likingProduct || likingArtwork || loadingProductLikes || loadingArtworkLikes,
+    [likingProduct, likingArtwork, loadingProductLikes, loadingArtworkLikes],
+  );
+  const likes = useMemo(
+    () =>
+      (info.isProduct ? productLikes?.getProductLikes : artworkLikes?.getArtworkLikes)?.map(
+        ({ userId }) => userId,
+      ),
+    [info.isProduct, productLikes?.getProductLikes, artworkLikes?.getArtworkLikes],
+  );
+  const likesCount = useMemo(() => {
+    const count = info.isProduct ? productLikesCount?.likeProduct : artworkLikesCount?.likeArtwork;
+    return count !== undefined ? count : likes?.length;
+  }, [
+    info.isProduct,
+    productLikesCount?.likeProduct,
+    artworkLikesCount?.likeArtwork,
+    likes?.length,
+  ]);
+  const showLikes = useMemo(() => info.userId === user.id || liked, [user.id, info.userId, liked]);
 
   const source = useMemo(
     () =>
@@ -186,9 +276,20 @@ export const Content = ({ info, content, isLocked }) => {
                   navigator.clipboard.writeText(window.location.href);
                   notification.infoToast('Copied');
                 }}
-              />
-              <LikeIcon className='like' onClick={() => setIsLiked(!isLiked)} />
-              {isLiked && <LikedIcon className='like' />} */}
+              /> */}
+              {!loadingProductLikes && !loadingArtworkLikes && (
+                <div className='like' onClick={likeOrUnlike}>
+                  <Spin spinning={loading} />
+                  {showLikes ? <LikedIcon /> : <LikeIcon />}
+                  {!loading && showLikes && (
+                    <div>
+                      <Text level={5} color='like'>
+                        {likesCount}
+                      </Text>
+                    </div>
+                  )}
+                </div>
+              )}
             </Col>
           )}
           <Col span={24}>

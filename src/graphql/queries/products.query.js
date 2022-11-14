@@ -78,3 +78,11 @@ export const getStripeCheckoutSession = gql`
     }
   }
 `;
+
+export const getProductLikes = gql`
+  query getProductLikes($productId: ID!) {
+    getProductLikes(productId: $productId) {
+      userId
+    }
+  }
+`;

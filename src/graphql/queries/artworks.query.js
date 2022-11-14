@@ -47,3 +47,11 @@ export const getRandomArtworks = gql`
   }
   ${artworkFragment}
 `;
+
+export const getArtworkLikes = gql`
+  query getArtworkLikes($artworkId: ID!) {
+    getArtworkLikes(artworkId: $artworkId) {
+      userId
+    }
+  }
+`;

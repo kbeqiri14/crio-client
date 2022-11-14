@@ -19,3 +19,9 @@ export const deleteArtwork = gql`
     deleteArtwork(params: $params)
   }
 `;
+
+export const likeArtwork = gql`
+  mutation likeArtwork($artworkId: ID!) {
+    likeArtwork(artworkId: $artworkId)
+  }
+`;

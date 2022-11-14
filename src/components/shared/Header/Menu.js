@@ -31,7 +31,7 @@ const getTabItems = (id, isCreator, isSubscribed, featuresSeen) => {
         }
       : {
           id: 'pricing',
-          title: isSubscribed ? 'Pro account' : 'Pricing',
+          title: isSubscribed ? 'Pro account' : 'Support Creators',
           path: '/pricing',
         },
   );

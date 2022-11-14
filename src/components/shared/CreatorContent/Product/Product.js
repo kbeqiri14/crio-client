@@ -1,18 +1,18 @@
 import { memo, useCallback, useMemo, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import history from '@configs/history';
 import { PRODUCTS } from '@configs/constants';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
-import useAvatarUrl from '@app/hooks/useAvatarUrl';
+import useCategories from '@app/hooks/useCategories';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import { getThumbnail } from '@utils/helpers';
 import { Col, Row, Tag, Text } from '@ui-kit';
-import Actions from '@screens/Video/Actions';
 import product from '@images/product.png';
-import { ProductWrapper, ImageWrapper } from './styled';
+import Actions from '@screens/Video/Actions';
+import Author from '../Author';
 import BuyButton from './BuyButton';
-import useCategories from '@app/hooks/useCategories';
+import { ProductWrapper, ImageWrapper } from './styled';
 
 const Product = ({
   providerType,
@@ -29,6 +29,7 @@ const Product = ({
   accessibility,
   thumbnail,
   file,
+  likes,
   large = false,
 }) => {
   const [isHovering, setIsHovering] = useState(false);
@@ -36,7 +37,6 @@ const Product = ({
   const { categories } = useCategories();
   const { pathname } = useLocation();
   const { setInfo } = usePresentation();
-  const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
 
   const handleMouseOver = useCallback(() => setIsHovering(true), []);
   const handleMouseOut = useCallback(() => setIsHovering(false), []);
@@ -203,24 +203,16 @@ const Product = ({
           </Col>
         </Row>
       </ProductWrapper>
-      <Link to={`/profile/${username}`} onClick={hide}>
-        <Row gutter={12} align='middle' padding_top={8}>
-          <Col>
-            <img
-              src={avatarUrl}
-              width={30}
-              height={30}
-              alt='avatar'
-              className='border-radius-100'
-            />
-          </Col>
-          <Col max_width={309}>
-            <Text level={3} ellipsis={{ tooltip: username }}>
-              {username}
-            </Text>
-          </Col>
-        </Row>
-      </Link>
+      <Author
+        isProduct
+        productId={productId}
+        providerType={providerType}
+        providerUserId={providerUserId}
+        avatar={avatar}
+        username={username}
+        likes={likes}
+        hide={hide}
+      />
     </>
   );
 };

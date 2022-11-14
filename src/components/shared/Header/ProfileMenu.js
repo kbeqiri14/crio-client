@@ -18,7 +18,7 @@ const ProfileMenu = ({ user = {} }) => {
         onClick: goAccount,
       },
       user.isCreator && {
-        label: 'Payment',
+        label: 'Payment and Tracking',
         key: 'payment',
         onClick: goPayment,
       },
