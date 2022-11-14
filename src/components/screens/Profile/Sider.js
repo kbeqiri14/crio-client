@@ -95,7 +95,7 @@ export const ProfileSider = ({
           </Col>
         )}
         {!loggedInUserLoading && !loggedInUserId && (
-          <Col span={24} style={{ backgroundColor: '#2B2B2B', borderRadius: 4, padding: 8 }}>
+          <Col span={24} className='box'>
             <Row gutter={[0, 12]}>
               <Col>
                 <Text level={1}>Subscribe to Crio for $7/month</Text>
@@ -163,9 +163,19 @@ export const ProfileSider = ({
           </Col>
         )}
         {!isProfile && user.isCreator && (
-          <Col align='center' className='revenue'>
-            <Title level={2}>Subscription Revenue</Title>
-            <Text level={3}>${user.revenue} / month</Text>
+          <Col className='box'>
+            <Row justify='space-between' align='middle'>
+              <Col>
+                <Text level={1}>
+                  Subscription
+                  <br />
+                  revenue
+                </Text>
+              </Col>
+              <Col>
+                <Text level={1}>${user.revenue} / month</Text>
+              </Col>
+            </Row>
           </Col>
         )}
         <Col span={24}>
