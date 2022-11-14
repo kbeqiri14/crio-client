@@ -99,7 +99,7 @@ const Pricing = () => {
           <RecommendIcon className='recommend' />
           <Row gutter={[0, 16]} className='card pro'>
             <Col span={24}>
-              <Title level={1}>Pro</Title>
+              <Title level={1}>Pro Support</Title>
             </Col>
             <Col span={24} padding_bottom={10}>
               <Title level={5}>
