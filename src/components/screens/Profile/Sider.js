@@ -96,20 +96,27 @@ export const ProfileSider = ({
         )}
         {!loggedInUserLoading && !loggedInUserId && (
           <Col span={24} style={{ backgroundColor: '#2B2B2B', borderRadius: 4, padding: 8 }}>
-            <Text level={1}>Subscribe to Crio for $7/month</Text>
-            <Badge
-              status='default'
-              color='white'
-              level={6}
-              text={`Support as many creators as you want including ${username}`}
-            />
-            <br />
-            <Badge
-              status='default'
-              color='white'
-              level={6}
-              text='Unlock free products & exclusive content from all creators you support'
-            />
+            <Row gutter={[0, 12]}>
+              <Col>
+                <Text level={1}>Subscribe to Crio for $7/month</Text>
+              </Col>
+              <Col padding_bottom={10}>
+                <Badge
+                  status='default'
+                  color='white'
+                  level={6}
+                  text={`Support as many creators as you want including ${username}`}
+                />
+              </Col>
+              <Col>
+                <Badge
+                  status='default'
+                  color='white'
+                  level={6}
+                  text='Unlock free products & exclusive content from all creators you support'
+                />
+              </Col>
+            </Row>
           </Col>
         )}
         {!hideButton && (
