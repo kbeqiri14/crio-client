@@ -21,9 +21,11 @@ import Content from '../../shared/CreatorContent';
 
 const Wrapper = styled('div')`
   background: #202020;
-  padding: 40px;
   max-width: 1312px;
+  border-radius: 8px;
+  padding: 40px;
   margin: auto;
+  margin-top: 20px;
 `;
 
 const PRODUCTS_LIMIT = 15;
