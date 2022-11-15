@@ -162,7 +162,7 @@ export const ProfileSider = ({
             </Row>
           </Col>
         )}
-        {!isProfile && user.isCreator && (
+        {user.isCreator && (!isProfile || user.showRevenue) && (
           <Col className='box'>
             <Row justify='space-between' align='middle'>
               <Col>

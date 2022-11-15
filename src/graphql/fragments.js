@@ -30,6 +30,7 @@ export const meFragment = gql`
     boughtProducts
     featuresSeen
     helpSeen
+    showRevenue
     revenue
     productLikes
     artworkLikes

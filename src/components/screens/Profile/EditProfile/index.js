@@ -1,8 +1,9 @@
 import { memo, useCallback, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { Space } from 'antd';
 
 import Confirmation from '@shared/Confirmation';
-import { Col, Input, Modal, Row, Text, Title } from '@ui-kit';
+import { Col, Input, Modal, Row, Switch, Text, Title } from '@ui-kit';
 import { ReactComponent as CloseIcon } from '@svgs/close.svg';
 import Footer from './Footer';
 
@@ -14,6 +15,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
   const lastName = watch('lastName');
   const username = watch('username');
   const about = watch('about');
+  const showRevenue = watch('showRevenue');
 
   const updatedData = useMemo(
     () => ({
@@ -21,11 +23,12 @@ const EditProfile = ({ user, visible, closeModal }) => {
       lastName: lastName?.trim(),
       username: username?.trim(),
       about: about?.trim(),
+      showRevenue,
     }),
-    [firstName, lastName, username, about],
+    [firstName, lastName, username, about, showRevenue],
   );
   const disabled = useMemo(() => {
-    const { firstName, lastName, username, about } = updatedData;
+    const { firstName, lastName, username, about, showRevenue } = updatedData;
     return !(
       username !== '' &&
       ((firstName && user?.firstName !== firstName) ||
@@ -34,9 +37,17 @@ const EditProfile = ({ user, visible, closeModal }) => {
         (lastName === '' && !!user?.lastName) ||
         (username && user?.username !== username) ||
         (about && user?.about !== about) ||
-        (about === '' && !!user?.about))
+        (about === '' && !!user?.about) ||
+        (showRevenue !== undefined && showRevenue !== user?.showRevenue))
     );
-  }, [updatedData, user?.firstName, user?.lastName, user?.username, user?.about]);
+  }, [
+    updatedData,
+    user?.firstName,
+    user?.lastName,
+    user?.username,
+    user?.about,
+    user?.showRevenue,
+  ]);
 
   const hideModal = useCallback(() => {
     setConfirmationVisible(false);
@@ -144,6 +155,20 @@ const EditProfile = ({ user, visible, closeModal }) => {
             )}
           />
         </Col>
+        {user.isCreator && (
+          <Col span={24} padding_bottom={16}>
+            <Space size='middle'>
+              <Text level={3} disabled>
+                Subscription revenue
+              </Text>
+              <Controller
+                name='showRevenue'
+                control={control}
+                render={({ field }) => <Switch defaultChecked={user.showRevenue} {...field} />}
+              />
+            </Space>
+          </Col>
+        )}
         <Col span={24}>
           <Footer
             disabled={disabled}
