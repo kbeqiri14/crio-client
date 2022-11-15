@@ -94,7 +94,7 @@ export const ProfileSider = ({
             <EditIcon className='pointer' />
           </Col>
         )}
-        {!loggedInUserLoading && !loggedInUserId && (
+        {user.isCreator && !loggedInUserLoading && !loggedInUserId && (
           <Col span={24} className='box'>
             <Row gutter={[0, 12]}>
               <Col>
