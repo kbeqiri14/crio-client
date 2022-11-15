@@ -111,7 +111,7 @@ const TopProducts = ({
             </Col>
             <Col span={24} padding_bottom={20} max_width={586}>
               <Text level={4}>
-                Shop thousands of products and see the best artwork from the entire community of
+                Discover thousands of products, watch exclusive content and support your favorite
                 creators on Crio
               </Text>
             </Col>
