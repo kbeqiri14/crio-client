@@ -152,7 +152,7 @@ export const ExplorePage = () => {
           ))}
         </Carousel>
         <Divider />
-        <Row justify='space-between' gutter={[40, 40]} padding_top={20}>
+        <Row justify='space-between' gutter={[40, 40]} padding_top={16}>
           <Col max_width={510}>
             <Title level={6}>For Creatives</Title>
             <Info info={creativeInfo} />
