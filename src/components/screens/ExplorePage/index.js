@@ -1,7 +1,9 @@
 import { memo, useEffect, useMemo, useState } from 'react';
+import styled from 'styled-components';
 import { useReactiveVar } from '@apollo/client';
 import { useQuery } from '@apollo/client';
 
+import history from '@configs/history';
 import { getTopProducts } from '@app/graphql/queries/products.query';
 import { Meta } from '@shared/Meta';
 import useRandomInfo from '@root/src/hooks/useRandomInfo';
@@ -12,12 +14,59 @@ import {
   refetchArtworkVar,
   refetchMarketplaceVar,
 } from '@configs/client-cache';
-import { Carousel, GlobalSpinner } from '@ui-kit';
+import { Button, Carousel, Col, Divider, GlobalSpinner, Row, Text, Title } from '@ui-kit';
+import Circle from '@ui-kit/Custom/Circle';
 import TopProducts from './TopProducts';
 import Content from '../../shared/CreatorContent';
 
+const Wrapper = styled('div')`
+  background: #202020;
+  max-width: 1312px;
+  border-radius: 8px;
+  padding: 40px;
+  margin: auto;
+  margin-top: 20px;
+`;
+
 const PRODUCTS_LIMIT = 15;
 const ARTWORKS_LIMIT = 24;
+
+const creativeInfo = [
+  <>Offer digital products and exclusive content</>,
+  <>
+    Get <strong>discovered</strong> and generate <strong>passive income</strong> immediately through
+    subscriptions & eCommerce
+  </>,
+  <>
+    Crio is <strong>free</strong> for creators to join!
+  </>,
+];
+
+const fansInfo = [
+  <>
+    Support <strong>multiple creators</strong> with <strong>one easy subscription</strong>
+  </>,
+  <>Gain access to all their free products and exclusive content</>,
+];
+
+const Info = ({ info }) => (
+  <Row gutter={[0, 30]} padding_top={20}>
+    {info.map((item, index) => (
+      <Col span={24}>
+        <Row align='middle' gutter={20}>
+          <Col>
+            <Circle>{index + 1}</Circle>
+          </Col>
+          <Col>
+            <Text level={3} color='dark25' max_width={400}>
+              {item}
+            </Text>
+          </Col>
+        </Row>
+      </Col>
+    ))}
+  </Row>
+);
 
 export const ExplorePage = () => {
   const [productsOffset, setProductsOffset] = useState(0);
@@ -96,11 +145,31 @@ export const ExplorePage = () => {
   return (
     <>
       <Meta title='Explore' description='Crio - Explore' />
-      <Carousel autoplay effect='fade'>
-        {topProducts?.getTopProducts?.map((item) => (
-          <TopProducts key={item.productId} {...item} />
-        ))}
-      </Carousel>
+      <Wrapper>
+        <Carousel autoplay effect='fade'>
+          {topProducts?.getTopProducts?.map((item) => (
+            <TopProducts key={item.productId} {...item} />
+          ))}
+        </Carousel>
+        <Divider />
+        <Row justify='space-between' gutter={[40, 40]} padding_top={20}>
+          <Col max_width={510}>
+            <Title level={6}>For Creatives</Title>
+            <Info info={creativeInfo} />
+          </Col>
+          <Col max_width={510}>
+            <Title level={6}>For Fans</Title>
+            <Info info={fansInfo} />
+          </Col>
+        </Row>
+        <Row justify='center' padding_top={40}>
+          <Col>
+            <Button white='true' onClick={() => history.push('/features')}>
+              LEARN MORE
+            </Button>
+          </Col>
+        </Row>
+      </Wrapper>
       <Content
         visibleLoadMoreProducts={!isProductsEnd && productsOffset}
         visibleLoadMoreArtworks={!isArtworksEnd && artworksOffset}

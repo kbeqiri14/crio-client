@@ -13,7 +13,6 @@ import { ReactComponent as GoogleIcon } from '@svgs/google.svg';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 
 const Wrapper = styled('div')`
-  padding: 85px 22px 50px;
   .card {
     width: 304px;
     height: 284px;
@@ -103,7 +102,7 @@ const TopProducts = ({
 
   return (
     <Wrapper>
-      <Row justify='space-around' align='middle' gutter={[0, 60]}>
+      <Row justify='space-between' align='middle' gutter={[0, 60]} padding_bottom={40}>
         <Col max_width={733}>
           <Row gutter={[0, 20]}>
             <Col span={24}>
@@ -132,7 +131,7 @@ const TopProducts = ({
           </Row>
         </Col>
         <Col>
-          <div className='card' onClick={showProduct}>
+          <div className='card' onClick={showProduct} style={{ background: '#2B2B2B' }}>
             <img alt='product' src={src} />
             <Text color='dark25' level={1} ellipsis={{ rows: 1, tooltip: title }}>
               {title}
