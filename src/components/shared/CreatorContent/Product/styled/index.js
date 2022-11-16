@@ -21,10 +21,23 @@ export const ProductWrapper = styled('div')`
     border-top-right-radius: 30px;
     object-fit: cover;
   }
+  .info {
+    position: absolute;
+    right: 32px;
+  }
+  .info,
+  .tooltip,
   .actions:not(.hover) {
     opacity: 0;
     visibility: hidden;
     transition: visibility 0s, opacity 0.2s linear;
+  }
+  &:hover {
+    .info,
+    .tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
   }
 `;
 
