@@ -34,20 +34,8 @@ export const Wrapper = styled('div')`
     transition: visibility 0s, opacity 0.2s linear;
   }
   &:hover {
-    .tooltip {
-      opacity: 1;
-      visibility: visible;
-    }
-  }
-  &:hover:not(.is-locked) {
     .info,
     .tooltip {
-      opacity: 1;
-      visibility: visible;
-    }
-  }
-  :not(.is-locked) {
-    .info.hover {
       opacity: 1;
       visibility: visible;
     }
