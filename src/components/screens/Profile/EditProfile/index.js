@@ -159,7 +159,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
           <Col span={24} padding_bottom={16}>
             <Space size='middle'>
               <Text level={3} disabled>
-                Subscription revenue
+                Show subscription revenue publicly
               </Text>
               <Controller
                 name='showRevenue'
