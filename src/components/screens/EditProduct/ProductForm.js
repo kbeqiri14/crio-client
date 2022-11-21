@@ -37,7 +37,7 @@ const ProductForm = ({ state }) => {
   const { categories } = useCategories('product');
   const [openTooltip, setOpenTooltip] = useState(user.id && !user.helpSeen);
   const [visibleBroadcast, setVisibleBroadcast] = useState(false);
-  const [uploading, setUploading] = useState(false);
+  const [uploading, setUploading] = useState({});
   const [limitVisible, setLimitVisible] = useState(state?.limit !== null && state?.limit >= 0);
   const [file, setFile] = useState(state?.file);
   const [files, setFiles] = useState([]);
