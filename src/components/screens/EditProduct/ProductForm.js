@@ -59,6 +59,9 @@ const ProductForm = ({ state }) => {
   });
 
   const formatRemainingTime = (time) => {
+    if (!time) {
+      return;
+    }
     let formattedTime = Math.round(time);
     let timeUnit = 'seconds';
     if (time > 60) {
