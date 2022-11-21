@@ -40,6 +40,10 @@ export default class Upload {
     };
   }
 
+  async signForUpload(filename, filetype) {
+    return this.sign(filename, filetype);
+  }
+
   async signAndUpload(filename, filetype, file) {
     const { url, signedRequest } = await this.sign(filename, filetype);
     await uploadToS3(file, signedRequest);

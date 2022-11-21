@@ -1,40 +1,43 @@
 import { memo, useCallback, useEffect, useMemo, useState, Fragment } from 'react';
-import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
+import { Controller, useForm } from 'react-hook-form';
 import { useQuery } from '@apollo/client';
 
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
+import useCategories from '@app/hooks/useCategories';
 import { getConnectAccount } from '@app/graphql/queries/payment-method.query';
-import Broadcast from './_partials/Broadcast';
-import FormWrapper from './styled/FormWrapper';
 import { ReactComponent as ArrowIcon } from '@svgs/arrow.svg';
-import { Badge } from '@ui-kit';
-
-import { Link } from 'react-router-dom';
-import { Controller } from 'react-hook-form';
+import { ReactComponent as CloseIcon } from '@svgs/close.svg';
 import {
+  Badge,
   Checkbox,
   Input,
   GlobalSpinner,
+  Modal,
+  Progress,
   Radio,
   Switch,
   Text,
+  Title,
   Tooltip,
   TreeSelect,
-  Title,
   Row,
   Col,
 } from '@ui-kit';
+import { Spinner } from '@ui-kit/Spinner';
+import HelpTooltip from '@screens/Product/HelpTooltip';
 import DraggerImage from './_partials/DraggerImage';
 import DraggerFile from './_partials/DraggerFile';
 import ActionButtons from './_partials/ActionButtons';
-import HelpTooltip from '@screens/Product/HelpTooltip';
-import useCategories from '@app/hooks/useCategories';
+import Broadcast from './_partials/Broadcast';
+import FormWrapper from './styled/FormWrapper';
 
 const ProductForm = ({ state }) => {
   const { user } = useLoggedInUser();
   const { categories } = useCategories('product');
   const [openTooltip, setOpenTooltip] = useState(user.id && !user.helpSeen);
   const [visibleBroadcast, setVisibleBroadcast] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [limitVisible, setLimitVisible] = useState(state?.limit !== null && state?.limit >= 0);
   const [file, setFile] = useState(state?.file);
   const [files, setFiles] = useState([]);
@@ -54,6 +57,19 @@ const ProductForm = ({ state }) => {
       }
     },
   });
+
+  const formatRemainingTime = (time) => {
+    let formattedTime = Math.round(time);
+    let timeUnit = 'seconds';
+    if (time > 60) {
+      let minutes = Math.round(time / 60);
+      const hours = Math.round(minutes / 60);
+      minutes = minutes - hours * 60;
+      formattedTime = hours ? `${hours} hour ${minutes < 0 ? 0 : minutes}` : minutes;
+      timeUnit = 'minutes';
+    }
+    return `${formattedTime} ${timeUnit} left`;
+  };
 
   const { control, watch, setValue, handleSubmit } = useForm();
   const title = watch('title');
@@ -444,6 +460,8 @@ const ProductForm = ({ state }) => {
                     image={image}
                     disabled={disabled}
                     categoryId={categoryId}
+                    uploading={uploading}
+                    setUploading={setUploading}
                     handleSubmit={handleSubmit}
                   />
                 </Col>
@@ -451,6 +469,25 @@ const ProductForm = ({ state }) => {
             </form>
           </Col>
         </Row>
+        <Modal
+          centered
+          footer={null}
+          closeIcon={<CloseIcon />}
+          open={uploading.visible}
+          closable={false}
+          maskClosable={false}
+          width={686}
+          className='uploading'
+        >
+          <Spinner spinning={loading} color='white'>
+            <Title level={2}>Uploading</Title>
+            <Text level={3}>
+              <span>{uploading.percent} % &bull; </span>
+              <span>{formatRemainingTime(uploading.remainingTime)}</span>
+            </Text>
+            <Progress percent={uploading.percent} showInfo={false} />
+          </Spinner>
+        </Modal>
       </FormWrapper>
     </>
   );

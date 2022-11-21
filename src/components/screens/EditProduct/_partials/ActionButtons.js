@@ -1,4 +1,5 @@
 import { Fragment, memo, useCallback, useMemo, useState } from 'react';
+import axios from 'axios';
 import { useMutation, useReactiveVar } from '@apollo/client';
 
 import useAsyncFn from '@app/hooks/useAsyncFn';
@@ -8,7 +9,7 @@ import { createProduct, updateProduct } from '@app/graphql/mutations/product.mut
 import { PRODUCTS } from '@configs/constants';
 import ActionButtons from '@shared/ActionButtons';
 import { notification } from '@ui-kit';
-import { formItemContent } from '@utils/upload.helper';
+import { formItemContent, sign } from '@utils/upload.helper';
 import Confirmation from '@shared/Confirmation';
 import { categoriesVar } from '@configs/client-cache';
 
@@ -18,7 +19,7 @@ const ProductActionButtons = ({
   disabled,
   categoryId,
   handleSubmit,
-  fillColor = 'blue',
+  setUploading,
 }) => {
   const buttonLabel = useMemo(() => (state?.productId ? 'UPDATE' : 'PUBLISH'), [state?.productId]);
   const { userId, redirect } = useRedirectToProfile();
@@ -54,21 +55,48 @@ const ProductActionButtons = ({
     onError: () => notification.errorToast('Something went wrong!', 'Please, try again later!'),
   });
 
+  const timeStarted = new Date();
+
   const onPublish = useAsyncFn(async (attributes) => {
     let file;
     let thumbnail = state?.thumbnail && !image.src ? 'remove-thumbnail' : undefined;
-    if (
-      attributes.image?.file ||
-      (attributes.file && attributes.categoryId !== categories.commissionId)
-    ) {
+    if (attributes.image?.file) {
       const content = await formItemContent({
         userId,
         image: image.file,
-        file: attributes.categoryId === categories.commissionId ? undefined : attributes.file?.file,
         type: PRODUCTS,
       });
       thumbnail = content?.image;
-      file = content?.file;
+    }
+    if (attributes.file && attributes.categoryId !== categories.commissionId) {
+      const { url, signedRequest } = await sign({
+        userId,
+        file: attributes.file?.file,
+        type: PRODUCTS,
+        prefix: 'file',
+      });
+      setUploading({ visible: true });
+      await axios.put(signedRequest, attributes.file?.file, {
+        headers: {
+          'Content-Type': attributes.file?.file?.type,
+        },
+        onUploadProgress: (progressEvent) => {
+          const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          const timeElapsed = new Date() - timeStarted;
+          const uploadSpeed = progressEvent.loaded / (timeElapsed / 1000);
+          setUploading({
+            visible: true,
+            percent: percentCompleted,
+            remainingTime: (progressEvent.total - progressEvent.loaded) / uploadSpeed,
+          });
+        },
+      });
+
+      // const newFile = await uploadContent(userId, file, type, 'file');
+      // if (newFile) {
+      //   content.file = newFile?.split('/')?.slice(-1)?.[0]?.slice('file-'.length);
+      // }
+      file = url?.split('/')?.slice(-1)?.[0]?.slice('file-'.length);
     }
 
     state?.productId
@@ -116,7 +144,6 @@ const ProductActionButtons = ({
   return (
     <Fragment>
       <ActionButtons
-        fillColor={fillColor}
         saveText={buttonLabel}
         loading={onPublish.loading || creating || updating}
         disabled={disabled}
