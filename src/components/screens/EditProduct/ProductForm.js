@@ -59,7 +59,7 @@ const ProductForm = ({ state }) => {
   });
 
   const formatRemainingTime = (time) => {
-    if (!time) {
+    if (time === undefined) {
       return;
     }
     let formattedTime = Math.round(time);
