@@ -39,13 +39,6 @@ export const ProductWrapper = styled('div')`
       visibility: visible;
     }
   }
-  &:hover:not(.is-locked) {
-    .info,
-    .actions {
-      opacity: 1;
-      visibility: visible;
-    }
-  }
 `;
 
 export const ImageWrapper = styled('div')`

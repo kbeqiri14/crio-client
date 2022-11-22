@@ -20,6 +20,20 @@ export const uploadContent = async (userId, file, type, prefix) => {
   return uploader.signAndUpload(filename, file.type, file);
 };
 
+export const sign = async ({ userId, file, type, prefix }) => {
+  const fileType = file?.type?.split('/')?.[0];
+  if (
+    !userId ||
+    ![PRODUCTS, ARTWORKS].includes(type) ||
+    (prefix !== 'file' && !FILE_TYPES.includes(fileType))
+  ) {
+    return null;
+  }
+  const filename = `${userId}/${type}/${prefix}-${Date.now()}`;
+
+  return uploader.signForUpload(filename, file.type);
+};
+
 export const formItemContent = async ({ userId, image, file, type }) => {
   const content = {};
 

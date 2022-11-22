@@ -14,7 +14,6 @@ const Wrapper = styled('div')`
   align-items: center;
   position: absolute;
   backdrop-filter: blur(8px);
-  z-index: 1;
 `;
 
 const LockState = ({
