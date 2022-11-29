@@ -16,6 +16,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
   const username = watch('username');
   const about = watch('about');
   const showRevenue = watch('showRevenue');
+  const emailVisible = watch('emailVisible');
 
   const updatedData = useMemo(
     () => ({
@@ -24,11 +25,12 @@ const EditProfile = ({ user, visible, closeModal }) => {
       username: username?.trim(),
       about: about?.trim(),
       showRevenue,
+      emailVisible,
     }),
-    [firstName, lastName, username, about, showRevenue],
+    [firstName, lastName, username, about, showRevenue, emailVisible],
   );
   const disabled = useMemo(() => {
-    const { firstName, lastName, username, about, showRevenue } = updatedData;
+    const { firstName, lastName, username, about, showRevenue, emailVisible } = updatedData;
     return !(
       username !== '' &&
       ((firstName && user?.firstName !== firstName) ||
@@ -38,7 +40,8 @@ const EditProfile = ({ user, visible, closeModal }) => {
         (username && user?.username !== username) ||
         (about && user?.about !== about) ||
         (about === '' && !!user?.about) ||
-        (showRevenue !== undefined && showRevenue !== user?.showRevenue))
+        (showRevenue !== undefined && showRevenue !== user?.showRevenue) ||
+        (emailVisible !== undefined && emailVisible !== user?.emailVisible))
     );
   }, [
     updatedData,
@@ -47,6 +50,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
     user?.username,
     user?.about,
     user?.showRevenue,
+    user?.emailVisible,
   ]);
 
   const hideModal = useCallback(() => {
@@ -136,6 +140,18 @@ const EditProfile = ({ user, visible, closeModal }) => {
             defaultValue={user.email}
             render={({ field }) => <Input {...field} disabled />}
           />
+        </Col>
+        <Col span={24} padding_bottom={16}>
+          <Space size='middle'>
+            <Text level={3} disabled>
+              Show email publicly
+            </Text>
+            <Controller
+              name='emailVisible'
+              control={control}
+              render={({ field }) => <Switch defaultChecked={user.emailVisible} {...field} />}
+            />
+          </Space>
         </Col>
         <Col span={24}>
           <Text level={3}>About me</Text>
