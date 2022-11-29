@@ -82,7 +82,7 @@ export const ProfileSider = ({
                 {name}
               </Text>
             </Col>
-            {user.emailVisible && (
+            {(!isProfile || user.emailVisible) && (
               <Col span={24} className='mail-icon' align='center'>
                 <Text level={3} color='dark25' ellipsis={{ tooltip: email }} className='full-width'>
                   <MailIcon /> {isProfile ? <a href={`mailto:${email}`}>{email}</a> : email}
