@@ -31,6 +31,7 @@ export const meFragment = gql`
     featuresSeen
     helpSeen
     showRevenue
+    emailVisible
     revenue
     productLikes
     artworkLikes
