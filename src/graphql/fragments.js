@@ -35,6 +35,10 @@ export const meFragment = gql`
     revenue
     productLikes
     artworkLikes
+    categories {
+      productCategories
+      artworkCategories
+    }
   }
 `;
 

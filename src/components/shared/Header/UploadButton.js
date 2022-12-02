@@ -1,7 +1,7 @@
 import { memo } from 'react';
 
 import history from '@configs/history';
-import { Button, Dropdown, Menu } from '@ui-kit';
+import { Button, Dropdown } from '@ui-kit';
 
 const goTo = (path) => () => history.push(path);
 
@@ -19,7 +19,7 @@ const items = [
 ];
 
 const UploadButton = () => (
-  <Dropdown overlay={<Menu items={items} />}>
+  <Dropdown menu={{ items }}>
     <Button type='primary' className='vertical-middle'>
       UPLOAD
     </Button>

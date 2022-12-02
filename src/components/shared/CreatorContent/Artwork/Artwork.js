@@ -117,7 +117,7 @@ const Artwork = ({
         <div className={`info ${isHovering ? 'hover' : ''}`}>
           <Row justify='space-between'>
             <Col span={showActions ? 19 : 24}>
-              <Text level={4} ellipsis={{ rows: 1, tooltip: title }}>
+              <Text level={4} ellipsis={{ tooltip: title }}>
                 {title}
               </Text>
             </Col>

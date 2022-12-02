@@ -13,8 +13,6 @@ const Wrapper = styled('div')`
   padding: 40px 22px;
 `;
 
-const { TabPane } = Tabs;
-
 const tabs = {
   MARKETPLACE: 'Marketplace',
   ARTWORK: 'Artwork',
@@ -29,6 +27,7 @@ const ProfileContent = ({
   isCreator,
   isProfile,
   isSubscribed,
+  userCategories,
 }) => {
   const tab = useMemo(
     () => (followingsCount ? `${tabs.FOLLOWING}: ${followingsCount}` : tabs.FOLLOWING),
@@ -77,21 +76,28 @@ const ProfileContent = ({
         artworksList={Artworks?.getUserArtworks}
         loadingProducts={initialPolling && productLoading}
         loadingArtworks={initialPolling && artworkLoading}
+        userCategories={userCategories}
       />
     );
   }
   return (
     <Wrapper>
-      <Tabs>
-        <TabPane key='Following' tab={tab}>
-          <Followings
-            username={username}
-            isProfile={isProfile}
-            isSubscribed={isSubscribed}
-            followingsCount={followingsCount}
-          />
-        </TabPane>
-      </Tabs>
+      <Tabs
+        items={[
+          {
+            label: tab,
+            key: 'Following',
+            children: (
+              <Followings
+                username={username}
+                isProfile={isProfile}
+                isSubscribed={isSubscribed}
+                followingsCount={followingsCount}
+              />
+            ),
+          },
+        ]}
+      />
     </Wrapper>
   );
 };

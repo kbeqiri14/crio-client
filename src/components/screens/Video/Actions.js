@@ -5,7 +5,7 @@ import { useMutation } from '@apollo/client';
 import { deleteProduct } from '@app/graphql/mutations/product.mutation';
 import { deleteArtwork } from '@app/graphql/mutations/artwork.mutation';
 import Confirmation from '@shared/Confirmation';
-import { Dropdown, Menu, notification } from '@ui-kit';
+import { Dropdown, notification } from '@ui-kit';
 import { ReactComponent as SettingsIcon } from '@svgs/settings.svg';
 
 const Actions = (props) => {
@@ -60,7 +60,7 @@ const Actions = (props) => {
 
   return (
     <>
-      <Dropdown overlay={<Menu items={items} />}>
+      <Dropdown menu={{ items }}>
         <SettingsIcon />
       </Dropdown>
       {visible && (

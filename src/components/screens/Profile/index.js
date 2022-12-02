@@ -67,6 +67,7 @@ export const Profile = () => {
                 isCreator={user?.isCreator}
                 isProfile={isProfile}
                 isSubscribed={loggedInUser.isSubscribed}
+                userCategories={user?.categories}
               />
             )}
           </Content>

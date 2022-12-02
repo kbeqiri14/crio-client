@@ -131,11 +131,14 @@ const Card = ({ id, name, isProduct, searchByCategory }) => {
   );
 };
 
-const Categories = ({ isProduct, categories }) => {
+const Categories = ({ isProduct, isProfilePage, categories }) => {
   const selectedProductCategory = useReactiveVar(searchProductCategoryVar);
   const selectedArtworkCategory = useReactiveVar(searchArtworkCategoryVar);
   const searchByCategory = useCallback(
     (id) => () => {
+      if (isProfilePage) {
+        return;
+      }
       if (isProduct) {
         if (id === selectedProductCategory) {
           return;
@@ -150,7 +153,7 @@ const Categories = ({ isProduct, categories }) => {
       refetchArtworkVar(true);
       refetchMarketplaceVar(true);
     },
-    [isProduct, selectedArtworkCategory, selectedProductCategory],
+    [isProduct, isProfilePage, selectedArtworkCategory, selectedProductCategory],
   );
 
   return (
@@ -164,6 +167,7 @@ const Categories = ({ isProduct, categories }) => {
             id={id}
             name={name}
             isProduct={isProduct}
+            isProfilePage={isProfilePage}
             searchByCategory={searchByCategory}
           />
         ))}

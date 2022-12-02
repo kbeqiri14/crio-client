@@ -3,7 +3,7 @@ import { memo, useCallback, useMemo } from 'react';
 import history from '@configs/history';
 import { signOut } from '@app/auth';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
-import { Dropdown, Menu } from '@ui-kit';
+import { Dropdown } from '@ui-kit';
 import { ReactComponent as ArrowIcon } from '@svgs/arrow.svg';
 
 const ProfileMenu = ({ user = {} }) => {
@@ -32,7 +32,7 @@ const ProfileMenu = ({ user = {} }) => {
   );
 
   return (
-    <Dropdown overlay={<Menu items={items} />}>
+    <Dropdown menu={{ items }}>
       <div>
         <img alt='profile' src={avatarUrl} width={40} height={40} className='border-radius-100' />
         <ArrowIcon className='vertical-middle' />
