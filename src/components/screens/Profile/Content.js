@@ -37,34 +37,29 @@ const ProfileContent = ({
   const { pathname } = useLocation();
   const [initialPolling, setInitialPolling] = useState(true);
 
-  const [requestArtworks, { data: Artworks, loading: artworkLoading }] = useLazyQuery(
-    getUserArtworks,
-    {
-      variables: { username: pathname.split('/').slice(-1)[0] || undefined },
-      fetchPolicy: 'no-cache',
+  const [requestArtworks, { data: artworks, loading: artworkLoading, fetchMore: refetchArtworks }] =
+    useLazyQuery(getUserArtworks, {
+      fetchPolicy: 'cache-and-network',
       notifyOnNetworkStatusChange: true,
       pollInterval: 30000,
       onCompleted: () => setInitialPolling(false),
-    },
-  );
+    });
 
-  const [requestProducts, { data: Products, loading: productLoading }] = useLazyQuery(
-    getUserProducts,
-    {
-      variables: { username: pathname.split('/').slice(-1)[0] || undefined },
-      fetchPolicy: 'no-cache',
+  const [requestProducts, { data: products, loading: productLoading, fetchMore: refetchProducts }] =
+    useLazyQuery(getUserProducts, {
+      fetchPolicy: 'cache-and-network',
       notifyOnNetworkStatusChange: true,
       pollInterval: 30000,
       onCompleted: () => setInitialPolling(false),
-    },
-  );
+    });
 
   useEffect(() => {
     if (isCreator) {
-      requestArtworks();
-      requestProducts();
+      const username = pathname.split('/').slice(-1)[0] || undefined;
+      requestArtworks({ variables: { params: { username } } });
+      requestProducts({ variables: { params: { username } } });
     }
-  }, [isCreator, requestArtworks, requestProducts]);
+  }, [pathname, isCreator, requestArtworks, requestProducts]);
 
   if (isCreator) {
     return (
@@ -72,10 +67,12 @@ const ProfileContent = ({
         isProfile={isProfile}
         productsCount={productsCount}
         artworksCount={artworksCount}
-        productsList={Products?.getUserProducts}
-        artworksList={Artworks?.getUserArtworks}
+        productsList={products?.getUserProducts}
+        artworksList={artworks?.getUserArtworks}
         loadingProducts={initialPolling && productLoading}
         loadingArtworks={initialPolling && artworkLoading}
+        refetchProducts={refetchProducts}
+        refetchArtworks={refetchArtworks}
         userCategories={userCategories}
       />
     );

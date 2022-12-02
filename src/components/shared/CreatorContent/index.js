@@ -46,6 +46,8 @@ export const Content = ({
   loadingMoreArtworks,
   loadMoreProducts,
   loadMoreArtworks,
+  refetchProducts,
+  refetchArtworks,
   userCategories,
 }) => {
   const { pathname } = useLocation(tabs.MARKETPLACE);
@@ -97,6 +99,7 @@ export const Content = ({
                           .filter(({ id }) => userCategories?.productCategories?.includes(id))
                       : categories.products.filter(({ name }) => name !== 'Digital Product')
                   }
+                  refetchProducts={refetchProducts}
                 />
                 {!loadingProducts && !productsCount && !productsList?.length && (
                   <EmptyState {...props} isMarketplace={true} />
@@ -128,6 +131,7 @@ export const Content = ({
                         )
                       : categories.contents
                   }
+                  refetchArtworks={refetchArtworks}
                 />
                 {!loadingArtworks && !artworksCount && !artworksList?.length && (
                   <EmptyState {...props} />

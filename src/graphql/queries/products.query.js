@@ -22,8 +22,8 @@ export const getCategories = gql`
 `;
 
 export const getUserProducts = gql`
-  query getUserProducts($username: String) {
-    getUserProducts(username: $username) {
+  query getUserProducts($params: UserAttributesParams!) {
+    getUserProducts(params: $params) {
       ...ProductDetailAttributes
     }
   }
