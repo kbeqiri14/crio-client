@@ -1,4 +1,4 @@
-import { memo, useMemo, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { useLazyQuery } from '@apollo/client';
@@ -29,29 +29,53 @@ const ProfileContent = ({
   isSubscribed,
   userCategories,
 }) => {
+  const [productsList, setProductsList] = useState([]);
+  const [artworksList, setArtworksList] = useState([]);
   const tab = useMemo(
     () => (followingsCount ? `${tabs.FOLLOWING}: ${followingsCount}` : tabs.FOLLOWING),
     [followingsCount],
   );
 
   const { pathname } = useLocation();
-  const [initialPolling, setInitialPolling] = useState(true);
+  const [initialPolling] = useState(true);
 
-  const [requestArtworks, { data: artworks, loading: artworkLoading, fetchMore: refetchArtworks }] =
-    useLazyQuery(getUserArtworks, {
+  const [requestArtworks, { loading: artworkLoading, fetchMore: fetchMoreArtworks }] = useLazyQuery(
+    getUserArtworks,
+    {
       fetchPolicy: 'cache-and-network',
-      notifyOnNetworkStatusChange: true,
-      pollInterval: 30000,
-      onCompleted: () => setInitialPolling(false),
-    });
+      // notifyOnNetworkStatusChange: true,
+      // pollInterval: 30000,
+      // onCompleted: () => setInitialPolling(false),
+      onCompleted: ({ getUserArtworks }) => setArtworksList(getUserArtworks),
+    },
+  );
 
-  const [requestProducts, { data: products, loading: productLoading, fetchMore: refetchProducts }] =
-    useLazyQuery(getUserProducts, {
+  const [requestProducts, { loading: productLoading, fetchMore: fetchMoreProducts }] = useLazyQuery(
+    getUserProducts,
+    {
       fetchPolicy: 'cache-and-network',
-      notifyOnNetworkStatusChange: true,
-      pollInterval: 30000,
-      onCompleted: () => setInitialPolling(false),
-    });
+      // notifyOnNetworkStatusChange: true,
+      // pollInterval: 30000,
+      // onCompleted: () => setInitialPolling(false),
+      onCompleted: ({ getUserProducts }) => setProductsList(getUserProducts),
+    },
+  );
+  const refetchArtworks = useCallback(
+    (variables) =>
+      fetchMoreArtworks({
+        variables,
+        updateQuery: (_, { fetchMoreResult }) => setArtworksList(fetchMoreResult.getUserArtworks),
+      }),
+    [fetchMoreArtworks],
+  );
+  const refetchProducts = useCallback(
+    (variables) =>
+      fetchMoreProducts({
+        variables,
+        updateQuery: (_, { fetchMoreResult }) => setProductsList(fetchMoreResult.getUserProducts),
+      }),
+    [fetchMoreProducts],
+  );
 
   useEffect(() => {
     if (isCreator) {
@@ -67,8 +91,8 @@ const ProfileContent = ({
         isProfile={isProfile}
         productsCount={productsCount}
         artworksCount={artworksCount}
-        productsList={products?.getUserProducts}
-        artworksList={artworks?.getUserArtworks}
+        productsList={productsList}
+        artworksList={artworksList}
         loadingProducts={initialPolling && productLoading}
         loadingArtworks={initialPolling && artworkLoading}
         refetchProducts={refetchProducts}

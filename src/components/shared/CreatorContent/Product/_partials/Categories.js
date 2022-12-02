@@ -157,7 +157,7 @@ const Categories = ({ isProduct, isProfilePage, categories, refetchProducts, ref
             return;
           }
           setSelectedProductCategory(id);
-          refetchProducts({ variables: { params: { username, categoryId: id } } });
+          refetchProducts({ params: { username, categoryId: id } });
           return;
         }
         if (id === searchProductCategory) {
@@ -170,7 +170,7 @@ const Categories = ({ isProduct, isProfilePage, categories, refetchProducts, ref
             return;
           }
           setSelectedArtworkCategory(id);
-          refetchArtworks({ variables: { params: { username, categoryId: id } } });
+          refetchArtworks({ params: { username, categoryId: id } });
           return;
         }
         if (id === searchArtworkCategory) {
