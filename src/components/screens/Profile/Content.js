@@ -29,35 +29,44 @@ const ProfileContent = ({
   isSubscribed,
   userCategories,
 }) => {
+  const { pathname } = useLocation();
   const [productsList, setProductsList] = useState([]);
   const [artworksList, setArtworksList] = useState([]);
+  const [initialArtworkPolling, setInitialArtworkPolling] = useState(true);
+  const [initialProductPolling, setInitialProductPolling] = useState(true);
+
   const tab = useMemo(
     () => (followingsCount ? `${tabs.FOLLOWING}: ${followingsCount}` : tabs.FOLLOWING),
     [followingsCount],
   );
 
-  const { pathname } = useLocation();
-  const [initialPolling] = useState(true);
-
   const [requestArtworks, { loading: artworkLoading, fetchMore: fetchMoreArtworks }] = useLazyQuery(
     getUserArtworks,
     {
-      fetchPolicy: 'cache-and-network',
-      // notifyOnNetworkStatusChange: true,
       // pollInterval: 30000,
-      // onCompleted: () => setInitialPolling(false),
-      onCompleted: ({ getUserArtworks }) => setArtworksList(getUserArtworks),
+      fetchPolicy: 'cache-and-network',
+      notifyOnNetworkStatusChange: true,
+      onCompleted: ({ getUserArtworks }) => {
+        if (initialArtworkPolling) {
+          setInitialArtworkPolling(false);
+          setArtworksList(getUserArtworks);
+        }
+      },
     },
   );
 
   const [requestProducts, { loading: productLoading, fetchMore: fetchMoreProducts }] = useLazyQuery(
     getUserProducts,
     {
-      fetchPolicy: 'cache-and-network',
-      // notifyOnNetworkStatusChange: true,
       // pollInterval: 30000,
-      // onCompleted: () => setInitialPolling(false),
-      onCompleted: ({ getUserProducts }) => setProductsList(getUserProducts),
+      fetchPolicy: 'cache-and-network',
+      notifyOnNetworkStatusChange: true,
+      onCompleted: ({ getUserProducts }) => {
+        if (initialProductPolling) {
+          setInitialProductPolling(false);
+          setProductsList(getUserProducts);
+        }
+      },
     },
   );
   const refetchArtworks = useCallback(
@@ -93,8 +102,8 @@ const ProfileContent = ({
         artworksCount={artworksCount}
         productsList={productsList}
         artworksList={artworksList}
-        loadingProducts={initialPolling && productLoading}
-        loadingArtworks={initialPolling && artworkLoading}
+        loadingProducts={productLoading}
+        loadingArtworks={artworkLoading}
         refetchProducts={refetchProducts}
         refetchArtworks={refetchArtworks}
         userCategories={userCategories}
