@@ -78,13 +78,6 @@ const Tag = styled('span')`
     `}
 `;
 
-const getSelected = (id, selectedCategory) => {
-  if (id) {
-    return selectedCategory === id;
-  }
-  return !selectedCategory;
-};
-
 const LeftArrow = () => {
   const { isFirstItemVisible, scrollPrev } = useContext(VisibilityContext);
 
@@ -121,7 +114,7 @@ const Card = ({ id, name, selectedCategory, searchByCategory }) => {
   // }, [selectedArtworkCategory, visibility]);
 
   return (
-    <Tag selected={getSelected(id, selectedCategory)} onClick={searchByCategory(id)}>
+    <Tag selected={selectedCategory === id} onClick={searchByCategory(id)}>
       {name}
     </Tag>
   );
@@ -131,8 +124,8 @@ const Categories = ({ isProduct, isProfilePage, categories, refetchProducts, ref
   const { pathname } = useLocation();
   const searchProductCategory = useReactiveVar(searchProductCategoryVar);
   const searchArtworkCategory = useReactiveVar(searchArtworkCategoryVar);
-  const [selectedProductCategory, setSelectedProductCategory] = useState();
-  const [selectedArtworkCategory, setSelectedArtworkCategory] = useState();
+  const [selectedProductCategory, setSelectedProductCategory] = useState('all');
+  const [selectedArtworkCategory, setSelectedArtworkCategory] = useState('all');
 
   const username = useMemo(() => pathname.split('/').slice(-1)[0] || undefined, [pathname]);
   const selectedCategory = useMemo(() => {
@@ -200,11 +193,23 @@ const Categories = ({ isProduct, isProfilePage, categories, refetchProducts, ref
     <Wrapper>
       <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
         <Card
-          itemId={0}
+          key='all'
+          itemId='all'
+          id='all'
           name='All'
           selectedCategory={selectedCategory}
           searchByCategory={searchByCategory}
         />
+        {isProduct && (
+          <Card
+            key='free'
+            itemId='free'
+            id='free'
+            name='Free for Subscriber'
+            selectedCategory={selectedCategory}
+            searchByCategory={searchByCategory}
+          />
+        )}
         {categories.map(({ id, name }) => (
           <Card
             key={id}
