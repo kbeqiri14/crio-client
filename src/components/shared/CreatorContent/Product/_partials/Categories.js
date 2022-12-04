@@ -216,9 +216,6 @@ const Categories = ({ isProduct, isProfilePage, categories, refetchProducts, ref
             itemId={id}
             id={id}
             name={name}
-            isProfilePage={isProfilePage}
-            searchProductCategory={searchProductCategory}
-            selectedArtworkCategory={selectedArtworkCategory}
             selectedCategory={selectedCategory}
             searchByCategory={searchByCategory}
           />
