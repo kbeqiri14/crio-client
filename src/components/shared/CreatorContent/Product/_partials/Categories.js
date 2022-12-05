@@ -1,4 +1,5 @@
-import React, { useContext, memo, useCallback } from 'react';
+import React, { memo, useCallback, useContext, useMemo, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
 import styled, { css } from 'styled-components';
 import { useReactiveVar } from '@apollo/client';
@@ -77,13 +78,6 @@ const Tag = styled('span')`
     `}
 `;
 
-const getSelected = (id, selectedCategory) => {
-  if (id) {
-    return selectedCategory === id;
-  }
-  return !selectedCategory;
-};
-
 const LeftArrow = () => {
   const { isFirstItemVisible, scrollPrev } = useContext(VisibilityContext);
 
@@ -104,10 +98,8 @@ const RightArrow = () => {
   );
 };
 
-const Card = ({ id, name, isProduct, searchByCategory }) => {
+const Card = ({ id, name, selectedCategory, searchByCategory }) => {
   // const visibility = useContext(VisibilityContext);
-  const selectedProductCategory = useReactiveVar(searchProductCategoryVar);
-  const selectedArtworkCategory = useReactiveVar(searchArtworkCategoryVar);
 
   // useEffect(() => {
   //   if (!visibility.isItemVisible(selectedProductCategory || 0)) {
@@ -122,27 +114,59 @@ const Card = ({ id, name, isProduct, searchByCategory }) => {
   // }, [selectedArtworkCategory, visibility]);
 
   return (
-    <Tag
-      selected={getSelected(id, isProduct ? selectedProductCategory : selectedArtworkCategory)}
-      onClick={searchByCategory(id)}
-    >
+    <Tag selected={selectedCategory === id} onClick={searchByCategory(id)}>
       {name}
     </Tag>
   );
 };
 
-const Categories = ({ isProduct, categories }) => {
-  const selectedProductCategory = useReactiveVar(searchProductCategoryVar);
-  const selectedArtworkCategory = useReactiveVar(searchArtworkCategoryVar);
+const Categories = ({ isProduct, isProfilePage, categories, refetchProducts, refetchArtworks }) => {
+  const { pathname } = useLocation();
+  const searchProductCategory = useReactiveVar(searchProductCategoryVar);
+  const searchArtworkCategory = useReactiveVar(searchArtworkCategoryVar);
+  const [selectedProductCategory, setSelectedProductCategory] = useState('all');
+  const [selectedArtworkCategory, setSelectedArtworkCategory] = useState('all');
+
+  const username = useMemo(() => pathname.split('/').slice(-1)[0] || undefined, [pathname]);
+  const selectedCategory = useMemo(() => {
+    if (isProduct) {
+      return isProfilePage ? selectedProductCategory : searchProductCategory;
+    }
+    return isProfilePage ? selectedArtworkCategory : searchArtworkCategory;
+  }, [
+    isProduct,
+    isProfilePage,
+    searchArtworkCategory,
+    searchProductCategory,
+    selectedArtworkCategory,
+    selectedProductCategory,
+  ]);
+
   const searchByCategory = useCallback(
     (id) => () => {
       if (isProduct) {
-        if (id === selectedProductCategory) {
+        if (isProfilePage) {
+          if (id === selectedProductCategory) {
+            return;
+          }
+          setSelectedProductCategory(id);
+          refetchProducts({ params: { username, categoryId: id } });
+          return;
+        }
+        if (id === searchProductCategory) {
           return;
         }
         searchProductCategoryVar(id);
       } else {
-        if (id === selectedArtworkCategory) {
+        if (isProfilePage) {
+          if (id === selectedArtworkCategory) {
+            return;
+          }
+          setSelectedArtworkCategory(id);
+          refetchArtworks({ params: { username, categoryId: id } });
+          return;
+        }
+        if (id === searchArtworkCategory) {
           return;
         }
         searchArtworkCategoryVar(id);
@@ -150,20 +174,49 @@ const Categories = ({ isProduct, categories }) => {
       refetchArtworkVar(true);
       refetchMarketplaceVar(true);
     },
-    [isProduct, selectedArtworkCategory, selectedProductCategory],
+    [
+      username,
+      isProduct,
+      isProfilePage,
+      refetchProducts,
+      refetchArtworks,
+      searchProductCategory,
+      searchArtworkCategory,
+      selectedProductCategory,
+      selectedArtworkCategory,
+      setSelectedProductCategory,
+      setSelectedArtworkCategory,
+    ],
   );
 
   return (
     <Wrapper>
       <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
-        <Card itemId={0} name='All' isProduct={isProduct} searchByCategory={searchByCategory} />
+        <Card
+          key='all'
+          itemId='all'
+          id='all'
+          name='All'
+          selectedCategory={selectedCategory}
+          searchByCategory={searchByCategory}
+        />
+        {isProduct && (
+          <Card
+            key='free'
+            itemId='free'
+            id='free'
+            name='Free for Subscriber'
+            selectedCategory={selectedCategory}
+            searchByCategory={searchByCategory}
+          />
+        )}
         {categories.map(({ id, name }) => (
           <Card
             key={id}
             itemId={id}
             id={id}
             name={name}
-            isProduct={isProduct}
+            selectedCategory={selectedCategory}
             searchByCategory={searchByCategory}
           />
         ))}

@@ -31,8 +31,8 @@ export const getArtwork = gql`
 `;
 
 export const getUserArtworks = gql`
-  query getUserArtworks($username: String) {
-    getUserArtworks(username: $username) {
+  query getUserArtworks($params: UserAttributesParams!) {
+    getUserArtworks(params: $params) {
       ...ArtworkDetailAttributes
     }
   }

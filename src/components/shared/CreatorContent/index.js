@@ -4,11 +4,11 @@ import styled from 'styled-components';
 
 import history from '@configs/history';
 import { Tabs } from '@ui-kit';
-import Categories from './Product/_partials/Categories';
 import EmptyState from '@shared/EmptyState';
 import LoadMoreButton from './LoadMoreButton';
 import ArtworksList from './Artwork/ArtworksList';
 import ProductsList from './Product/ProductsList';
+import Categories from './Product/_partials/Categories';
 import useCategories from '@app/hooks/useCategories';
 
 const Wrapper = styled('div')`
@@ -46,6 +46,9 @@ export const Content = ({
   loadingMoreArtworks,
   loadMoreProducts,
   loadMoreArtworks,
+  refetchProducts,
+  refetchArtworks,
+  userCategories,
 }) => {
   const { pathname } = useLocation(tabs.MARKETPLACE);
   const [activeKey, setActiveKey] = useState(
@@ -86,14 +89,18 @@ export const Content = ({
             key: tabs.MARKETPLACE,
             children: (
               <>
-                {!isProfilePage && (
-                  <Categories
-                    isProduct
-                    categories={categories.products.filter(
-                      ({ name }) => name !== 'Digital Product',
-                    )}
-                  />
-                )}
+                <Categories
+                  isProduct
+                  isProfilePage={isProfilePage}
+                  categories={
+                    userCategories
+                      ? categories.products
+                          .filter(({ name }) => name !== 'Digital Product')
+                          .filter(({ id }) => userCategories?.productCategories?.includes(id))
+                      : categories.products.filter(({ name }) => name !== 'Digital Product')
+                  }
+                  refetchProducts={refetchProducts}
+                />
                 {!loadingProducts && !productsCount && !productsList?.length && (
                   <EmptyState {...props} isMarketplace={true} />
                 )}
@@ -115,7 +122,17 @@ export const Content = ({
             key: tabs.ARTWORK,
             children: (
               <>
-                {!isProfilePage && <Categories categories={categories.contents} />}
+                <Categories
+                  isProfilePage={isProfilePage}
+                  categories={
+                    userCategories
+                      ? categories.contents.filter(({ id }) =>
+                          userCategories?.artworkCategories?.includes(id),
+                        )
+                      : categories.contents
+                  }
+                  refetchArtworks={refetchArtworks}
+                />
                 {!loadingArtworks && !artworksCount && !artworksList?.length && (
                   <EmptyState {...props} />
                 )}
@@ -133,7 +150,7 @@ export const Content = ({
             ),
           },
         ]}
-      ></Tabs>
+      />
     </Wrapper>
   );
 };

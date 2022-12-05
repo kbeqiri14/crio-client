@@ -179,12 +179,12 @@ const Product = ({
           <Col>
             <Row align='middle' gutter={[0, 8]}>
               <Col span={24}>
-                <Text level={4} style={style} ellipsis={{ rows: 1, tooltip: title }}>
+                <Text level={4} style={style} ellipsis={{ tooltip: title }}>
                   {title}
                 </Text>
               </Col>
               <Col span={24}>
-                <Text level={4} style={style} ellipsis={{ rows: 1, tooltip: priceText }}>
+                <Text level={4} style={style} ellipsis={{ tooltip: priceText }}>
                   {priceText}
                 </Text>
               </Col>

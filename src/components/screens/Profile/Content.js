@@ -1,4 +1,4 @@
-import { memo, useMemo, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { useLazyQuery } from '@apollo/client';
@@ -12,8 +12,6 @@ import Content from '@shared/CreatorContent';
 const Wrapper = styled('div')`
   padding: 40px 22px;
 `;
-
-const { TabPane } = Tabs;
 
 const tabs = {
   MARKETPLACE: 'Marketplace',
@@ -29,43 +27,72 @@ const ProfileContent = ({
   isCreator,
   isProfile,
   isSubscribed,
+  userCategories,
 }) => {
+  const { pathname } = useLocation();
+  const [productsList, setProductsList] = useState([]);
+  const [artworksList, setArtworksList] = useState([]);
+  const [initialArtworkPolling, setInitialArtworkPolling] = useState(true);
+  const [initialProductPolling, setInitialProductPolling] = useState(true);
+
   const tab = useMemo(
     () => (followingsCount ? `${tabs.FOLLOWING}: ${followingsCount}` : tabs.FOLLOWING),
     [followingsCount],
   );
 
-  const { pathname } = useLocation();
-  const [initialPolling, setInitialPolling] = useState(true);
-
-  const [requestArtworks, { data: Artworks, loading: artworkLoading }] = useLazyQuery(
+  const [requestArtworks, { loading: artworkLoading, fetchMore: fetchMoreArtworks }] = useLazyQuery(
     getUserArtworks,
     {
-      variables: { username: pathname.split('/').slice(-1)[0] || undefined },
-      fetchPolicy: 'no-cache',
+      // pollInterval: 30000,
+      fetchPolicy: 'cache-and-network',
       notifyOnNetworkStatusChange: true,
-      pollInterval: 30000,
-      onCompleted: () => setInitialPolling(false),
+      onCompleted: ({ getUserArtworks }) => {
+        if (initialArtworkPolling) {
+          setInitialArtworkPolling(false);
+          setArtworksList(getUserArtworks);
+        }
+      },
     },
   );
 
-  const [requestProducts, { data: Products, loading: productLoading }] = useLazyQuery(
+  const [requestProducts, { loading: productLoading, fetchMore: fetchMoreProducts }] = useLazyQuery(
     getUserProducts,
     {
-      variables: { username: pathname.split('/').slice(-1)[0] || undefined },
-      fetchPolicy: 'no-cache',
+      // pollInterval: 30000,
+      fetchPolicy: 'cache-and-network',
       notifyOnNetworkStatusChange: true,
-      pollInterval: 30000,
-      onCompleted: () => setInitialPolling(false),
+      onCompleted: ({ getUserProducts }) => {
+        if (initialProductPolling) {
+          setInitialProductPolling(false);
+          setProductsList(getUserProducts);
+        }
+      },
     },
+  );
+  const refetchArtworks = useCallback(
+    (variables) =>
+      fetchMoreArtworks({
+        variables,
+        updateQuery: (_, { fetchMoreResult }) => setArtworksList(fetchMoreResult.getUserArtworks),
+      }),
+    [fetchMoreArtworks],
+  );
+  const refetchProducts = useCallback(
+    (variables) =>
+      fetchMoreProducts({
+        variables,
+        updateQuery: (_, { fetchMoreResult }) => setProductsList(fetchMoreResult.getUserProducts),
+      }),
+    [fetchMoreProducts],
   );
 
   useEffect(() => {
     if (isCreator) {
-      requestArtworks();
-      requestProducts();
+      const username = pathname.split('/').slice(-1)[0] || undefined;
+      requestArtworks({ variables: { params: { username } } });
+      requestProducts({ variables: { params: { username } } });
     }
-  }, [isCreator, requestArtworks, requestProducts]);
+  }, [pathname, isCreator, requestArtworks, requestProducts]);
 
   if (isCreator) {
     return (
@@ -73,25 +100,34 @@ const ProfileContent = ({
         isProfile={isProfile}
         productsCount={productsCount}
         artworksCount={artworksCount}
-        productsList={Products?.getUserProducts}
-        artworksList={Artworks?.getUserArtworks}
-        loadingProducts={initialPolling && productLoading}
-        loadingArtworks={initialPolling && artworkLoading}
+        productsList={productsList}
+        artworksList={artworksList}
+        loadingProducts={productLoading}
+        loadingArtworks={artworkLoading}
+        refetchProducts={refetchProducts}
+        refetchArtworks={refetchArtworks}
+        userCategories={userCategories}
       />
     );
   }
   return (
     <Wrapper>
-      <Tabs>
-        <TabPane key='Following' tab={tab}>
-          <Followings
-            username={username}
-            isProfile={isProfile}
-            isSubscribed={isSubscribed}
-            followingsCount={followingsCount}
-          />
-        </TabPane>
-      </Tabs>
+      <Tabs
+        items={[
+          {
+            label: tab,
+            key: 'Following',
+            children: (
+              <Followings
+                username={username}
+                isProfile={isProfile}
+                isSubscribed={isSubscribed}
+                followingsCount={followingsCount}
+              />
+            ),
+          },
+        ]}
+      />
     </Wrapper>
   );
 };

@@ -133,7 +133,7 @@ const TopProducts = ({
         <Col>
           <div className='card' onClick={showProduct} style={{ background: '#2B2B2B' }}>
             <img alt='product' src={src} />
-            <Text color='dark25' level={1} ellipsis={{ rows: 1, tooltip: title }}>
+            <Text color='dark25' level={1} ellipsis={{ tooltip: title }}>
               {title}
             </Text>
           </div>

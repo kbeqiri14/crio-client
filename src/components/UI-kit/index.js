@@ -18,7 +18,6 @@ export { default as Row } from './Layout/Grid/Row';
   Navigation
 */
 export { default as Dropdown } from './Navigation/Dropdown';
-export { default as Menu } from './Navigation/Menu';
 
 /*
   Data Display

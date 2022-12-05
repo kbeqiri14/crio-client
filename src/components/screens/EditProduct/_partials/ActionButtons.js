@@ -36,6 +36,19 @@ const ProductActionButtons = ({
             me: {
               ...existingLoggedInUser?.me,
               productsCount: existingLoggedInUser?.me?.productsCount + 1,
+              categories: {
+                ...existingLoggedInUser?.me?.categories,
+                ...(existingLoggedInUser?.me?.categories?.productCategories?.some(
+                  (item) => item === categoryId,
+                )
+                  ? {}
+                  : {
+                      productCategories: [
+                        ...existingLoggedInUser?.me?.categories?.productCategories,
+                        categoryId,
+                      ],
+                    }),
+              },
             },
           },
         });
