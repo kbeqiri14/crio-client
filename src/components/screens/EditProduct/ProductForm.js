@@ -288,7 +288,7 @@ const ProductForm = ({ state }) => {
                         {...field}
                         level={3}
                         maxLength={1000}
-                        autoSize={{ minRows: 3, maxRows: 3 }}
+                        autoSize={{ minRows: 5, maxRows: 9 }}
                         placeholder='Write here'
                       />
                     )}
