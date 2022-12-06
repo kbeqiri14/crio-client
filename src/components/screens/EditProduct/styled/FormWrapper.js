@@ -55,6 +55,30 @@ const FormWrapper = styled('div')`
       margin-top: 137px;
     }
   }
+
+  .uploaded-images {
+    img {
+      width: 100%;
+      height: auto;
+      max-height: 232px;
+      object-fit: cover;
+    }
+    .remove {
+      position: absolute;
+      top: 4px;
+      right: 10px;
+      opacity: 0;
+      transition: visibility 0s, opacity 0.4s linear;
+      visibility: hidden;
+      cursor: pointer;
+    }
+    :hover {
+      .remove {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
 `;
 
 export default FormWrapper;

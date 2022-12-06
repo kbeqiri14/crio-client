@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useMemo, useState, Fragment } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState, Fragment, useReducer } from 'react';
 import { Link } from 'react-router-dom';
 import { Controller, useForm } from 'react-hook-form';
 import { useQuery } from '@apollo/client';
@@ -6,6 +6,7 @@ import { useQuery } from '@apollo/client';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useCategories from '@app/hooks/useCategories';
 import { getConnectAccount } from '@app/graphql/queries/payment-method.query';
+import { ReactComponent as CloaseIcon } from '@svgs/close.svg';
 import { ReactComponent as ArrowIcon } from '@svgs/arrow.svg';
 import { ReactComponent as CloseIcon } from '@svgs/close.svg';
 import {
@@ -32,6 +33,22 @@ import ActionButtons from './_partials/ActionButtons';
 import Broadcast from './_partials/Broadcast';
 import FormWrapper from './styled/FormWrapper';
 
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'ADD_IMAGE':
+      return [...state, action.payload];
+
+    case 'DELETE_IMAGE':
+      const newState = state.filter((item, index) => {
+        return index !== action.payload.id;
+      });
+      return newState;
+
+    default:
+      return state;
+  }
+};
+
 const ProductForm = ({ state }) => {
   const { user } = useLoggedInUser();
   const { categories } = useCategories('product');
@@ -41,11 +58,14 @@ const ProductForm = ({ state }) => {
   const [limitVisible, setLimitVisible] = useState(state?.limit !== null && state?.limit >= 0);
   const [file, setFile] = useState(state?.file);
   const [files, setFiles] = useState([]);
-  const [image, setImage] = useState(
+
+  const [images, dispatch] = useReducer(
+    reducer,
     state?.thumbnail && !state?.thumbnail?.startsWith('/static/media/product')
-      ? { src: state.thumbnail }
-      : {},
+      ? [{ src: state.thumbnail }]
+      : [],
   );
+
   const hideBroadcast = useCallback(() => setVisibleBroadcast(false), []);
   const { data: stripeAccount, loading } = useQuery(getConnectAccount, {
     fetchPolicy: 'cache-and-network',
@@ -107,8 +127,8 @@ const ProductForm = ({ state }) => {
           (limitVisible && limit && +limit !== state?.limit) ||
           !!limitVisible !== !!state?.limit ||
           accessibility !== state?.accessibility ||
-          image?.file ||
-          (image.src !== state?.thumbnail &&
+          images[0]?.file ||
+          (images[0].src !== state?.thumbnail &&
             !state?.thumbnail?.startsWith('/static/media/product')))
       ),
     [
@@ -119,8 +139,7 @@ const ProductForm = ({ state }) => {
       limit,
       accessibility,
       limitVisible,
-      image?.file,
-      image.src,
+      images,
       state?.title,
       state?.description,
       state?.price,
@@ -383,8 +402,41 @@ const ProductForm = ({ state }) => {
                   <Text level={3}>Thumbnail</Text>
                 </Col>
                 <Col span={18} padding_bottom={32}>
-                  <DraggerImage control={control} image={image} setImage={setImage} />
+                  <DraggerImage control={control} dispatch={dispatch} />
                 </Col>
+                {images.length && (
+                  <Col span={18} padding_bottom={32}>
+                    <Row gutter={12} className='uploaded-images'>
+                      {images[0]?.src && (
+                        <Col span={8}>
+                          <img alt='cover' src={images[0]?.src} />
+                          <CloaseIcon
+                            className='remove'
+                            onClick={() => dispatch({ type: 'DELETE_IMAGE', payload: { id: 0 } })}
+                          />
+                        </Col>
+                      )}
+                      {images[1]?.src && (
+                        <Col span={8}>
+                          <img alt='cover' src={images[1]?.src} />
+                          <CloaseIcon
+                            className='remove'
+                            onClick={() => dispatch({ type: 'DELETE_IMAGE', payload: { id: 1 } })}
+                          />
+                        </Col>
+                      )}
+                      {images[2]?.src && (
+                        <Col span={8}>
+                          <img alt='cover' src={images[2]?.src} />
+                          <CloaseIcon
+                            className='remove'
+                            onClick={() => dispatch({ type: 'DELETE_IMAGE', payload: { id: 2 } })}
+                          />
+                        </Col>
+                      )}
+                    </Row>
+                  </Col>
+                )}
                 {isDigitalProduct && (
                   <Fragment>
                     <Col span={18} align='start'>
@@ -460,7 +512,7 @@ const ProductForm = ({ state }) => {
                 <Col span={18}>
                   <ActionButtons
                     state={state}
-                    image={image}
+                    image={images[0]}
                     disabled={disabled}
                     categoryId={categoryId}
                     uploading={uploading}
