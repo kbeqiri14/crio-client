@@ -6,7 +6,6 @@ import { useQuery } from '@apollo/client';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useCategories from '@app/hooks/useCategories';
 import { getConnectAccount } from '@app/graphql/queries/payment-method.query';
-import { ReactComponent as CloaseIcon } from '@svgs/close.svg';
 import { ReactComponent as ArrowIcon } from '@svgs/arrow.svg';
 import { ReactComponent as CloseIcon } from '@svgs/close.svg';
 import {
@@ -401,39 +400,23 @@ const ProductForm = ({ state }) => {
                 <Col span={18} align='start'>
                   <Text level={3}>Thumbnail</Text>
                 </Col>
-                <Col span={18} padding_bottom={32}>
+                <Col span={18} padding_bottom={32} className='dragger'>
                   <DraggerImage control={control} dispatch={dispatch} />
                 </Col>
                 {images.length && (
                   <Col span={18} padding_bottom={32}>
-                    <Row gutter={12} className='uploaded-images'>
-                      {images[0]?.src && (
-                        <Col span={8}>
-                          <img alt='cover' src={images[0]?.src} />
-                          <CloaseIcon
+                    <Row gutter={15}>
+                      {images.map(({ src }, index) => (
+                        <Col key={index} span={8} className='uploaded-image'>
+                          <img alt='cover' src={src} />
+                          <CloseIcon
                             className='remove'
-                            onClick={() => dispatch({ type: 'DELETE_IMAGE', payload: { id: 0 } })}
+                            onClick={() =>
+                              dispatch({ type: 'DELETE_IMAGE', payload: { id: index } })
+                            }
                           />
                         </Col>
-                      )}
-                      {images[1]?.src && (
-                        <Col span={8}>
-                          <img alt='cover' src={images[1]?.src} />
-                          <CloaseIcon
-                            className='remove'
-                            onClick={() => dispatch({ type: 'DELETE_IMAGE', payload: { id: 1 } })}
-                          />
-                        </Col>
-                      )}
-                      {images[2]?.src && (
-                        <Col span={8}>
-                          <img alt='cover' src={images[2]?.src} />
-                          <CloaseIcon
-                            className='remove'
-                            onClick={() => dispatch({ type: 'DELETE_IMAGE', payload: { id: 2 } })}
-                          />
-                        </Col>
-                      )}
+                      ))}
                     </Row>
                   </Col>
                 )}

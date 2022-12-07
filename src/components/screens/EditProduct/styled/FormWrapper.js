@@ -55,18 +55,22 @@ const FormWrapper = styled('div')`
       margin-top: 137px;
     }
   }
-
-  .uploaded-images {
+  .dragger {
+    .ant-upload.ant-upload-drag {
+      height: 232px;
+    }
+  }
+  .uploaded-image {
     img {
-      width: 100%;
-      height: auto;
-      max-height: 232px;
+      width: 178px;
+      height: 178px;
       object-fit: cover;
+      border-radius: 4px;
     }
     .remove {
       position: absolute;
-      top: 4px;
-      right: 10px;
+      top: 8px;
+      right: 12px;
       opacity: 0;
       transition: visibility 0s, opacity 0.4s linear;
       visibility: hidden;
