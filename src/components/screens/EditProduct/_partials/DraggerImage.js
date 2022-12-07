@@ -8,8 +8,10 @@ import ImageDraggerWrapper from '../styled/ImageDraggerWrapper';
 
 const { Dragger } = Upload;
 
-const DraggerImage = ({ control, dispatch }) => {
+const DraggerImage = ({ control, dispatch, images }) => {
   const [compressing, setCompressing] = useState(false);
+
+  const disabled = useMemo(() => images.length > 2, [images]);
   const props = useMemo(
     () => ({
       name: 'file',
@@ -43,7 +45,7 @@ const DraggerImage = ({ control, dispatch }) => {
         render={({ field }) => (
           <>
             <Spin spinning={compressing}>
-              <Dragger {...props} {...field} multiple>
+              <Dragger {...props} {...field} disabled={disabled} multiple>
                 <Title level={2} className='upload-text'>
                   {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                   Drag and drop an image, or <a>Upload</a>
