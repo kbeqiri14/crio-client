@@ -1,9 +1,9 @@
-import { memo, useState, useMemo, Fragment } from 'react';
+import { memo, useState, useMemo } from 'react';
 import { Controller } from 'react-hook-form';
 import { Spin } from 'antd';
 import imageCompression from 'browser-image-compression';
 
-import { Badge, Title, Upload } from '@ui-kit';
+import { Badge, Col, Row, Title, Upload } from '@ui-kit';
 const { Dragger } = Upload;
 
 const DraggerImage = ({ control, dispatch }) => {
@@ -12,6 +12,7 @@ const DraggerImage = ({ control, dispatch }) => {
     () => ({
       name: 'file',
       accept: 'image/*',
+      multiple: true,
       showUploadList: false,
       listType: 'picture',
       beforeUpload(file) {
@@ -40,21 +41,21 @@ const DraggerImage = ({ control, dispatch }) => {
       render={({ field }) => (
         <>
           <Spin spinning={compressing}>
-            <Dragger {...props} {...field} multiple>
-              <Title level={2} className='upload-text'>
-                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                Drag and drop an image, or <a>Upload</a>
-              </Title>
-              <Badge
-                status='default'
-                text='HI-Res images (png, jpg, gif)'
-                className='upload-text'
-              />
-              <Badge
-                status='default'
-                text='Maximum uploaded image count: 3'
-                className='upload-text'
-              />
+            <Dragger {...props} {...field}>
+              <Row justify='center' gutter={[0, 20]}>
+                <Col>
+                  <Title level={2}>
+                    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                    Drag and drop an image, or <a>Upload</a>
+                  </Title>
+                </Col>
+                <Col>
+                  <Badge status='default' text='HI-Res images (png, jpg, gif)' />
+                </Col>
+                <Col>
+                  <Badge status='default' text='Maximum uploaded image count: 3' />
+                </Col>
+              </Row>
             </Dragger>
           </Spin>
         </>

@@ -20,9 +20,6 @@ const FormWrapper = styled('div')`
       visibility: visible;
     }
   }
-  .upload-text {
-    padding-bottom: 10px;
-  }
   .limit-section {
     display: flex;
     align-items: center;
