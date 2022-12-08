@@ -401,7 +401,7 @@ const ProductForm = ({ state }) => {
                   <Text level={3}>Thumbnail</Text>
                 </Col>
                 <Col span={18} padding_bottom={32} className='dragger'>
-                  <DraggerImage control={control} dispatch={dispatch} />
+                  <DraggerImage control={control} dispatch={dispatch} images={images} />
                 </Col>
                 {images.length && (
                   <Col span={18} padding_bottom={32}>

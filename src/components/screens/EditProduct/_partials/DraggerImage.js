@@ -6,8 +6,11 @@ import imageCompression from 'browser-image-compression';
 import { Badge, Col, Row, Title, Upload } from '@ui-kit';
 const { Dragger } = Upload;
 
-const DraggerImage = ({ control, dispatch }) => {
+const DraggerImage = ({ control, dispatch, images }) => {
   const [compressing, setCompressing] = useState(false);
+
+  // const disabled = useMemo(() => images.length > 2, [images]);
+
   const props = useMemo(
     () => ({
       name: 'file',
@@ -16,6 +19,9 @@ const DraggerImage = ({ control, dispatch }) => {
       showUploadList: false,
       listType: 'picture',
       beforeUpload(file) {
+        if (images.length > 2) {
+          return;
+        }
         const compression = async () => {
           setCompressing(true);
           const compressionFile = await imageCompression(file, {
@@ -31,7 +37,7 @@ const DraggerImage = ({ control, dispatch }) => {
         return false;
       },
     }),
-    [dispatch],
+    [images, dispatch],
   );
 
   return (
