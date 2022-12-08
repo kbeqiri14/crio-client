@@ -1,6 +1,6 @@
-import { memo, useState, useMemo, Fragment } from 'react';
-import { Controller } from 'react-hook-form';
 import { Spin } from 'antd';
+import { Controller } from 'react-hook-form';
+import { memo, useState, useMemo } from 'react';
 import imageCompression from 'browser-image-compression';
 
 import { Badge, Title, Upload } from '@ui-kit';
@@ -9,7 +9,8 @@ const { Dragger } = Upload;
 const DraggerImage = ({ control, dispatch, images }) => {
   const [compressing, setCompressing] = useState(false);
 
-  const disabled = useMemo(() => images.length > 2, [images]);
+  // const disabled = useMemo(() => images.length > 2, [images]);
+
   const props = useMemo(
     () => ({
       name: 'file',
@@ -17,6 +18,9 @@ const DraggerImage = ({ control, dispatch, images }) => {
       showUploadList: false,
       listType: 'picture',
       beforeUpload(file) {
+        if (images.length > 2) {
+          return;
+        }
         const compression = async () => {
           setCompressing(true);
           const compressionFile = await imageCompression(file, {
@@ -32,7 +36,7 @@ const DraggerImage = ({ control, dispatch, images }) => {
         return false;
       },
     }),
-    [dispatch],
+    [images, dispatch],
   );
 
   return (
@@ -42,10 +46,10 @@ const DraggerImage = ({ control, dispatch, images }) => {
       render={({ field }) => (
         <>
           <Spin spinning={compressing}>
-            <Dragger {...props} {...field} disabled={disabled} multiple>
+            <Dragger {...props} {...field} disabled={false} multiple>
               <Title level={2} className='upload-text'>
                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                Drag and drop an image, or <a>Upload</a>
+                Drag and drop an image, or <a disabled={false}>Upload</a>
               </Title>
               <Badge
                 status='default'
