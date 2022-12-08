@@ -401,7 +401,7 @@ const ProductForm = ({ state }) => {
                   <Text level={3}>Thumbnail</Text>
                 </Col>
                 <Col span={18} padding_bottom={32} className='dragger'>
-                  <DraggerImage control={control} dispatch={dispatch} images={images} />
+                  <DraggerImage filesCount={images.length} control={control} dispatch={dispatch} />
                 </Col>
                 {images.length && (
                   <Col span={18} padding_bottom={32}>
@@ -495,7 +495,7 @@ const ProductForm = ({ state }) => {
                 <Col span={18}>
                   <ActionButtons
                     state={state}
-                    image={images[0]}
+                    images={images}
                     disabled={disabled}
                     categoryId={categoryId}
                     uploading={uploading}

@@ -1,15 +1,21 @@
-import { memo, useState, useMemo } from 'react';
+import { memo, useState, useMemo, useEffect } from 'react';
 import { Controller } from 'react-hook-form';
 import { Spin } from 'antd';
 import imageCompression from 'browser-image-compression';
 
-import { Badge, Col, Row, Title, Upload } from '@ui-kit';
+import { Badge, Col, notification, Row, Title, Upload } from '@ui-kit';
 const { Dragger } = Upload;
 
-const DraggerImage = ({ control, dispatch, images }) => {
+const DraggerImage = ({ filesCount, control, dispatch }) => {
+  const [visible, setVisible] = useState(false);
   const [compressing, setCompressing] = useState(false);
 
-  // const disabled = useMemo(() => images.length > 2, [images]);
+  useEffect(() => {
+    if (visible) {
+      notification.errorToast(`You can't upload more then 3 thumbnail`);
+      setVisible(false);
+    }
+  }, [visible]);
 
   const props = useMemo(
     () => ({
@@ -18,9 +24,10 @@ const DraggerImage = ({ control, dispatch, images }) => {
       multiple: true,
       showUploadList: false,
       listType: 'picture',
-      beforeUpload(file) {
-        if (images.length > 2) {
-          return;
+      beforeUpload(file, fileList) {
+        if (filesCount > 3 || filesCount + fileList.length > 3) {
+          setVisible(true);
+          return false;
         }
         const compression = async () => {
           setCompressing(true);
@@ -37,12 +44,12 @@ const DraggerImage = ({ control, dispatch, images }) => {
         return false;
       },
     }),
-    [images, dispatch],
+    [filesCount, dispatch],
   );
 
   return (
     <Controller
-      name='image'
+      name='images'
       control={control}
       render={({ field }) => (
         <>
