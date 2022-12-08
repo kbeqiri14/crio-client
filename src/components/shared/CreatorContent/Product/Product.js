@@ -1,21 +1,19 @@
-import { Image } from 'antd';
 import { useLocation } from 'react-router-dom';
-import { memo, useCallback, useMemo, useState, useRef } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 
 import Author from '../Author';
 import BuyButton from './BuyButton';
 import history from '@configs/history';
-import { PRODUCTS } from '@configs/constants';
-import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
-import useCategories from '@app/hooks/useCategories';
-import { usePresentation } from '@shared/PresentationView/PresentationContext';
-import { getThumbnail } from '@utils/helpers';
-import { Col, Row, Tag, Text, Carousel } from '@ui-kit';
 import product from '@images/product.png';
 import Actions from '@screens/Video/Actions';
+import { PRODUCTS } from '@configs/constants';
+import { getThumbnail } from '@utils/helpers';
+import { Col, Row, Tag, Text } from '@ui-kit';
+import useCategories from '@app/hooks/useCategories';
 import { ProductWrapper, ImageWrapper } from './styled';
-import { ReactComponent as ArrowRight } from '@svgs/arrow-right.svg';
-import { ReactComponent as ArrowLeft } from '@svgs/arrow-left.svg';
+import ImagesCarousel from './_partials/ImagesCarousel';
+import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
+import { usePresentation } from '@shared/PresentationView/PresentationContext';
 
 const Product = ({
   providerType,
@@ -36,8 +34,6 @@ const Product = ({
   large = false,
 }) => {
   const [isHovering, setIsHovering] = useState(false);
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const slider = useRef(null);
   const { user } = useLoggedInUser();
   const { categories } = useCategories();
   const { pathname } = useLocation();
@@ -154,111 +150,24 @@ const Product = ({
         onMouseLeave={handleMouseOut}
       >
         {true ? (
-          <div style={{ position: 'relative' }}>
-            {currentSlide !== 0 && (
-              <ArrowLeft
-                onClick={() => {
-                  slider.current.prev();
-                  setCurrentSlide((prev) => --prev);
-                }}
-                className='arrow-left'
-              />
-            )}
-            {currentSlide !== 2 && (
-              <ArrowRight
-                onClick={() => {
-                  slider.current.next();
-                  setCurrentSlide((prev) => ++prev);
-                }}
-                className='arrow-right'
-              />
-            )}
-            <Carousel ref={slider} autoplay={false} dots={false}>
-              <ImageWrapper className={imageClasses}>
-                <Image preview={false} src={src} alt='product' onClick={showProduct} />
-                {categories.products.length && isHovering && categoryId && (
-                  <Tag>{categories.products.find(({ id }) => id === categoryId)?.name}</Tag>
-                )}
-                <div
-                  className={`actions ${isHovering ? 'hover' : ''}`}
-                  onClick={() => !showActions && showProduct()}
-                >
-                  {showActions && (
-                    <Actions
-                      userId={userId}
-                      username={username}
-                      productId={productId}
-                      categoryId={categoryId}
-                      title={title}
-                      description={description}
-                      price={price}
-                      limit={limit}
-                      accessibility={accessibility}
-                      thumbnail={src}
-                      file={file}
-                      isProduct={true}
-                    />
-                  )}
-                </div>
-              </ImageWrapper>
-
-              <ImageWrapper className={imageClasses}>
-                <Image preview={false} src={src} alt='product' onClick={showProduct} />
-                {categories.products.length && isHovering && categoryId && (
-                  <Tag>{categories.products.find(({ id }) => id === categoryId)?.name}</Tag>
-                )}
-                <div
-                  className={`actions ${isHovering ? 'hover' : ''}`}
-                  onClick={() => !showActions && showProduct()}
-                >
-                  {showActions && (
-                    <Actions
-                      userId={userId}
-                      username={username}
-                      productId={productId}
-                      categoryId={categoryId}
-                      title={title}
-                      description={description}
-                      price={price}
-                      limit={limit}
-                      accessibility={accessibility}
-                      thumbnail={src}
-                      file={file}
-                      isProduct={true}
-                    />
-                  )}
-                </div>
-              </ImageWrapper>
-
-              <ImageWrapper className={imageClasses}>
-                <Image preview={false} src={src} alt='product' onClick={showProduct} />
-                {categories.products.length && isHovering && categoryId && (
-                  <Tag>{categories.products.find(({ id }) => id === categoryId)?.name}</Tag>
-                )}
-                <div
-                  className={`actions ${isHovering ? 'hover' : ''}`}
-                  onClick={() => !showActions && showProduct()}
-                >
-                  {showActions && (
-                    <Actions
-                      userId={userId}
-                      username={username}
-                      productId={productId}
-                      categoryId={categoryId}
-                      title={title}
-                      description={description}
-                      price={price}
-                      limit={limit}
-                      accessibility={accessibility}
-                      thumbnail={src}
-                      file={file}
-                      isProduct={true}
-                    />
-                  )}
-                </div>
-              </ImageWrapper>
-            </Carousel>
-          </div>
+          <ImagesCarousel
+            src={src}
+            file={file}
+            title={title}
+            price={price}
+            limit={limit}
+            userId={userId}
+            username={username}
+            productId={productId}
+            description={description}
+            imageClasses={imageClasses}
+            accessibility={accessibility}
+            categoryId={categoryId}
+            categories={categories}
+            isHovering={isHovering}
+            showProduct={showProduct}
+            showActions={showActions}
+          />
         ) : (
           <ImageWrapper className={imageClasses}>
             <img src={src} alt='product' onClick={showProduct} />

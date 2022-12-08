@@ -61,6 +61,10 @@ const Wrapper = styled('div')`
     left: 0;
     cursor: pointer;
   }
+  .slick-list {
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+  }
 
   @media (max-width: 1200px) {
     .like {
