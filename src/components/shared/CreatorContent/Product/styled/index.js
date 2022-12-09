@@ -70,11 +70,11 @@ export const ImageWrapper = styled('div')`
   width: 330px;
   height: 245px;
   img {
-    /* width: inherit; */
-    /* height: inherit; */
-    height: 100%;
+    width: inherit;
+    height: inherit;
     border-bottom: 1px solid transparent;
-    object-fit: cover;
+    // height: 100%;
+    // object-fit: cover;
   }
 
   .ant-image {
@@ -103,10 +103,10 @@ export const ImageWrapper = styled('div')`
     width: 684px;
     height: 636px;
     img {
-      /* width: inherit; */
-      /* height: inherit; */
+      width: inherit;
+      height: inherit;
       // height: auto;
-      height: 100%;
+      // height: 100%;
     }
     &.no-thumbnail {
       border-top-left-radius: 30px;

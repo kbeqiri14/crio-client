@@ -111,24 +111,26 @@ const ProductForm = ({ state }) => {
   const disabled = useMemo(
     () =>
       !(
-        title?.trim() &&
-        (categoryId || state?.categoryId) &&
-        (+price > 0 || isFree) &&
-        (!limitVisible || (limitVisible && +limit > 0)) &&
-        !(isDigitalProduct && !(files.length || file)) &&
-        ((categoryId && categoryId !== state?.categoryId) ||
-          (title?.trim() && title?.trim() !== state?.title) ||
-          (state?.file && file !== state?.file) ||
-          (description?.trim() && description?.trim() !== state?.description) ||
-          (description?.trim() === '' && !!state?.description) ||
-          (price && +price !== +state?.price) ||
-          (!price && isFree && state?.price > 0) ||
-          (limitVisible && limit && +limit !== state?.limit) ||
-          !!limitVisible !== !!state?.limit ||
-          accessibility !== state?.accessibility ||
-          images[0]?.file ||
-          (images[0].src !== state?.thumbnail &&
-            !state?.thumbnail?.startsWith('/static/media/product')))
+        (
+          title?.trim() &&
+          (categoryId || state?.categoryId) &&
+          (+price > 0 || isFree) &&
+          (!limitVisible || (limitVisible && +limit > 0)) &&
+          !(isDigitalProduct && !(files.length || file)) &&
+          ((categoryId && categoryId !== state?.categoryId) ||
+            (title?.trim() && title?.trim() !== state?.title) ||
+            (state?.file && file !== state?.file) ||
+            (description?.trim() && description?.trim() !== state?.description) ||
+            (description?.trim() === '' && !!state?.description) ||
+            (price && +price !== +state?.price) ||
+            (!price && isFree && state?.price > 0) ||
+            (limitVisible && limit && +limit !== state?.limit) ||
+            !!limitVisible !== !!state?.limit ||
+            accessibility !== state?.accessibility ||
+            images[0]?.file)
+        )
+        // (images[0].src !== state?.thumbnails && //Narine Kosyan
+        //   !state?.thumbnail?.startsWith('/static/media/product')))
       ),
     [
       title,
@@ -144,7 +146,7 @@ const ProductForm = ({ state }) => {
       state?.price,
       state?.limit,
       state?.accessibility,
-      state?.thumbnail,
+      // state?.thumbnails,
       state?.file,
       state?.categoryId,
       categoryId,
@@ -398,7 +400,7 @@ const ProductForm = ({ state }) => {
                   />
                 </Col>
                 <Col span={18} align='start'>
-                  <Text level={3}>Thumbnail</Text>
+                  <Text level={3}>Thumbnails</Text>
                 </Col>
                 <Col span={18} padding_bottom={32} className='dragger'>
                   <DraggerImage filesCount={images.length} control={control} dispatch={dispatch} />

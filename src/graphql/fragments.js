@@ -69,6 +69,7 @@ export const productFragment = gql`
     limit
     accessibility
     thumbnail
+    thumbnails
     file
     likes
   }

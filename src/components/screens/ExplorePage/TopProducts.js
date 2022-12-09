@@ -45,7 +45,7 @@ const TopProducts = ({
   price,
   limit,
   accessibility,
-  thumbnail,
+  thumbnails,
   file,
 }) => {
   const { user } = useLoggedInUser();
@@ -54,8 +54,8 @@ const TopProducts = ({
   const { setInfo } = usePresentation();
   const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
   const src = useMemo(
-    () => getThumbnail(PRODUCTS, userId, `thumbnail-${thumbnail}`),
-    [userId, thumbnail],
+    () => getThumbnail(PRODUCTS, userId, `thumbnail-${thumbnails?.[0]}`),
+    [userId, thumbnails],
   );
 
   const showProduct = useCallback(() => {
@@ -77,7 +77,7 @@ const TopProducts = ({
       price,
       limit,
       accessibility,
-      thumbnail: src,
+      thumbnails,
       file,
       isProduct: true,
     });
@@ -93,7 +93,7 @@ const TopProducts = ({
     price,
     limit,
     accessibility,
-    src,
+    thumbnails,
     file,
     pathname,
     productId,
