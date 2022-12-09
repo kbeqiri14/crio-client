@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useLazyQuery, useMutation, useReactiveVar } from '@apollo/client';
 import { memo, useCallback, useState, useMemo, useEffect, useRef } from 'react';
 
-import { ARTWORKS } from '@configs/constants';
+import { ARTWORKS, PRODUCTS } from '@configs/constants';
 import { loggedInUserLoadingVar } from '@configs/client-cache';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
@@ -16,6 +16,7 @@ import { Carousel, Col, notification, Row, Text, Title } from '@ui-kit';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import LockState from '@shared/CreatorContent/LockState';
 import BuyWidget from '@screens/Product/BuyWidget';
+import product from '@images/product.png';
 // import { ReactComponent as ShareIcon } from '@svgs/share.svg';
 import { ReactComponent as LikeIcon } from '@svgs/like.svg';
 import { ReactComponent as LikedIcon } from '@svgs/liked.svg';
@@ -111,13 +112,24 @@ export const Content = ({ info, content, isLocked }) => {
   ]);
   const showLikes = useMemo(() => info.userId === user.id || liked, [user.id, info.userId, liked]);
 
-  const source = useMemo(
-    () =>
-      info.isProduct || info.content?.startsWith('/videos/')
-        ? info.thumbnail
-        : getThumbnail(ARTWORKS, info.userId, `main-${info.content}`),
-    [info.isProduct, info.userId, info.content, info.thumbnail],
-  );
+  // const source = useMemo(
+  //   () =>
+  //     info.isProduct || info.content?.startsWith('/videos/')
+  //       ? info.thumbnail
+  //       : getThumbnail(ARTWORKS, info.userId, `main-${info.content}`),
+  //   [info.isProduct, info.userId, info.content, info.thumbnail],
+  // );
+  const source = useMemo(() => {
+    if (info.content?.startsWith('/videos/')) {
+      return info.thumbnail;
+    }
+    if (info.isProduct) {
+      return info.thumbnails?.[0]
+        ? getThumbnail(PRODUCTS, info.userId, `thumbnail-${info.thumbnails?.[0]}`)
+        : product;
+    }
+    return getThumbnail(ARTWORKS, info.userId, `main-${info.content}`);
+  }, [info.content, info.isProduct, info.userId, info.thumbnail, info.thumbnails]);
 
   const hide = useCallback(() => setInfo({}), [setInfo]);
 

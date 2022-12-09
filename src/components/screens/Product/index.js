@@ -51,11 +51,11 @@ export const Product = () => {
         ? {
             ...data.getProduct,
             isProduct: true,
-            thumbnail: data.getProduct.thumbnail
+            thumbnail: data.getProduct.thumbnails?.[0]
               ? getThumbnail(
                   PRODUCTS,
                   data.getProduct.userId,
-                  `thumbnail-${data.getProduct.thumbnail}`,
+                  `thumbnail-${data.getProduct.thumbnails?.[0]}`,
                 )
               : defaultCover,
           }

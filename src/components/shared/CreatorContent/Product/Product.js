@@ -11,7 +11,7 @@ import { getThumbnail } from '@utils/helpers';
 import { Col, Row, Tag, Text } from '@ui-kit';
 import useCategories from '@app/hooks/useCategories';
 import { ProductWrapper, ImageWrapper } from './styled';
-import ImagesCarousel from './_partials/ImagesCarousel';
+// import ImagesCarousel from './_partials/ImagesCarousel';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 
@@ -90,14 +90,14 @@ const Product = ({
 
   const imageClasses = useMemo(() => {
     let name;
-    if (!thumbnails.length) {
+    if (!thumbnails?.[0]) {
       name = 'no-thumbnail';
     }
     if (large) {
       return `${name} large`;
     }
     return name;
-  }, [thumbnails.length, large]);
+  }, [thumbnails, large]);
 
   const hide = useCallback(() => setInfo({}), [setInfo]);
 
