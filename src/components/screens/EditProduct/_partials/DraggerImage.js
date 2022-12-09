@@ -1,4 +1,4 @@
-import { memo, useState, useMemo, useEffect } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { Spin } from 'antd';
 import imageCompression from 'browser-image-compression';

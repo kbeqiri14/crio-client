@@ -3,10 +3,8 @@ import { Link } from 'react-router-dom';
 import { useLazyQuery, useMutation, useReactiveVar } from '@apollo/client';
 import { memo, useCallback, useState, useMemo, useEffect, useRef } from 'react';
 
-import Wrapper from './styled/Wrapper';
-import ImageWrapper from './styled/ImageWrapper';
-import BuyWidget from '@screens/Product/BuyWidget';
 import { ARTWORKS } from '@configs/constants';
+import { loggedInUserLoadingVar } from '@configs/client-cache';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { getProductLikes } from '@app/graphql/queries/products.query';
@@ -14,16 +12,17 @@ import { getArtworkLikes } from '@app/graphql/queries/artworks.query';
 import { likeProduct } from '@app/graphql/mutations/product.mutation';
 import { likeArtwork } from '@app/graphql/mutations/artwork.mutation';
 import { getThumbnail, urlify } from '@utils/helpers';
+import { Carousel, Col, notification, Row, Text, Title } from '@ui-kit';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import LockState from '@shared/CreatorContent/LockState';
-import { loggedInUserLoadingVar } from '@configs/client-cache';
-import { Col, notification, Row, Text, Title, Carousel } from '@ui-kit'; //notification
-
+import BuyWidget from '@screens/Product/BuyWidget';
 // import { ReactComponent as ShareIcon } from '@svgs/share.svg';
 import { ReactComponent as LikeIcon } from '@svgs/like.svg';
 import { ReactComponent as LikedIcon } from '@svgs/liked.svg';
 import { ReactComponent as ArrowRight } from '@svgs/arrow-right.svg';
 import { ReactComponent as ArrowLeft } from '@svgs/arrow-left.svg';
+import Wrapper from './styled/Wrapper';
+import ImageWrapper from './styled/ImageWrapper';
 
 export const Content = ({ info, content, isLocked }) => {
   const { user } = useLoggedInUser();
