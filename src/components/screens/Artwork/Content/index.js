@@ -131,6 +131,23 @@ export const Content = ({ info, content, isLocked }) => {
     return getThumbnail(ARTWORKS, info.userId, `main-${info.content}`);
   }, [info.content, info.isProduct, info.userId, info.thumbnail, info.thumbnails]);
 
+  const sources = useMemo(() => {
+    if (info.content?.startsWith('/videos/')) {
+      console.log(info?.thumbnail, 'thumbnail__');
+      return info.thumbnail;
+    }
+    if (info.isProduct) {
+      return info.thumbnails?.[0]
+        ? [
+            getThumbnail(PRODUCTS, info.userId, `thumbnail-${info.thumbnails?.[0]}`),
+            getThumbnail(PRODUCTS, info.userId, `thumbnail-${info.thumbnails?.[1]}`),
+            getThumbnail(PRODUCTS, info.userId, `thumbnail-${info.thumbnails?.[2]}`),
+          ]
+        : [product, product, product];
+    }
+    return getThumbnail(ARTWORKS, info.userId, `main-${info.content}`);
+  }, [info.content, info.isProduct, info.userId, info.thumbnail, info.thumbnails]);
+
   const hide = useCallback(() => setInfo({}), [setInfo]);
 
   return (
@@ -170,7 +187,7 @@ export const Content = ({ info, content, isLocked }) => {
                 <LockState userId={info.userId} accessibility={info.accessibility} size='lg' />
                 <ImageWrapper>
                   <img
-                    src={source}
+                    src={sources[0]}
                     alt='artwork'
                     className={info.content?.startsWith('/static/media/') ? 'default' : ''}
                   />
@@ -201,13 +218,13 @@ export const Content = ({ info, content, isLocked }) => {
                   )}
                   <Carousel ref={slider} autoplay={false} dots={false}>
                     <ImageWrapper>
-                      <Image preview={false} src={source} alt='product' />
+                      <Image preview={false} src={sources[0]} alt='product' />
                     </ImageWrapper>
                     <ImageWrapper>
-                      <Image preview={false} src={source} alt='product' />
+                      <Image preview={false} src={sources[1]} alt='product' />
                     </ImageWrapper>
                     <ImageWrapper>
-                      <Image preview={false} src={source} alt='product' />
+                      <Image preview={false} src={sources[2]} alt='product' />
                     </ImageWrapper>
                   </Carousel>
                 </div>

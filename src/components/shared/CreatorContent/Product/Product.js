@@ -11,7 +11,7 @@ import { getThumbnail } from '@utils/helpers';
 import { Col, Row, Tag, Text } from '@ui-kit';
 import useCategories from '@app/hooks/useCategories';
 import { ProductWrapper, ImageWrapper } from './styled';
-// import ImagesCarousel from './_partials/ImagesCarousel';
+import ImagesCarousel from './ImagesCarousel';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 
@@ -66,9 +66,15 @@ const Product = ({
     return { width };
   }, [large, isHovering, user.isCreator, isLocked, price, categoryId, categories.digitalId]);
 
-  const src = useMemo(
+  const sources = useMemo(
     () =>
-      thumbnails?.[0] ? getThumbnail(PRODUCTS, userId, `thumbnail-${thumbnails?.[0]}`) : product,
+      thumbnails?.[0]
+        ? [
+            getThumbnail(PRODUCTS, userId, `thumbnail-${thumbnails?.[0]}`),
+            getThumbnail(PRODUCTS, userId, `thumbnail-${thumbnails?.[1]}`),
+            getThumbnail(PRODUCTS, userId, `thumbnail-${thumbnails?.[2]}`),
+          ]
+        : [product, product, product],
     [userId, thumbnails],
   );
 
@@ -142,7 +148,6 @@ const Product = ({
     productId,
     setInfo,
   ]);
-
   return (
     <>
       <ProductWrapper
@@ -150,9 +155,9 @@ const Product = ({
         onMouseOver={handleMouseOver}
         onMouseLeave={handleMouseOut}
       >
-        {/* {true ? (
+        {true ? (
           <ImagesCarousel
-            src={src}
+            sources={sources}
             file={file}
             title={title}
             price={price}
@@ -163,41 +168,42 @@ const Product = ({
             description={description}
             imageClasses={imageClasses}
             accessibility={accessibility}
+            thumbnails={thumbnails}
             categoryId={categoryId}
             categories={categories}
             isHovering={isHovering}
             showProduct={showProduct}
             showActions={showActions}
           />
-        ) : ( */}
-        <ImageWrapper className={imageClasses}>
-          <img src={src} alt='product' onClick={showProduct} />
-          {categories.products.length && isHovering && categoryId && (
-            <Tag>{categories.products.find(({ id }) => id === categoryId)?.name}</Tag>
-          )}
-          <div
-            className={`actions ${isHovering ? 'hover' : ''}`}
-            onClick={() => !showActions && showProduct()}
-          >
-            {showActions && (
-              <Actions
-                userId={userId}
-                username={username}
-                productId={productId}
-                categoryId={categoryId}
-                title={title}
-                description={description}
-                price={price}
-                limit={limit}
-                accessibility={accessibility}
-                thumbnails={thumbnails}
-                file={file}
-                isProduct={true}
-              />
+        ) : (
+          <ImageWrapper className={imageClasses}>
+            <img src={sources[0]} alt='product' onClick={showProduct} />
+            {categories.products.length && isHovering && categoryId && (
+              <Tag>{categories.products.find(({ id }) => id === categoryId)?.name}</Tag>
             )}
-          </div>
-        </ImageWrapper>
-        {/* )} */}
+            <div
+              className={`actions ${isHovering ? 'hover' : ''}`}
+              onClick={() => !showActions && showProduct()}
+            >
+              {showActions && (
+                <Actions
+                  userId={userId}
+                  username={username}
+                  productId={productId}
+                  categoryId={categoryId}
+                  title={title}
+                  description={description}
+                  price={price}
+                  limit={limit}
+                  accessibility={accessibility}
+                  thumbnails={thumbnails}
+                  file={file}
+                  isProduct={true}
+                />
+              )}
+            </div>
+          </ImageWrapper>
+        )}
 
         <Row justify='space-between' align='middle' padding_horizontal={20} padding_top={12}>
           <Col>
