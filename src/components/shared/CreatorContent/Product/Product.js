@@ -5,15 +5,15 @@ import Author from '../Author';
 import BuyButton from './BuyButton';
 import history from '@configs/history';
 import product from '@images/product.png';
-import Actions from '@screens/Video/Actions';
 import { PRODUCTS } from '@configs/constants';
 import { getThumbnail } from '@utils/helpers';
-import { Col, Row, Tag, Text } from '@ui-kit';
+import { Col, Row, Text } from '@ui-kit';
 import useCategories from '@app/hooks/useCategories';
-import { ProductWrapper, ImageWrapper } from './styled';
+import { ProductWrapper } from './styled';
 import ImagesCarousel from './ImagesCarousel';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
+import ImageContainer from './_partials/ImageContainer';
 
 const Product = ({
   providerType,
@@ -174,33 +174,25 @@ const Product = ({
             showActions={showActions}
           />
         ) : (
-          <ImageWrapper className={imageClasses}>
-            <img src={sources} alt='product' onClick={showProduct} />
-            {categories.products.length && isHovering && categoryId && (
-              <Tag>{categories.products.find(({ id }) => id === categoryId)?.name}</Tag>
-            )}
-            <div
-              className={`actions ${isHovering ? 'hover' : ''}`}
-              onClick={() => !showActions && showProduct()}
-            >
-              {showActions && (
-                <Actions
-                  userId={userId}
-                  username={username}
-                  productId={productId}
-                  categoryId={categoryId}
-                  title={title}
-                  description={description}
-                  price={price}
-                  limit={limit}
-                  accessibility={accessibility}
-                  thumbnails={thumbnails}
-                  file={file}
-                  isProduct={true}
-                />
-              )}
-            </div>
-          </ImageWrapper>
+          <ImageContainer
+            src={sources}
+            file={file}
+            title={title}
+            price={price}
+            limit={limit}
+            userId={userId}
+            username={username}
+            productId={productId}
+            description={description}
+            imageClasses={imageClasses}
+            accessibility={accessibility}
+            thumbnails={thumbnails}
+            categoryId={categoryId}
+            categories={categories}
+            isHovering={isHovering}
+            showActions={showActions}
+            showProduct={showProduct}
+          />
         )}
 
         <Row justify='space-between' align='middle' padding_horizontal={20} padding_top={12}>

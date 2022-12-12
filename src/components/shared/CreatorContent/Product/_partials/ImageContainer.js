@@ -1,4 +1,3 @@
-import { Image } from 'antd';
 import { Tag } from '@ui-kit';
 import { ImageWrapper } from '../styled';
 import Actions from '@screens/Video/Actions';
@@ -24,7 +23,7 @@ const ImageContainer = ({
 }) => {
   return (
     <ImageWrapper className={imageClasses}>
-      <Image preview={false} src={src} alt='product' onClick={showProduct} />
+      <img src={src} alt='product' onClick={showProduct} />
       {categories?.products.length && isHovering && categoryId && (
         <Tag>{categories?.products.find(({ id }) => id === categoryId)?.name}</Tag>
       )}

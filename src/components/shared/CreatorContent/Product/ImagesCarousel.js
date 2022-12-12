@@ -1,9 +1,9 @@
 import { useState, useRef, memo } from 'react';
 
 import { Carousel } from '@ui-kit';
-import ImageContainer from './_partials/ImageContainer';
 import { ReactComponent as ArrowLeft } from '@svgs/arrow-left.svg';
 import { ReactComponent as ArrowRight } from '@svgs/arrow-right.svg';
+import ImageContainer from './_partials/ImageContainer';
 
 const ImagesCarousel = ({
   thumbnails,
