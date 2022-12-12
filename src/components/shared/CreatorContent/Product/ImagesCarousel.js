@@ -27,7 +27,7 @@ const ImagesCarousel = ({
   const slider = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   return (
-    <div style={{ position: 'relative' }}>
+    <div className='relative'>
       {currentSlide !== 0 && (
         <ArrowLeft
           onClick={() => {
