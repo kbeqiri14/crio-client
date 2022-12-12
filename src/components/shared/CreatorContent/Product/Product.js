@@ -1,19 +1,15 @@
 import { useLocation } from 'react-router-dom';
 import { memo, useCallback, useMemo, useState } from 'react';
 
-import Author from '../Author';
-import BuyButton from './BuyButton';
 import history from '@configs/history';
-import product from '@images/product.png';
-import { PRODUCTS } from '@configs/constants';
-import { getThumbnail } from '@utils/helpers';
 import { Col, Row, Text } from '@ui-kit';
 import useCategories from '@app/hooks/useCategories';
-import { ProductWrapper } from './styled';
-import ImagesCarousel from './ImagesCarousel';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
+import Author from '../Author';
+import BuyButton from './BuyButton';
 import ImageContainer from './_partials/ImageContainer';
+import { ProductWrapper } from './styled';
 
 const Product = ({
   providerType,
@@ -65,16 +61,6 @@ const Product = ({
     }
     return { width };
   }, [large, isHovering, user.isCreator, isLocked, price, categoryId, categories.digitalId]);
-
-  const sources = useMemo(
-    () =>
-      thumbnails?.length > 1
-        ? thumbnails.map((item) => getThumbnail(PRODUCTS, userId, `thumbnail-${item}`))
-        : thumbnails?.[0]
-        ? getThumbnail(PRODUCTS, userId, `thumbnail-${thumbnails[0]}`)
-        : product,
-    [userId, thumbnails],
-  );
 
   const priceText = useMemo(
     () => (price ? `$${price.toFixed(2)}` : 'Free for Subscribers'),
@@ -153,48 +139,24 @@ const Product = ({
         onMouseOver={handleMouseOver}
         onMouseLeave={handleMouseOut}
       >
-        {thumbnails.length > 1 ? (
-          <ImagesCarousel
-            sources={sources}
-            file={file}
-            title={title}
-            price={price}
-            limit={limit}
-            userId={userId}
-            username={username}
-            productId={productId}
-            description={description}
-            imageClasses={imageClasses}
-            accessibility={accessibility}
-            thumbnails={thumbnails}
-            categoryId={categoryId}
-            categories={categories}
-            isHovering={isHovering}
-            showProduct={showProduct}
-            showActions={showActions}
-          />
-        ) : (
-          <ImageContainer
-            src={sources}
-            file={file}
-            title={title}
-            price={price}
-            limit={limit}
-            userId={userId}
-            username={username}
-            productId={productId}
-            description={description}
-            imageClasses={imageClasses}
-            accessibility={accessibility}
-            thumbnails={thumbnails}
-            categoryId={categoryId}
-            categories={categories}
-            isHovering={isHovering}
-            showActions={showActions}
-            showProduct={showProduct}
-          />
-        )}
-
+        <ImageContainer
+          file={file}
+          title={title}
+          price={price}
+          limit={limit}
+          userId={userId}
+          username={username}
+          productId={productId}
+          description={description}
+          imageClasses={imageClasses}
+          accessibility={accessibility}
+          thumbnails={thumbnails}
+          categoryId={categoryId}
+          categories={categories}
+          isHovering={isHovering}
+          showActions={showActions}
+          showProduct={showProduct}
+        />
         <Row justify='space-between' align='middle' padding_horizontal={20} padding_top={12}>
           <Col>
             <Row align='middle' gutter={[0, 8]}>
