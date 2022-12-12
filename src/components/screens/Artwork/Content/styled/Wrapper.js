@@ -66,6 +66,12 @@ const Wrapper = styled('div')`
     border-top-right-radius: 30px;
   }
 
+  .ant-carousel {
+    .slick-list {
+      border-radius: 30px;
+    }
+  }
+
   @media (max-width: 1200px) {
     .like {
       top: -74px;

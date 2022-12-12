@@ -195,7 +195,7 @@ export const Content = ({ info, content, isLocked }) => {
           ) : (
             <Col span={24}>
               {info.isProduct && sources.length > 1 ? (
-                <div style={{ position: 'relative' }}>
+                <div className='relative'>
                   {currentSlide !== 0 && (
                     <ArrowLeft
                       onClick={() => {
