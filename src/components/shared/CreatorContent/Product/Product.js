@@ -68,13 +68,11 @@ const Product = ({
 
   const sources = useMemo(
     () =>
-      thumbnails?.[0]
-        ? [
-            getThumbnail(PRODUCTS, userId, `thumbnail-${thumbnails?.[0]}`),
-            getThumbnail(PRODUCTS, userId, `thumbnail-${thumbnails?.[1]}`),
-            getThumbnail(PRODUCTS, userId, `thumbnail-${thumbnails?.[2]}`),
-          ]
-        : [product, product, product],
+      thumbnails?.length > 1
+        ? thumbnails.map((item) => getThumbnail(PRODUCTS, userId, `thumbnail-${item}`))
+        : thumbnails?.[0]
+        ? getThumbnail(PRODUCTS, userId, `thumbnail-${thumbnails[0]}`)
+        : product,
     [userId, thumbnails],
   );
 
@@ -155,7 +153,7 @@ const Product = ({
         onMouseOver={handleMouseOver}
         onMouseLeave={handleMouseOut}
       >
-        {true ? (
+        {thumbnails.length > 1 ? (
           <ImagesCarousel
             sources={sources}
             file={file}
@@ -177,7 +175,7 @@ const Product = ({
           />
         ) : (
           <ImageWrapper className={imageClasses}>
-            <img src={sources[0]} alt='product' onClick={showProduct} />
+            <img src={sources} alt='product' onClick={showProduct} />
             {categories.products.length && isHovering && categoryId && (
               <Tag>{categories.products.find(({ id }) => id === categoryId)?.name}</Tag>
             )}

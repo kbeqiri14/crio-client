@@ -28,7 +28,6 @@ const ImagesCarousel = ({
   const [currentSlide, setCurrentSlide] = useState(0);
   return (
     <div style={{ position: 'relative' }}>
-      {/* {console.log(thumbnails, 'thubnails')} */}
       {currentSlide !== 0 && (
         <ArrowLeft
           onClick={() => {
@@ -38,7 +37,7 @@ const ImagesCarousel = ({
           className='arrow-left'
         />
       )}
-      {currentSlide !== 2 && (
+      {currentSlide !== sources.length - 1 && (
         <ArrowRight
           onClick={() => {
             slider.current.next();
@@ -48,63 +47,28 @@ const ImagesCarousel = ({
         />
       )}
       <Carousel ref={slider} autoplay={false} dots={false}>
-        <ImageContainer
-          thumbnails={thumbnails}
-          src={sources[0]}
-          file={file}
-          limit={limit}
-          price={price}
-          title={title}
-          userId={userId}
-          username={username}
-          productId={productId}
-          isHovering={isHovering}
-          categoryId={categoryId}
-          categories={categories}
-          showActions={showActions}
-          showProduct={showProduct}
-          description={description}
-          accessibility={accessibility}
-          imageClasses={imageClasses}
-        />
-        <ImageContainer
-          thumbnails={thumbnails}
-          src={sources[1]}
-          file={file}
-          limit={limit}
-          price={price}
-          title={title}
-          userId={userId}
-          username={username}
-          productId={productId}
-          isHovering={isHovering}
-          categoryId={categoryId}
-          categories={categories}
-          showActions={showActions}
-          showProduct={showProduct}
-          description={description}
-          accessibility={accessibility}
-          imageClasses={imageClasses}
-        />
-        <ImageContainer
-          thumbnails={thumbnails}
-          src={sources[2]}
-          file={file}
-          limit={limit}
-          price={price}
-          title={title}
-          userId={userId}
-          username={username}
-          productId={productId}
-          isHovering={isHovering}
-          categoryId={categoryId}
-          categories={categories}
-          showActions={showActions}
-          showProduct={showProduct}
-          description={description}
-          accessibility={accessibility}
-          imageClasses={imageClasses}
-        />
+        {sources.map((item, index) => (
+          <ImageContainer
+            key={index}
+            thumbnails={thumbnails}
+            src={item}
+            file={file}
+            limit={limit}
+            price={price}
+            title={title}
+            userId={userId}
+            username={username}
+            productId={productId}
+            isHovering={isHovering}
+            categoryId={categoryId}
+            categories={categories}
+            showActions={showActions}
+            showProduct={showProduct}
+            description={description}
+            accessibility={accessibility}
+            imageClasses={imageClasses}
+          />
+        ))}
       </Carousel>
     </div>
   );

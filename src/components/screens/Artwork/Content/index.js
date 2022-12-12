@@ -137,13 +137,11 @@ export const Content = ({ info, content, isLocked }) => {
       return info.thumbnail;
     }
     if (info.isProduct) {
-      return info.thumbnails?.[0]
-        ? [
-            getThumbnail(PRODUCTS, info.userId, `thumbnail-${info.thumbnails?.[0]}`),
-            getThumbnail(PRODUCTS, info.userId, `thumbnail-${info.thumbnails?.[1]}`),
-            getThumbnail(PRODUCTS, info.userId, `thumbnail-${info.thumbnails?.[2]}`),
-          ]
-        : [product, product, product];
+      return info.thumbnails?.length > 1
+        ? info.thumbnails.map((item) => getThumbnail(PRODUCTS, info.userId, `thumbnail-${item}`))
+        : info.thumbnails?.length
+        ? [getThumbnail(PRODUCTS, info.userId, `thumbnail-${info.thumbnails[0]}`)]
+        : [product];
     }
     return getThumbnail(ARTWORKS, info.userId, `main-${info.content}`);
   }, [info.content, info.isProduct, info.userId, info.thumbnail, info.thumbnails]);
@@ -196,7 +194,7 @@ export const Content = ({ info, content, isLocked }) => {
             </Col>
           ) : (
             <Col span={24}>
-              {info.isProduct && true ? (
+              {info.isProduct && sources.length > 1 ? (
                 <div style={{ position: 'relative' }}>
                   {currentSlide !== 0 && (
                     <ArrowLeft
@@ -207,7 +205,7 @@ export const Content = ({ info, content, isLocked }) => {
                       className='arrow-left'
                     />
                   )}
-                  {currentSlide !== 2 && (
+                  {currentSlide !== sources.length - 1 && (
                     <ArrowRight
                       onClick={() => {
                         slider.current.next();
@@ -217,15 +215,11 @@ export const Content = ({ info, content, isLocked }) => {
                     />
                   )}
                   <Carousel ref={slider} autoplay={false} dots={false}>
-                    <ImageWrapper>
-                      <Image preview={false} src={sources[0]} alt='product' />
-                    </ImageWrapper>
-                    <ImageWrapper>
-                      <Image preview={false} src={sources[1]} alt='product' />
-                    </ImageWrapper>
-                    <ImageWrapper>
-                      <Image preview={false} src={sources[2]} alt='product' />
-                    </ImageWrapper>
+                    {sources.map((source, index) => (
+                      <ImageWrapper key={index}>
+                        <Image preview={false} src={source} alt='product' />
+                      </ImageWrapper>
+                    ))}
                   </Carousel>
                 </div>
               ) : info.isProduct || info.isImage ? (
