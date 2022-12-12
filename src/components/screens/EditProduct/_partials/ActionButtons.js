@@ -15,7 +15,7 @@ import { categoriesVar } from '@configs/client-cache';
 
 const ProductActionButtons = ({
   state,
-  image,
+  images,
   disabled,
   categoryId,
   handleSubmit,
@@ -71,16 +71,19 @@ const ProductActionButtons = ({
   const timeStarted = new Date();
 
   const onPublish = useAsyncFn(async (attributes) => {
-    let file;
-    let thumbnail = state?.thumbnail && !image.src ? 'remove-thumbnail' : undefined;
-    if (attributes.image?.file) {
-      const content = await formItemContent({
-        userId,
-        image: image.file,
-        type: PRODUCTS,
-      });
-      thumbnail = content?.image;
-    }
+    let file,
+      thumbnails = [];
+    Promise.all(
+      images.map(async (item) => {
+        const content = await formItemContent({
+          userId,
+          image: item.file,
+          type: PRODUCTS,
+        });
+        thumbnails.push(content?.image);
+        // thumbnails.push(item.file.name);
+      }),
+    );
     if (attributes.file && attributes.categoryId !== categories.commissionId) {
       const { url, signedRequest } = await sign({
         userId,
@@ -123,7 +126,7 @@ const ProductActionButtons = ({
               price: +attributes.price || undefined,
               limit: +attributes.limit || undefined,
               accessibility: attributes.accessibility,
-              thumbnail,
+              thumbnails,
               file,
             },
           },
@@ -137,7 +140,7 @@ const ProductActionButtons = ({
               price: +attributes.price || undefined,
               limit: +attributes.limit || undefined,
               accessibility: attributes.accessibility,
-              thumbnail,
+              thumbnails,
               file,
             },
           },

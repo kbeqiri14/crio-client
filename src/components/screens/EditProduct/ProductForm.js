@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useMemo, useState, Fragment } from 'react';
+import { Fragment, memo, useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Controller, useForm } from 'react-hook-form';
 import { useQuery } from '@apollo/client';
@@ -32,6 +32,22 @@ import ActionButtons from './_partials/ActionButtons';
 import Broadcast from './_partials/Broadcast';
 import FormWrapper from './styled/FormWrapper';
 
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'ADD_IMAGE':
+      return [...state, action.payload];
+
+    case 'DELETE_IMAGE':
+      const newState = state.filter((item, index) => {
+        return index !== action.payload.id;
+      });
+      return newState;
+
+    default:
+      return state;
+  }
+};
+
 const ProductForm = ({ state }) => {
   const { user } = useLoggedInUser();
   const { categories } = useCategories('product');
@@ -41,11 +57,14 @@ const ProductForm = ({ state }) => {
   const [limitVisible, setLimitVisible] = useState(state?.limit !== null && state?.limit >= 0);
   const [file, setFile] = useState(state?.file);
   const [files, setFiles] = useState([]);
-  const [image, setImage] = useState(
+
+  const [images, dispatch] = useReducer(
+    reducer,
     state?.thumbnail && !state?.thumbnail?.startsWith('/static/media/product')
-      ? { src: state.thumbnail }
-      : {},
+      ? [{ src: state.thumbnail }]
+      : [],
   );
+
   const hideBroadcast = useCallback(() => setVisibleBroadcast(false), []);
   const { data: stripeAccount, loading } = useQuery(getConnectAccount, {
     fetchPolicy: 'cache-and-network',
@@ -92,24 +111,26 @@ const ProductForm = ({ state }) => {
   const disabled = useMemo(
     () =>
       !(
-        title?.trim() &&
-        (categoryId || state?.categoryId) &&
-        (+price > 0 || isFree) &&
-        (!limitVisible || (limitVisible && +limit > 0)) &&
-        !(isDigitalProduct && !(files.length || file)) &&
-        ((categoryId && categoryId !== state?.categoryId) ||
-          (title?.trim() && title?.trim() !== state?.title) ||
-          (state?.file && file !== state?.file) ||
-          (description?.trim() && description?.trim() !== state?.description) ||
-          (description?.trim() === '' && !!state?.description) ||
-          (price && +price !== +state?.price) ||
-          (!price && isFree && state?.price > 0) ||
-          (limitVisible && limit && +limit !== state?.limit) ||
-          !!limitVisible !== !!state?.limit ||
-          accessibility !== state?.accessibility ||
-          image?.file ||
-          (image.src !== state?.thumbnail &&
-            !state?.thumbnail?.startsWith('/static/media/product')))
+        (
+          title?.trim() &&
+          (categoryId || state?.categoryId) &&
+          (+price > 0 || isFree) &&
+          (!limitVisible || (limitVisible && +limit > 0)) &&
+          !(isDigitalProduct && !(files.length || file)) &&
+          ((categoryId && categoryId !== state?.categoryId) ||
+            (title?.trim() && title?.trim() !== state?.title) ||
+            (state?.file && file !== state?.file) ||
+            (description?.trim() && description?.trim() !== state?.description) ||
+            (description?.trim() === '' && !!state?.description) ||
+            (price && +price !== +state?.price) ||
+            (!price && isFree && state?.price > 0) ||
+            (limitVisible && limit && +limit !== state?.limit) ||
+            !!limitVisible !== !!state?.limit ||
+            accessibility !== state?.accessibility ||
+            images[0]?.file)
+        )
+        // (images[0].src !== state?.thumbnails && //Narine Kosyan
+        //   !state?.thumbnail?.startsWith('/static/media/product')))
       ),
     [
       title,
@@ -119,14 +140,13 @@ const ProductForm = ({ state }) => {
       limit,
       accessibility,
       limitVisible,
-      image?.file,
-      image.src,
+      images,
       state?.title,
       state?.description,
       state?.price,
       state?.limit,
       state?.accessibility,
-      state?.thumbnail,
+      // state?.thumbnails,
       state?.file,
       state?.categoryId,
       categoryId,
@@ -380,11 +400,28 @@ const ProductForm = ({ state }) => {
                   />
                 </Col>
                 <Col span={18} align='start'>
-                  <Text level={3}>Thumbnail</Text>
+                  <Text level={3}>Thumbnails</Text>
                 </Col>
-                <Col span={18} padding_bottom={32}>
-                  <DraggerImage control={control} image={image} setImage={setImage} />
+                <Col span={18} padding_bottom={32} className='dragger'>
+                  <DraggerImage filesCount={images.length} control={control} dispatch={dispatch} />
                 </Col>
+                {images.length && (
+                  <Col span={18} padding_bottom={32}>
+                    <Row gutter={15}>
+                      {images.map(({ src }, index) => (
+                        <Col key={index} span={8} className='uploaded-image'>
+                          <img alt='cover' src={src} />
+                          <CloseIcon
+                            className='remove'
+                            onClick={() =>
+                              dispatch({ type: 'DELETE_IMAGE', payload: { id: index } })
+                            }
+                          />
+                        </Col>
+                      ))}
+                    </Row>
+                  </Col>
+                )}
                 {isDigitalProduct && (
                   <Fragment>
                     <Col span={18} align='start'>
@@ -460,7 +497,7 @@ const ProductForm = ({ state }) => {
                 <Col span={18}>
                   <ActionButtons
                     state={state}
-                    image={image}
+                    images={images}
                     disabled={disabled}
                     categoryId={categoryId}
                     uploading={uploading}

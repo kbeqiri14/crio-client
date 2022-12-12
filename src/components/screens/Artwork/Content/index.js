@@ -1,10 +1,10 @@
-import { memo, useCallback, useState, useMemo, useEffect } from 'react';
+import { Spin, Image } from 'antd';
 import { Link } from 'react-router-dom';
-import { Spin } from 'antd';
-import styled from 'styled-components';
 import { useLazyQuery, useMutation, useReactiveVar } from '@apollo/client';
+import { memo, useCallback, useState, useMemo, useEffect, useRef } from 'react';
 
-import { ARTWORKS } from '@configs/constants';
+import { ARTWORKS, PRODUCTS } from '@configs/constants';
+import { loggedInUserLoadingVar } from '@configs/client-cache';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import { getProductLikes } from '@app/graphql/queries/products.query';
@@ -12,104 +12,18 @@ import { getArtworkLikes } from '@app/graphql/queries/artworks.query';
 import { likeProduct } from '@app/graphql/mutations/product.mutation';
 import { likeArtwork } from '@app/graphql/mutations/artwork.mutation';
 import { getThumbnail, urlify } from '@utils/helpers';
+import { Carousel, Col, notification, Row, Text, Title } from '@ui-kit';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
-import { Col, notification, Row, Text, Title } from '@ui-kit'; //notification
 import LockState from '@shared/CreatorContent/LockState';
-import BuyWidget from '../Product/BuyWidget';
-import { loggedInUserLoadingVar } from '@configs/client-cache';
+import BuyWidget from '@screens/Product/BuyWidget';
+import product from '@images/product.png';
 // import { ReactComponent as ShareIcon } from '@svgs/share.svg';
 import { ReactComponent as LikeIcon } from '@svgs/like.svg';
 import { ReactComponent as LikedIcon } from '@svgs/liked.svg';
-
-const Wrapper = styled('div')`
-  display: flex;
-  justify-content: center;
-  padding: 40px 20px;
-  > div {
-    width: 1040px;
-    padding: 0 10px;
-  }
-  .lock {
-    .tooltip {
-      opacity: 0;
-      visibility: hidden;
-      transition: visibility 0s, opacity 0.2s linear;
-      top: 190px;
-    }
-    &:hover {
-      .tooltip {
-        opacity: 1;
-        visibility: visible;
-      }
-    }
-  }
-  .like {
-    width: 54px;
-    height: 54px;
-    position: absolute;
-    top: 0;
-    right: -85px;
-    cursor: pointer;
-    text-align: center;
-    div:not(.ant-spin) {
-      position: absolute;
-      top: 25px;
-      width: 100%;
-    }
-    .ant-spin {
-      position: absolute;
-      top: 17px;
-      width: 100%;
-      .ant-spin-dot-spin {
-        .ant-spin-dot-item {
-          background-color: #ec455a;
-        }
-      }
-    }
-  }
-  @media (max-width: 1200px) {
-    .like {
-      top: -74px;
-      left: 75px;
-      text-align: center;
-    }
-    .bottom-push {
-      margin-bottom: 50px;
-    }
-  }
-  @media (max-width: 420px) {
-    .flex-dir {
-      flex-direction: column-reverse;
-    }
-    .widget {
-      width: 334px;
-    }
-    .text-content {
-      margin-top: 44px;
-    }
-  }
-`;
-
-const ImageWrapper = styled('div')`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #182024;
-  max-width: 1040px;
-  min-height: 538px;
-  height: auto;
-  @media (min-width: 575px) {
-    border-radius: 16px;
-  }
-  img {
-    height: auto;
-    max-width: 100%;
-    max-height: 538px;
-    &.default {
-      object-fit: contain;
-    }
-  }
-`;
+import { ReactComponent as ArrowRight } from '@svgs/arrow-right.svg';
+import { ReactComponent as ArrowLeft } from '@svgs/arrow-left.svg';
+import Wrapper from './styled/Wrapper';
+import ImageWrapper from './styled/ImageWrapper';
 
 export const Content = ({ info, content, isLocked }) => {
   const { user } = useLoggedInUser();
@@ -118,6 +32,8 @@ export const Content = ({ info, content, isLocked }) => {
   const [openTooltip, setOpenTooltip] = useState(user.id && !user.helpSeen);
   const avatarUrl = useAvatarUrl(info.providerType, info.providerUserId, info.avatar);
   const { setInfo } = usePresentation();
+  const slider = useRef(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   const [requestProductLikes, { loading: loadingProductLikes, data: productLikes }] = useLazyQuery(
     getProductLikes,
@@ -196,13 +112,39 @@ export const Content = ({ info, content, isLocked }) => {
   ]);
   const showLikes = useMemo(() => info.userId === user.id || liked, [user.id, info.userId, liked]);
 
-  const source = useMemo(
-    () =>
-      info.isProduct || info.content?.startsWith('/videos/')
-        ? info.thumbnail
-        : getThumbnail(ARTWORKS, info.userId, `main-${info.content}`),
-    [info.isProduct, info.userId, info.content, info.thumbnail],
-  );
+  // const source = useMemo(
+  //   () =>
+  //     info.isProduct || info.content?.startsWith('/videos/')
+  //       ? info.thumbnail
+  //       : getThumbnail(ARTWORKS, info.userId, `main-${info.content}`),
+  //   [info.isProduct, info.userId, info.content, info.thumbnail],
+  // );
+  const source = useMemo(() => {
+    if (info.content?.startsWith('/videos/')) {
+      return info.thumbnail;
+    }
+    if (info.isProduct) {
+      return info.thumbnails?.[0]
+        ? getThumbnail(PRODUCTS, info.userId, `thumbnail-${info.thumbnails?.[0]}`)
+        : product;
+    }
+    return getThumbnail(ARTWORKS, info.userId, `main-${info.content}`);
+  }, [info.content, info.isProduct, info.userId, info.thumbnail, info.thumbnails]);
+
+  const sources = useMemo(() => {
+    if (info.content?.startsWith('/videos/')) {
+      console.log(info?.thumbnail, 'thumbnail__');
+      return info.thumbnail;
+    }
+    if (info.isProduct) {
+      return info.thumbnails?.length > 1
+        ? info.thumbnails.map((item) => getThumbnail(PRODUCTS, info.userId, `thumbnail-${item}`))
+        : info.thumbnails?.length
+        ? [getThumbnail(PRODUCTS, info.userId, `thumbnail-${info.thumbnails[0]}`)]
+        : [product];
+    }
+    return getThumbnail(ARTWORKS, info.userId, `main-${info.content}`);
+  }, [info.content, info.isProduct, info.userId, info.thumbnail, info.thumbnails]);
 
   const hide = useCallback(() => setInfo({}), [setInfo]);
 
@@ -243,7 +185,7 @@ export const Content = ({ info, content, isLocked }) => {
                 <LockState userId={info.userId} accessibility={info.accessibility} size='lg' />
                 <ImageWrapper>
                   <img
-                    src={source}
+                    src={sources[0]}
                     alt='artwork'
                     className={info.content?.startsWith('/static/media/') ? 'default' : ''}
                   />
@@ -252,7 +194,35 @@ export const Content = ({ info, content, isLocked }) => {
             </Col>
           ) : (
             <Col span={24}>
-              {info.isProduct || info.isImage ? (
+              {info.isProduct && sources.length > 1 ? (
+                <div className='relative'>
+                  {currentSlide !== 0 && (
+                    <ArrowLeft
+                      onClick={() => {
+                        slider.current.prev();
+                        setCurrentSlide((prev) => --prev);
+                      }}
+                      className='arrow-left'
+                    />
+                  )}
+                  {currentSlide !== sources.length - 1 && (
+                    <ArrowRight
+                      onClick={() => {
+                        slider.current.next();
+                        setCurrentSlide((prev) => ++prev);
+                      }}
+                      className='arrow-right'
+                    />
+                  )}
+                  <Carousel ref={slider} autoplay={false} dots={false}>
+                    {sources.map((source, index) => (
+                      <ImageWrapper key={index}>
+                        <Image preview={false} src={source} alt='product' />
+                      </ImageWrapper>
+                    ))}
+                  </Carousel>
+                </div>
+              ) : info.isProduct || info.isImage ? (
                 <ImageWrapper>
                   <img
                     src={source}
