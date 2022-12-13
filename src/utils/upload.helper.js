@@ -34,21 +34,15 @@ export const sign = async ({ userId, file, type, prefix }) => {
   return uploader.signForUpload(filename, file.type);
 };
 
-export const formItemContent = async ({ userId, image, file, type }) => {
+export const formItemContent = async ({ userId, image, type }) => {
   const content = {};
 
   if (image) {
     const prefix = type === PRODUCTS ? 'thumbnail-' : 'main-';
     const newImage = await uploadContent(userId, image, type, prefix);
+    console.log(newImage, 'newImage');
     if (newImage) {
       content.image = newImage?.split('/')?.slice(-1)?.[0]?.slice(prefix.length);
-    }
-  }
-
-  if (file) {
-    const newFile = await uploadContent(userId, file, type, 'file');
-    if (newFile) {
-      content.file = newFile?.split('/')?.slice(-1)?.[0]?.slice('file-'.length);
     }
   }
 
