@@ -75,6 +75,7 @@ const ProductActionButtons = ({
     let thumbnails = [];
     await Promise.all(
       images.map(async (item) => {
+        console.log(item.file.name, 'item.file.name');
         const content = await formItemContent({
           userId,
           image: item.file,
