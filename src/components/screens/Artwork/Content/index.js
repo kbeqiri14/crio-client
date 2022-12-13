@@ -127,9 +127,9 @@ export const Content = ({ info, content, isLocked }) => {
       return info.thumbnail;
     }
     if (info.isProduct) {
-      return info.thumbnails?.length > 1
+      return info.thumbnails.length > 1
         ? info.thumbnails.map((item) => getThumbnail(PRODUCTS, info.userId, `thumbnail-${item}`))
-        : info.thumbnails?.length
+        : info.thumbnails.length
         ? [getThumbnail(PRODUCTS, info.userId, `thumbnail-${info.thumbnails[0]}`)]
         : [product];
     }

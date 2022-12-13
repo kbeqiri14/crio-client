@@ -97,12 +97,12 @@ export const ImagesCarousel = ({ sources, ...props }) => {
 
 export const ImageContainer = (props = {}) => {
   const [Component, source] = useMemo(() => {
-    if (props.thumbnails?.length > 1) {
+    if (props.thumbnails.length > 1) {
       return [
         ImagesCarousel,
         {
-          sources: props.thumbnails.map((item) =>
-            getThumbnail(PRODUCTS, props.userId, `thumbnail-${item}`),
+          sources: props.thumbnails.map((thumbnail) =>
+            getThumbnail(PRODUCTS, props.userId, `thumbnail-${thumbnail}`),
           ),
         },
       ];
@@ -110,7 +110,7 @@ export const ImageContainer = (props = {}) => {
     return [
       Image,
       {
-        source: props.thumbnails?.[0]
+        source: props.thumbnails.length
           ? getThumbnail(PRODUCTS, props.userId, `thumbnail-${props.thumbnails[0]}`)
           : product,
       },

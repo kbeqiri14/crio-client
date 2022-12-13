@@ -9,6 +9,7 @@ import { PRODUCTS } from '@configs/constants';
 import history from '@configs/history';
 import { getThumbnail } from '@utils/helpers';
 import { Button, Col, Row, Text, Title } from '@ui-kit';
+import product from '@images/product.png';
 import { ReactComponent as GoogleIcon } from '@svgs/google.svg';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 
@@ -54,7 +55,8 @@ const TopProducts = ({
   const { setInfo } = usePresentation();
   const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
   const src = useMemo(
-    () => getThumbnail(PRODUCTS, userId, `thumbnail-${thumbnails?.[0]}`),
+    () =>
+      thumbnails.length ? getThumbnail(PRODUCTS, userId, `thumbnail-${thumbnails[0]}`) : product,
     [userId, thumbnails],
   );
 
