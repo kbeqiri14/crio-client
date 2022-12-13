@@ -73,7 +73,7 @@ const ProductActionButtons = ({
   const onPublish = useAsyncFn(async (attributes) => {
     let file,
       thumbnails = [];
-    Promise.all(
+    await Promise.all(
       images.map(async (item) => {
         const content = await formItemContent({
           userId,

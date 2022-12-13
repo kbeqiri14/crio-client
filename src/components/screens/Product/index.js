@@ -51,25 +51,18 @@ export const Product = () => {
         ? {
             ...data.getProduct,
             isProduct: true,
-            thumbnails: data.getProduct.thumbnails?.[0]
-              ? [
-                  getThumbnail(
+            thumbnails:
+              data.getProduct.thumbnails?.length > 1
+                ? data.getProduct.thumbnails?.map((item) =>
+                    getThumbnail(PRODUCTS, data.getProduct.userId, `thumbnail-${item}`),
+                  )
+                : data.getProduct.thumbnails?.[0]
+                ? getThumbnail(
                     PRODUCTS,
                     data.getProduct.userId,
-                    `thumbnail-${data.getProduct.thumbnails?.[0]}`,
-                  ),
-                  getThumbnail(
-                    PRODUCTS,
-                    data.getProduct.userId,
-                    `thumbnail-${data.getProduct.thumbnails?.[1]}`,
-                  ),
-                  getThumbnail(
-                    PRODUCTS,
-                    data.getProduct.userId,
-                    `thumbnail-${data.getProduct.thumbnails?.[2]}`,
-                  ),
-                ]
-              : [defaultCover, defaultCover, defaultCover],
+                    `thumbnail-${data.getProduct.thumbnails[0]}`,
+                  )
+                : defaultCover,
           }
         : {},
     [data?.getProduct],

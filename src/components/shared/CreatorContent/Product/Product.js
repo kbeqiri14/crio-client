@@ -132,6 +132,7 @@ const Product = ({
     productId,
     setInfo,
   ]);
+
   return (
     <>
       <ProductWrapper
