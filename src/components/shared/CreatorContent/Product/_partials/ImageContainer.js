@@ -134,8 +134,8 @@ const ImageContainer = (props = {}) => {
     () => ({
       ...props,
       sources:
-        props?.thumbnails?.length > 1
-          ? props.thumbnails?.map((item) =>
+        props.thumbnails?.length > 1
+          ? props.thumbnails.map((item) =>
               getThumbnail(PRODUCTS, props.userId, `thumbnail-${item}`),
             )
           : props.thumbnails?.[0]

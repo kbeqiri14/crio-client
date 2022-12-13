@@ -80,7 +80,7 @@ const Product = ({
 
   const imageClasses = useMemo(() => {
     let name;
-    if (!thumbnails?.[0]) {
+    if (!thumbnails?.length) {
       name = 'no-thumbnail';
     }
     if (large) {

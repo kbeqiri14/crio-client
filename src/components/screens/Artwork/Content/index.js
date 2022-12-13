@@ -117,8 +117,8 @@ export const Content = ({ info, content, isLocked }) => {
       return info.thumbnail;
     }
     if (info.isProduct) {
-      return info.thumbnails?.[0]
-        ? getThumbnail(PRODUCTS, info.userId, `thumbnail-${info.thumbnails?.[0]}`)
+      return info.thumbnails.length
+        ? getThumbnail(PRODUCTS, info.userId, `thumbnail-${info.thumbnails[0]}`)
         : product;
     }
     return getThumbnail(ARTWORKS, info.userId, `main-${info.content}`);
