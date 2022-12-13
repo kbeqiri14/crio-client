@@ -67,6 +67,7 @@ export const ImageWrapper = styled('div')`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
   width: 330px;
   height: 245px;
   img {

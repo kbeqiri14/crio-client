@@ -112,13 +112,6 @@ export const Content = ({ info, content, isLocked }) => {
   ]);
   const showLikes = useMemo(() => info.userId === user.id || liked, [user.id, info.userId, liked]);
 
-  // const source = useMemo(
-  //   () =>
-  //     info.isProduct || info.content?.startsWith('/videos/')
-  //       ? info.thumbnail
-  //       : getThumbnail(ARTWORKS, info.userId, `main-${info.content}`),
-  //   [info.isProduct, info.userId, info.content, info.thumbnail],
-  // );
   const source = useMemo(() => {
     if (info.content?.startsWith('/videos/')) {
       return info.thumbnail;

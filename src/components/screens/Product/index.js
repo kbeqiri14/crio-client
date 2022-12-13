@@ -8,11 +8,8 @@ import { useQuery, useReactiveVar } from '@apollo/client';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { getProduct } from '@app/graphql/queries/products.query';
 import { loggedInUserLoadingVar } from '@configs/client-cache';
-import { PRODUCTS } from '@configs/constants';
-import { getThumbnail } from '@utils/helpers';
 import { Col, Row } from '@ui-kit';
 import Broadcast from '@screens/EditProduct/_partials/Broadcast';
-import defaultCover from '@images/product.png';
 import Content from '../Artwork/Content';
 import MoreProductsSection from './MoreProductsSection';
 import EmptyState from '@shared/EmptyState';
@@ -46,25 +43,7 @@ export const Product = () => {
     [loggedInUserLoading, user.id, visibleBroadcast],
   );
   const product = useMemo(
-    () =>
-      data?.getProduct
-        ? {
-            ...data.getProduct,
-            isProduct: true,
-            thumbnails:
-              data.getProduct.thumbnails?.length > 1
-                ? data.getProduct.thumbnails?.map((item) =>
-                    getThumbnail(PRODUCTS, data.getProduct.userId, `thumbnail-${item}`),
-                  )
-                : data.getProduct.thumbnails?.[0]
-                ? getThumbnail(
-                    PRODUCTS,
-                    data.getProduct.userId,
-                    `thumbnail-${data.getProduct.thumbnails[0]}`,
-                  )
-                : defaultCover,
-          }
-        : {},
+    () => (data?.getProduct ? { ...data.getProduct, isProduct: true } : {}),
     [data?.getProduct],
   );
   const isLocked = useMemo(() => {
