@@ -1,7 +1,7 @@
-import { Spin, Image } from 'antd';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Spin } from 'antd';
 import { useLazyQuery, useMutation, useReactiveVar } from '@apollo/client';
-import { memo, useCallback, useState, useMemo, useEffect, useRef } from 'react';
 
 import { ARTWORKS, PRODUCTS } from '@configs/constants';
 import { loggedInUserLoadingVar } from '@configs/client-cache';
@@ -12,16 +12,15 @@ import { getArtworkLikes } from '@app/graphql/queries/artworks.query';
 import { likeProduct } from '@app/graphql/mutations/product.mutation';
 import { likeArtwork } from '@app/graphql/mutations/artwork.mutation';
 import { getThumbnail, urlify } from '@utils/helpers';
-import { Carousel, Col, notification, Row, Text, Title } from '@ui-kit';
+import { Col, notification, Row, Text, Title } from '@ui-kit';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
+import { ImagesCarousel } from '@shared/CreatorContent/Product/_partials/ImageContainer';
 import LockState from '@shared/CreatorContent/LockState';
 import BuyWidget from '@screens/Product/BuyWidget';
 import product from '@images/product.png';
 // import { ReactComponent as ShareIcon } from '@svgs/share.svg';
 import { ReactComponent as LikeIcon } from '@svgs/like.svg';
 import { ReactComponent as LikedIcon } from '@svgs/liked.svg';
-import { ReactComponent as ArrowRight } from '@svgs/arrow-right.svg';
-import { ReactComponent as ArrowLeft } from '@svgs/arrow-left.svg';
 import Wrapper from './styled/Wrapper';
 import ImageWrapper from './styled/ImageWrapper';
 
@@ -32,8 +31,6 @@ export const Content = ({ info, content, isLocked }) => {
   const [openTooltip, setOpenTooltip] = useState(user.id && !user.helpSeen);
   const avatarUrl = useAvatarUrl(info.providerType, info.providerUserId, info.avatar);
   const { setInfo } = usePresentation();
-  const slider = useRef(null);
-  const [currentSlide, setCurrentSlide] = useState(0);
 
   const [requestProductLikes, { loading: loadingProductLikes, data: productLikes }] = useLazyQuery(
     getProductLikes,
@@ -188,33 +185,7 @@ export const Content = ({ info, content, isLocked }) => {
           ) : (
             <Col span={24}>
               {info.isProduct && sources.length > 1 ? (
-                <div className='relative'>
-                  {currentSlide !== 0 && (
-                    <ArrowLeft
-                      onClick={() => {
-                        slider.current.prev();
-                        setCurrentSlide((prev) => --prev);
-                      }}
-                      className='arrow-left'
-                    />
-                  )}
-                  {currentSlide !== sources.length - 1 && (
-                    <ArrowRight
-                      onClick={() => {
-                        slider.current.next();
-                        setCurrentSlide((prev) => ++prev);
-                      }}
-                      className='arrow-right'
-                    />
-                  )}
-                  <Carousel ref={slider} autoplay={false} dots={false}>
-                    {sources.map((source, index) => (
-                      <ImageWrapper key={index}>
-                        <Image preview={false} src={source} alt='product' />
-                      </ImageWrapper>
-                    ))}
-                  </Carousel>
-                </div>
+                <ImagesCarousel presentationView sources={sources} />
               ) : info.isProduct || info.isImage ? (
                 <ImageWrapper>
                   <img

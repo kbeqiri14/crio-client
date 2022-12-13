@@ -8,7 +8,7 @@ import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
 import Author from '../Author';
 import BuyButton from './BuyButton';
-import ImageContainer from './_partials/ImageContainer';
+import { ImageContainer } from './_partials/ImageContainer';
 import { ProductWrapper } from './styled';
 
 const Product = ({

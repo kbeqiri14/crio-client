@@ -1,4 +1,4 @@
-import { memo, useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 
 import { PRODUCTS } from '@configs/constants';
 import { getThumbnail } from '@utils/helpers';
@@ -7,11 +7,12 @@ import product from '@images/product.png';
 import { ReactComponent as ArrowLeft } from '@svgs/arrow-left.svg';
 import { ReactComponent as ArrowRight } from '@svgs/arrow-right.svg';
 import Actions from '@screens/Video/Actions';
-import { ImageWrapper } from '../styled';
+import ImageWrapper from '@screens/Artwork/Content/styled/ImageWrapper';
+import { ImageWrapper as ProductWrapper } from '../styled';
 
 const Image = ({
   thumbnails,
-  sources,
+  source,
   file,
   limit,
   price,
@@ -23,22 +24,24 @@ const Image = ({
   categoryId,
   categories,
   showActions,
-  showProduct,
   description,
   accessibility,
   imageClasses,
+  presentationView,
+  showProduct = () => {},
 }) => {
+  const Wrapper = presentationView ? ImageWrapper : ProductWrapper;
   return (
-    <ImageWrapper className={imageClasses}>
-      <img src={sources} alt='product' onClick={showProduct} />
+    <Wrapper className={imageClasses}>
+      <img src={source} alt='product' onClick={showProduct} />
       {categories?.products?.length && isHovering && categoryId && (
         <Tag>{categories?.products?.find(({ id }) => id === categoryId)?.name}</Tag>
       )}
-      <div
-        className={`actions ${isHovering ? 'hover' : ''}`}
-        onClick={() => !showActions && showProduct()}
-      >
-        {showActions && (
+      {showActions && (
+        <div
+          className={`actions ${isHovering ? 'hover' : ''}`}
+          onClick={() => !showActions && showProduct()}
+        >
           <Actions
             userId={userId}
             username={username}
@@ -53,37 +56,19 @@ const Image = ({
             file={file}
             isProduct={true}
           />
-        )}
-      </div>
-    </ImageWrapper>
+        </div>
+      )}
+    </Wrapper>
   );
 };
 
-const ImagesCarousel = ({
-  thumbnails,
-  sources,
-  file,
-  limit,
-  price,
-  title,
-  userId,
-  username,
-  productId,
-  isHovering,
-  categoryId,
-  categories,
-  showActions,
-  showProduct,
-  description,
-  accessibility,
-  imageClasses,
-}) => {
+export const ImagesCarousel = ({ sources, ...props }) => {
   const slider = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(0);
 
   return (
     <div className='relative'>
-      {currentSlide !== 0 && (
+      {!!currentSlide && (
         <ArrowLeft
           onClick={() => {
             slider.current.prev();
@@ -102,49 +87,35 @@ const ImagesCarousel = ({
         />
       )}
       <Carousel ref={slider} autoplay={false} dots={false}>
-        {sources.map((item, index) => (
-          <Image
-            key={index}
-            thumbnails={thumbnails}
-            sources={item}
-            file={file}
-            limit={limit}
-            price={price}
-            title={title}
-            userId={userId}
-            username={username}
-            productId={productId}
-            isHovering={isHovering}
-            categoryId={categoryId}
-            categories={categories}
-            showActions={showActions}
-            showProduct={showProduct}
-            description={description}
-            accessibility={accessibility}
-            imageClasses={imageClasses}
-          />
+        {sources.map((source, index) => (
+          <Image key={index} {...props} source={source} />
         ))}
       </Carousel>
     </div>
   );
 };
 
-const ImageContainer = (props = {}) => {
-  const data = useMemo(
-    () => ({
-      ...props,
-      sources:
-        props.thumbnails?.length > 1
-          ? props.thumbnails.map((item) =>
-              getThumbnail(PRODUCTS, props.userId, `thumbnail-${item}`),
-            )
-          : props.thumbnails?.[0]
+export const ImageContainer = (props = {}) => {
+  const [Component, source] = useMemo(() => {
+    if (props.thumbnails?.length > 1) {
+      return [
+        ImagesCarousel,
+        {
+          sources: props.thumbnails.map((item) =>
+            getThumbnail(PRODUCTS, props.userId, `thumbnail-${item}`),
+          ),
+        },
+      ];
+    }
+    return [
+      Image,
+      {
+        source: props.thumbnails?.[0]
           ? getThumbnail(PRODUCTS, props.userId, `thumbnail-${props.thumbnails[0]}`)
           : product,
-    }),
-    [props],
-  );
-  return props.thumbnails?.length > 1 ? <ImagesCarousel {...data} /> : <Image {...data} />;
-};
+      },
+    ];
+  }, [props.thumbnails, props.userId]);
 
-export default memo(ImageContainer);
+  return <Component {...props} {...source} />;
+};

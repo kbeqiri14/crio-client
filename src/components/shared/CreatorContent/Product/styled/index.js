@@ -74,8 +74,6 @@ export const ImageWrapper = styled('div')`
     width: inherit;
     height: inherit;
     border-bottom: 1px solid transparent;
-    // height: 100%;
-    // object-fit: cover;
   }
 
   .ant-image {
