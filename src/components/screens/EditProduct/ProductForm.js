@@ -62,10 +62,12 @@ const ProductForm = ({ state }) => {
 
   const [images, dispatch] = useReducer(
     reducer,
-    state?.thumbnails?.map((thumbnail) => ({
-      src: getThumbnail(PRODUCTS, user.id, `thumbnail-${thumbnail}`),
-      fileName: thumbnail,
-    })),
+    state?.thumbnails
+      ? state.thumbnails.map((thumbnail) => ({
+          src: getThumbnail(PRODUCTS, user.id, `thumbnail-${thumbnail}`),
+          fileName: thumbnail,
+        }))
+      : [],
   );
 
   const hideBroadcast = useCallback(() => setVisibleBroadcast(false), []);
@@ -114,26 +116,24 @@ const ProductForm = ({ state }) => {
   const disabled = useMemo(
     () =>
       !(
-        (
-          title?.trim() &&
-          (categoryId || state?.categoryId) &&
-          (+price > 0 || isFree) &&
-          (!limitVisible || (limitVisible && +limit > 0)) &&
-          !(isDigitalProduct && !(files.length || file)) &&
-          ((categoryId && categoryId !== state?.categoryId) ||
-            (title?.trim() && title?.trim() !== state?.title) ||
-            (state?.file && file !== state?.file) ||
-            (description?.trim() && description?.trim() !== state?.description) ||
-            (description?.trim() === '' && !!state?.description) ||
-            (price && +price !== +state?.price) ||
-            (!price && isFree && state?.price > 0) ||
-            (limitVisible && limit && +limit !== state?.limit) ||
-            !!limitVisible !== !!state?.limit ||
-            accessibility !== state?.accessibility ||
-            images[0]?.file)
-        )
-        // (images[0].src !== state?.thumbnails && //Narine Kosyan
-        //   !state?.thumbnail?.startsWith('/static/media/product')))
+        title?.trim() &&
+        (categoryId || state?.categoryId) &&
+        (+price > 0 || isFree) &&
+        (!limitVisible || (limitVisible && +limit > 0)) &&
+        !(isDigitalProduct && !(files.length || file)) &&
+        ((categoryId && categoryId !== state?.categoryId) ||
+          (title?.trim() && title?.trim() !== state?.title) ||
+          (state?.file && file !== state?.file) ||
+          (description?.trim() && description?.trim() !== state?.description) ||
+          (description?.trim() === '' && !!state?.description) ||
+          (price && +price !== +state?.price) ||
+          (!price && isFree && state?.price > 0) ||
+          (limitVisible && limit && +limit !== state?.limit) ||
+          !!limitVisible !== !!state?.limit ||
+          accessibility !== state?.accessibility ||
+          images[0]?.file ||
+          images.length !== state?.thumbnails ||
+          images.some(({ file }) => file))
       ),
     [
       title,
@@ -149,7 +149,7 @@ const ProductForm = ({ state }) => {
       state?.price,
       state?.limit,
       state?.accessibility,
-      // state?.thumbnails,
+      state?.thumbnails,
       state?.file,
       state?.categoryId,
       categoryId,
