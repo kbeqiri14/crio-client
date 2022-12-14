@@ -72,17 +72,19 @@ const ProductActionButtons = ({
 
   const onPublish = useAsyncFn(async (attributes) => {
     let file;
-    let thumbnails = [];
+    let thumbnails = [images.filter(({ file }) => !file).map(({ fileName }) => fileName)];
     await Promise.all(
-      images.map(async (item) => {
-        const fileName = await formItemContent({
-          userId,
-          image: item.file,
-          type: PRODUCTS,
-        });
-        thumbnails.push(fileName);
-        // thumbnails.push(item.file.name);
-      }),
+      images
+        .filter(({ file }) => file)
+        .map(async (item) => {
+          const fileName = await formItemContent({
+            userId,
+            image: item.file,
+            type: PRODUCTS,
+          });
+          thumbnails.push(fileName);
+          // thumbnails.push(item.file.name);
+        }),
     );
     if (attributes.file && attributes.categoryId !== categories.commissionId) {
       const { url, signedRequest } = await sign({
@@ -107,11 +109,6 @@ const ProductActionButtons = ({
           });
         },
       });
-
-      // const newFile = await uploadContent(userId, file, type, 'file');
-      // if (newFile) {
-      //   content.file = newFile?.split('/')?.slice(-1)?.[0]?.slice('file-'.length);
-      // }
       file = url?.split('/')?.slice(-1)?.[0]?.slice('file-'.length);
     }
 

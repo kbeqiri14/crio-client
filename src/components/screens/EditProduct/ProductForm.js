@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import { Controller, useForm } from 'react-hook-form';
 import { useQuery } from '@apollo/client';
 
+import { PRODUCTS } from '@configs/constants';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import useCategories from '@app/hooks/useCategories';
 import { getConnectAccount } from '@app/graphql/queries/payment-method.query';
+import { getThumbnail } from '@utils/helpers';
 import { ReactComponent as ArrowIcon } from '@svgs/arrow.svg';
 import { ReactComponent as CloseIcon } from '@svgs/close.svg';
 import {
@@ -60,9 +62,10 @@ const ProductForm = ({ state }) => {
 
   const [images, dispatch] = useReducer(
     reducer,
-    state?.thumbnail && !state?.thumbnail?.startsWith('/static/media/product')
-      ? [{ src: state.thumbnail }]
-      : [],
+    state?.thumbnails?.map((thumbnail) => ({
+      src: getThumbnail(PRODUCTS, user.id, `thumbnail-${thumbnail}`),
+      fileName: thumbnail,
+    })),
   );
 
   const hideBroadcast = useCallback(() => setVisibleBroadcast(false), []);
