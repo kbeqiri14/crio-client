@@ -123,7 +123,6 @@ export const Content = ({ info, content, isLocked }) => {
 
   const sources = useMemo(() => {
     if (info.content?.startsWith('/videos/')) {
-      console.log(info?.thumbnail, 'thumbnail__');
       return info.thumbnail;
     }
     if (info.isProduct) {

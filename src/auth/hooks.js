@@ -35,7 +35,6 @@ export const useAmplifyUser = function () {
 
   useEffect(() => {
     const updateUser = async (e) => {
-      console.log(e?.payload?.event, 'e?.payload?.event');
       const event = e?.payload?.event;
       if (
         [

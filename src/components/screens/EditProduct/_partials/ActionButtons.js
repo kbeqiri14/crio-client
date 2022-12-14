@@ -75,14 +75,12 @@ const ProductActionButtons = ({
     let thumbnails = [];
     await Promise.all(
       images.map(async (item) => {
-        console.log(item.file.name, 'item.file.name');
-        const { image } = await formItemContent({
+        const fileName = await formItemContent({
           userId,
           image: item.file,
           type: PRODUCTS,
         });
-        console.log(image, 'image');
-        thumbnails.push(image);
+        thumbnails.push(fileName);
         // thumbnails.push(item.file.name);
       }),
     );

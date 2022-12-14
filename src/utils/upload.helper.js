@@ -35,16 +35,11 @@ export const sign = async ({ userId, file, type, prefix }) => {
 };
 
 export const formItemContent = async ({ userId, image, type }) => {
-  const content = {};
-
   if (image) {
     const prefix = type === PRODUCTS ? 'thumbnail-' : 'main-';
     const newImage = await uploadContent(userId, image, type, prefix);
-    console.log(newImage, 'newImage');
     if (newImage) {
-      content.image = newImage?.split('/')?.slice(-1)?.[0]?.slice(prefix.length);
+      return newImage?.split('/')?.slice(-1)?.[0]?.slice(prefix.length);
     }
   }
-
-  return content;
 };

@@ -153,7 +153,7 @@ const VideoInfo = ({
         maxWidthOrHeight: 1600,
         useWebWorker: true,
       });
-      const itemContent = await formItemContent({
+      const fileName = await formItemContent({
         userId: user.id,
         image: compressionFile,
         type: ARTWORKS,
@@ -162,8 +162,8 @@ const VideoInfo = ({
       saveArtwork({
         variables: {
           params: {
-            content: itemContent?.image,
-            thumbnail: itemContent?.image,
+            content: fileName,
+            thumbnail: fileName,
             title,
             description: desc,
             accessibility,
