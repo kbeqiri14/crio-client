@@ -73,7 +73,7 @@ const ProductActionButtons = ({
   const onPublish = useAsyncFn(async (attributes) => {
     let file;
     let thumbnails = images.filter(({ file }) => !file).map(({ fileName }) => fileName);
-    await Promise.all(
+    await Promise.allSettled(
       images
         .filter(({ file }) => file)
         .map(async (item) => {
@@ -83,7 +83,6 @@ const ProductActionButtons = ({
             type: PRODUCTS,
           });
           thumbnails.push(fileName);
-          // thumbnails.push(item.file.name);
         }),
     );
     if (attributes.file && attributes.categoryId !== categories.commissionId) {
