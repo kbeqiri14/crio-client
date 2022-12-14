@@ -72,7 +72,7 @@ const ProductActionButtons = ({
 
   const onPublish = useAsyncFn(async (attributes) => {
     let file;
-    let thumbnails = [images.filter(({ file }) => !file).map(({ fileName }) => fileName)];
+    let thumbnails = images.filter(({ file }) => !file).map(({ fileName }) => fileName);
     await Promise.all(
       images
         .filter(({ file }) => file)
