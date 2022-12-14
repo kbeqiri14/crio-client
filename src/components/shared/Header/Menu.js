@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo, Fragment } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { searchKeywordVar, refetchArtworkVar, refetchMarketplaceVar } from '@configs/client-cache';
@@ -18,7 +18,7 @@ const getTabItems = (id, isCreator, isSubscribed, featuresSeen) => {
 
     {
       id: 'features',
-      title: <Fragment>Features {id && !featuresSeen && <img src={star} alt='star' />}</Fragment>,
+      title: <>Features {id && !featuresSeen && <img src={star} alt='star' />}</>,
       path: '/features',
     },
   ];
