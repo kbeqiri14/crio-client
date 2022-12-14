@@ -114,13 +114,14 @@ const ProductActionButtons = ({
     //       }
     //     }),
     // );
-    if (images?.[0]) {
+    const uploadImages = images.filter(({ file }) => file);
+    if (uploadImages[0]) {
       thumbnails.push(await upload(images[0], userId));
     }
-    if (images?.[1]) {
+    if (uploadImages[1]) {
       thumbnails.push(await upload(images[1], userId));
     }
-    if (images?.[2]) {
+    if (uploadImages[2]) {
       thumbnails.push(await upload(images[2], userId));
     }
     if (attributes.file && attributes.categoryId !== categories.commissionId) {
