@@ -73,21 +73,19 @@ const ProductActionButtons = ({
   const onPublish = useAsyncFn(async (attributes) => {
     let file;
     let thumbnails = [];
-    Promise.all(
+    await Promise.all(
       images.map(async (item) => {
         console.log(item.file.name, 'item.file.name');
-        await formItemContent({
+        const { image } = await formItemContent({
           userId,
           image: item.file,
           type: PRODUCTS,
         });
-        // thumbnails.push(content?.image);
+        console.log(image, 'image');
+        thumbnails.push(image);
         // thumbnails.push(item.file.name);
       }),
-    ).then((values) => {
-      console.log(values, 'values');
-      thumbnails = values.map(({ image }) => image);
-    });
+    );
     if (attributes.file && attributes.categoryId !== categories.commissionId) {
       const { url, signedRequest } = await sign({
         userId,
