@@ -1,18 +1,15 @@
-import { memo, useCallback, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { memo, useCallback, useMemo, useState } from 'react';
 
 import history from '@configs/history';
-import { PRODUCTS } from '@configs/constants';
-import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
+import { Col, Row, Text } from '@ui-kit';
 import useCategories from '@app/hooks/useCategories';
+import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { usePresentation } from '@shared/PresentationView/PresentationContext';
-import { getThumbnail } from '@utils/helpers';
-import { Col, Row, Tag, Text } from '@ui-kit';
-import product from '@images/product.png';
-import Actions from '@screens/Video/Actions';
 import Author from '../Author';
 import BuyButton from './BuyButton';
-import { ProductWrapper, ImageWrapper } from './styled';
+import { ImageContainer } from './_partials/ImageContainer';
+import { ProductWrapper } from './styled';
 
 const Product = ({
   providerType,
@@ -27,7 +24,7 @@ const Product = ({
   price,
   limit,
   accessibility,
-  thumbnail,
+  thumbnails,
   file,
   likes,
   large = false,
@@ -65,11 +62,6 @@ const Product = ({
     return { width };
   }, [large, isHovering, user.isCreator, isLocked, price, categoryId, categories.digitalId]);
 
-  const src = useMemo(
-    () => (thumbnail ? getThumbnail(PRODUCTS, userId, `thumbnail-${thumbnail}`) : product),
-    [userId, thumbnail],
-  );
-
   const priceText = useMemo(
     () => (price ? `$${price.toFixed(2)}` : 'Free for Subscribers'),
     [price],
@@ -88,14 +80,14 @@ const Product = ({
 
   const imageClasses = useMemo(() => {
     let name;
-    if (!thumbnail) {
+    if (!thumbnails.length) {
       name = 'no-thumbnail';
     }
     if (large) {
       return `${name} large`;
     }
     return name;
-  }, [thumbnail, large]);
+  }, [thumbnails, large]);
 
   const hide = useCallback(() => setInfo({}), [setInfo]);
 
@@ -118,7 +110,7 @@ const Product = ({
       price,
       limit,
       accessibility,
-      thumbnail: src,
+      thumbnails,
       file,
       isProduct: true,
     });
@@ -134,7 +126,7 @@ const Product = ({
     price,
     limit,
     accessibility,
-    src,
+    thumbnails,
     file,
     pathname,
     productId,
@@ -148,33 +140,24 @@ const Product = ({
         onMouseOver={handleMouseOver}
         onMouseLeave={handleMouseOut}
       >
-        <ImageWrapper className={imageClasses}>
-          <img src={src} alt='product' onClick={showProduct} />
-          {categories.products.length && isHovering && categoryId && (
-            <Tag>{categories.products.find(({ id }) => id === categoryId)?.name}</Tag>
-          )}
-          <div
-            className={`actions ${isHovering ? 'hover' : ''}`}
-            onClick={() => !showActions && showProduct()}
-          >
-            {showActions && (
-              <Actions
-                userId={userId}
-                username={username}
-                productId={productId}
-                categoryId={categoryId}
-                title={title}
-                description={description}
-                price={price}
-                limit={limit}
-                accessibility={accessibility}
-                thumbnail={src}
-                file={file}
-                isProduct={true}
-              />
-            )}
-          </div>
-        </ImageWrapper>
+        <ImageContainer
+          file={file}
+          title={title}
+          price={price}
+          limit={limit}
+          userId={userId}
+          username={username}
+          productId={productId}
+          description={description}
+          imageClasses={imageClasses}
+          accessibility={accessibility}
+          thumbnails={thumbnails}
+          categoryId={categoryId}
+          categories={categories}
+          isHovering={isHovering}
+          showActions={showActions}
+          showProduct={showProduct}
+        />
         <Row justify='space-between' align='middle' padding_horizontal={20} padding_top={12}>
           <Col>
             <Row align='middle' gutter={[0, 8]}>

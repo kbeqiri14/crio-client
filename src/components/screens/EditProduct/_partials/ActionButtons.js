@@ -2,6 +2,7 @@ import { Fragment, memo, useCallback, useMemo, useState } from 'react';
 import axios from 'axios';
 import { useMutation, useReactiveVar } from '@apollo/client';
 
+import uploader from '@app/configs/uploader';
 import useAsyncFn from '@app/hooks/useAsyncFn';
 import useRedirectToProfile from '@app/hooks/useRedirectToProfile';
 import { me } from '@app/graphql/queries/users.query';
@@ -9,13 +10,27 @@ import { createProduct, updateProduct } from '@app/graphql/mutations/product.mut
 import { PRODUCTS } from '@configs/constants';
 import ActionButtons from '@shared/ActionButtons';
 import { notification } from '@ui-kit';
-import { formItemContent, sign } from '@utils/upload.helper';
+import { sign } from '@utils/upload.helper';
 import Confirmation from '@shared/Confirmation';
 import { categoriesVar } from '@configs/client-cache';
 
+const upload = async (item, userId) => {
+  const type = item?.file?.type?.split('/')?.[0];
+  if (type === 'image') {
+    const name = Date.now().toString();
+    console.log(name);
+    await uploader.signAndUpload(
+      `${userId}/${PRODUCTS}/thumbnail-${name}`,
+      item.file.type,
+      item.file,
+    );
+    return name;
+  }
+};
+
 const ProductActionButtons = ({
   state,
-  image,
+  images,
   disabled,
   categoryId,
   handleSubmit,
@@ -72,14 +87,42 @@ const ProductActionButtons = ({
 
   const onPublish = useAsyncFn(async (attributes) => {
     let file;
-    let thumbnail = state?.thumbnail && !image.src ? 'remove-thumbnail' : undefined;
-    if (attributes.image?.file) {
-      const content = await formItemContent({
-        userId,
-        image: image.file,
-        type: PRODUCTS,
-      });
-      thumbnail = content?.image;
+    let thumbnails = images.filter(({ file }) => !file).map(({ fileName }) => fileName);
+    // await Promise.allSettled(
+    //   images
+    //     .filter(({ file }) => file)
+    //     .map(async (item) => {
+    //       const fileName = await formItemContent({
+    //         userId,
+    //         image: item.file,
+    //         type: PRODUCTS,
+    //       });
+    //       thumbnails.push(fileName);
+    //     }),
+    // );
+
+    // await Promise.allSettled(
+    //   images
+    //     .filter(({ file }) => file)
+    //     .map(async (item) => {
+    //       const type = item?.file?.type?.split('/')?.[0];
+    //       if (type === 'image') {
+    //         const name = Date.now();
+    //         console.log(name)
+    //         await uploader.signAndUpload(`${userId}/${PRODUCTS}/thumbnail-${name}`, item.file.type, item.file);
+    //         thumbnails.push(name);
+    //       }
+    //     }),
+    // );
+    const uploadImages = images.filter(({ file }) => file);
+    if (uploadImages[0]) {
+      thumbnails.push(await upload(images[0], userId));
+    }
+    if (uploadImages[1]) {
+      thumbnails.push(await upload(images[1], userId));
+    }
+    if (uploadImages[2]) {
+      thumbnails.push(await upload(images[2], userId));
     }
     if (attributes.file && attributes.categoryId !== categories.commissionId) {
       const { url, signedRequest } = await sign({
@@ -104,11 +147,6 @@ const ProductActionButtons = ({
           });
         },
       });
-
-      // const newFile = await uploadContent(userId, file, type, 'file');
-      // if (newFile) {
-      //   content.file = newFile?.split('/')?.slice(-1)?.[0]?.slice('file-'.length);
-      // }
       file = url?.split('/')?.slice(-1)?.[0]?.slice('file-'.length);
     }
 
@@ -123,7 +161,7 @@ const ProductActionButtons = ({
               price: +attributes.price || undefined,
               limit: +attributes.limit || undefined,
               accessibility: attributes.accessibility,
-              thumbnail,
+              thumbnails,
               file,
             },
           },
@@ -137,7 +175,7 @@ const ProductActionButtons = ({
               price: +attributes.price || undefined,
               limit: +attributes.limit || undefined,
               accessibility: attributes.accessibility,
-              thumbnail,
+              thumbnails,
               file,
             },
           },

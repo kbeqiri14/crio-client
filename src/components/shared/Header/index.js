@@ -1,5 +1,7 @@
 import { memo } from 'react';
+import { useReactiveVar } from '@apollo/client';
 
+import { loggedInUserLoadingVar } from '@configs/client-cache';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { Col, Row } from '@ui-kit';
 import Menu from './Menu';
@@ -10,6 +12,7 @@ import BurgerMenu from './BurgerMenu';
 
 export const Header = ({ isAuthenticated, keyword, setKeyword }) => {
   const { user } = useLoggedInUser();
+  const loggedInUserLoading = useReactiveVar(loggedInUserLoadingVar);
 
   return (
     <>
@@ -20,18 +23,20 @@ export const Header = ({ isAuthenticated, keyword, setKeyword }) => {
         <Col xs={0} lg={15}>
           <Menu user={user} keyword={keyword} setKeyword={setKeyword} />
         </Col>
-        <Col xs={0} lg={9}>
-          <Row justify='end' gutter={20}>
-            <Col className='self-center'>
-              {isAuthenticated && user ? <ProfileMenu user={user} /> : <GetStarted />}
-            </Col>
-            {user?.isCreator && (
-              <Col>
-                <UploadButton />
+        {!loggedInUserLoading && (
+          <Col xs={0} lg={9}>
+            <Row justify='end' gutter={20}>
+              <Col className='self-center'>
+                {isAuthenticated && user ? <ProfileMenu user={user} /> : <GetStarted />}
               </Col>
-            )}
-          </Row>
-        </Col>
+              {user?.isCreator && (
+                <Col>
+                  <UploadButton />
+                </Col>
+              )}
+            </Row>
+          </Col>
+        )}
       </Row>
     </>
   );

@@ -19,7 +19,7 @@ export const Wrapper = styled('div')`
   .info {
     position: absolute;
     background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 103.09%);
-    bottom: 39px;
+    bottom: 41px;
     padding: 26px 20px;
     width: 330px;
     border-bottom-left-radius: 30px;

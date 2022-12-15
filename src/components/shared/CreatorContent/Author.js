@@ -13,6 +13,9 @@ import { ReactComponent as LikeIcon } from '@svgs/like-small.svg';
 import { ReactComponent as LikedIcon } from '@svgs/liked-small.svg';
 
 const Wrapper = styled('div')`
+  div:first-child {
+    height: 40px;
+  }
   .ant-spin {
     .ant-spin-dot-spin {
       .ant-spin-dot-item {

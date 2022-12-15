@@ -20,9 +20,6 @@ const FormWrapper = styled('div')`
       visibility: visible;
     }
   }
-  .upload-text {
-    padding-bottom: 10px;
-  }
   .limit-section {
     display: flex;
     align-items: center;
@@ -53,6 +50,34 @@ const FormWrapper = styled('div')`
   .select-title {
     @media (max-width: 1061px) {
       margin-top: 137px;
+    }
+  }
+  .dragger {
+    .ant-upload.ant-upload-drag {
+      height: 232px;
+    }
+  }
+  .uploaded-image {
+    img {
+      width: 178px;
+      height: 178px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+    .remove {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      opacity: 0;
+      transition: visibility 0s, opacity 0.4s linear;
+      visibility: hidden;
+      cursor: pointer;
+    }
+    :hover {
+      .remove {
+        opacity: 1;
+        visibility: visible;
+      }
     }
   }
 `;

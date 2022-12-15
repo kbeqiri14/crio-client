@@ -39,18 +39,46 @@ export const ProductWrapper = styled('div')`
       visibility: visible;
     }
   }
+
+  .arrow-right {
+    position: absolute;
+    z-index: 10;
+    top: 48%;
+    right: 0;
+    cursor: pointer;
+  }
+  .arrow-left {
+    position: absolute;
+    z-index: 10;
+    top: 48%;
+    left: 0;
+    cursor: pointer;
+  }
+
+  .ant-carousel {
+    .slick-list {
+      border-top-left-radius: 30px;
+      border-top-right-radius: 30px;
+    }
+  }
 `;
 
 export const ImageWrapper = styled('div')`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
   width: 330px;
   height: 245px;
   img {
     width: inherit;
     height: inherit;
     border-bottom: 1px solid transparent;
+  }
+
+  .ant-image {
+    height: 100%;
+    width: 100%;
   }
   .actions {
     width: 330px;
@@ -76,6 +104,8 @@ export const ImageWrapper = styled('div')`
     img {
       width: inherit;
       height: inherit;
+      // height: auto;
+      // height: 100%;
     }
     &.no-thumbnail {
       border-top-left-radius: 30px;

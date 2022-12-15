@@ -21,7 +21,7 @@ const Item = memo(({ item, large }) => (
     price={item?.price}
     limit={item?.limit}
     accessibility={item?.accessibility}
-    thumbnail={item?.thumbnail}
+    thumbnails={item?.thumbnails}
     file={item?.file}
     likes={item?.likes}
     large={large}
