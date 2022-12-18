@@ -256,7 +256,7 @@ export const questions = [
           transaction.
         </li>
         <li>
-          Creators keep 90% of each transaction, Crio takes 10% (this is to cover transaction fees
+          Creators keep 95% of each transaction, Crio takes 5% (this is to cover transaction fees
           and the cost of operations such as paying our employees).
         </li>
       </Fragment>
