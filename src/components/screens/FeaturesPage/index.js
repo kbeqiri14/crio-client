@@ -37,7 +37,7 @@ const eCommerceData = [
     users and subscribers.
   </Text>,
   <Text color='dark25'>
-    Creators <Text>keep 90%</Text> of each transaction. 10% is kept by Crio to cover the costs of
+    Creators <Text>keep 95%</Text> of each transaction. 5% is kept by Crio to cover the costs of
     operations (e.g., transaction fees, paying our employees, server costs).
   </Text>,
 ];
