@@ -172,7 +172,6 @@ const ProductForm = ({ state }) => {
   const setFree = useCallback(
     (e) => {
       setValue('price', undefined);
-      setValue('accessibility', 'subscriber_only');
       setValue('isFree', e.target.checked);
     },
     [setValue],
@@ -443,9 +442,7 @@ const ProductForm = ({ state }) => {
                   </Fragment>
                 )}
                 <Col span={18} align='start'>
-                  <Text level={3} disabled={isFree}>
-                    Who can get this?
-                  </Text>
+                  <Text level={3}>Who can get this?</Text>
                 </Col>
                 <Col span={18} padding_bottom={32} align='start'>
                   <Controller
@@ -453,13 +450,7 @@ const ProductForm = ({ state }) => {
                     control={control}
                     defaultValue={state?.accessibility || 'subscriber_only'}
                     render={({ field }) => (
-                      <Radio.Group
-                        value={
-                          isFree ? 'subscriber_only' : state?.accessibility || 'subscriber_only'
-                        }
-                        {...field}
-                        disabled={isFree}
-                      >
+                      <Radio.Group {...field}>
                         <Radio value='subscriber_only'>Subscriber Only</Radio>
                         <Radio value='everyone'>Everyone</Radio>
                       </Radio.Group>
