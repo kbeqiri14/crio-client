@@ -35,10 +35,8 @@ const Wrapper = styled('div')`
 
 const TopProducts = ({
   userId,
-  providerType,
-  providerUserId,
   username,
-  avatar,
+  image,
   productId,
   categoryId,
   title,
@@ -53,7 +51,7 @@ const TopProducts = ({
   const googleSignIn = useCallback(() => signIn('Google'), []);
   const { pathname } = useLocation();
   const { setInfo } = usePresentation();
-  const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
+  const avatarUrl = useAvatarUrl(image);
   const src = useMemo(
     () =>
       thumbnails.length ? getThumbnail(PRODUCTS, userId, `thumbnail-${thumbnails[0]}`) : product,
@@ -68,10 +66,8 @@ const TopProducts = ({
     window.history.replaceState('', '', `/product/${productId}`);
     setInfo({
       userId,
-      providerType,
-      providerUserId,
       username,
-      avatar,
+      image,
       productId,
       categoryId,
       title,
@@ -85,10 +81,8 @@ const TopProducts = ({
     });
   }, [
     userId,
-    providerType,
-    providerUserId,
     username,
-    avatar,
+    image,
     categoryId,
     title,
     description,

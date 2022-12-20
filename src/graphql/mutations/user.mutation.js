@@ -19,7 +19,6 @@ export const updateUser = gql`
     updateUser(attributes: $attributes) {
       id
       userId
-      providerType
       email
       username
       firstName

@@ -29,7 +29,7 @@ export const Content = ({ info, content, isLocked }) => {
   const loggedInUserLoading = useReactiveVar(loggedInUserLoadingVar);
   const [liked, setLiked] = useState(false);
   const [openTooltip, setOpenTooltip] = useState(user.id && !user.helpSeen);
-  const avatarUrl = useAvatarUrl(info.providerType, info.providerUserId, info.avatar);
+  const avatarUrl = useAvatarUrl(info.image);
   const { setInfo } = usePresentation();
 
   const [requestProductLikes, { loading: loadingProductLikes, data: productLikes }] = useLazyQuery(
@@ -149,7 +149,7 @@ export const Content = ({ info, content, isLocked }) => {
               <Col span={24}>
                 <Row align='middle'>
                   <Col>
-                    {info.providerUserId && (
+                    {info.image && (
                       <img
                         src={avatarUrl}
                         height='33'

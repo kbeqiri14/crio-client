@@ -29,15 +29,13 @@ const Author = ({
   isProduct,
   productId,
   artworkId,
-  providerType,
-  providerUserId,
-  avatar,
+  image,
   username,
   likes = 0,
   hide = () => {},
 }) => {
   const { user } = useLoggedInUser();
-  const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
+  const avatarUrl = useAvatarUrl(image);
   const [like, { loading, data }] = useMutation(isProduct ? likeProduct : likeArtwork, {
     variables: isProduct ? { productId } : { artworkId },
   });

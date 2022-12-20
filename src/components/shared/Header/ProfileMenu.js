@@ -7,7 +7,7 @@ import { Dropdown } from '@ui-kit';
 import { ReactComponent as ArrowIcon } from '@svgs/arrow.svg';
 
 const ProfileMenu = ({ user = {} }) => {
-  const avatarUrl = useAvatarUrl(user.providerType, user.providerUserId, user.avatar);
+  const avatarUrl = useAvatarUrl(user.image);
   const goAccount = useCallback(() => history.push(`/profile/${user.username}`), [user.username]);
   const goPayment = useCallback(() => history.push('/payment'), []);
   const items = useMemo(

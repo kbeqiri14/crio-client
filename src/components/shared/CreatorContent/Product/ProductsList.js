@@ -9,11 +9,9 @@ import { SkeletonWrapper } from './styled';
 
 const Item = memo(({ item, large }) => (
   <Product
-    providerType={item?.providerType}
-    providerUserId={item?.providerUserId}
-    avatar={item?.avatar}
     userId={item?.userId}
     username={item?.username}
+    image={item?.image}
     productId={item?.productId}
     categoryId={item?.categoryId}
     title={item?.title}

@@ -22,7 +22,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
   const showRevenue = watch('showRevenue');
   const emailVisible = watch('emailVisible');
 
-  const avatarUrl = useAvatarUrl(user.providerType, user.providerUserId, user.avatar);
+  const avatarUrl = useAvatarUrl(user.image);
 
   const updatedData = useMemo(
     () => ({

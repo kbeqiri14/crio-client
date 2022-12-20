@@ -27,11 +27,9 @@ export const ArtworksList = ({ artworksList = [], loading }) => {
       {artworksList.map((item) => (
         <Col key={item.artworkId}>
           <Artwork
-            providerType={item?.providerType}
-            providerUserId={item?.providerUserId}
-            avatar={item?.avatar}
             userId={item?.userId}
             username={item?.username}
+            image={item?.image}
             artworkId={item?.artworkId}
             categoryId={item?.categoryId}
             title={item?.title}
