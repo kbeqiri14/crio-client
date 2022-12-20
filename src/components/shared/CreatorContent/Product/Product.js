@@ -44,11 +44,11 @@ const Product = ({
   }, [user.username, pathname]);
 
   const isLocked = useMemo(() => {
-    if (user.isCreator || accessibility === 'everyone') {
+    if (user.isCreator || (user.id && accessibility === 'everyone')) {
       return false;
     }
     return user.isSubscribed ? !user.followings?.includes(userId) : true;
-  }, [user.isCreator, user.isSubscribed, user.followings, accessibility, userId]);
+  }, [user.id, user.isCreator, user.isSubscribed, user.followings, accessibility, userId]);
   const style = useMemo(() => {
     let width = large ? 686 : 332;
     if (isHovering) {

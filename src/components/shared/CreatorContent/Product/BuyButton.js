@@ -95,6 +95,12 @@ const BuyButton = ({ userId, productId, categoryId, file, price, limit, accessib
   const disabled = useMemo(() => label === 'BUY' && limit === 0, [limit, label]);
   const onClick = useMemo(() => {
     if (isLocked) {
+      if (accessibility === 'everyone') {
+        return () =>
+          notification.errorToast(
+            `Please sign in to ${label === 'DOWNLOAD' ? 'download' : 'email'}`,
+          );
+      }
       return () => hide() || history.push('/pricing');
     }
     if (label === 'EMAIL') {
@@ -111,6 +117,7 @@ const BuyButton = ({ userId, productId, categoryId, file, price, limit, accessib
     isLocked,
     hide,
     userId,
+    accessibility,
     file,
     setSendEmailInfo,
     download,
