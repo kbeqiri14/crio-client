@@ -62,10 +62,12 @@ const Product = ({
     return { width };
   }, [large, isHovering, user.isCreator, isLocked, price, categoryId, categories.digitalId]);
 
-  const priceText = useMemo(
-    () => (price ? `$${price.toFixed(2)}` : 'Free for Subscribers'),
-    [price],
-  );
+  const priceText = useMemo(() => {
+    if (price) {
+      return `$${price.toFixed(2)}`;
+    }
+    return `Free for ${accessibility === 'everyone' ? 'Everyone' : 'Subscribers'}`;
+  }, [price, accessibility]);
 
   const classes = useMemo(() => {
     let name;

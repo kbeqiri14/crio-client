@@ -205,7 +205,7 @@ const Categories = ({ isProduct, isProfilePage, categories, refetchProducts, ref
             key='free'
             itemId='free'
             id='free'
-            name='Free for Subscriber'
+            name='Free'
             selectedCategory={selectedCategory}
             searchByCategory={searchByCategory}
           />

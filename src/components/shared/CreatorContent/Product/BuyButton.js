@@ -67,19 +67,20 @@ const BuyButton = ({ userId, productId, categoryId, file, price, limit, accessib
   }, []);
 
   const isLocked = useMemo(() => {
-    if (user.isCreator || accessibility === 'everyone') {
+    if (user.isCreator || (user.id && accessibility === 'everyone')) {
       return false;
     }
     return user.isSubscribed ? !user.followings?.includes(userId) : true;
-  }, [user.isCreator, user.isSubscribed, user.followings, accessibility, userId]);
+  }, [user.id, user.isCreator, user.isSubscribed, user.followings, accessibility, userId]);
 
-  const tooltip = useMemo(
-    () =>
-      user.isSubscribed
-        ? 'Follow Creator to gain access'
-        : 'Subscribe and follow Creator to gain access',
-    [user.isSubscribed],
-  );
+  const tooltip = useMemo(() => {
+    if (accessibility === 'everyone' && !user.id) {
+      return 'Register to gain access';
+    }
+    return user.isSubscribed
+      ? 'Follow Creator to gain access'
+      : 'Subscribe and follow Creator to gain access';
+  }, [user.id, user.isSubscribed, accessibility]);
 
   const label = useMemo(
     () =>
