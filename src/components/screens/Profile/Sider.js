@@ -20,7 +20,6 @@ export const ProfileSider = ({
   hideButton,
 }) => {
   const [visible, setVisible] = useState(false);
-  console.log(user.image, 'user.imageuser.image');
   const loggedInUserLoading = useReactiveVar(loggedInUserLoadingVar);
   const { firstName, lastName, username, email } = user || {};
   const avatarUrl = useAvatarUrl(user.image);
