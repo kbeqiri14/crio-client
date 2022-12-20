@@ -96,7 +96,7 @@ const BuyButton = ({ userId, productId, categoryId, file, price, limit, accessib
   const onClick = useMemo(() => {
     if (isLocked) {
       if (accessibility === 'everyone') {
-        return () => notification.errorToast(`Please sign in to ${label.toLocaleLowerCase()}.`);
+        return () => notification.warningToast(`Please sign in to ${label.toLocaleLowerCase()}.`);
       }
       return () => hide() || history.push('/pricing');
     }
