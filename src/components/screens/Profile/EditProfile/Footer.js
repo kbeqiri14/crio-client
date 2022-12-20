@@ -1,13 +1,15 @@
 import { memo, useCallback } from 'react';
+import imageCompression from 'browser-image-compression';
 import { useMutation } from '@apollo/client';
 
 import { me } from '@app/graphql/queries/users.query';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { updateUser } from '@app/graphql/mutations/user.mutation';
+import { uploadProfileImage } from '@utils/upload.helper';
 import ActionButtons from '@shared/ActionButtons';
 import { notification } from '@ui-kit';
 
-const Footer = ({ disabled, updatedData, onCancel, closeModal, handleSubmit }) => {
+const Footer = ({ userId, disabled, updatedData, onCancel, closeModal, handleSubmit }) => {
   const { user, dispatchUser } = useLoggedInUser();
 
   const [updateUserInfo, { loading }] = useMutation(updateUser, {
@@ -35,13 +37,20 @@ const Footer = ({ disabled, updatedData, onCancel, closeModal, handleSubmit }) =
     },
   });
 
-  const onSubmit = useCallback(
-    () =>
-      updateUserInfo({
-        variables: { attributes: updatedData },
-      }),
-    [updatedData, updateUserInfo],
-  );
+  const onSubmit = useCallback(async () => {
+    let image;
+    if (updatedData.image.file) {
+      const compressionFile = await imageCompression(updatedData.image.file, {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1600,
+        useWebWorker: true,
+      });
+      image = await uploadProfileImage(userId, compressionFile);
+    }
+    updateUserInfo({
+      variables: { attributes: { ...updatedData, image } },
+    });
+  }, [userId, updatedData, updateUserInfo]);
 
   return (
     <ActionButtons

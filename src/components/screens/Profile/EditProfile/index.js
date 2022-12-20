@@ -5,7 +5,7 @@ import { Space, Badge } from 'antd';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import Confirmation from '@shared/Confirmation';
 import { Col, Input, Modal, Row, Switch, Text, Title, Upload } from '@ui-kit';
-import { ReactComponent as PlusIcon } from '@svgs/edit.svg';
+import { ReactComponent as EditIcon } from '@svgs/edit.svg';
 import { ReactComponent as CloseIcon } from '@svgs/close.svg';
 import { ReactComponent as RemoveIcon } from '@svgs/remove.svg';
 import Footer from './Footer';
@@ -13,7 +13,7 @@ import Footer from './Footer';
 const EditProfile = ({ user, visible, closeModal }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [confirmationVisible, setConfirmationVisible] = useState();
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState({});
   const { control, watch, handleSubmit } = useForm();
   const firstName = watch('firstName');
   const lastName = watch('lastName');
@@ -32,8 +32,9 @@ const EditProfile = ({ user, visible, closeModal }) => {
       about: about?.trim(),
       showRevenue,
       emailVisible,
+      image,
     }),
-    [firstName, lastName, username, about, showRevenue, emailVisible],
+    [firstName, lastName, username, about, showRevenue, emailVisible, image],
   );
   const disabled = useMemo(() => {
     const { firstName, lastName, username, about, showRevenue, emailVisible } = updatedData;
@@ -85,8 +86,8 @@ const EditProfile = ({ user, visible, closeModal }) => {
         <Col span={24} align='center'>
           <Badge
             count={
-              image ? (
-                <RemoveIcon onClick={() => setImage('')} className='pointer' />
+              image.src ? (
+                <RemoveIcon onClick={() => setImage({})} className='pointer' />
               ) : (
                 <span>
                   <Upload
@@ -96,11 +97,11 @@ const EditProfile = ({ user, visible, closeModal }) => {
                     onChange={(e) => {
                       if (e.file instanceof Blob) {
                         const file = e.file;
-                        setImage(URL.createObjectURL(file));
+                        setImage({ file, src: URL.createObjectURL(file) });
                       }
                     }}
                   >
-                    <PlusIcon className='pointer' />
+                    <EditIcon className='pointer' />
                   </Upload>
                 </span>
               )
@@ -111,7 +112,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
               alt='profile'
               width={122}
               height={122}
-              src={image ? image : avatarUrl}
+              src={image?.src ? image.src : avatarUrl}
               className='fit-cover border-radius-100'
             />
           </Badge>
@@ -227,6 +228,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
         )}
         <Col span={24}>
           <Footer
+            userId={user.id}
             disabled={disabled}
             updatedData={updatedData}
             onCancel={onCancel}

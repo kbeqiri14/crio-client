@@ -15,7 +15,7 @@ export const uploadContent = async (userId, file, type, prefix) => {
   ) {
     return null;
   }
-  const filename = `${userId}/${type}/${prefix}-${Date.now()}`;
+  const filename = `${userId}/${type}/${prefix}${Date.now()}`;
 
   return uploader.signAndUpload(filename, file.type, file);
 };
@@ -42,4 +42,14 @@ export const formItemContent = async ({ userId, image, type }) => {
       return newImage?.split('/')?.slice(-1)?.[0]?.slice(prefix.length);
     }
   }
+};
+
+export const uploadProfileImage = async (userId, file) => {
+  const fileType = file?.type?.split('/')?.[0];
+  if (!userId || fileType !== IMAGE_TYPE) {
+    return null;
+  }
+  const filename = Date.now();
+  await uploader.signAndUpload(`${userId}/profile/${filename}`, file.type, file);
+  return filename;
 };
