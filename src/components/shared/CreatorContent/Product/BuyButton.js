@@ -95,7 +95,7 @@ const BuyButton = ({ userId, productId, categoryId, file, price, limit, accessib
   const disabled = useMemo(() => label === 'BUY' && limit === 0, [limit, label]);
   const onClick = useMemo(() => {
     if (isLocked) {
-      if (accessibility === 'everyone') {
+      if (accessibility === 'everyone' && label !== 'BUY') {
         return () =>
           notification.errorToast(
             `Please sign in to ${label === 'DOWNLOAD' ? 'download' : 'email'}`,
