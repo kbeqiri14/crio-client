@@ -76,13 +76,19 @@ const ProductActionButtons = ({
 
     const uploadImages = images.filter(({ file }) => file);
     if (uploadImages[0]) {
-      thumbnails.push(await formItemContent({ userId, image: images[0]?.file, type: PRODUCTS }));
+      thumbnails.push(
+        await formItemContent({ userId, image: uploadImages[0].file, type: PRODUCTS }),
+      );
     }
     if (uploadImages[1]) {
-      thumbnails.push(await formItemContent({ userId, image: images[1]?.file, type: PRODUCTS }));
+      thumbnails.push(
+        await formItemContent({ userId, image: uploadImages[1].file, type: PRODUCTS }),
+      );
     }
     if (uploadImages[2]) {
-      thumbnails.push(await formItemContent({ userId, image: images[2]?.file, type: PRODUCTS }));
+      thumbnails.push(
+        await formItemContent({ userId, image: uploadImages[2].file, type: PRODUCTS }),
+      );
     }
 
     if (attributes.file && attributes.categoryId !== categories.commissionId) {
