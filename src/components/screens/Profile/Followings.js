@@ -34,7 +34,7 @@ const StyledCard = styled('div')`
 
 const FollowingCard = ({ user }) => {
   const { firstName, lastName, username } = user || {};
-  const avatarUrl = useAvatarUrl(user.image);
+  const avatarUrl = useAvatarUrl(user.id, user.image);
   const name = useMemo(() => `${firstName || ''} ${lastName || ''}`, [firstName, lastName]);
   const goToProfile = useCallback(() => history.push(`/profile/${username}`), [username]);
 

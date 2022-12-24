@@ -51,7 +51,7 @@ const TopProducts = ({
   const googleSignIn = useCallback(() => signIn('Google'), []);
   const { pathname } = useLocation();
   const { setInfo } = usePresentation();
-  const avatarUrl = useAvatarUrl(image);
+  const avatarUrl = useAvatarUrl(userId, image);
   const src = useMemo(
     () =>
       thumbnails.length ? getThumbnail(PRODUCTS, userId, `thumbnail-${thumbnails[0]}`) : product,

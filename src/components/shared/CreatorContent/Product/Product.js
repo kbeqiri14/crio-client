@@ -185,6 +185,7 @@ const Product = ({
       <Author
         isProduct
         productId={productId}
+        userId={userId}
         username={username}
         image={image}
         likes={likes}

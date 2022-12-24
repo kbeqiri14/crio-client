@@ -21,8 +21,8 @@ export const ProfileSider = ({
 }) => {
   const [visible, setVisible] = useState(false);
   const loggedInUserLoading = useReactiveVar(loggedInUserLoadingVar);
-  const { firstName, lastName, username, email } = user || {};
-  const avatarUrl = useAvatarUrl(user.image);
+  const { id, firstName, lastName, username, email } = user || {};
+  const avatarUrl = useAvatarUrl(id, user.image);
   const name = useMemo(() => `${firstName || ''} ${lastName || ''}`, [firstName, lastName]);
   const editProfile = useCallback(() => setVisible(true), []);
   const closeModal = useCallback(() => setVisible(false), []);

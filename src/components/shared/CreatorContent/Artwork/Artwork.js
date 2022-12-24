@@ -132,7 +132,13 @@ const Artwork = ({
           </Row>
         </div>
       </Wrapper>
-      <Author artworkId={artworkId} username={username} image={image} likes={likes} />
+      <Author
+        artworkId={artworkId}
+        userId={userId}
+        username={username}
+        image={image}
+        likes={likes}
+      />
     </>
   );
 };
