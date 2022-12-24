@@ -100,7 +100,7 @@ const Job = () => {
         .then(async (blob) => {
           const file = await uploadProfileImage(userId, blob);
           console.log(file);
-          updateUserImageRequest({ variables: { userId, image: file } });
+          updateUserImageRequest({ variables: { userId, image: `${file}` } });
         });
     });
   }, [profileImages?.getProfileImages, updateUserImageRequest]);
