@@ -45,11 +45,11 @@ export const formItemContent = async ({ userId, image, type }) => {
 };
 
 export const uploadProfileImage = async (userId, file) => {
-  // const fileType = file?.type?.split('/')?.[0];
-  // console.log(userId, fileType)
-  // if (!userId || fileType !== IMAGE_TYPE) {
-  //   return null;
-  // }
+  const fileType = file?.type?.split('/')?.[0];
+  console.log(userId, fileType);
+  if (!userId || fileType !== IMAGE_TYPE) {
+    return null;
+  }
   const filename = Date.now();
   await uploader.signAndUpload(`${userId}/profile/${filename}`, file.type, file);
   return filename;
