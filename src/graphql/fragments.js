@@ -5,12 +5,10 @@ export const meFragment = gql`
     id
     email
     userId
-    providerType
-    providerUserId
     username
     firstName
     lastName
-    avatar
+    image
     about
     isCreator
     payment {
@@ -45,12 +43,10 @@ export const meFragment = gql`
 export const followingInfoFragment = gql`
   fragment FollowingInfoAttributes on FollowingInfo {
     id
-    providerType
-    providerUserId
     username
     firstName
     lastName
-    avatar
+    image
   }
 `;
 
@@ -59,9 +55,7 @@ export const productFragment = gql`
     productId
     userId
     username
-    providerType
-    providerUserId
-    avatar
+    image
     categoryId
     title
     description
@@ -79,9 +73,7 @@ export const artworkFragment = gql`
     artworkId
     userId
     username
-    providerType
-    providerUserId
-    avatar
+    image
     content
     thumbnail
     title

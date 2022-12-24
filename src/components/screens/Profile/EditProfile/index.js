@@ -1,15 +1,19 @@
 import { memo, useCallback, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Space } from 'antd';
+import { Space, Badge } from 'antd';
 
+import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import Confirmation from '@shared/Confirmation';
-import { Col, Input, Modal, Row, Switch, Text, Title } from '@ui-kit';
+import { Col, Input, Modal, Row, Switch, Text, Title, Upload } from '@ui-kit';
+import { ReactComponent as EditIcon } from '@svgs/edit.svg';
 import { ReactComponent as CloseIcon } from '@svgs/close.svg';
+import { ReactComponent as RemoveIcon } from '@svgs/remove.svg';
 import Footer from './Footer';
 
 const EditProfile = ({ user, visible, closeModal }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [confirmationVisible, setConfirmationVisible] = useState();
+  const [image, setImage] = useState({});
   const { control, watch, handleSubmit } = useForm();
   const firstName = watch('firstName');
   const lastName = watch('lastName');
@@ -17,6 +21,8 @@ const EditProfile = ({ user, visible, closeModal }) => {
   const about = watch('about');
   const showRevenue = watch('showRevenue');
   const emailVisible = watch('emailVisible');
+
+  const avatarUrl = useAvatarUrl(user.image);
 
   const updatedData = useMemo(
     () => ({
@@ -26,8 +32,9 @@ const EditProfile = ({ user, visible, closeModal }) => {
       about: about?.trim(),
       showRevenue,
       emailVisible,
+      image,
     }),
-    [firstName, lastName, username, about, showRevenue, emailVisible],
+    [firstName, lastName, username, about, showRevenue, emailVisible, image],
   );
   const disabled = useMemo(() => {
     const { firstName, lastName, username, about, showRevenue, emailVisible } = updatedData;
@@ -75,6 +82,40 @@ const EditProfile = ({ user, visible, closeModal }) => {
       <Row justify='center' gutter={[0, 8]}>
         <Col span={24} padding_bottom={32}>
           <Title level={1}>Edit Profile</Title>
+        </Col>
+        <Col span={24} align='center'>
+          <Badge
+            count={
+              image.src ? (
+                <RemoveIcon onClick={() => setImage({})} className='pointer' />
+              ) : (
+                <span>
+                  <Upload
+                    beforeUpload={() => {
+                      return false;
+                    }}
+                    onChange={(e) => {
+                      if (e.file instanceof Blob) {
+                        const file = e.file;
+                        setImage({ file, src: URL.createObjectURL(file) });
+                      }
+                    }}
+                  >
+                    <EditIcon className='pointer' />
+                  </Upload>
+                </span>
+              )
+            }
+            offset={[-12, 105]}
+          >
+            <img
+              alt='profile'
+              width={122}
+              height={122}
+              src={image?.src ? image.src : avatarUrl}
+              className='fit-cover border-radius-100'
+            />
+          </Badge>
         </Col>
         <Col span={24}>
           <Text level={3}>Username *</Text>
@@ -187,6 +228,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
         )}
         <Col span={24}>
           <Footer
+            userId={user.id}
             disabled={disabled}
             updatedData={updatedData}
             onCancel={onCancel}

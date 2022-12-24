@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { Checkbox, Switch, Table } from 'antd';
 import styled from 'styled-components';
@@ -7,8 +6,9 @@ import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import history from '@configs/history';
 import { loggedInUserLoadingVar } from '@configs/client-cache';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
-import { job } from '@app/graphql/queries/users.query';
-import { createTransfers } from '@app/graphql/mutations/user.mutation';
+import { job, getProfileImages } from '@app/graphql/queries/users.query';
+import { updateUserImage } from '@app/graphql/mutations/user.mutation';
+import { uploadProfileImage } from '@utils/upload.helper';
 import { Button, Col, GlobalSpinner, notification, Row, Text, Title } from '@ui-kit';
 
 const Wrapper = styled('div')`
@@ -87,10 +87,23 @@ const Job = () => {
       setDataSource(creatorsFollowers.filter(({ count }) => count > 0));
     },
   });
-  const [transfer, { loading: transferring }] = useMutation(createTransfers, {
-    onCompleted: () => notification.successToast('Transfers successfully done'),
+  const { data: profileImages } = useQuery(getProfileImages);
+  const [updateUserImageRequest] = useMutation(updateUserImage, {
+    onCompleted: () => notification.successToast('Images successfully updated'),
     onError: () => notification.errorToast('Something went wrong!'),
   });
+
+  const upload = useCallback(() => {
+    profileImages?.getProfileImages?.forEach(({ userId, image }) => {
+      fetch(image)
+        .then((res) => res.blob())
+        .then(async (blob) => {
+          const file = await uploadProfileImage(43, blob);
+          console.log(file);
+          updateUserImageRequest({ variables: { userId, image: file } });
+        });
+    });
+  }, [profileImages?.getProfileImages, updateUserImageRequest]);
 
   const pool = useMemo(
     () => ((state.subscribersCount * AMOUNT * 80) / 100).toFixed(2),
@@ -224,7 +237,7 @@ const Job = () => {
         </Col>
         {user.email === 'nkosyan123@gmail.com' && (
           <Col span={24} align='end'>
-            <Button type='primary' loading={transferring} onClick={transfer}>
+            <Button type='primary' loading={false} onClick={upload}>
               Transfer
             </Button>
           </Col>

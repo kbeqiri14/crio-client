@@ -33,8 +33,8 @@ const StyledCard = styled('div')`
 `;
 
 const FollowingCard = ({ user }) => {
-  const { providerType, providerUserId, firstName, lastName, username, avatar } = user || {};
-  const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
+  const { firstName, lastName, username } = user || {};
+  const avatarUrl = useAvatarUrl(user.image);
   const name = useMemo(() => `${firstName || ''} ${lastName || ''}`, [firstName, lastName]);
   const goToProfile = useCallback(() => history.push(`/profile/${username}`), [username]);
 

@@ -75,3 +75,12 @@ export const getUserInvitations = gql`
     }
   }
 `;
+
+export const getProfileImages = gql`
+  query {
+    getProfileImages {
+      userId
+      image
+    }
+  }
+`;
