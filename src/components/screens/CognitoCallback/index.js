@@ -7,6 +7,7 @@ import history from '@configs/history';
 import { useCurrentUser } from '@app/auth/hooks';
 import { useQueryParams } from '@app/hooks/useRouter';
 import { signIn } from '@app/graphql/mutations/user.mutation';
+import { uploadProfileImage } from '@utils/upload.helper';
 import { GlobalSpinner, notification } from '@ui-kit';
 
 export const CognitoCallback = () => {
@@ -19,6 +20,17 @@ export const CognitoCallback = () => {
         localStorage.clear();
         notification.errorToast('Sign up error', data.saveUser.error);
       } else {
+        // if (data.saveUser.upload) {
+        const { picture } = user.attributes;
+        const url = `${picture.substring(0, picture.indexOf('s96-c'))}s350`;
+        console.log(url, 1111);
+        fetch(url, { mode: 'no-cors' })
+          .then((res) => res.blob())
+          .then(async (blob) => {
+            const image = await uploadProfileImage(43, blob);
+            console.log(image, 555555555);
+          });
+        // }
         signupErrorVar(false);
       }
     },

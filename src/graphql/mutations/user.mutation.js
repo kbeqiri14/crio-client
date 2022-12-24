@@ -4,6 +4,7 @@ export const signIn = gql`
   mutation {
     saveUser {
       error
+      upload
     }
   }
 `;
