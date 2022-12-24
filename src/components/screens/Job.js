@@ -87,7 +87,7 @@ const Job = () => {
       setDataSource(creatorsFollowers.filter(({ count }) => count > 0));
     },
   });
-  const { data: profileImages } = useQuery(getProfileImages);
+  const { data: profileImages } = useQuery(getProfileImages, { fetchPolicy: 'no-cache' });
   const [updateUserImageRequest] = useMutation(updateUserImage, {
     onCompleted: () => notification.successToast('Images successfully updated'),
     onError: () => notification.errorToast('Something went wrong!'),
