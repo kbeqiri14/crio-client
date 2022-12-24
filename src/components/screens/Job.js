@@ -98,7 +98,7 @@ const Job = () => {
       fetch(image)
         .then((res) => res.blob())
         .then(async (blob) => {
-          const file = await uploadProfileImage(43, blob);
+          const file = await uploadProfileImage(userId, blob);
           console.log(file);
           updateUserImageRequest({ variables: { userId, image: file } });
         });
