@@ -43,6 +43,7 @@ export const meFragment = gql`
 export const followingInfoFragment = gql`
   fragment FollowingInfoAttributes on FollowingInfo {
     id
+    followingId
     username
     firstName
     lastName
