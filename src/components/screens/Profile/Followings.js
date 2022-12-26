@@ -48,7 +48,7 @@ const FollowingCard = ({ user }) => {
               width={45}
               height={45}
               src={avatarUrl}
-              className='border-radius-100'
+              className='fit-cover border-radius-100'
             />
           </Badge>
         </Col>

@@ -159,7 +159,7 @@ export const BurgerMenu = ({ user, keyword, setKeyword }) => {
                       src={avatarUrl}
                       width={40}
                       height={40}
-                      className='border-radius-100'
+                      className='fit-cover border-radius-100'
                     />
                     <Text level={3} color='dark25'>
                       {user.firstName} {user.lastName}

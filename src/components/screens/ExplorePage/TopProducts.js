@@ -143,7 +143,7 @@ const TopProducts = ({
                       width={28}
                       height={28}
                       alt='avatar'
-                      className='border-radius-100'
+                      className='fit-cover border-radius-100'
                     />
                   </Col>
                   <Col max_width={210}>

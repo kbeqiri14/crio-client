@@ -8,12 +8,15 @@ import { Col, Input, Modal, Row, Switch, Text, Title, Upload } from '@ui-kit';
 import { ReactComponent as EditIcon } from '@svgs/edit.svg';
 import { ReactComponent as CloseIcon } from '@svgs/close.svg';
 import { ReactComponent as RemoveIcon } from '@svgs/remove.svg';
+import defaultAvatar from '@svgs/avatar.svg';
 import Footer from './Footer';
 
 const EditProfile = ({ user, visible, closeModal }) => {
+  const avatarUrl = useAvatarUrl(user.id, user.image);
+  const [image, setImage] = useState({ src: avatarUrl });
   const [errorMessage, setErrorMessage] = useState('');
   const [confirmationVisible, setConfirmationVisible] = useState();
-  const [image, setImage] = useState({});
+
   const { control, watch, handleSubmit } = useForm();
   const firstName = watch('firstName');
   const lastName = watch('lastName');
@@ -21,8 +24,6 @@ const EditProfile = ({ user, visible, closeModal }) => {
   const about = watch('about');
   const showRevenue = watch('showRevenue');
   const emailVisible = watch('emailVisible');
-
-  const avatarUrl = useAvatarUrl(user.id, user.image);
 
   const updatedData = useMemo(
     () => ({
@@ -32,9 +33,19 @@ const EditProfile = ({ user, visible, closeModal }) => {
       about: about?.trim(),
       showRevenue,
       emailVisible,
-      image,
+      image: image.file ? image.file : user.image && image.src === defaultAvatar ? null : undefined,
     }),
-    [firstName, lastName, username, about, showRevenue, emailVisible, image],
+    [
+      firstName,
+      lastName,
+      username,
+      about,
+      showRevenue,
+      emailVisible,
+      image.file,
+      image.src,
+      user.image,
+    ],
   );
   const disabled = useMemo(() => {
     const { firstName, lastName, username, about, showRevenue, emailVisible } = updatedData;
@@ -48,7 +59,9 @@ const EditProfile = ({ user, visible, closeModal }) => {
         (about && user?.about !== about) ||
         (about === '' && !!user?.about) ||
         (showRevenue !== undefined && showRevenue !== user?.showRevenue) ||
-        (emailVisible !== undefined && emailVisible !== user?.emailVisible))
+        (emailVisible !== undefined && emailVisible !== user?.emailVisible) ||
+        image.file ||
+        (user.image && image.src === defaultAvatar))
     );
   }, [
     updatedData,
@@ -58,6 +71,9 @@ const EditProfile = ({ user, visible, closeModal }) => {
     user?.about,
     user?.showRevenue,
     user?.emailVisible,
+    image.file,
+    image.src,
+    user.image,
   ]);
 
   const hideModal = useCallback(() => {
@@ -85,15 +101,14 @@ const EditProfile = ({ user, visible, closeModal }) => {
         </Col>
         <Col span={24} align='center'>
           <Badge
+            offset={[-20, 105]}
             count={
-              image.src ? (
-                <RemoveIcon onClick={() => setImage({})} className='pointer' />
-              ) : (
-                <span>
+              <Row gutter={5}>
+                <Col>
                   <Upload
-                    beforeUpload={() => {
-                      return false;
-                    }}
+                    accept='image/*'
+                    beforeUpload={() => false}
+                    showUploadList={false}
                     onChange={(e) => {
                       if (e.file instanceof Blob) {
                         const file = e.file;
@@ -103,16 +118,23 @@ const EditProfile = ({ user, visible, closeModal }) => {
                   >
                     <EditIcon className='pointer' />
                   </Upload>
-                </span>
-              )
+                </Col>
+                {image.src !== defaultAvatar && (
+                  <Col>
+                    <RemoveIcon
+                      onClick={() => setImage({ src: defaultAvatar })}
+                      className='pointer'
+                    />
+                  </Col>
+                )}
+              </Row>
             }
-            offset={[-12, 105]}
           >
             <img
               alt='profile'
               width={122}
               height={122}
-              src={image?.src ? image.src : avatarUrl}
+              src={image.src}
               className='fit-cover border-radius-100'
             />
           </Badge>

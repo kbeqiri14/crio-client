@@ -71,7 +71,7 @@ const Author = ({
                   width={30}
                   height={30}
                   alt='avatar'
-                  className='border-radius-100'
+                  className='fit-cover border-radius-100'
                 />
               </Col>
               <Col>

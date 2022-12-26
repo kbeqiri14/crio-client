@@ -34,7 +34,13 @@ const ProfileMenu = ({ user = {} }) => {
   return (
     <Dropdown menu={{ items }}>
       <div>
-        <img alt='profile' src={avatarUrl} width={40} height={40} className='border-radius-100' />
+        <img
+          alt='profile'
+          src={avatarUrl}
+          width={40}
+          height={40}
+          className='fit-cover border-radius-100'
+        />
         <ArrowIcon className='vertical-middle' />
       </div>
     </Dropdown>

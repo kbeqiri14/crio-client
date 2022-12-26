@@ -155,7 +155,7 @@ export const Content = ({ info, content, isLocked }) => {
                         height='33'
                         width='33'
                         alt='Author avatar'
-                        className='border-radius-100'
+                        className='fit-cover border-radius-100'
                       />
                     )}
                   </Col>

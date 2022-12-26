@@ -57,7 +57,7 @@ export const ProfileSider = ({
                 width={122}
                 height={122}
                 src={avatarUrl}
-                className='border-radius-100'
+                className='fit-cover border-radius-100'
               />
             </BadgeAnt>
           ) : (
@@ -66,7 +66,7 @@ export const ProfileSider = ({
               width={122}
               height={122}
               src={avatarUrl}
-              className='border-radius-100'
+              className='fit-cover border-radius-100'
             />
           )}
         </Col>
