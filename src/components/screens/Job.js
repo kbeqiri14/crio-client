@@ -99,7 +99,6 @@ const Job = () => {
         .then((res) => res.blob())
         .then(async (blob) => {
           const file = await uploadProfileImage(userId, blob);
-          console.log(file);
           updateUserImageRequest({ variables: { userId, image: `${file}` } });
         });
     });

@@ -149,15 +149,13 @@ export const Content = ({ info, content, isLocked }) => {
               <Col span={24}>
                 <Row align='middle'>
                   <Col>
-                    {info.image && (
-                      <img
-                        src={avatarUrl}
-                        height='33'
-                        width='33'
-                        alt='Author avatar'
-                        className='fit-cover border-radius-100'
-                      />
-                    )}
+                    <img
+                      src={avatarUrl}
+                      height='33'
+                      width='33'
+                      alt='Author avatar'
+                      className='fit-cover border-radius-100'
+                    />
                   </Col>
                   <Col margin_left={20}>
                     <Text level={4} color='primary' onClick={hide}>
