@@ -5,6 +5,7 @@ import { Space, Badge } from 'antd';
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import Confirmation from '@shared/Confirmation';
 import { Col, Input, Modal, Row, Switch, Text, Title, Upload } from '@ui-kit';
+import { ReactComponent as PlusIcon } from '@svgs/plus.svg';
 import { ReactComponent as EditIcon } from '@svgs/edit.svg';
 import { ReactComponent as CloseIcon } from '@svgs/close.svg';
 import { ReactComponent as RemoveIcon } from '@svgs/remove.svg';
@@ -116,7 +117,11 @@ const EditProfile = ({ user, visible, closeModal }) => {
                       }
                     }}
                   >
-                    <EditIcon className='pointer' />
+                    {image.src === defaultAvatar ? (
+                      <PlusIcon className='pointer' />
+                    ) : (
+                      <EditIcon className='pointer' />
+                    )}
                   </Upload>
                 </Col>
                 {image.src !== defaultAvatar && (
