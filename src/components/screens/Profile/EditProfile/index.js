@@ -258,7 +258,6 @@ const EditProfile = ({ user, visible, closeModal }) => {
         )}
         <Col span={24}>
           <Footer
-            userId={user.id}
             disabled={disabled}
             updatedData={updatedData}
             onCancel={onCancel}

@@ -66,7 +66,7 @@ export const createTransfers = gql`
 `;
 
 export const updateUserImage = gql`
-  mutation updateUserImage($userId: ID!, $image: String!) {
-    updateUserImage(userId: $userId, image: $image)
+  mutation updateUserImage($image: String!) {
+    updateUserImage(image: $image)
   }
 `;

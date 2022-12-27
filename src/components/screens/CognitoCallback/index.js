@@ -39,9 +39,7 @@ export const CognitoCallback = () => {
             .then((res) => res.blob())
             .then(async (blob) => {
               const image = await uploadProfileImage(data.saveUser.userId, blob);
-              updateUserImageRequest({
-                variables: { userId: data.saveUser.userId, image: `${image}` },
-              });
+              updateUserImageRequest({ variables: { image: `${image}` } });
             });
         }
         signupErrorVar(false);
