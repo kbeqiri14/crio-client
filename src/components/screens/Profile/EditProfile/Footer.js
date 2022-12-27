@@ -9,7 +9,7 @@ import { uploadProfileImage } from '@utils/upload.helper';
 import ActionButtons from '@shared/ActionButtons';
 import { notification } from '@ui-kit';
 
-const Footer = ({ userId, disabled, updatedData, onCancel, closeModal, handleSubmit }) => {
+const Footer = ({ disabled, updatedData, onCancel, closeModal, handleSubmit }) => {
   const { user, dispatchUser } = useLoggedInUser();
 
   const [updateUserInfo] = useMutation(updateUser, {
@@ -37,12 +37,12 @@ const Footer = ({ userId, disabled, updatedData, onCancel, closeModal, handleSub
           maxWidthOrHeight: 1600,
           useWebWorker: true,
         });
-        image = await uploadProfileImage(userId, compressionFile);
+        image = await uploadProfileImage(user.id, compressionFile);
       }
       updateUserInfo({
         variables: { attributes: { ...updatedData, image: image ? `${image}` : image } },
       });
-    }, [userId, updatedData, updateUserInfo]),
+    }, [user.id, updatedData, updateUserInfo]),
   );
 
   return (
