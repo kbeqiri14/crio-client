@@ -4,7 +4,7 @@ import { Space, Badge } from 'antd';
 
 import useAvatarUrl from '@app/hooks/useAvatarUrl';
 import Confirmation from '@shared/Confirmation';
-import { Col, Input, Modal, Row, Switch, Text, Title, Upload } from '@ui-kit';
+import { Col, Input, Modal, notification, Row, Switch, Text, Title, Upload } from '@ui-kit';
 import { ReactComponent as PlusIcon } from '@svgs/plus.svg';
 import { ReactComponent as EditIcon } from '@svgs/edit.svg';
 import { ReactComponent as CloseIcon } from '@svgs/close.svg';
@@ -111,8 +111,12 @@ const EditProfile = ({ user, visible, closeModal }) => {
                     beforeUpload={() => false}
                     showUploadList={false}
                     onChange={(e) => {
-                      if (e.file instanceof Blob) {
-                        const file = e.file;
+                      const file = e.file;
+                      if (file instanceof Blob) {
+                        if (file.type.split('/')?.[0] !== 'image') {
+                          notification.warningToast('Please select an image file');
+                          return;
+                        }
                         setImage({ file, src: URL.createObjectURL(file) });
                       }
                     }}
