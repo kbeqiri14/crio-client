@@ -110,8 +110,7 @@ const EditProfile = ({ user, visible, closeModal }) => {
                     accept='image/*'
                     beforeUpload={() => false}
                     showUploadList={false}
-                    onChange={(e) => {
-                      const file = e.file;
+                    onChange={({ file }) => {
                       if (file instanceof Blob) {
                         if (file.type.split('/')?.[0] !== 'image') {
                           notification.warningToast('Please select an image file');
