@@ -48,7 +48,7 @@ const Wrapper = styled('div')`
 export const BurgerMenu = ({ user, keyword, setKeyword }) => {
   const [visibleMenu, setVisibleMenu] = useState(false);
   const [visibleOptions, setVisibleOptions] = useState(false);
-  const avatarUrl = useAvatarUrl(user.providerType, user.providerUserId, user.avatar);
+  const avatarUrl = useAvatarUrl(user.id, user.image);
 
   const googleSignIn = useCallback(() => signIn('Google'), []);
   const setMenu = useCallback(() => setVisibleMenu(!visibleMenu), [visibleMenu]);
@@ -159,7 +159,7 @@ export const BurgerMenu = ({ user, keyword, setKeyword }) => {
                       src={avatarUrl}
                       width={40}
                       height={40}
-                      className='border-radius-100'
+                      className='fit-cover border-radius-100'
                     />
                     <Text level={3} color='dark25'>
                       {user.firstName} {user.lastName}

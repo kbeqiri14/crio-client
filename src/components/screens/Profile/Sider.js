@@ -21,8 +21,8 @@ export const ProfileSider = ({
 }) => {
   const [visible, setVisible] = useState(false);
   const loggedInUserLoading = useReactiveVar(loggedInUserLoadingVar);
-  const { providerType, providerUserId, firstName, lastName, username, email, avatar } = user || {};
-  const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
+  const { id, firstName, lastName, username, email } = user || {};
+  const avatarUrl = useAvatarUrl(id, user.image);
   const name = useMemo(() => `${firstName || ''} ${lastName || ''}`, [firstName, lastName]);
   const editProfile = useCallback(() => setVisible(true), []);
   const closeModal = useCallback(() => setVisible(false), []);
@@ -57,7 +57,7 @@ export const ProfileSider = ({
                 width={122}
                 height={122}
                 src={avatarUrl}
-                className='border-radius-100'
+                className='fit-cover border-radius-100'
               />
             </BadgeAnt>
           ) : (
@@ -66,7 +66,7 @@ export const ProfileSider = ({
               width={122}
               height={122}
               src={avatarUrl}
-              className='border-radius-100'
+              className='fit-cover border-radius-100'
             />
           )}
         </Col>

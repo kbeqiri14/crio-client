@@ -33,8 +33,8 @@ const StyledCard = styled('div')`
 `;
 
 const FollowingCard = ({ user }) => {
-  const { providerType, providerUserId, firstName, lastName, username, avatar } = user || {};
-  const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
+  const { followingId, firstName, lastName, username } = user || {};
+  const avatarUrl = useAvatarUrl(followingId, user.image);
   const name = useMemo(() => `${firstName || ''} ${lastName || ''}`, [firstName, lastName]);
   const goToProfile = useCallback(() => history.push(`/profile/${username}`), [username]);
 
@@ -48,7 +48,7 @@ const FollowingCard = ({ user }) => {
               width={45}
               height={45}
               src={avatarUrl}
-              className='border-radius-100'
+              className='fit-cover border-radius-100'
             />
           </Badge>
         </Col>

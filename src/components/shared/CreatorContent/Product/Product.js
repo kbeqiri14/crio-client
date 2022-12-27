@@ -12,9 +12,7 @@ import { ImageContainer } from './_partials/ImageContainer';
 import { ProductWrapper } from './styled';
 
 const Product = ({
-  providerType,
-  providerUserId,
-  avatar,
+  image,
   userId,
   username,
   productId,
@@ -101,10 +99,8 @@ const Product = ({
     window.history.replaceState('', '', `/product/${productId}`);
     setInfo({
       userId,
-      providerType,
-      providerUserId,
       username,
-      avatar,
+      image,
       productId,
       categoryId,
       title,
@@ -118,10 +114,8 @@ const Product = ({
     });
   }, [
     userId,
-    providerType,
-    providerUserId,
     username,
-    avatar,
+    image,
     categoryId,
     title,
     description,
@@ -191,10 +185,9 @@ const Product = ({
       <Author
         isProduct
         productId={productId}
-        providerType={providerType}
-        providerUserId={providerUserId}
-        avatar={avatar}
+        userId={userId}
         username={username}
+        image={image}
         likes={likes}
         hide={hide}
       />

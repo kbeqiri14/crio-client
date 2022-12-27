@@ -1,25 +1,18 @@
 import { memo, useCallback } from 'react';
+import imageCompression from 'browser-image-compression';
 import { useMutation } from '@apollo/client';
 
-import { me } from '@app/graphql/queries/users.query';
+import useAsyncFn from '@app/hooks/useAsyncFn';
 import { useLoggedInUser } from '@app/hooks/useLoggedInUser';
 import { updateUser } from '@app/graphql/mutations/user.mutation';
+import { uploadProfileImage } from '@utils/upload.helper';
 import ActionButtons from '@shared/ActionButtons';
 import { notification } from '@ui-kit';
 
-const Footer = ({ disabled, updatedData, onCancel, closeModal, handleSubmit }) => {
+const Footer = ({ userId, disabled, updatedData, onCancel, closeModal, handleSubmit }) => {
   const { user, dispatchUser } = useLoggedInUser();
 
-  const [updateUserInfo, { loading }] = useMutation(updateUser, {
-    update: (cache, mutationResult) => {
-      if (mutationResult?.data?.updateUser) {
-        const existingData = cache.readQuery({ query: me });
-        cache.writeQuery({
-          query: me,
-          data: { me: { ...existingData?.me, ...updatedData } },
-        });
-      }
-    },
+  const [updateUserInfo] = useMutation(updateUser, {
     onCompleted: (data) => {
       notification.successToast('Your profile has been updated.');
       dispatchUser({ ...user, ...data.updateUser });
@@ -35,12 +28,21 @@ const Footer = ({ disabled, updatedData, onCancel, closeModal, handleSubmit }) =
     },
   });
 
-  const onSubmit = useCallback(
-    () =>
+  const { call, loading } = useAsyncFn(
+    useCallback(async () => {
+      let image = updatedData.image;
+      if (updatedData.image) {
+        const compressionFile = await imageCompression(updatedData.image, {
+          maxSizeMB: 1,
+          maxWidthOrHeight: 1600,
+          useWebWorker: true,
+        });
+        image = await uploadProfileImage(userId, compressionFile);
+      }
       updateUserInfo({
-        variables: { attributes: updatedData },
-      }),
-    [updatedData, updateUserInfo],
+        variables: { attributes: { ...updatedData, image: image ? `${image}` : image } },
+      });
+    }, [userId, updatedData, updateUserInfo]),
   );
 
   return (
@@ -48,7 +50,7 @@ const Footer = ({ disabled, updatedData, onCancel, closeModal, handleSubmit }) =
       loading={loading}
       disabled={disabled}
       onCancel={onCancel}
-      onSave={handleSubmit(onSubmit)}
+      onSave={handleSubmit(call)}
     />
   );
 };

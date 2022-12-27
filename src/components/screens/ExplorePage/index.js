@@ -52,7 +52,7 @@ const fansInfo = [
 const Info = ({ info }) => (
   <Row gutter={[0, 30]} padding_top={20}>
     {info.map((item, index) => (
-      <Col span={24}>
+      <Col key={index} span={24}>
         <Row align='middle' gutter={20}>
           <Col>
             <Circle>{index + 1}</Circle>

@@ -1,16 +1,8 @@
 import defaultAvatar from '@svgs/avatar.svg';
 
-const useAvatarUrl = (providerType, providerUserId, avatar) => {
-  if (!providerUserId) {
-    return defaultAvatar;
-  }
-  if (providerType === 'Google') {
-    return `https://lh3.googleusercontent.com/${avatar}s350`;
-  }
-  if (providerType === 'Facebook') {
-    return `https://graph.facebook.com/${providerUserId}/picture?height=350&width=350`;
-  }
-  return defaultAvatar;
-};
+const useAvatarUrl = (userId, image) =>
+  image
+    ? `https://crio-in-staging-bucket.s3.us-west-2.amazonaws.com/${userId}/profile/${image}`
+    : defaultAvatar;
 
 export default useAvatarUrl;

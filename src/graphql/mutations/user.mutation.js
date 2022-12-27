@@ -4,6 +4,7 @@ export const signIn = gql`
   mutation {
     saveUser {
       error
+      userId
     }
   }
 `;
@@ -19,7 +20,6 @@ export const updateUser = gql`
     updateUser(attributes: $attributes) {
       id
       userId
-      providerType
       email
       username
       firstName
@@ -62,5 +62,11 @@ export const acceptInvitation = gql`
 export const createTransfers = gql`
   mutation {
     createTransfers
+  }
+`;
+
+export const updateUserImage = gql`
+  mutation updateUserImage($userId: ID!, $image: String!) {
+    updateUserImage(userId: $userId, image: $image)
   }
 `;

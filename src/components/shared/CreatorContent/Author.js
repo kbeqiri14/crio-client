@@ -29,15 +29,14 @@ const Author = ({
   isProduct,
   productId,
   artworkId,
-  providerType,
-  providerUserId,
-  avatar,
+  image,
+  userId,
   username,
   likes = 0,
   hide = () => {},
 }) => {
   const { user } = useLoggedInUser();
-  const avatarUrl = useAvatarUrl(providerType, providerUserId, avatar);
+  const avatarUrl = useAvatarUrl(userId, image);
   const [like, { loading, data }] = useMutation(isProduct ? likeProduct : likeArtwork, {
     variables: isProduct ? { productId } : { artworkId },
   });
@@ -72,7 +71,7 @@ const Author = ({
                   width={30}
                   height={30}
                   alt='avatar'
-                  className='border-radius-100'
+                  className='fit-cover border-radius-100'
                 />
               </Col>
               <Col>

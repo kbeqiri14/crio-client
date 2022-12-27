@@ -7,7 +7,7 @@ import { Dropdown } from '@ui-kit';
 import { ReactComponent as ArrowIcon } from '@svgs/arrow.svg';
 
 const ProfileMenu = ({ user = {} }) => {
-  const avatarUrl = useAvatarUrl(user.providerType, user.providerUserId, user.avatar);
+  const avatarUrl = useAvatarUrl(user.id, user.image);
   const goAccount = useCallback(() => history.push(`/profile/${user.username}`), [user.username]);
   const goPayment = useCallback(() => history.push('/payment'), []);
   const items = useMemo(
@@ -34,7 +34,13 @@ const ProfileMenu = ({ user = {} }) => {
   return (
     <Dropdown menu={{ items }}>
       <div>
-        <img alt='profile' src={avatarUrl} width={40} height={40} className='border-radius-100' />
+        <img
+          alt='profile'
+          src={avatarUrl}
+          width={40}
+          height={40}
+          className='fit-cover border-radius-100'
+        />
         <ArrowIcon className='vertical-middle' />
       </div>
     </Dropdown>

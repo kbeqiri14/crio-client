@@ -12,8 +12,8 @@ const Bullet = ({ title, desc, badge }) => {
       )}
       <Col span={24}>
         <Text level={3}>{desc}</Text>
-        {badge.map((item) => (
-          <Badge status='default' color='white' level={3} text={item} />
+        {badge.map((item, index) => (
+          <Badge key={index} status='default' color='white' level={3} text={item} />
         ))}
       </Col>
     </Row>

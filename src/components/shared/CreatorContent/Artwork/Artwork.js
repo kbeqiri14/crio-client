@@ -15,9 +15,7 @@ import LockState from '../LockState';
 import { Wrapper } from './styled';
 
 const Artwork = ({
-  providerType,
-  providerUserId,
-  avatar,
+  image,
   userId,
   username,
   artworkId,
@@ -77,18 +75,14 @@ const Artwork = ({
       artworkId,
       categoryId,
       userId,
-      providerType,
-      providerUserId,
       username,
-      avatar,
+      image,
       content,
       thumbnail,
       isImage: !content.startsWith('/videos/'),
     });
   }, [
-    providerType,
-    providerUserId,
-    avatar,
+    image,
     userId,
     username,
     artworkId,
@@ -140,10 +134,9 @@ const Artwork = ({
       </Wrapper>
       <Author
         artworkId={artworkId}
-        providerType={providerType}
-        providerUserId={providerUserId}
-        avatar={avatar}
+        userId={userId}
         username={username}
+        image={image}
         likes={likes}
       />
     </>
