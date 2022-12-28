@@ -12,6 +12,8 @@ import Circle from '@ui-kit/Custom/Circle';
 import paperPlane from '@images/paper-plane.png';
 import earnMore from '@images/earn-more.png';
 
+const LIMIT = 10;
+
 const Wrapper = styled('div')`
   width: 100%;
   .ant-select-dropdown {
@@ -76,8 +78,8 @@ const EarnMore = () => {
   });
 
   const send = useCallback(() => {
-    if (emails.length + +data?.getUserInvitations?.length > 5) {
-      notification.errorToast("You can't invite more then 5 people");
+    if (emails.length + +data?.getUserInvitations?.length > LIMIT) {
+      notification.errorToast(`You can't invite more then ${LIMIT} people`);
       return;
     }
     inviteUsers();
@@ -115,7 +117,7 @@ const EarnMore = () => {
                 <Text level={4}>
                   For every creator that signs-up, you will get a payout equal to <b>5%</b> of each
                   of their earnings for as long as they are Creators on Crio! You can refer up to{' '}
-                  <b>5 creators.</b>
+                  <b>{LIMIT} creators.</b>
                 </Text>
               </Col>
               <Col>
@@ -144,7 +146,7 @@ const EarnMore = () => {
                   </Title>
                 ))}
               </Col>
-              {data?.getUserInvitations?.length < 5 && (
+              {data?.getUserInvitations?.length < LIMIT && (
                 <>
                   <Wrapper>
                     <Select
